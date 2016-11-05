@@ -1,0 +1,35 @@
+\section{Probabilistic Methods}
+
+Several methods have been developed to integrate an Ordinary Differential Equation (ODE) numerically (\ldots). If a deterministic solver is employed, the error introduced by the numerical method is however difficult to quantify (\ldots). In the frame of statistical analyses, quantifying the impact on the uncertainty of the solution due to the numerical approximation is of the utmost importance (\ldots). Therefore, a new class of probabilistic numerical methods have been recently proposed \cite{CGS16} (\ldots). \\
+Let us consider $f\colon \R^d \to \R^d$ and the following ODE
+\begin{equation}\label{ODE}
+\begin{aligned}
+	\dv{u(t)}{t} &= f(u), &&  t \in (0, T], \\
+	u(0) &= u_0, && u_0 \in \R^d.
+\end{aligned}
+\end{equation}
+Integrating numerically \eqref{ODE} with a deterministic method on a time discretization $t_k = kh, k = 0, \ldots, N, T = Nh$ gives a numerical solution $U_k, k = 0, \ldots, N$, defined by
+\begin{equation}\label{numericalODE}
+\begin{aligned}
+	U_{k+1} &= \Psi(U_k), \quad k = 0, \ldots, N-1, \\
+	U_{0} &= u_0, 
+\end{aligned}
+\end{equation}
+where $\Psi$ defines one step of a deterministic numerical method to integrate \eqref{ODE}. \\
+The idea behind probabilistic methods is adding at each step of the numerical integration a noise component, \textit{i.e.},
+\begin{equation}\label{probabilityODE}
+\begin{aligned}
+	U_{k+1} &= \Psi(U_k) + \xi_k(h), \\
+	U_0 &= u_0,
+\end{aligned}
+\end{equation}
+where $\xi_k(h)$ are i.i.d. Gaussian random variables. 
+
+\input{deterministicmethods}
+
+\subsection{Method derivation (M. motivation)}
+
+\input{strongconvergence}
+\input{weakconvergence}
+\input{MLMC}
+\input{bayesianinference}

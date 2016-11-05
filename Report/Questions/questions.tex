@@ -1,0 +1,12 @@
+\documentclass{article}
+\input{../Preamble}
+
+\begin{document}
+\begin{itemize}
+\item Monte Carlo estimation of the likelihood (section 3.2), given $M$ number of trajectories of the probabilistic method. Then
+\begin{equation}
+	\int{\mathcal L \left(d, U^{h, \sigma}(\theta, \xi)\right)} \dd{\xi} = \frac{1}{M} \sum_{i = 1}^{M}\mathcal L \left(d, U_i^{h, \sigma}(\theta, \xi_i)\right),
+\end{equation}
+where the index $i$ indicates the draws from the solution $U^{h,\sigma}$. Is it necessary to perform a Monte Carlo estimation of the likelihood at each MCMC iteration?
+\end{document}
+\end{itemize}

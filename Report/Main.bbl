@@ -1,0 +1,43 @@
+\def\cprime{$'$}
+\begin{thebibliography}{1}
+
+\bibitem{AnR09}
+{\sc C.~Andrieu and G.~O. Roberts}, {\em The pseudo-marginal approach for
+  efficient {M}onte {C}arlo computations}, Ann. Statist., 37 (2009),
+  pp.~697--725.
+
+\bibitem{CGS16}
+{\sc P.~R. Conrad, M.~Girolami, S.~S{\"a}rkk{\"a}, A.~Stuart, and
+  K.~Zygalakis}, {\em Statistical analysis of differential equations:
+  introducing probability measures on numerical solutions}, Stat. Comput.,
+  (2016).
+
+\bibitem{GiS02}
+{\sc A.~L. Gibbs and F.~E. Su}, {\em On choosing and bounding probability
+  metrics}, Int. Stat. Rev., 70 (2002), pp.~419--435.
+
+\bibitem{KaS05}
+{\sc J.~Kaipio and E.~Somersalo}, {\em Statistical and Computational Inverse
+  Problems}, Applied Mathematical Sciences, 160, Springer, 2005.
+
+\bibitem{MLR16}
+{\sc F.~J. Medina-Aguayo, A.~Lee, and G.~O. Roberts}, {\em Stability of noisy
+  {M}etropolis--{H}astings}, Stat. Comput., 26 (2016), pp.~1187--1211.
+
+\bibitem{OBB00}
+{\sc P.~D. O'Neill, D.~J. Balding, N.~G. Becker, M.~Eerola, and D.~Mollison},
+  {\em Analyses of infectious disease data from household outbreaks by {M}arkov
+  chain {M}onte {C}arlo methods}, J. R. Stat. Soc. Ser. C. Appl. Stat., 49
+  (2000), pp.~517--542.
+
+\bibitem{SHM15}
+{\sc S.~S{\"a}rkk{\"a}, J.~Hartikainen, I.~S. Mbalawata, and H.~Haario}, {\em
+  Posterior inference on parameters of stochastic differential equations via
+  non-linear {G}aussian filtering and adaptive {MCMC}}, Stat. Comput., 25
+  (2015), pp.~427--437.
+
+\bibitem{Vih12}
+{\sc M.~Vihola}, {\em Robust adaptive {M}etropolis algorithm with coerced
+  acceptance rate}, Stat. Comput., 22 (2012), pp.~997--1008.
+
+\end{thebibliography}
