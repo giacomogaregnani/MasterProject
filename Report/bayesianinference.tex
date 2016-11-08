@@ -40,22 +40,7 @@ If the solution of \eqref{ODEParam} is computable analytically, then thanks to B
  
 \subsection{Markov Chain Monte Carlo methods}
 
-\begin{algorithm}[t]
-	\caption{Metropolis-Hastings algorithm.}
-	\label{alg:MH}
-	\KwData{$\theta_0, N_{it}, d_i, i = 0, \ldots, D$.}
-	Compute $\mathcal{Q}(\theta_0)$ and $\diffL(d|\theta_0)$ \;
-	\For{$k = 0, \ldots, N_{it}$}{
-		Draw $\vartheta$ from $q(\theta_k, \cdot)$ \;
-		Compute the probability $\alpha = \min\left\{1, \dfrac{\pi(\vartheta|d)q(\theta_k, \vartheta)}{\pi(\theta_k|d)q(\vartheta, \theta_k)}\right\}$ \; \label{alg:MHProb}
-		Draw $u$ from $\mathcal{U}(0, 1)$ \;
-		\eIf{$\alpha > u$} {
-			Accept $\vartheta$, set $\theta_{k+1} = \vartheta$ \; 
-		} {
-		Set $\theta_{k+1} = \theta$\;
-	}
-}
-\end{algorithm}
+
 
 The Markov Chain Monte Carlo (MCMC) methods are a useful tool for performing Bayesian inference. The main idea behind these methods is creating a chain of guesses of a parameter $\theta$ in order to build an approximation of its posterior distribution. \\
 One of the most popular MCMC methods is the Metropolis-Hastings (MH) algorithm \cite{KaS05}, presented in pseudo-code in Algorithm \ref{alg:MH}. In this algorithm, the new guess $\vartheta$ of the parameter $\theta$ value is drawn from a proposal function $q(\theta_k, \cdot)$ dependent on the current guess $\theta_k$. Then, the new value $\vartheta$ is included in the chain as $\theta_{k+1}$ with a probability $\alpha$ dependent on the ratio between the posterior distribution evaluated in $\vartheta$ and $\theta$, as in line \ref{alg:MHProb} of Algorithm \ref{alg:MH}. Otherwise, $\theta_{k+1}$ is chosen to be equal to $\theta_k$. \\

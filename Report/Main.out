@@ -1,19 +1,26 @@
-\BOOKMARK [1][-]{section.1}{Probabilistic Methods}{}% 1
-\BOOKMARK [2][-]{subsection.1.1}{Deterministic methods}{section.1}% 2
-\BOOKMARK [2][-]{subsection.1.2}{Method derivation \(M. motivation\)}{section.1}% 3
-\BOOKMARK [2][-]{subsection.1.3}{Strong convergence}{section.1}% 4
-\BOOKMARK [2][-]{subsection.1.4}{Weak convergence}{section.1}% 5
-\BOOKMARK [3][-]{subsubsection.1.4.1}{Numerical verification of weak order}{subsection.1.4}% 6
-\BOOKMARK [2][-]{subsection.1.5}{Multi-level Monte Carlo}{section.1}% 7
-\BOOKMARK [3][-]{subsubsection.1.5.1}{Numerical example}{subsection.1.5}% 8
-\BOOKMARK [1][-]{section.2}{Bayesian inference of parameters}{}% 9
-\BOOKMARK [2][-]{subsection.2.1}{Bayesian inference - an introduction}{section.2}% 10
-\BOOKMARK [2][-]{subsection.2.2}{Bayesian inference of the parameters of an ODE}{section.2}% 11
-\BOOKMARK [2][-]{subsection.2.3}{Markov Chain Monte Carlo methods}{section.2}% 12
-\BOOKMARK [3][-]{subsubsection.2.3.1}{An adaptive approach}{subsection.2.3}% 13
-\BOOKMARK [3][-]{subsubsection.2.3.2}{Noisy pseudo-marginal MCMC}{subsection.2.3}% 14
-\BOOKMARK [3][-]{subsubsection.2.3.3}{A MLMC approach}{subsection.2.3}% 15
-\BOOKMARK [3][-]{subsubsection.2.3.4}{Numerical example}{subsection.2.3}% 16
-\BOOKMARK [3][-]{subsubsection.2.3.5}{A Gaussian filtering approach}{subsection.2.3}% 17
-\BOOKMARK [2][-]{subsection.2.4}{Numerical example}{section.2}% 18
-\BOOKMARK [1][-]{section.3}{Numerical example}{}% 19
+\BOOKMARK [1][-]{section.1}{Bayesian statistics and Markov chain Monte Carlo}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Bayes' formula}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Parametrized models}{section.1}% 3
+\BOOKMARK [3][-]{subsubsection.1.2.1}{An example: parametrized differential equations}{subsection.1.2}% 4
+\BOOKMARK [2][-]{subsection.1.3}{Markov chain Monte Carlo methods}{section.1}% 5
+\BOOKMARK [3][-]{subsubsection.1.3.1}{Metropolis-Hastings algorithm}{subsection.1.3}% 6
+\BOOKMARK [3][-]{subsubsection.1.3.2}{An adaptive approach}{subsection.1.3}% 7
+\BOOKMARK [3][-]{subsubsection.1.3.3}{Pseudo-marginal Metropolis-Hastings}{subsection.1.3}% 8
+\BOOKMARK [1][-]{section.2}{Probabilistic Methods}{}% 9
+\BOOKMARK [2][-]{subsection.2.1}{Deterministic methods}{section.2}% 10
+\BOOKMARK [2][-]{subsection.2.2}{Method derivation \(M. motivation\)}{section.2}% 11
+\BOOKMARK [2][-]{subsection.2.3}{Strong convergence}{section.2}% 12
+\BOOKMARK [2][-]{subsection.2.4}{Weak convergence}{section.2}% 13
+\BOOKMARK [3][-]{subsubsection.2.4.1}{Numerical verification of weak order}{subsection.2.4}% 14
+\BOOKMARK [2][-]{subsection.2.5}{Multi-level Monte Carlo}{section.2}% 15
+\BOOKMARK [3][-]{subsubsection.2.5.1}{Numerical example}{subsection.2.5}% 16
+\BOOKMARK [1][-]{section.3}{Bayesian inference of parameters}{}% 17
+\BOOKMARK [2][-]{subsection.3.1}{Bayesian inference - an introduction}{section.3}% 18
+\BOOKMARK [2][-]{subsection.3.2}{Bayesian inference of the parameters of an ODE}{section.3}% 19
+\BOOKMARK [2][-]{subsection.3.3}{Markov Chain Monte Carlo methods}{section.3}% 20
+\BOOKMARK [3][-]{subsubsection.3.3.1}{Noisy pseudo-marginal MCMC}{subsection.3.3}% 21
+\BOOKMARK [3][-]{subsubsection.3.3.2}{A MLMC approach}{subsection.3.3}% 22
+\BOOKMARK [3][-]{subsubsection.3.3.3}{Numerical example}{subsection.3.3}% 23
+\BOOKMARK [3][-]{subsubsection.3.3.4}{A Gaussian filtering approach}{subsection.3.3}% 24
+\BOOKMARK [2][-]{subsection.3.4}{Numerical example}{section.3}% 25
+\BOOKMARK [1][-]{section.4}{Numerical example}{}% 26

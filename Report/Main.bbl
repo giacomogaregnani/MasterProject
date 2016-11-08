@@ -1,5 +1,10 @@
 \def\cprime{$'$}
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{ADH10}
+{\sc C.~Andrieu, A.~Doucet, and R.~Holenstein}, {\em Particle {M}arkov chain
+  {M}onte {C}arlo methods}, J. R. Stat. Soc. Ser. B. Stat. Methodol.,  (2010),
+  pp.~269 -- 342.
 
 \bibitem{AnR09}
 {\sc C.~Andrieu and G.~O. Roberts}, {\em The pseudo-marginal approach for
@@ -12,9 +17,18 @@
   introducing probability measures on numerical solutions}, Stat. Comput.,
   (2016).
 
+\bibitem{DPD15}
+{\sc A.~Doucet, M.~K. Pitt, G.~Deligiannidis, and R.~Kohn}, {\em Efficient
+  implementation of {M}arkov chain {M}onte {C}arlo when using an unbiased
+  likelihood estimator}, Biometrika,  (2015), pp.~1 -- 19.
+
 \bibitem{GiS02}
 {\sc A.~L. Gibbs and F.~E. Su}, {\em On choosing and bounding probability
   metrics}, Int. Stat. Rev., 70 (2002), pp.~419--435.
+
+\bibitem{Gil05}
+{\sc W.~R. Gilks}, {\em {M}arkov chain {M}onte {C}arlo}, Encyclopedia of
+  Biostatistics, 4 (2005).
 
 \bibitem{KaS05}
 {\sc J.~Kaipio and E.~Somersalo}, {\em Statistical and Computational Inverse
