@@ -1,15 +1,15 @@
 \section{Bayesian statistics and Markov chain Monte Carlo}
 
-In the following section we will briefly discuss the main features of a Bayesian statistical approach, comparing it with the classical inferential statistics. Then we, will present a class of techniques used to practically perform Bayesian inference, the Markov chain Monte Carlo (commonly denoted with the acronym MCMC), discussing some of the possible implementations and properties of these methods.
+In the following section we will briefly discuss the main features of a Bayesian statistical approach, comparing it with the classical inferential statistics. Then, we will present a class of techniques used to practically perform Bayesian inference, the Markov chain Monte Carlo (commonly denoted with the acronym MCMC), discussing some of the possible implementations and properties of these methods.
 \subsection{Bayes' formula}
-Bayesian inference is a powerful tool widely used in the frame of inverse problems. Let us consider an event space $\Omega$ a sigma-algebra $\mathcal{A}$ and a probability measure $P$, let us consider the probability space $(\Omega, \mathcal{A}, P)$. Then, if $A$ and $B$ are two events in $\Omega$, it is widely known that the probability of the intersection of $A$ and $B$ is given by
+The basis of Bayesian statistics can be found in the simple Bayes' formula. Let us consider an event space $\Omega$, a sigma-algebra $\mathcal{A}$, a probability measure $P$ and the probability space $(\Omega, \mathcal{A}, P)$. If $A$ and $B$ are two events in $\Omega$, the probability of the intersection of $A$ and $B$ is given by
 \begin{equation}
 \begin{aligned}
 	P(A, B) &= P(A|B)P(B) \\
 	&= P(B|A)P(A).
 \end{aligned}
 \end{equation}
-The equivalence between the two formulations leads to Bayes' formula, which represents the basis of Bayesian inference
+The equivalence between the two formulations leads to Bayes' formula
 \begin{equation}\label{eq:BayesRule}
 	P(A|B) = \frac{P(B|A)P(A)}{P(B)}.
 \end{equation}
@@ -82,27 +82,27 @@ Let us denote as $\mathcal{Y}_i$ the set of all the observations $y_i$ up to tim
 \begin{equation}
 	\pi(\mu|\mathcal{Y}_i) \propto \prior(\mu) \diffL(\mathcal{Y}_i|\mu).
 \end{equation}
-In this simple frame, the knowledge of the analytical form of the solution and of the measurement erorr gives us an exact notion of the model connecting the parameter and the observations. Hence, for each choice of the value of $\mu$ it is possible to evaluate the likelihood function $\diffL$ as follows
+In this simple frame, the knowledge of the analytical form of the solution and of the measurement error gives us an exact notion of the model connecting the parameter and the observations. Hence, for each choice of the value of $\mu$ it is possible to evaluate the likelihood function $\diffL$ as follows
 \begin{equation}
-	\diffL(\mathcal{Y}_{N_d}|\mu) = (2\pi\sigma^2)^{-1/2}\prod_{k = 1}^{N_d}\E\left[\exp(-\frac{\sigma^2}{2}(X(t_k) - y_k)^2)\right],
+	\diffL(\mathcal{Y}_{N_d}|\mu) = (2\pi\sigma^2)^{-N_d/2}\prod_{k = 1}^{N_d}\E\left[\exp(-\frac{\sigma^2}{2}(X(t_k) - y_k)^2)\right],
 \end{equation}
 where we omitted the implicit dependence of the process $X$ on $\mu$. Furthermore, if the prior distribution $\prior$ admits a density in closed form, it is possible to evaluate it on any choice of $\mu$. Therefore, it is possible to compute for each value of $\mu$ the value of the posterior distribution associated with the available set of measurements. 
 
-In this simple example the analytical form of any of the quantities involved in Bayesian analysis implies that with a small effort it is possible to determine the value of the posterior distribution. In general this is not true, and as we will show in the next sections fine Monte Carlo techniques have been proposed to generate samples from any distribution. 
+In this simple example the analytical form of any of the quantities of Bayes' formula and the small dimension of the parameter space imply that with a low effort it is possible to determine the value of the posterior distribution. In general this is not true, and as we will show in the next sections fine Monte Carlo techniques have been proposed to generate samples from any distribution. 
 
 \subsection{Markov chain Monte Carlo methods}
 
-Markov chain Monte Carlo methods (MCMC) are a class of techniques used to perform Bayesian analyses \cite{KaS05, Gil05}. In the following we will present the main idea behind the method as well as some examples of their implementation. 
+Markov chain Monte Carlo methods (MCMC) are a class of techniques used to perform Bayesian analyses \cite{Gil05, KaS05}. In the following we will present the main idea behind the method as well as some examples of their implementation. 
 
-Let us consider a model which has a random variable $X$ as its outcome parametrized by a parameter $\theta$. Then, let us consider a set of observations $\mathcal{Y}_i = \left\{y_1, y_2, \ldots, y_i\right\}$, $i = 1, \ldots, N_d$ providing information regarding $X$. Then, thanks to Bayes' rule, we can construct the posterior distribution of $\theta$ by Bayes' rule
+Let us consider a model which has a random variable $X$ as its outcome parametrized by a parameter $\theta$ and a set of observations $\mathcal{Y}_i = \left\{y_1, y_2, \ldots, y_i\right\}$, $i = 1, \ldots, N_d$, providing information regarding $X$. Then, thanks to Bayes' rule, we can construct the posterior distribution of $\theta$ by Bayes' rule
 \begin{equation}
 	\pi(\theta|\mathcal{Y}_i) \propto \prior(\theta) \diffL(\mathcal{Y}_i|\theta).
 \end{equation}
-As in the previous paragraphs, let us assume that $\theta$ is a real-valued parameter of dimension $N_p$. If the parameter space has a high dimension, it is computationally expensive exploring all the possible values in order to build the posterior distribution, especially if evaluating the model connecting $\theta$ and the random variable $X$ is non-trivial. If we are interested in knowing the value of the expectation of some measurable function $g\colon \R^{N_p} \to \R$, when evaluated on $\theta$ we can proceed by the following Monte Carlo evaluation
+As in the previous paragraphs, let us assume that $\theta$ is a real-valued parameter of dimension $N_p$. If the parameter space has a high dimension, it is computationally expensive exploring all the possible values in order to build the posterior distribution, especially if evaluating the model connecting $\theta$ and the random variable $X$ is non-trivial. If we are interested in knowing the expectation of some measurable function $g\colon \R^{N_p} \to \R$ of $\theta$ we can proceed by the following Monte Carlo evaluation
 \begin{equation}\label{eq:MonteCarloMCMC}
 	 \E\left[g(\theta)\right]= \int_{\R^{N_p}} g(\theta)\pi(\dd\theta|\mathcal{Y}_i) \approx \frac{1}{N}\sum_{k = 1}^{N} g(\theta^{(k)}),
 \end{equation}
-where $\theta^{(k)}$, $k = 1, \ldots, N$, is a set of realizations of $\theta$. While the equality in the equation follows from the definition of expectation, there is no guarantee that the Monte Carlo estimator will be a good approximation of the expectation regardless of the samples. MCMC techniques consist in generating samples such that the Monte Carlo approximation is valid without exploring the whole parameter space,  which would lead to an unaffordable computational time on any modern computer. As the name of the methods suggests, given an initial guess $\theta^{(0)}$, MCMC builds a discrete Markov chain $\{\theta^{(i)}\}_{i\geq 0}$ such that the Monte Carlo approximation in \eqref{eq:MonteCarloMCMC} is valid. Formally, this is achieved considering a \textit{transition kernel} $P$ which given the current element of the chain $\theta^{(i)}$ produces the next guess $\theta^{(i-1)}$. Under a set of assumptions on $P$ \cite{KaS05}, we have the theoretical guarantee that the samples $\theta^{(i)}$ are drawn from the same \textit{stationary distribution} for $i$ large enough. We can build many transition kernels having this property, and any choice of $P$ leads to a different MCMC method. In the following, we will present the widely-used \textit{Metropolis-Hastings} algorithm, as well as two of its variants that were necessary for our work.
+where $\theta^{(k)}$, $k = 1, \ldots, N$, is a set of realizations of $\theta$. While the equality in the equation follows from the definition of expectation, there is no guarantee that the Monte Carlo estimator will be a good approximation of the expectation regardless of the samples. MCMC techniques consist in generating samples such that the Monte Carlo approximation is valid without exploring the whole parameter space,  which would lead to an unaffordable computational time on any modern computer. As the name of the methods suggests, given an initial guess $\theta^{(0)}$, MCMC builds a discrete Markov chain $\{\theta^{(i)}\}_{i\geq 0}$ such that the Monte Carlo approximation in \eqref{eq:MonteCarloMCMC} is valid. Formally, this is achieved considering a \textit{transition kernel} $P$ which given the current element of the chain $\theta^{(i)}$ produces the next guess $\theta^{(i-1)}$. Under a set of assumptions on $P$ \cite{KaS05}, we have the theoretical guarantee that the samples $\theta^{(i)}$ are drawn from the same \textit{stationary distribution} for $i$ large enough. We can build many transition kernels having this property, and any valid choice of $P$ leads to a different MCMC method. In the following, we will present the widely-used \textit{Metropolis-Hastings} algorithm, as well as two of its variants that were necessary for our work.
 
 \subsubsection{Metropolis-Hastings algorithm}
 \begin{algorithm}[t]
@@ -121,7 +121,7 @@ where $\theta^{(k)}$, $k = 1, \ldots, N$, is a set of realizations of $\theta$. 
 	}
 }
 \end{algorithm}
-In this paragraph we will introduce one of the most successful MCMC methods, the Metropolis-Hastings method (MH). In this method, the samples forming the Markov chain are generated following a \textit{proposal distribution} $q\colon \R^{N_p} \cross \R^{N_p} \to \R^+$ which satisfies the condition
+In this paragraph we will introduce one of the most successful MCMC methods, the Metropolis-Hastings method (MH). In MH, the samples forming the Markov chain are generated following a \textit{proposal distribution} $q\colon \R^{N_p} \cross \R^{N_p} \to \R^+$ which satisfies the condition
 \begin{equation}
 	\int_{\R^{N_p}}q(x, y)\dd y = 1,
 \end{equation}
@@ -135,9 +135,9 @@ where $\delta_x$ is the Dirac delta centered in $x$ and $\rho$ is defined as
 \end{equation}
 In words, the expression of the transition kernel $P_{\MH}$ is equivalent to stating that the new guess $\vartheta$ generated from the proposal distribution is accepted with probability $\alpha$ and rejected with probability $1 - \alpha$. Imposing that $P_{\MH}$ satisfies the hypotheses that guarantee the convergence of MCMC, we can get the expression of the acceptance probability in closed form as 
 \begin{equation}\label{eq:MHalpha}
-	\alpha(\theta^{(i)}, \vartheta) = \min\left\{\frac{\pi(\vartheta)q(\theta^{(i)}, \vartheta)}{\pi(\theta^{(i)})q(\vartheta, \theta^{(i)})}, 1\right\}.
+	\alpha(\theta^{(i)}, \vartheta) = \min\left\{\frac{\pi(\vartheta)q(\vartheta, \theta^{(i)})}{\pi(\theta^{(i)})q(\theta^{(i)}, \vartheta)}, 1\right\}.
 \end{equation}
-As it is possible to remark from its pseudo-code, given in Algorithm \ref{alg:MH}, MH is extremely simple to implement practically. In fact, the only choice left to the user of a MH algorithm is the proposal distribution $q(x,y)$. Unfortunately, this choice could impact negatively the behavior of MH, slowing dramatically its convergence towards the stationary distribution of the Markov chain. Let us first remark that if the proposal distribution is a symmetric function in its two arguments, i.e., $q(x, y) = q(y, x)$,  the expression of the acceptance probability simplifies to
+As it is possible to remark from its pseudo-code, given in Algorithm \ref{alg:MH}, MH is extremely simple to implement on a computer in any programming language. In fact, the only choice left to the user of a MH algorithm is the proposal distribution $q(x,y)$. Unfortunately, this choice could impact negatively the behavior of MH, slowing dramatically its convergence towards the stationary distribution of the Markov chain. Let us first remark that if the proposal distribution is a symmetric function in its two arguments, i.e., $q(x, y) = q(y, x)$,  the expression of the acceptance probability simplifies to
 \begin{equation}\label{eq:MHalphasym}
 	\alpha(\theta^{(i)}, \vartheta) = \min\left\{\frac{\pi(\vartheta)}{\pi(\theta^{(i)})}, 1\right\}.
 \end{equation}
@@ -194,11 +194,64 @@ Hence, we can compute $S_{n+1}$ as the Cholesky factorization of the right hand 
 Often the computational cost needed for the evaluation of the posterior distribution is high with respect to the dimension $N_p$ of the parameter space. In Algorithm \ref{alg:RAM} we give the pseudo-code for the RAM update. Therefore, performing a Cholesky factorization at each iteration, which has a complexity of $\OO(N_p^3)$, does not spoil the performances of RAM with respect to a standard MH. 
 
 \subsubsection{Pseudo-marginal Metropolis-Hastings}
+\begin{algorithm}[t]
+	\caption{Monte Carlo within Metropolis.}
+	\label{alg:MCWM}
+	\KwData{$\theta^{(0)} \in \R^{N_p}, \: N \in \N_0$.}
+	Compute $\pi(\theta_0)$ \;
+	\For{$i = 0, \ldots, N$}{
+		Draw $\vartheta$ from $q(\theta^{(i)}, \cdot)$ \;
+		Compute the estimators $\pi_M(\theta^{(i)}, \xi)$ and $\pi_M(\vartheta, \xi)$ as in \eqref{eq:MCWMestimators} \;
+		Compute the acceptance probability $\alpha_M(\theta^{(i)}, \vartheta)$ as in \eqref{eq:MCWMalpha}\;
+		Draw $u$ from $\mathcal{U}(0, 1)$ \;
+		\eIf{$\alpha > u$} {
+			Accept $\vartheta$, set $\theta_{i+1} = \vartheta$ \; 
+		} {
+		Set $\theta^{(i+1)} = \theta^{(i)}$\;
+	}
+}
+\end{algorithm}
+In this paragraph we discuss the second issue presented above. Let us consider the case in which it is not possible to evaluate the posterior distribution $\pi(\theta)$, or it is too computational expensive. For instance, in the example we provided in Section \ref{sect:exBayes} the analytical solution of the SDE is computable. If we have a general equation which does not admit a closed-form solution, it is not possible to evaluate the likelihood function. Therefore, the standard MH algorithm and its adaptive version RAM are not applicable.
 
-In this paragraph we answer to the second issue exposed above. Let us consider the case in which it is not possible to evaluate the posterior distribution $\pi(\theta)$, or it is too computational expensive. For instance, in the example we provided in Section \ref{sect:exBayes} the analytical solution of the SDE is computable. If we have a general equation which does not admit a closed-form solution, it is not possible to evaluate the likelihood function. Therefore, the standard MH algorithm and its adaptive version RAM are not applicable.
-
-An algorithm that has been proposed to overcome this issue is the so-called \textit{pseudo-marginal} MCMC \cite{DPD15,MLR16}, which is known also as particle Markov chain Monte Carlo (PMCMC) \cite{ADH10} or Monte Carlo within Metropolis (MCWM) \cite{AnR09}. The main idea of the proposed pseudo-marginal algorithms is modifying the acceptance probability $\alpha$ in the MH standard algorithm by an approximation $\alpha_M$ depending on an integer parameter $M > 0$, such that while $\alpha$ is not computable it is possible to compute $\alpha_M$. In a formal way, this could be obtained by drawing at each iteration from a random variable $W_M(\theta)$, depending on the current guess $\theta$ of the parameter, which will be interpreted as a weight. Then, the modified acceptance probability is computed as
-\begin{equation}
-	\alpha_N(\theta^{(i)}, u; \vartheta, w) = \min\left\{\frac{\pi(\vartheta)wq(\theta^{(i)}, \vartheta)}{\pi(\theta^{(i)})uq(\vartheta, \theta^{(i)})}, 1\right\},
+An algorithm that has been proposed to overcome this issue is the so-called \textit{pseudo-marginal} MCMC \cite{DPD15}, which is also known as particle Markov chain Monte Carlo (PMCMC) \cite{ADH10}. The main idea of the proposed pseudo-marginal algorithms is modifying the target of the algorithm to a distribution $\pi(\theta, \xi)$ that admits $\pi(\theta)$ as a marginal distribution and that is easier than $\pi(\theta)$ to evaluate. Then, we can compute an unbiased Monte Carlo approximation $\pi_M(\theta)$ of the marginal distribution as
+\begin{equation}\label{eq:MCWMestimators}
+	\pi_M(\theta) = \frac{1}{M} \sum_{i = 1}^{M} \pi(\theta, \xi^{(i)}),
 \end{equation}
-where $u, w$ are two realizations of $W_M(\theta^{(i)})$ and $W_M(\vartheta)$ respectively. The assumptions that have to be satisfied by $W_M$ so that the algorithms converges are rigorously explained in \cite{MLR16}. 
+where the values $\xi^{(i)}$ are realizations of the random variable $\xi$. The acceptance probability $\alpha_M$ has then the same form of $\alpha$ in the standard MH, with $\pi_M(\theta)$ instead of the true marginal distribution, i.e.,
+\begin{equation}\label{eq:MCWMalpha}
+	\alpha_M(\theta^{(i)}, \vartheta) = \min\left\{\frac{\pi_M(\vartheta)q(\vartheta, \theta^{(i)})}{\pi_M(\theta^{(i)})q(\theta^{(i)}, \vartheta)}, 1\right\}.
+\end{equation}
+The pseudo-code of the resulting algorithm is shown in Algorithm \ref{alg:MCWM}. Let us remark that if the estimator $\pi_M(\theta^{(i)})$ at the $i$-th iteration of MCMC is computed at each iteration and not recycled from the previous iterations, the resulting algorithm is often referred to as Monte Carlo within Metropolis (MCWM) \cite{AnR09} or noisy pseudo-marginal Metropolis \cite{MLR16}. Even though recomputing the estimator may be computationally expensive, the resulting Markov chain has an higher acceptance ratio, i.e., it explores the relevant values of the parameter $\theta$ faster, therefore defining better the posterior distribution. The main issue that has been addressed by the research on this kind of pseudo-marginal algorithms is whether the invariant distribution of the Markov chain converges to the marginal posterior distribution of the random variable $\theta$. It has been shown \cite{AnR09, MLR16} that under appropriate assumptions the following properties are valid
+\begin{enumerate}
+	\item the transition kernel $P_M$ given by \eqref{eq:MCWMalpha} converges to an invariant distribution $\pi_M$ with the number of iterations $N$ of MCMC if the number of Monte Carlo draws $M$ is large enough \cite[Theorem 9]{AnR09},
+	\item the invariant distribution $\pi_M$ obtained with MCWM converges to the true marginal distribution $\pi$ if $M$ tends to infinity \cite[Theorem 4.1]{MLR16},
+	\item under stronger assumptions, it is possible to obtain convergence rates of $\pi_M$ to $\pi$ with respect to $M$ \cite[Theorem 4.2 and Proposition 4.1]{MLR16}.
+\end{enumerate}
+Let us consider the example provided in Section \ref{sect:exBayes}. If we choose an SDE which does not admit a closed-form solution, it is impossible to evaluate the posterior distribution, as the likelihood function does not admit an analytical expression. On the other hand, there exists a large variety of numerical methods \cite{KPS94} that we can apply together with a Monte Carlo approximation to compute an estimator of the likelihood, thus obtaining a value $\pi_M$ as in \eqref{eq:MCWMestimators}. Hence, while it is impossible in this case to get the exact value of the posterior distribution, we can approximate it through an auxiliary simulation. Therefore, it is possible to apply a MCWM algorithm and obtain an approximation of $\pi(\theta)$ in this case as well.
+
+\subsubsection{How to deal with inadmissible parameter values}
+
+Let us consider without loss of generality a one-dimensional real parameter $\theta$ that can assume values only on a subset of $\R$. For instance, let us consider as the parameter space the interval $I = [a, b]$. If a Gaussian proposal function $q(x, y)$ is adopted in the implementation of MH, the unboundedness of the support of the proposal distribution results in a new guess $\vartheta$ which takes values outside $I$ with a non-zero probability. In this case, we choose to adopt as proposal function a \textit{truncated Gaussian distribution}. The new guess $\vartheta$ is generated by $q(\theta^{(i)}, \cdot)$, which is a truncated Gaussian distribution of mean $\theta^{(i)}$ and fixed variance $\sigma$. The analytical expression of $q$ in this case is given by
+\begin{equation}\label{eq:truncGauss}
+	q(x, y; a, b, \sigma) = \frac{1}{\sigma} \frac{\phi\left((y - x)/\sigma\right)}
+	{\Phi\left((b - x)/\sigma\right) - \Phi\left((a - x)/\sigma\right)},
+\end{equation}
+where we explicitly added the dependence on $a$, $b$ and $\sigma$. In \eqref{eq:truncGauss} the function $\phi$ is defined as
+\begin{equation}
+	\phi(x) = \frac{1}{\sqrt{2\pi}} \exp(-\frac{x^2}{2}),
+\end{equation}
+and $\Phi$ is the standard Gaussian cumulative distribution function, where we assume that if $b = \infty$ then $\Phi((b-x)/\sigma)$ equals one, and if $a = -\infty$ then $\Phi((a-x)/\sigma)$ equals one. Let us remark that this proposal distribution is not symmetric, therefore $\alpha$ in MH has to take into account the ratio between the proposal distribution evaluated in the old and the new guesses of the parameter. Hence, in this case the acceptance probability is given by
+\begin{equation}
+		\alpha(\theta^{(i)}, \vartheta) = \min\left\{
+		\frac{\pi(\vartheta)\left(\Phi\left((b - \theta^{(i)})/\sigma\right) - \Phi\left((a - \theta^{(i)})/\sigma\right)\right)}
+		{\pi(\theta^{(i)})\left(\Phi\left((b - \vartheta)/\sigma\right) - \Phi\left((a - \vartheta)/\sigma\right)\right)}
+		, 1\right\}.
+\end{equation}
+Let us consider the example of a non-negative random variable $\theta$. In this case, thanks to the symmetry properties of the function $\Phi$, the acceptance probability $\alpha$ simplifies to
+\begin{equation}
+	\alpha(\theta^{(i)}, \vartheta) = \min\left\{
+	\frac{\pi(\vartheta)\Phi\left(\theta^{(i)}/\sigma\right)}
+	{\pi(\theta^{(i)})\Phi\left(\vartheta/\sigma\right)}
+	, 1\right\}.
+\end{equation}
+As far as the practical implementation is concerned, modern programming languages often provide with generators of pseudo-random Gaussian numbers. In order to obtain a truncated Gaussian distribution, a practical procedure could be generating random numbers until a number in the acceptable range is generated.

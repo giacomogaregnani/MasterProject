@@ -34,6 +34,10 @@
 {\sc J.~Kaipio and E.~Somersalo}, {\em Statistical and Computational Inverse
   Problems}, Applied Mathematical Sciences, 160, Springer, 2005.
 
+\bibitem{KPS94}
+{\sc P.~E. Kloeden, E.~Platen, and H.~Schurz}, {\em Numerical solution of {SDE}
+  through computer experiments}, Universitext, Springer-Verlag, Berlin, 1994.
+
 \bibitem{MLR16}
 {\sc F.~J. Medina-Aguayo, A.~Lee, and G.~O. Roberts}, {\em Stability of noisy
   {M}etropolis--{H}astings}, Stat. Comput., 26 (2016), pp.~1187--1211.
