@@ -1,9 +1,13 @@
 #include <vector>
 #include <Eigen/Dense>
+#include <Eigen/Cholesky>
+#include <Solver.hpp>
 
 using namespace Eigen;
 
 // INSTRUMENTS (PRIOR AND LIKELIHOOD EVALUATIONS) (mcmcTools.cpp)
+double phi(double x);
+
 double evalPrior(VectorXd x, VectorXd mean, VectorXd variance, int size);
 
 double evalLikelihood(std::vector<VectorXd> data,
@@ -26,12 +30,10 @@ std::vector<VectorXd> metropolisHastings(VectorXd initialGuess, std::vector<doub
 										 VectorXd priorMean, VectorXd priorVariance, int internalMC,
 										 int nStepsMC, double varData, double* accRatio);
 
-std::vector<VectorXd> sMetropolisHastings(VectorXd initialGuess, std::vector<double>& param, double sigma,
-										  int size, double h, double finalTime,
-										  std::vector<VectorXd>& data, std::vector<double>& dataTimes,
-										  VectorXd (*odeFunc) (VectorXd, std::vector<double>&),
+std::vector<VectorXd> sMetropolisHastings(odeDef odeModel, std::vector<double>& param, double sigma,
+										  double h, double finalTime, std::vector<VectorXd>& data, std::vector<double>& dataTimes,
 										  VectorXd priorMean, VectorXd priorVariance, int internalMC,
-										  int nStepsMC, int nLev, double damping, double varData);
+										  int nStepsMC, double damping, double varData);
 
 std::vector<VectorXd> MLmetropolisHastings(VectorXd initialGuess, std::vector<double>& param, double sigma,
 										   int size, double h, double finalTime,
@@ -49,9 +51,12 @@ std::vector<VectorXd> sMLmetropolisHastings(VectorXd initialCond, std::vector<do
 											VectorXd priorMean, VectorXd priorVariance, int internalMC,
 											int nStepsMC, double varData, double rho, double damping);
 
-std::vector<VectorXd> gaussMetropolisHastings(VectorXd initialCond, std::vector<double>& param, double sigma,
-											  int size, double h, double finalTime, std::vector<VectorXd>& data,
+std::vector<VectorXd> gaussMetropolisHastings(odeDef odeModel, std::vector<double>& param, double sigma,
+											  double h, double finalTime, std::vector<VectorXd>& data,
 											  std::vector<double>& dataTimes,
-											  VectorXd (*odeFunc) (VectorXd, std::vector<double>&),
-											  VectorXd priorMean, VectorXd priorVariance,
-											  int nStepsMC, double varData, double* accRatio);
+											  VectorXd priorMean, VectorXd priorVariance, int nStepsMC,
+											  double varData, double* accRatio, bool isStable, StabValues stab);
+
+MatrixXd RAMinit(double gamma, double desiredAlpha, int nParam);
+
+MatrixXd RAMupdate(MatrixXd S, VectorXd w, double alpha, double desiredAlpha, int nParam, int nIt);

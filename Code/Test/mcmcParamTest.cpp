@@ -8,6 +8,9 @@
 #include <fstream>
 #include "problems.hpp"
 #include "mcmcTools.hpp"
+#include <Eigen/Eigenvalues>
+#include <complex>
+#include <chrono>
 
 using namespace Eigen;
 
@@ -53,8 +56,8 @@ int main(int argc, char* argv[])
         }
         nMCloop.push_back(1);
 	} else if (MC) {
-        int nExp = 6;
-        double maxH = 0.05;
+        int nExp = 4;
+        double maxH = 0.2;
         for (int i = 0; i < nExp; i++) {
             h.push_back(maxH);
             maxH /= 2;
@@ -64,7 +67,7 @@ int main(int argc, char* argv[])
 		//int nDouble[] = {1, 10, 100, 1000, 10000};
 		//nMCloop.insert(nMCloop.end(), nDouble, nDouble + 5);
 	} else {
-        int nExp = 6;
+        int nExp = 4;
         double maxH = 0.1;
         for (int i = 0; i < nExp; i++) {
             h.push_back(maxH);
@@ -74,18 +77,15 @@ int main(int argc, char* argv[])
 	}
 
     // PROBLEM DATA
-	problems problem = LORENZ;
-	VectorXd (*odeFunc) (VectorXd, std::vector<double>&);
-	int size;
-	VectorXd initialCond;
-	setProblem(&initialCond, &odeFunc, problem, &size);
+    odeDef odeModel;
+    odeModel.ode = BRUSS;
+	setProblem(&odeModel);
 
 	// Choose parameter list (on which inference will be done)
-    std::vector<double> paramList = {10.0, 28.0, 8.0 / 3.0};
-	// std::vector<double> paramList = {1.0};
+    std::vector<double> paramList = {1.0};
 
     // DATA ACQUISITION FROM REFSOL
-    std::string refFile("refSolLorenz.txt");
+    std::string refFile("refSolBruss.txt");
 	std::fstream refSolution;
 	std::string extension(".txt");
 	std::string slash("/");
@@ -97,20 +97,20 @@ int main(int argc, char* argv[])
 	refSolution >> finalTime;
 	refSolution >> nData;
 	std::vector<double> times(static_cast<unsigned int>(nData));
-	std::vector<VectorXd> data(static_cast<unsigned int>(nData), VectorXd(size));
+	std::vector<VectorXd> data(static_cast<unsigned int>(nData), VectorXd(odeModel.size));
 	// read times where data was computed
 	for (int i = 0; i < nData; i++) {
 		refSolution >> times[i];
 	}
 	// read data
 	for (int i = 0; i < nData; i++) {
-		for (int j = 0; j < size; j++) {
+		for (int j = 0; j < odeModel.size; j++) {
 			refSolution >> data[i](j);
 		}
 	}
 
     // DATA UNCERTAINTY (COHERENT WITH REFSOL)
-	double varData = 1e-3;
+	double varData = 1e-2;
 
     // Counter and time for output files
     int count = 0;
@@ -139,49 +139,53 @@ int main(int argc, char* argv[])
 			std::normal_distribution<double> disturbOnParam(0.0, 0.01);
 			std::default_random_engine generator{(unsigned int) time(NULL)};
 			for (size_t i = 0; i < nParam; i++) {
-				paramGuess[i] = paramList[i] + 0.1 * disturbOnParam(generator);
+				paramGuess[i] = paramList[i] + disturbOnParam(generator);
 			}
 
             // PARAMETERS OF THE CHAIN
 			std::vector<VectorXd> mcmcPath;
-			int nMCMC = 100000;
+			int nMCMC = 50000;
 			double sigma = 0.5;
 
             // ONLY FOR STABLE METHODS
 			double damping = 0.0;
-			double rho = 25;
-			int nStages = static_cast<int>(pow(3.0 * rho * ith, 0.5));
+            double rho = 25;
 
             // COST
             long int cost;
 			double accRatio;
 
+			StabValues stabParam;
+			if (stableMethod && count == 0) {
+				stabParam.damping = 0.1;
+			}
+
 			if (MC) {
 				if (!stableMethod) {
 					if (!multiLevel) {
-						mcmcPath = metropolisHastings(initialCond, paramGuess, sigma, size, ith, finalTime, 
-													  data, times, odeFunc, priorMean, priorVariance, nInternalMC,
+						mcmcPath = metropolisHastings(odeModel.initialCond, paramGuess, sigma, odeModel.size, ith, finalTime,
+													  data, times, odeModel.odeFunc, priorMean, priorVariance, nInternalMC,
 													  nMCMC, varData, &accRatio);
 					} else {
-						mcmcPath = MLmetropolisHastings(initialCond, paramGuess, sigma, size, ith, finalTime, 
-														data, times, odeFunc, priorMean, priorVariance, nInternalMC,
+						mcmcPath = MLmetropolisHastings(odeModel.initialCond, paramGuess, sigma, odeModel.size, ith, finalTime,
+														data, times, odeModel.odeFunc, priorMean, priorVariance, nInternalMC,
 														nMCMC, varData, &cost, &accRatio);
 					}
 				} else {
 					if (!multiLevel) {
-						mcmcPath = sMetropolisHastings(initialCond, paramGuess, sigma, size, ith, finalTime, 
-													   data, times, odeFunc, priorMean, priorVariance, nInternalMC,
-													   nMCMC, nStages, damping, varData);
+						mcmcPath = sMetropolisHastings(odeModel, paramGuess, sigma, ith, finalTime,
+													   data, times, priorMean, priorVariance, nInternalMC,
+													   nMCMC, damping, varData);
 					} else {
-						mcmcPath = sMLmetropolisHastings(initialCond, paramGuess, sigma, size, ith, finalTime, 
-														 data, times, odeFunc, priorMean, priorVariance, nInternalMC,
+						mcmcPath = sMLmetropolisHastings(odeModel.initialCond, paramGuess, sigma, odeModel.size, ith, finalTime,
+														 data, times, odeModel.odeFunc, priorMean, priorVariance, nInternalMC,
 														 nMCMC, varData, rho, damping);
 					}
 				}
 			} else {
-				mcmcPath = gaussMetropolisHastings(initialCond, paramGuess, sigma, size, ith, finalTime,
-			                	                   data, times, odeFunc, priorMean, priorVariance, 
-							                       nMCMC, varData, &accRatio);
+				mcmcPath = gaussMetropolisHastings(odeModel, paramGuess, sigma, ith, finalTime,
+			                	                   data, times, priorMean, priorVariance,
+							                       nMCMC, varData, &accRatio, stableMethod, stabParam);
 			}
 
 			// OUTPUT FILEs

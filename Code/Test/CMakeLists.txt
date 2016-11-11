@@ -20,9 +20,9 @@ add_executable(refSol generateRefSol.cpp
                problems.hpp problems.cpp)
 target_link_libraries(refSol Solver)
 
-add_executable(mlmc testMLMC.cpp
-		       problems.hpp problems.cpp)
-target_link_libraries(mlmc Solver)
+#add_executable(mlmc testMLMC.cpp
+#		       problems.hpp problems.cpp)
+#target_link_libraries(mlmc Solver)
 
 #add_executable(testStab testStab.cpp
 #	       problems.hpp problems.cpp)

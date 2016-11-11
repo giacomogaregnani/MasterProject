@@ -3,9 +3,9 @@
 // STABILIZED PROBABILISTIC METHOD
 template <class T> 
 sProbMethod<T>::sProbMethod(int n, double timestep,
-                          VectorXd initialCond, std::vector<double> paramVec,
-                          VectorXd (*func) (VectorXd, std::vector<double>&),
-	                  double stoch, int nRKCStages, double damping)
+							VectorXd initialCond, std::vector<double> paramVec,
+							VectorXd (*func) (VectorXd, std::vector<double>&),
+							double stoch, int nRKCStages, double damping)
 {
 	detSolver = std::make_shared<T>(n, func, paramVec, nRKCStages, damping);
 	detSolver->computeStageCoeff(timestep);
@@ -66,3 +66,4 @@ void sProbMethod<T>::resetIC(void)
 }
 
 template class sProbMethod<detSROCK>;
+template class sProbMethod<RKC>;

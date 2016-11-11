@@ -11,6 +11,39 @@
 #include "RungeKutta.hpp"
 #include "sRungeKutta.hpp"
 
+// SUPPORT STRUCTURES (SEE PROBLEMS.HPP)
+enum problems {
+    FITZNAG,
+    LORENZ,
+    TEST,
+    TEST1D,
+    VDPOL,
+    ROBERTSON,
+    BRUSS,
+    POISSON
+};
+
+struct odeDef {
+    problems ode;
+    int size;
+    VectorXd initialCond;
+    VectorXd (*odeFunc) (VectorXd, std::vector<double>&);
+    MatrixXd (*odeJac) (VectorXd, std::vector<double>&);
+};
+
+enum stabMethods {
+	stdRKC,
+	ROCK
+};
+
+struct StabValues {
+	double stiffIndex;
+	double damping;
+	int nStages;
+	MatrixXd (*jacobian) (VectorXd, std::vector<double>&);
+	stabMethods method;
+};
+
 // PROBABILISTIC METHOD 
 template <class T> 
 class ProbMethod { 
@@ -220,8 +253,10 @@ class ThirdOrderGauss {
 
 	// Variance and square root of the variance
     MatrixXd P;
+	MatrixXd lChol;
 	MatrixXd sqrtP;
 	void updateSqrtP(void);
+	MatrixXd xAntiSym;
 
     // Correct the fact that sqrt(zeros) does not work in Eigen (-nan -nan ...)
     MatrixXd matrixSqrt(MatrixXd&);
@@ -232,6 +267,7 @@ class ThirdOrderGauss {
 
 	// drift function
 	VectorXd (*f) (VectorXd, std::vector<double>&);
+    MatrixXd (*Fx)(VectorXd, std::vector<double>&);
 
 	// diffusion function
 	MatrixXd (*L) (VectorXd, std::vector<double>&, double, double);
@@ -248,39 +284,42 @@ class ThirdOrderGauss {
 	// private EFupdates
 	VectorXd meanUpdateFct(VectorXd, MatrixXd);
 	MatrixXd varianceUpdateFct(VectorXd, MatrixXd);
+    VectorXd TmeanUpdateFct(VectorXd);
+    MatrixXd TvarianceUpdateFct(VectorXd, MatrixXd);
+	MatrixXd TsqrtVarianceUpdateFct(VectorXd mIntern, MatrixXd LIntern);
 	void EFupdates(int nSteps);
     void stabUpdates(int nSteps);
 	void KalmanUpdate(VectorXd data);
-    void (*updateFct) (int nSteps);
 
 	// evaluate Gaussian
 	double evaluateGaussian(VectorXd data);
 
 	// stability parameters
+    StabValues stabParam;
 	bool stableMethod;
-	double rho;
-	int nStages;
 
     // Stability tools
     void computeStageCoeff(void);
     void computeChebCoeff(double x);
     double omegaZero;
     double omegaOne;
-    double damping;
     std::vector<double> chebCoeff;
     std::vector<std::vector<double>> stageCoeff;
     std::vector<VectorXd> kMean;
     std::vector<MatrixXd> kVar;
 
 public:
-	ThirdOrderGauss(int n, VectorXd initialMean, MatrixXd initialVariance,
+	ThirdOrderGauss(odeDef odeModel, MatrixXd initialVariance,
 					std::vector<double> param,
-					VectorXd (*drift) (VectorXd, std::vector<double>&),
 					MatrixXd (*diffusion) (VectorXd, std::vector<double>&, double, double),
 					double dataVariance, double step, double sigmadiff, bool isStiff,
-					double stiffIndex, double damping);
+					StabValues* stability);
 
 	double oneStep(VectorXd data, int nSteps);
 };
+
+// Utilities
+double powerMethod(MatrixXd A, double tol);
+
 
 #endif

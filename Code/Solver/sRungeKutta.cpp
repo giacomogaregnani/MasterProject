@@ -76,3 +76,40 @@ void detSROCK::computeStageCoeff(double h)
 		stageCoeff[i][2] = -1.0 * chebCoeff[i - 2] / chebCoeff[i]; 
 	}
 }
+
+// Classic first order RKC method
+RKC::RKC(int n, VectorXd (*func) (VectorXd, std::vector<double>&),
+		 std::vector<double> paramVec,
+		 int stages, double damping)
+{
+	f = func;
+	size = n;
+	parameters = paramVec;
+	nStages = stages;
+	K.resize(nStages + 1);
+	for (auto it : K) {
+		it.resize(size);
+	}
+}
+
+VectorXd RKC::oneStep(VectorXd lastValue, double h)
+{
+	K[0] = lastValue;
+	double coeff = h / static_cast<double>(nStages * nStages);
+	K[1] = lastValue + f(lastValue, parameters) * coeff;
+	coeff = 2.0 * coeff;
+
+	for (int i = 2; i < nStages + 1; i++) {
+		K[i] = f(K[i - 1], parameters) * coeff +
+			   K[i - 1] * 2.0 - K[i - 2];
+	}
+
+	return K.back();
+}
+
+int RKC::getOrder(void)
+{
+	return 1;
+}
+
+void RKC::computeStageCoeff(double h) {}

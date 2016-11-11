@@ -1,3 +1,5 @@
+add_definitions(-DDATA_PATH_SRC="${PROJECT_SOURCE_DIR}/data")
+
 add_library(Solver Solver.hpp
 		   ProbMethod.cpp
 		   sProbMethod.cpp		
@@ -5,4 +7,4 @@ add_library(Solver Solver.hpp
 		   smlmc.cpp	
 		   RungeKutta.hpp RungeKutta.cpp
 		   sRungeKutta.hpp sRungeKutta.cpp
-		   ThirdOrderGauss.cpp)
+		   ThirdOrderGauss.cpp tools.cpp)

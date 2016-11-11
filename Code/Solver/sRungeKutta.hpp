@@ -38,4 +38,27 @@ public:
 	void computeStageCoeff(double h);
 };
 
+class RKC {
+private:
+	int size;
+
+	VectorXd (*f)(VectorXd, std::vector<double>&);
+
+	std::vector<double> parameters;
+
+	int nStages;
+
+	std::vector<VectorXd> K;
+public:
+	RKC(int n, VectorXd (*func) (VectorXd, std::vector<double>&),
+			 std::vector<double> paramVec, int nRKCStages, double damping);
+
+	VectorXd oneStep(VectorXd lastValue, double h);
+
+	int getOrder(void);
+
+	void computeStageCoeff(double h);
+};
+
+
 #endif

@@ -2,6 +2,8 @@
 #include <unsupported/Eigen/MatrixFunctions>
 #include <Eigen/LU>
 #include <cmath>
+#include <fstream>
+#include <string>
 
 #ifndef PI
 #define PI 3.14159265358979323846
@@ -17,29 +19,33 @@ using namespace Eigen;
 // ==================
 // Initializers
 // ==================
-ThirdOrderGauss::ThirdOrderGauss(int n, VectorXd initialMean, MatrixXd initialVariance,
+ThirdOrderGauss::ThirdOrderGauss(odeDef odeModel, MatrixXd initialVariance,
                                  std::vector<double> param,
-                                 VectorXd (*drift) (VectorXd, std::vector<double>&),
                                  MatrixXd (*diffusion) (VectorXd, std::vector<double>&, double, double),
                                  double dataVariance, double step, double sigmadiff, bool isStiff,
-                                 double stiffIndex, double dampingInput)
+                                 StabValues* stability)
 {
-    size = n;
-    m = initialMean;
+    size = odeModel.size;
+    f = odeModel.odeFunc;
+    m = odeModel.initialCond;
     oldM = m;
     P = initialVariance;
-    f = drift;
+    LLT<MatrixXd> chol(P);
+    lChol = chol.matrixL();
     L = diffusion;
     xi = computeSigmaPoints();
     theta = param;
-    varData = dataVariance * MatrixXd::Identity(size, size);
+    varData = MatrixXd::Identity(size, size) * dataVariance;
     h = step;
     sigma = sigmadiff;
+    xAntiSym = MatrixXd::Zero(size, size);
 
     // Stabilized method
     stableMethod = isStiff;
-    rho = stiffIndex;
-    damping = dampingInput;
+    if (stableMethod) {
+        stabParam = *stability;
+    }
+    Fx = odeModel.odeJac;
 }
 
 std::vector<VectorXd> ThirdOrderGauss::computeSigmaPoints(void)
@@ -83,12 +89,24 @@ double ThirdOrderGauss::evaluateGaussian(VectorXd data)
 {
     // SINCE WE ARE COMPUTING RATIOS, DO NOT INCLUDE THE MULTIPLICATIVE TERM
     double A = -0.5 * (data - m).transpose() * (varData + P).inverse() * (data - m);
-    // std::cout << m.transpose() << std::endl << data.transpose() << std::endl << std::endl;
-    return exp(A);
+    std::cout << data.transpose()
+              << std::endl
+              << m.transpose()
+              << std::endl
+              << P
+              << std::endl
+              << theta[0]
+              << std::endl
+              << "============"
+              << std::endl;
+    if (A > 0) {
+        throw 1;
+    }
+    return A;
 }
 
 // ==================
-// mean EFupdates
+// mean updates
 // ==================
 VectorXd ThirdOrderGauss::meanUpdateFct(VectorXd mIntern, MatrixXd sqrtPIntern)
 {
@@ -104,8 +122,13 @@ VectorXd ThirdOrderGauss::meanUpdateFct(VectorXd mIntern, MatrixXd sqrtPIntern)
     return sum;
 }
 
+VectorXd ThirdOrderGauss::TmeanUpdateFct(VectorXd mIntern)
+{
+    return f(mIntern, theta);
+}
+
 // ==================
-// variance EFupdates
+// variance updates
 // ==================
 MatrixXd ThirdOrderGauss::varianceUpdateFct(VectorXd mIntern, MatrixXd sqrtPIntern)
 {
@@ -129,45 +152,118 @@ MatrixXd ThirdOrderGauss::varianceUpdateFct(VectorXd mIntern, MatrixXd sqrtPInte
     return (sumOne + sumTwo + sumThree) * weight;
 }
 
+MatrixXd ThirdOrderGauss::TvarianceUpdateFct(VectorXd mIntern, MatrixXd PIntern)
+{
+    MatrixXd FxEval = Fx(mIntern, theta);
+    MatrixXd l = L(mIntern, theta, sigma, h);
+    return PIntern * FxEval.transpose() + FxEval * PIntern + l * l.transpose();
+}
+
+MatrixXd ThirdOrderGauss::TsqrtVarianceUpdateFct(VectorXd mIntern, MatrixXd LIntern)
+{
+    double sumOne, sumTwo, sumThree, sumFour;
+    MatrixXd FxEval = Fx(mIntern, theta);
+    MatrixXd l = L(mIntern, theta, sigma, h);
+    MatrixXd S = l * l.transpose();
+    MatrixXd LInv = LIntern.inverse();
+
+    //// DEBUG
+    for (int jX = 0; jX < size; jX++) {
+        for (int iX = 0; iX < jX; iX++) {
+            sumOne = 0.0;
+            for (int kX = jX; kX < size; kX++) {
+                sumOne += FxEval(iX, kX) * LIntern(kX, jX);
+            }
+            sumTwo = 0.0;
+            for (int mX = 0; mX < jX; mX++) {
+                sumTwo += S(iX, mX) * LInv(jX, mX);
+            }
+            sumTwo *= 0.5;
+            sumThree = 0.0;
+            for (int mX = 0; mX < iX - 1; mX++) {
+                sumThree += xAntiSym(iX, mX) * LInv(jX, mX);
+            }
+            sumFour = 0.0;
+            for (int mX = iX + 1; mX < jX - 1; mX++) {
+                sumFour = xAntiSym(mX, iX) * LInv(jX, mX);
+            }
+            xAntiSym(jX, iX) = LIntern(jX, jX) * (sumOne + sumTwo + sumThree - sumFour);
+        }
+    }
+    MatrixXd tmp = xAntiSym.transpose();
+    xAntiSym = xAntiSym - tmp;
+
+    return FxEval * LIntern + (xAntiSym + S * 0.5) * LInv;
+}
+
 // ==================
 // Un-stiff time integration
 // Implemented with Euler Forward.
 // ==================
 void ThirdOrderGauss::EFupdates(int nSteps)
 {
-    updateSqrtP();
+    //updateSqrtP();
+    /*for (int i = 0; i < nSteps; i++) {
+        oldM = m;
+        m += TmeanUpdateFct(m) * h;
+        P += TvarianceUpdateFct(oldM, P) * h;
+        //updateSqrtP();
+    } */
     for (int i = 0; i < nSteps; i++) {
         oldM = m;
-        m += meanUpdateFct(m, sqrtP) * h;
-        P += varianceUpdateFct(oldM, sqrtP) * h;
-        updateSqrtP();
+        m += TmeanUpdateFct(m) * h;
+        lChol += TsqrtVarianceUpdateFct(oldM, lChol) * h;
     }
+    P = lChol * lChol.transpose();
 }
 
-// TODO: Debug this
 void ThirdOrderGauss::stabUpdates(int nSteps)
 {
-    MatrixXd sqrtK(size, size);
-    for (int j = 0; j < nSteps; j++) {
-        // Hard-code the first two stages
-        kMean[0] = m * stageCoeff[0][0];
-        kVar[0] = P * stageCoeff[0][0];
-        sqrtK = matrixSqrt(kVar[0]);
-        kMean[1] = m * stageCoeff[1][0] + meanUpdateFct(kMean[0], sqrtK) * stageCoeff[1][1];
-        kVar[1] = P * stageCoeff[1][0] + varianceUpdateFct(kMean[0], sqrtK) * stageCoeff[1][1];
-        sqrtK = matrixSqrt(kVar[1]);
-        for (int i = 2; i < nStages + 1; i++) {
-            kMean[i] = meanUpdateFct(kMean[i - 1], sqrtK) * stageCoeff[i][0] +
-                       kMean[i - 1] * stageCoeff[i][1] +
-                       kMean[i - 2] * stageCoeff[i][2];
-            kVar[i] = varianceUpdateFct(kMean[i - 1], sqrtK) * stageCoeff[i][0] +
-                      kVar[i - 1] * stageCoeff[i][1] +
-                      kVar[i - 2] * stageCoeff[i][2];
-            sqrtK = matrixSqrt(kVar[i]);
+    // MatrixXd sqrtK(size, size);
+    if (stabParam.method == ROCK) {
+        for (int j = 0; j < nSteps; j++) {
+
+            // SQRT ROCK TAYLOR UPDATE
+            kMean[0] = m * stageCoeff[0][0];
+            kVar[0] = lChol * stageCoeff[0][0];
+
+            kMean[1] = m * stageCoeff[1][0] + TmeanUpdateFct(kMean[0]) * stageCoeff[1][1];
+            kVar[1] = lChol * stageCoeff[1][0] + TsqrtVarianceUpdateFct(kMean[0], lChol) * stageCoeff[1][1];
+
+            for (int i = 2; i < stabParam.nStages + 1; i++) {
+                kMean[i] = TmeanUpdateFct(kMean[i - 1]) * stageCoeff[i][0] +
+                           kMean[i - 1] * stageCoeff[i][1] +
+                           kMean[i - 2] * stageCoeff[i][2];
+                kVar[i] = TsqrtVarianceUpdateFct(kMean[i - 1], kVar[i - 1]) * stageCoeff[i][0] +
+                          kVar[i - 1] * stageCoeff[i][1] +
+                          kVar[i - 2] * stageCoeff[i][2];
+            }
+            m = kMean.back();
+            lChol = kVar.back();
         }
-        m = kMean.back();
-        P = kVar.back();
+    } else if (stabParam.method == stdRKC) {
+        for (int j = 0; j < nSteps; j++) {
+
+            // RKC SQRT TAYLOR UPDATE
+            kMean[0] = m;
+            kVar[0] = lChol;
+            double coeff = h / static_cast<double>(stabParam.nStages * stabParam.nStages);
+            kMean[1] = m + TmeanUpdateFct(m) * coeff;
+            kVar[1] = lChol + TsqrtVarianceUpdateFct(m, lChol) * coeff;;
+            coeff = 2.0 * coeff;
+
+            for (int i = 2; i < stabParam.nStages + 1; i++) {
+                kMean[i] = TmeanUpdateFct(kMean[i - 1]) * coeff +
+                           kMean[i - 1] * 2.0 - kMean[i - 2];
+                kVar[i] = TsqrtVarianceUpdateFct(kMean[i - 1], kVar[i - 1]) * coeff +
+                          kVar[i - 1] * 2.0 - kVar[i - 2];
+            }
+
+            m = kMean.back();
+            lChol = kVar.back();
+        }
     }
+    P = lChol * lChol.transpose();
 }
 
 // ==================
@@ -187,16 +283,19 @@ void ThirdOrderGauss::KalmanUpdate(VectorXd data)
 double ThirdOrderGauss::oneStep(VectorXd data, int nSteps)
 {
     if (stableMethod) {
-        nStages = static_cast<unsigned int> (std::max(std::ceil(sqrt(3.0 * rho / nSteps)), 2.0));
-        std::cout << nStages << std::endl;
-        omegaZero = 1.0 + damping / (nStages * nStages);
-        chebCoeff.resize(nStages + 1);
-        computeChebCoeff(omegaZero);
-        stageCoeff.resize(nStages + 1);
-        computeStageCoeff();
-        kMean.resize(nStages + 1);
-        kVar.resize(nStages + 1);
-        for (int i = 0; i < nStages + 1; i++) {
+        if (stabParam.method == stdRKC) {
+            stabParam.nStages = static_cast<int>(std::max(std::ceil(sqrt(0.5 * stabParam.stiffIndex / nSteps)), 2.0));
+        } else if (stabParam.method == ROCK) {
+            stabParam.nStages = static_cast<int> (std::max(std::ceil(sqrt(3.0 * stabParam.stiffIndex / nSteps)), 2.0));
+            omegaZero = 1.0 + stabParam.damping / static_cast<double>(stabParam.nStages * stabParam.nStages);
+            chebCoeff.resize(stabParam.nStages + 1);
+            computeChebCoeff(omegaZero);
+            stageCoeff.resize(stabParam.nStages + 1);
+            computeStageCoeff();
+        }
+        kMean.resize(stabParam.nStages + 1);
+        kVar.resize(stabParam.nStages + 1);
+        for (int i = 0; i < stabParam.nStages + 1; i++) {
             kMean[i].resize(size);
             kVar[i].resize(size, size);
         }
@@ -210,25 +309,25 @@ double ThirdOrderGauss::oneStep(VectorXd data, int nSteps)
 }
 
 // ================
-// Stability update tools
+// Stability update tools (ROCK)
 // ================
 void ThirdOrderGauss::computeChebCoeff(double x)
 {
     chebCoeff[0] = 1.0;
     chebCoeff[1] = x;
-    for (int i = 2; i < nStages + 1; i++) {
-        chebCoeff[i] = 2 * x * chebCoeff[i - 1] - chebCoeff[i - 2];
+    for (int i = 2; i < stabParam.nStages + 1; i++) {
+        chebCoeff[i] = 2.0 * x * chebCoeff[i - 1] - chebCoeff[i - 2];
     }
 
     // Compute omegaOne (derivative of Cheb polynomials)
-    std::vector<double> chebDerivatives(nStages + 1);
+    std::vector<double> chebDerivatives(stabParam.nStages + 1);
     chebDerivatives[0] = 0.0;
     chebDerivatives[1] = 1.0;
-    chebDerivatives[2] = 4 * x;
+    chebDerivatives[2] = 4.0 * x;
     double doubI;
-    for (int i = 3; i < nStages + 1; i++) {
+    for (int i = 3; i < stabParam.nStages + 1; i++) {
         doubI = static_cast<double>(i);
-        chebDerivatives[i] = doubI * (2 * chebCoeff[i - 1] + chebDerivatives[i - 2] / (doubI - 2));
+        chebDerivatives[i] = doubI * (2 * chebCoeff[i - 1] + chebDerivatives[i - 2] / (doubI - 2.0));
     }
     omegaOne = chebCoeff.back() / chebDerivatives.back();
 }
@@ -243,11 +342,10 @@ void ThirdOrderGauss::computeStageCoeff(void)
     stageCoeff[1][0] = 1.0;
     stageCoeff[1][1] = h * omegaOne / omegaZero;
 
-    for (int i = 2; i < nStages + 1; i++) {
+    for (int i = 2; i < stabParam.nStages + 1; i++) {
         stageCoeff[i].resize(3);
         stageCoeff[i][0] = 2 * h * omegaOne * chebCoeff[i - 1] / chebCoeff[i];
         stageCoeff[i][1] = 2 * omegaZero * chebCoeff[i - 1] / chebCoeff[i];
         stageCoeff[i][2] = -1.0 * chebCoeff[i - 2] / chebCoeff[i];
     }
 }
-

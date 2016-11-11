@@ -1,18 +1,8 @@
 #include <vector>
 #include <Eigen/Dense>
+#include <Solver.hpp>
 
 using namespace Eigen;
-
-enum problems {
-	FITZNAG,
-	LORENZ,
-	TEST,
-	TEST1D,
-	VDPOL,
-	ROBERTSON,
-	BRUSS,
-	POISSON
-};
 
 class Poisson {
 private:
@@ -24,10 +14,13 @@ public:
 
 VectorXd lorenz(VectorXd argument, std::vector<double>& param);
 VectorXd testOneD(VectorXd argument, std::vector<double>& param);
+MatrixXd testOneDJ(VectorXd argument, std::vector<double>& param);
 VectorXd test(VectorXd argument, std::vector<double>& param);
 VectorXd fitznag(VectorXd argument, std::vector<double>& param);
+MatrixXd fitznagJ(VectorXd argument, std::vector<double>& param);
 VectorXd vdPol(VectorXd argument, std::vector<double>& param);
+MatrixXd vdPolJ(VectorXd argument, std::vector<double>& param);
 VectorXd bruss(VectorXd argument, std::vector<double>& param);
+MatrixXd brussJ(VectorXd argument, std::vector<double>& param);
 
-void setProblem(VectorXd* initialCond, VectorXd (**odeFunc) (VectorXd, std::vector<double>&), 
-	        problems choice, int* size);
+void setProblem(odeDef* odeModel);
