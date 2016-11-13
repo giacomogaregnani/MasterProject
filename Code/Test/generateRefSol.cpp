@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
     std::string filepath("refSolBruss.txt");
     // equispaced values from 0 to finalTime
     double finalTime = 10;
-    unsigned int nData = 1;
+    unsigned int nData = 5;
     // =========================
 
     // =========================

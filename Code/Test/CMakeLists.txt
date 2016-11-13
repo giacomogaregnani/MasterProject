@@ -13,12 +13,23 @@ add_executable(mcmcParam mcmcParamTest.cpp
 		mcmcTools.hpp mcmcTools.cpp
 		Metropolis.cpp sMetropolis.cpp
 		mlMetropolis.cpp smlMetropolis.cpp
-		gaussMetropolis.cpp)
+		gaussMetropolis.cpp testMH.cpp)
 target_link_libraries(mcmcParam Solver)
+
+add_executable(MH plainMH.cpp
+		problems.hpp problems.cpp
+		mcmcTools.hpp mcmcTools.cpp
+		Metropolis.cpp sMetropolis.cpp
+		mlMetropolis.cpp smlMetropolis.cpp
+		gaussMetropolis.cpp testMH.cpp)
+target_link_libraries(MH Solver)
 
 add_executable(refSol generateRefSol.cpp
                problems.hpp problems.cpp)
 target_link_libraries(refSol Solver)
+
+add_executable(testInv testInverse.cpp)
+target_link_libraries(testInv Solver)
 
 #add_executable(mlmc testMLMC.cpp
 #		       problems.hpp problems.cpp)

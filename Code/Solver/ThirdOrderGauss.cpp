@@ -1,5 +1,6 @@
 #include "Solver.hpp"
 #include <unsupported/Eigen/MatrixFunctions>
+#include <Eigen/Cholesky>
 #include <Eigen/LU>
 #include <cmath>
 #include <fstream>
@@ -89,7 +90,7 @@ double ThirdOrderGauss::evaluateGaussian(VectorXd data)
 {
     // SINCE WE ARE COMPUTING RATIOS, DO NOT INCLUDE THE MULTIPLICATIVE TERM
     double A = -0.5 * (data - m).transpose() * (varData + P).inverse() * (data - m);
-    std::cout << data.transpose()
+    /* std::cout << data.transpose()
               << std::endl
               << m.transpose()
               << std::endl
@@ -98,7 +99,7 @@ double ThirdOrderGauss::evaluateGaussian(VectorXd data)
               << theta[0]
               << std::endl
               << "============"
-              << std::endl;
+              << std::endl; */
     if (A > 0) {
         throw 1;
     }
@@ -161,13 +162,13 @@ MatrixXd ThirdOrderGauss::TvarianceUpdateFct(VectorXd mIntern, MatrixXd PIntern)
 
 MatrixXd ThirdOrderGauss::TsqrtVarianceUpdateFct(VectorXd mIntern, MatrixXd LIntern)
 {
-    double sumOne, sumTwo, sumThree, sumFour;
     MatrixXd FxEval = Fx(mIntern, theta);
     MatrixXd l = L(mIntern, theta, sigma, h);
     MatrixXd S = l * l.transpose();
-    MatrixXd LInv = LIntern.inverse();
+    MatrixXd LInv = triInv(LIntern, size);
 
-    //// DEBUG
+    // Construction of an antisymmetric X as in Andrews (1968)
+    /* double sumOne, sumTwo, sumThree, sumFour;
     for (int jX = 0; jX < size; jX++) {
         for (int iX = 0; iX < jX; iX++) {
             sumOne = 0.0;
@@ -175,17 +176,17 @@ MatrixXd ThirdOrderGauss::TsqrtVarianceUpdateFct(VectorXd mIntern, MatrixXd LInt
                 sumOne += FxEval(iX, kX) * LIntern(kX, jX);
             }
             sumTwo = 0.0;
-            for (int mX = 0; mX < jX; mX++) {
+            for (int mX = 0; mX < jX + 1; mX++) {
                 sumTwo += S(iX, mX) * LInv(jX, mX);
             }
             sumTwo *= 0.5;
             sumThree = 0.0;
-            for (int mX = 0; mX < iX - 1; mX++) {
+            for (int mX = 0; mX < iX; mX++) {
                 sumThree += xAntiSym(iX, mX) * LInv(jX, mX);
             }
             sumFour = 0.0;
-            for (int mX = iX + 1; mX < jX - 1; mX++) {
-                sumFour = xAntiSym(mX, iX) * LInv(jX, mX);
+            for (int mX = iX + 1; mX < jX; mX++) {
+                sumFour += xAntiSym(mX, iX) * LInv(jX, mX);
             }
             xAntiSym(jX, iX) = LIntern(jX, jX) * (sumOne + sumTwo + sumThree - sumFour);
         }
@@ -193,7 +194,26 @@ MatrixXd ThirdOrderGauss::TsqrtVarianceUpdateFct(VectorXd mIntern, MatrixXd LInt
     MatrixXd tmp = xAntiSym.transpose();
     xAntiSym = xAntiSym - tmp;
 
-    return FxEval * LIntern + (xAntiSym + S * 0.5) * LInv;
+    std::cout << LIntern
+              << std::endl
+              << "======="
+              << std::endl
+              << LInv
+              << std::endl
+              << "======="
+              << std::endl
+              << xAntiSym
+              << std::endl
+              << "======="
+              << std::endl
+              << FxEval * LIntern + (xAntiSym + S * 0.5) * LInv.transpose()
+              << std::endl
+              << "======================"
+              << std::endl;
+    */
+
+    return FxEval * LIntern + (xAntiSym + S * 0.5) * LInv.transpose();
+    // return MatrixXd((FxEval * LIntern + (xAntiSym + S * 0.5) * LInv.transpose()).triangularView<Lower>());
 }
 
 // ==================
@@ -209,6 +229,7 @@ void ThirdOrderGauss::EFupdates(int nSteps)
         P += TvarianceUpdateFct(oldM, P) * h;
         //updateSqrtP();
     } */
+
     for (int i = 0; i < nSteps; i++) {
         oldM = m;
         m += TmeanUpdateFct(m) * h;
@@ -249,7 +270,10 @@ void ThirdOrderGauss::stabUpdates(int nSteps)
             kVar[0] = lChol;
             double coeff = h / static_cast<double>(stabParam.nStages * stabParam.nStages);
             kMean[1] = m + TmeanUpdateFct(m) * coeff;
-            kVar[1] = lChol + TsqrtVarianceUpdateFct(m, lChol) * coeff;;
+            kVar[1] = lChol + TsqrtVarianceUpdateFct(m, lChol) * coeff;
+            P = kVar[1] * kVar[1].transpose();
+            LLT<MatrixXd> chol(P);
+            kVar[1] = chol.matrixL();
             coeff = 2.0 * coeff;
 
             for (int i = 2; i < stabParam.nStages + 1; i++) {
@@ -257,10 +281,14 @@ void ThirdOrderGauss::stabUpdates(int nSteps)
                            kMean[i - 1] * 2.0 - kMean[i - 2];
                 kVar[i] = TsqrtVarianceUpdateFct(kMean[i - 1], kVar[i - 1]) * coeff +
                           kVar[i - 1] * 2.0 - kVar[i - 2];
+                P = kVar[i] * kVar[i].transpose();
+                LLT<MatrixXd> chol(P);
+                kVar[i] = chol.matrixL();
             }
 
             m = kMean.back();
             lChol = kVar.back();
+
         }
     }
     P = lChol * lChol.transpose();

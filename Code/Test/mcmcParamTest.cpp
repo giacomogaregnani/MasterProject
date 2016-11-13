@@ -56,19 +56,12 @@ int main(int argc, char* argv[])
         }
         nMCloop.push_back(1);
 	} else if (MC) {
-        int nExp = 4;
-        double maxH = 0.2;
-        for (int i = 0; i < nExp; i++) {
-            h.push_back(maxH);
-            maxH /= 2;
-        }
-        nMCloop.push_back(100);
-        // nMCloop.push_back(1000);
-		//int nDouble[] = {1, 10, 100, 1000, 10000};
-		//nMCloop.insert(nMCloop.end(), nDouble, nDouble + 5);
+        h.push_back(0.2);
+		int nDouble[] = {10, 100, 1000};
+		nMCloop.insert(nMCloop.end(), nDouble, nDouble + 3);
 	} else {
         int nExp = 4;
-        double maxH = 0.1;
+        double maxH = 0.01;
         for (int i = 0; i < nExp; i++) {
             h.push_back(maxH);
             maxH /= 2;
@@ -85,12 +78,12 @@ int main(int argc, char* argv[])
     std::vector<double> paramList = {1.0};
 
     // DATA ACQUISITION FROM REFSOL
-    std::string refFile("refSolBruss.txt");
+    std::string refFile("refSolBruss");
 	std::fstream refSolution;
 	std::string extension(".txt");
 	std::string slash("/");
 	std::string folder(DATA_PATH);
-	refSolution.open(folder + slash + refFile, std::ios_base::in);
+	refSolution.open(folder + slash + refFile + extension, std::ios_base::in);
 	double finalTime;
 	int nData;
 	// read final time and number of data from reference solution
@@ -158,6 +151,7 @@ int main(int argc, char* argv[])
 			StabValues stabParam;
 			if (stableMethod && count == 0) {
 				stabParam.damping = 0.1;
+                stabParam.method = stdRKC;
 			}
 
 			if (MC) {

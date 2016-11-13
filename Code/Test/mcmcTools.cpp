@@ -66,10 +66,10 @@ double evalPrior(VectorXd x, VectorXd mean, VectorXd variance, int size)
 double evalLogPrior(VectorXd x, VectorXd mean, VectorXd variance, int size)
 {
 	// normal 
-	return -(x - mean).dot(x - mean) / (2 * variance(0));
+	// return -(x - mean).dot(x - mean) / (2 * variance(0));
 
 	// log-normal distribution
-	/* VectorXd logar(size);
+	VectorXd logar(size);
 	for (int i = 0; i < size; i++) {
 		if (x(i) < 0) {
 			return 0.0;
@@ -77,7 +77,7 @@ double evalLogPrior(VectorXd x, VectorXd mean, VectorXd variance, int size)
 			logar(i) = log(x(i));
 		}
 	}
-	return -(logar - mean).dot(logar - mean) / (2 * variance(0)); */
+	return -(logar - mean).dot(logar - mean) / (2 * variance(0));
 }
 
 MatrixXd RAMinit(double gamma, double desiredAlpha, int nParam)
@@ -98,4 +98,27 @@ MatrixXd RAMupdate(MatrixXd S, VectorXd w, double alpha, double desiredAlpha, in
     MatrixXd C = MatrixXd::Identity(nParam, nParam) + WWT * coeff;
     LLT<MatrixXd> cholIt(S * C * S.transpose());
     return cholIt.matrixL();
+}
+
+double phi(double x)
+{
+	// constants
+	double a1 =  0.254829592;
+	double a2 = -0.284496736;
+	double a3 =  1.421413741;
+	double a4 = -1.453152027;
+	double a5 =  1.061405429;
+	double p  =  0.3275911;
+
+	// Save the sign of x
+	int sign = 1;
+	if (x < 0)
+		sign = -1;
+	x = fabs(x)/sqrt(2.0);
+
+	// A&S formula 7.1.26
+	double t = 1.0/(1.0 + p*x);
+	double y = 1.0 - (((((a5*t + a4)*t) + a3)*t + a2)*t + a1)*t*exp(-x*x);
+
+	return 0.5*(1.0 + sign*y);
 }

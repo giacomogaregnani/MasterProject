@@ -9,6 +9,7 @@ private:
     static MatrixXd A;
 public:
     static VectorXd poissonTest(VectorXd argument, std::vector<double>& param);
+    static MatrixXd poissonTestJ(VectorXd argument, std::vector<double>& param);
     Poisson(int N);
 };
 

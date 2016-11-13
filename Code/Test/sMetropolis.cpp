@@ -10,14 +10,20 @@ std::vector<VectorXd> sMetropolisHastings(odeDef odeModel, std::vector<double>& 
 										  VectorXd priorMean, VectorXd priorVariance, int internalMC,
 										  int nStepsMC, double damping, double varData)
 {
+	// Initialize stuff
+	int nParam = static_cast<int>(param.size());
+	size_t nData = data.size();
+	VectorXd paramVecN(nParam);
+	std::vector<VectorXd> mcmcPath(nStepsMC, VectorXd(nParam));
+	std::vector<VectorXd> solutionAtDataTimes(nData, VectorXd(odeModel.size));
+	VectorXd w(nParam);
+	std::vector<double> paramStd(nParam);
 	std::default_random_engine wGenerator{(unsigned int) time(NULL)};
 	std::default_random_engine solGenerator{(unsigned int) time(NULL)};
 	std::normal_distribution<double> normal(0.0, 1.0);
 	std::uniform_real_distribution<double> unif;
-	size_t nData = data.size();
-	
+
 	double oldLike = 0.0;
-	int nParam = (int) param.size();
 	VectorXd paramVec(nParam);
 	for (int i = 0; i < nParam; i++) {
 		paramVec(i) = param[i];
@@ -29,7 +35,7 @@ std::vector<VectorXd> sMetropolisHastings(odeDef odeModel, std::vector<double>& 
 	stiffIndex = std::abs(powerMethod(odeModel.odeJac(odeModel.initialCond, param), 1.0));
 	int nLevels = static_cast<int>(std::max(2.0, std::ceil(sqrt(0.5 * stiffIndex * h))));
 
-	// Evaluate posterior for initial guess
+	// Compute the posterior on the initial guess
 	sProbMethod<RKC> firstSolver(odeModel.size, h, odeModel.initialCond, param, odeModel.odeFunc, sigma, nLevels, damping); 		
 	for (int j = 0; j < internalMC; j++) {	
 		double t = 0; 
@@ -46,21 +52,20 @@ std::vector<VectorXd> sMetropolisHastings(odeDef odeModel, std::vector<double>& 
 			}
 		}
 		oldLike += evalLogLikelihood(data, solutionAtDataTimes, odeModel.size, varData);
+		firstSolver.resetIC();
 	}
 	oldLike /= internalMC; 
 	double oldPrior = evalLogPrior(paramVec, priorMean, priorVariance, nParam);
-	
-	VectorXd paramVecN(nParam); 	
-	std::vector<VectorXd> mcmcPath(nStepsMC, VectorXd(nParam));
-	std::vector<VectorXd> solutionAtDataTimes(nData, VectorXd(odeModel.size));
-	VectorXd w(nParam);
-	std::vector<double> paramStd(nParam);
+
 
 
 	// Initialize RAM
-	double gamma = 1e-4;
+	double gamma = 1;
 	double desiredAlpha = 0.25;
 	MatrixXd S = RAMinit(gamma, desiredAlpha, nParam);
+
+	// Only for positive parameters
+	double oldGauss, newGauss;
 
 	for (int i = 0; i < nStepsMC; i++)	
 	{
@@ -72,21 +77,32 @@ std::vector<VectorXd> sMetropolisHastings(odeDef odeModel, std::vector<double>& 
 			std::cout << "param: " << paramVec.transpose() << std::endl;
 		}
 
-		for (int j = 0; j < nParam; j++) {
-			w(j) = normal(wGenerator);
+		// Generate new guess for parameter
+		bool isPositive = false;
+		while (!isPositive) {
+			for (int j = 0; j < nParam; j++) {
+				w(j) = normal(wGenerator);
+			}
+			paramVecN = paramVec + S * w;
+			if (paramVecN(0) > 0) {
+				isPositive = true;
+				oldGauss = phi(paramVec(0) / (S(0, 0) * S(0, 0)));
+				newGauss = phi(paramVecN(0) / (S(0, 0) * S(0, 0)));
+			}
 		}
-		paramVecN = paramVec + S * w;
 		for (int j = 0; j < nParam; j++) {
 			paramStd[j] = paramVecN(j);
 		}
 
+		// Compute stiffness index on the new parameter
 		stiffIndex = 1.2 * std::abs(powerMethod(odeModel.odeJac(odeModel.initialCond, paramStd), 1.0));
 		nLevels = static_cast<int>(std::max(2.0, std::ceil(sqrt(0.5 * stiffIndex * h))));
 
+		// Compute likelihood for the new parameter
 		double lVec[internalMC];	
 		int MCindex; 
 		#pragma omp parallel for num_threads(24) private(MCindex)
-		for (MCindex = 0; MCindex < internalMC; MCindex++) {	
+		for (MCindex = 0; MCindex < internalMC; MCindex++) {
 			std::vector<VectorXd> solutionAtDataTimesPar(nData, VectorXd(odeModel.size));
 			sProbMethod<RKC> solver(odeModel.size, h, odeModel.initialCond, paramStd, odeModel.odeFunc, sigma, nLevels, damping); 		
 			double t = 0; 
@@ -106,21 +122,20 @@ std::vector<VectorXd> sMetropolisHastings(odeDef odeModel, std::vector<double>& 
 			l += lVec[j];
 		}
 		l /= internalMC;
-		std::cout << "param = " << paramVecN.transpose()
-				  << " stiffness = " << stiffIndex
-				  << " nLevels = " << nLevels
-				  << " likelihood = " << l
-				  << std::endl;
 
-		// Add computations with old value of parameters
+		// Compute prior on the new parameter
+		prior = evalLogPrior(paramVecN, priorMean, priorVariance, nParam);
+
+		// Return on the old parameter
 		for (int j = 0; j < nParam; j++) {
 			paramStd[j] = paramVec(j);
 		}
 
+		// Compute stiffness index on the old parameter
 		stiffIndex = 1.2 * std::abs(powerMethod(odeModel.odeJac(odeModel.initialCond, paramStd), 1.0));
 		nLevels = static_cast<int>(std::max(2.0, std::ceil(sqrt(0.5 * stiffIndex * h))));
 
-		double oldParamL = 0.0;
+		// Compute likelihood for the old parameter
 		#pragma omp parallel for num_threads(24) private(MCindex)
 		for (MCindex = 0; MCindex < internalMC; MCindex++) {	
 			std::vector<VectorXd> solutionAtDataTimesPar(nData, VectorXd(odeModel.size));
@@ -137,15 +152,19 @@ std::vector<VectorXd> sMetropolisHastings(odeDef odeModel, std::vector<double>& 
 			}
 			lVec[MCindex] = evalLogLikelihood(data, solutionAtDataTimesPar, odeModel.size, varData);
 		}
-
+		double oldParamL = 0.0;
 		for (int j = 0; j < internalMC; j++) {
 			oldParamL += lVec[j];
 		}
 		oldParamL /= internalMC;
- 
-		prior = evalLogPrior(paramVecN, priorMean, priorVariance, nParam);
+
+		// Generate (log) of uniform random variable
 		double u = log(unif(wGenerator));
-		double alpha = std::min<double>(0.0, (l + prior) - (oldParamL + oldPrior));	
+
+		// Compute probability of acceptance
+		double alpha = std::min<double>(0.0, (l + prior + log(oldGauss)) - (oldParamL + oldPrior + log(newGauss)));
+
+		// Update the chain
 		if (u < alpha) {
 			paramVec = paramVecN;
 			oldLike = l;

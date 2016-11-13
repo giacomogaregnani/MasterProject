@@ -11,7 +11,8 @@
 #include "RungeKutta.hpp"
 #include "sRungeKutta.hpp"
 
-// SUPPORT STRUCTURES (SEE PROBLEMS.HPP)
+// SUPPORT STRUCTURES AND TOOLS (SEE PROBLEMS.HPP)
+
 enum problems {
     FITZNAG,
     LORENZ,
@@ -43,6 +44,10 @@ struct StabValues {
 	MatrixXd (*jacobian) (VectorXd, std::vector<double>&);
 	stabMethods method;
 };
+
+double powerMethod(MatrixXd A, double tol);
+
+MatrixXd triInv(MatrixXd A, int size);
 
 // PROBABILISTIC METHOD 
 template <class T> 
@@ -318,8 +323,7 @@ public:
 	double oneStep(VectorXd data, int nSteps);
 };
 
-// Utilities
-double powerMethod(MatrixXd A, double tol);
+
 
 
 #endif

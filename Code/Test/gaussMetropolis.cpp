@@ -12,28 +12,7 @@ MatrixXd diffusion(VectorXd x, std::vector<double>& param, double sigma, double 
 	return M;
 }
 
-double phi(double x)
-{
-	// constants
-	double a1 =  0.254829592;
-	double a2 = -0.284496736;
-	double a3 =  1.421413741;
-	double a4 = -1.453152027;
-	double a5 =  1.061405429;
-	double p  =  0.3275911;
 
-	// Save the sign of x
-	int sign = 1;
-	if (x < 0)
-		sign = -1;
-	x = fabs(x)/sqrt(2.0);
-
-	// A&S formula 7.1.26
-	double t = 1.0/(1.0 + p*x);
-	double y = 1.0 - (((((a5*t + a4)*t) + a3)*t + a2)*t + a1)*t*exp(-x*x);
-
-	return 0.5*(1.0 + sign*y);
-}
 
 std::vector<VectorXd> gaussMetropolisHastings(odeDef odeModel, std::vector<double>& param, double sigma,
 											  double h, double finalTime, std::vector<VectorXd>& data,
@@ -43,8 +22,6 @@ std::vector<VectorXd> gaussMetropolisHastings(odeDef odeModel, std::vector<doubl
 {
     // Initialization of the acceptance ratio
 	*accRatio = 0.0;
-
-	stabParam.method = stdRKC;
 
     // likelihoods and priors
 	double l, prior, oldLike, oldPrior;
@@ -76,7 +53,7 @@ std::vector<VectorXd> gaussMetropolisHastings(odeDef odeModel, std::vector<doubl
 
 	// Compute stiffness parameters
 	if (isStable) {
-		stabParam.stiffIndex = 3.0 * std::abs(powerMethod(odeModel.odeJac(odeModel.initialCond, param), 1.0));
+		stabParam.stiffIndex = 2.0 * std::abs(powerMethod(odeModel.odeJac(odeModel.initialCond, param), 1.0));
 	}
 
     // Compute likelihood and prior first guess of the parameters
@@ -106,7 +83,7 @@ std::vector<VectorXd> gaussMetropolisHastings(odeDef odeModel, std::vector<doubl
 
 	for (int i = 0; i < nStepsMC; i++) {
         // Print results every 50 iterations
-		if (i % 50 == 0) {
+		if (i % 1 == 0) {
 			std::cout << "iteration: " << i << std::endl;
 			std::cout << "likelihood: " << oldLike << std::endl;
 			std::cout << "S matrix: " << std::endl << S << std::endl;
@@ -138,7 +115,7 @@ std::vector<VectorXd> gaussMetropolisHastings(odeDef odeModel, std::vector<doubl
 
         // Determine stiffness index for new guess of the parameter
         if (isStable) {
-            stabParam.stiffIndex = 20.0 * std::abs(powerMethod(odeModel.odeJac(odeModel.initialCond, paramStd), 1.0));
+            stabParam.stiffIndex = 2.0 * std::abs(powerMethod(odeModel.odeJac(odeModel.initialCond, paramStd), 1.0));
         }
 
         // Compute the likelihood and the prior for this new guess

@@ -57,6 +57,9 @@ std::vector<VectorXd> gaussMetropolisHastings(odeDef odeModel, std::vector<doubl
 											  VectorXd priorMean, VectorXd priorVariance, int nStepsMC,
 											  double varData, double* accRatio, bool isStable, StabValues stab);
 
+std::vector<VectorXd> testMetropolis(VectorXd oldGuess, int nIter, double* accRatio,
+                                     double gamma, bool RAM, double desiredAlpha);
+
 MatrixXd RAMinit(double gamma, double desiredAlpha, int nParam);
 
 MatrixXd RAMupdate(MatrixXd S, VectorXd w, double alpha, double desiredAlpha, int nParam, int nIt);

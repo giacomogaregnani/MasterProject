@@ -167,6 +167,11 @@ VectorXd Poisson::poissonTest(VectorXd argument, std::vector<double>& param) {
     return A * argument * param[0];
 }
 
+MatrixXd Poisson::poissonTestJ(VectorXd argument, std::vector<double> &param)
+{
+	return A;
+}
+
 Poisson::Poisson(int N) {
     A = MatrixXd::Zero(N, N);
     for (int i = 0; i < N - 1; i++) {
@@ -179,7 +184,6 @@ Poisson::Poisson(int N) {
 
 void setProblem(odeDef* odeModel)
 {
-	std::vector<double> a = {1.0, 2.0, 3.0};
 	switch ((*odeModel).ode) {
 		case FITZNAG:
 			(*odeModel).size = 2;
@@ -229,7 +233,7 @@ void setProblem(odeDef* odeModel)
 			(*odeModel).odeFunc = &robertson;
 			break;
 		case BRUSS:
-			(*odeModel).size = 10;
+			(*odeModel).size = 80;
 			((*odeModel).initialCond).resize((*odeModel).size);
 			double x;
 			for (int i = 0; i < (*odeModel).size / 2; i++) {
@@ -250,6 +254,7 @@ void setProblem(odeDef* odeModel)
 				((*odeModel).initialCond)(i) = 1.0;
 			}
 			(*odeModel).odeFunc = &P.poissonTest;
+			(*odeModel).odeJac = &P.poissonTestJ;
 			break;
 	}
 }

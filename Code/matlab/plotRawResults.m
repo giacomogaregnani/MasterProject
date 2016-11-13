@@ -2,7 +2,7 @@
 clear; clc; close all
 
 for i = 0 : 1
-    resultsfile{i+1} = ['../data/TestBRUSS_SQRTGAUSS_11_11_2016_03_59', ...
+    resultsfile{i+1} = ['../data/testBRUSS_MCSTABLE_12_11_2016_04_14', ...
         num2str(i), '.txt'];
 end
 nExperience = length(resultsfile);
