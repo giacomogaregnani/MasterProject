@@ -11,7 +11,7 @@ Let us consider \eqref{ODE} and the numerical method \eqref{probabilityODE}. Usi
 In particular, $\diffL = f \cdot \nabla$ and the explicit definition of $\diffL^h$ is not needed in this scope. \\
 We now introduced a modified ODE
 \begin{equation}\label{modifiedODE}
-	\dv{\hat u}{t} = f^h(\hat u), \\
+	\dv{\hat u}{t} = f^h(\hat u), 
 \end{equation}
 and a modified SDE
 \begin{equation}\label{modifiedSDE}
@@ -58,7 +58,7 @@ with $u$ and $\tilde u$ solutions of \eqref{ODE} and \eqref{modifiedSDE}.
 \subsubsection{Numerical verification of weak order}
 
 Let us consider for \eqref{ODE} the FitzHugh-Nagumo model, defined by
-\begin{equation}\label{FitzHughNagumo}
+\begin{equation}\label{eq:FitzNag}
 \begin{aligned}
 	\dv{x_1}{t} &= c\left(x_1 - \frac{x_1^3}{3} + x_2\right), \\
 	\dv{x_2}{t} &= -\frac{1}{c}(x_1 - a + bx_2),
@@ -69,6 +69,6 @@ where $a, b, c \in \R$. In particular, we choose $a = 0.2, b = 0.2, c = 3$. We p
 \begin{figure}
 \centering
 \resizebox{0.6\linewidth}{!}{\input{plots/weakorder.tikz}}
-\caption{Weak order of convergence of \eqref{probabilityODE} applied to \eqref{FitzHughNagumo}.}
+\caption{Weak order of convergence of \eqref{probabilityODE} applied to \eqref{eq:FitzNag}.}
 \label{fig:weakorder}
 \end{figure}

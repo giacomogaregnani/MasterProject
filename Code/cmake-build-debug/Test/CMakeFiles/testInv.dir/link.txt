@@ -1,0 +1,1 @@
+/usr/bin/c++    -fopenmp -std=c++11 -g   CMakeFiles/testInv.dir/testInverse.cpp.o  -o testInv -rdynamic ../Solver/libSolver.a 

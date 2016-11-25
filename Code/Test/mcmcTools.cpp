@@ -5,7 +5,6 @@
 #include <Solver.hpp>
 
 #define PI 3.1415926535897	
-#define M_EPS 0.0000001
 
 double evalLikelihood(std::vector<VectorXd> data,
 					  std::vector<VectorXd> values,
@@ -40,8 +39,7 @@ double evalLogLikelihood(std::vector<VectorXd>& data,
 double evalSingleLikelihood(VectorXd data, VectorXd value, double variance)
 {
     double lik = (data - value).dot(data - value);
-	std::cout << data.transpose() << std::endl << value.transpose() << std::endl << std::endl;
-	return exp(-lik / (2.0 * variance));
+	return -lik / (2.0 * variance);
 }
 
 
@@ -66,10 +64,10 @@ double evalPrior(VectorXd x, VectorXd mean, VectorXd variance, int size)
 double evalLogPrior(VectorXd x, VectorXd mean, VectorXd variance, int size)
 {
 	// normal 
-	// return -(x - mean).dot(x - mean) / (2 * variance(0));
+	return -(x - mean).dot(x - mean) / (2 * variance(0));
 
 	// log-normal distribution
-	VectorXd logar(size);
+	/* VectorXd logar(size);
 	for (int i = 0; i < size; i++) {
 		if (x(i) < 0) {
 			return 0.0;
@@ -77,7 +75,7 @@ double evalLogPrior(VectorXd x, VectorXd mean, VectorXd variance, int size)
 			logar(i) = log(x(i));
 		}
 	}
-	return -(logar - mean).dot(logar - mean) / (2 * variance(0));
+	return -(logar - mean).dot(logar - mean) / (2 * variance(0));*/
 }
 
 MatrixXd RAMinit(double gamma, double desiredAlpha, int nParam)

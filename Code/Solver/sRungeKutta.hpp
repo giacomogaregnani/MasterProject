@@ -29,7 +29,7 @@ public:
 	detSROCK(int n, VectorXd (*func) (VectorXd, std::vector<double>&), 
                  std::vector<double> paramVec, int nRKCStages, double damping);
 
-	VectorXd oneStep(VectorXd lastValue, double h);	
+	VectorXd oneStep(VectorXd lastValue, double h, int localStages);
 
 	int getOrder(void);
 
@@ -48,12 +48,15 @@ private:
 
 	int nStages;
 
-	std::vector<VectorXd> K;
+	VectorXd kOld;
+	VectorXd kNew;
+	VectorXd kCurr;
+
 public:
 	RKC(int n, VectorXd (*func) (VectorXd, std::vector<double>&),
 			 std::vector<double> paramVec, int nRKCStages, double damping);
 
-	VectorXd oneStep(VectorXd lastValue, double h);
+	VectorXd oneStep(VectorXd lastValue, double h, int localStages);
 
 	int getOrder(void);
 

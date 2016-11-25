@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include "problems.hpp"
+#include <iomanip>
 #include <unsupported/Eigen/MatrixFunctions>
 
 using namespace Eigen;
@@ -15,24 +16,27 @@ using namespace Eigen;
 int main(int argc, char* argv[])
 {
     // =========================
-    // CHANGE THOSE VALUES
+    // INITIALIZATION
     // =========================
-    problems problem = BRUSS;
-    std::vector<double> paramList = {1.0};
-    std::string filepath("refSolBruss.txt");
-    // equispaced values from 0 to finalTime
-    double finalTime = 10;
-    unsigned int nData = 5;
-    // =========================
+    problems problem = LORENZ;
 
-    // =========================
-    // KEEP THE REST
-    // =========================
-
-   	// Set problem
+    // Set problem
     odeDef testODE;
-	testODE.ode = problem;
-	setProblem(&testODE);
+    testODE.ode = problem;
+    setProblem(&testODE);
+    //
+
+    std::vector<double> paramList = testODE.refParam;
+    std::string filepath("refSolLorenz.txt");
+    // equispaced values from 0 to finalTime
+    double finalTime = 20.0;
+    unsigned int nData = 1;
+    double noiseStdDev = 0.0;
+    // =========================
+
+    // =========================
+    // SOLUTION GENERATION
+    // =========================
 
 	// REFERENCE SOLUTION
 	double hRef = 0.000001;
@@ -47,8 +51,19 @@ int main(int argc, char* argv[])
 
 	// ERROR MODEL
 	std::vector<VectorXd> data(nData, VectorXd(testODE.size));
-	std::normal_distribution<double> disturb(0.0, 1e-1);
+	std::normal_distribution<double> disturb(0.0, noiseStdDev);
 	std::default_random_engine generator{(unsigned int) time(NULL)};
+
+    // Write all results
+    std::string folder(DATA_PATH);
+    std::string slash("/");
+    std::ofstream fullResults;
+    std::string fullResPath = "fullResultsBruss.txt";
+    std::string fullPath = folder + slash + fullResPath;
+
+    if (argc > 1) {
+        fullResults.open(fullPath, std::ofstream::out | std::ofstream::trunc);
+    }
 
     // COMPUTE SOLUTION (EXACT FOR TEST1D AND POISSON (MATRIX EXPONENTIALS))
     if (testODE.ode == TEST1D) {
@@ -56,34 +71,34 @@ int main(int argc, char* argv[])
             data[i](0) = exp(paramList[0] * times[i]) + disturb(generator);
         }
     } else if (testODE.ode == POISSON) {
-        MatrixXd A(testODE.size, testODE.size);
-        for (int i = 0; i < testODE.size - 1; i++) {
-            A(i, i) = -2.0;
-            A(i, i + 1) = 1.0;
-            A(i + 1, i) = 1.0;
-        }
-        A(testODE.size - 1, testODE.size - 1) = -2.0;
-
         for (unsigned int i = 0; i < nData; i++) {
-            MatrixXd B = paramList[0] * times[i] * A;
-            data[i] = B.exp() * testODE.initialCond;
+            data[i] = testODE.exactSol(paramList, times[i]);
             for (int j = 0; j < testODE.size; j++) {
                 data[i](j) += disturb(generator);
             }
         }
+    } else if (testODE.ode == VDPOL) {
+        data[0](0) = -0.1863646254808130e1 + disturb(generator);
+        data[0](1) = -0.1863646254808130e1 + disturb(generator);
     } else {
-        ProbMethod<EulerForward> refSolver(testODE.size, hRef, testODE.initialCond, paramList, testODE.odeFunc, 0.0);
+        ProbMethod<RungeKutta> refSolver(testODE.size, hRef, testODE.initialCond, paramList, testODE.odeFunc, 0.0);
         double time = 0;
         VectorXd tmpSol(testODE.size);
         int count = 0;
-        for (int i = 0; i < nSteps; i++) {
+        for (int i = 0; i < nSteps + 10; i++) {
             refSolver.oneStep(generator, hRef);
             time = time + hRef;
-            if (std::abs(times[count] - time) < hRef / 10.0) {
+            if (fmod(time, 0.1) < 1.1 * hRef) {
+                fullResults << time << "\t" << refSolver.getSolution().transpose() << "\n";
+            }
+            if (std::abs(times[count] - time) < hRef / 2.0) {
                 std::cout << time << std::endl;
                 tmpSol = refSolver.getSolution();
                 for (int j = 0; j < testODE.size; j++) {
                     data[count](j) = tmpSol(j) + disturb(generator);
+                    if (testODE.ode == HIRES && data[count](j) < 0) {
+                        data[count](j) = 0.0;
+                    }
                 }
                 count++;
             }
@@ -91,12 +106,8 @@ int main(int argc, char* argv[])
     }
 
     std::ofstream results;
-    std::string folder(DATA_PATH);
-    std::string slash("/");
     std::string finalpath = folder + slash + filepath;
-
     results.open(finalpath , std::ofstream::out | std::ofstream::trunc);
-    std::cout << finalpath << std::endl;
 
     results << finalTime << "\n";
 	results << nData << "\n";
@@ -104,9 +115,12 @@ int main(int argc, char* argv[])
 		results << it << "\n";
 	}
 	for (auto it : data) {
-		results << it.transpose() << "\n";
+		results << std::fixed << std::setprecision(30) << it.transpose() << "\n";
 	}
 
 	results.close();
+    if (argc > 1) {
+        fullResults.close();
+    }
 	return 0;
 }

@@ -1,30 +1,25 @@
 %% Load numerical solution Monte Carlo h variable N = 100
 clear; clc; close all
 
-for i = 0 : 1
-    resultsfile{i+1} = ['../data/testBRUSS_MCSTABLE_12_11_2016_04_14', ...
+for i = 0 : 3
+    resultsfile{i+1} = ['../data/testHIRES_stableGAUSS_16_11_2016_04_38_', ...
         num2str(i), '.txt'];
 end
 nExperience = length(resultsfile);
 
-%% Plot results MonteCarlo h variable N = 100
+%% Plot results MCMC
 
 % numerical distribution h = 0.1
-meanMCMC = zeros(nExperience, 1);
-varMCMC = zeros(nExperience, 1);
+meanMCMC = zeros(nExperience, 5);
+varMCMC = zeros(nExperience, 5);
 
-for i = 1 : 1
+for k = 1 : nExperience
     figure
     hold on
-    for k = 1 : nExperience
-        results = dlmread(resultsfile{k});
-        x = results(5001:end, i);
-        meanMCMC(k, i) = mean(x);
-        varMCMC(k, i) = var(x);
-        [f, xi] = ksdensity(x);
-        plot(xi, f)
-    end
-    legend('h = 0.1', 'h = 0.05', 'h = 0.025', 'h = 0.0125', 'h = 0.0065', 'h = 0.0031')
+    results = dlmread(resultsfile{k});
+    x = results(5001:end, :);
+    meanMCMC(k, :) = mean(x);
+    varMCMC(k, :) = var(x);
+    plotmatrix(x)
 end
 set(gca, 'YTickLabel', '')
-title('Gauss')

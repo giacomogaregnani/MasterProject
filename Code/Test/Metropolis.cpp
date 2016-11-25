@@ -2,167 +2,179 @@
 #include <random>
 #include <iostream>
 #include "mcmcTools.hpp"
-#include <Solver.hpp>
-#include <Eigen/Cholesky>
 
 #define PI 3.1415926535897
-#define M_EPS 0.0000001
 
-std::vector<VectorXd> metropolisHastings(VectorXd initialCond, std::vector<double>& param, double sigma,
-                                         int size, double h, double finalTime,
-                                         std::vector<VectorXd>& data,
-                                         std::vector<double>& dataTimes,
-                                         VectorXd (*odeFunc) (VectorXd, std::vector<double>&),
+
+std::vector<VectorXd> MetropolisHastings(odeDef odeModel, std::vector<double>& param, double sigma,
+                                         double h, double finalTime, std::vector<VectorXd>& data, std::vector<double>& dataTimes,
                                          VectorXd priorMean, VectorXd priorVariance, int internalMC,
-                                         int nStepsMC, double varData, double* accRatio)
+                                         int nStepsMC, double varData, long int* cost, bool posPar,
+                                         std::vector<double>& likelihoods, std::default_random_engine& generator)
 {
-    *accRatio = 0.0;
+    // Initialize stuff
+    int nParam = static_cast<int>(param.size());
+    size_t nData = data.size();
+    VectorXd paramVecN(nParam);
+    std::vector<VectorXd> mcmcPath(nStepsMC, VectorXd(nParam));
+    likelihoods.resize(nStepsMC);
+    VectorXd w(nParam);
+    std::vector<double> paramStd(nParam);
     std::default_random_engine wGenerator{(unsigned int) time(NULL)};
-    std::default_random_engine solGenerator{(unsigned int) time(NULL)};
     std::normal_distribution<double> normal(0.0, 1.0);
     std::uniform_real_distribution<double> unif;
-    size_t nData = data.size();
+    *cost = 0;
+    int nOdeSteps = static_cast<int> (finalTime / h);
+    int MCindex;
+    double lVec[internalMC];
+    double l, prior, oldPrior, oldLike;
 
-    double oldLike = 0.0;
-    int nParam = (int) param.size();
     VectorXd paramVec(nParam);
     for (int i = 0; i < nParam; i++) {
         paramVec(i) = param[i];
     }
-    double l;
-    double prior;
 
-    // Evaluate posterior for initial guess
-    ProbMethod<EulerForward> firstSolver(size, h, initialCond, param, odeFunc, sigma);
-    for (int j = 0; j < internalMC; j++) {
+    // Compute the posterior on the initial guess
+    ProbMethod<EulerForward> solver(odeModel.size, h, odeModel.initialCond, param, odeModel.odeFunc, sigma);
+    std::vector<VectorXd> solutionAtDataTimes(nData, VectorXd(odeModel.size));
+    for (MCindex = 0; MCindex < internalMC; MCindex++) {
         double t = 0;
         int count = 0;
-        std::vector<VectorXd> solutionAtDataTimes(nData, VectorXd(size));
         while (t < finalTime) {
-            firstSolver.oneStep(solGenerator, h);
+            solver.oneStep(generator, h);
             t = t + h;
             if (std::abs(t - dataTimes[count]) < h / 10.0) {
-                std::cout << t << std::endl;
-                solutionAtDataTimes[count] = firstSolver.getSolution();
+                solutionAtDataTimes[count] = solver.getSolution();
                 count++;
             }
         }
-        oldLike += evalLogLikelihood(data, solutionAtDataTimes, size, varData);
+        oldLike +=  evalLogLikelihood(data, solutionAtDataTimes, odeModel.size, varData);
+        solver.resetIC();
     }
     oldLike /= internalMC;
-    double oldPrior = evalLogPrior(paramVec, priorMean, priorVariance, nParam);
+    oldPrior = evalLogPrior(paramVec, priorMean, priorVariance, nParam);
+    cost += nOdeSteps * internalMC;
+    mcmcPath[0] = paramVec;
+    likelihoods[0] = oldLike;
 
-    VectorXd paramVecN(nParam);
-    std::vector<VectorXd> mcmcPath(nStepsMC, VectorXd(nParam));
-    std::vector<VectorXd> solutionAtDataTimes(nData, VectorXd(size));
-    VectorXd w(nParam);
-    std::vector<double> paramStd(nParam);
-
-    // =========== RAM UPDATE ===========
+    // Initialize RAM
     double gamma = 0.01;
-    MatrixXd I = MatrixXd::Identity(nParam, nParam);
-    MatrixXd initialCov = gamma * I;
-    LLT<MatrixXd> chol(initialCov);
-    MatrixXd S = chol.matrixL();
     double desiredAlpha = 0.25;
-    MatrixXd tmp(nParam, nParam);
-    // ==================================
+    MatrixXd S = RAMinit(gamma, desiredAlpha, nParam);
 
-    for (int i = 0; i < nStepsMC; i++)
+    // Only for positive parameters
+    double oldGauss, newGauss;
+
+
+    for (int i = 1; i < nStepsMC; i++)
     {
         if (i % 50 == 0) {
             std::cout << "iteration: " << i << std::endl;
             std::cout << "likelihood: " << oldLike << std::endl;
-            std::cout << "S matrix: " << std::endl << S << std::endl;
+            std::cout << "step: " << std::endl << S << std::endl;
             std::cout << "prior: " << oldPrior << std::endl;
             std::cout << "param: " << paramVec.transpose() << std::endl;
         }
 
-        for (int j = 0; j < nParam; j++) {
-            w(j) = normal(wGenerator);
+        // Generate new guess for parameter
+        bool isPositive = false;
+        while (!isPositive) {
+            for (int j = 0; j < nParam; j++) {
+                w(j) = normal(wGenerator);
+            }
+            paramVecN = paramVec + S * w;
+            if (posPar) {
+                if (paramVecN(0) > 0) {
+                    isPositive = true;
+                    oldGauss = phi(paramVec(0) / (S(0, 0) * S(0, 0)));
+                    newGauss = phi(paramVecN(0) / (S(0, 0) * S(0, 0)));
+                }
+            } else {
+                isPositive = true;
+            }
         }
-        paramVecN = paramVec + S * w;
-
         for (int j = 0; j < nParam; j++) {
             paramStd[j] = paramVecN(j);
         }
 
-        double lVec[internalMC];
-        int MCindex;
-#pragma omp parallel for num_threads(20) private(MCindex)
+        // Compute likelihood for the new parameter
+        #pragma omp parallel for num_threads(20) private(MCindex)
         for (MCindex = 0; MCindex < internalMC; MCindex++) {
-            std::vector<VectorXd> solutionAtDataTimesPar(nData, VectorXd(size));
-            ProbMethod<EulerForward> solver(size, h, initialCond, paramStd, odeFunc, sigma);
+            std::vector<VectorXd> solutionAtDataTimesPar(nData, VectorXd(odeModel.size));
+            ProbMethod<EulerForward> solver(odeModel.size, h, odeModel.initialCond, paramStd, odeModel.odeFunc, sigma);
             double t = 0;
             int count = 0;
             while (t < finalTime) {
-                solver.oneStep(solGenerator, h);
+                solver.oneStep(generator, h);
                 t = t + h;
                 if (std::abs(t - dataTimes[count]) < h / 10.0) {
                     solutionAtDataTimesPar[count] = solver.getSolution();
                     count++;
                 }
             }
-            lVec[MCindex] = evalLogLikelihood(data, solutionAtDataTimesPar, size, varData);
+            lVec[MCindex] = evalLogLikelihood(data, solutionAtDataTimesPar, odeModel.size, varData);
         }
         l = 0.0;
         for (int j = 0; j < internalMC; j++) {
             l += lVec[j];
         }
         l /= internalMC;
+        *cost += nOdeSteps * internalMC;
 
-        // Add computations with old value of parameters
+        // Compute prior on the new parameter
+        prior = evalLogPrior(paramVecN, priorMean, priorVariance, nParam);
+
+        // Return on the old parameter
         for (int j = 0; j < nParam; j++) {
             paramStd[j] = paramVec(j);
         }
 
-        double oldParamL = 0.0;
-#pragma omp parallel for num_threads(20) private(MCindex)
+        // Compute likelihood for the old parameter
+        #pragma omp parallel for num_threads(20) private(MCindex)
         for (MCindex = 0; MCindex < internalMC; MCindex++) {
-            std::vector<VectorXd> solutionAtDataTimesPar(nData, VectorXd(size));
-            ProbMethod<EulerForward> solverOld(size, h, initialCond, paramStd, odeFunc, sigma);
+            std::vector<VectorXd> solutionAtDataTimesPar(nData, VectorXd(odeModel.size));
+            ProbMethod<EulerForward> solver(odeModel.size, h, odeModel.initialCond, paramStd, odeModel.odeFunc, sigma);
             double t = 0;
             int count = 0;
             while (t < finalTime) {
-                solverOld.oneStep(solGenerator, h);
+                solver.oneStep(generator, h);
                 t = t + h;
                 if (std::abs(t - dataTimes[count]) < h / 10.0) {
-                    solutionAtDataTimesPar[count] = solverOld.getSolution();
+                    solutionAtDataTimesPar[count] = solver.getSolution();
                     count++;
                 }
             }
-            lVec[MCindex] = evalLogLikelihood(data, solutionAtDataTimesPar, size, varData);
+            lVec[MCindex] = evalLogLikelihood(data, solutionAtDataTimesPar, odeModel.size, varData);
         }
-
+        double oldParamL = 0.0;
         for (int j = 0; j < internalMC; j++) {
             oldParamL += lVec[j];
         }
         oldParamL /= internalMC;
+        *cost += nOdeSteps * internalMC;
 
-        prior = evalLogPrior(paramVecN, priorMean, priorVariance, nParam);
-        double u = unif(wGenerator);
-        double alpha = std::min<double>(1.0, exp((l + prior) - (oldParamL + oldPrior)));
+        // Generate (log) of uniform random variable
+        double u = log(unif(wGenerator));
+
+        // Compute probability of acceptance
+        double alpha;
+        if (posPar) {
+            alpha = std::min<double>(0.0, (l + prior + log(oldGauss)) - (oldParamL + oldPrior + log(newGauss)));
+        } else {
+            alpha = std::min<double>(0.0, (l + prior) - (oldParamL + oldPrior));
+        }
+        // Update the chain
         if (u < alpha) {
-            *accRatio += 1.0 / nStepsMC;
             paramVec = paramVecN;
             oldLike = l;
             oldPrior = prior;
-            gamma = std::min<double>(gamma * 2.0, 1.0);
-        } else {
-            gamma = std::max<double>(gamma / 2.0, 0.01);
         }
         mcmcPath[i] = paramVec;
+        likelihoods[i] = oldLike;
 
-        // RAM UPDATE
-        MatrixXd WWT = w * w.transpose();
-        double WTW = w.dot(w);
-        double gammaI = std::min(1.0, 2.0 * pow(static_cast<double>(i + 1), -0.75));
-        double diffAlpha = alpha - desiredAlpha;
-        double coeff = gammaI * diffAlpha / WTW;
-        MatrixXd C = I + coeff * WWT;
-        tmp = S * C * S.transpose();
-        LLT<MatrixXd> cholIt(tmp);
-        S = cholIt.matrixL();
+        // Update RAM
+        S = RAMupdate(S, w, exp(alpha), desiredAlpha, nParam, i + 1);
     }
     return mcmcPath;
 }
+

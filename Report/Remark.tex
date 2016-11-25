@@ -1,0 +1,17 @@
+\section{Remark}
+
+\begin{equation}
+\begin{aligned}
+	\abs{X_{n+1} - X_n} &\leq h\abs{f(X_n)} + h\abs{\Delta W_n} \\
+	&\leq h(1 + \abs{X_n}) + h\abs{\Delta W_n} \\
+	&\leq (h + h\abs{\Delta W_n})(1 + \abs{X_n}) \\
+	&\leq h\left(1 + h^{1/2}\frac{\abs{\Delta W_n}}{h^{1/2}}\right)(1 + \abs{X_n}) \\
+	&\leq h\left(1 + T^{1/2}\frac{\abs{\Delta W_n}}{h^{1/2}}\right) (1 + \abs{X_n})
+\end{aligned}
+\end{equation}
+Define 
+\begin{equation}
+	Z \defeq \frac{\abs{\Delta W_n}}{h^{1/2}} \sim \mathcal{N}(0, 1),
+\end{equation} 
+then $M_n \defeq 1 + T^{1/2}Z$ has bounded moments of any order $r \in \N$ independently of $h$.
+

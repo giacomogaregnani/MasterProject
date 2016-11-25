@@ -13,8 +13,8 @@ std::vector<VectorXd> testMetropolis(VectorXd oldGuess, int nIter, double* accRa
 {
     // Normal generators
     std::normal_distribution<double> normal(0.0, 1.0);
-    std::default_random_engine generator{(unsigned int) time(NULL)};
     std::uniform_real_distribution<double> unif;
+    std::default_random_engine generator{(unsigned int) time(NULL)};
 
     // Initial posterior
     double oldPost = posterior(oldGuess);
@@ -49,7 +49,7 @@ std::vector<VectorXd> testMetropolis(VectorXd oldGuess, int nIter, double* accRa
             newGuess = oldGuess + S * w;
         }
         else {
-            newGuess = oldGuess + gamma * w;
+            newGuess = oldGuess + w * gamma;
         }
 
         // evaluate posterior
@@ -63,6 +63,7 @@ std::vector<VectorXd> testMetropolis(VectorXd oldGuess, int nIter, double* accRa
         if (u < alpha) {
             oldGuess = newGuess;
             oldPost = newPost;
+            *accRatio += 1.0 / nIter;
         }
         MCMC.push_back(oldGuess);
 
@@ -70,7 +71,6 @@ std::vector<VectorXd> testMetropolis(VectorXd oldGuess, int nIter, double* accRa
         if (RAM) {
             S = RAMupdate(S, w, alpha, desiredAlpha, nParam, i + 1);
         }
-
     }
 
     return MCMC;

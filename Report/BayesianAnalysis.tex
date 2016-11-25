@@ -191,7 +191,29 @@ Hence, we can compute $S_{n+1}$ as the Cholesky factorization of the right hand 
 \begin{equation}
 \eta_n = n^{-\gamma}, \quad 0.5 < \gamma \leq 1.
 \end{equation}
-Often the computational cost needed for the evaluation of the posterior distribution is high with respect to the dimension $N_p$ of the parameter space. In Algorithm \ref{alg:RAM} we give the pseudo-code for the RAM update. Therefore, performing a Cholesky factorization at each iteration, which has a complexity of $\OO(N_p^3)$, does not spoil the performances of RAM with respect to a standard MH. 
+Often the computational cost needed for the evaluation of the posterior distribution is high with respect to the dimension $N_p$ of the parameter space. In Algorithm \ref{alg:RAM} we give the pseudo-code for the RAM update. Therefore, performing a Cholesky factorization at each iteration, which has a complexity of $\OO(N_p^3)$, does not spoil the performances of RAM with respect to a standard MH.
+
+Let us consider a two-dimensional real random variable $X$ whose distribution has the following density
+\begin{equation}\label{eq:RAMtestPi}
+	\pi(X) \propto \exp(-10(X_1^2 - X_2)^2 - (X_1 - 0.25)^4),
+\end{equation}
+where we denoted by $X_i$, $i = 1, 2$ the two components of $X$ and we omitted the normalization constant. We then consider a real value $\sigma$ in the set $\{0.01, 0.5, 2.0\}$ and target the distribution defined by \eqref{eq:RAMtestPi} either using a standard MH with the proposal distribution given by a zero-centered normal distribution with covariance $\Sigma = \sigma^2 I$, or using RAM with the same choice of covariance structure as an initial guess and $\alpha^* = 0.4$. We run $N = 5000$ iterations of both algorithms and register all the guesses they produce as well as the final acceptance ratio. Results (Figure \ref{fig:RAMexample}) show that for the $\sigma = 0.01$ and $\sigma = 2.0$ standard MH fails to properly describe the posterior distribution, either accepting too many guesses and partially describing the posterior, or refusing almost all guesses therefore obtaining an insufficient number of samples. On the other hand, RAM adapts the step and for any choice of $\sigma$ the samples we obtain are equally good, with an acceptance ratio near to $\alpha^*$ (Table \ref{tab:RAMalphaStar}).
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{cccc}
+		\toprule
+		MCMC & $\sigma = 0.01$ & $\sigma = 0.5$ & $\sigma = 2.0$ \\ 
+		\midrule
+		MH & 0.96  & 0.35  & 0.06  \\
+		RAM & 0.43 & 0.40 & 0.38 \\
+		\bottomrule
+	\end{tabular}
+	\caption{Acceptance ratios for MH and RAM with posterior distribution \eqref{eq:RAMtestPi}}.
+	\label{tab:RAMalphaStar}
+\end{table}
+
+\input{RAMplots}
 
 \subsubsection{Pseudo-marginal Metropolis-Hastings}
 \begin{algorithm}[t]

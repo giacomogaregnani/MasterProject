@@ -23,17 +23,17 @@ double evalLogLikelihood(std::vector<VectorXd>& data,
 double evalSingleLikelihood(VectorXd data, VectorXd value, double variance);
 
 // IMPLEMENTED IN THEIR CPP FILE
-std::vector<VectorXd> metropolisHastings(VectorXd initialGuess, std::vector<double>& param, double sigma,
-										 int size, double h, double finalTime, std::vector<VectorXd>& data,
-										 std::vector<double>& dataTimes,
-										 VectorXd (*odeFunc) (VectorXd, std::vector<double>&),
+std::vector<VectorXd> MetropolisHastings(odeDef odeModel, std::vector<double>& param, double sigma,
+										 double h, double finalTime, std::vector<VectorXd>& data, std::vector<double>& dataTimes,
 										 VectorXd priorMean, VectorXd priorVariance, int internalMC,
-										 int nStepsMC, double varData, double* accRatio);
+										 int nStepsMC, double varData, long int* cost, bool posPar,
+										 std::vector<double>& likelihoods, std::default_random_engine& generator);
 
 std::vector<VectorXd> sMetropolisHastings(odeDef odeModel, std::vector<double>& param, double sigma,
 										  double h, double finalTime, std::vector<VectorXd>& data, std::vector<double>& dataTimes,
 										  VectorXd priorMean, VectorXd priorVariance, int internalMC,
-										  int nStepsMC, double damping, double varData);
+										  int nStepsMC, double damping, double varData, long int* cost, bool posPar,
+										  std::vector<double>& likelihoods);
 
 std::vector<VectorXd> MLmetropolisHastings(VectorXd initialGuess, std::vector<double>& param, double sigma,
 										   int size, double h, double finalTime,
@@ -44,12 +44,12 @@ std::vector<VectorXd> MLmetropolisHastings(VectorXd initialGuess, std::vector<do
 										   int nStepsMC, double varData, long int* costPerIteration,
 										   double* accRatio);
 
-std::vector<VectorXd> sMLmetropolisHastings(VectorXd initialCond, std::vector<double>& param, double sigma,
-											int size, double h, double finalTime,
-											std::vector<VectorXd>& data, std::vector<double>& dataTimes,
-											VectorXd (*odeFunc) (VectorXd, std::vector<double>&),
-											VectorXd priorMean, VectorXd priorVariance, int internalMC,
-											int nStepsMC, double varData, double rho, double damping);
+std::vector<VectorXd> sMLmetropolisHastings(odeDef odeModel, std::vector<double>& param, double sigma,
+											double h, double finalTime,
+											std::vector<VectorXd>& data,
+											std::vector<double>& dataTimes,
+											VectorXd priorMean, VectorXd priorVariance,
+											int nStepsMC, double varData, double damping, long int* cost);
 
 std::vector<VectorXd> gaussMetropolisHastings(odeDef odeModel, std::vector<double>& param, double sigma,
 											  double h, double finalTime, std::vector<VectorXd>& data,

@@ -7,30 +7,45 @@ int main()
     firstGuess(0) = 1.5;
     firstGuess(1) = -1.0;
 
-    std::vector<VectorXd> MH, RAM;
-    int nMCMC = 5000;
-    double accRatioMH, accRatioRAM;
-    double gamma = 2.0;
-    MH = testMetropolis(firstGuess, nMCMC, &accRatioMH, gamma, false, 0.0);
-    RAM = testMetropolis(firstGuess, nMCMC, &accRatioRAM, gamma, true, 0.5);
+    std::vector<double> gamma = {0.01, 0.5, 2.0};
+    int count = 0;
 
-    std::fstream results, resultsRAM;
-    std::string resFile("resultsMH");
-    std::string resRAM("resultsRAM");
-    std::string extension(".txt");
-    std::string slash("/");
-    std::string folder(DATA_PATH);
-    std::string finalpath = folder + slash + resFile + extension;
-    std::string finalpathRAM = folder + slash + resRAM + extension;
+    for (auto it : gamma) {
+        // Obtain results
+        std::vector<VectorXd> MH, RAM;
+        int nMCMC = 50000;
+        double accRatioMH = 0.0, accRatioRAM = 0.0;
+        MH = testMetropolis(firstGuess, nMCMC, &accRatioMH, it, false, 0.0);
+        RAM = testMetropolis(firstGuess, nMCMC, &accRatioRAM, it, true, 0.4);
 
-    results.open(finalpath , std::ofstream::out | std::ofstream::trunc);
-    resultsRAM.open(finalpathRAM , std::ofstream::out | std::ofstream::trunc);
 
-    for (int i = 0; i < nMCMC; i++) {
-        results << MH[i].transpose() << "\n";
-        resultsRAM << RAM[i].transpose() << "\n";
+        // Write results on file
+        std::fstream results, resultsRAM, accRatios;
+        std::string resFile("resultsMH");
+        std::string resRAM("resultsRAM");
+        std::string resACC("resultsACC");
+        std::string extension(".txt");
+        std::string slash("/");
+        std::string iteration = std::to_string(count++);
+        std::string folder(DATA_PATH);
+        std::string finalpath = folder + slash + resFile + "_" + iteration + extension;
+        std::string finalpathRAM = folder + slash + resRAM + "_" + iteration + extension;
+        std::string finalpathACC = folder + slash + resACC + "_" + iteration + extension;
+
+        results.open(finalpath, std::ofstream::out | std::ofstream::trunc);
+        resultsRAM.open(finalpathRAM, std::ofstream::out | std::ofstream::trunc);
+        accRatios.open(finalpathACC, std::ofstream::out | std::ofstream::trunc);
+
+        for (int i = 0; i < nMCMC; i++) {
+            results << MH[i].transpose() << "\n";
+            resultsRAM << RAM[i].transpose() << "\n";
+        }
+        accRatios << accRatioMH << "\t" << accRatioRAM << "\n";
+
+        results.close();
+        resultsRAM.close();
+        accRatios.close();
     }
-    results.close();
 
     return 0;
 }

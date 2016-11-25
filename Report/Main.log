@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.10.29)  11 NOV 2016 16:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.10.29)  25 NOV 2016 11:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1933,32 +1933,162 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 26.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] [5] [6] [7]) [
-8] (./probmethod.tex (./deterministicmethods.tex) (./strongconvergence.tex [9] 
-[10])
-(./weakconvergence.tex [11] (./plots/weakorder.tikz
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-)) (./MLMC.tex [12] [13]
-[14]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] [5] (./RAMplot
+s.tex
+Package epstopdf Info: Source file: <plots/MHvsRAM/MH_small.eps>
+(epstopdf)                    date: 2016-11-14 09:40:56
+(epstopdf)                    size: 1666624 bytes
+(epstopdf)             Output file: <plots/MHvsRAM/MH_small-eps-converted-to.pd
+f>
+(epstopdf)                    date: 2016-11-14 09:41:40
+(epstopdf)                    size: 335798 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/MHvsRAM/MH_small-eps
+-converted-to.pdf plots/MHvsRAM/MH_small.eps>
+(epstopdf)             \includegraphics on input line 4.
+Package epstopdf Info: Output file is already uptodate.
 
-LaTeX Warning: Reference `fig:MLMCtheory' on page 15 undefined on input line 16
-4.
+<plots/MHvsRAM/MH_small-eps-converted-to.pdf, id=228, 439.6425pt x 330.23375pt>
+File: plots/MHvsRAM/MH_small-eps-converted-to.pdf Graphic file (type pdf)
+<use plots/MHvsRAM/MH_small-eps-converted-to.pdf>
+Package pdftex.def Info: plots/MHvsRAM/MH_small-eps-converted-to.pdf used on in
+put line 4.
+(pdftex.def)             Requested size: 136.78122pt x 102.73924pt.
+Package epstopdf Info: Source file: <plots/MHvsRAM/MH_medium.eps>
+(epstopdf)                    date: 2016-11-14 09:41:04
+(epstopdf)                    size: 1666038 bytes
+(epstopdf)             Output file: <plots/MHvsRAM/MH_medium-eps-converted-to.p
+df>
+(epstopdf)                    date: 2016-11-14 09:41:42
+(epstopdf)                    size: 179253 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/MHvsRAM/MH_medium-ep
+s-converted-to.pdf plots/MHvsRAM/MH_medium.eps>
+(epstopdf)             \includegraphics on input line 7.
+Package epstopdf Info: Output file is already uptodate.
 
-[15] (./plots/MLMCpracticecost.tikz
+<plots/MHvsRAM/MH_medium-eps-converted-to.pdf, id=229, 439.6425pt x 330.23375pt
+>
+File: plots/MHvsRAM/MH_medium-eps-converted-to.pdf Graphic file (type pdf)
+ <use plots/MHvsRAM/MH_medium-eps-converted-to.pdf>
+Package pdftex.def Info: plots/MHvsRAM/MH_medium-eps-converted-to.pdf used on i
+nput line 7.
+(pdftex.def)             Requested size: 136.78122pt x 102.73924pt.
+Package epstopdf Info: Source file: <plots/MHvsRAM/MH_big.eps>
+(epstopdf)                    date: 2016-11-14 09:41:11
+(epstopdf)                    size: 1665804 bytes
+(epstopdf)             Output file: <plots/MHvsRAM/MH_big-eps-converted-to.pdf>
+
+(epstopdf)                    date: 2016-11-14 09:41:43
+(epstopdf)                    size: 90949 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/MHvsRAM/MH_big-eps-c
+onverted-to.pdf plots/MHvsRAM/MH_big.eps>
+(epstopdf)             \includegraphics on input line 10.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/MHvsRAM/MH_big-eps-converted-to.pdf, id=230, 439.6425pt x 330.23375pt>
+File: plots/MHvsRAM/MH_big-eps-converted-to.pdf Graphic file (type pdf)
+
+<use plots/MHvsRAM/MH_big-eps-converted-to.pdf>
+Package pdftex.def Info: plots/MHvsRAM/MH_big-eps-converted-to.pdf used on inpu
+t line 10.
+(pdftex.def)             Requested size: 136.78122pt x 102.73924pt.
+Package epstopdf Info: Source file: <plots/MHvsRAM/RAM_small.eps>
+(epstopdf)                    date: 2016-11-14 09:41:20
+(epstopdf)                    size: 1666294 bytes
+(epstopdf)             Output file: <plots/MHvsRAM/RAM_small-eps-converted-to.p
+df>
+(epstopdf)                    date: 2016-11-14 09:41:45
+(epstopdf)                    size: 203368 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/MHvsRAM/RAM_small-ep
+s-converted-to.pdf plots/MHvsRAM/RAM_small.eps>
+(epstopdf)             \includegraphics on input line 14.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/MHvsRAM/RAM_small-eps-converted-to.pdf, id=231, 439.6425pt x 330.23375pt
+>
+File: plots/MHvsRAM/RAM_small-eps-converted-to.pdf Graphic file (type pdf)
+ <use plots/MHvsRAM/RAM_small-eps-converted-to.pdf>
+Package pdftex.def Info: plots/MHvsRAM/RAM_small-eps-converted-to.pdf used on i
+nput line 14.
+(pdftex.def)             Requested size: 136.78122pt x 102.73924pt.
+Package epstopdf Info: Source file: <plots/MHvsRAM/RAM_medium.eps>
+(epstopdf)                    date: 2016-11-14 09:41:26
+(epstopdf)                    size: 1666374 bytes
+(epstopdf)             Output file: <plots/MHvsRAM/RAM_medium-eps-converted-to.
+pdf>
+(epstopdf)                    date: 2016-11-14 09:41:47
+(epstopdf)                    size: 193327 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/MHvsRAM/RAM_medium-e
+ps-converted-to.pdf plots/MHvsRAM/RAM_medium.eps>
+(epstopdf)             \includegraphics on input line 17.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/MHvsRAM/RAM_medium-eps-converted-to.pdf, id=232, 439.6425pt x 330.23375p
+t>
+File: plots/MHvsRAM/RAM_medium-eps-converted-to.pdf Graphic file (type pdf)
+ <use plots/MHvsRAM/RAM_medium-eps-converted-to.pdf>
+Package pdftex.def Info: plots/MHvsRAM/RAM_medium-eps-converted-to.pdf used on 
+input line 17.
+(pdftex.def)             Requested size: 136.78122pt x 102.73924pt.
+Package epstopdf Info: Source file: <plots/MHvsRAM/RAM_big.eps>
+(epstopdf)                    date: 2016-11-14 09:41:31
+(epstopdf)                    size: 1665569 bytes
+(epstopdf)             Output file: <plots/MHvsRAM/RAM_big-eps-converted-to.pdf
+>
+(epstopdf)                    date: 2016-11-14 09:41:48
+(epstopdf)                    size: 187762 bytes
+(epstopdf)             Command: <repstopdf --outfile=plots/MHvsRAM/RAM_big-eps-
+converted-to.pdf plots/MHvsRAM/RAM_big.eps>
+(epstopdf)             \includegraphics on input line 20.
+Package epstopdf Info: Output file is already uptodate.
+
+<plots/MHvsRAM/RAM_big-eps-converted-to.pdf, id=233, 439.6425pt x 330.23375pt>
+File: plots/MHvsRAM/RAM_big-eps-converted-to.pdf Graphic file (type pdf)
+
+<use plots/MHvsRAM/RAM_big-eps-converted-to.pdf>
+Package pdftex.def Info: plots/MHvsRAM/RAM_big-eps-converted-to.pdf used on inp
+ut line 20.
+(pdftex.def)             Requested size: 136.78122pt x 102.73924pt.
+) [6] [7 <./plots/MHvsRAM/MH_small-eps-converted-to.pdf> <./plots/MHvsRAM/MH_me
+dium-eps-converted-to.pdf> <./plots/MHvsRAM/MH_big-eps-converted-to.pdf> <./plo
+ts/MHvsRAM/RAM_small-eps-converted-to.pdf> <./plots/MHvsRAM/RAM_medium-eps-conv
+erted-to.pdf> <./plots/MHvsRAM/RAM_big-eps-converted-to.pdf>]) [8] [9] (./probm
+ethod.tex
+(./deterministicmethods.tex) (./strongconvergence.tex [10] [11])
+(./weakconvergence.tex [12] (./plots/weakorder.tikz
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-)) (./bayesianinference.tex [16]
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+)) (./MLMC.tex [13] [14]
+(./plots/MonteCarloVariance2.tikz
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+) [15] [16] [17] [18]
 
-LaTeX Warning: Reference `alg:MHProb' on page 17 undefined on input line 46.
+LaTeX Warning: Reference `fig:MLMCtheory' on page 19 undefined on input line 28
+1.
 
-[17] (./RamMCMC.tex) [18] [19] [20] (./numericalExact.tex) (./gaussApproach.tex
-[21]) [22] (./FitzNagPlots.tex
+[19] (./plots/MLMCpracticecost.tikz
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+)) (./bayesianinference.tex [20]
+
+LaTeX Warning: Reference `alg:MHProb' on page 21 undefined on input line 46.
+
+[21] (./RamMCMC.tex) [22] [23] (./numericalExact.tex [24]) (./gaussApproach.tex
+[25])
+
+LaTeX Warning: Reference `FitzHughNagumo' on page 26 undefined on input line 18
+9.
+
+(./FitzNagPlots.tex
 Package epstopdf Info: Source file: <plots/FitzNagNoNoise/TopLeft.eps>
 (epstopdf)                    date: 2016-11-05 15:50:12
 (epstopdf)                    size: 25540 bytes
@@ -1971,7 +2101,7 @@ ft-eps-converted-to.pdf plots/FitzNagNoNoise/TopLeft.eps>
 (epstopdf)             \includegraphics on input line 4.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/FitzNagNoNoise/TopLeft-eps-converted-to.pdf, id=460, 439.6425pt x 330.23
+<plots/FitzNagNoNoise/TopLeft-eps-converted-to.pdf, id=555, 439.6425pt x 330.23
 375pt>
 File: plots/FitzNagNoNoise/TopLeft-eps-converted-to.pdf Graphic file (type pdf)
 
@@ -1991,7 +2121,7 @@ eLeft-eps-converted-to.pdf plots/FitzNagNoNoise/MiddleLeft.eps>
 (epstopdf)             \includegraphics on input line 9.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/FitzNagNoNoise/MiddleLeft-eps-converted-to.pdf, id=461, 439.6425pt x 330
+<plots/FitzNagNoNoise/MiddleLeft-eps-converted-to.pdf, id=556, 439.6425pt x 330
 .23375pt>
 File: plots/FitzNagNoNoise/MiddleLeft-eps-converted-to.pdf Graphic file (type p
 df)
@@ -2011,7 +2141,7 @@ eMiddle-eps-converted-to.pdf plots/FitzNagNoNoise/MiddleMiddle.eps>
 (epstopdf)             \includegraphics on input line 12.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/FitzNagNoNoise/MiddleMiddle-eps-converted-to.pdf, id=462, 439.6425pt x 3
+<plots/FitzNagNoNoise/MiddleMiddle-eps-converted-to.pdf, id=557, 439.6425pt x 3
 30.23375pt>
 File: plots/FitzNagNoNoise/MiddleMiddle-eps-converted-to.pdf Graphic file (type
  pdf)
@@ -2031,7 +2161,7 @@ mLeft-eps-converted-to.pdf plots/FitzNagNoNoise/BottomLeft.eps>
 (epstopdf)             \includegraphics on input line 17.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/FitzNagNoNoise/BottomLeft-eps-converted-to.pdf, id=463, 439.6425pt x 330
+<plots/FitzNagNoNoise/BottomLeft-eps-converted-to.pdf, id=558, 439.6425pt x 330
 .23375pt>
 File: plots/FitzNagNoNoise/BottomLeft-eps-converted-to.pdf Graphic file (type p
 df)
@@ -2051,7 +2181,7 @@ mMiddle-eps-converted-to.pdf plots/FitzNagNoNoise/BottomMiddle.eps>
 (epstopdf)             \includegraphics on input line 20.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/FitzNagNoNoise/BottomMiddle-eps-converted-to.pdf, id=464, 439.6425pt x 3
+<plots/FitzNagNoNoise/BottomMiddle-eps-converted-to.pdf, id=559, 439.6425pt x 3
 52.31625pt>
 File: plots/FitzNagNoNoise/BottomMiddle-eps-converted-to.pdf Graphic file (type
  pdf)
@@ -2071,7 +2201,7 @@ mRight-eps-converted-to.pdf plots/FitzNagNoNoise/BottomRight.eps>
 (epstopdf)             \includegraphics on input line 23.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/FitzNagNoNoise/BottomRight-eps-converted-to.pdf, id=465, 439.6425pt x 33
+<plots/FitzNagNoNoise/BottomRight-eps-converted-to.pdf, id=560, 439.6425pt x 33
 0.23375pt>
 File: plots/FitzNagNoNoise/BottomRight-eps-converted-to.pdf Graphic file (type 
 pdf)
@@ -2091,7 +2221,7 @@ o.pdf>
 (epstopdf)             \includegraphics on input line 32.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/FitzNagNoise/TopLeft-eps-converted-to.pdf, id=466, 439.6425pt x 330.2337
+<plots/FitzNagNoise/TopLeft-eps-converted-to.pdf, id=561, 439.6425pt x 330.2337
 5pt>
 File: plots/FitzNagNoise/TopLeft-eps-converted-to.pdf Graphic file (type pdf)
  <use plots/FitzNagNoise/TopLeft-eps-converted-to.pdf>
@@ -2110,7 +2240,7 @@ eft-eps-converted-to.pdf plots/FitzNagNoise/MiddleLeft.eps>
 (epstopdf)             \includegraphics on input line 37.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/FitzNagNoise/MiddleLeft-eps-converted-to.pdf, id=467, 439.6425pt x 330.2
+<plots/FitzNagNoise/MiddleLeft-eps-converted-to.pdf, id=562, 439.6425pt x 330.2
 3375pt>
 File: plots/FitzNagNoise/MiddleLeft-eps-converted-to.pdf Graphic file (type pdf
 )
@@ -2130,7 +2260,7 @@ iddle-eps-converted-to.pdf plots/FitzNagNoise/MiddleMiddle.eps>
 (epstopdf)             \includegraphics on input line 40.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/FitzNagNoise/MiddleMiddle-eps-converted-to.pdf, id=468, 439.6425pt x 330
+<plots/FitzNagNoise/MiddleMiddle-eps-converted-to.pdf, id=563, 439.6425pt x 330
 .23375pt>
 File: plots/FitzNagNoise/MiddleMiddle-eps-converted-to.pdf Graphic file (type p
 df)
@@ -2150,7 +2280,7 @@ eft-eps-converted-to.pdf plots/FitzNagNoise/BottomLeft.eps>
 (epstopdf)             \includegraphics on input line 45.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/FitzNagNoise/BottomLeft-eps-converted-to.pdf, id=469, 439.6425pt x 330.2
+<plots/FitzNagNoise/BottomLeft-eps-converted-to.pdf, id=564, 439.6425pt x 330.2
 3375pt>
 File: plots/FitzNagNoise/BottomLeft-eps-converted-to.pdf Graphic file (type pdf
 )
@@ -2170,7 +2300,7 @@ iddle-eps-converted-to.pdf plots/FitzNagNoise/BottomMiddle.eps>
 (epstopdf)             \includegraphics on input line 48.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/FitzNagNoise/BottomMiddle-eps-converted-to.pdf, id=470, 439.6425pt x 330
+<plots/FitzNagNoise/BottomMiddle-eps-converted-to.pdf, id=565, 439.6425pt x 330
 .23375pt>
 File: plots/FitzNagNoise/BottomMiddle-eps-converted-to.pdf Graphic file (type p
 df)
@@ -2190,7 +2320,7 @@ ight-eps-converted-to.pdf plots/FitzNagNoise/BottomRight.eps>
 (epstopdf)             \includegraphics on input line 51.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/FitzNagNoise/BottomRight-eps-converted-to.pdf, id=471, 439.6425pt x 330.
+<plots/FitzNagNoise/BottomRight-eps-converted-to.pdf, id=566, 439.6425pt x 330.
 23375pt>
 File: plots/FitzNagNoise/BottomRight-eps-converted-to.pdf Graphic file (type pd
 f)
@@ -2199,44 +2329,44 @@ Package pdftex.def Info: plots/FitzNagNoise/BottomRight-eps-converted-to.pdf us
 ed on input line 51.
 (pdftex.def)             Requested size: 136.78122pt x 102.73924pt.
 )))
-(./numex.tex [23 <./plots/FitzNagNoNoise/TopLeft-eps-converted-to.pdf> <./plots
-/FitzNagNoNoise/MiddleLeft-eps-converted-to.pdf> <./plots/FitzNagNoNoise/Middle
-Middle-eps-converted-to.pdf> <./plots/FitzNagNoNoise/BottomLeft-eps-converted-t
-o.pdf> <./plots/FitzNagNoNoise/BottomMiddle-eps-converted-to.pdf> <./plots/Fitz
-NagNoNoise/BottomRight-eps-converted-to.pdf>]
-<plots/Lorenz_x.png, id=509, 1503.53021pt x 448.54532pt>
+(./numex.tex [26] <plots/Lorenz_x.png, id=574, 1503.53021pt x 448.54532pt>
 File: plots/Lorenz_x.png Graphic file (type png)
 
 <use plots/Lorenz_x.png>
 Package pdftex.def Info: plots/Lorenz_x.png used on input line 18.
 (pdftex.def)             Requested size: 427.43153pt x 127.51506pt.
 
-<plots/Lorenz_y.png, id=510, 1501.95914pt x 445.40315pt>
+<plots/Lorenz_y.png, id=575, 1501.95914pt x 445.40315pt>
 File: plots/Lorenz_y.png Graphic file (type png)
 
 <use plots/Lorenz_y.png>
 Package pdftex.def Info: plots/Lorenz_y.png used on input line 21.
 (pdftex.def)             Requested size: 427.43153pt x 126.75092pt.
 
-<plots/Lorenz_z.png, id=511, 1501.95914pt x 445.40315pt>
+<plots/Lorenz_z.png, id=576, 1501.95914pt x 445.40315pt>
 File: plots/Lorenz_z.png Graphic file (type png)
 
 <use plots/Lorenz_z.png>
 Package pdftex.def Info: plots/Lorenz_z.png used on input line 24.
 (pdftex.def)             Requested size: 427.43153pt x 126.75092pt.
-) [24 <./plots/FitzNagNoise/TopLeft-eps-converted-to.pdf> <./plots/FitzNagNoise
-/MiddleLeft-eps-converted-to.pdf> <./plots/FitzNagNoise/MiddleMiddle-eps-conver
-ted-to.pdf> <./plots/FitzNagNoise/BottomLeft-eps-converted-to.pdf> <./plots/Fit
-zNagNoise/BottomMiddle-eps-converted-to.pdf> <./plots/FitzNagNoise/BottomRight-
-eps-converted-to.pdf>] (./Main.bbl [25 <./plots/Lorenz_x.png (PNG copy)> <./plo
-ts/Lorenz_y.png (PNG copy)> <./plots/Lorenz_z.png (PNG copy)>]) [26]
+) [27 <./plots/FitzNagNoNoise/TopLeft-eps-converted-to.pdf> <./plots/FitzNagNoN
+oise/MiddleLeft-eps-converted-to.pdf> <./plots/FitzNagNoNoise/MiddleMiddle-eps-
+converted-to.pdf> <./plots/FitzNagNoNoise/BottomLeft-eps-converted-to.pdf> <./p
+lots/FitzNagNoNoise/BottomMiddle-eps-converted-to.pdf> <./plots/FitzNagNoNoise/
+BottomRight-eps-converted-to.pdf>] (./Main.bbl [28 <./plots/FitzNagNoise/TopLef
+t-eps-converted-to.pdf> <./plots/FitzNagNoise/MiddleLeft-eps-converted-to.pdf> 
+<./plots/FitzNagNoise/MiddleMiddle-eps-converted-to.pdf> <./plots/FitzNagNoise/
+BottomLeft-eps-converted-to.pdf> <./plots/FitzNagNoise/BottomMiddle-eps-convert
+ed-to.pdf> <./plots/FitzNagNoise/BottomRight-eps-converted-to.pdf>]) [29 <./plo
+ts/Lorenz_x.png (PNG copy)> <./plots/Lorenz_y.png (PNG copy)> <./plots/Lorenz_z
+.png (PNG copy)>]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 14.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 14.
  (./Main.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 14.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 14.
 Package rerunfilecheck Info: File `Main.out' has not changed.
-(rerunfilecheck)             Checksum: 2FC06F367BA69F596405BC3ACE230189;2139.
+(rerunfilecheck)             Checksum: 2D1B29B611F2F5FB4E3F7787917839D8;2319.
 
 
 LaTeX Warning: There were undefined references.
@@ -2244,13 +2374,13 @@ LaTeX Warning: There were undefined references.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 14.
  ) 
 Here is how much of TeX's memory you used:
- 35161 strings out of 493105
- 788104 string characters out of 6137071
- 1059808 words of memory out of 5000000
- 37888 multiletter control sequences out of 15000+600000
- 9953 words of font info for 37 fonts, out of 8000000 for 9000
+ 35270 strings out of 493105
+ 792264 string characters out of 6137071
+ 1066358 words of memory out of 5000000
+ 37969 multiletter control sequences out of 15000+600000
+ 11200 words of font info for 42 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 64i,21n,112p,10417b,2311s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 64i,21n,112p,10417b,2319s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/sha
 re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/tex
@@ -2258,19 +2388,21 @@ live/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/share/texlive/te
 xmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on Main.pdf (26 pages, 711060 bytes).
+pe1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
+2.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
+Output written on Main.pdf (29 pages, 1921630 bytes).
 PDF statistics:
- 650 PDF objects out of 1000 (max. 8388607)
- 567 compressed objects within 6 object streams
- 165 named destinations out of 1000 (max. 500000)
- 304 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 752 PDF objects out of 1000 (max. 8388607)
+ 645 compressed objects within 7 object streams
+ 179 named destinations out of 1000 (max. 500000)
+ 350 words of extra memory for PDF output out of 10000 (max. 10000000)
 

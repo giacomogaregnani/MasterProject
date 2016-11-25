@@ -12,8 +12,6 @@ MatrixXd diffusion(VectorXd x, std::vector<double>& param, double sigma, double 
 	return M;
 }
 
-
-
 std::vector<VectorXd> gaussMetropolisHastings(odeDef odeModel, std::vector<double>& param, double sigma,
 											  double h, double finalTime, std::vector<VectorXd>& data,
 											  std::vector<double>& dataTimes,
@@ -35,7 +33,7 @@ std::vector<VectorXd> gaussMetropolisHastings(odeDef odeModel, std::vector<doubl
 	size_t nData = data.size();
 
     // Create first parameter guess
-	int nParam = (int) param.size();
+	int nParam = static_cast<int> (param.size());
 	VectorXd paramVec(nParam);
 	for (int i = 0; i < nParam; i++) {
 		paramVec(i) = param[i];
@@ -50,11 +48,6 @@ std::vector<VectorXd> gaussMetropolisHastings(odeDef odeModel, std::vector<doubl
 
     // Initialize the variance of the initial condition (zeros if the initial condition is deterministic)
     MatrixXd initialVar = varData * MatrixXd::Identity(odeModel.size, odeModel.size);
-
-	// Compute stiffness parameters
-	if (isStable) {
-		stabParam.stiffIndex = 2.0 * std::abs(powerMethod(odeModel.odeJac(odeModel.initialCond, param), 1.0));
-	}
 
     // Compute likelihood and prior first guess of the parameters
 	oldLike = 0.0;
@@ -78,8 +71,7 @@ std::vector<VectorXd> gaussMetropolisHastings(odeDef odeModel, std::vector<doubl
     MatrixXd S = RAMinit(gamma, desiredAlpha, nParam);
 
 	// Only for positive parameters
-	double oldGauss, newGauss;
-	double currentStiffness;
+	// double oldGauss, newGauss;
 
 	for (int i = 0; i < nStepsMC; i++) {
         // Print results every 50 iterations
@@ -89,13 +81,10 @@ std::vector<VectorXd> gaussMetropolisHastings(odeDef odeModel, std::vector<doubl
 			std::cout << "S matrix: " << std::endl << S << std::endl;
 			std::cout << "prior: " << oldPrior << std::endl;
 			std::cout << "param: " << paramVec.transpose() << std::endl;
-			if (isStable) {
-				std::cout << "stiffness= " << currentStiffness << std::endl;
-			}
 		}
 
 		// Generate new guess for parameter
-		bool isPositive = false;
+		/* bool isPositive = false;
 
 		while (!isPositive) {
 			for (int j = 0; j < nParam; j++) {
@@ -107,16 +96,16 @@ std::vector<VectorXd> gaussMetropolisHastings(odeDef odeModel, std::vector<doubl
 				oldGauss = phi(paramVec(0) / (S(0, 0) * S(0, 0)));
 				newGauss = phi(paramVecN(0) / (S(0, 0) * S(0, 0)));
 			}
+		}*/
+
+		for (int j = 0; j < nParam; j++) {
+			w(j) = normal(wGenerator);
 		}
+		paramVecN = paramVec + S * w;
 
         for (int j = 0; j < nParam; j++) {
 			paramStd[j] = paramVecN(j);
 		}
-
-        // Determine stiffness index for new guess of the parameter
-        if (isStable) {
-            stabParam.stiffIndex = 2.0 * std::abs(powerMethod(odeModel.odeJac(odeModel.initialCond, paramStd), 1.0));
-        }
 
         // Compute the likelihood and the prior for this new guess
         l = 0.0;
@@ -128,13 +117,13 @@ std::vector<VectorXd> gaussMetropolisHastings(odeDef odeModel, std::vector<doubl
 
 		// Generate probability and update
 		double u = log(unif(wGenerator));
-		double alpha = std::min<double>(0.0, l + prior + oldGauss - newGauss - oldLike - oldPrior);
-        if (u < alpha) {
+		// double alpha = std::min<double>(0.0, l + prior + oldGauss - newGauss - oldLike - oldPrior);
+        double alpha = std::min<double>(0.0, l + prior - oldLike - oldPrior);
+		if (u < alpha) {
 			*accRatio += 1.0 / nStepsMC;
 			paramVec = paramVecN;
 			oldLike = l;
 			oldPrior = prior;
-			currentStiffness = stabParam.stiffIndex;
 		}
 		mcmcPath[i] = paramVec;
 

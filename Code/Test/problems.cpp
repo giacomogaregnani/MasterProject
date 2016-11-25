@@ -2,6 +2,7 @@
 #include <iostream> 
 #include "problems.hpp"
 #include <Eigen/Core>
+#include <unsupported/Eigen/MatrixFunctions>
 
 #ifndef PI
 #define PI 3.1415926535897
@@ -16,6 +17,18 @@ VectorXd lorenz(VectorXd argument, std::vector<double>& param) {
 	result(1) = argument(0) * (rho - argument(2)) - argument(1);
 	result(2) = argument(0) * argument(1) - beta * argument(2);
 	return result;
+}
+
+MatrixXd lorenzJ(VectorXd argument, std::vector<double>& param) {
+    double sigma = param[0], rho = param[1], beta = param[2];
+
+    MatrixXd result(3, 3);
+
+    result << - sigma, sigma, 0.0,
+              rho - argument(2), - 1.0, - argument(0),
+              argument(1), argument(0), - beta;
+
+    return result;
 }
 
 VectorXd test(VectorXd argument, std::vector<double>& param) {
@@ -41,11 +54,8 @@ MatrixXd fitznagJ(VectorXd argument, std::vector<double>& param)
 {
     double b = param[1], c = param[2];
     MatrixXd result(2, 2);
-
-    result(0, 0) = c * (1.0 - argument(0) * argument(0));
-    result(0, 1) = c;
-    result(1, 0) = -1.0 / c;
-    result(1, 1) = -1.0 * b / c;
+	result << c * (1.0 - argument(0) * argument(0)), c,
+			  -1.0 / c, -1.0 * b / c;
 
     return result;
 }
@@ -61,7 +71,7 @@ MatrixXd testOneDJ(VectorXd argument, std::vector<double>& param) {
 VectorXd vdPol(VectorXd argument, std::vector<double>& param) {
 	VectorXd result(2);
 	result(0) = argument(1);
-	result(1) = param[0] * (1 - argument(0) * argument(0)) * argument(1) - argument(0);
+	result(1) = param[0] * ((1 - argument(0) * argument(0)) * argument(1) - argument(0));
 	return result;
 }
 
@@ -70,7 +80,7 @@ MatrixXd vdPolJ(VectorXd argument, std::vector<double>& param) {
 	MatrixXd result(2, 2);
 	result(0, 0) = 0.0;
 	result(0, 1) = 1.0;
-	result(1, 0) = -2.0 * param[0] * argument(1) * argument(0) - 1.0;
+	result(1, 0) = -param[0] * (2.0 * argument(1) * argument(0) + 1.0);
 	result(0, 1) = param[0] * (1 - argument(0) * argument(0));
 	return result;
 }
@@ -83,6 +93,38 @@ VectorXd robertson(VectorXd argument, std::vector<double>& param) {
 
 	return result;
 }
+
+VectorXd hires(VectorXd y, std::vector<double>& param)
+{
+    VectorXd result(8);
+
+    result(0) = - param[0] * y(0) + 0.43 * y(1) + param[2] * y(2) + 0.0007;
+    result(1) = param[0] * y(0) - 8.75 * y(1);
+    result(2) = param[1] * y(2) + 0.43 * y(3) + 0.035 * y(4);
+    result(3) = param[2] * y(1) + param[0] * y(2) - 1.12 * y(3);
+    result(4) = param[3] * y(4) + 0.43 * y(5) + 0.43 * y(6);
+    result(5) = - param[4] * y(5) * y(7) + 0.69 * y(3) + param[0] * y(4) -
+                0.43 * y(5) + 0.69 * y(6);
+    result(6) = param[4] * y(5) * y(7) - 1.81 * y(6);
+    result(7) = - result(6);
+
+    return result;
+}
+
+MatrixXd hiresJ(VectorXd y, std::vector<double>& param)
+{
+    MatrixXd result(8, 8);
+    result << - param[0], 0.43, param[2], 0.0, 0.0, 0.0, 0.0, 0.0,
+              param[0], - 8.75, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+              0.0, 0.0, param[1], 0.43, 0.035, 0.0, 0.0, 0.0,
+              0.0, param[2], param[0], - 1.12, 0.0, 0.0, 0.0, 0.0,
+              0.0, 0.0, 0.0, 0.0, param[3], 0.43, 0.43, 0.0,
+              0.0, 0.0, 0.0, 0.69, param[0], - 0.43 - param[4] * y(7), 0.69, - param[4] * y(5),
+              0.0, 0.0, 0.0, 0.0, 0.0, param[4] * y(7), - 1.81, param[4] * y(5),
+              0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1, 0.0;
+    return result;
+}
+
 
 VectorXd bruss(VectorXd argument, std::vector<double>& param)
 {
@@ -158,8 +200,10 @@ MatrixXd brussJ(VectorXd argument, std::vector<double>& param)
 	return result;
 }
 
-// For Poisson test, a class avoids to form the matrix only once
+// For Poisson test, a class allows to form the matrix only once
 MatrixXd Poisson::A(10, 10);
+
+VectorXd Poisson::initialCond(10);
 
 VectorXd Poisson::poissonTest(VectorXd argument, std::vector<double>& param) {
 	long int N = argument.size();
@@ -172,7 +216,14 @@ MatrixXd Poisson::poissonTestJ(VectorXd argument, std::vector<double> &param)
 	return A;
 }
 
-Poisson::Poisson(int N) {
+VectorXd Poisson::poissonExact(std::vector<double> &param, double time)
+{
+	return (A * time).exp() * initialCond;
+}
+
+
+Poisson::Poisson(int N)
+{
     A = MatrixXd::Zero(N, N);
     for (int i = 0; i < N - 1; i++) {
         A(i, i) = -2.0;
@@ -180,6 +231,10 @@ Poisson::Poisson(int N) {
         A(i + 1, i) = 1.0;
     }
     A(N - 1, N - 1) = -2.0;
+
+	for (int i = 0; i < N; i++) {
+		initialCond(i) = 1.0;
+	}
 }
 
 void setProblem(odeDef* odeModel)
@@ -192,6 +247,10 @@ void setProblem(odeDef* odeModel)
 			((*odeModel).initialCond)(1) = 1.0;
 			(*odeModel).odeFunc = &fitznag;
             (*odeModel).odeJac = &fitznagJ;
+			((*odeModel).refParam).resize(3);
+			(*odeModel).refParam[0] = 0.2;
+			(*odeModel).refParam[1] = 0.2;
+			(*odeModel).refParam[2] = 3.0;
 			break;
 		case LORENZ:
 			((*odeModel).size) = 3;
@@ -200,7 +259,12 @@ void setProblem(odeDef* odeModel)
 			((*odeModel).initialCond)(1) = -1.0;
 			((*odeModel).initialCond)(2) = 40.0;
 			(*odeModel).odeFunc = &lorenz;
-			break;	
+            (*odeModel).odeJac = &lorenzJ;
+			((*odeModel).refParam).resize(3);
+            (*odeModel).refParam[0] = 10.0;
+            (*odeModel).refParam[1] = 28.0;
+            (*odeModel).refParam[2] = 8.0 / 3.0;
+            break;
 		case TEST:
 			(*odeModel).size = 3;
 			((*odeModel).initialCond).resize((*odeModel).size);
@@ -223,6 +287,8 @@ void setProblem(odeDef* odeModel)
 			((*odeModel).initialCond)(1) = 0.0; 
 			(*odeModel).odeFunc = &vdPol;
 			(*odeModel).odeJac = &vdPolJ;
+			((*odeModel).refParam).resize(1);
+			((*odeModel).refParam)[0] = 1.0;
 			break;
 		case ROBERTSON:
 			(*odeModel).size = 3;
@@ -245,18 +311,36 @@ void setProblem(odeDef* odeModel)
 			}
 			(*odeModel).odeFunc = &bruss;
 			(*odeModel).odeJac = &brussJ;
+			((*odeModel).refParam).resize(1);
+			((*odeModel).refParam)[0] = 1.0;
+			break;
+		case HIRES:
+			(*odeModel).size = 8;
+			((*odeModel).initialCond).resize((*odeModel).size);
+			for (int i = 1; i < 7; i++) {
+				((*odeModel).initialCond)(i) = 0.0;
+			}
+			((*odeModel).initialCond)(0) = 1.0;
+			((*odeModel).initialCond)(7) = 0.0057;
+			(*odeModel).odeFunc = &hires;
+			(*odeModel).odeJac = &hiresJ;
+			((*odeModel).refParam).resize(5);
+			((*odeModel).refParam)[0] = 1.71;
+			((*odeModel).refParam)[1] = -10.03;
+			((*odeModel).refParam)[2] = 8.32;
+			((*odeModel).refParam)[3] = -1.745;
+			((*odeModel).refParam)[4] = 280.0;
 			break;
 		case POISSON:
             Poisson P(10);
 			(*odeModel).size = 10;
 			((*odeModel).initialCond).resize((*odeModel).size);
-			for (int i = 0; i < (*odeModel).size; i++) {
-				((*odeModel).initialCond)(i) = 1.0;
-			}
-			(*odeModel).odeFunc = &P.poissonTest;
-			(*odeModel).odeJac = &P.poissonTestJ;
+			odeModel->initialCond = P.initialCond;
+			odeModel->odeFunc = &P.poissonTest;
+			odeModel->odeJac = &P.poissonTestJ;
+			odeModel->exactSol = &P.poissonExact;
+			(odeModel->refParam).resize(1);
+			(odeModel->refParam)[0] = 1.0;
 			break;
 	}
 }
-
-

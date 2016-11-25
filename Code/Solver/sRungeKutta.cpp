@@ -20,7 +20,7 @@ detSROCK::detSROCK(int n, VectorXd (*func) (VectorXd, std::vector<double>&),
 	}
 }
 
-VectorXd detSROCK::oneStep(VectorXd solution, double h)
+VectorXd detSROCK::oneStep(VectorXd solution, double h, int unUsed)
 {
 	// Hard-code the first two stages
 	K[0] = stageCoeff[0][0] * solution;
@@ -86,25 +86,26 @@ RKC::RKC(int n, VectorXd (*func) (VectorXd, std::vector<double>&),
 	size = n;
 	parameters = paramVec;
 	nStages = stages;
-	K.resize(nStages + 1);
-	for (auto it : K) {
-		it.resize(size);
-	}
+	kOld.resize(size);
+	kNew.resize(size);
+	kCurr.resize(size);
 }
 
-VectorXd RKC::oneStep(VectorXd lastValue, double h)
+VectorXd RKC::oneStep(VectorXd lastValue, double h, int localStages)
 {
-	K[0] = lastValue;
-	double coeff = h / static_cast<double>(nStages * nStages);
-	K[1] = lastValue + f(lastValue, parameters) * coeff;
+	kOld = lastValue;
+	double coeff = h / static_cast<double>(localStages * localStages);
+	kNew = lastValue + f(lastValue, parameters) * coeff;
 	coeff = 2.0 * coeff;
 
-	for (int i = 2; i < nStages + 1; i++) {
-		K[i] = f(K[i - 1], parameters) * coeff +
-			   K[i - 1] * 2.0 - K[i - 2];
+	for (int i = 2; i < localStages + 1; i++) {
+		kCurr = f(kNew, parameters) * coeff +
+			   kNew * 2.0 - kOld;
+		kOld = kNew;
+		kNew = kCurr;
 	}
 
-	return K.back();
+	return kCurr;
 }
 
 int RKC::getOrder(void)

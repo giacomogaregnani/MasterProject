@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="projecttest"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\Downloads\;CMake Files\..\..\Downloads\clion-2016.2.3\;CMake Files\..\..\Downloads\clion-2016.2.3\bin\;CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\;CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\;CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\;CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\;CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\Platform\;CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\Compiler\;CMake Files\Solver\;CMake Files\Test\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Solver">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Solver/libSolver.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Solver"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH_SRC=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Solver/Makefile&quot;  VERBOSE=1 Solver"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Solver/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Solver/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Solver/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Solver/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Solver/libSolver.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Solver"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH_SRC=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Solver/Makefile&quot;  VERBOSE=1 Solver/fast"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Solver/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Solver/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Solver/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="refSol">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/refSol" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 refSol"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="refSol/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/refSol" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 refSol/fast"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="plotGauss">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/plotGauss" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 plotGauss"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="plotGauss/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/plotGauss" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 plotGauss/fast"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="testInv">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/testInv" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 testInv"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="testInv/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/testInv" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 testInv/fast"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="binary">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/binary" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 binary"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="binary/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/binary" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 binary/fast"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="likEst">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/likEst" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 likEst"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="likEst/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/likEst" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 likEst/fast"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="plotter">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/plotter" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 plotter"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="plotter/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/plotter" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 plotter/fast"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="mcmcParam">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/mcmcParam" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 mcmcParam"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="mcmcParam/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/mcmcParam" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 mcmcParam/fast"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="jacobian">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/jacobian" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 jacobian"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="jacobian/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/jacobian" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 jacobian/fast"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="testVar">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/testVar" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 testVar"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="testVar/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/testVar" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 testVar/fast"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Solver/ProbMethod.cpp">
+			<Option target="Solver"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Solver/RungeKutta.cpp">
+			<Option target="Solver"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Solver/RungeKutta.hpp">
+			<Option target="Solver"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Solver/Solver.hpp">
+			<Option target="Solver"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Solver/ThirdOrderGauss.cpp">
+			<Option target="Solver"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Solver/mlmc.cpp">
+			<Option target="Solver"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Solver/sProbMethod.cpp">
+			<Option target="Solver"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Solver/sRungeKutta.cpp">
+			<Option target="Solver"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Solver/sRungeKutta.hpp">
+			<Option target="Solver"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Solver/smlmc.cpp">
+			<Option target="Solver"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Solver/tools.cpp">
+			<Option target="Solver"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/Metropolis.cpp">
+			<Option target="likEst"/>
+			<Option target="mcmcParam"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/gaussMetropolis.cpp">
+			<Option target="likEst"/>
+			<Option target="mcmcParam"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/generateRefSol.cpp">
+			<Option target="refSol"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/jacTest.cpp">
+			<Option target="jacobian"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/likelihoodEstimator.cpp">
+			<Option target="likEst"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/mcmcParamTest.cpp">
+			<Option target="mcmcParam"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/mcmcTools.cpp">
+			<Option target="likEst"/>
+			<Option target="mcmcParam"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/mcmcTools.hpp">
+			<Option target="likEst"/>
+			<Option target="mcmcParam"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/mlMetropolis.cpp">
+			<Option target="likEst"/>
+			<Option target="mcmcParam"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/plotGaussTrajectories.cpp">
+			<Option target="plotGauss"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/plotTrajectories.cpp">
+			<Option target="plotter"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/problems.cpp">
+			<Option target="refSol"/>
+			<Option target="plotGauss"/>
+			<Option target="likEst"/>
+			<Option target="plotter"/>
+			<Option target="mcmcParam"/>
+			<Option target="jacobian"/>
+			<Option target="testVar"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/problems.hpp">
+			<Option target="refSol"/>
+			<Option target="plotGauss"/>
+			<Option target="likEst"/>
+			<Option target="plotter"/>
+			<Option target="mcmcParam"/>
+			<Option target="jacobian"/>
+			<Option target="testVar"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/sMetropolis.cpp">
+			<Option target="likEst"/>
+			<Option target="mcmcParam"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/smlMetropolis.cpp">
+			<Option target="likEst"/>
+			<Option target="mcmcParam"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/testBinary.cpp">
+			<Option target="binary"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/testInverse.cpp">
+			<Option target="testInv"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/testMH.cpp">
+			<Option target="likEst"/>
+			<Option target="mcmcParam"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/testVarMC.cpp">
+			<Option target="testVar"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/../../Downloads/clion-2016.2.3/bin/cmake/share/cmake-3.6/Modules/CMakeSystemSpecificInitialize.cmake">
+			<Option virtualFolder="CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/../../Downloads/clion-2016.2.3/bin/cmake/share/cmake-3.6/Modules/CMakeSystemSpecificInformation.cmake">
+			<Option virtualFolder="CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/../../Downloads/clion-2016.2.3/bin/cmake/share/cmake-3.6/Modules/CMakeGenericSystem.cmake">
+			<Option virtualFolder="CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/../../Downloads/clion-2016.2.3/bin/cmake/share/cmake-3.6/Modules/CMakeFindCodeBlocks.cmake">
+			<Option virtualFolder="CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/../../Downloads/clion-2016.2.3/bin/cmake/share/cmake-3.6/Modules/CMakeExtraGeneratorDetermineCompilerMacrosAndIncludeDirs.cmake">
+			<Option virtualFolder="CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/../../Downloads/clion-2016.2.3/bin/cmake/share/cmake-3.6/Modules/ProcessorCount.cmake">
+			<Option virtualFolder="CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/../../Downloads/clion-2016.2.3/bin/cmake/share/cmake-3.6/Modules/CMakeCInformation.cmake">
+			<Option virtualFolder="CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/../../Downloads/clion-2016.2.3/bin/cmake/share/cmake-3.6/Modules/CMakeLanguageInformation.cmake">
+			<Option virtualFolder="CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/../../Downloads/clion-2016.2.3/bin/cmake/share/cmake-3.6/Modules/CMakeCommonLanguageInclude.cmake">
+			<Option virtualFolder="CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/../../Downloads/clion-2016.2.3/bin/cmake/share/cmake-3.6/Modules/CMakeCXXInformation.cmake">
+			<Option virtualFolder="CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/../../Downloads/clion-2016.2.3/bin/cmake/share/cmake-3.6/Modules/CMakeLanguageInformation.cmake">
+			<Option virtualFolder="CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/../../Downloads/clion-2016.2.3/bin/cmake/share/cmake-3.6/Modules/CMakeCommonLanguageInclude.cmake">
+			<Option virtualFolder="CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/../../Downloads/clion-2016.2.3/bin/cmake/share/cmake-3.6/Modules/Platform/Linux.cmake">
+			<Option virtualFolder="CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\Platform\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/../../Downloads/clion-2016.2.3/bin/cmake/share/cmake-3.6/Modules/Platform/UnixPaths.cmake">
+			<Option virtualFolder="CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\Platform\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/../../Downloads/clion-2016.2.3/bin/cmake/share/cmake-3.6/Modules/Platform/Linux-GNU-C.cmake">
+			<Option virtualFolder="CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\Platform\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/../../Downloads/clion-2016.2.3/bin/cmake/share/cmake-3.6/Modules/Platform/Linux-GNU.cmake">
+			<Option virtualFolder="CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\Platform\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/../../Downloads/clion-2016.2.3/bin/cmake/share/cmake-3.6/Modules/Platform/Linux-GNU-CXX.cmake">
+			<Option virtualFolder="CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\Platform\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/../../Downloads/clion-2016.2.3/bin/cmake/share/cmake-3.6/Modules/Platform/Linux-GNU.cmake">
+			<Option virtualFolder="CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\Platform\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/../../Downloads/clion-2016.2.3/bin/cmake/share/cmake-3.6/Modules/Compiler/GNU-C.cmake">
+			<Option virtualFolder="CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\Compiler\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/../../Downloads/clion-2016.2.3/bin/cmake/share/cmake-3.6/Modules/Compiler/GNU.cmake">
+			<Option virtualFolder="CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\Compiler\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/../../Downloads/clion-2016.2.3/bin/cmake/share/cmake-3.6/Modules/Compiler/GNU-CXX.cmake">
+			<Option virtualFolder="CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\Compiler\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/../../Downloads/clion-2016.2.3/bin/cmake/share/cmake-3.6/Modules/Compiler/GNU.cmake">
+			<Option virtualFolder="CMake Files\..\..\Downloads\clion-2016.2.3\bin\cmake\share\cmake-3.6\Modules\Compiler\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Solver/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\Solver\"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\Test\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

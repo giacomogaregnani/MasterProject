@@ -48,20 +48,29 @@ int main(int argc, char* argv[])
 	std::vector<int> nMCloop = {};
 
 	if (MC && multiLevel) {
-        int nExp = 6;
-        double maxH = 0.1;
+        int nExp = 4;
+        double maxH = 0.125;
         for (int i = 0; i < nExp; i++) {
             h.push_back(maxH);
             maxH /= 2;
         }
         nMCloop.push_back(1);
 	} else if (MC) {
-        h.push_back(0.2);
-		int nDouble[] = {10, 100, 1000};
-		nMCloop.insert(nMCloop.end(), nDouble, nDouble + 3);
+		int nExp = 1;
+		double maxH = 0.01;
+        for (int i = 0; i < 100; i++) {
+            nMCloop.push_back(650);
+        }
+        h.push_back(maxH);
+        /* int nMC[3] = {300, 400, 1000};
+        nMCloop.insert(nMCloop.end(), &nMC[0], &nMC[0] + 3);
+		for (int i = 0; i < nExp; i++) {
+			h.push_back(maxH);
+			maxH /= 2;
+        } */
 	} else {
         int nExp = 4;
-        double maxH = 0.01;
+        double maxH = 0.001;
         for (int i = 0; i < nExp; i++) {
             h.push_back(maxH);
             maxH /= 2;
@@ -71,14 +80,14 @@ int main(int argc, char* argv[])
 
     // PROBLEM DATA
     odeDef odeModel;
-    odeModel.ode = BRUSS;
+    odeModel.ode = FITZNAG;
 	setProblem(&odeModel);
 
 	// Choose parameter list (on which inference will be done)
-    std::vector<double> paramList = {1.0};
+    std::vector<double> paramList = odeModel.refParam;
 
     // DATA ACQUISITION FROM REFSOL
-    std::string refFile("refSolBruss");
+    std::string refFile("refSolFitznag");
 	std::fstream refSolution;
 	std::string extension(".txt");
 	std::string slash("/");
@@ -105,16 +114,16 @@ int main(int argc, char* argv[])
     // DATA UNCERTAINTY (COHERENT WITH REFSOL)
 	double varData = 1e-2;
 
-    // Counter and time for output files
-    int count = 0;
-
 	time_t now;
 	now = time(NULL);
 	char charDate[18];
 	if (now != -1) {
-		strftime(charDate, 18, "%d_%m_%Y_%I_%M", gmtime(&now));
+		strftime(charDate, 18, "%d_%m_%Y_%I_%M_", gmtime(&now));
 	}
 	std::string strDate(charDate);
+
+    // a counter
+    int count = 0;
 
     for (auto ith : h) {
 		for (auto nInternalMC : nMCloop) {
@@ -132,34 +141,39 @@ int main(int argc, char* argv[])
 			std::normal_distribution<double> disturbOnParam(0.0, 0.01);
 			std::default_random_engine generator{(unsigned int) time(NULL)};
 			for (size_t i = 0; i < nParam; i++) {
-				paramGuess[i] = paramList[i] + disturbOnParam(generator);
+                paramGuess[i] = paramList[i];
+				// paramGuess[i] = paramList[i] + disturbOnParam(generator);
 			}
 
             // PARAMETERS OF THE CHAIN
 			std::vector<VectorXd> mcmcPath;
-			int nMCMC = 50000;
+			int nMCMC = 1000;
 			double sigma = 0.5;
-
-            // ONLY FOR STABLE METHODS
-			double damping = 0.0;
-            double rho = 25;
 
             // COST
             long int cost;
 			double accRatio;
 
 			StabValues stabParam;
-			if (stableMethod && count == 0) {
+			if (stableMethod) {
 				stabParam.damping = 0.1;
                 stabParam.method = stdRKC;
 			}
 
+            bool isPositive = false;
+            if (odeModel.ode == BRUSS) {
+                isPositive = true;
+            }
+
+            std::vector<double> likelihoods = {};
+
 			if (MC) {
 				if (!stableMethod) {
 					if (!multiLevel) {
-						mcmcPath = metropolisHastings(odeModel.initialCond, paramGuess, sigma, odeModel.size, ith, finalTime,
-													  data, times, odeModel.odeFunc, priorMean, priorVariance, nInternalMC,
-													  nMCMC, varData, &accRatio);
+                        mcmcPath = MetropolisHastings(odeModel, paramGuess, sigma, ith, finalTime,
+                                                      data, times, priorMean, priorVariance, nInternalMC,
+                                                      nMCMC, varData, &cost, isPositive,
+                                                      likelihoods, generator);
 					} else {
 						mcmcPath = MLmetropolisHastings(odeModel.initialCond, paramGuess, sigma, odeModel.size, ith, finalTime,
 														data, times, odeModel.odeFunc, priorMean, priorVariance, nInternalMC,
@@ -169,11 +183,12 @@ int main(int argc, char* argv[])
 					if (!multiLevel) {
 						mcmcPath = sMetropolisHastings(odeModel, paramGuess, sigma, ith, finalTime,
 													   data, times, priorMean, priorVariance, nInternalMC,
-													   nMCMC, damping, varData);
+													   nMCMC, stabParam.damping, varData, &cost, isPositive,
+                                                       likelihoods);
 					} else {
-						mcmcPath = sMLmetropolisHastings(odeModel.initialCond, paramGuess, sigma, odeModel.size, ith, finalTime,
-														 data, times, odeModel.odeFunc, priorMean, priorVariance, nInternalMC,
-														 nMCMC, varData, rho, damping);
+						mcmcPath = sMLmetropolisHastings(odeModel, paramGuess, sigma, ith, finalTime,
+														 data, times, priorMean, priorVariance,
+														 nMCMC, varData, stabParam.damping, &cost);
 					}
 				}
 			} else {
@@ -188,7 +203,9 @@ int main(int argc, char* argv[])
                 printResults = false;
             }
             std::ofstream results;
-			std::string iteration = std::to_string(count++);
+			std::string hIter = std::to_string(static_cast<int>(ith * 1000));
+            std::string nMC = std::to_string(nInternalMC);
+            std::string nExperience = std::to_string(count++);
 			std::string filepath;
 			// default value to "test"
 			if (argc > 1) {
@@ -196,16 +213,15 @@ int main(int argc, char* argv[])
 			} else {
 				filepath = "test";
 			}
-			filepath = filepath + strDate + iteration + extension;
+			filepath = filepath + strDate + "_MC_" + nMC + "_h_" + hIter + "_Exp_" + nExperience + extension;
 			std::string finalpath = folder + slash + filepath;
             if (printResults) results.open(finalpath , std::ofstream::out | std::ofstream::trunc);
 			std::cout << finalpath << std::endl;
 
             // WRITE THE COST ON A FILE
-            if (multiLevel && !stableMethod) {
+            if (stableMethod && printResults && false) {
                 std::ofstream costFile;
-                filepath = argv[1] + std::string("cost");
-                filepath = filepath + iteration + extension;
+                filepath = argv[1] + strDate + "_MC_" + nMC + "_h_" + hIter + std::string("_cost") + extension;
                 finalpath = folder + slash + filepath;
                 costFile.open(finalpath, std::ofstream::out | std::ofstream::trunc);
                 costFile << cost;
@@ -214,8 +230,8 @@ int main(int argc, char* argv[])
 
 			// WRITE RESULTS ON FILE
             if (printResults) {
-                for (auto it : mcmcPath) {
-                    results << it.transpose() << "\n";
+                for (int i = 0; i < nMCMC; i++) {
+                    results << (mcmcPath[i]).transpose() << " " << likelihoods[i] << "\n";
                 }
             }
 

@@ -1,5 +1,5 @@
 Code/.idea
-Code/data
+Code/data/*.txt
 Code/eigen
 Code/build
 Report/plots

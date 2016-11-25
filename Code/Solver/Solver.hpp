@@ -21,7 +21,8 @@ enum problems {
     VDPOL,
     ROBERTSON,
     BRUSS,
-    POISSON
+    POISSON,
+    HIRES,
 };
 
 struct odeDef {
@@ -30,6 +31,8 @@ struct odeDef {
     VectorXd initialCond;
     VectorXd (*odeFunc) (VectorXd, std::vector<double>&);
     MatrixXd (*odeJac) (VectorXd, std::vector<double>&);
+	VectorXd (*exactSol) (std::vector<double>&, double);
+    std::vector<double> refParam;
 };
 
 enum stabMethods {
@@ -45,7 +48,7 @@ struct StabValues {
 	stabMethods method;
 };
 
-double powerMethod(MatrixXd A, double tol);
+double powerMethod(MatrixXd A, double tol, int nMax);
 
 MatrixXd triInv(MatrixXd A, int size);
 
@@ -120,9 +123,9 @@ public:
 
 	VectorXd& getSolution(void);
 
-	void oneStep(std::default_random_engine& generator, double step);
+	void oneStep(std::default_random_engine& generator, double step, int localStages);
 
-	VectorXd oneStepGiven(VectorXd& xi, double step);
+	VectorXd oneStepGiven(VectorXd& xi, double step, int localStages);
 
 	void resetIC(void);
 };
@@ -256,6 +259,9 @@ class ThirdOrderGauss {
 	// parameters defining the system
 	std::vector<double> theta;
 
+	// The ode
+	odeDef ODE;
+
 	// Variance and square root of the variance
     MatrixXd P;
 	MatrixXd lChol;
@@ -319,6 +325,9 @@ public:
 					MatrixXd (*diffusion) (VectorXd, std::vector<double>&, double, double),
 					double dataVariance, double step, double sigmadiff, bool isStiff,
 					StabValues* stability);
+
+	VectorXd getMean(void);
+	MatrixXd getVariance(void);
 
 	double oneStep(VectorXd data, int nSteps);
 };

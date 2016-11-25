@@ -28,7 +28,7 @@ VectorXd& sProbMethod<T>::getSolution(void)
 }
 
 template <class T> 
-void sProbMethod<T>::oneStep(std::default_random_engine& generator, double step) 
+void sProbMethod<T>::oneStep(std::default_random_engine& generator, double step, int localStages)
 {
 	VectorXd noise(size);
 	for (int i = 0; i < size; i++){	
@@ -36,24 +36,24 @@ void sProbMethod<T>::oneStep(std::default_random_engine& generator, double step)
 	}
 
 	if (step == h) {
-		VectorXd detSol = detSolver->oneStep(solution, h);
+		VectorXd detSol = detSolver->oneStep(solution, h, localStages);
 		solution = detSol + hfunc * rootsigma * noise;
 	} else {
 		double hfunctmp = pow(h, detSolver->getOrder() + 0.5);
-		VectorXd detSol = detSolver->oneStep(solution, step);
+		VectorXd detSol = detSolver->oneStep(solution, step, localStages);
 		solution = detSol + hfunctmp * rootsigma * noise;
 	}
 }
 
 template <class T>
-VectorXd sProbMethod<T>::oneStepGiven(VectorXd& noise, double step)
+VectorXd sProbMethod<T>::oneStepGiven(VectorXd& noise, double step, int localStages)
 {
 	if (step == h) {
-		VectorXd detSol = detSolver->oneStep(solution, h);
+		VectorXd detSol = detSolver->oneStep(solution, h, localStages);
 		solution = detSol + hfunc * rootsigma * noise;
 	} else {
 		double hfunctmp = pow(h, detSolver->getOrder() + 0.5);
-		VectorXd detSol = detSolver->oneStep(solution, step);
+		VectorXd detSol = detSolver->oneStep(solution, step, localStages);
 		solution = detSol + hfunctmp * rootsigma * noise;
 	}
 	return solution;

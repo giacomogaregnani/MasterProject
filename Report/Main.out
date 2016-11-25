@@ -13,15 +13,17 @@
 \BOOKMARK [2][-]{subsection.2.3}{Strong convergence}{section.2}% 13
 \BOOKMARK [2][-]{subsection.2.4}{Weak convergence}{section.2}% 14
 \BOOKMARK [3][-]{subsubsection.2.4.1}{Numerical verification of weak order}{subsection.2.4}% 15
-\BOOKMARK [2][-]{subsection.2.5}{Multi-level Monte Carlo}{section.2}% 16
-\BOOKMARK [3][-]{subsubsection.2.5.1}{Numerical example}{subsection.2.5}% 17
-\BOOKMARK [1][-]{section.3}{Bayesian inference of parameters}{}% 18
-\BOOKMARK [2][-]{subsection.3.1}{Bayesian inference - an introduction}{section.3}% 19
-\BOOKMARK [2][-]{subsection.3.2}{Bayesian inference of the parameters of an ODE}{section.3}% 20
-\BOOKMARK [2][-]{subsection.3.3}{Markov Chain Monte Carlo methods}{section.3}% 21
-\BOOKMARK [3][-]{subsubsection.3.3.1}{Noisy pseudo-marginal MCMC}{subsection.3.3}% 22
-\BOOKMARK [3][-]{subsubsection.3.3.2}{A MLMC approach}{subsection.3.3}% 23
-\BOOKMARK [3][-]{subsubsection.3.3.3}{Numerical example}{subsection.3.3}% 24
-\BOOKMARK [3][-]{subsubsection.3.3.4}{A Gaussian filtering approach}{subsection.3.3}% 25
-\BOOKMARK [2][-]{subsection.3.4}{Numerical example}{section.3}% 26
-\BOOKMARK [1][-]{section.4}{Numerical example}{}% 27
+\BOOKMARK [2][-]{subsection.2.5}{Monte Carlo approximation of probabilistic solvers}{section.2}% 16
+\BOOKMARK [3][-]{subsubsection.2.5.1}{Numerical experiment}{subsection.2.5}% 17
+\BOOKMARK [2][-]{subsection.2.6}{Multi-level Monte Carlo}{section.2}% 18
+\BOOKMARK [3][-]{subsubsection.2.6.1}{Numerical example}{subsection.2.6}% 19
+\BOOKMARK [1][-]{section.3}{Bayesian inference of parameters}{}% 20
+\BOOKMARK [2][-]{subsection.3.1}{Bayesian inference - an introduction}{section.3}% 21
+\BOOKMARK [2][-]{subsection.3.2}{Bayesian inference of the parameters of an ODE}{section.3}% 22
+\BOOKMARK [2][-]{subsection.3.3}{Markov Chain Monte Carlo methods}{section.3}% 23
+\BOOKMARK [3][-]{subsubsection.3.3.1}{Noisy pseudo-marginal MCMC}{subsection.3.3}% 24
+\BOOKMARK [3][-]{subsubsection.3.3.2}{A MLMC approach}{subsection.3.3}% 25
+\BOOKMARK [3][-]{subsubsection.3.3.3}{Numerical example}{subsection.3.3}% 26
+\BOOKMARK [3][-]{subsubsection.3.3.4}{A Gaussian filtering approach}{subsection.3.3}% 27
+\BOOKMARK [2][-]{subsection.3.4}{Numerical example}{section.3}% 28
+\BOOKMARK [1][-]{section.4}{Numerical example}{}% 29
