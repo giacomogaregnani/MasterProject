@@ -1,0 +1,96 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
+\definecolor{mycolor3}{rgb}{0.92900,0.69400,0.12500}%
+\definecolor{mycolor4}{rgb}{0.49400,0.18400,0.55600}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=4.717in,
+height=3.721in,
+at={(0.791in,0.502in)},
+scale only axis,
+xmode=log,
+xmin=0.01,
+xmax=1,
+xminorticks=true,
+xlabel={$h$},
+ymode=log,
+ymin=1e-06,
+ymax=1,
+yminorticks=true,
+ylabel={error},
+axis background/.style={fill=white},
+legend style={at={(0.97,0.03)},anchor=south east,legend cell align=left,align=left,draw=white!15!black}
+]
+\addplot [color=mycolor1,solid,mark=o,mark options={solid}]
+  table[row sep=crcr]{%
+0.25	0.631246661321072\\
+0.125	0.271954994254564\\
+0.0625	0.0934646255275224\\
+0.03125	0.0288825692070494\\
+};
+\addlegendentry{$p = 1$};
+
+\addplot [color=mycolor2,solid,mark=+,mark options={solid}]
+  table[row sep=crcr]{%
+0.25	0.343449960636189\\
+0.125	0.0562182182303921\\
+0.0625	0.00706611887813939\\
+0.03125	0.000811541742610916\\
+};
+\addlegendentry{$p = 1.5$};
+
+\addplot [color=mycolor3,solid,mark=triangle,mark options={solid,rotate=90}]
+  table[row sep=crcr]{%
+0.25	0.160147596847408\\
+0.125	0.00949041732485985\\
+0.0625	0.000560514049779203\\
+0.03125	8.000000000008e-06\\
+};
+\addlegendentry{$p = 2$};
+
+\addplot [color=mycolor4,solid,mark=asterisk,mark options={solid}]
+  table[row sep=crcr]{%
+0.25	0.0855526336473634\\
+0.125	0.00334580468646921\\
+0.0625	0.00015008331019791\\
+0.03125	2.06155281282234e-05\\
+};
+\addlegendentry{$p = 2.5$};
+
+\addplot [color=black,dashed]
+  table[row sep=crcr]{%
+0.25	0.625\\
+0.125	0.15625\\
+0.0625	0.0390625\\
+0.03125	0.009765625\\
+};
+\addlegendentry{slope 2};
+
+\addplot [color=black,dashdotted]
+  table[row sep=crcr]{%
+0.25	0.15625\\
+0.125	0.01953125\\
+0.0625	0.00244140625\\
+0.03125	0.00030517578125\\
+};
+\addlegendentry{slope 3};
+
+\addplot [color=black,dotted]
+  table[row sep=crcr]{%
+0.25	0.0390625\\
+0.125	0.00244140625\\
+0.0625	0.000152587890625\\
+0.03125	9.5367431640625e-06\\
+};
+\addlegendentry{slope 4};
+
+\end{axis}
+\end{tikzpicture}%
