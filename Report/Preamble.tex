@@ -1,6 +1,6 @@
 % BASICS
 \usepackage{vmargin}
-\setlength{\footskip}{20pt}
+%\setlength{\footskip}{20pt}
 \usepackage[utf8x]{inputenc}
 \usepackage[title,titletoc]{appendix}
 % MATHS
@@ -31,9 +31,10 @@
 \newcommand{\iid}{\ensuremath{\stackrel{\text{i.i.d.}}{\sim}}}
 \newtheorem{theorem}{Proposition}[section]
 \newtheorem{lemma}{Lemma}[section]
-\newtheorem{remark}{Remark}[section]
 \newtheorem{assumption}{Assumption}[section]
 \newtheorem{definition}{Definition}[section]
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[section]
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\E}{\mathbb{E}}
@@ -46,5 +47,5 @@
 \newcommand{\MSE}{\operatorname{MSE}}
 \newcommand{\MH}{\mathrm{MH}}
 \newcommand{\ttt}{\texttt}
-
-
+\newcommand{\Hell}{d_{\mathrm{Hell}}}
+\newcommand{\sksum}{\textstyle\sum}

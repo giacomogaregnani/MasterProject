@@ -1,0 +1,62 @@
+% This file was created by matlab2tikz.
+%
+%The latest EFupdates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=4.717in,
+height=3.721in,
+at={(0.791in,0.502in)},
+scale only axis,
+xmode=log,
+xmin=0.001,
+xmax=0.1,
+xminorticks=true,
+ymode=log,
+ymin=0.01,
+ymax=1,
+yminorticks=true,
+xmajorgrids,
+ymajorgrids,
+xlabel = {$h$},
+xlabel style = {font=\LARGE},
+axis background/.style={fill=white},
+mark size = 3,
+legend style={at={(0.97,0.03)},anchor=south east,legend cell align=left,align=left,draw=white!15!black},
+ticklabel style={font=\LARGE},legend style={font=\LARGE},title style={font=\LARGE}
+]
+\addplot [color=mycolor1,solid,mark=o,mark options={solid}]
+  table[row sep=crcr]{%
+0.04	0.915980282661453\\
+0.02857	0.881638502139478\\
+0.0204	0.834320632103037\\
+0.0147	0.760383480361768\\
+0.01052	0.636287526853273\\
+0.00751	0.467610152880999\\
+0.00537	0.296289016487872\\
+0.00384	0.17806319330902\\
+0.00274	0.101540456729153\\
+};
+\addlegendentry{$\Hell(\pi, \pi^h)$};
+
+\addplot [color=black,dashed]
+  table[row sep=crcr]{%
+0.04	0.4\\
+0.02857	0.2857\\
+0.0204	0.204\\
+0.0147	0.147\\
+0.01052	0.1052\\
+0.00751	0.0751\\
+0.00537	0.0537\\
+0.00384	0.0384\\
+0.00274	0.0274\\
+};
+\addlegendentry{slope 1};
+
+\end{axis}
+\end{tikzpicture}%

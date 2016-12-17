@@ -22,7 +22,7 @@ xmin=0.0001,
 xmax=1,
 xminorticks=true,
 xlabel={$h$},
-xlabel style = {font=\Large},
+xlabel style = {font=\LARGE},
 xmajorgrids,
 ymajorgrids,
 ymode=log,
@@ -32,7 +32,7 @@ yminorticks=true,
 mark size = 3,
 axis background/.style={fill=white},
 legend style={at={(0.03,0.03)},anchor=south west,legend cell align=left,align=left,draw=white!15!black},
-ticklabel style={font=\Large},legend style={font=\Large},title style={font=\Large}
+ticklabel style={font=\LARGE},legend style={font=\Large},title style={font=\Large}
 ]
 \addplot [color=mycolor1,solid,mark=o,mark options={solid}]
   table[row sep=crcr]{%

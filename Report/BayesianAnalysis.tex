@@ -215,7 +215,7 @@ where we denoted by $X_i$, $i = 1, 2$ the two components of $X$ and we omitted t
 
 \input{RAMplots}
 
-\subsubsection{Pseudo-marginal Metropolis-Hastings}
+\subsubsection{Pseudo-marginal Metropolis-Hastings} \label{sec:MCWM}
 \begin{algorithm}[t]
 	\caption{Monte Carlo within Metropolis.}
 	\label{alg:MCWM}
@@ -277,3 +277,42 @@ Let us consider the example of a non-negative random variable $\theta$. In this 
 	, 1\right\}.
 \end{equation}
 As far as the practical implementation is concerned, modern programming languages often provide with generators of pseudo-random Gaussian numbers. In order to obtain a truncated Gaussian distribution, a practical procedure could be generating random numbers until a number in the acceptable range is generated.
+
+\subsubsection{Monitoring convergence}
+
+\begin{algorithm}[t]
+	\caption{Monitoring convergence.}
+	\label{alg:Convergence}
+	\KwData{$K \in \N; \: \theta^{(0), i} \in \R^{N_p}, i = 1, \ldots, K; \: N_0 \in \N; \: \bar \rho > 1$.}
+	$\mathrm{count} = 0$ \;
+	\While{$\exists \, i \in \{1, 2, \ldots, N_p\}: \rho_i < \bar \rho$}{
+		Initialize $K$ parallel MCMC with starting value $\theta^{(\mathrm{count}), i}$ for $i = 1, \ldots, K$ \;
+		Execute $N_0$ iterations of each MCMC algorithm \;
+		Get the chains $\Theta_i$ for each MCMC and assemble the mixed chain $\Theta_{\mathrm{mix}}$ \;
+		\ForEach{component $j$ of $\theta$ in $\R^{N_p}$}{
+			\ForEach{chain $\Theta_i$} {
+			Compute the variance $V_i^j$ of the component $j$ in $\Theta_i$ \;
+			}
+			Compute the mean within chains $V_{\mathrm{mean}}^j$ averaging the variances $V_i^j$ \;
+			Compute the variance $V^j_{\mathrm{mix}}$ of the component $j$ in $\Theta_{\mathrm{mix}}$ \;
+			Compute the potential scale reduction factor as in \eqref{eq:RhoMCMC} \;
+		}
+		count = count + $N_0$ \;
+	}
+\end{algorithm}
+
+It is unclear from the discussion of all the variants of MCMC discussed above how to choose an optimal number of samples $N$. In other words, no convergence criteria for the Markov chain has been presented. An interesting approach in order to monitor the convergence of MCMC consists in mixing several Markov chains \cite{GeS11}. The main idea consists in starting $K$ parallel MCMC with different initial guesses and check the properties of the single chains with respect to the chain resulting from the mixing of all the single chains. Let us denote by $\Theta_i$, with $i = 1, \ldots, K$ the single chains, and by $\Theta_{\mathrm{mix}}$ the mixed chain, i.e.
+\begin{equation}
+	\Theta_{\mathrm{mix}} = \bigcup_{i = 1}^{K} \Theta_i.
+\end{equation}
+Let us consider the estimation of the distribution of a random variable $\theta$ with values in $\R^{N_p}$ with components $\theta_1, \ldots, \theta_{N_p}$. Let us moreover assume that all the MCMC algorithms have reached the iteration $N_0$. Then, we compute separately the population variance within each chain for each component $j$ of the random variable and denote it by $V_i^j$, for $i = 1, \ldots, K$ and $j = 1, \ldots, N_p$, i.e.
+\begin{equation}
+	V_i^j = \frac{1}{N_0} \sum_{k=0}^{N_0} \left(\theta_j - \frac{1}{N_0}\sum_{h = 0}^{N_0} \theta_j \right)^2.
+\end{equation}
+Then, we average these variances and denote the result as $V^j_{\mathrm{mean}}$. Finally, we compute the population variance for each component of $\theta$ of the mixed chain $\Theta_{\mathrm{mix}}$ and we denote it $V^j_{\mathrm{mix}}$. We now define the \textit{potential scale reduction factor} $\rho_j$ of the $j$-th component of $\theta$ as \cite{GeS11}
+\begin{equation}\label{eq:RhoMCMC}
+	\rho_j \defeq \sqrt{ V^j_{\mathrm{mix}} / V_{\mathrm{mean}}^j }.
+\end{equation}
+Let us remark that $\rho_j$ is greater than one for any sample, and a value close to one implies that all the single chains have in averaged mixed as well as the mixed chain. We therefore check whether all the $\rho_j$ are smaller than a certain threshold $\bar \rho$ (e.g., $\bar \rho = 1.05$) every $N_0$ iterations, and stop the MCMC algorithms if the condition is verified (Algorithm \ref{alg:Convergence}), thus keeping as the output of the mixed chain $\Theta_{\mathrm{mix}}$.
+
+

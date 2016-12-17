@@ -1,0 +1,30 @@
+\section{Bayesian inference of the parameters of an ODE}
+
+We now consider the probabilistic solver introduced in the previous section and study its behavior when used in the context of Bayesian inference. Let us consider $\theta$ a parameter in $\R^{N_p}$, a function $f_\theta\colon \R^d \to \R^d$ depending on the parameter, an element $u_0$ of $\R^d$ and the following ODE 
+\begin{equation}\label{eq:ODEParam}
+\begin{aligned}
+	\dv{u_\theta}{t} (t) &= f_\theta(u_\theta(t)),\\
+			 u_\theta(0) &= u_0,
+\end{aligned}
+\end{equation}
+where we write explicitly the dependence of the solution $u$ on the parameter. In the following, we consider $\theta$ to be unknown a priori, and we denote by $\bar \theta$ its true value. Moreover, let us consider a set of observed data $\mathcal{Y}_i$ defined as
+\begin{equation}
+	\mathcal{Y}_i = \{y_1, y_2, \ldots, y_i\}, \quad i = 1, \ldots, D,
+\end{equation} 
+where $D$ is the total number of observations. We consider the data to be a Gaussian linear function of the exact solution of \eqref{eq:ODEParam} computed at the true value of $\theta$ at a discrete set of times $t_i$, i.e.
+\begin{equation}
+	y_i = u_{\bar\theta}(t_i) + \epl_i, \quad \epl_i \iid \mathcal{N}(0, \Gamma), \quad i = 1, \ldots, D.
+\end{equation} 
+If the solution of \eqref{eq:ODEParam} is computable analytically, then thanks to Bayes theorem we know that once a prior distribution $\mathcal{Q}(\theta)$ is specified, the posterior distribution of $\theta$ is given by Bayes' formula and can be expressed as
+\begin{equation}\label{eq:BayesODE}
+	\pi(\theta|\mathcal Y) \propto \mathcal{Q}(\theta) \diffL(\mathcal Y|u_\theta(t)).
+\end{equation}
+ Under the hypothesis that the observational error is normally distributed, the likelihood function is easy to compute and is given by
+ \begin{equation}\label{eq:likelihood}
+	 \diffL(\mathcal Y|u_\theta(t)) \propto \exp\left(-\frac{1}{2}\sum_{i=1}^{D}\left(u_\theta(t_i) - y_i\right)^T \Gamma^{-1} \left(u_\theta(t_i) - y_i) \right)\right).
+ \end{equation}
+ In most of applications, the exact solution of \eqref{eq:ODEParam} is not computable in closed form, and therefore Bayes rule cannot be applied directly as in \eqref{eq:BayesODE}. Therefore, a MCMC technique has to be applied to obtain an estimation of the parameter.
+ 
+\input{LikelihoodApprox}
+\input{NumericalExample}
+\input{Convergence}

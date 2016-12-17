@@ -5,32 +5,32 @@ The style file: siam.bst
 Database file #1: anmc.bib.bib
 You've used 12 entries,
             2030 wiz_defined-function locations,
-            587 strings with 5779 characters,
-and the built_in function-call counts, 4557 in all, are:
-= -- 446
-> -- 209
+            588 strings with 5706 characters,
+and the built_in function-call counts, 4579 in all, are:
+= -- 442
+> -- 208
 < -- 0
-+ -- 83
-- -- 70
-* -- 362
-:= -- 705
++ -- 81
+- -- 68
+* -- 361
+:= -- 706
 add.period$ -- 12
 call.type$ -- 12
-change.case$ -- 69
+change.case$ -- 66
 chr.to.int$ -- 0
 cite$ -- 12
-duplicate$ -- 202
-empty$ -- 316
-format.name$ -- 70
-if$ -- 965
+duplicate$ -- 207
+empty$ -- 332
+format.name$ -- 68
+if$ -- 977
 int.to.chr$ -- 0
 int.to.str$ -- 12
 missing$ -- 14
 newline$ -- 40
-num.names$ -- 24
-pop$ -- 59
+num.names$ -- 26
+pop$ -- 61
 preamble$ -- 2
-purify$ -- 59
+purify$ -- 56
 quote$ -- 0
 skip$ -- 177
 stack$ -- 0
@@ -41,6 +41,6 @@ text.prefix$ -- 0
 top$ -- 0
 type$ -- 44
 warning$ -- 0
-while$ -- 48
+while$ -- 49
 width$ -- 14
-write$ -- 110
+write$ -- 111

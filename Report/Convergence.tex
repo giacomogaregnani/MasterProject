@@ -1,0 +1,101 @@
+\subsection{Convergence of the posterior distribution}
+
+We wish to study the convergence of the posterior distribution obtained using the probabilistic method with respect to the true posterior distribution. In order to study the convergence, it is necessary to introduce a notion of distance between two probability measures. A standard measure is the \textit{total variation distance}, defined in the following.
+\begin{definition} Given two probability measures $\nu$ and $\mu$ on a measurable space $(\mathcal{X}, \mathcal{B}(\mathcal{X}))$, the total variation distance between $\nu$ and $\mu$ is defined as
+\begin{equation}
+	d_{\mathrm{TV}}(\nu,\mu) \defeq \sup_{A\in \mathcal{B}(\mathcal{X})} \left|\nu(A) - \mu(A)\right|.
+\end{equation}
+Moreover, if $\nu$ and $\mu$ admit a densities $f$ and $g$ respectively with respect to a dominating measure $\lambda$, then the total variation distance can be expressed as
+\begin{equation}
+	d_{\mathrm{TV}}(\nu,\mu) \defeq \frac{1}{2} \int_{\mathcal{X}} (f(x) - g(x))\dd \lambda(x).
+\end{equation}
+\end{definition}
+\noindent Other notions of distance can be employed when the total variation distance is not practical to compute, such as the Hellinger distance, which is defined as follows \cite{GiS02}.
+\begin{definition} If $f, g$ are densities of the measures $\mu$ and $\nu$ on $(\R^n, \mathcal{B}(\R^n))$ with respect to the Lebesgue measure, the Hellinger distance between $\nu$ and $\mu$ is defined as
+\begin{equation}
+	\Hell^2(\mu, \nu) \defeq \frac{1}{2}\int_{\R^n}\left(\sqrt{f(x)} - \sqrt{g(x)}\right)^2\dd x
+\end{equation}
+\end{definition}
+\noindent The Hellinger distance allows us to estimate the total variation distance as the following inequalities hold \cite{GiS02}
+\begin{equation}\label{eq:TVvsHell}
+	\frac{\Hell^2(\mu, \nu)}{2} \leq d_{\mathrm{TV}}(\mu, \nu) \leq \Hell(\mu, \nu).
+\end{equation}
+Let us consider the posterior distribution given by MCMC with approximated likelihood. We can compute the second moment of the Hellinger distance as
+\begin{equation}
+\begin{aligned}
+2\E^\xi\left[\Hell^2(\pi(\theta|\mathcal{Y}),\pi^M_h(\theta|\mathcal{Y}))\right] &= \E^\xi\left[\int \left(\sqrt{\pi(\theta|\mathcal{Y})} - \sqrt{\pi^M_h(\theta|\mathcal{Y})}\right)^2 \dd \theta\right] \\
+&= \E^\xi\left[\int \left(\sqrt{\prior(\theta) \diffL(\mathcal{Y}|\theta)} - \sqrt{\prior(\theta) \diffL^M_h(\mathcal{Y}|\theta)}\right)^2 \dd \theta \right]\\
+&= \int \E^\xi\left[\left(\sqrt{\diffL(\mathcal{Y}|\theta)} - \sqrt{\diffL^M_h(\mathcal{Y}|\theta)}\right)^2\right] \dd \prior(\theta)  \\
+&= \int \MSE\left(\sqrt{\diffL^M_h(\mathcal Y|\theta)}\right) \dd \prior(\theta) \\
+&\leq \int C(\theta)h^{2q} \dd \prior(\theta) \\
+&= h^{2q} \int C(\theta) \dd \prior(\theta),
+\end{aligned}
+\end{equation}
+where $C(\theta)$ is the constant appearing in Proposition \ref{prop:MSE}. Let us remark that the constant depends on the Lipschitz constant of the function defining the ODE, which depends non-trivially on $\theta$. Finally, defining 
+\begin{equation}
+	\tilde C \defeq \sqrt{\frac{1}{2} \int C(\theta) \dd \prior(\theta)}, 
+\end{equation}
+we get the following bound on the second moment of the Hellinger distance between the approximated posterior and the posterior obtained with the exact solution 
+\begin{equation}
+	\E^\xi\left[\Hell^2(\pi(\theta|\mathcal{Y}),\pi^M_h(\theta|\mathcal{Y}))\right] \leq \tilde C^2 h^{2q}.
+\end{equation}
+Then, thanks to Jensen's inequality
+\begin{equation}
+\begin{aligned}
+	\E^\xi\left[\Hell(\pi(\theta|\mathcal{Y}),\pi^M_h(\theta|\mathcal{Y}))\right] &\leq \E^\xi\left[\Hell^2(\pi(\theta|\mathcal{Y}),\pi^M_h(\theta|\mathcal{Y}))\right]^{1/2} \\
+	&\leq \tilde C h^q.
+\end{aligned}
+\end{equation}
+Let us remark that thanks to \eqref{eq:TVvsHell}, this bound is equally true for the total variation distance. 
+
+\subsection{Convergence of the Monte Carlo estimation}
+We are now interested in the convergence of the expectation of the parameter $\theta$ inferred by MCMC. Let us consider a function $g \colon \R^{N_p} \to \R$ such that $g \in L^\infty(\R^{N_p})$. Then, we wish to bound the distance between the expectation of $g(\theta)$ computed with respect to the true measure and to the measure targeted by MCMC implemented with the probabilistc solver and time step $h$. Thanks to the previous result on the total variation distance we get
+\begin{equation}
+\begin{aligned}
+	\E^\xi\abs{\E^\pi\left[g(\theta)\right] - \E^{\pi_h^M}\left[g(\theta)\right]} &= \E^\xi\abs{\int g(\theta)(\pi(\theta|\mathcal{Y}) - \pi_h^M(\theta|\mathcal{Y}))\dd \theta}\\
+	&\leq \norm{g}_\infty \E^\xi \left[\int \abs{\pi(\theta|\mathcal{Y}) - \pi_h^M(\theta|\mathcal{Y})} \dd \theta\right] \\
+	&= 2 \norm{g}_\infty \E^\xi\left[d_{\mathrm{TV}}(\pi, \pi_h^M)\right] \\
+	&\leq 2 \norm{g}_\infty C h^{q}.
+\end{aligned}
+\end{equation}
+We can now compute the variance of the expectation of $g(\theta)$ computed MCMC and the probabilistic integrator as
+\begin{equation}
+\begin{aligned}
+	\Var^\xi (\E^{\pi_h^M}\left[g(\theta)\right]) &= \Var^\xi \left(\int g(\theta) \pi^M_h (\theta) \dd \theta \right) \\
+	&= \Var^\xi \left(\int g(\theta) \diffL^M_h (\mathcal{Y}|\theta) \dd \prior(\theta) \right) \\
+	&= \int g(\theta) \Var^\xi(\diffL^M_h (\mathcal{Y}|\theta)) \dd \prior(\theta) \\
+	&\leq Ch^{2q} \int g(\theta) \dd \prior(\theta) \\
+	&= \hat C h^{2q},
+\end{aligned}
+\end{equation}
+where we applied Proposition \ref{prop:MSE}. Hence, the MSE of this estimation is bounded quadratically with respect to the order of the employed Runge-Kutta method, i.e.,  
+\begin{equation}
+\begin{aligned}
+	\MSE(\E^{\pi_h^M}\left[g(\theta)\right]) &= \E^\xi\left[\E^{\pi_h^M}\left[g(\theta)\right] - \E^{\pi}\left[g(\theta)\right]\right]^2 + \Var^\xi(\E^{\pi_h^M}\left[g(\theta)\right]) \\
+	&\leq C h^{2q}.
+\end{aligned}
+\end{equation}
+
+\subsubsection{Numerical experiment}
+
+We consider the FitzHug-Nagumo model \eqref{eq:FitzNag} and produce observations $\mathcal{Y}$ at times $t_i = i$ for $i = 1, \ldots, 10$ from a reference solution with additive noise with variance $10^{-2}$. We produce a reference posterior distribution using the result of a MCMC algorithm obtained with a small time step $h$. We then vary $h$ in order to observe the convergence of the posterior distribution towards the reference, as well as the convergence of the Monte Carlo estimation. We consider $100000$ iterations of RAM applied to MCWM. As discussed above, the number of trajectories $M$ used to approximate the numerical likelihood does not have an influence on the convergence rate of the posterior distribution to the true posterior. Therefore, we just fix $M$ to be equal to one. We consider as the function $g$ of the parameter the Euclidean norm, therefore we consider the approximation
+\begin{equation}
+	\norm{\theta} \approx 10^{-6} \sum_{i = 1}^{10^6} \norm{\theta^{(i)}}.
+\end{equation}
+Results	(Figure \ref{fig:ConvergenceMCMC}) show the convergence obtained averaging 10 realizations of the entire MCMC chain used in order to simulate the expectation with respect to the random variable $\sigma$.
+
+\begin{figure}[t]
+	\centering
+	\begin{subfigure}{0.49\linewidth}
+		\centering
+		\resizebox{1.0\linewidth}{!}{\input{plots/ConvGTheta.tikz}}
+	\end{subfigure}
+	\begin{subfigure}{0.49\linewidth}
+		\centering
+		\resizebox{1.0\linewidth}{!}{\input{plots/ConvHell.tikz}}
+	\end{subfigure}
+	\caption{Convergence of the parameter to its stationary value and of the Hellinger distance of the probability distributions.}
+	\label{fig:ConvergenceMCMC}
+\end{figure}
+
+

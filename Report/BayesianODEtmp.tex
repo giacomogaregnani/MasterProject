@@ -1,0 +1,179 @@
+\section{Bayesian inference of the parameters of an ODE}
+
+Let us consider the following initial value problem. Given $u_0$ a vector in $\R^d$ and a parameter set $\theta$ in $\R^p$
+\begin{equation}\label{ODEParam}
+\begin{aligned}
+	\dv{u}{t}\left(t; \theta\right) &= f(u(t;\theta)),\\
+	u(0; \theta) &= u_0.
+\end{aligned}
+\end{equation}
+We consider the case in which $\theta$ is not known a priori and the problem of estimating its distribution. We consider the set of data $d_i$ in $\R^d$ with $i = 1, \ldots, D$ which represents the observed state of the system $\eqref{ODEParam}$ at a set of time $t_i, i = 1, \ldots, D$ in which an observational noise $\epl$ is present. We assume that $\epl$ is normally distributed with zero mean and a given variance $\Gamma$, i.e.,
+\begin{equation}
+	d_i = u(t_i) + \epl_i, \quad \epl_i \sim \mathcal{N}(0, \Gamma).
+\end{equation} 
+If the solution of \eqref{ODEParam} is computable analytically, then thanks to Bayes theorem we know that once a prior distribution $\mathcal{Q}(\theta)$ is specified, the posterior distribution of $\theta$ is given by Bayes' formula and can be expressed as
+\begin{equation}\label{BayesFormulaODE}
+	\pi(\theta|d) \propto \mathcal{Q}(\theta) \diffL(d|u(t;\theta)).
+\end{equation}
+ Under the hypothesis that the observational error is normally distributed, the likelihood function is easy to compute and is given by
+ \begin{equation}\label{likelihood}
+	 \diffL(d|u(\theta)) \propto \exp\left(\frac{1}{2}\sum_{i=1}^{D}\left(u(t_i;\theta) - d_i\right)^T \Gamma^{-2} \left(u(t_i;\theta) - d_i) \right)\right).
+ \end{equation}
+ In many cases, the analytical solution of \eqref{ODEParam} is not computable in closed form, therefore one replaces the analytical solution with its numerical approximation, which we denote by $U^{h,0}$. We then replace the analytical solution in the ODE, hoping that it does not spoil the quality of the posterior distribution, i.e.,
+ \begin{equation}
+	 \mathcal{Q}(\theta) \diffL(d|u(\theta)) \approx \mathcal{Q}(\theta) \diffL(d|U^{h,0}(t;\theta)).
+ \end{equation}
+ Another approach consists of considering the probabilistic numerical method \eqref{probabilityODE} and a set of realizations of its solution. Let us denote by $U^{h, \sigma}(t, \xi; \theta)$ the numerical solution in this case, where $\sigma$ represents the amount of uncertainty that is introduced with the method (see Assumption \ref{assumption_1} and the following remarks). We then replace the likelihood function in \eqref{BayesFormulaODE} integrating over the random variable $\xi$, thus obtaining the following Bayes' rule
+ \begin{equation}
+	 	\pi(\theta|d) \propto \mathcal{Q}(\theta) \int{\diffL(d|U^{h,\sigma}(t,\xi;\theta))\dd\xi}.
+ \end{equation}
+ In \cite{CGS16} the authors claim that using the deterministic numerical solution for the purpose of estimating the parameters leads to unreliable posterior distributions, whilst the approximation of $\pi(\theta|d)$ provided by the probabilistic method takes accordingly into account the error introduced by the numerical solution. \\
+ In order to draw from the posterior distribution $\pi(\theta|d)$ one has to perform a Markov Chain Monte Carlo method, which is a class of numerical methods for Bayesian inference, briefly introduced in the following section.
+ 
+\subsection{Markov Chain Monte Carlo methods}
+
+The Markov Chain Monte Carlo (MCMC) methods are a useful tool for performing Bayesian inference. The main idea behind these methods is creating a chain of guesses of a parameter $\theta$ in order to build an approximation of its posterior distribution. \\
+One of the most popular MCMC methods is the Metropolis-Hastings (MH) algorithm \cite{KaS05}, presented in pseudo-code in Algorithm \ref{alg:MH}. In this algorithm, the new guess $\vartheta$ of the parameter $\theta$ value is drawn from a proposal function $q(\theta_k, \cdot)$ dependent on the current guess $\theta_k$. Then, the new value $\vartheta$ is included in the chain as $\theta_{k+1}$ with a probability $\alpha$ dependent on the ratio between the posterior distribution evaluated in $\vartheta$ and $\theta$, as in line \ref{alg:MHProb} of Algorithm \ref{alg:MH}. Otherwise, $\theta_{k+1}$ is chosen to be equal to $\theta_k$. \\
+Let us remark that if $q(x, y)$ is a symmetric function, then the expression of the probability $\alpha$ at the $k$-th step simplifies to 
+\begin{equation}
+	\alpha = \min\left\{1, \frac{\pi(\vartheta|d)}{\pi(\theta_k|d)}\right\}.
+\end{equation}
+This is the case, for example, of a Gaussian proposal distribution, which is a common choice (ADDREF) in case no a priori restriction is imposed on the range of $\theta$. \\
+Let us consider the problem of finding the distribution of the parameter $\theta$ defining an ODE. In this case, once the new guess $\vartheta$ is generated from the proposal distribution, it is necessary to solve numerically \eqref{ODEParam} in order to determine the value of the likelihood function. In particular, assuming that the proposal distribution $q$ is symmetric, the value of $\alpha$ at the $k$-th step in this frame reads in case the deterministic solver is adopted
+\begin{equation}\label{detAlphaMH}
+	\alpha = \min\left\{1, \frac{\mathcal{Q}(\vartheta)\diffL(d|U^{h,0}(t; \vartheta))}{\mathcal{Q}(\theta_k)\diffL(d|U^{h,0}(t; \theta_k))}\right\},
+\end{equation} 
+while for the probabilistic solver one gets
+\begin{equation}\label{probAlphaMH}
+	\alpha^{h,\sigma} = \min\left\{1, \frac{\mathcal{Q}(\vartheta)\int{\diffL(d|U^{h,\sigma}(t,\xi; \vartheta))\dd\xi}}{\mathcal{Q}(\theta_k)\int{\diffL(d|U^{h,\sigma}(t,\xi; \theta_k))\dd\xi}}\right\}.
+\end{equation} 
+The integrals in \eqref{probAlphaMH} are not trivial to compute, therefore a Monte Carlo approach has to be exploited. In particular, considering $M$ realizations $\left\{\xi_i\right\}_{i=1}^M$of the random variable $\xi$, one can approximate the integral of the likelihood as
+\begin{equation}\label{MCapproxL}
+	\int{\diffL(d|U^{h,\sigma}(t,\xi; \theta))\dd\xi} \approx \frac{1}{N} \sum_{i=1}^{N} \diffL(d|U^{h,\sigma}(t,\xi_i; \theta)).
+\end{equation}
+In this way, the probability $\alpha$ is computable and can be used to obtain the distribution of the parameter $\theta$.
+
+\subsubsection{Noisy pseudo-marginal MCMC} \label{sect:MCWM}
+
+It is crucial to understand whether the approximation of the integrals in \eqref{probAlphaMH} influence the convergence of the posterior distribution to the true distribution of $\theta$. Let us denote by $\pi(\theta|d)$ the real posterior distribution of $\theta$, i.e.,
+\begin{equation}
+	\pi(\theta|d) \propto \mathcal{Q}(\theta) \diffL(d|u(t,\theta)),
+\end{equation}
+where $u$ is the exact solution of the equation. Then, let us denote by $\pi^{h,\sigma}(\theta|d)$ the distribution obtained applying MH with the \textit{transition kernel} (define it) induced by the probability $\alpha^{h,\sigma}$. Finally, let us denote by $\pi^{h,\sigma}_N(\theta|d)$ the distribution obtained approximating the integrals with Monte Carlo sums. We can rewrite the probability under the form of a \textit{pseudo-marginal} Metropolis-Hastings (add reference). If one defines the following weights 
+\begin{equation}
+\begin{aligned}
+	W_{\theta, N} &= \frac{1}{N} \frac{\sum_{i=1}^{N}\diffL(d|U^{h,\sigma}(t,\xi_i; \theta))}{\int{\diffL(d|U^{h,\sigma}(t,\xi; \theta))\dd\xi}} \\
+			      &= \frac{1}{N} \sum_{i=1}^{N}\frac{\diffL(d|U^{h,\sigma}(t,\xi_i; \theta))}{\int{\diffL(d|U^{h,\sigma}(t,\xi; \theta))\dd\xi}} \\
+			      &= \frac{1}{N} \sum_{i=1}^{N}W_\theta^{(i)},
+\end{aligned}
+\end{equation}
+then the probability of acceptance can be rewritten as
+\begin{equation}
+	\alpha^{h,\sigma}_{N} = \min\left\{1, \frac{\pi(\vartheta|d)W_{\vartheta,N}q(\theta_k, \vartheta)}{\pi(\theta_k|d)W_{\theta_k,N}q(\vartheta,\theta_k)}\right\}.
+\end{equation}
+Let us remark that the random variables $W_\theta^{(i)}$ are i.i.d. with the property
+\begin{equation}
+	\E(W_\theta^{(i)}) = 1, \quad i = 1, \ldots, N,
+\end{equation}
+and in the same way $W_{\theta,N}$ has unitary expectation. The probability can be computed in two different ways
+\begin{enumerate}
+	\item the weight $W_{\theta_k,N}$ is not recomputed from the last iteration and only $W_{\vartheta,N}$ is drawn,
+	\item at each iteration both $W_{\theta_k,N}$ and $W_{\vartheta,N}$ are computed.
+\end{enumerate}
+The second approach defines a noisy pseudo-marginal Metropolis-Hastings algorithm \cite{AnR09, MLR16, OBB00}, which requires a double computational cost per iteration, as two Monte Carlo simulation have to be carried out for each MCMC iteration. On the other hand, the value of the likelihood at $\theta_k$ could be artificially good due to a particularly favorable set of realizations of $\xi$. Therefore, the ratio of the posteriors could be small, implying that the chain might remain blocked at the same guess of $\theta$ for an arbitrarily large number of iterations. In practice, the noisy approach guarantees a fast mixing, so that even with a double cost per-iteration it is computationally faster than the first approach. 
+
+We now consider the convergence of the probability distribution obtained with the noisy pseudo-marginal approach to the real distribution. We consider the total variation distance, which is defined as follow \cite{GiS02}
+\begin{definition} Given two probability measures $\nu$ and $\mu$ on a measurable space $(\mathcal{X}, \mathcal{B}(\mathcal{X}))$, the total variation distance between $P$ and $Q$ is defined as
+\begin{equation}
+	\norm{\nu-\mu}_{TV} \defeq \sup_{A\in \mathcal{B}(\mathcal{X})} \left|\nu(A) - \mu(A)\right|
+\end{equation}
+\end{definition}
+\noindent Let us remark that the total variation distance between two probability measures is not often practical to compute. The Hellinger distance is more practical, especially in case the distributions are Gaussian. The Hellinger distance is defined as follows \cite{GiS02}.
+\begin{definition} If $f, g$ are densities of the measures $\mu$ and $\nu$ on a measurable space $(\mathcal{X}, \mathcal{B}(\mathcal{X}))$ with respect to a dominating measure $\lambda$, 
+\begin{equation}
+	d_H(\mu, \nu) = \left[\int_{\mathcal{X}}\left(\sqrt{f} - \sqrt{g}\right)^2\dd \lambda\right]^{1/2} = \left[2\left(1-\int_{\mathcal{X}}\sqrt{fg}\right)\right]^{1/2}.
+\end{equation}
+\end{definition}
+\noindent In the Gaussian case, if $\mu=\mathcal{N}(\mu_1, \Sigma_1)$, $\nu=\mathcal{N}(\mu_2,\Sigma_2)$, the Hellinger distance is given by
+\begin{equation}
+ d_H(\mu, \nu)^2 = 1 - \frac{ \det (\Sigma_1)^{1/4} \det (\Sigma_2) ^{1/4}} { \det \left( \frac{\Sigma_1 + \Sigma_2}{2}\right)^{1/2} }
+ \exp\left(-\frac{1}{8}(\mu_1 - \mu_2)^T 
+ \left(\frac{\Sigma_1 + \Sigma_2}{2}\right)^{-1}
+ (\mu_1 - \mu_2)              
+ \right).
+\end{equation} 
+The Hellinger distance is equivalent to the total variation distance with the relation \cite{GiS02}
+\begin{equation}\label{eq:TVvsHell}
+	\frac{d_H(\mu, \nu)^2}{2} \leq \norm{\mu-\nu}_{TV} \leq d_H(\mu, \nu),
+\end{equation}
+hence when the total variation distance will not be computable, we will estimate it using the Hellinger distance. We consider now the distance between the true distribution of $\theta$ and the distribution obtained with the noisy-pseudomarginal approach. Let us remark that by the triangular inequality
+\begin{equation}
+	\norm{\pi- \pi_N^{h, \sigma}}_{TV} \leq \norm{\pi - \pi^{h, \sigma}}_{TV} + \norm{\pi^{h,\sigma} - \pi_N^{h, \sigma}}_{TV}.
+\end{equation}
+\noindent Intuitively, the first term in the sum concerns the numerical accuracy of the numerical method, while the second term concerns the quality of the approximation performed in \eqref{MCapproxL}. For the first term, if $\theta$ is a vector of $\R^g$ we remark that thanks to Theorem \ref{thm:weakorder} we have
+\begin{equation}
+\begin{aligned}
+	\norm{\pi-\pi^{h,\sigma}}_{TV} &= C \sup_{A\in\mathcal{B}(\R^g)} \int_{A} \mathcal{Q}(\theta)\left(\diffL(d|u(\theta)) - \left(\int \diffL(d|U^{h,\sigma}(\theta,\xi))\dd\xi\right) \right) \dd \theta\\
+							  &= C \sup_{A\in\mathcal{B}(\R^g)} \int_{A} \mathcal{Q}(\theta)\left(\diffL(d|u(\theta)) - \E^\xi\left(\diffL(d|U^{h,\sigma}(\theta,\xi))\right) \right) \dd \theta\\
+							  &\leq C h^{\min\left\{q,2p\right\}}\sup_{A\in\mathcal{B}(\R^g)}\int_{A} \mathcal{Q}(\theta) \dd\theta \\
+						      &= C h^{\min\left\{q,2p\right\}},
+\end{aligned}
+\end{equation}
+where $\E^\xi(\cdot)$ denotes the expectation with respect to the random variable $\xi$ and $C$ is a positive constant independent of $h$. \\
+For the second term, since the weights $W_{\theta,N}$ are given by arithmetic averages and have unitary expectation, the following result has been shown \cite{MLR16}.
+\begin{theorem} Under appropriate conditions (add them?) there exist $0 < \delta < 1/6$, $C_{\delta} > 0$ and $N_0 \in N^{+}$ such that for all $N \geq N_0$ 
+\begin{equation}
+	\norm{\pi^{h,\sigma} - \pi^{h,\sigma}_N}_{TV} \leq C_{\delta} \frac{\log(N)}{N^{\frac{1}{2} - \delta}}.
+\end{equation}
+\end{theorem}
+\noindent With the two results above, we can now estimate the convergence with respect to $h$ and $N$ to the true probability distribution in the total variation distance
+\begin{equation}
+\begin{aligned}
+	\norm{\pi- \pi_N^{h, \sigma}}_{TV} &\leq \norm{\pi - \pi^{h, \sigma}}_{TV} + \norm{\pi^{h,\sigma} - \pi_N^{h, \sigma}}_{TV}\\
+									   &\leq C h^{\min\left\{q,2p\right\}} + C_{\delta} \frac{\log(N)}{N^{\frac{1}{2} - \delta}}.
+\end{aligned}
+\end{equation}
+where $C$ and $C_\delta$ are specified above. Hence, defining the error $e$ as
+\begin{equation}
+	e \defeq \norm{\pi- \pi_N^{h, \sigma}}_{TV}
+\end{equation} 
+and imposing it to be equal to $\OO(\epl)$ where $\epl$ is a desired tolerance we find that the time step $h$ has to satisfy
+\begin{equation}
+	h = \OO\left(\epl^{1/\min\left\{q,2p\right\}}\right).
+\end{equation}
+As far as the number of samples $N$ in $W_{\theta,N}$ is concerned, if we define the function $F_\delta\colon\R\to\R$ as
+\begin{equation}
+	F_\delta(N) \defeq \frac{\log(N)}{N^{\frac{1}{2} - \delta}},
+\end{equation}
+then its inverse function $F_\delta^{-1}$ is given by
+\begin{equation}
+	F_\delta^{-1}(x) = \exp\left(\frac{1}{\gamma}W(\gamma x)\right).
+\end{equation}
+where $\gamma \defeq \delta - 1/2$ and $W$ is the Lambert function. Therefore, in order to balance the two error terms it is necessary to impose
+\begin{equation}
+	N = \OO(F_\delta^{-1}(\epl)).
+\end{equation}
+Thus, the computational cost per iteration of the noisy Metropolis-Hastings algorithm is given by
+\begin{equation}
+\begin{aligned}
+	\mathrm{cost} &= \OO(h^{-1}N) \\
+				  &= \OO\left(\epl^{-1/\min\left\{q,2p\right\}}F_\delta^{-1}(\epl)\right)
+\end{aligned}
+\end{equation}
+Let us remark that the computational cost predicted by this formula is rapidly growing for small values of $\epl$, leading to unaffordable computational times when a precise computation is required.
+
+\subsubsection{A MLMC approach}
+Instead of arithmetic averages, use 
+\begin{equation}
+	W_{\theta,\text{MLMC}} = \sum_{l=0}^{L} \frac{1}{M_l} \sum_{i=1}^{M_l}\left(W_l^{(i)} - W_{l-1}^{(i)}\right),
+\end{equation}
+where (definition of $W_{l}$)
+
+\input{numericalExact}
+
+\input{gaussApproach}
+
+
+
+\input{FitzNagPlots}
+
