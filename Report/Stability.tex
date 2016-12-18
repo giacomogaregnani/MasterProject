@@ -1,4 +1,4 @@
-\subsection{Stability analysis}
+\subsubsection{Stability analysis}
 
 In the previous sections we analyzed the behavior of the probabilistic integrator for ODE's in terms of its convergence with respect to the time step. Moreover, we analyzed the convergence of a Monte Carlo approximation of the probabilistic solution towards the exact solution. Another key feature of numerical methods is their stability. We recall that the one step of the numerical method can be written, under Assumption \ref{assumption_1}, as
 \begin{equation}
@@ -12,3 +12,7 @@ where the random variables $\Delta W_k$, $k = 0, \ldots, N$, are standard Wiener
 \begin{equation}
 	\dd U(t) = f(U(t))\dd t + \sqrt{\sigma Q}h^p \dd W(t).
 \end{equation}
+This is an SDE with \textit{additive noise}, i.e., the noise component is independent on the solution $U$. The following result concerns the $A$-stability of the stochastic Runge-Kutta methods applied to this class of equations \cite[Theorem 4.1.]{HeS92}
+\begin{theorem} The stochastic Runge-Kutta method applied to an SDE with additive noise is $A$-stable if and only if so is its deterministc component.
+\end{theorem}
+\noindent This stability results is a direct consequence of the independence of the noise component on the value of the solution itself. Therefore, if the approximation of the drift term is stable, so will be the solution of the full SDE. The $A$-stability of Runge-Kutta has been extensively analyzed \cite{HaW96}, therefore the choice of an $A$-stable method $\Psi$ is applicable in the frame of probabilistic solvers without any restriction to obtain a family of stable probabilistic numerical solutions.

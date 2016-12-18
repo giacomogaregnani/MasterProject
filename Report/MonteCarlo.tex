@@ -97,7 +97,8 @@ where $C$ is a positive varying from one line to another depending on $C_L$, $T$
 \end{equation}
 Finally, we can proceed as explained above in detail in the case of Explicit Euler and recur over $k$ to obtain the desired bound. 
 \end{proof}
-\noindent We now consider the same estimation for an implicit Runge-Kutta method
+
+\noindent We can show a similar result for any implicit Runge-Kutta method. In this case, a restriction on the time step will be required in order to bound the variance of the numerical solution. We will discuss how this restriction is connected with the well-posedeness of the numerical method.
 \begin{lemma}\label{lem:varimRK} Consider the numerical method \eqref{probabilityODE} applied to a one-dimensional ODE with $\Psi$ any explicit or implicit Runge-Kutta method on $s$ stages and Assumption \ref{assumption_1}. Then, if $h$ is small enough, the numerical solution $U_k$ at time $t_k = kh$ satisfies
 	\begin{equation}
 	\Var(U_k) \leq C_1\Var(U_0) + C_2\sigma Q h^{2p}, \quad k = 1, \ldots, N,

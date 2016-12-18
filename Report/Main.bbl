@@ -36,6 +36,15 @@
 {\sc W.~R. Gilks}, {\em {M}arkov chain {M}onte {C}arlo}, Encyclopedia of
   Biostatistics, 4 (2005).
 
+\bibitem{HaW96}
+{\sc E.~Hairer and G.~Wanner}, {\em Solving ordinary differential equations II.
+  Stiff and differential-algebraic problems}, Springer-Verlag, Berlin and
+  Heidelberg, 1996.
+
+\bibitem{HeS92}
+{\sc D.~B. Hernandez and R.~Spigler}, {\em A-stability of {R}unge-{K}utta
+  methods for systems with additive noise}, BIT, 32 (1992), pp.~620--633.
+
 \bibitem{KaS05}
 {\sc J.~Kaipio and E.~Somersalo}, {\em Statistical and Computational Inverse
   Problems}, Applied Mathematical Sciences, 160, Springer, 2005.

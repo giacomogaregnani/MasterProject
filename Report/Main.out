@@ -18,8 +18,8 @@
 \BOOKMARK [3][-]{subsubsection.2.3.3}{Numerical verification of weak order}{subsection.2.3}% 18
 \BOOKMARK [3][-]{subsubsection.2.3.4}{Monte Carlo approximation}{subsection.2.3}% 19
 \BOOKMARK [3][-]{subsubsection.2.3.5}{Numerical experiment}{subsection.2.3}% 20
-\BOOKMARK [2][-]{subsection.2.4}{Stability analysis}{section.2}% 21
-\BOOKMARK [2][-]{subsection.2.5}{To do at Christmas}{section.2}% 22
+\BOOKMARK [3][-]{subsubsection.2.3.6}{Stability analysis}{subsection.2.3}% 21
+\BOOKMARK [2][-]{subsection.2.4}{To do at Christmas}{section.2}% 22
 \BOOKMARK [1][-]{section.3}{Bayesian inference of the parameters of an ODE}{}% 23
 \BOOKMARK [2][-]{subsection.3.1}{Approximation of the likelihood}{section.3}% 24
 \BOOKMARK [3][-]{subsubsection.3.1.1}{Numerical example}{subsection.3.1}% 25

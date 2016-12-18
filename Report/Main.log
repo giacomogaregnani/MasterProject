@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.10.29)  16 DEC 2016 17:33
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.10.29)  17 DEC 2016 18:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1917,17 +1917,52 @@ LaTeX Info: Redefining \nameref on input line 5.
 \@outlinefile=\write4
 \openout4 = `Main.out'.
 
- (./BayesianAnalysis.tex
-LaTeX Font Info:    Try loading font information for U+msa on input line 5.
+ (./Titlepage.tex
+(/usr/share/texlive/texmf-dist/tex/latex/ucs/data/uni-0.def
+File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
+)
+LaTeX Font Info:    Try loading font information for U+msa on input line 33.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 5.
+LaTeX Font Info:    Try loading font information for U+msb on input line 33.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
+Package epstopdf Info: Source file: <Logo.eps>
+(epstopdf)                    date: 2012-10-18 14:18:00
+(epstopdf)                    size: 1158474 bytes
+(epstopdf)             Output file: <Logo-eps-converted-to.pdf>
+(epstopdf)                    date: 2016-12-17 16:31:17
+(epstopdf)                    size: 39285 bytes
+(epstopdf)             Command: <repstopdf --outfile=Logo-eps-converted-to.pdf 
+Logo.eps>
+(epstopdf)             \includegraphics on input line 46.
+Package epstopdf Info: Output file is already uptodate.
+
+<Logo-eps-converted-to.pdf, id=123, 757.83125pt x 369.38pt>
+File: Logo-eps-converted-to.pdf Graphic file (type pdf)
+
+<use Logo-eps-converted-to.pdf>
+Package pdftex.def Info: Logo-eps-converted-to.pdf used on input line 46.
+(pdftex.def)             Requested size: 213.71576pt x 104.16403pt.
+ [1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./Logo-eps-converted-to.pd
+f>]) (./Acknow.tex)pdfTeX warning (ext4): destination with the same identifier 
+(name{page.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.9 \clearpage
+               [1] (./Main.toc)
+\tf@toc=\write5
+\openout5 = `Main.toc'.
+
+ [2
+
+] (./BayesianAnalysis.tex
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 26.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
@@ -1935,10 +1970,19 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 26.
- [1
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.41 \end{equation}
+                    [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] [5] (./RAMplot
-s.tex
+]pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has
+ been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.76 	\begin{equation}
+                       [2] [3] [4] [5] (./RAMplots.tex
 Package epstopdf Info: Source file: <plots/MHvsRAM/MH_small.eps>
 (epstopdf)                    date: 2016-11-14 09:40:56
 (epstopdf)                    size: 1666624 bytes
@@ -1951,7 +1995,7 @@ f>
 (epstopdf)             \includegraphics on input line 4.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/MH_small-eps-converted-to.pdf, id=228, 439.6425pt x 330.23375pt>
+<plots/MHvsRAM/MH_small-eps-converted-to.pdf, id=275, 439.6425pt x 330.23375pt>
 File: plots/MHvsRAM/MH_small-eps-converted-to.pdf Graphic file (type pdf)
 <use plots/MHvsRAM/MH_small-eps-converted-to.pdf>
 Package pdftex.def Info: plots/MHvsRAM/MH_small-eps-converted-to.pdf used on in
@@ -1969,7 +2013,7 @@ s-converted-to.pdf plots/MHvsRAM/MH_medium.eps>
 (epstopdf)             \includegraphics on input line 7.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/MH_medium-eps-converted-to.pdf, id=229, 439.6425pt x 330.23375pt
+<plots/MHvsRAM/MH_medium-eps-converted-to.pdf, id=276, 439.6425pt x 330.23375pt
 >
 File: plots/MHvsRAM/MH_medium-eps-converted-to.pdf Graphic file (type pdf)
  <use plots/MHvsRAM/MH_medium-eps-converted-to.pdf>
@@ -1988,7 +2032,7 @@ onverted-to.pdf plots/MHvsRAM/MH_big.eps>
 (epstopdf)             \includegraphics on input line 10.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/MH_big-eps-converted-to.pdf, id=230, 439.6425pt x 330.23375pt>
+<plots/MHvsRAM/MH_big-eps-converted-to.pdf, id=277, 439.6425pt x 330.23375pt>
 File: plots/MHvsRAM/MH_big-eps-converted-to.pdf Graphic file (type pdf)
 
 <use plots/MHvsRAM/MH_big-eps-converted-to.pdf>
@@ -2007,7 +2051,7 @@ s-converted-to.pdf plots/MHvsRAM/RAM_small.eps>
 (epstopdf)             \includegraphics on input line 14.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/RAM_small-eps-converted-to.pdf, id=231, 439.6425pt x 330.23375pt
+<plots/MHvsRAM/RAM_small-eps-converted-to.pdf, id=278, 439.6425pt x 330.23375pt
 >
 File: plots/MHvsRAM/RAM_small-eps-converted-to.pdf Graphic file (type pdf)
  <use plots/MHvsRAM/RAM_small-eps-converted-to.pdf>
@@ -2026,7 +2070,7 @@ ps-converted-to.pdf plots/MHvsRAM/RAM_medium.eps>
 (epstopdf)             \includegraphics on input line 17.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/RAM_medium-eps-converted-to.pdf, id=232, 439.6425pt x 330.23375p
+<plots/MHvsRAM/RAM_medium-eps-converted-to.pdf, id=279, 439.6425pt x 330.23375p
 t>
 File: plots/MHvsRAM/RAM_medium-eps-converted-to.pdf Graphic file (type pdf)
  <use plots/MHvsRAM/RAM_medium-eps-converted-to.pdf>
@@ -2045,7 +2089,7 @@ converted-to.pdf plots/MHvsRAM/RAM_big.eps>
 (epstopdf)             \includegraphics on input line 20.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/RAM_big-eps-converted-to.pdf, id=233, 439.6425pt x 330.23375pt>
+<plots/MHvsRAM/RAM_big-eps-converted-to.pdf, id=280, 439.6425pt x 330.23375pt>
 File: plots/MHvsRAM/RAM_big-eps-converted-to.pdf Graphic file (type pdf)
 
 <use plots/MHvsRAM/RAM_big-eps-converted-to.pdf>
@@ -2058,9 +2102,6 @@ ts/MHvsRAM/RAM_small-eps-converted-to.pdf> <./plots/MHvsRAM/RAM_medium-eps-conv
 erted-to.pdf> <./plots/MHvsRAM/RAM_big-eps-converted-to.pdf>] [8]) [9] (./probm
 ethod.tex
 (./deterministicmethods.tex) (./ProbabilisticMotivation.tex
-(/usr/share/texlive/texmf-dist/tex/latex/ucs/data/uni-0.def
-File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
-)
 
 LaTeX Warning: Reference `fig:LorenzTraj' on page 10 undefined on input line 18
 .
@@ -2078,7 +2119,7 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 )) (./MonteCarlo.tex [13] [14] [15] [16]
-Underfull \hbox (badness 10000) in paragraph at lines 186--188
+Underfull \hbox (badness 10000) in paragraph at lines 187--189
 
  []
 
@@ -2112,7 +2153,7 @@ d-to.pdf plots/Fitznag.eps>
 (epstopdf)             \includegraphics on input line 10.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/Fitznag-eps-converted-to.pdf, id=532, 439.6425pt x 330.23375pt>
+<plots/Fitznag-eps-converted-to.pdf, id=582, 439.6425pt x 330.23375pt>
 File: plots/Fitznag-eps-converted-to.pdf Graphic file (type pdf)
 
 <use plots/Fitznag-eps-converted-to.pdf>
@@ -2128,13 +2169,13 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 ) [25])) [26] (./Main.bbl) [27]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 15.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 15.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 28.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 28.
  (./Main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 15.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 15.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 28.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 28.
 Package rerunfilecheck Info: File `Main.out' has not changed.
-(rerunfilecheck)             Checksum: 4CF11DFA383C285E5441219A48C2CE8B;2301.
+(rerunfilecheck)             Checksum: 767559D3797A05C64922F7A4D96B567D;2311.
 
 
 LaTeX Warning: There were undefined references.
@@ -2142,14 +2183,14 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 15.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 28.
  ) 
 Here is how much of TeX's memory you used:
- 35782 strings out of 493105
- 799023 string characters out of 6137071
- 1078780 words of memory out of 5000000
- 38463 multiletter control sequences out of 15000+600000
- 14600 words of font info for 55 fonts, out of 8000000 for 9000
+ 35812 strings out of 493105
+ 799424 string characters out of 6137071
+ 1078863 words of memory out of 5000000
+ 38477 multiletter control sequences out of 15000+600000
+ 16155 words of font info for 60 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  65i,23n,112p,10417b,2460s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></u
@@ -2171,12 +2212,13 @@ f-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
 blic/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
-sfonts/symbols/msbm7.pfb>
-Output written on Main.pdf (27 pages, 5270301 bytes).
+msfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/symbols/msbm7.pfb>
+Output written on Main.pdf (30 pages, 5312143 bytes).
 PDF statistics:
- 690 PDF objects out of 1000 (max. 8388607)
- 610 compressed objects within 7 object streams
- 189 named destinations out of 1000 (max. 500000)
- 280 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 743 PDF objects out of 1000 (max. 8388607)
+ 658 compressed objects within 7 object streams
+ 194 named destinations out of 1000 (max. 500000)
+ 285 words of extra memory for PDF output out of 10000 (max. 10000000)
 
