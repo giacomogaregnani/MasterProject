@@ -1,4 +1,6 @@
 Code/.idea
 Code/data/*.txt
+Code/data/MeanExp/*.txt
+Code/data/SigmaExp/*.txt
 Code/eigen
 Code/build
