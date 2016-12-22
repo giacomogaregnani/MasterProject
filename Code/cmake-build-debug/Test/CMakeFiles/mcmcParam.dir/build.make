@@ -177,28 +177,28 @@ Test/CMakeFiles/mcmcParam.dir/sMetropolis.cpp.o.provides: Test/CMakeFiles/mcmcPa
 Test/CMakeFiles/mcmcParam.dir/sMetropolis.cpp.o.provides.build: Test/CMakeFiles/mcmcParam.dir/sMetropolis.cpp.o
 
 
-Test/CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.o: Test/CMakeFiles/mcmcParam.dir/flags.make
-Test/CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.o: ../Test/mlMetropolis.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object Test/CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.o"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.o -c /u/anmc/garegnan/Desktop/Code/Test/mlMetropolis.cpp
+Test/CMakeFiles/mcmcParam.dir/MetropolisConv.cpp.o: Test/CMakeFiles/mcmcParam.dir/flags.make
+Test/CMakeFiles/mcmcParam.dir/MetropolisConv.cpp.o: ../Test/MetropolisConv.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object Test/CMakeFiles/mcmcParam.dir/MetropolisConv.cpp.o"
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/mcmcParam.dir/MetropolisConv.cpp.o -c /u/anmc/garegnan/Desktop/Code/Test/MetropolisConv.cpp
 
-Test/CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.i"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Code/Test/mlMetropolis.cpp > CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.i
+Test/CMakeFiles/mcmcParam.dir/MetropolisConv.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mcmcParam.dir/MetropolisConv.cpp.i"
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Code/Test/MetropolisConv.cpp > CMakeFiles/mcmcParam.dir/MetropolisConv.cpp.i
 
-Test/CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.s"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Code/Test/mlMetropolis.cpp -o CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.s
+Test/CMakeFiles/mcmcParam.dir/MetropolisConv.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mcmcParam.dir/MetropolisConv.cpp.s"
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Code/Test/MetropolisConv.cpp -o CMakeFiles/mcmcParam.dir/MetropolisConv.cpp.s
 
-Test/CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.o.requires:
+Test/CMakeFiles/mcmcParam.dir/MetropolisConv.cpp.o.requires:
 
-.PHONY : Test/CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.o.requires
+.PHONY : Test/CMakeFiles/mcmcParam.dir/MetropolisConv.cpp.o.requires
 
-Test/CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.o.provides: Test/CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.o.requires
-	$(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.o.provides.build
-.PHONY : Test/CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.o.provides
+Test/CMakeFiles/mcmcParam.dir/MetropolisConv.cpp.o.provides: Test/CMakeFiles/mcmcParam.dir/MetropolisConv.cpp.o.requires
+	$(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/MetropolisConv.cpp.o.provides.build
+.PHONY : Test/CMakeFiles/mcmcParam.dir/MetropolisConv.cpp.o.provides
 
-Test/CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.o.provides.build: Test/CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.o
+Test/CMakeFiles/mcmcParam.dir/MetropolisConv.cpp.o.provides.build: Test/CMakeFiles/mcmcParam.dir/MetropolisConv.cpp.o
 
 
 Test/CMakeFiles/mcmcParam.dir/smlMetropolis.cpp.o: Test/CMakeFiles/mcmcParam.dir/flags.make
@@ -225,9 +225,33 @@ Test/CMakeFiles/mcmcParam.dir/smlMetropolis.cpp.o.provides: Test/CMakeFiles/mcmc
 Test/CMakeFiles/mcmcParam.dir/smlMetropolis.cpp.o.provides.build: Test/CMakeFiles/mcmcParam.dir/smlMetropolis.cpp.o
 
 
+Test/CMakeFiles/mcmcParam.dir/MetropolisDet.cpp.o: Test/CMakeFiles/mcmcParam.dir/flags.make
+Test/CMakeFiles/mcmcParam.dir/MetropolisDet.cpp.o: ../Test/MetropolisDet.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object Test/CMakeFiles/mcmcParam.dir/MetropolisDet.cpp.o"
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/mcmcParam.dir/MetropolisDet.cpp.o -c /u/anmc/garegnan/Desktop/Code/Test/MetropolisDet.cpp
+
+Test/CMakeFiles/mcmcParam.dir/MetropolisDet.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mcmcParam.dir/MetropolisDet.cpp.i"
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Code/Test/MetropolisDet.cpp > CMakeFiles/mcmcParam.dir/MetropolisDet.cpp.i
+
+Test/CMakeFiles/mcmcParam.dir/MetropolisDet.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mcmcParam.dir/MetropolisDet.cpp.s"
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Code/Test/MetropolisDet.cpp -o CMakeFiles/mcmcParam.dir/MetropolisDet.cpp.s
+
+Test/CMakeFiles/mcmcParam.dir/MetropolisDet.cpp.o.requires:
+
+.PHONY : Test/CMakeFiles/mcmcParam.dir/MetropolisDet.cpp.o.requires
+
+Test/CMakeFiles/mcmcParam.dir/MetropolisDet.cpp.o.provides: Test/CMakeFiles/mcmcParam.dir/MetropolisDet.cpp.o.requires
+	$(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/MetropolisDet.cpp.o.provides.build
+.PHONY : Test/CMakeFiles/mcmcParam.dir/MetropolisDet.cpp.o.provides
+
+Test/CMakeFiles/mcmcParam.dir/MetropolisDet.cpp.o.provides.build: Test/CMakeFiles/mcmcParam.dir/MetropolisDet.cpp.o
+
+
 Test/CMakeFiles/mcmcParam.dir/gaussMetropolis.cpp.o: Test/CMakeFiles/mcmcParam.dir/flags.make
 Test/CMakeFiles/mcmcParam.dir/gaussMetropolis.cpp.o: ../Test/gaussMetropolis.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object Test/CMakeFiles/mcmcParam.dir/gaussMetropolis.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object Test/CMakeFiles/mcmcParam.dir/gaussMetropolis.cpp.o"
 	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/mcmcParam.dir/gaussMetropolis.cpp.o -c /u/anmc/garegnan/Desktop/Code/Test/gaussMetropolis.cpp
 
 Test/CMakeFiles/mcmcParam.dir/gaussMetropolis.cpp.i: cmake_force
@@ -251,7 +275,7 @@ Test/CMakeFiles/mcmcParam.dir/gaussMetropolis.cpp.o.provides.build: Test/CMakeFi
 
 Test/CMakeFiles/mcmcParam.dir/testMH.cpp.o: Test/CMakeFiles/mcmcParam.dir/flags.make
 Test/CMakeFiles/mcmcParam.dir/testMH.cpp.o: ../Test/testMH.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object Test/CMakeFiles/mcmcParam.dir/testMH.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object Test/CMakeFiles/mcmcParam.dir/testMH.cpp.o"
 	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/mcmcParam.dir/testMH.cpp.o -c /u/anmc/garegnan/Desktop/Code/Test/testMH.cpp
 
 Test/CMakeFiles/mcmcParam.dir/testMH.cpp.i: cmake_force
@@ -280,8 +304,9 @@ mcmcParam_OBJECTS = \
 "CMakeFiles/mcmcParam.dir/mcmcTools.cpp.o" \
 "CMakeFiles/mcmcParam.dir/Metropolis.cpp.o" \
 "CMakeFiles/mcmcParam.dir/sMetropolis.cpp.o" \
-"CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.o" \
+"CMakeFiles/mcmcParam.dir/MetropolisConv.cpp.o" \
 "CMakeFiles/mcmcParam.dir/smlMetropolis.cpp.o" \
+"CMakeFiles/mcmcParam.dir/MetropolisDet.cpp.o" \
 "CMakeFiles/mcmcParam.dir/gaussMetropolis.cpp.o" \
 "CMakeFiles/mcmcParam.dir/testMH.cpp.o"
 
@@ -293,14 +318,15 @@ Test/mcmcParam: Test/CMakeFiles/mcmcParam.dir/problems.cpp.o
 Test/mcmcParam: Test/CMakeFiles/mcmcParam.dir/mcmcTools.cpp.o
 Test/mcmcParam: Test/CMakeFiles/mcmcParam.dir/Metropolis.cpp.o
 Test/mcmcParam: Test/CMakeFiles/mcmcParam.dir/sMetropolis.cpp.o
-Test/mcmcParam: Test/CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.o
+Test/mcmcParam: Test/CMakeFiles/mcmcParam.dir/MetropolisConv.cpp.o
 Test/mcmcParam: Test/CMakeFiles/mcmcParam.dir/smlMetropolis.cpp.o
+Test/mcmcParam: Test/CMakeFiles/mcmcParam.dir/MetropolisDet.cpp.o
 Test/mcmcParam: Test/CMakeFiles/mcmcParam.dir/gaussMetropolis.cpp.o
 Test/mcmcParam: Test/CMakeFiles/mcmcParam.dir/testMH.cpp.o
 Test/mcmcParam: Test/CMakeFiles/mcmcParam.dir/build.make
 Test/mcmcParam: Solver/libSolver.a
 Test/mcmcParam: Test/CMakeFiles/mcmcParam.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable mcmcParam"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable mcmcParam"
 	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/mcmcParam.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -313,8 +339,9 @@ Test/CMakeFiles/mcmcParam.dir/requires: Test/CMakeFiles/mcmcParam.dir/problems.c
 Test/CMakeFiles/mcmcParam.dir/requires: Test/CMakeFiles/mcmcParam.dir/mcmcTools.cpp.o.requires
 Test/CMakeFiles/mcmcParam.dir/requires: Test/CMakeFiles/mcmcParam.dir/Metropolis.cpp.o.requires
 Test/CMakeFiles/mcmcParam.dir/requires: Test/CMakeFiles/mcmcParam.dir/sMetropolis.cpp.o.requires
-Test/CMakeFiles/mcmcParam.dir/requires: Test/CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.o.requires
+Test/CMakeFiles/mcmcParam.dir/requires: Test/CMakeFiles/mcmcParam.dir/MetropolisConv.cpp.o.requires
 Test/CMakeFiles/mcmcParam.dir/requires: Test/CMakeFiles/mcmcParam.dir/smlMetropolis.cpp.o.requires
+Test/CMakeFiles/mcmcParam.dir/requires: Test/CMakeFiles/mcmcParam.dir/MetropolisDet.cpp.o.requires
 Test/CMakeFiles/mcmcParam.dir/requires: Test/CMakeFiles/mcmcParam.dir/gaussMetropolis.cpp.o.requires
 Test/CMakeFiles/mcmcParam.dir/requires: Test/CMakeFiles/mcmcParam.dir/testMH.cpp.o.requires
 

@@ -1,0 +1,1 @@
+/usr/bin/c++    -fopenmp -std=c++11 -g   CMakeFiles/LorenzTraj.dir/LorenzPlotTrajectories.cpp.o CMakeFiles/LorenzTraj.dir/problems.cpp.o  -o LorenzTraj -rdynamic ../Solver/libSolver.a 

@@ -10,43 +10,10 @@
 #include <ctime>
 #include "RungeKutta.hpp"
 #include "sRungeKutta.hpp"
+#include "Structures.hpp"
+#include <unsupported/Eigen/KroneckerProduct>
 
 // SUPPORT STRUCTURES AND TOOLS (SEE PROBLEMS.HPP)
-
-enum problems {
-    FITZNAG,
-    LORENZ,
-    TEST,
-    TEST1D,
-    VDPOL,
-    ROBERTSON,
-    BRUSS,
-    POISSON,
-    HIRES,
-};
-
-struct odeDef {
-    problems ode;
-    int size;
-    VectorXd initialCond;
-    VectorXd (*odeFunc) (VectorXd, std::vector<double>&);
-    MatrixXd (*odeJac) (VectorXd, std::vector<double>&);
-	VectorXd (*exactSol) (std::vector<double>&, double);
-    std::vector<double> refParam;
-};
-
-enum stabMethods {
-	stdRKC,
-	ROCK
-};
-
-struct StabValues {
-	double stiffIndex;
-	double damping;
-	int nStages;
-	MatrixXd (*jacobian) (VectorXd, std::vector<double>&);
-	stabMethods method;
-};
 
 double powerMethod(MatrixXd A, double tol, int nMax);
 
@@ -76,10 +43,8 @@ private:
 
 	std::vector<double> parameters;
 public:
-	ProbMethod(int n, double step,  
-		   VectorXd initialCond, std::vector<double> paramVec,
-		   VectorXd (*func) (VectorXd, std::vector<double>&),
-		   double stoch);
+	ProbMethod(odeDef ODE, double step, std::vector<double> paramVec,
+			   double stoch);
 
 	VectorXd& getSolution(void);
 
@@ -89,6 +54,41 @@ public:
 
 	void resetIC(void);
 };
+
+class impProbMethod {
+private:
+	std::shared_ptr<ImplicitRK> detSolver;
+
+	int size;
+
+	VectorXd solution;
+
+	double sigma;
+
+	double rootsigma;
+
+	std::normal_distribution<double> normalDist;
+
+	double h;
+
+	double hfunc;
+
+	VectorXd IC;
+
+	std::vector<double> parameters;
+public:
+	impProbMethod(odeDef ODE, double step, std::vector<double> paramVec,
+			   double stoch, MatrixXd A, VectorXd b, int order);
+
+	VectorXd& getSolution(void);
+
+	void oneStep(std::default_random_engine& generator, double step);
+
+	VectorXd oneStepGiven(VectorXd& xi, double step);
+
+	void resetIC(void);
+};
+
 
 // STABILIZED PROBABILISTIC METHOD 
 template <class T> 
@@ -131,8 +131,8 @@ public:
 };
 
 // MULTI-LEVEL MONTE CARLO
-template <class T>
-class MLMC {
+/*template <class T>
+ class MLMC {
 private:
 	// Solver
 	std::vector<std::shared_ptr<ProbMethod<T>>> solver;
@@ -187,7 +187,7 @@ public:
 	double compute(void);
 
 	double gethL(void);
-};
+};*/
 
 // STABILIZED MULTI-LEVEL MONTE CARLO
 template <class T>
@@ -331,8 +331,5 @@ public:
 
 	double oneStep(VectorXd data, int nSteps);
 };
-
-
-
 
 #endif

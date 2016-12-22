@@ -56,17 +56,6 @@ CMAKE_BINARY_DIR = /u/anmc/garegnan/Desktop/Code/cmake-build-debug
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/amd/smana3/root/vol/vol2/anmc/garegnan/Downloads/clion-2016.2.3/bin/cmake/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -77,6 +66,17 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/amd/smana3/root/vol/vol2/anmc/garegnan/Downloads/clion-2016.2.3/bin/cmake/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -111,109 +111,34 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-Test/CMakeFiles/refSol.dir/rule:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/refSol.dir/rule
-.PHONY : Test/CMakeFiles/refSol.dir/rule
+Test/CMakeFiles/sigmaEst.dir/rule:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/sigmaEst.dir/rule
+.PHONY : Test/CMakeFiles/sigmaEst.dir/rule
 
 # Convenience name for target.
-refSol: Test/CMakeFiles/refSol.dir/rule
+sigmaEst: Test/CMakeFiles/sigmaEst.dir/rule
 
-.PHONY : refSol
+.PHONY : sigmaEst
 
 # fast build rule for target.
-refSol/fast:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/refSol.dir/build.make Test/CMakeFiles/refSol.dir/build
-.PHONY : refSol/fast
+sigmaEst/fast:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/build
+.PHONY : sigmaEst/fast
 
 # Convenience name for target.
-Test/CMakeFiles/plotGauss.dir/rule:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/plotGauss.dir/rule
-.PHONY : Test/CMakeFiles/plotGauss.dir/rule
+Test/CMakeFiles/mcmcConvFix.dir/rule:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/mcmcConvFix.dir/rule
+.PHONY : Test/CMakeFiles/mcmcConvFix.dir/rule
 
 # Convenience name for target.
-plotGauss: Test/CMakeFiles/plotGauss.dir/rule
+mcmcConvFix: Test/CMakeFiles/mcmcConvFix.dir/rule
 
-.PHONY : plotGauss
+.PHONY : mcmcConvFix
 
 # fast build rule for target.
-plotGauss/fast:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plotGauss.dir/build.make Test/CMakeFiles/plotGauss.dir/build
-.PHONY : plotGauss/fast
-
-# Convenience name for target.
-Test/CMakeFiles/testInv.dir/rule:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/testInv.dir/rule
-.PHONY : Test/CMakeFiles/testInv.dir/rule
-
-# Convenience name for target.
-testInv: Test/CMakeFiles/testInv.dir/rule
-
-.PHONY : testInv
-
-# fast build rule for target.
-testInv/fast:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/testInv.dir/build.make Test/CMakeFiles/testInv.dir/build
-.PHONY : testInv/fast
-
-# Convenience name for target.
-Test/CMakeFiles/binary.dir/rule:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/binary.dir/rule
-.PHONY : Test/CMakeFiles/binary.dir/rule
-
-# Convenience name for target.
-binary: Test/CMakeFiles/binary.dir/rule
-
-.PHONY : binary
-
-# fast build rule for target.
-binary/fast:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/binary.dir/build.make Test/CMakeFiles/binary.dir/build
-.PHONY : binary/fast
-
-# Convenience name for target.
-Test/CMakeFiles/likEst.dir/rule:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/likEst.dir/rule
-.PHONY : Test/CMakeFiles/likEst.dir/rule
-
-# Convenience name for target.
-likEst: Test/CMakeFiles/likEst.dir/rule
-
-.PHONY : likEst
-
-# fast build rule for target.
-likEst/fast:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/build
-.PHONY : likEst/fast
-
-# Convenience name for target.
-Test/CMakeFiles/plotter.dir/rule:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/plotter.dir/rule
-.PHONY : Test/CMakeFiles/plotter.dir/rule
-
-# Convenience name for target.
-plotter: Test/CMakeFiles/plotter.dir/rule
-
-.PHONY : plotter
-
-# fast build rule for target.
-plotter/fast:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plotter.dir/build.make Test/CMakeFiles/plotter.dir/build
-.PHONY : plotter/fast
-
-# Convenience name for target.
-Test/CMakeFiles/mcmcParam.dir/rule:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/mcmcParam.dir/rule
-.PHONY : Test/CMakeFiles/mcmcParam.dir/rule
-
-# Convenience name for target.
-mcmcParam: Test/CMakeFiles/mcmcParam.dir/rule
-
-.PHONY : mcmcParam
-
-# fast build rule for target.
-mcmcParam/fast:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/build
-.PHONY : mcmcParam/fast
+mcmcConvFix/fast:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/build
+.PHONY : mcmcConvFix/fast
 
 # Convenience name for target.
 Test/CMakeFiles/jacobian.dir/rule:
@@ -231,6 +156,186 @@ jacobian/fast:
 .PHONY : jacobian/fast
 
 # Convenience name for target.
+Test/CMakeFiles/LorenzTraj.dir/rule:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/LorenzTraj.dir/rule
+.PHONY : Test/CMakeFiles/LorenzTraj.dir/rule
+
+# Convenience name for target.
+LorenzTraj: Test/CMakeFiles/LorenzTraj.dir/rule
+
+.PHONY : LorenzTraj
+
+# fast build rule for target.
+LorenzTraj/fast:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/LorenzTraj.dir/build.make Test/CMakeFiles/LorenzTraj.dir/build
+.PHONY : LorenzTraj/fast
+
+# Convenience name for target.
+Test/CMakeFiles/invMeas.dir/rule:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/invMeas.dir/rule
+.PHONY : Test/CMakeFiles/invMeas.dir/rule
+
+# Convenience name for target.
+invMeas: Test/CMakeFiles/invMeas.dir/rule
+
+.PHONY : invMeas
+
+# fast build rule for target.
+invMeas/fast:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/invMeas.dir/build.make Test/CMakeFiles/invMeas.dir/build
+.PHONY : invMeas/fast
+
+# Convenience name for target.
+Test/CMakeFiles/binary.dir/rule:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/binary.dir/rule
+.PHONY : Test/CMakeFiles/binary.dir/rule
+
+# Convenience name for target.
+binary: Test/CMakeFiles/binary.dir/rule
+
+.PHONY : binary
+
+# fast build rule for target.
+binary/fast:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/binary.dir/build.make Test/CMakeFiles/binary.dir/build
+.PHONY : binary/fast
+
+# Convenience name for target.
+Test/CMakeFiles/plotGauss.dir/rule:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/plotGauss.dir/rule
+.PHONY : Test/CMakeFiles/plotGauss.dir/rule
+
+# Convenience name for target.
+plotGauss: Test/CMakeFiles/plotGauss.dir/rule
+
+.PHONY : plotGauss
+
+# fast build rule for target.
+plotGauss/fast:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plotGauss.dir/build.make Test/CMakeFiles/plotGauss.dir/build
+.PHONY : plotGauss/fast
+
+# Convenience name for target.
+Test/CMakeFiles/testBE.dir/rule:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/testBE.dir/rule
+.PHONY : Test/CMakeFiles/testBE.dir/rule
+
+# Convenience name for target.
+testBE: Test/CMakeFiles/testBE.dir/rule
+
+.PHONY : testBE
+
+# fast build rule for target.
+testBE/fast:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/testBE.dir/build.make Test/CMakeFiles/testBE.dir/build
+.PHONY : testBE/fast
+
+# Convenience name for target.
+Test/CMakeFiles/plainMH.dir/rule:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/plainMH.dir/rule
+.PHONY : Test/CMakeFiles/plainMH.dir/rule
+
+# Convenience name for target.
+plainMH: Test/CMakeFiles/plainMH.dir/rule
+
+.PHONY : plainMH
+
+# fast build rule for target.
+plainMH/fast:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plainMH.dir/build.make Test/CMakeFiles/plainMH.dir/build
+.PHONY : plainMH/fast
+
+# Convenience name for target.
+Test/CMakeFiles/refSol.dir/rule:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/refSol.dir/rule
+.PHONY : Test/CMakeFiles/refSol.dir/rule
+
+# Convenience name for target.
+refSol: Test/CMakeFiles/refSol.dir/rule
+
+.PHONY : refSol
+
+# fast build rule for target.
+refSol/fast:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/refSol.dir/build.make Test/CMakeFiles/refSol.dir/build
+.PHONY : refSol/fast
+
+# Convenience name for target.
+Test/CMakeFiles/plainMHconv.dir/rule:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/plainMHconv.dir/rule
+.PHONY : Test/CMakeFiles/plainMHconv.dir/rule
+
+# Convenience name for target.
+plainMHconv: Test/CMakeFiles/plainMHconv.dir/rule
+
+.PHONY : plainMHconv
+
+# fast build rule for target.
+plainMHconv/fast:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plainMHconv.dir/build.make Test/CMakeFiles/plainMHconv.dir/build
+.PHONY : plainMHconv/fast
+
+# Convenience name for target.
+Test/CMakeFiles/testInv.dir/rule:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/testInv.dir/rule
+.PHONY : Test/CMakeFiles/testInv.dir/rule
+
+# Convenience name for target.
+testInv: Test/CMakeFiles/testInv.dir/rule
+
+.PHONY : testInv
+
+# fast build rule for target.
+testInv/fast:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/testInv.dir/build.make Test/CMakeFiles/testInv.dir/build
+.PHONY : testInv/fast
+
+# Convenience name for target.
+Test/CMakeFiles/plotter.dir/rule:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/plotter.dir/rule
+.PHONY : Test/CMakeFiles/plotter.dir/rule
+
+# Convenience name for target.
+plotter: Test/CMakeFiles/plotter.dir/rule
+
+.PHONY : plotter
+
+# fast build rule for target.
+plotter/fast:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plotter.dir/build.make Test/CMakeFiles/plotter.dir/build
+.PHONY : plotter/fast
+
+# Convenience name for target.
+Test/CMakeFiles/mcmcConv.dir/rule:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/mcmcConv.dir/rule
+.PHONY : Test/CMakeFiles/mcmcConv.dir/rule
+
+# Convenience name for target.
+mcmcConv: Test/CMakeFiles/mcmcConv.dir/rule
+
+.PHONY : mcmcConv
+
+# fast build rule for target.
+mcmcConv/fast:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/build
+.PHONY : mcmcConv/fast
+
+# Convenience name for target.
+Test/CMakeFiles/testMerge.dir/rule:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/testMerge.dir/rule
+.PHONY : Test/CMakeFiles/testMerge.dir/rule
+
+# Convenience name for target.
+testMerge: Test/CMakeFiles/testMerge.dir/rule
+
+.PHONY : testMerge
+
+# fast build rule for target.
+testMerge/fast:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/testMerge.dir/build.make Test/CMakeFiles/testMerge.dir/build
+.PHONY : testMerge/fast
+
+# Convenience name for target.
 Test/CMakeFiles/testVar.dir/rule:
 	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/testVar.dir/rule
 .PHONY : Test/CMakeFiles/testVar.dir/rule
@@ -245,14 +350,69 @@ testVar/fast:
 	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/testVar.dir/build.make Test/CMakeFiles/testVar.dir/build
 .PHONY : testVar/fast
 
+LorenzPlotTrajectories.o: LorenzPlotTrajectories.cpp.o
+
+.PHONY : LorenzPlotTrajectories.o
+
+# target to build an object file
+LorenzPlotTrajectories.cpp.o:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/LorenzTraj.dir/build.make Test/CMakeFiles/LorenzTraj.dir/LorenzPlotTrajectories.cpp.o
+.PHONY : LorenzPlotTrajectories.cpp.o
+
+LorenzPlotTrajectories.i: LorenzPlotTrajectories.cpp.i
+
+.PHONY : LorenzPlotTrajectories.i
+
+# target to preprocess a source file
+LorenzPlotTrajectories.cpp.i:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/LorenzTraj.dir/build.make Test/CMakeFiles/LorenzTraj.dir/LorenzPlotTrajectories.cpp.i
+.PHONY : LorenzPlotTrajectories.cpp.i
+
+LorenzPlotTrajectories.s: LorenzPlotTrajectories.cpp.s
+
+.PHONY : LorenzPlotTrajectories.s
+
+# target to generate assembly for a file
+LorenzPlotTrajectories.cpp.s:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/LorenzTraj.dir/build.make Test/CMakeFiles/LorenzTraj.dir/LorenzPlotTrajectories.cpp.s
+.PHONY : LorenzPlotTrajectories.cpp.s
+
+MCMCconvFix.o: MCMCconvFix.cpp.o
+
+.PHONY : MCMCconvFix.o
+
+# target to build an object file
+MCMCconvFix.cpp.o:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/MCMCconvFix.cpp.o
+.PHONY : MCMCconvFix.cpp.o
+
+MCMCconvFix.i: MCMCconvFix.cpp.i
+
+.PHONY : MCMCconvFix.i
+
+# target to preprocess a source file
+MCMCconvFix.cpp.i:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/MCMCconvFix.cpp.i
+.PHONY : MCMCconvFix.cpp.i
+
+MCMCconvFix.s: MCMCconvFix.cpp.s
+
+.PHONY : MCMCconvFix.s
+
+# target to generate assembly for a file
+MCMCconvFix.cpp.s:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/MCMCconvFix.cpp.s
+.PHONY : MCMCconvFix.cpp.s
+
 Metropolis.o: Metropolis.cpp.o
 
 .PHONY : Metropolis.o
 
 # target to build an object file
 Metropolis.cpp.o:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/Metropolis.cpp.o
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/Metropolis.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/Metropolis.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/Metropolis.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/Metropolis.cpp.o
 .PHONY : Metropolis.cpp.o
 
 Metropolis.i: Metropolis.cpp.i
@@ -261,8 +421,9 @@ Metropolis.i: Metropolis.cpp.i
 
 # target to preprocess a source file
 Metropolis.cpp.i:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/Metropolis.cpp.i
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/Metropolis.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/Metropolis.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/Metropolis.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/Metropolis.cpp.i
 .PHONY : Metropolis.cpp.i
 
 Metropolis.s: Metropolis.cpp.s
@@ -271,9 +432,76 @@ Metropolis.s: Metropolis.cpp.s
 
 # target to generate assembly for a file
 Metropolis.cpp.s:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/Metropolis.cpp.s
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/Metropolis.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/Metropolis.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/Metropolis.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/Metropolis.cpp.s
 .PHONY : Metropolis.cpp.s
+
+MetropolisConv.o: MetropolisConv.cpp.o
+
+.PHONY : MetropolisConv.o
+
+# target to build an object file
+MetropolisConv.cpp.o:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/MetropolisConv.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/MetropolisConv.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/MetropolisConv.cpp.o
+.PHONY : MetropolisConv.cpp.o
+
+MetropolisConv.i: MetropolisConv.cpp.i
+
+.PHONY : MetropolisConv.i
+
+# target to preprocess a source file
+MetropolisConv.cpp.i:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/MetropolisConv.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/MetropolisConv.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/MetropolisConv.cpp.i
+.PHONY : MetropolisConv.cpp.i
+
+MetropolisConv.s: MetropolisConv.cpp.s
+
+.PHONY : MetropolisConv.s
+
+# target to generate assembly for a file
+MetropolisConv.cpp.s:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/MetropolisConv.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/MetropolisConv.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/MetropolisConv.cpp.s
+.PHONY : MetropolisConv.cpp.s
+
+MetropolisDet.o: MetropolisDet.cpp.o
+
+.PHONY : MetropolisDet.o
+
+# target to build an object file
+MetropolisDet.cpp.o:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/MetropolisDet.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/MetropolisDet.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/MetropolisDet.cpp.o
+.PHONY : MetropolisDet.cpp.o
+
+MetropolisDet.i: MetropolisDet.cpp.i
+
+.PHONY : MetropolisDet.i
+
+# target to preprocess a source file
+MetropolisDet.cpp.i:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/MetropolisDet.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/MetropolisDet.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/MetropolisDet.cpp.i
+.PHONY : MetropolisDet.cpp.i
+
+MetropolisDet.s: MetropolisDet.cpp.s
+
+.PHONY : MetropolisDet.s
+
+# target to generate assembly for a file
+MetropolisDet.cpp.s:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/MetropolisDet.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/MetropolisDet.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/MetropolisDet.cpp.s
+.PHONY : MetropolisDet.cpp.s
 
 gaussMetropolis.o: gaussMetropolis.cpp.o
 
@@ -281,8 +509,9 @@ gaussMetropolis.o: gaussMetropolis.cpp.o
 
 # target to build an object file
 gaussMetropolis.cpp.o:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/gaussMetropolis.cpp.o
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/gaussMetropolis.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/gaussMetropolis.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/gaussMetropolis.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/gaussMetropolis.cpp.o
 .PHONY : gaussMetropolis.cpp.o
 
 gaussMetropolis.i: gaussMetropolis.cpp.i
@@ -291,8 +520,9 @@ gaussMetropolis.i: gaussMetropolis.cpp.i
 
 # target to preprocess a source file
 gaussMetropolis.cpp.i:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/gaussMetropolis.cpp.i
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/gaussMetropolis.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/gaussMetropolis.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/gaussMetropolis.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/gaussMetropolis.cpp.i
 .PHONY : gaussMetropolis.cpp.i
 
 gaussMetropolis.s: gaussMetropolis.cpp.s
@@ -301,8 +531,9 @@ gaussMetropolis.s: gaussMetropolis.cpp.s
 
 # target to generate assembly for a file
 gaussMetropolis.cpp.s:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/gaussMetropolis.cpp.s
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/gaussMetropolis.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/gaussMetropolis.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/gaussMetropolis.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/gaussMetropolis.cpp.s
 .PHONY : gaussMetropolis.cpp.s
 
 generateRefSol.o: generateRefSol.cpp.o
@@ -332,6 +563,66 @@ generateRefSol.cpp.s:
 	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/refSol.dir/build.make Test/CMakeFiles/refSol.dir/generateRefSol.cpp.s
 .PHONY : generateRefSol.cpp.s
 
+impMetropolisConv.o: impMetropolisConv.cpp.o
+
+.PHONY : impMetropolisConv.o
+
+# target to build an object file
+impMetropolisConv.cpp.o:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/impMetropolisConv.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/impMetropolisConv.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/impMetropolisConv.cpp.o
+.PHONY : impMetropolisConv.cpp.o
+
+impMetropolisConv.i: impMetropolisConv.cpp.i
+
+.PHONY : impMetropolisConv.i
+
+# target to preprocess a source file
+impMetropolisConv.cpp.i:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/impMetropolisConv.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/impMetropolisConv.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/impMetropolisConv.cpp.i
+.PHONY : impMetropolisConv.cpp.i
+
+impMetropolisConv.s: impMetropolisConv.cpp.s
+
+.PHONY : impMetropolisConv.s
+
+# target to generate assembly for a file
+impMetropolisConv.cpp.s:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/impMetropolisConv.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/impMetropolisConv.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/impMetropolisConv.cpp.s
+.PHONY : impMetropolisConv.cpp.s
+
+invMeasure.o: invMeasure.cpp.o
+
+.PHONY : invMeasure.o
+
+# target to build an object file
+invMeasure.cpp.o:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/invMeas.dir/build.make Test/CMakeFiles/invMeas.dir/invMeasure.cpp.o
+.PHONY : invMeasure.cpp.o
+
+invMeasure.i: invMeasure.cpp.i
+
+.PHONY : invMeasure.i
+
+# target to preprocess a source file
+invMeasure.cpp.i:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/invMeas.dir/build.make Test/CMakeFiles/invMeas.dir/invMeasure.cpp.i
+.PHONY : invMeasure.cpp.i
+
+invMeasure.s: invMeasure.cpp.s
+
+.PHONY : invMeasure.s
+
+# target to generate assembly for a file
+invMeasure.cpp.s:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/invMeas.dir/build.make Test/CMakeFiles/invMeas.dir/invMeasure.cpp.s
+.PHONY : invMeasure.cpp.s
+
 jacTest.o: jacTest.cpp.o
 
 .PHONY : jacTest.o
@@ -359,68 +650,17 @@ jacTest.cpp.s:
 	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/jacobian.dir/build.make Test/CMakeFiles/jacobian.dir/jacTest.cpp.s
 .PHONY : jacTest.cpp.s
 
-likelihoodEstimator.o: likelihoodEstimator.cpp.o
-
-.PHONY : likelihoodEstimator.o
-
-# target to build an object file
-likelihoodEstimator.cpp.o:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/likelihoodEstimator.cpp.o
-.PHONY : likelihoodEstimator.cpp.o
-
-likelihoodEstimator.i: likelihoodEstimator.cpp.i
-
-.PHONY : likelihoodEstimator.i
-
-# target to preprocess a source file
-likelihoodEstimator.cpp.i:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/likelihoodEstimator.cpp.i
-.PHONY : likelihoodEstimator.cpp.i
-
-likelihoodEstimator.s: likelihoodEstimator.cpp.s
-
-.PHONY : likelihoodEstimator.s
-
-# target to generate assembly for a file
-likelihoodEstimator.cpp.s:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/likelihoodEstimator.cpp.s
-.PHONY : likelihoodEstimator.cpp.s
-
-mcmcParamTest.o: mcmcParamTest.cpp.o
-
-.PHONY : mcmcParamTest.o
-
-# target to build an object file
-mcmcParamTest.cpp.o:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/mcmcParamTest.cpp.o
-.PHONY : mcmcParamTest.cpp.o
-
-mcmcParamTest.i: mcmcParamTest.cpp.i
-
-.PHONY : mcmcParamTest.i
-
-# target to preprocess a source file
-mcmcParamTest.cpp.i:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/mcmcParamTest.cpp.i
-.PHONY : mcmcParamTest.cpp.i
-
-mcmcParamTest.s: mcmcParamTest.cpp.s
-
-.PHONY : mcmcParamTest.s
-
-# target to generate assembly for a file
-mcmcParamTest.cpp.s:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/mcmcParamTest.cpp.s
-.PHONY : mcmcParamTest.cpp.s
-
 mcmcTools.o: mcmcTools.cpp.o
 
 .PHONY : mcmcTools.o
 
 # target to build an object file
 mcmcTools.cpp.o:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/mcmcTools.cpp.o
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/mcmcTools.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/mcmcTools.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/mcmcTools.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plainMH.dir/build.make Test/CMakeFiles/plainMH.dir/mcmcTools.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plainMHconv.dir/build.make Test/CMakeFiles/plainMHconv.dir/mcmcTools.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/mcmcTools.cpp.o
 .PHONY : mcmcTools.cpp.o
 
 mcmcTools.i: mcmcTools.cpp.i
@@ -429,8 +669,11 @@ mcmcTools.i: mcmcTools.cpp.i
 
 # target to preprocess a source file
 mcmcTools.cpp.i:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/mcmcTools.cpp.i
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/mcmcTools.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/mcmcTools.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/mcmcTools.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plainMH.dir/build.make Test/CMakeFiles/plainMH.dir/mcmcTools.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plainMHconv.dir/build.make Test/CMakeFiles/plainMHconv.dir/mcmcTools.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/mcmcTools.cpp.i
 .PHONY : mcmcTools.cpp.i
 
 mcmcTools.s: mcmcTools.cpp.s
@@ -439,39 +682,66 @@ mcmcTools.s: mcmcTools.cpp.s
 
 # target to generate assembly for a file
 mcmcTools.cpp.s:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/mcmcTools.cpp.s
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/mcmcTools.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/mcmcTools.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/mcmcTools.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plainMH.dir/build.make Test/CMakeFiles/plainMH.dir/mcmcTools.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plainMHconv.dir/build.make Test/CMakeFiles/plainMHconv.dir/mcmcTools.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/mcmcTools.cpp.s
 .PHONY : mcmcTools.cpp.s
 
-mlMetropolis.o: mlMetropolis.cpp.o
+plainMH.o: plainMH.cpp.o
 
-.PHONY : mlMetropolis.o
+.PHONY : plainMH.o
 
 # target to build an object file
-mlMetropolis.cpp.o:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/mlMetropolis.cpp.o
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.o
-.PHONY : mlMetropolis.cpp.o
+plainMH.cpp.o:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plainMH.dir/build.make Test/CMakeFiles/plainMH.dir/plainMH.cpp.o
+.PHONY : plainMH.cpp.o
 
-mlMetropolis.i: mlMetropolis.cpp.i
+plainMH.i: plainMH.cpp.i
 
-.PHONY : mlMetropolis.i
+.PHONY : plainMH.i
 
 # target to preprocess a source file
-mlMetropolis.cpp.i:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/mlMetropolis.cpp.i
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.i
-.PHONY : mlMetropolis.cpp.i
+plainMH.cpp.i:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plainMH.dir/build.make Test/CMakeFiles/plainMH.dir/plainMH.cpp.i
+.PHONY : plainMH.cpp.i
 
-mlMetropolis.s: mlMetropolis.cpp.s
+plainMH.s: plainMH.cpp.s
 
-.PHONY : mlMetropolis.s
+.PHONY : plainMH.s
 
 # target to generate assembly for a file
-mlMetropolis.cpp.s:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/mlMetropolis.cpp.s
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/mlMetropolis.cpp.s
-.PHONY : mlMetropolis.cpp.s
+plainMH.cpp.s:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plainMH.dir/build.make Test/CMakeFiles/plainMH.dir/plainMH.cpp.s
+.PHONY : plainMH.cpp.s
+
+plainMHConv.o: plainMHConv.cpp.o
+
+.PHONY : plainMHConv.o
+
+# target to build an object file
+plainMHConv.cpp.o:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plainMHconv.dir/build.make Test/CMakeFiles/plainMHconv.dir/plainMHConv.cpp.o
+.PHONY : plainMHConv.cpp.o
+
+plainMHConv.i: plainMHConv.cpp.i
+
+.PHONY : plainMHConv.i
+
+# target to preprocess a source file
+plainMHConv.cpp.i:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plainMHconv.dir/build.make Test/CMakeFiles/plainMHconv.dir/plainMHConv.cpp.i
+.PHONY : plainMHConv.cpp.i
+
+plainMHConv.s: plainMHConv.cpp.s
+
+.PHONY : plainMHConv.s
+
+# target to generate assembly for a file
+plainMHConv.cpp.s:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plainMHconv.dir/build.make Test/CMakeFiles/plainMHconv.dir/plainMHConv.cpp.s
+.PHONY : plainMHConv.cpp.s
 
 plotGaussTrajectories.o: plotGaussTrajectories.cpp.o
 
@@ -533,12 +803,16 @@ problems.o: problems.cpp.o
 
 # target to build an object file
 problems.cpp.o:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/refSol.dir/build.make Test/CMakeFiles/refSol.dir/problems.cpp.o
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plotGauss.dir/build.make Test/CMakeFiles/plotGauss.dir/problems.cpp.o
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/problems.cpp.o
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plotter.dir/build.make Test/CMakeFiles/plotter.dir/problems.cpp.o
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/problems.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/problems.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/problems.cpp.o
 	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/jacobian.dir/build.make Test/CMakeFiles/jacobian.dir/problems.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/LorenzTraj.dir/build.make Test/CMakeFiles/LorenzTraj.dir/problems.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/invMeas.dir/build.make Test/CMakeFiles/invMeas.dir/problems.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plotGauss.dir/build.make Test/CMakeFiles/plotGauss.dir/problems.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/testBE.dir/build.make Test/CMakeFiles/testBE.dir/problems.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/refSol.dir/build.make Test/CMakeFiles/refSol.dir/problems.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plotter.dir/build.make Test/CMakeFiles/plotter.dir/problems.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/problems.cpp.o
 	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/testVar.dir/build.make Test/CMakeFiles/testVar.dir/problems.cpp.o
 .PHONY : problems.cpp.o
 
@@ -548,12 +822,16 @@ problems.i: problems.cpp.i
 
 # target to preprocess a source file
 problems.cpp.i:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/refSol.dir/build.make Test/CMakeFiles/refSol.dir/problems.cpp.i
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plotGauss.dir/build.make Test/CMakeFiles/plotGauss.dir/problems.cpp.i
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/problems.cpp.i
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plotter.dir/build.make Test/CMakeFiles/plotter.dir/problems.cpp.i
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/problems.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/problems.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/problems.cpp.i
 	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/jacobian.dir/build.make Test/CMakeFiles/jacobian.dir/problems.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/LorenzTraj.dir/build.make Test/CMakeFiles/LorenzTraj.dir/problems.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/invMeas.dir/build.make Test/CMakeFiles/invMeas.dir/problems.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plotGauss.dir/build.make Test/CMakeFiles/plotGauss.dir/problems.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/testBE.dir/build.make Test/CMakeFiles/testBE.dir/problems.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/refSol.dir/build.make Test/CMakeFiles/refSol.dir/problems.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plotter.dir/build.make Test/CMakeFiles/plotter.dir/problems.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/problems.cpp.i
 	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/testVar.dir/build.make Test/CMakeFiles/testVar.dir/problems.cpp.i
 .PHONY : problems.cpp.i
 
@@ -563,12 +841,16 @@ problems.s: problems.cpp.s
 
 # target to generate assembly for a file
 problems.cpp.s:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/refSol.dir/build.make Test/CMakeFiles/refSol.dir/problems.cpp.s
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plotGauss.dir/build.make Test/CMakeFiles/plotGauss.dir/problems.cpp.s
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/problems.cpp.s
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plotter.dir/build.make Test/CMakeFiles/plotter.dir/problems.cpp.s
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/problems.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/problems.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/problems.cpp.s
 	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/jacobian.dir/build.make Test/CMakeFiles/jacobian.dir/problems.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/LorenzTraj.dir/build.make Test/CMakeFiles/LorenzTraj.dir/problems.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/invMeas.dir/build.make Test/CMakeFiles/invMeas.dir/problems.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plotGauss.dir/build.make Test/CMakeFiles/plotGauss.dir/problems.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/testBE.dir/build.make Test/CMakeFiles/testBE.dir/problems.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/refSol.dir/build.make Test/CMakeFiles/refSol.dir/problems.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plotter.dir/build.make Test/CMakeFiles/plotter.dir/problems.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/problems.cpp.s
 	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/testVar.dir/build.make Test/CMakeFiles/testVar.dir/problems.cpp.s
 .PHONY : problems.cpp.s
 
@@ -578,8 +860,9 @@ sMetropolis.o: sMetropolis.cpp.o
 
 # target to build an object file
 sMetropolis.cpp.o:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/sMetropolis.cpp.o
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/sMetropolis.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/sMetropolis.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/sMetropolis.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/sMetropolis.cpp.o
 .PHONY : sMetropolis.cpp.o
 
 sMetropolis.i: sMetropolis.cpp.i
@@ -588,8 +871,9 @@ sMetropolis.i: sMetropolis.cpp.i
 
 # target to preprocess a source file
 sMetropolis.cpp.i:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/sMetropolis.cpp.i
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/sMetropolis.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/sMetropolis.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/sMetropolis.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/sMetropolis.cpp.i
 .PHONY : sMetropolis.cpp.i
 
 sMetropolis.s: sMetropolis.cpp.s
@@ -598,9 +882,37 @@ sMetropolis.s: sMetropolis.cpp.s
 
 # target to generate assembly for a file
 sMetropolis.cpp.s:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/sMetropolis.cpp.s
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/sMetropolis.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/sMetropolis.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/sMetropolis.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/sMetropolis.cpp.s
 .PHONY : sMetropolis.cpp.s
+
+sigmaEst.o: sigmaEst.cpp.o
+
+.PHONY : sigmaEst.o
+
+# target to build an object file
+sigmaEst.cpp.o:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/sigmaEst.cpp.o
+.PHONY : sigmaEst.cpp.o
+
+sigmaEst.i: sigmaEst.cpp.i
+
+.PHONY : sigmaEst.i
+
+# target to preprocess a source file
+sigmaEst.cpp.i:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/sigmaEst.cpp.i
+.PHONY : sigmaEst.cpp.i
+
+sigmaEst.s: sigmaEst.cpp.s
+
+.PHONY : sigmaEst.s
+
+# target to generate assembly for a file
+sigmaEst.cpp.s:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/sigmaEst.cpp.s
+.PHONY : sigmaEst.cpp.s
 
 smlMetropolis.o: smlMetropolis.cpp.o
 
@@ -608,8 +920,9 @@ smlMetropolis.o: smlMetropolis.cpp.o
 
 # target to build an object file
 smlMetropolis.cpp.o:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/smlMetropolis.cpp.o
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/smlMetropolis.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/smlMetropolis.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/smlMetropolis.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/smlMetropolis.cpp.o
 .PHONY : smlMetropolis.cpp.o
 
 smlMetropolis.i: smlMetropolis.cpp.i
@@ -618,8 +931,9 @@ smlMetropolis.i: smlMetropolis.cpp.i
 
 # target to preprocess a source file
 smlMetropolis.cpp.i:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/smlMetropolis.cpp.i
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/smlMetropolis.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/smlMetropolis.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/smlMetropolis.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/smlMetropolis.cpp.i
 .PHONY : smlMetropolis.cpp.i
 
 smlMetropolis.s: smlMetropolis.cpp.s
@@ -628,9 +942,37 @@ smlMetropolis.s: smlMetropolis.cpp.s
 
 # target to generate assembly for a file
 smlMetropolis.cpp.s:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/smlMetropolis.cpp.s
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/smlMetropolis.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/smlMetropolis.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/smlMetropolis.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/smlMetropolis.cpp.s
 .PHONY : smlMetropolis.cpp.s
+
+testBackEul.o: testBackEul.cpp.o
+
+.PHONY : testBackEul.o
+
+# target to build an object file
+testBackEul.cpp.o:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/testBE.dir/build.make Test/CMakeFiles/testBE.dir/testBackEul.cpp.o
+.PHONY : testBackEul.cpp.o
+
+testBackEul.i: testBackEul.cpp.i
+
+.PHONY : testBackEul.i
+
+# target to preprocess a source file
+testBackEul.cpp.i:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/testBE.dir/build.make Test/CMakeFiles/testBE.dir/testBackEul.cpp.i
+.PHONY : testBackEul.cpp.i
+
+testBackEul.s: testBackEul.cpp.s
+
+.PHONY : testBackEul.s
+
+# target to generate assembly for a file
+testBackEul.cpp.s:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/testBE.dir/build.make Test/CMakeFiles/testBE.dir/testBackEul.cpp.s
+.PHONY : testBackEul.cpp.s
 
 testBinary.o: testBinary.cpp.o
 
@@ -686,14 +1028,43 @@ testInverse.cpp.s:
 	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/testInv.dir/build.make Test/CMakeFiles/testInv.dir/testInverse.cpp.s
 .PHONY : testInverse.cpp.s
 
+testMCMCconvergence.o: testMCMCconvergence.cpp.o
+
+.PHONY : testMCMCconvergence.o
+
+# target to build an object file
+testMCMCconvergence.cpp.o:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/testMCMCconvergence.cpp.o
+.PHONY : testMCMCconvergence.cpp.o
+
+testMCMCconvergence.i: testMCMCconvergence.cpp.i
+
+.PHONY : testMCMCconvergence.i
+
+# target to preprocess a source file
+testMCMCconvergence.cpp.i:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/testMCMCconvergence.cpp.i
+.PHONY : testMCMCconvergence.cpp.i
+
+testMCMCconvergence.s: testMCMCconvergence.cpp.s
+
+.PHONY : testMCMCconvergence.s
+
+# target to generate assembly for a file
+testMCMCconvergence.cpp.s:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/testMCMCconvergence.cpp.s
+.PHONY : testMCMCconvergence.cpp.s
+
 testMH.o: testMH.cpp.o
 
 .PHONY : testMH.o
 
 # target to build an object file
 testMH.cpp.o:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/testMH.cpp.o
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/testMH.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/testMH.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/testMH.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plainMH.dir/build.make Test/CMakeFiles/plainMH.dir/testMH.cpp.o
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/testMH.cpp.o
 .PHONY : testMH.cpp.o
 
 testMH.i: testMH.cpp.i
@@ -702,8 +1073,10 @@ testMH.i: testMH.cpp.i
 
 # target to preprocess a source file
 testMH.cpp.i:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/testMH.cpp.i
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/testMH.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/testMH.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/testMH.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plainMH.dir/build.make Test/CMakeFiles/plainMH.dir/testMH.cpp.i
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/testMH.cpp.i
 .PHONY : testMH.cpp.i
 
 testMH.s: testMH.cpp.s
@@ -712,9 +1085,65 @@ testMH.s: testMH.cpp.s
 
 # target to generate assembly for a file
 testMH.cpp.s:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/testMH.cpp.s
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcParam.dir/build.make Test/CMakeFiles/mcmcParam.dir/testMH.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/testMH.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/testMH.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plainMH.dir/build.make Test/CMakeFiles/plainMH.dir/testMH.cpp.s
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/testMH.cpp.s
 .PHONY : testMH.cpp.s
+
+testMHconv.o: testMHconv.cpp.o
+
+.PHONY : testMHconv.o
+
+# target to build an object file
+testMHconv.cpp.o:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plainMHconv.dir/build.make Test/CMakeFiles/plainMHconv.dir/testMHconv.cpp.o
+.PHONY : testMHconv.cpp.o
+
+testMHconv.i: testMHconv.cpp.i
+
+.PHONY : testMHconv.i
+
+# target to preprocess a source file
+testMHconv.cpp.i:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plainMHconv.dir/build.make Test/CMakeFiles/plainMHconv.dir/testMHconv.cpp.i
+.PHONY : testMHconv.cpp.i
+
+testMHconv.s: testMHconv.cpp.s
+
+.PHONY : testMHconv.s
+
+# target to generate assembly for a file
+testMHconv.cpp.s:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/plainMHconv.dir/build.make Test/CMakeFiles/plainMHconv.dir/testMHconv.cpp.s
+.PHONY : testMHconv.cpp.s
+
+testMerge.o: testMerge.cpp.o
+
+.PHONY : testMerge.o
+
+# target to build an object file
+testMerge.cpp.o:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/testMerge.dir/build.make Test/CMakeFiles/testMerge.dir/testMerge.cpp.o
+.PHONY : testMerge.cpp.o
+
+testMerge.i: testMerge.cpp.i
+
+.PHONY : testMerge.i
+
+# target to preprocess a source file
+testMerge.cpp.i:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/testMerge.dir/build.make Test/CMakeFiles/testMerge.dir/testMerge.cpp.i
+.PHONY : testMerge.cpp.i
+
+testMerge.s: testMerge.cpp.s
+
+.PHONY : testMerge.s
+
+# target to generate assembly for a file
+testMerge.cpp.s:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/testMerge.dir/build.make Test/CMakeFiles/testMerge.dir/testMerge.cpp.s
+.PHONY : testMerge.cpp.s
 
 testVarMC.o: testVarMC.cpp.o
 
@@ -749,41 +1178,63 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... refSol"
-	@echo "... plotGauss"
-	@echo "... edit_cache"
-	@echo "... testInv"
-	@echo "... binary"
-	@echo "... likEst"
-	@echo "... plotter"
-	@echo "... mcmcParam"
-	@echo "... jacobian"
 	@echo "... rebuild_cache"
+	@echo "... sigmaEst"
+	@echo "... mcmcConvFix"
+	@echo "... jacobian"
+	@echo "... LorenzTraj"
+	@echo "... invMeas"
+	@echo "... binary"
+	@echo "... plotGauss"
+	@echo "... testBE"
+	@echo "... plainMH"
+	@echo "... refSol"
+	@echo "... edit_cache"
+	@echo "... plainMHconv"
+	@echo "... testInv"
+	@echo "... plotter"
+	@echo "... mcmcConv"
+	@echo "... testMerge"
 	@echo "... testVar"
+	@echo "... LorenzPlotTrajectories.o"
+	@echo "... LorenzPlotTrajectories.i"
+	@echo "... LorenzPlotTrajectories.s"
+	@echo "... MCMCconvFix.o"
+	@echo "... MCMCconvFix.i"
+	@echo "... MCMCconvFix.s"
 	@echo "... Metropolis.o"
 	@echo "... Metropolis.i"
 	@echo "... Metropolis.s"
+	@echo "... MetropolisConv.o"
+	@echo "... MetropolisConv.i"
+	@echo "... MetropolisConv.s"
+	@echo "... MetropolisDet.o"
+	@echo "... MetropolisDet.i"
+	@echo "... MetropolisDet.s"
 	@echo "... gaussMetropolis.o"
 	@echo "... gaussMetropolis.i"
 	@echo "... gaussMetropolis.s"
 	@echo "... generateRefSol.o"
 	@echo "... generateRefSol.i"
 	@echo "... generateRefSol.s"
+	@echo "... impMetropolisConv.o"
+	@echo "... impMetropolisConv.i"
+	@echo "... impMetropolisConv.s"
+	@echo "... invMeasure.o"
+	@echo "... invMeasure.i"
+	@echo "... invMeasure.s"
 	@echo "... jacTest.o"
 	@echo "... jacTest.i"
 	@echo "... jacTest.s"
-	@echo "... likelihoodEstimator.o"
-	@echo "... likelihoodEstimator.i"
-	@echo "... likelihoodEstimator.s"
-	@echo "... mcmcParamTest.o"
-	@echo "... mcmcParamTest.i"
-	@echo "... mcmcParamTest.s"
 	@echo "... mcmcTools.o"
 	@echo "... mcmcTools.i"
 	@echo "... mcmcTools.s"
-	@echo "... mlMetropolis.o"
-	@echo "... mlMetropolis.i"
-	@echo "... mlMetropolis.s"
+	@echo "... plainMH.o"
+	@echo "... plainMH.i"
+	@echo "... plainMH.s"
+	@echo "... plainMHConv.o"
+	@echo "... plainMHConv.i"
+	@echo "... plainMHConv.s"
 	@echo "... plotGaussTrajectories.o"
 	@echo "... plotGaussTrajectories.i"
 	@echo "... plotGaussTrajectories.s"
@@ -796,18 +1247,33 @@ help:
 	@echo "... sMetropolis.o"
 	@echo "... sMetropolis.i"
 	@echo "... sMetropolis.s"
+	@echo "... sigmaEst.o"
+	@echo "... sigmaEst.i"
+	@echo "... sigmaEst.s"
 	@echo "... smlMetropolis.o"
 	@echo "... smlMetropolis.i"
 	@echo "... smlMetropolis.s"
+	@echo "... testBackEul.o"
+	@echo "... testBackEul.i"
+	@echo "... testBackEul.s"
 	@echo "... testBinary.o"
 	@echo "... testBinary.i"
 	@echo "... testBinary.s"
 	@echo "... testInverse.o"
 	@echo "... testInverse.i"
 	@echo "... testInverse.s"
+	@echo "... testMCMCconvergence.o"
+	@echo "... testMCMCconvergence.i"
+	@echo "... testMCMCconvergence.s"
 	@echo "... testMH.o"
 	@echo "... testMH.i"
 	@echo "... testMH.s"
+	@echo "... testMHconv.o"
+	@echo "... testMHconv.i"
+	@echo "... testMHconv.s"
+	@echo "... testMerge.o"
+	@echo "... testMerge.i"
+	@echo "... testMerge.s"
 	@echo "... testVarMC.o"
 	@echo "... testVarMC.i"
 	@echo "... testVarMC.s"

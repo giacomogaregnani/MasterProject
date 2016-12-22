@@ -239,102 +239,104 @@ Poisson::Poisson(int N)
 
 void setProblem(odeDef* odeModel)
 {
-	switch ((*odeModel).ode) {
+	switch (odeModel->ode) {
 		case FITZNAG:
-			(*odeModel).size = 2;
-			((*odeModel).initialCond).resize((*odeModel).size);
-			((*odeModel).initialCond)(0) = -1.0;
-			((*odeModel).initialCond)(1) = 1.0;
-			(*odeModel).odeFunc = &fitznag;
-            (*odeModel).odeJac = &fitznagJ;
-			((*odeModel).refParam).resize(3);
-			(*odeModel).refParam[0] = 0.2;
-			(*odeModel).refParam[1] = 0.2;
-			(*odeModel).refParam[2] = 3.0;
+			odeModel->size = 2;
+			(odeModel->initialCond).resize(odeModel->size);
+			(odeModel->initialCond)(0) = -1.0;
+			(odeModel->initialCond)(1) = 1.0;
+			odeModel->odeFunc = &fitznag;
+            odeModel->odeJac = &fitznagJ;
+			(odeModel->refParam).resize(3);
+			odeModel->refParam[0] = 0.2;
+			odeModel->refParam[1] = 0.2;
+			odeModel->refParam[2] = 3.0;
 			break;
 		case LORENZ:
-			((*odeModel).size) = 3;
-			((*odeModel).initialCond).resize((*odeModel).size);
-			((*odeModel).initialCond)(0) = -10.0;
-			((*odeModel).initialCond)(1) = -1.0;
-			((*odeModel).initialCond)(2) = 40.0;
-			(*odeModel).odeFunc = &lorenz;
-            (*odeModel).odeJac = &lorenzJ;
-			((*odeModel).refParam).resize(3);
-            (*odeModel).refParam[0] = 10.0;
-            (*odeModel).refParam[1] = 28.0;
-            (*odeModel).refParam[2] = 8.0 / 3.0;
+			(odeModel->size) = 3;
+			(odeModel->initialCond).resize(odeModel->size);
+			(odeModel->initialCond)(0) = -10.0;
+			(odeModel->initialCond)(1) = -1.0;
+			(odeModel->initialCond)(2) = 40.0;
+			odeModel->odeFunc = &lorenz;
+            odeModel->odeJac = &lorenzJ;
+			(odeModel->refParam).resize(3);
+            (odeModel->refParam)[0] = 10.0;
+            (odeModel->refParam)[1] = 28.0;
+            (odeModel->refParam)[2] = 8.0 / 3.0;
             break;
 		case TEST:
-			(*odeModel).size = 3;
-			((*odeModel).initialCond).resize((*odeModel).size);
-			((*odeModel).initialCond)(0) = 1.0;
-			((*odeModel).initialCond)(1) = 2.0;
-			((*odeModel).initialCond)(2) = 3.0;
-			(*odeModel).odeFunc = &test;
+			odeModel->size = 3;
+			(odeModel->initialCond).resize(odeModel->size);
+			(odeModel->initialCond)(0) = 1.0;
+			(odeModel->initialCond)(1) = 2.0;
+			(odeModel->initialCond)(2) = 3.0;
+			odeModel->odeFunc = &test;
 			break;
 		case TEST1D:
-			(*odeModel).size = 1; 
-			((*odeModel).initialCond).resize((*odeModel).size);
-			((*odeModel).initialCond)(0) = 1.0;
-			(*odeModel).odeFunc = &testOneD;
-			(*odeModel).odeJac = &testOneDJ;
+			odeModel->size = 1;
+			(odeModel->initialCond).resize(odeModel->size);
+			(odeModel->initialCond)(0) = 1.0;
+			odeModel->odeFunc = &testOneD;
+			odeModel->odeJac = &testOneDJ;
+			(odeModel->refParam).resize(1);
+			(odeModel->refParam)[0] = -0.5;
 			break;
 		case VDPOL:
-			(*odeModel).size = 2;
-			((*odeModel).initialCond).resize((*odeModel).size);
-			((*odeModel).initialCond)(0) = 2.0;
-			((*odeModel).initialCond)(1) = 0.0; 
-			(*odeModel).odeFunc = &vdPol;
-			(*odeModel).odeJac = &vdPolJ;
-			((*odeModel).refParam).resize(1);
-			((*odeModel).refParam)[0] = 1.0;
+			odeModel->size = 2;
+			(odeModel->initialCond).resize(odeModel->size);
+			(odeModel->initialCond)(0) = 2.0;
+			(odeModel->initialCond)(1) = 0.0;
+			odeModel->odeFunc = &vdPol;
+			odeModel->odeJac = &vdPolJ;
+			(odeModel->refParam).resize(1);
+			(odeModel->refParam)[0] = 1.0;
 			break;
 		case ROBERTSON:
-			(*odeModel).size = 3;
-			((*odeModel).initialCond).resize((*odeModel).size);
-			((*odeModel).initialCond)(0) = 1.0;
-			((*odeModel).initialCond)(1) = 0.0;
-			((*odeModel).initialCond)(2) = 0.0;
-			(*odeModel).odeFunc = &robertson;
+			odeModel->size = 3;
+			(odeModel->initialCond).resize(odeModel->size);
+			(odeModel->initialCond)(0) = 1.0;
+			(odeModel->initialCond)(1) = 0.0;
+			(odeModel->initialCond)(2) = 0.0;
+			odeModel->odeFunc = &robertson;
 			break;
 		case BRUSS:
-			(*odeModel).size = 80;
-			((*odeModel).initialCond).resize((*odeModel).size);
+			odeModel->size = 80;
+			(odeModel->initialCond).resize(odeModel->size);
 			double x;
-			for (int i = 0; i < (*odeModel).size / 2; i++) {
-				x = static_cast<double>(i + 1) / ((*odeModel).size / 2.0 + 1);
-				((*odeModel).initialCond)(i) = 1.0 + 0.5 * sin(2 * PI * x);	
+			for (int i = 0; i < odeModel->size / 2; i++) {
+				x = static_cast<double>(i + 1) / (odeModel->size / 2.0 + 1);
+				(odeModel->initialCond)(i) = 1.0 + 0.5 * sin(2 * PI * x);
 			}
-			for (int i = (*odeModel).size / 2; i < (*odeModel).size; i++) {
-				((*odeModel).initialCond)(i) = 3.0;
+			for (int i = odeModel->size / 2; i < odeModel->size; i++) {
+				(odeModel->initialCond)(i) = 3.0;
 			}
-			(*odeModel).odeFunc = &bruss;
-			(*odeModel).odeJac = &brussJ;
-			((*odeModel).refParam).resize(1);
-			((*odeModel).refParam)[0] = 1.0;
+			odeModel->odeFunc = &bruss;
+			odeModel->odeJac = &brussJ;
+			(odeModel->refParam).resize(1);
+			(odeModel->refParam)[0] = 1.0;
 			break;
 		case HIRES:
-			(*odeModel).size = 8;
-			((*odeModel).initialCond).resize((*odeModel).size);
+			odeModel->size = 8;
+			(odeModel->initialCond).resize(odeModel->size);
 			for (int i = 1; i < 7; i++) {
-				((*odeModel).initialCond)(i) = 0.0;
+				(odeModel->initialCond)(i) = 0.0;
 			}
-			((*odeModel).initialCond)(0) = 1.0;
-			((*odeModel).initialCond)(7) = 0.0057;
-			(*odeModel).odeFunc = &hires;
-			(*odeModel).odeJac = &hiresJ;
-			((*odeModel).refParam).resize(5);
-			((*odeModel).refParam)[0] = 1.71;
-			((*odeModel).refParam)[1] = -10.03;
-			((*odeModel).refParam)[2] = 8.32;
-			((*odeModel).refParam)[3] = -1.745;
-			((*odeModel).refParam)[4] = 280.0;
+			(odeModel->initialCond)(0) = 1.0;
+			(odeModel->initialCond)(7) = 0.0057;
+			odeModel->odeFunc = &hires;
+			odeModel->odeJac = &hiresJ;
+			(odeModel->refParam).resize(5);
+			(odeModel->refParam)[0] = 1.71;
+			(odeModel->refParam)[1] = -10.03;
+			(odeModel->refParam)[2] = 8.32;
+			(odeModel->refParam)[3] = -1.745;
+			(odeModel->refParam)[4] = 280.0;
 			break;
 		case POISSON:
             Poisson P(10);
-			(*odeModel).size = 10;
-			((*odeModel).initialCond).resize((*odeModel).size);
+			odeModel->size = 10;
+			(odeModel->initialCond).resize(odeModel->size);
 			odeModel->initialCond = P.initialCond;
 			odeModel->odeFunc = &P.poissonTest;
 			odeModel->odeJac = &P.poissonTestJ;

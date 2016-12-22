@@ -177,28 +177,28 @@ Test/CMakeFiles/likEst.dir/sMetropolis.cpp.o.provides: Test/CMakeFiles/likEst.di
 Test/CMakeFiles/likEst.dir/sMetropolis.cpp.o.provides.build: Test/CMakeFiles/likEst.dir/sMetropolis.cpp.o
 
 
-Test/CMakeFiles/likEst.dir/mlMetropolis.cpp.o: Test/CMakeFiles/likEst.dir/flags.make
-Test/CMakeFiles/likEst.dir/mlMetropolis.cpp.o: ../Test/mlMetropolis.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object Test/CMakeFiles/likEst.dir/mlMetropolis.cpp.o"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/likEst.dir/mlMetropolis.cpp.o -c /u/anmc/garegnan/Desktop/Code/Test/mlMetropolis.cpp
+Test/CMakeFiles/likEst.dir/MetropolisConv.cpp.o: Test/CMakeFiles/likEst.dir/flags.make
+Test/CMakeFiles/likEst.dir/MetropolisConv.cpp.o: ../Test/MetropolisConv.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object Test/CMakeFiles/likEst.dir/MetropolisConv.cpp.o"
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/likEst.dir/MetropolisConv.cpp.o -c /u/anmc/garegnan/Desktop/Code/Test/MetropolisConv.cpp
 
-Test/CMakeFiles/likEst.dir/mlMetropolis.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/likEst.dir/mlMetropolis.cpp.i"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Code/Test/mlMetropolis.cpp > CMakeFiles/likEst.dir/mlMetropolis.cpp.i
+Test/CMakeFiles/likEst.dir/MetropolisConv.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/likEst.dir/MetropolisConv.cpp.i"
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Code/Test/MetropolisConv.cpp > CMakeFiles/likEst.dir/MetropolisConv.cpp.i
 
-Test/CMakeFiles/likEst.dir/mlMetropolis.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/likEst.dir/mlMetropolis.cpp.s"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Code/Test/mlMetropolis.cpp -o CMakeFiles/likEst.dir/mlMetropolis.cpp.s
+Test/CMakeFiles/likEst.dir/MetropolisConv.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/likEst.dir/MetropolisConv.cpp.s"
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Code/Test/MetropolisConv.cpp -o CMakeFiles/likEst.dir/MetropolisConv.cpp.s
 
-Test/CMakeFiles/likEst.dir/mlMetropolis.cpp.o.requires:
+Test/CMakeFiles/likEst.dir/MetropolisConv.cpp.o.requires:
 
-.PHONY : Test/CMakeFiles/likEst.dir/mlMetropolis.cpp.o.requires
+.PHONY : Test/CMakeFiles/likEst.dir/MetropolisConv.cpp.o.requires
 
-Test/CMakeFiles/likEst.dir/mlMetropolis.cpp.o.provides: Test/CMakeFiles/likEst.dir/mlMetropolis.cpp.o.requires
-	$(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/mlMetropolis.cpp.o.provides.build
-.PHONY : Test/CMakeFiles/likEst.dir/mlMetropolis.cpp.o.provides
+Test/CMakeFiles/likEst.dir/MetropolisConv.cpp.o.provides: Test/CMakeFiles/likEst.dir/MetropolisConv.cpp.o.requires
+	$(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/MetropolisConv.cpp.o.provides.build
+.PHONY : Test/CMakeFiles/likEst.dir/MetropolisConv.cpp.o.provides
 
-Test/CMakeFiles/likEst.dir/mlMetropolis.cpp.o.provides.build: Test/CMakeFiles/likEst.dir/mlMetropolis.cpp.o
+Test/CMakeFiles/likEst.dir/MetropolisConv.cpp.o.provides.build: Test/CMakeFiles/likEst.dir/MetropolisConv.cpp.o
 
 
 Test/CMakeFiles/likEst.dir/smlMetropolis.cpp.o: Test/CMakeFiles/likEst.dir/flags.make
@@ -225,9 +225,33 @@ Test/CMakeFiles/likEst.dir/smlMetropolis.cpp.o.provides: Test/CMakeFiles/likEst.
 Test/CMakeFiles/likEst.dir/smlMetropolis.cpp.o.provides.build: Test/CMakeFiles/likEst.dir/smlMetropolis.cpp.o
 
 
+Test/CMakeFiles/likEst.dir/MetropolisDet.cpp.o: Test/CMakeFiles/likEst.dir/flags.make
+Test/CMakeFiles/likEst.dir/MetropolisDet.cpp.o: ../Test/MetropolisDet.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object Test/CMakeFiles/likEst.dir/MetropolisDet.cpp.o"
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/likEst.dir/MetropolisDet.cpp.o -c /u/anmc/garegnan/Desktop/Code/Test/MetropolisDet.cpp
+
+Test/CMakeFiles/likEst.dir/MetropolisDet.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/likEst.dir/MetropolisDet.cpp.i"
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Code/Test/MetropolisDet.cpp > CMakeFiles/likEst.dir/MetropolisDet.cpp.i
+
+Test/CMakeFiles/likEst.dir/MetropolisDet.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/likEst.dir/MetropolisDet.cpp.s"
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Code/Test/MetropolisDet.cpp -o CMakeFiles/likEst.dir/MetropolisDet.cpp.s
+
+Test/CMakeFiles/likEst.dir/MetropolisDet.cpp.o.requires:
+
+.PHONY : Test/CMakeFiles/likEst.dir/MetropolisDet.cpp.o.requires
+
+Test/CMakeFiles/likEst.dir/MetropolisDet.cpp.o.provides: Test/CMakeFiles/likEst.dir/MetropolisDet.cpp.o.requires
+	$(MAKE) -f Test/CMakeFiles/likEst.dir/build.make Test/CMakeFiles/likEst.dir/MetropolisDet.cpp.o.provides.build
+.PHONY : Test/CMakeFiles/likEst.dir/MetropolisDet.cpp.o.provides
+
+Test/CMakeFiles/likEst.dir/MetropolisDet.cpp.o.provides.build: Test/CMakeFiles/likEst.dir/MetropolisDet.cpp.o
+
+
 Test/CMakeFiles/likEst.dir/gaussMetropolis.cpp.o: Test/CMakeFiles/likEst.dir/flags.make
 Test/CMakeFiles/likEst.dir/gaussMetropolis.cpp.o: ../Test/gaussMetropolis.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object Test/CMakeFiles/likEst.dir/gaussMetropolis.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object Test/CMakeFiles/likEst.dir/gaussMetropolis.cpp.o"
 	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/likEst.dir/gaussMetropolis.cpp.o -c /u/anmc/garegnan/Desktop/Code/Test/gaussMetropolis.cpp
 
 Test/CMakeFiles/likEst.dir/gaussMetropolis.cpp.i: cmake_force
@@ -251,7 +275,7 @@ Test/CMakeFiles/likEst.dir/gaussMetropolis.cpp.o.provides.build: Test/CMakeFiles
 
 Test/CMakeFiles/likEst.dir/testMH.cpp.o: Test/CMakeFiles/likEst.dir/flags.make
 Test/CMakeFiles/likEst.dir/testMH.cpp.o: ../Test/testMH.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object Test/CMakeFiles/likEst.dir/testMH.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object Test/CMakeFiles/likEst.dir/testMH.cpp.o"
 	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/likEst.dir/testMH.cpp.o -c /u/anmc/garegnan/Desktop/Code/Test/testMH.cpp
 
 Test/CMakeFiles/likEst.dir/testMH.cpp.i: cmake_force
@@ -280,8 +304,9 @@ likEst_OBJECTS = \
 "CMakeFiles/likEst.dir/mcmcTools.cpp.o" \
 "CMakeFiles/likEst.dir/Metropolis.cpp.o" \
 "CMakeFiles/likEst.dir/sMetropolis.cpp.o" \
-"CMakeFiles/likEst.dir/mlMetropolis.cpp.o" \
+"CMakeFiles/likEst.dir/MetropolisConv.cpp.o" \
 "CMakeFiles/likEst.dir/smlMetropolis.cpp.o" \
+"CMakeFiles/likEst.dir/MetropolisDet.cpp.o" \
 "CMakeFiles/likEst.dir/gaussMetropolis.cpp.o" \
 "CMakeFiles/likEst.dir/testMH.cpp.o"
 
@@ -293,14 +318,15 @@ Test/likEst: Test/CMakeFiles/likEst.dir/problems.cpp.o
 Test/likEst: Test/CMakeFiles/likEst.dir/mcmcTools.cpp.o
 Test/likEst: Test/CMakeFiles/likEst.dir/Metropolis.cpp.o
 Test/likEst: Test/CMakeFiles/likEst.dir/sMetropolis.cpp.o
-Test/likEst: Test/CMakeFiles/likEst.dir/mlMetropolis.cpp.o
+Test/likEst: Test/CMakeFiles/likEst.dir/MetropolisConv.cpp.o
 Test/likEst: Test/CMakeFiles/likEst.dir/smlMetropolis.cpp.o
+Test/likEst: Test/CMakeFiles/likEst.dir/MetropolisDet.cpp.o
 Test/likEst: Test/CMakeFiles/likEst.dir/gaussMetropolis.cpp.o
 Test/likEst: Test/CMakeFiles/likEst.dir/testMH.cpp.o
 Test/likEst: Test/CMakeFiles/likEst.dir/build.make
 Test/likEst: Solver/libSolver.a
 Test/likEst: Test/CMakeFiles/likEst.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable likEst"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable likEst"
 	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/likEst.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -313,8 +339,9 @@ Test/CMakeFiles/likEst.dir/requires: Test/CMakeFiles/likEst.dir/problems.cpp.o.r
 Test/CMakeFiles/likEst.dir/requires: Test/CMakeFiles/likEst.dir/mcmcTools.cpp.o.requires
 Test/CMakeFiles/likEst.dir/requires: Test/CMakeFiles/likEst.dir/Metropolis.cpp.o.requires
 Test/CMakeFiles/likEst.dir/requires: Test/CMakeFiles/likEst.dir/sMetropolis.cpp.o.requires
-Test/CMakeFiles/likEst.dir/requires: Test/CMakeFiles/likEst.dir/mlMetropolis.cpp.o.requires
+Test/CMakeFiles/likEst.dir/requires: Test/CMakeFiles/likEst.dir/MetropolisConv.cpp.o.requires
 Test/CMakeFiles/likEst.dir/requires: Test/CMakeFiles/likEst.dir/smlMetropolis.cpp.o.requires
+Test/CMakeFiles/likEst.dir/requires: Test/CMakeFiles/likEst.dir/MetropolisDet.cpp.o.requires
 Test/CMakeFiles/likEst.dir/requires: Test/CMakeFiles/likEst.dir/gaussMetropolis.cpp.o.requires
 Test/CMakeFiles/likEst.dir/requires: Test/CMakeFiles/likEst.dir/testMH.cpp.o.requires
 

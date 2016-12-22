@@ -1,0 +1,1 @@
+/usr/bin/c++    -fopenmp -std=c++11 -g   CMakeFiles/plainMHconv.dir/plainMHConv.cpp.o CMakeFiles/plainMHconv.dir/mcmcTools.cpp.o CMakeFiles/plainMHconv.dir/testMHconv.cpp.o  -o plainMHconv -rdynamic 

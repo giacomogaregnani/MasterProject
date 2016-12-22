@@ -105,28 +105,28 @@ Solver/CMakeFiles/Solver.dir/sProbMethod.cpp.o.provides: Solver/CMakeFiles/Solve
 Solver/CMakeFiles/Solver.dir/sProbMethod.cpp.o.provides.build: Solver/CMakeFiles/Solver.dir/sProbMethod.cpp.o
 
 
-Solver/CMakeFiles/Solver.dir/mlmc.cpp.o: Solver/CMakeFiles/Solver.dir/flags.make
-Solver/CMakeFiles/Solver.dir/mlmc.cpp.o: ../Solver/mlmc.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object Solver/CMakeFiles/Solver.dir/mlmc.cpp.o"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Solver && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solver.dir/mlmc.cpp.o -c /u/anmc/garegnan/Desktop/Code/Solver/mlmc.cpp
+Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.o: Solver/CMakeFiles/Solver.dir/flags.make
+Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.o: ../Solver/impProbMethod.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.o"
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Solver && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solver.dir/impProbMethod.cpp.o -c /u/anmc/garegnan/Desktop/Code/Solver/impProbMethod.cpp
 
-Solver/CMakeFiles/Solver.dir/mlmc.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Solver.dir/mlmc.cpp.i"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Solver && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Code/Solver/mlmc.cpp > CMakeFiles/Solver.dir/mlmc.cpp.i
+Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Solver.dir/impProbMethod.cpp.i"
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Solver && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Code/Solver/impProbMethod.cpp > CMakeFiles/Solver.dir/impProbMethod.cpp.i
 
-Solver/CMakeFiles/Solver.dir/mlmc.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Solver.dir/mlmc.cpp.s"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Solver && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Code/Solver/mlmc.cpp -o CMakeFiles/Solver.dir/mlmc.cpp.s
+Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Solver.dir/impProbMethod.cpp.s"
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Solver && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Code/Solver/impProbMethod.cpp -o CMakeFiles/Solver.dir/impProbMethod.cpp.s
 
-Solver/CMakeFiles/Solver.dir/mlmc.cpp.o.requires:
+Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.o.requires:
 
-.PHONY : Solver/CMakeFiles/Solver.dir/mlmc.cpp.o.requires
+.PHONY : Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.o.requires
 
-Solver/CMakeFiles/Solver.dir/mlmc.cpp.o.provides: Solver/CMakeFiles/Solver.dir/mlmc.cpp.o.requires
-	$(MAKE) -f Solver/CMakeFiles/Solver.dir/build.make Solver/CMakeFiles/Solver.dir/mlmc.cpp.o.provides.build
-.PHONY : Solver/CMakeFiles/Solver.dir/mlmc.cpp.o.provides
+Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.o.provides: Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.o.requires
+	$(MAKE) -f Solver/CMakeFiles/Solver.dir/build.make Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.o.provides.build
+.PHONY : Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.o.provides
 
-Solver/CMakeFiles/Solver.dir/mlmc.cpp.o.provides.build: Solver/CMakeFiles/Solver.dir/mlmc.cpp.o
+Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.o.provides.build: Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.o
 
 
 Solver/CMakeFiles/Solver.dir/smlmc.cpp.o: Solver/CMakeFiles/Solver.dir/flags.make
@@ -253,7 +253,7 @@ Solver/CMakeFiles/Solver.dir/tools.cpp.o.provides.build: Solver/CMakeFiles/Solve
 Solver_OBJECTS = \
 "CMakeFiles/Solver.dir/ProbMethod.cpp.o" \
 "CMakeFiles/Solver.dir/sProbMethod.cpp.o" \
-"CMakeFiles/Solver.dir/mlmc.cpp.o" \
+"CMakeFiles/Solver.dir/impProbMethod.cpp.o" \
 "CMakeFiles/Solver.dir/smlmc.cpp.o" \
 "CMakeFiles/Solver.dir/RungeKutta.cpp.o" \
 "CMakeFiles/Solver.dir/sRungeKutta.cpp.o" \
@@ -265,7 +265,7 @@ Solver_EXTERNAL_OBJECTS =
 
 Solver/libSolver.a: Solver/CMakeFiles/Solver.dir/ProbMethod.cpp.o
 Solver/libSolver.a: Solver/CMakeFiles/Solver.dir/sProbMethod.cpp.o
-Solver/libSolver.a: Solver/CMakeFiles/Solver.dir/mlmc.cpp.o
+Solver/libSolver.a: Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.o
 Solver/libSolver.a: Solver/CMakeFiles/Solver.dir/smlmc.cpp.o
 Solver/libSolver.a: Solver/CMakeFiles/Solver.dir/RungeKutta.cpp.o
 Solver/libSolver.a: Solver/CMakeFiles/Solver.dir/sRungeKutta.cpp.o
@@ -284,7 +284,7 @@ Solver/CMakeFiles/Solver.dir/build: Solver/libSolver.a
 
 Solver/CMakeFiles/Solver.dir/requires: Solver/CMakeFiles/Solver.dir/ProbMethod.cpp.o.requires
 Solver/CMakeFiles/Solver.dir/requires: Solver/CMakeFiles/Solver.dir/sProbMethod.cpp.o.requires
-Solver/CMakeFiles/Solver.dir/requires: Solver/CMakeFiles/Solver.dir/mlmc.cpp.o.requires
+Solver/CMakeFiles/Solver.dir/requires: Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.o.requires
 Solver/CMakeFiles/Solver.dir/requires: Solver/CMakeFiles/Solver.dir/smlmc.cpp.o.requires
 Solver/CMakeFiles/Solver.dir/requires: Solver/CMakeFiles/Solver.dir/RungeKutta.cpp.o.requires
 Solver/CMakeFiles/Solver.dir/requires: Solver/CMakeFiles/Solver.dir/sRungeKutta.cpp.o.requires

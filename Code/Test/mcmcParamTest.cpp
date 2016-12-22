@@ -175,9 +175,9 @@ int main(int argc, char* argv[])
                                                       nMCMC, varData, &cost, isPositive,
                                                       likelihoods, generator);
 					} else {
-						mcmcPath = MLmetropolisHastings(odeModel.initialCond, paramGuess, sigma, odeModel.size, ith, finalTime,
+						/* mcmcPath = MLmetropolisHastings(odeModel.initialCond, paramGuess, sigma, odeModel.size, ith, finalTime,
 														data, times, odeModel.odeFunc, priorMean, priorVariance, nInternalMC,
-														nMCMC, varData, &cost, &accRatio);
+														nMCMC, varData, &cost, &accRatio); */
 					}
 				} else {
 					if (!multiLevel) {

@@ -13,7 +13,7 @@ int main()
     for (auto it : gamma) {
         // Obtain results
         std::vector<VectorXd> MH, RAM;
-        int nMCMC = 50000;
+        int nMCMC = 5000;
         double accRatioMH = 0.0, accRatioRAM = 0.0;
         MH = testMetropolis(firstGuess, nMCMC, &accRatioMH, it, false, 0.0);
         RAM = testMetropolis(firstGuess, nMCMC, &accRatioRAM, it, true, 0.4);

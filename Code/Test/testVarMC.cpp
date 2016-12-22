@@ -16,7 +16,7 @@ int main(void)
     testODE.ode = problem;
     setProblem(&testODE);
     std::vector<double> paramList = testODE.refParam;
-    std::string filepath("varMCResults");
+    std::string filepath("varMCResults_BE_Lorenz");
 
     // =========================
     // IMPORT EXACT SOLUTION
@@ -40,16 +40,21 @@ int main(void)
 
     // h and M
     std::vector<double> h;
-    double hMax = 0.5;
+    double hMax = 0.2;
     for (int i = 0; i < 10; i++) {
         h.push_back(hMax);
         hMax /= 2.0;
     }
-    unsigned int M = 10;
+    std::vector<unsigned int> M = {};
+    unsigned int Mmin = 1;
+    for (int i = 0; i < 10; i++) {
+        M.push_back(Mmin);
+        Mmin *= 2;
+    }
     std::default_random_engine generator{(unsigned int) time(NULL)};
 
     // Number of experiences
-    unsigned int nExp = 300;
+    unsigned int nExp = 100;
 
     // temporary vector and sum
     VectorXd tmp(testODE.size);
@@ -63,6 +68,11 @@ int main(void)
     std::string finalpath = std::string(DATA_PATH) + "/" + filepath + ".txt";
     results.open(finalpath, std::ofstream::out | std::ofstream::trunc);
 
+    // Butcher tableau
+    Butcher butcher(RADAU, 2);
+    MatrixXd A = butcher.getA();
+    VectorXd b = butcher.getB();
+
     for (auto it : h) {
         std::cout << "Executing timestep : " << it << std::endl;
 
@@ -72,10 +82,9 @@ int main(void)
         unsigned int j;
         #pragma omp parallel for num_threads(30) private(j)
         for (j = 0; j < nExp; j++) {
-            ProbMethod<RungeKutta> refSolver(testODE.size, it, testODE.initialCond,
-                                               paramList, testODE.odeFunc, 0.1);
+            impProbMethod refSolver(testODE, it, paramList, 0.1, A, b, 4);
             MC[j] = 0.0;
-            for (unsigned int i = 0; i < M; i++) {
+            for (unsigned int i = 0; i < M.front(); i++) {
                 refSolver.resetIC();
                 double time = 0;
                 while (time < finalTime) {
@@ -85,10 +94,11 @@ int main(void)
                 tmp = refSolver.getSolution();
                 MC[j] += tmp.dot(tmp);
             }
-            MC[j] /= M;
+            MC[j] /= M.front();
         }
 
         for (auto itMean : MC) {
+            std::cout << itMean << " " << refVal << std::endl;
             mean += itMean;
         }
         mean /= nExp;

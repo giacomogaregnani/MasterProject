@@ -1,6 +1,7 @@
 \subsection{Convergence of the posterior distribution}
 
-We wish to study the convergence of the posterior distribution obtained using the probabilistic method with respect to the true posterior distribution. In order to study the convergence, it is necessary to introduce a notion of distance between two probability measures. A standard measure is the \textit{total variation distance}, defined in the following.
+We wish to study the convergence of the posterior distribution obtained using the probabilistic method with respect to the true posterior distribution. In the following, we consider only the distance between the target distributions given by an exact algorithm and the target distribution of the MCMC with approximated likelihood, disregarding the error due to the MCMC approximation. This assumption is rather strong, as the convergence of MCMC can be slow depending on the initial condition, the prior distribution and the proposal distribution. \\
+In order to study the convergence, it is necessary to introduce a notion of distance between two probability measures. A standard measure is the \textit{total variation distance}, defined in the following.
 \begin{definition} Given two probability measures $\nu$ and $\mu$ on a measurable space $(\mathcal{X}, \mathcal{B}(\mathcal{X}))$, the total variation distance between $\nu$ and $\mu$ is defined as
 \begin{equation}
 	d_{\mathrm{TV}}(\nu,\mu) \defeq \sup_{A\in \mathcal{B}(\mathcal{X})} \left|\nu(A) - \mu(A)\right|.
@@ -48,7 +49,7 @@ Then, thanks to Jensen's inequality
 \end{equation}
 Let us remark that thanks to \eqref{eq:TVvsHell}, this bound is equally true for the total variation distance. 
 
-\subsection{Convergence of the Monte Carlo estimation}
+\subsection{Convergence of the parameter mean}\label{sec:ParH}
 We are now interested in the convergence of the expectation of the parameter $\theta$ inferred by MCMC. Let us consider a function $g \colon \R^{N_p} \to \R$ such that $g \in L^\infty(\R^{N_p})$. Then, we wish to bound the distance between the expectation of $g(\theta)$ computed with respect to the true measure and to the measure targeted by MCMC implemented with the probabilistc solver and time step $h$. Thanks to the previous result on the total variation distance we get
 \begin{equation}
 \begin{aligned}
@@ -76,7 +77,55 @@ where we applied Proposition \ref{prop:MSE}. Hence, the MSE of this estimation i
 \end{aligned}
 \end{equation}
 
+\subsection{Considerations on the MCMC approximation}
+
+All the results of convergence presented above regard the approximation of the true posterior distribution with the posterior distribution approximated with time step $h$. These estimations are true if we have access to these distributions. In practice, if the posterior distribution is $\pi(\cdot)$, we use a MCMC method to get the Monte Carlo approximation
+\begin{equation}
+	\E^\pi[g(\theta)] \approx \frac{1}{N} \sum_{i = 1}^{N} g(\theta^{(i)}),
+\end{equation}
+where $\theta^{(i)}$, $i = 1, \ldots, N$, are the samples given by MCMC. Let us denote by $\hat g(\theta)$ the Monte Carlo estimator, i.e.,
+\begin{equation}
+	\hat g(\theta) = \frac{1}{N} \sum_{i = 1}^{N} g(\theta^{(i)}).
+\end{equation} 
+It is meaningful to study the relation between $\hat g(\theta)$ and $\E^\pi[g(\theta)]$ with respect to the number of samples $N$. The main issue is given by the Markov chain property of the samples. In standard Monte Carlo, the samples are independent and therefore estimating its mean and variance is straightforward, as well as studying the asymptotic properties with the central limit theorem. A central limit theorem is available for Markov chains under regularity assumptions on the Markov kernel \cite{Jon04}, i.e., with the notation introduced above
+\begin{equation}\label{eq:CLTMarkov}
+	\sqrt{N}(\hat g(\theta) - \E^\pi[g(\theta)]) \totext{d} \mathcal{N}(0, \sigma^2_g),
+\end{equation}
+where the convergence is in the distributional sense and we can define the variance of the Monte Carlo estimator as
+\begin{equation}
+\sigma^2_g \defeq \Var^\pi(g(\theta^{(0)})) + 2\sum_{i = 1}^{\infty} \mathrm{Cov}^\pi(g(\theta^{(0)}), g(\theta^{(i)})) < \infty.
+\end{equation}
+In general, it is not possible to compute analytically $\sigma_g$, but many techniques have been proposed in order to estimate it from the Markov chain itself. A common method \cite{FlJ10} is to compute the \textit{batch means} of the Markov chain and use them to estimate $\sigma^2_g$. \\
+Let us suppose that there exist two integers $a_N, b_N$ such that $N = a_Nb_N$. Then we define the following $a_N$ non-overlapping means of subsequences contained in the Markov chain of length $b_N$
+\begin{equation}
+	\bar g_k(\theta) = \frac{1}{b_N} \sum_{i=1}^{b_N} g(\theta^{(kb_N + i)}), \quad k = 0, \ldots, a_N - 1. 
+\end{equation} 
+Finally, we can build an estimator of $\sigma_g^2$ computing the population variance of the $\bar g_k$ with respect to $\hat g$, i.e.,
+\begin{equation}
+	\hat\sigma^2_{\mathrm{BM}} = \frac{b_N}{a_N - 1} \sum_{k=0}^{a_N -1}(\bar g_k - \hat g)^2. 
+\end{equation}
+Under regularity conditions on the posterior distribution $\pi$ and the transition kernel $P$ defining the Markov chain, and if $a_N$ and $b_N$ are growing functions of $N$ such that $a_N \to \infty$, $b_N \to \infty$ if $N \to \infty$, with $b_N / N \to 0$, it is possible to show \cite{FlJ10} that this estimator is \textit{mean-square consistent}, i.e.,
+\begin{equation}
+	\MSE(\hat\sigma^2_{\mathrm{BM}}) \totext{N\to\infty} 0.
+\end{equation}
+In \cite{FlJ10}, the authors suggest to choose $b_N$ to be the square or cubic root of $N$ for accelerating the convergence of the MSE to zero, i.e.,
+\begin{equation}
+	b_N = \floor{N^{1/3}}, \quad \text{or,} \quad b_N = \floor{N^{1/2}}.
+\end{equation}
+We can deduce from the limit in \eqref{eq:CLTMarkov} that the standard deviation of the MCMC estimator decreases asymptotically linearly with respect to $N^{1/2}$. Therefore, in order to observe the convergence rates with respect to $h$ presented in Section \ref{sec:ParH}, the number of samples of the drawn in the MCMC algorithm will have to be considerably high.
+
 \subsubsection{Numerical experiment}
+
+In this experiment we wish to verify numerically the validity of the batch mean estimator presented above. Therefore, we consider the FitzHug-Nagumo model \eqref{eq:FitzNag} with ten observations $\mathcal{Y}$ equispaced in the time span $0 \leq t \leq 10$. We run MCMC algorithms with approximated likelihood with $h = 0.1$ and growing number of iterations $N = \{1000, 2000, 4000, 8000, 16000, 32000, 64000\}$, and equal starting points. For each value of $N$, we perform $400$ repetitions of the Markov chain and compute the population variance of the estimator $\hat g(\theta)$ as a function of $N$ in order to obtain an estimation of $\sigma^2_g$, where the function $g$ we consider in this experiment is $g(\theta) = \theta^T\theta$. We then compute the batch mean estimator $\hat \sigma_{\mathrm{BM}}$ using $b = \floor{N^{1/2}}$ for each repetition and average the results in order to obtain a function of the number of samples $N$. Results (Figure \ref{fig:BatchMeans}) show that the variance $\sigma^2_g$ converges as predicted linearly with $N$. Moreover, the estimation provided by $\hat \sigma_{\mathrm{BM}}$ is coherent with the theoretical results. Hence, we can conclude that the batch means method provides a consistent estimation of the variance, without running several repetitions of the chains to verify their variance.
+
+\begin{figure}
+	\centering
+	\resizebox{0.6\linewidth}{!}{\input{plots/ConvBatchMeans.tikz}}
+	\caption{Variance of the Monte Carlo approximation given by MCMC with respect to the number of samples $N$. The convergence to zero is linear with respect to the number of samples. The estimator given by the batch means method gives a good approximation of the variance.}
+	\label{fig:BatchMeans}
+\end{figure}
+
+\subsection{Numerical experiment}
 
 We consider the FitzHug-Nagumo model \eqref{eq:FitzNag} and produce observations $\mathcal{Y}$ at times $t_i = i$ for $i = 1, \ldots, 10$ from a reference solution with additive noise with variance $10^{-2}$. We produce a reference posterior distribution using the result of a MCMC algorithm obtained with a small time step $h$. We then vary $h$ in order to observe the convergence of the posterior distribution towards the reference, as well as the convergence of the Monte Carlo estimation. We consider $100000$ iterations of RAM applied to MCWM. As discussed above, the number of trajectories $M$ used to approximate the numerical likelihood does not have an influence on the convergence rate of the posterior distribution to the true posterior. Therefore, we just fix $M$ to be equal to one. We consider as the function $g$ of the parameter the Euclidean norm, therefore we consider the approximation
 \begin{equation}

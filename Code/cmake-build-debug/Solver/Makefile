@@ -206,32 +206,32 @@ ThirdOrderGauss.cpp.s:
 	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Solver/CMakeFiles/Solver.dir/build.make Solver/CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.s
 .PHONY : ThirdOrderGauss.cpp.s
 
-mlmc.o: mlmc.cpp.o
+impProbMethod.o: impProbMethod.cpp.o
 
-.PHONY : mlmc.o
+.PHONY : impProbMethod.o
 
 # target to build an object file
-mlmc.cpp.o:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Solver/CMakeFiles/Solver.dir/build.make Solver/CMakeFiles/Solver.dir/mlmc.cpp.o
-.PHONY : mlmc.cpp.o
+impProbMethod.cpp.o:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Solver/CMakeFiles/Solver.dir/build.make Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.o
+.PHONY : impProbMethod.cpp.o
 
-mlmc.i: mlmc.cpp.i
+impProbMethod.i: impProbMethod.cpp.i
 
-.PHONY : mlmc.i
+.PHONY : impProbMethod.i
 
 # target to preprocess a source file
-mlmc.cpp.i:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Solver/CMakeFiles/Solver.dir/build.make Solver/CMakeFiles/Solver.dir/mlmc.cpp.i
-.PHONY : mlmc.cpp.i
+impProbMethod.cpp.i:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Solver/CMakeFiles/Solver.dir/build.make Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.i
+.PHONY : impProbMethod.cpp.i
 
-mlmc.s: mlmc.cpp.s
+impProbMethod.s: impProbMethod.cpp.s
 
-.PHONY : mlmc.s
+.PHONY : impProbMethod.s
 
 # target to generate assembly for a file
-mlmc.cpp.s:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Solver/CMakeFiles/Solver.dir/build.make Solver/CMakeFiles/Solver.dir/mlmc.cpp.s
-.PHONY : mlmc.cpp.s
+impProbMethod.cpp.s:
+	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(MAKE) -f Solver/CMakeFiles/Solver.dir/build.make Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.s
+.PHONY : impProbMethod.cpp.s
 
 sProbMethod.o: sProbMethod.cpp.o
 
@@ -359,9 +359,9 @@ help:
 	@echo "... ThirdOrderGauss.o"
 	@echo "... ThirdOrderGauss.i"
 	@echo "... ThirdOrderGauss.s"
-	@echo "... mlmc.o"
-	@echo "... mlmc.i"
-	@echo "... mlmc.s"
+	@echo "... impProbMethod.o"
+	@echo "... impProbMethod.i"
+	@echo "... impProbMethod.s"
 	@echo "... sProbMethod.o"
 	@echo "... sProbMethod.i"
 	@echo "... sProbMethod.s"

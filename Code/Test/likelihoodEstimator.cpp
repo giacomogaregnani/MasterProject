@@ -2,9 +2,6 @@
 #include <vector>
 #include <random>
 #include <Solver.hpp>
-#include <Eigen/Dense>
-#include <ctime>
-#include <iostream>
 #include <fstream>
 #include "problems.hpp"
 #include "mcmcTools.hpp"
@@ -20,24 +17,24 @@ int main(int argc, char* argv[])
 
     // TIME STEP AND NUMBER OF MC TRAJECTORIES
     std::vector<double> h = {};
-    double maxH = 0.1;
-    for (int i = 0; i < 14; i++) {
+    double maxH = 0.05;
+    for (int i = 0; i < 7; i++) {
         h.push_back(maxH);
         maxH /= 2;
     }
-    int nMC = 10;
+    int nMC = 1;
 
     // NUMBER OF REPETITIONS
-    unsigned int nReps = 40;
+    unsigned int nReps = 4;
 
     // PROBLEM DATA
     odeDef odeModel;
-    odeModel.ode = POISSON;
+    odeModel.ode = FITZNAG;
     setProblem(&odeModel);
     std::vector<double> paramList = odeModel.refParam;
 
     // DATA ACQUISITION FROM REFSOL
-    std::string refFile("refSolPoisson");
+    std::string refFile("refSolFitznag");
     std::fstream refSolution;
     refSolution.open(std::string(DATA_PATH) + "/" + refFile + ".txt", std::ios_base::in);
 
@@ -82,12 +79,15 @@ int main(int argc, char* argv[])
     // INITIAL MCMC GUESS
     std::vector<double> paramGuess(nParam);
     for (size_t i = 0; i < nParam; i++) {
-        paramGuess[i] = paramList[i];
+        paramGuess[i] = paramList[i] - 0.5;
     }
 
     // PARAMETERS OF THE CHAIN
+    std::vector<int> nMCMCVec = {10};
+    for (int i = 0; i < 12; i++) {
+        nMCMCVec.push_back(nMCMCVec.back() * 2);
+    }
     std::vector<VectorXd> mcmcPath;
-    int nMCMC = 1;
 
     // DEFINE THE PROBABILISTIC INTEGRATOR
     double sigma = 0.5;
@@ -98,60 +98,172 @@ int main(int argc, char* argv[])
         isPositive = true;
     }
 
-    // COST (UNUSED)
-    long int cost;
-
-    // IN THE POISSON CASE THE EXACT SOLUTION IS AVAILABLE, LET'S COMPUTE THE EXACT LIKELIHOOD
+    // COMPUTE LIKELIHOOD OF THE EXACT SOLUTION
+    double exactLikelihood;
+    std::vector<VectorXd> exactSol(nData, VectorXd(odeModel.size));
     if (odeModel.ode == POISSON) {
-        double exactLikelihood;
-        std::vector<VectorXd> exactSol(nData, VectorXd(odeModel.size));
         for (size_t i = 0; i < nData; i++) {
             exactSol[i] = odeModel.exactSol(paramList, times[i]);
         }
-        exactLikelihood = evalLogLikelihood(data, exactSol, odeModel.size, varData);
-        std::ofstream exactFile;
-        std::string exactpath = std::string(DATA_PATH) + "/" + argv[1] + strTime
-                                + "exact.txt";
-        exactFile.open(exactpath, std::ofstream::out | std::ofstream::trunc);
-        exactFile << std::fixed << std::setprecision(16) << exactLikelihood;
-        exactFile.close();
+    } else {
+        std::string exactFileString("refSolFitznagNoNoise");
+        std::fstream exactFileIn;
+        exactFileIn.open(std::string(DATA_PATH) + "/" + exactFileString + ".txt", std::ios_base::in);
+
+        // Burn the first part of the file
+        double burn;
+        exactFileIn >> burn;
+        exactFileIn >> burn;
+        for (size_t i = 0; i < nData; i++) {
+            exactFileIn >> burn;
+        }
+
+        for (int i = 0; i < nData; i++) {
+            for (int j = 0; j < odeModel.size; j++) {
+                exactFileIn >> exactSol[i](j);
+            }
+        }
+        exactFileIn.close();
+    }
+    exactLikelihood = evalLogLikelihood(data, exactSol, odeModel.size, varData);
+
+    // OUTPUT FILEs
+    bool printResults = true;
+    if (strcmp(argv[1], "debug") == 0) {
+        printResults = false;
+    }
+    std::ofstream results;
+    std::string filepath = std::string(DATA_PATH) + "/" + argv[1] + strTime + ".txt";
+    std::cout << filepath << std::endl;
+
+    // OUTPUT FILE
+    std::ofstream thetaResults;
+    std::string thetaFilepath = std::string(DATA_PATH) + "/" + argv[1] + "_thetas_" + strTime + ".txt";
+    std::cout << thetaFilepath << std::endl;
+
+    bool allThetas = false;
+    if (argc > 2) {
+        if (strcmp(argv[2], "thetas") == 0) {
+            allThetas = true;
+        }
     }
 
-    for (auto ith : h) {
-
-        std::cout << "Executing timestep : " << ith << std::endl;
-
-        // OUTPUT FILE
-        bool printResults = true;
-        if (strcmp(argv[1], "debug") == 0) {
-            printResults = false;
+    bool meanThetas = false;
+    if (argc > 3) {
+        if (strcmp(argv[3], "meantheta") == 0) {
+            meanThetas = true;
         }
-        std::ofstream results;
-        std::string filepath = std::string(DATA_PATH) + "/" + argv[1] + strTime
-                               + "_h_"
-                               + std::to_string(static_cast<int>(ith*1e9)) + ".txt";
-        if (printResults) results.open(filepath, std::ofstream::out | std::ofstream::trunc);
-        std::cout << filepath << std::endl;
+    }
 
-        // COMPUTE THE APPROXIMATED LIKELIHOOD
-        std::vector<double> allLik(nReps);
-        unsigned int i;
-        #pragma omp parallel for num_threads(20) private(i)
+    double ith = 0.01;
+    // COMPUTE THE APPROXIMATED LIKELIHOOD
+    for (auto nMCMC = nMCMCVec.end() - 1; nMCMC < nMCMCVec.end(); nMCMC++) {
+        std::cout << "Executing timestep : " << *nMCMC << std::endl;
+        std::vector<double> allLik(nReps, 0.0);
+
+        std::vector<double> meanTheta(nReps, 0.0);
+
+        size_t i;
+        long int cost;
+
+        #pragma omp parallel for num_threads(4) private(i)
         for (i = 0; i < nReps; i++) {
-            std::vector<double> likelihoods = {};
+            std::vector<double> likelihoods;
+
+            /* mcmcPath = detMetropolisHastings(odeModel, paramGuess, ith, finalTime,
+                                             data, times, priorMean, priorVariance,
+                                             nMCMC, varData, &cost, isPositive,
+                                             likelihoods, generator);
+
+            if (allThetas) {
+                std::ofstream thetas;
+                std::string thetaFileName = std::string(DATA_PATH) + "/" + argv[1] + strTime
+                                            + std::to_string(static_cast<int>(ith * 1e6)) + "_det.txt";
+                thetas.open(thetaFileName, std::ofstream::out | std::ofstream::trunc);
+                for (auto it : mcmcPath) {
+                    thetas << it.transpose() << "\n";
+                }
+                thetas.close();
+            } */
+
+            printf("%d\n", i);
+
             mcmcPath = MetropolisHastings(odeModel, paramGuess, sigma, ith, finalTime,
                                           data, times, priorMean, priorVariance, nMC,
-                                          nMCMC, varData, &cost, isPositive,
+                                          *nMCMC, varData, &cost, isPositive,
                                           likelihoods, generator);
-            allLik[i] = likelihoods[0];
+            for (auto it : likelihoods) {
+                allLik[i] += it;
+            }
+
+            allLik[i] /= *nMCMC;
+
+            if (allThetas) {
+                std::ofstream thetas;
+                std::string thetaFileName = std::string(DATA_PATH) + "/" + argv[1] + strTime
+                                            + std::to_string(*nMCMC) + ".txt";
+                thetas.open(thetaFileName, std::ofstream::out | std::ofstream::trunc);
+                for (auto it : mcmcPath) {
+                    thetas << it.dot(it) << "\n";
+                }
+                thetas.close();
+            }
+
+            if (meanThetas) {
+                for (auto it : mcmcPath) {
+                    meanTheta[i] += it.dot(it);
+                }
+                meanTheta[i] /= *nMCMC;
+            }
+
         }
+
+        // Compute variance and bias of the likelihood estimator
+        double meanLikelihood = 0.0, varianceLikelihood = 0.0, tmp;
+        for (auto it : allLik) {
+            meanLikelihood += it;
+        }
+        meanLikelihood /= nReps;
+        double biasSqd = (meanLikelihood - exactLikelihood);
+        biasSqd *= biasSqd;
 
         for (auto it : allLik) {
-            results << std::fixed << std::setprecision(16) << it << "\n";
+            tmp = it - meanLikelihood;
+            varianceLikelihood += tmp * tmp;
+        }
+        varianceLikelihood /= nReps;
+
+        if (printResults) {
+            results.open(filepath, std::ofstream::out | std::ofstream::app);
+            results << std::fixed << std::setprecision(30) << *nMCMC << " " << varianceLikelihood << " " << biasSqd
+                    << "\n";
+            //results << std::fixed << std::setprecision(30) << ith << " " << varianceLikelihood << " " << biasSqd
+            //        << "\n";
+            results.close();
         }
 
-        if (printResults) results.close();
+        // Compute variance and mean of the MCMC estimator
+        double meanMCMC = 0.0, varMCMC = 0.0;
+        for (auto it : meanTheta) {
+            meanMCMC += it;
+        }
+        meanMCMC /= nReps;
 
+        if (printResults) thetaResults.open(thetaFilepath, std::ofstream::out | std::ios_base::app);
+
+        for (auto it : meanTheta) {
+            tmp = it - meanMCMC;
+            varMCMC += tmp * tmp;
+        }
+        varMCMC /= nReps;
+
+        thetaResults << std::fixed << std::setprecision(30) << *nMCMC << " " << meanMCMC << " " << varMCMC << "\n";
+        // thetaResults << std::fixed << std::setprecision(30) << ith << " " << meanMCMC << " " << varMCMC << "\n";
+        if (printResults) thetaResults.close();
+    }
+
+    if (printResults) {
+        results.close();
     }
 
     return 0;

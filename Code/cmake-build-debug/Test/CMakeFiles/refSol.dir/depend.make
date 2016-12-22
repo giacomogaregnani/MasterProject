@@ -428,6 +428,14 @@ Test/CMakeFiles/refSol.dir/problems.cpp.o: ../eigen/Eigen/src/plugins/CommonCwis
 Test/CMakeFiles/refSol.dir/problems.cpp.o: ../eigen/Eigen/src/plugins/CommonCwiseUnaryOps.h
 Test/CMakeFiles/refSol.dir/problems.cpp.o: ../eigen/Eigen/src/plugins/MatrixCwiseBinaryOps.h
 Test/CMakeFiles/refSol.dir/problems.cpp.o: ../eigen/Eigen/src/plugins/MatrixCwiseUnaryOps.h
+Test/CMakeFiles/refSol.dir/problems.cpp.o: ../eigen/unsupported/Eigen/MatrixFunctions
+Test/CMakeFiles/refSol.dir/problems.cpp.o: ../eigen/unsupported/Eigen/src/MatrixFunctions/MatrixExponential.h
+Test/CMakeFiles/refSol.dir/problems.cpp.o: ../eigen/unsupported/Eigen/src/MatrixFunctions/MatrixFunction.h
+Test/CMakeFiles/refSol.dir/problems.cpp.o: ../eigen/unsupported/Eigen/src/MatrixFunctions/MatrixFunctionAtomic.h
+Test/CMakeFiles/refSol.dir/problems.cpp.o: ../eigen/unsupported/Eigen/src/MatrixFunctions/MatrixLogarithm.h
+Test/CMakeFiles/refSol.dir/problems.cpp.o: ../eigen/unsupported/Eigen/src/MatrixFunctions/MatrixPower.h
+Test/CMakeFiles/refSol.dir/problems.cpp.o: ../eigen/unsupported/Eigen/src/MatrixFunctions/MatrixSquareRoot.h
+Test/CMakeFiles/refSol.dir/problems.cpp.o: ../eigen/unsupported/Eigen/src/MatrixFunctions/StemFunction.h
 Test/CMakeFiles/refSol.dir/problems.cpp.o: ../Test/problems.cpp
 Test/CMakeFiles/refSol.dir/problems.cpp.o: ../Test/problems.hpp
 

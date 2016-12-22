@@ -11,31 +11,31 @@ One of the most famous examples of chaotic ODE's is the Lorenz system. This ODE 
 \begin{equation}\label{eq:Lorenz}
 \begin{aligned}
 \dv{x}{t} &= \sigma(y - x), \quad &&x(0) = -10,\\
-\dv{y}{t} &= x(\rho - z) - y, \quad &&y(0) = -1,\\§
+\dv{y}{t} &= x(\rho - z) - y, \quad &&y(0) = -1,\\
 \dv{z}{t} &= xy - \beta z, \quad &&z(0) = 40.
 \end{aligned}
 \end{equation}
 Edward Lorenz discovered in 1963 that for certain values of the parameters $\rho$, $\sigma$ and $\beta$ this equation has a chaotic behavior, i.e., small variations of the initial conditions result in completely different solutions of the system. A sample trajectory of the solution is depicted in Figure \ref{fig:LorenzTraj}. When solving numerically \eqref{eq:Lorenz}, the perturbation induced by the numerical approximation on the true solution imply that the obtained value could be completely different from the exact solution. Hence, in this case introducing a probabilistic solution can give a clearer indication of the value and uncertainty of the numerical solution. \\
 Let us consider $\sigma = 10$, $\rho = 28$, $\beta = 8/3$. For this value, the solution has indeed a chaotic behavior. We solve the equation with a time step $h = 0.01$ using the probabilistic solver with $\Psi$ the Gauss collocation method on two stages. In Figure \ref{fig:Lorenz} we show 10 realizations of the numerical solution given by the probabilistic solver and the numerical solution without any added perturbation from initial time $t = 0$ to final time $T = 20$. We can remark that all the trajectories given by the probabilistic solver coincide with the punctual solution up to a time $\bar t$, approximately equal to 12, where the random perturbation force the numerical solution on another trajectory. 
 
-%\begin{figure}[t]
-%	\centering
-%	\resizebox{0.7\linewidth}{!}{\input{plots/LorenzTraj.tikz}}
-%	\caption{Trajectory of the solution of the Lorenz system in the state space.}
-%	\label{fig:LorenzTraj}
-%\end{figure}
-%
-%\begin{figure}[t]
-%	\centering
-%	\begin{subfigure}{1\linewidth}
-%		\resizebox{1.0\linewidth}{!}{\input{plots/LorenzX.tikz}}
-%	\end{subfigure}
-%	\begin{subfigure}{1\linewidth}
-%		\resizebox{1.0\linewidth}{!}{\input{plots/LorenzY.tikz}}
-%	\end{subfigure}
-%	\begin{subfigure}{1\linewidth}
-%		\resizebox{1.0\linewidth}{!}{\input{plots/LorenzZ.tikz}}
-%	\end{subfigure}
-%	\caption{Solution of the Lorenz system obtained with the deterministic solver (thick black) and realizations of the solution obtained with the probabilistic solver (light gray).}
-%	\label{fig:Lorenz}
-%\end{figure}
+\begin{figure}[t]
+	\centering
+	\resizebox{0.7\linewidth}{!}{\input{plots/LorenzTraj.tikz}}
+	\caption{Trajectory of the solution of the Lorenz system in the state space.}
+	\label{fig:LorenzTraj}
+\end{figure}
+
+\begin{figure}[t]
+	\centering
+	\begin{subfigure}{1\linewidth}
+		\resizebox{1.0\linewidth}{!}{\input{plots/LorenzX.tikz}}
+	\end{subfigure}
+	\begin{subfigure}{1\linewidth}
+		\resizebox{1.0\linewidth}{!}{\input{plots/LorenzY.tikz}}
+	\end{subfigure}
+	\begin{subfigure}{1\linewidth}
+		\resizebox{1.0\linewidth}{!}{\input{plots/LorenzZ.tikz}}
+	\end{subfigure}
+	\caption{Solution of the Lorenz system obtained with the deterministic solver (thick black) and realizations of the solution obtained with the probabilistic solver (light gray).}
+	\label{fig:Lorenz}
+\end{figure}

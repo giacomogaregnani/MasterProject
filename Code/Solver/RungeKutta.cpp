@@ -2,16 +2,17 @@
 #include <cmath>
 #include "RungeKutta.hpp"
 
-EulerForward::EulerForward(int n, VectorXd (*func) (VectorXd, std::vector<double>&), std::vector<double> paramVec)
+EulerForward::EulerForward(odeDef ODE, std::vector<double> paramVec)
 {
-	f = func;
-	size = n;
+	f = ODE.odeFunc;
+	size = ODE.size;
 	parameters = paramVec;
+    theODE = ODE;
 }
 
 VectorXd EulerForward::oneStep(VectorXd solution, double h)
 {
-	return solution + h * f(solution, parameters);                        
+	return solution + h * f(solution, parameters);
 }
 
 int EulerForward::getOrder(void)
@@ -19,11 +20,30 @@ int EulerForward::getOrder(void)
 	return 1;
 }
 
-RungeKutta::RungeKutta(int n, VectorXd (*func) (VectorXd, std::vector<double>&), std::vector<double> paramVec)
+EulerBackwards::EulerBackwards(odeDef ODE, std::vector<double> paramVec)
 {
-	f = func;
-	size = n;
+    f = ODE.odeFunc;
+    size = ODE.size;
 	parameters = paramVec;
+    theODE = ODE;
+}
+
+VectorXd EulerBackwards::oneStep(VectorXd solution, double h)
+{
+    return newton(theODE, solution, parameters, h, 100, 1e-12);
+}
+
+int EulerBackwards::getOrder(void)
+{
+	return 1;
+}
+
+RungeKutta::RungeKutta(odeDef ODE, std::vector<double> paramVec)
+{
+    f = ODE.odeFunc;
+    size = ODE.size;
+	parameters = paramVec;
+    theODE = ODE;
 }
 
 VectorXd RungeKutta::oneStep(VectorXd solution, double h)
@@ -46,4 +66,42 @@ VectorXd RungeKutta::oneStep(VectorXd solution, double h)
 int RungeKutta::getOrder(void)
 {
 	return 4;
+}
+
+MidPoint::MidPoint(odeDef ODE, std::vector<double> paramVec)
+{
+	f = ODE.odeFunc;
+	size = ODE.size;
+	parameters = paramVec;
+	theODE = ODE;
+}
+
+VectorXd MidPoint::oneStep(VectorXd solution, double h)
+{
+	return solution + h * f(solution + 0.5 * h * f(solution, parameters), parameters);
+}
+
+int MidPoint::getOrder(void)
+{
+	return 2;
+}
+
+ImplicitRK::ImplicitRK(odeDef inODE, std::vector<double> paramVec,
+					   MatrixXd inA, VectorXd inB, int inOrder)
+{
+	ODE = inODE;
+	parameters = paramVec;
+	A = inA;
+	b = inB;
+	order = inOrder;
+}
+
+VectorXd ImplicitRK::oneStep(VectorXd solution, double h)
+{
+	return newtonGeneral(ODE, solution, parameters, h, 100, 1e-12, A, b);
+}
+
+int ImplicitRK::getOrder(void)
+{
+	return order;
 }

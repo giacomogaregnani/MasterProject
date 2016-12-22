@@ -1,5 +1,6 @@
 % BASICS
-\usepackage{vmargin}
+%\usepackage{vmargin}
+\usepackage[margin=3cm,footskip=0.25in]{geometry}
 %\setlength{\footskip}{20pt}
 \usepackage[utf8x]{inputenc}
 \usepackage[title,titletoc]{appendix}
@@ -25,10 +26,12 @@
 \mathtoolsset{showonlyrefs}
 % MISC
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
 \renewcommand{\phi}{\varphi}
 \newcommand{\eqtext}[1]{\ensuremath{\stackrel{#1}{=}}}
 \newcommand{\leqtext}[1]{\ensuremath{\stackrel{#1}{\leq}}}
 \newcommand{\iid}{\ensuremath{\stackrel{\text{i.i.d.}}{\sim}}}
+\newcommand{\totext}[1]{\ensuremath{\stackrel{#1}{\to}}}
 \newtheorem{theorem}{Proposition}[section]
 \newtheorem{lemma}{Lemma}[section]
 \newtheorem{assumption}{Assumption}[section]

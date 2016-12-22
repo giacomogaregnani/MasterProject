@@ -1135,6 +1135,8 @@ problems.hpp
 /u/anmc/garegnan/Desktop/Code/Test/problems.hpp
 Eigen/Core
 -
+unsupported/Eigen/MatrixFunctions
+-
 
 /u/anmc/garegnan/Desktop/Code/Test/problems.hpp
 vector

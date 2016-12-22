@@ -87,8 +87,8 @@
 					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Solver/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="refSol">
-				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/refSol" prefix_auto="0" extension_auto="0"/>
+			<Target title="sigmaEst">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/sigmaEst" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -107,14 +107,14 @@
 					<Add directory="/usr/include/c++/4.9/backward"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 refSol"/>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 sigmaEst"/>
 					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="refSol/fast">
-				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/refSol" prefix_auto="0" extension_auto="0"/>
+			<Target title="sigmaEst/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/sigmaEst" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -133,14 +133,14 @@
 					<Add directory="/usr/include/c++/4.9/backward"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 refSol/fast"/>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 sigmaEst/fast"/>
 					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="plotGauss">
-				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/plotGauss" prefix_auto="0" extension_auto="0"/>
+			<Target title="mcmcConvFix">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/mcmcConvFix" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -159,14 +159,14 @@
 					<Add directory="/usr/include/c++/4.9/backward"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 plotGauss"/>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 mcmcConvFix"/>
 					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="plotGauss/fast">
-				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/plotGauss" prefix_auto="0" extension_auto="0"/>
+			<Target title="mcmcConvFix/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/mcmcConvFix" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -185,14 +185,14 @@
 					<Add directory="/usr/include/c++/4.9/backward"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 plotGauss/fast"/>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 mcmcConvFix/fast"/>
 					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="testInv">
-				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/testInv" prefix_auto="0" extension_auto="0"/>
+			<Target title="jacobian">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/jacobian" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -211,14 +211,14 @@
 					<Add directory="/usr/include/c++/4.9/backward"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 testInv"/>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 jacobian"/>
 					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="testInv/fast">
-				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/testInv" prefix_auto="0" extension_auto="0"/>
+			<Target title="jacobian/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/jacobian" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -237,7 +237,111 @@
 					<Add directory="/usr/include/c++/4.9/backward"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 testInv/fast"/>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 jacobian/fast"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="LorenzTraj">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/LorenzTraj" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 LorenzTraj"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="LorenzTraj/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/LorenzTraj" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 LorenzTraj/fast"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="invMeas">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/invMeas" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 invMeas"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="invMeas/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/invMeas" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 invMeas/fast"/>
 					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
@@ -295,8 +399,8 @@
 					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="likEst">
-				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/likEst" prefix_auto="0" extension_auto="0"/>
+			<Target title="plotGauss">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/plotGauss" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -315,14 +419,14 @@
 					<Add directory="/usr/include/c++/4.9/backward"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 likEst"/>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 plotGauss"/>
 					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="likEst/fast">
-				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/likEst" prefix_auto="0" extension_auto="0"/>
+			<Target title="plotGauss/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/plotGauss" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -341,7 +445,267 @@
 					<Add directory="/usr/include/c++/4.9/backward"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 likEst/fast"/>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 plotGauss/fast"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="testBE">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/testBE" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 testBE"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="testBE/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/testBE" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 testBE/fast"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="plainMH">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/plainMH" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 plainMH"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="plainMH/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/plainMH" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 plainMH/fast"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="refSol">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/refSol" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 refSol"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="refSol/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/refSol" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 refSol/fast"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="plainMHconv">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/plainMHconv" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 plainMHconv"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="plainMHconv/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/plainMHconv" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 plainMHconv/fast"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="testInv">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/testInv" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 testInv"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="testInv/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/testInv" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 testInv/fast"/>
 					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
@@ -399,8 +763,8 @@
 					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="mcmcParam">
-				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/mcmcParam" prefix_auto="0" extension_auto="0"/>
+			<Target title="mcmcConv">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/mcmcConv" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -419,14 +783,14 @@
 					<Add directory="/usr/include/c++/4.9/backward"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 mcmcParam"/>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 mcmcConv"/>
 					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="mcmcParam/fast">
-				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/mcmcParam" prefix_auto="0" extension_auto="0"/>
+			<Target title="mcmcConv/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/mcmcConv" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -445,14 +809,14 @@
 					<Add directory="/usr/include/c++/4.9/backward"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 mcmcParam/fast"/>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 mcmcConv/fast"/>
 					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="jacobian">
-				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/jacobian" prefix_auto="0" extension_auto="0"/>
+			<Target title="testMerge">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/testMerge" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -471,14 +835,14 @@
 					<Add directory="/usr/include/c++/4.9/backward"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 jacobian"/>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 testMerge"/>
 					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="jacobian/fast">
-				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/jacobian" prefix_auto="0" extension_auto="0"/>
+			<Target title="testMerge/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/testMerge" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -497,7 +861,7 @@
 					<Add directory="/usr/include/c++/4.9/backward"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 jacobian/fast"/>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 testMerge/fast"/>
 					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
@@ -568,10 +932,13 @@
 		<Unit filename="/u/anmc/garegnan/Desktop/Code/Solver/Solver.hpp">
 			<Option target="Solver"/>
 		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Solver/Structures.hpp">
+			<Option target="Solver"/>
+		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Code/Solver/ThirdOrderGauss.cpp">
 			<Option target="Solver"/>
 		</Unit>
-		<Unit filename="/u/anmc/garegnan/Desktop/Code/Solver/mlmc.cpp">
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Solver/impProbMethod.cpp">
 			<Option target="Solver"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Code/Solver/sProbMethod.cpp">
@@ -589,37 +956,65 @@
 		<Unit filename="/u/anmc/garegnan/Desktop/Code/Solver/tools.cpp">
 			<Option target="Solver"/>
 		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/LorenzPlotTrajectories.cpp">
+			<Option target="LorenzTraj"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/MCMCconvFix.cpp">
+			<Option target="mcmcConvFix"/>
+		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/Metropolis.cpp">
-			<Option target="likEst"/>
-			<Option target="mcmcParam"/>
+			<Option target="sigmaEst"/>
+			<Option target="mcmcConvFix"/>
+			<Option target="mcmcConv"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/MetropolisConv.cpp">
+			<Option target="sigmaEst"/>
+			<Option target="mcmcConvFix"/>
+			<Option target="mcmcConv"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/MetropolisDet.cpp">
+			<Option target="sigmaEst"/>
+			<Option target="mcmcConvFix"/>
+			<Option target="mcmcConv"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/gaussMetropolis.cpp">
-			<Option target="likEst"/>
-			<Option target="mcmcParam"/>
+			<Option target="sigmaEst"/>
+			<Option target="mcmcConvFix"/>
+			<Option target="mcmcConv"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/generateRefSol.cpp">
 			<Option target="refSol"/>
 		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/impMetropolisConv.cpp">
+			<Option target="sigmaEst"/>
+			<Option target="mcmcConvFix"/>
+			<Option target="mcmcConv"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/invMeasure.cpp">
+			<Option target="invMeas"/>
+		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/jacTest.cpp">
 			<Option target="jacobian"/>
 		</Unit>
-		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/likelihoodEstimator.cpp">
-			<Option target="likEst"/>
-		</Unit>
-		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/mcmcParamTest.cpp">
-			<Option target="mcmcParam"/>
-		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/mcmcTools.cpp">
-			<Option target="likEst"/>
-			<Option target="mcmcParam"/>
+			<Option target="sigmaEst"/>
+			<Option target="mcmcConvFix"/>
+			<Option target="plainMH"/>
+			<Option target="plainMHconv"/>
+			<Option target="mcmcConv"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/mcmcTools.hpp">
-			<Option target="likEst"/>
-			<Option target="mcmcParam"/>
+			<Option target="sigmaEst"/>
+			<Option target="mcmcConvFix"/>
+			<Option target="plainMH"/>
+			<Option target="plainMHconv"/>
+			<Option target="mcmcConv"/>
 		</Unit>
-		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/mlMetropolis.cpp">
-			<Option target="likEst"/>
-			<Option target="mcmcParam"/>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/plainMH.cpp">
+			<Option target="plainMH"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/plainMHConv.cpp">
+			<Option target="plainMHconv"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/plotGaussTrajectories.cpp">
 			<Option target="plotGauss"/>
@@ -628,30 +1023,46 @@
 			<Option target="plotter"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/problems.cpp">
-			<Option target="refSol"/>
-			<Option target="plotGauss"/>
-			<Option target="likEst"/>
-			<Option target="plotter"/>
-			<Option target="mcmcParam"/>
+			<Option target="sigmaEst"/>
+			<Option target="mcmcConvFix"/>
 			<Option target="jacobian"/>
+			<Option target="LorenzTraj"/>
+			<Option target="invMeas"/>
+			<Option target="plotGauss"/>
+			<Option target="testBE"/>
+			<Option target="refSol"/>
+			<Option target="plotter"/>
+			<Option target="mcmcConv"/>
 			<Option target="testVar"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/problems.hpp">
-			<Option target="refSol"/>
-			<Option target="plotGauss"/>
-			<Option target="likEst"/>
-			<Option target="plotter"/>
-			<Option target="mcmcParam"/>
+			<Option target="sigmaEst"/>
+			<Option target="mcmcConvFix"/>
 			<Option target="jacobian"/>
+			<Option target="LorenzTraj"/>
+			<Option target="invMeas"/>
+			<Option target="plotGauss"/>
+			<Option target="testBE"/>
+			<Option target="refSol"/>
+			<Option target="plotter"/>
+			<Option target="mcmcConv"/>
 			<Option target="testVar"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/sMetropolis.cpp">
-			<Option target="likEst"/>
-			<Option target="mcmcParam"/>
+			<Option target="sigmaEst"/>
+			<Option target="mcmcConvFix"/>
+			<Option target="mcmcConv"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/sigmaEst.cpp">
+			<Option target="sigmaEst"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/smlMetropolis.cpp">
-			<Option target="likEst"/>
-			<Option target="mcmcParam"/>
+			<Option target="sigmaEst"/>
+			<Option target="mcmcConvFix"/>
+			<Option target="mcmcConv"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/testBackEul.cpp">
+			<Option target="testBE"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/testBinary.cpp">
 			<Option target="binary"/>
@@ -659,9 +1070,20 @@
 		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/testInverse.cpp">
 			<Option target="testInv"/>
 		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/testMCMCconvergence.cpp">
+			<Option target="mcmcConv"/>
+		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/testMH.cpp">
-			<Option target="likEst"/>
-			<Option target="mcmcParam"/>
+			<Option target="sigmaEst"/>
+			<Option target="mcmcConvFix"/>
+			<Option target="plainMH"/>
+			<Option target="mcmcConv"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/testMHconv.cpp">
+			<Option target="plainMHconv"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/testMerge.cpp">
+			<Option target="testMerge"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Code/Test/testVarMC.cpp">
 			<Option target="testVar"/>

@@ -22,6 +22,11 @@
   implementation of {M}arkov chain {M}onte {C}arlo when using an unbiased
   likelihood estimator}, Biometrika,  (2015), pp.~1 -- 19.
 
+\bibitem{FlJ10}
+{\sc J.~M. Flegal and G.~L. Jones}, {\em Batch means and spectral variance
+  estimators in {M}arkov chain {M}onte {C}arlo}, Ann. Statist., 38 (2010),
+  pp.~1034--1070.
+
 \bibitem{GeS11}
 {\sc A.~Gelman and K.~Shirley}, {\em Inference from simulations and monitoring
   convergence}, in Handbook of {M}arkov chain {M}onte {C}arlo, S.~Brooks,
@@ -44,6 +49,10 @@
 \bibitem{HeS92}
 {\sc D.~B. Hernandez and R.~Spigler}, {\em A-stability of {R}unge-{K}utta
   methods for systems with additive noise}, BIT, 32 (1992), pp.~620--633.
+
+\bibitem{Jon04}
+{\sc G.~L. Jones}, {\em On the {M}arkov chain central limit theorem}, Probab.
+  Surveys, 1 (2004), pp.~299--320.
 
 \bibitem{KaS05}
 {\sc J.~Kaipio and E.~Somersalo}, {\em Statistical and Computational Inverse

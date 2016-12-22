@@ -4,7 +4,38 @@
 #include "mcmcTools.hpp"
 #include <Solver.hpp>
 
-#define PI 3.1415926535897	
+#define PI 3.1415926535897
+
+
+
+VectorXd computeMeans(std::vector<VectorXd>& input)
+{
+	long int n = input[0].size();
+	size_t nSamples = input.size();
+	VectorXd means = VectorXd::Zero(n);
+	for (auto it : input) {
+		means += it;
+	}
+	means /= nSamples;
+	return means;
+}
+
+VectorXd computeVariances(std::vector<VectorXd>& input, VectorXd inputMean)
+{
+	long int n = input[0].size();
+	size_t nSamples = input.size();
+	VectorXd variances = VectorXd::Zero(n);
+	double tmp;
+	for (auto it : input) {
+		for (int j = 0; j < n; j++) {
+			tmp = it(j) - inputMean(j);
+			variances(j) += tmp * tmp;
+		}
+	}
+	variances /= nSamples;
+	return variances;
+}
+
 
 double evalLikelihood(std::vector<VectorXd> data,
 					  std::vector<VectorXd> values,
@@ -67,7 +98,7 @@ double evalLogPrior(VectorXd x, VectorXd mean, VectorXd variance, int size)
 	return -(x - mean).dot(x - mean) / (2 * variance(0));
 
 	// log-normal distribution
-	/* VectorXd logar(size);
+	/*VectorXd logar(size);
 	for (int i = 0; i < size; i++) {
 		if (x(i) < 0) {
 			return 0.0;
@@ -75,7 +106,7 @@ double evalLogPrior(VectorXd x, VectorXd mean, VectorXd variance, int size)
 			logar(i) = log(x(i));
 		}
 	}
-	return -(logar - mean).dot(logar - mean) / (2 * variance(0));*/
+	return -(logar - mean).dot(logar - mean) / (2 * variance(0)); */
 }
 
 MatrixXd RAMinit(double gamma, double desiredAlpha, int nParam)
@@ -119,4 +150,29 @@ double phi(double x)
 	double y = 1.0 - (((((a5*t + a4)*t) + a3)*t + a2)*t + a1)*t*exp(-x*x);
 
 	return 0.5*(1.0 + sign*y);
+}
+
+double computeBatchMeans(std::vector<VectorXd>& data, double MCMean)
+{
+	size_t N = data.size();
+	size_t b = static_cast<size_t>(pow(static_cast<double>(N), 1.0 / 2.0));
+	size_t a = N / b;
+	std::vector<double> batchMeans(a, 0.0);
+
+	for (size_t k = 0; k < a; k++) {
+		for (size_t i = 0; i < b; i++) {
+			batchMeans[k] += data[k*b + i].dot(data[k*b + i]);
+		}
+		batchMeans[k] /= static_cast<double>(b);
+	}
+
+	double batchMeansEstimator = 0.0, tmp;
+
+	for (size_t k = 0; k < a; k++) {
+		tmp = batchMeans[k] - MCMean;
+		batchMeansEstimator += tmp * tmp;
+	}
+	batchMeansEstimator *= static_cast<double>(b) / static_cast<double>(a - 1);
+
+	return batchMeansEstimator;
 }

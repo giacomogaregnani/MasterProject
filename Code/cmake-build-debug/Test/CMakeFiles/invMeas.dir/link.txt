@@ -1,0 +1,1 @@
+/usr/bin/c++    -fopenmp -std=c++11 -g   CMakeFiles/invMeas.dir/invMeasure.cpp.o CMakeFiles/invMeas.dir/problems.cpp.o  -o invMeas -rdynamic ../Solver/libSolver.a 

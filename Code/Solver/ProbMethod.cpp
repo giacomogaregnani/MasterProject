@@ -1,20 +1,18 @@
 #include "Solver.hpp"
 
 template <class T> 
-ProbMethod<T>::ProbMethod(int n, double timestep,
-                          VectorXd initialCond, std::vector<double> paramVec,
-                          VectorXd (*func) (VectorXd, std::vector<double>&),
+ProbMethod<T>::ProbMethod(odeDef ODE, double timestep, std::vector<double> paramVec,
 						  double stoch)
 {
-	detSolver = std::make_shared<T>(n, func, paramVec);
-	solution = initialCond;
+	detSolver = std::make_shared<T>(ODE, paramVec);
+	solution = ODE.initialCond;
 	sigma = stoch;
 	rootsigma = sqrt(sigma); 
-	size = n;
+	size = ODE.size;
 	h = timestep;
 	int detOrder = detSolver->getOrder();
 	hfunc = pow(h, detOrder + 0.5);
-	IC = initialCond;
+	IC = ODE.initialCond;
 	parameters = paramVec;
 }
 
@@ -64,3 +62,5 @@ void ProbMethod<T>::resetIC(void)
 
 template class ProbMethod<RungeKutta>;
 template class ProbMethod<EulerForward>;
+template class ProbMethod<EulerBackwards>;
+template class ProbMethod<MidPoint>;

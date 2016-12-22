@@ -429,5 +429,13 @@ Test/CMakeFiles/refSol.dir/problems.cpp.o
  ../eigen/Eigen/src/plugins/CommonCwiseUnaryOps.h
  ../eigen/Eigen/src/plugins/MatrixCwiseBinaryOps.h
  ../eigen/Eigen/src/plugins/MatrixCwiseUnaryOps.h
+ ../eigen/unsupported/Eigen/MatrixFunctions
+ ../eigen/unsupported/Eigen/src/MatrixFunctions/MatrixExponential.h
+ ../eigen/unsupported/Eigen/src/MatrixFunctions/MatrixFunction.h
+ ../eigen/unsupported/Eigen/src/MatrixFunctions/MatrixFunctionAtomic.h
+ ../eigen/unsupported/Eigen/src/MatrixFunctions/MatrixLogarithm.h
+ ../eigen/unsupported/Eigen/src/MatrixFunctions/MatrixPower.h
+ ../eigen/unsupported/Eigen/src/MatrixFunctions/MatrixSquareRoot.h
+ ../eigen/unsupported/Eigen/src/MatrixFunctions/StemFunction.h
  /u/anmc/garegnan/Desktop/Code/Test/problems.cpp
  /u/anmc/garegnan/Desktop/Code/Test/problems.hpp

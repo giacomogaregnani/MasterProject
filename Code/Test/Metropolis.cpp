@@ -17,7 +17,7 @@ std::vector<VectorXd> MetropolisHastings(odeDef odeModel, std::vector<double>& p
     size_t nData = data.size();
     VectorXd paramVecN(nParam);
     std::vector<VectorXd> mcmcPath(nStepsMC, VectorXd(nParam));
-    likelihoods.resize(nStepsMC);
+    likelihoods.resize(static_cast<size_t>(nStepsMC));
     VectorXd w(nParam);
     std::vector<double> paramStd(nParam);
     std::default_random_engine wGenerator{(unsigned int) time(NULL)};
@@ -34,8 +34,13 @@ std::vector<VectorXd> MetropolisHastings(odeDef odeModel, std::vector<double>& p
         paramVec(i) = param[i];
     }
 
+    /* Butcher butcher(GAUSS, 4);
+    MatrixXd A = butcher.getA();
+    VectorXd b = butcher.getB(); */
+
     // Compute the posterior on the initial guess
-    ProbMethod<EulerForward> solver(odeModel.size, h, odeModel.initialCond, param, odeModel.odeFunc, sigma);
+    // impProbMethod solver(odeModel, h, param, sigma, A, b, 4);
+    ProbMethod<MidPoint> solver(odeModel, h, param, sigma);
     std::vector<VectorXd> solutionAtDataTimes(nData, VectorXd(odeModel.size));
     for (MCindex = 0; MCindex < internalMC; MCindex++) {
         double t = 0;
@@ -44,8 +49,7 @@ std::vector<VectorXd> MetropolisHastings(odeDef odeModel, std::vector<double>& p
             solver.oneStep(generator, h);
             t = t + h;
             if (std::abs(t - dataTimes[count]) < h / 10.0) {
-                solutionAtDataTimes[count] = solver.getSolution();
-                count++;
+                solutionAtDataTimes[count++] = solver.getSolution();
             }
         }
         oldLike +=  evalLogLikelihood(data, solutionAtDataTimes, odeModel.size, varData);
@@ -65,15 +69,15 @@ std::vector<VectorXd> MetropolisHastings(odeDef odeModel, std::vector<double>& p
     // Only for positive parameters
     double oldGauss, newGauss;
 
-
     for (int i = 1; i < nStepsMC; i++)
     {
         if (i % 50 == 0) {
-            std::cout << "iteration: " << i << std::endl;
+            printf("iteration: %d \n", i);
+            /* std::cout << "iteration: " << i << std::endl;
             std::cout << "likelihood: " << oldLike << std::endl;
             std::cout << "step: " << std::endl << S << std::endl;
             std::cout << "prior: " << oldPrior << std::endl;
-            std::cout << "param: " << paramVec.transpose() << std::endl;
+            std::cout << "param: " << paramVec.transpose() << std::endl; */
         }
 
         // Generate new guess for parameter
@@ -97,29 +101,30 @@ std::vector<VectorXd> MetropolisHastings(odeDef odeModel, std::vector<double>& p
             paramStd[j] = paramVecN(j);
         }
 
+
         // Compute likelihood for the new parameter
-        #pragma omp parallel for num_threads(20) private(MCindex)
         for (MCindex = 0; MCindex < internalMC; MCindex++) {
+            ProbMethod<MidPoint> solverNew(odeModel, h, paramStd, sigma);
             std::vector<VectorXd> solutionAtDataTimesPar(nData, VectorXd(odeModel.size));
-            ProbMethod<EulerForward> solver(odeModel.size, h, odeModel.initialCond, paramStd, odeModel.odeFunc, sigma);
             double t = 0;
             int count = 0;
             while (t < finalTime) {
-                solver.oneStep(generator, h);
+                solverNew.oneStep(generator, h);
                 t = t + h;
                 if (std::abs(t - dataTimes[count]) < h / 10.0) {
-                    solutionAtDataTimesPar[count] = solver.getSolution();
+                    solutionAtDataTimesPar[count] = solverNew.getSolution();
                     count++;
                 }
             }
             lVec[MCindex] = evalLogLikelihood(data, solutionAtDataTimesPar, odeModel.size, varData);
+            solverNew.resetIC();
         }
         l = 0.0;
         for (int j = 0; j < internalMC; j++) {
             l += lVec[j];
         }
         l /= internalMC;
-        *cost += nOdeSteps * internalMC;
+        // *cost += nOdeSteps * internalMC;
 
         // Compute prior on the new parameter
         prior = evalLogPrior(paramVecN, priorMean, priorVariance, nParam);
@@ -130,28 +135,29 @@ std::vector<VectorXd> MetropolisHastings(odeDef odeModel, std::vector<double>& p
         }
 
         // Compute likelihood for the old parameter
-        #pragma omp parallel for num_threads(20) private(MCindex)
         for (MCindex = 0; MCindex < internalMC; MCindex++) {
+            ProbMethod<MidPoint> solverOld(odeModel, h, paramStd, sigma);
             std::vector<VectorXd> solutionAtDataTimesPar(nData, VectorXd(odeModel.size));
-            ProbMethod<EulerForward> solver(odeModel.size, h, odeModel.initialCond, paramStd, odeModel.odeFunc, sigma);
             double t = 0;
             int count = 0;
             while (t < finalTime) {
-                solver.oneStep(generator, h);
+                solverOld.oneStep(generator, h);
                 t = t + h;
                 if (std::abs(t - dataTimes[count]) < h / 10.0) {
-                    solutionAtDataTimesPar[count] = solver.getSolution();
+                    solutionAtDataTimesPar[count] = solverOld.getSolution();
                     count++;
                 }
             }
             lVec[MCindex] = evalLogLikelihood(data, solutionAtDataTimesPar, odeModel.size, varData);
+            solverOld.resetIC();
         }
+
         double oldParamL = 0.0;
         for (int j = 0; j < internalMC; j++) {
             oldParamL += lVec[j];
         }
         oldParamL /= internalMC;
-        *cost += nOdeSteps * internalMC;
+        // *cost += nOdeSteps * internalMC;
 
         // Generate (log) of uniform random variable
         double u = log(unif(wGenerator));

@@ -15,6 +15,7 @@ public:
     Poisson(int N);
 };
 
+
 VectorXd lorenz(VectorXd argument, std::vector<double>& param);
 MatrixXd lorenzJ(VectorXd argument, std::vector<double>& param);
 VectorXd testOneD(VectorXd argument, std::vector<double>& param);

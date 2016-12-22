@@ -170,23 +170,23 @@ Let us remark that in practice the method \eqref{probabilityODE} is tuned so tha
 %	\label{fig:MLMCtheory}
 %\end{figure}
 
-\subsubsection{Numerical example}
-We consider the Fitzhug-Nagumo problem \eqref{eq:FitzNag} and we aim to verify the cost of MLMC with respect to standard Monte Carlo for the estimation of the expectation of the solution at final time when applying the numerical method \eqref{probabilityODE}. We consider the case $q = p = 1$, using as a deterministic integrator the explicit Euler method. Hence, once a value of accuracy $\epl$ is requested, the number of stages $L$ as well as the time steps $h_l, l = 0, \ldots, L$, are imposed using \eqref{LCaseOne} and \eqref{hLeps}. In order to set up the standard Monte Carlo method, we consider the cost obtained in the MLMC simulation, denote by $\hat C$ and impose it to be equal for the standard Monte Carlo. In order to obtain a good balance between the error terms in \eqref{MSEMC} we impose
-\begin{equation}
-\begin{aligned}
-	\frac{T}{h} M &= \hat C, \\
-	M &= \ceil{h^{-2q}},
-\end{aligned}
-\end{equation}
-thus obtaining for the time step
-\begin{equation}
-	h = \left(\frac{T}{\hat C}\right)^{1 / (2q + 1)}.
-\end{equation}
-In this way, the computational cost for MLMC and standard Monte Carlo are imposed to be artificially equal and the two methods can be compared for their weak error with respect to an accurate solution. We impose for MLMC four values of accuracy $\epl = 0.1, 0.01, 0.001, 0.0001$, and apply the aforementioned technique to compare MLMC and Monte Carlo. Results (Figure \ref{fig:MLMCpractice}) show that imposing $L$ and $h_l, l = 0, \ldots, L$ as above the obtained accuracy in the same order of magnitude as $\epl$. Furthermore, the obtained accuracy is smaller for MLMC than MC if the cost 
-
-\begin{figure}
-	\centering
-	\resizebox{0.6\linewidth}{!}{\input{plots/MLMCpracticecost.tikz}}
-	\caption{Accuracy of MLMC and standard Monte Carlo for the FitzHug-Nagumo problem with fixed cost.}
-	\label{fig:MLMCpractice}
-\end{figure}
+%\subsubsection{Numerical example}
+%We consider the Fitzhug-Nagumo problem \eqref{eq:FitzNag} and we aim to verify the cost of MLMC with respect to standard Monte Carlo for the estimation of the expectation of the solution at final time when applying the numerical method \eqref{probabilityODE}. We consider the case $q = p = 1$, using as a deterministic integrator the explicit Euler method. Hence, once a value of accuracy $\epl$ is requested, the number of stages $L$ as well as the time steps $h_l, l = 0, \ldots, L$, are imposed using \eqref{LCaseOne} and \eqref{hLeps}. In order to set up the standard Monte Carlo method, we consider the cost obtained in the MLMC simulation, denote by $\hat C$ and impose it to be equal for the standard Monte Carlo. In order to obtain a good balance between the error terms in \eqref{MSEMC} we impose
+%\begin{equation}
+%\begin{aligned}
+%	\frac{T}{h} M &= \hat C, \\
+%	M &= \ceil{h^{-2q}},
+%\end{aligned}
+%\end{equation}
+%thus obtaining for the time step
+%\begin{equation}
+%	h = \left(\frac{T}{\hat C}\right)^{1 / (2q + 1)}.
+%\end{equation}
+%In this way, the computational cost for MLMC and standard Monte Carlo are imposed to be artificially equal and the two methods can be compared for their weak error with respect to an accurate solution. We impose for MLMC four values of accuracy $\epl = 0.1, 0.01, 0.001, 0.0001$, and apply the aforementioned technique to compare MLMC and Monte Carlo. Results (Figure \ref{fig:MLMCpractice}) show that imposing $L$ and $h_l, l = 0, \ldots, L$ as above the obtained accuracy in the same order of magnitude as $\epl$. Furthermore, the obtained accuracy is smaller for MLMC than MC if the cost 
+%
+%\begin{figure}
+%	\centering
+%	\resizebox{0.6\linewidth}{!}{\input{plots/MLMCpracticecost.tikz}}
+%	\caption{Accuracy of MLMC and standard Monte Carlo for the FitzHug-Nagumo problem with fixed cost.}
+%	\label{fig:MLMCpractice}
+%\end{figure}

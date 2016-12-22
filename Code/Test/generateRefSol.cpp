@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
     // =========================
     // INITIALIZATION
     // =========================
-    problems problem = LORENZ;
+    problems problem = TEST1D;
 
     // Set problem
     odeDef testODE;
@@ -27,11 +27,11 @@ int main(int argc, char* argv[])
     //
 
     std::vector<double> paramList = testODE.refParam;
-    std::string filepath("refSolLorenz.txt");
+    std::string filepath("refSolTest1D.txt");
     // equispaced values from 0 to finalTime
-    double finalTime = 20.0;
-    unsigned int nData = 1;
-    double noiseStdDev = 0.0;
+    double finalTime = 10.0;
+    unsigned int nData = 10;
+    double noiseStdDev = 0.1;
     // =========================
 
     // =========================
@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
     // =========================
 
 	// REFERENCE SOLUTION
-	double hRef = 0.000001;
+	double hRef = 0.00001;
 	int nSteps = int (finalTime / hRef);
 
 	// Prepare structures for data acquisition
@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
     std::string folder(DATA_PATH);
     std::string slash("/");
     std::ofstream fullResults;
-    std::string fullResPath = "fullResultsBruss.txt";
+    std::string fullResPath = "fullResultsLorenz.txt";
     std::string fullPath = folder + slash + fullResPath;
 
     if (argc > 1) {
@@ -81,19 +81,18 @@ int main(int argc, char* argv[])
         data[0](0) = -0.1863646254808130e1 + disturb(generator);
         data[0](1) = -0.1863646254808130e1 + disturb(generator);
     } else {
-        ProbMethod<RungeKutta> refSolver(testODE.size, hRef, testODE.initialCond, paramList, testODE.odeFunc, 0.0);
+        RungeKutta refSolver(testODE, paramList);
         double time = 0;
-        VectorXd tmpSol(testODE.size);
+        VectorXd tmpSol = testODE.initialCond;
         int count = 0;
         for (int i = 0; i < nSteps + 10; i++) {
-            refSolver.oneStep(generator, hRef);
+            tmpSol = refSolver.oneStep(tmpSol, hRef);
             time = time + hRef;
-            if (fmod(time, 0.1) < 1.1 * hRef) {
-                fullResults << time << "\t" << refSolver.getSolution().transpose() << "\n";
+            if (fmod(time, 0.01) < 1.1 * hRef) {
+                fullResults << time << "\t" << tmpSol.transpose() << "\n";
             }
             if (std::abs(times[count] - time) < hRef / 2.0) {
                 std::cout << time << std::endl;
-                tmpSol = refSolver.getSolution();
                 for (int j = 0; j < testODE.size; j++) {
                     data[count](j) = tmpSol(j) + disturb(generator);
                     if (testODE.ode == HIRES && data[count](j) < 0) {

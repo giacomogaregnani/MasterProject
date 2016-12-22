@@ -420,6 +420,14 @@ Test/CMakeFiles/plotter.dir/problems.cpp.o: ../eigen/Eigen/src/plugins/CommonCwi
 Test/CMakeFiles/plotter.dir/problems.cpp.o: ../eigen/Eigen/src/plugins/CommonCwiseUnaryOps.h
 Test/CMakeFiles/plotter.dir/problems.cpp.o: ../eigen/Eigen/src/plugins/MatrixCwiseBinaryOps.h
 Test/CMakeFiles/plotter.dir/problems.cpp.o: ../eigen/Eigen/src/plugins/MatrixCwiseUnaryOps.h
+Test/CMakeFiles/plotter.dir/problems.cpp.o: ../eigen/unsupported/Eigen/MatrixFunctions
+Test/CMakeFiles/plotter.dir/problems.cpp.o: ../eigen/unsupported/Eigen/src/MatrixFunctions/MatrixExponential.h
+Test/CMakeFiles/plotter.dir/problems.cpp.o: ../eigen/unsupported/Eigen/src/MatrixFunctions/MatrixFunction.h
+Test/CMakeFiles/plotter.dir/problems.cpp.o: ../eigen/unsupported/Eigen/src/MatrixFunctions/MatrixFunctionAtomic.h
+Test/CMakeFiles/plotter.dir/problems.cpp.o: ../eigen/unsupported/Eigen/src/MatrixFunctions/MatrixLogarithm.h
+Test/CMakeFiles/plotter.dir/problems.cpp.o: ../eigen/unsupported/Eigen/src/MatrixFunctions/MatrixPower.h
+Test/CMakeFiles/plotter.dir/problems.cpp.o: ../eigen/unsupported/Eigen/src/MatrixFunctions/MatrixSquareRoot.h
+Test/CMakeFiles/plotter.dir/problems.cpp.o: ../eigen/unsupported/Eigen/src/MatrixFunctions/StemFunction.h
 Test/CMakeFiles/plotter.dir/problems.cpp.o: ../Test/problems.cpp
 Test/CMakeFiles/plotter.dir/problems.cpp.o: ../Test/problems.hpp
 

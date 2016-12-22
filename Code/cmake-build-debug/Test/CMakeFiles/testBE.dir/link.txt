@@ -1,0 +1,1 @@
+/usr/bin/c++    -fopenmp -std=c++11 -g   CMakeFiles/testBE.dir/testBackEul.cpp.o CMakeFiles/testBE.dir/problems.cpp.o  -o testBE -rdynamic ../Solver/libSolver.a 

@@ -1030,6 +1030,16 @@ details.h
 
 ../eigen/Eigen/src/plugins/MatrixCwiseUnaryOps.h
 
+../eigen/unsupported/Eigen/KroneckerProduct
+../../Eigen/Core
+../eigen/Eigen/Core
+../../Eigen/src/Core/util/DisableStupidWarnings.h
+../eigen/Eigen/src/Core/util/DisableStupidWarnings.h
+src/KroneckerProduct/KroneckerTensorProduct.h
+../eigen/unsupported/Eigen/src/KroneckerProduct/KroneckerTensorProduct.h
+../../Eigen/src/Core/util/ReenableStupidWarnings.h
+../eigen/Eigen/src/Core/util/ReenableStupidWarnings.h
+
 ../eigen/unsupported/Eigen/MatrixFunctions
 cfloat
 -
@@ -1055,6 +1065,8 @@ src/MatrixFunctions/MatrixLogarithm.h
 ../eigen/unsupported/Eigen/src/MatrixFunctions/MatrixLogarithm.h
 src/MatrixFunctions/MatrixPower.h
 ../eigen/unsupported/Eigen/src/MatrixFunctions/MatrixPower.h
+
+../eigen/unsupported/Eigen/src/KroneckerProduct/KroneckerTensorProduct.h
 
 ../eigen/unsupported/Eigen/src/MatrixFunctions/MatrixExponential.h
 StemFunction.h
@@ -1091,6 +1103,8 @@ RungeKutta.hpp
 /u/anmc/garegnan/Desktop/Code/Solver/RungeKutta.hpp
 Eigen/Dense
 -
+Structures.hpp
+/u/anmc/garegnan/Desktop/Code/Solver/Structures.hpp
 
 /u/anmc/garegnan/Desktop/Code/Solver/Solver.hpp
 iostream
@@ -1111,6 +1125,14 @@ RungeKutta.hpp
 /u/anmc/garegnan/Desktop/Code/Solver/RungeKutta.hpp
 sRungeKutta.hpp
 /u/anmc/garegnan/Desktop/Code/Solver/sRungeKutta.hpp
+Structures.hpp
+/u/anmc/garegnan/Desktop/Code/Solver/Structures.hpp
+unsupported/Eigen/KroneckerProduct
+-
+
+/u/anmc/garegnan/Desktop/Code/Solver/Structures.hpp
+Eigen/Dense
+-
 
 /u/anmc/garegnan/Desktop/Code/Solver/ThirdOrderGauss.cpp
 Solver.hpp
@@ -1128,7 +1150,7 @@ fstream
 string
 -
 
-/u/anmc/garegnan/Desktop/Code/Solver/mlmc.cpp
+/u/anmc/garegnan/Desktop/Code/Solver/impProbMethod.cpp
 Solver.hpp
 /u/anmc/garegnan/Desktop/Code/Solver/Solver.hpp
 

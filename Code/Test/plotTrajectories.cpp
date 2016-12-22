@@ -44,7 +44,7 @@ int main(int argc, char* argv[]) {
     std::string fullPath = folder + slash + fullResPath;
     fullResults.open(fullPath, std::ofstream::out | std::ofstream::trunc);
 
-    ProbMethod<EulerForward> refSolver(testODE.size, hRef, testODE.initialCond, paramList, testODE.odeFunc, 0.5);
+    ProbMethod<EulerForward> refSolver(testODE, hRef, paramList, 0.5);
     int nRealizations = 1;
 
     for (int j = 0; j < nRealizations; j++) {
