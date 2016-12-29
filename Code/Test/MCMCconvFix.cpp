@@ -70,7 +70,7 @@ int main(int argc, char* argv[])
     }
 
     // PARAMETERS OF THE CHAIN
-    int nMCMC = 1000000;
+    int nMCMC = 100000;
 
     // DEFINE THE PROBABILISTIC INTEGRATOR
     double sigma = 0.5;
@@ -89,7 +89,7 @@ int main(int argc, char* argv[])
         nMin = static_cast<int>(nMin * ratio);
     }
     double h;
-    int nMC = 1;
+    int nMC = 10;
 
     int numberOfReps = 1;
 

@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
     double h = 0.1;
     int nMC = 1;
 
-    int numberOfReps = 10;
+    int numberOfReps = 1;
 
     for (int k = 0; k < 8; k++) {
 
@@ -126,7 +126,7 @@ int main(int argc, char* argv[])
             while (!convergence) {
                 size_t i;
 
-                #pragma omp parallel for num_threads(6) private(i)
+                // #pragma omp parallel for num_threads(6) private(i)
                 for (i = 0; i < nReps; i++) {
                     std::vector<double> stdInGuess(nParam);
                     for (size_t j = 0; j < nParam; j++) {

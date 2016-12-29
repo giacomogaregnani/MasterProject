@@ -1,7 +1,7 @@
 clear; clc; close all;
 
 % h = [4000, 2857, 2040, 1470, 1052, 751, 537, 384, 274, 50];
-h = [4000, 2857, 2040, 1470, 1052, 100];
+h = [5555, 4000, 2857, 2040, 1470, 1052];
 h = h / 1e5;
 
 exactTheta = [0.2, 0.2, 3.0];
@@ -10,7 +10,8 @@ gExact = exactTheta * exactTheta';
 nExp = length(h);
 meanTheta = zeros(nExp, 3);
 
-fileName = 'MeanExp/testFitznagMP_20_12_2016_09_46_'; nExpReps = 1;% MP Fitznag
+fileName = 'MeanExp/testHell10_26_12_2016_06_16_'; nExpReps = 1;% MP Fitznag
+% fileName = 'MeanExp/testFitznagMP_20_12_2016_09_46_'; nExpReps = 1;% MP Fitznag
 % fileName = 'MeanExp/testFitznagEE_14_12_2016_04_35_'; nExpReps = 10;% EE Fitznag
 
 
@@ -91,7 +92,7 @@ for i = 1 : nExp - 1
     
     display(i)
     
-    for k = 1 : 10
+    for k = 1 : nExpReps
         results = dlmread([fileName, num2str(round(h(i) * 1e5)), '_', num2str(k-1), '.txt']);
         Sigma = cov(results);
         Stest{i} = Sigma;

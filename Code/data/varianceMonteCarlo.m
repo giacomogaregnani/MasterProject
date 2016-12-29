@@ -5,9 +5,9 @@ resultsLoad = true;
 MorH = 'h';
 
 if resultsLoad
-    results = dlmread('varMCResults.txt');
-    resultsRK = dlmread('varMCResults_RK.txt');
-    resultsBE = dlmread('varMCResults_BE_Lorenz.txt');
+    results = dlmread('varMCResults_nonZVar.txt');
+    resultsRK = dlmread('varMCResults_nonZVar.txt');
+    resultsBE = dlmread('varMCResults_nonZVar.txt');
     
     hEM = results(:, 1);
     hRK = resultsRK(:, 1);
@@ -16,8 +16,8 @@ if resultsLoad
     errEM = results(:, 3);
     varRK = resultsRK(:, 2);
     errRK = resultsRK(:, 3);
-    varBE = resultsBE(:, 2) / 800;
-    errBE = resultsBE(:, 3) / 800;
+    varBE = resultsBE(:, 2);
+    errBE = resultsBE(:, 3);
 else
     load('MCVarianceFITZNAG');
 end
@@ -31,8 +31,8 @@ if MorH == 'h'
     loglog(hEM, errEM, 'marker', markers(3))
     loglog(hRK, errRK, 'marker', markers(4))
     loglog(hBE, errBE, 'marker', markers(5))
-    loglog(hBE, 100000000000000 * hBE.^8, 'k')
-    loglog(hRK, hRK.^8, '--k')
+    loglog(hBE, hBE.^-1, 'k')
+    loglog(hRK, hRK.^-1, '--k')
     legend('VarianceEM', 'VarianceRK', 'VarianceBE', 'ErrorEM', 'ErrorRK', 'ErrorBE', 'slope 2', 'slope 8', 'Location', 'SW')
     xlabel('h')
     ylabel('Var MC')

@@ -3,20 +3,13 @@ include_directories("${PROJECT_SOURCE_DIR}/Solver")
 
 add_executable(testMerge testMerge.cpp)
 
-#add_executable(mcmcParam mcmcParamTest.cpp
-#		problems.hpp problems.cpp
-#		mcmcTools.hpp mcmcTools.cpp
-#		Metropolis.cpp sMetropolis.cpp
-#		#mlMetropolis.cpp
-#		MetropolisConv.cpp
-#		smlMetropolis.cpp
-#		MetropolisDet.cpp
-#		gaussMetropolis.cpp testMH.cpp)
-#target_link_libraries(mcmcParam Solver)
-
 add_executable(LorenzTraj LorenzPlotTrajectories.cpp
 		problems.cpp problems.hpp)
 target_link_libraries(LorenzTraj Solver)
+
+add_executable(nonZeroVar nonZeroVar.cpp
+		problems.cpp problems.hpp)
+target_link_libraries(nonZeroVar Solver)
 
 #add_executable(MH plainMH.cpp
 #		problems.hpp problems.cpp
@@ -36,9 +29,6 @@ add_executable(refSol generateRefSol.cpp
                problems.hpp problems.cpp)
 target_link_libraries(refSol Solver)
 
-add_executable(testInv testInverse.cpp)
-target_link_libraries(testInv Solver)
-
 add_executable(plotter plotTrajectories.cpp
 		       problems.hpp problems.cpp)
 target_link_libraries(plotter Solver)
@@ -46,9 +36,6 @@ target_link_libraries(plotter Solver)
 add_executable(plotGauss plotGaussTrajectories.cpp
 		problems.hpp problems.cpp)
 target_link_libraries(plotGauss Solver)
-
-add_executable(jacobian jacTest.cpp
-		       problems.hpp problems.cpp)
 
 add_executable(testVar testVarMC.cpp
 		       problems.hpp problems.cpp)
@@ -113,3 +100,6 @@ add_executable(sigmaEst sigmaEst.cpp
 		gaussMetropolis.cpp testMH.cpp)
 target_link_libraries(sigmaEst Solver)
 
+add_executable(weakConv weakConvergence.cpp
+		problems.hpp problems.cpp)
+target_link_libraries(weakConv Solver)
