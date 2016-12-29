@@ -22,6 +22,11 @@ int main(int argc, char* argv[]) {
     for (size_t i = 0; i < 8; i++) {
         hVec.push_back(hVec.back() / 2);
     }
+    std::vector<unsigned long int> NSteps;
+    NSteps.push_back(100);
+    for (size_t i = 0; i < 8; i++) {
+        NSteps.push_back(NSteps.back() * 2);
+    }
     unsigned long int M = 1000;
 
     // Only for implicit methods
@@ -51,20 +56,23 @@ int main(int argc, char* argv[]) {
     // ProbMethod realizations
 
     std::vector<VectorXd> MCRealizations(M, VectorXd(testODE.size));
-    for (auto h : hVec) {
+    for (size_t k = 0; k < hVec.size(); k++) {
 
+        double h = hVec[k];
+        unsigned long int N = NSteps[k];
         std::cout << "Executing time step : " << h << std::endl;
 
         // Compute realizations
         unsigned long int i;
-        #pragma omp parallel for num_threads(20) private(i)
+        #pragma omp parallel for num_threads(2) private(i, t)
         for (i = 0; i < M; i++) {
             ProbMethod<EulerForward> Solver(testODE, h, testODE.refParam, 0.5);
-            t = 0;
-            while (t < finalTime) {
+            t = 0.0;
+            for (unsigned long int j = 0; j < N; j++){
                 Solver.oneStep(generator, h);
                 t = t + h;
             }
+            printf("%f\n", t);
             MCRealizations[i] = Solver.getSolution();
         }
 
