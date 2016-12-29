@@ -1,16 +1,9 @@
 \subsubsection{Strong convergence}
 
-In this section we prove a result about strong convergence of the method defined in \eqref{probabilityODE}. The following discrete Gronwall lemma is needed in the proof. 
-\begin{theorem}[Discrete Gronwall Lemma]\label{thm:Gronwall} Let $y_n$ be a nonnegative sequence and $C_1, C_2$ positive constants. If
-\begin{equation}
-	y_n \leq C_1 + C_2 \sum_{k=0}^{n-1} y_k,
-\end{equation}
-then 
-\begin{equation}
-	y_n \leq C_1 \exp(nC_2).
-\end{equation}
-\end{theorem}
-\noindent Two assumptions are necessary to prove the strong convergence result. The first assumption is on the noise model.
+The first property we treat is the strong convergence of the numerical solution. All the results presented can be found in details in \cite{CGS16}. Let us first recall the definition of the strong order of convergence of a numerical method. 
+\begin{definition} General definition of strong order of convergence
+\end{definition}
+\noindent In order to prove a result of strong convergence for the method defined in \eqref{eq:probMethod}, we need to state two assumptions on the random variables $\xi_k$ as well as on the numerical method defined by $\Psi$. 
 \begin{assumption}\label{assumption_1}
 \begin{equation}
 	\E^h|\xi_k(t)\xi_k(t)^T|^2_F \leq Kt^{2p+1}.
@@ -21,18 +14,28 @@ Furthermore, there exists a matrix $Q$ independent of $h$ such that
 \end{equation}
 where $p\geq 1$.
 \end{assumption}
-\noindent Let us remark that if $Q = \sigma I$, with $I$ the identity matrix in $\R^{d\times d}$ and $\sigma > 0$, the method \eqref{probabilityODE} can be simulated by
+\noindent Let us remark that if $Q = \sigma I$, with $I$ the identity matrix in $\R^{d\times d}$ and $\sigma > 0$, the method \eqref{eq:probMethod} can be simulated by
 \begin{equation}
 	U_{k+1} = \Psi_h(U_k) + \sqrt{\sigma} h^{p + \frac{1}{2}} Z_k,
 \end{equation}
 where $Z_k$ is a Gaussian random vector with independent entries $Z_{k,i}  \sim\mathcal{N}(0,1), i = 1, \ldots, d$. \\
 An assumption on the numerical method is needed.
-\begin{assumption}\label{assumption_2}  The function $f$ and a sufficient number of its derivatives are bounded uniformly in $\R^n$ in order to ensure that $f$ is globally Lipschitz and that the numerical flow map $\Psi_h$ has uniform local truncation error of order $q + 1$
+\begin{assumption}\label{assumption_2}  The function $f$ and a sufficient number of its derivatives are bounded uniformly in $\R^n$ in order to ensure that $f$ is globally Lipschitz and that the numerical flow map $\Psi_h$ has uniform local truncation error of order $q + 1$, i.e., 
 \begin{equation}
 	\sup_{u\in\R^n} |\Psi_t(u) - \Phi_t(u)| \leq Kt^{q+1}.
 \end{equation}
 \end{assumption}
-\noindent The following result hold.
+\noindent Moreover, the following discrete Gronwall lemma has to be exploited to complete the proof. 
+\begin{lemma}[Discrete Gronwall Lemma]\label{thm:Gronwall} Let $y_n$ be a nonnegative sequence and $C_1, C_2$ positive constants. If
+	\begin{equation}
+	y_n \leq C_1 + C_2 \sum_{k=0}^{n-1} y_k,
+	\end{equation}
+	then 
+	\begin{equation}
+	y_n \leq C_1 \exp(nC_2).
+	\end{equation}
+\end{lemma}
+\noindent Given the two assumptions above and the discrete Gronwall lemma, we can state the result on strong convergence of the numerical method. 
 \begin{theorem}[Strong Convergence]\label{thm:strongConv} Under assumptions \ref{assumption_1} and \ref{assumption_2} it follows that there is $K>0$ such that
 \begin{equation}\label{strongConvDisc}
 	\sup_{0<kh<T} \E^h|u_k - U_K|^2 \leq Kh^{2\min\{p,q\}}.
@@ -42,9 +45,9 @@ Furthermore
 	\sup_{0\leq t \leq T} \E^h|u(t) - U(t)| \leq Kh^{\min\{p, q\}}.
 \end{equation}
 \end{theorem}
-\noindent This result implies that a reasonable choice in $p$ of Assumption \ref{assumption_1} is $p = q$.
+\noindent Let us report for a matter of completeness the proof of the first inequality. The second result regards the convergence of a continuous interpolation of the numerical solution on grid points, where the interpolation has to be intended as a stochastic process depending on a continuous random variable $\xi(t)$. 
 \begin{proof}
-Given the method in \eqref{probabilityODE} and writing the exact solution of \eqref{ODE} as
+Given the method in \eqref{eq:probMethod} and writing the exact solution of \eqref{eq:ODE} as
 \begin{equation}
 	u_{k+1} = \Phi_h(u_k),
 \end{equation}
@@ -77,6 +80,9 @@ Therefore by Proposition \ref{thm:Gronwall}
 \begin{align}
 	\E^h|e_{k}|^2 &\leq C_2 h^{2\min\{p,q\}} \exp(C_1kh)\\ 
 		      &\leq C_2 h^{2\min\{p,q\}} \exp(C_1T) \\	
-		      &\leq Ch^{2\min\{p,q\}}.	
+		      &\leq Ch^{2\min\{p,q\}},
 \end{align}  	
+which concludes the proof of \eqref{strongConvDisc}.
 \end{proof}
+\begin{remark} Let us remark that the result Theorem \ref{thm:strongConv} indicates that a good choice for the noise scale, i.e., the integer $p$, is given by the order of convergence of the deterministic method $q$. In practice, this means that the stochastic noise introduced during time integration has the same order of magnitude of the numerical error with respect to the step of the time discretization $h$. 
+\end{remark}

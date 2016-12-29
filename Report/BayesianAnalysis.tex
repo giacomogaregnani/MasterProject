@@ -61,7 +61,7 @@ In this paragraph we present a simple example that is useful to understand Bayes
 	X(0) &= X_0, && X_0 \in \R,
 \end{aligned}
 \end{equation}
-where $\lambda, \mu$ are real parameters and we consider $X_0$ is a random variable. It is known that under the hypotheses of It\^o calculus the solution of \eqref{eq:exSDE} is given by
+where $\lambda, \mu$ are real parameters and $X_0$ is a random variable. It is known that under the hypotheses of It\^o calculus the solution of \eqref{eq:exSDE} is given by
 \begin{equation}
 	X(t) = X_0 \exp\left(\left(\lambda - \frac{1}{2}\mu^2\right)t + \mu W(t)\right),
 \end{equation}
@@ -102,7 +102,7 @@ As in the previous paragraphs, let us assume that $\theta$ is a real-valued para
 \begin{equation}\label{eq:MonteCarloMCMC}
 	 \E\left[g(\theta)\right]= \int_{\R^{N_p}} g(\theta)\pi(\dd\theta|\mathcal{Y}_i) \approx \frac{1}{N}\sum_{k = 1}^{N} g(\theta^{(k)}),
 \end{equation}
-where $\theta^{(k)}$, $k = 1, \ldots, N$, is a set of realizations of $\theta$. While the equality in the equation follows from the definition of expectation, there is no guarantee that the Monte Carlo estimator will be a good approximation of the expectation regardless of the samples. MCMC techniques consist in generating samples such that the Monte Carlo approximation is valid without exploring the whole parameter space,  which would lead to an unaffordable computational time on any modern computer. As the name of the methods suggests, given an initial guess $\theta^{(0)}$, MCMC builds a discrete Markov chain $\{\theta^{(i)}\}_{i\geq 0}$ such that the Monte Carlo approximation in \eqref{eq:MonteCarloMCMC} is valid. Formally, this is achieved considering a \textit{transition kernel} $P$ which given the current element of the chain $\theta^{(i)}$ produces the next guess $\theta^{(i-1)}$. Under a set of assumptions on $P$ \cite{KaS05}, we have the theoretical guarantee that the samples $\theta^{(i)}$ are drawn from the same \textit{stationary distribution} for $i$ large enough. We can build many transition kernels having this property, and any valid choice of $P$ leads to a different MCMC method. In the following, we will present the widely-used \textit{Metropolis-Hastings} algorithm, as well as two of its variants that were necessary for our work.
+where $\theta^{(k)}$, $k = 1, \ldots, N$, is a set of realizations of $\theta$. While the equality in the equation follows from the definition of expectation, there is no guarantee that the Monte Carlo estimator will be a good approximation of the expectation regardless of the samples. MCMC techniques consist in generating samples such that the Monte Carlo approximation is valid without exploring the whole parameter space,  which would lead to an unaffordable computational time on any modern computer. As the name of the methods suggests, given an initial guess $\theta^{(0)}$, MCMC builds a discrete Markov chain $\{\theta^{(i)}\}_{i\geq 0}$ such that the Monte Carlo approximation in \eqref{eq:MonteCarloMCMC} is valid. Formally, this is achieved considering a \textit{transition kernel} $P$ which given the current element of the chain $\theta^{(i)}$ produces the next guess $\theta^{(i+1)}$. Under a set of assumptions on $P$ \cite{KaS05}, we have the theoretical guarantee that the samples $\theta^{(i)}$ are drawn from the same \textit{stationary distribution} for $i$ large enough. We can build many transition kernels having this property, and any valid choice of $P$ leads to a different MCMC method. In the following, we will present the widely-used \textit{Metropolis-Hastings} algorithm, as well as two of its variants that were necessary for our work.
 
 \subsubsection{Metropolis-Hastings algorithm}
 \begin{algorithm}[t]
@@ -187,17 +187,17 @@ with $S_n$ a lower triangular positive definite matrix and $I$ the identity matr
 \begin{equation}\label{eq:RAMupdate}
 S_{n+1}S_{n+1}^T = S_n\left(I + \eta_n\left(\alpha(\theta^{(n)}, \vartheta) - \alpha^*\right)\frac{z_nz_n^T}{z_n^Tz_n}\right)S_n^T.
 \end{equation}
-Hence, we can compute $S_{n+1}$ as the Cholesky factorization of the right hand side. Let us remark that this update has to be performed at each iteration of RAM, both in case $\vartheta$ is accepted and rejected. The sequence $\left\{\eta_n\right\}_{n\geq 1}$ can be any sequence decaying to zero with $n$. In this work, we consider
+Hence, we can compute $S_{n+1}$ as the Cholesky factorization of the right hand side. Let us remark that this update has to be performed at each iteration of RAM, both in case $\vartheta$ is accepted and rejected. The sequence $\left\{\eta_n\right\}_{n\geq 1}$ can be any sequence decaying to zero with $n$. In this work, we consider \cite{Vih12}
 \begin{equation}
 \eta_n = n^{-\gamma}, \quad 0.5 < \gamma \leq 1.
 \end{equation}
-Often the computational cost needed for the evaluation of the posterior distribution is high with respect to the dimension $N_p$ of the parameter space. In Algorithm \ref{alg:RAM} we give the pseudo-code for the RAM update. Therefore, performing a Cholesky factorization at each iteration, which has a complexity of $\OO(N_p^3)$, does not spoil the performances of RAM with respect to a standard MH.
+Often the computational cost needed for the evaluation of the posterior distribution is high with respect to the dimension $N_p$ of the parameter space. Therefore, performing a Cholesky factorization at each iteration, which has a complexity of $\OO(N_p^3)$, does not spoil the performances of RAM with respect to a standard MH. In Algorithm \ref{alg:RAM} we give the pseudo-code for the RAM update.
 
-Let us consider a two-dimensional real random variable $X$ whose distribution has the following density
+We now present a numerical example showing the optimal behavior of RAM. Let us consider a two-dimensional real random variable $X$ whose distribution admits the following density
 \begin{equation}\label{eq:RAMtestPi}
 	\pi(X) \propto \exp(-10(X_1^2 - X_2)^2 - (X_1 - 0.25)^4),
 \end{equation}
-where we denoted by $X_i$, $i = 1, 2$ the two components of $X$ and we omitted the normalization constant. We then consider a real value $\sigma$ in the set $\{0.01, 0.5, 2.0\}$ and target the distribution defined by \eqref{eq:RAMtestPi} either using a standard MH with the proposal distribution given by a zero-centered normal distribution with covariance $\Sigma = \sigma^2 I$, or using RAM with the same choice of covariance structure as an initial guess and $\alpha^* = 0.4$. We run $N = 5000$ iterations of both algorithms and register all the guesses they produce as well as the final acceptance ratio. Results (Figure \ref{fig:RAMexample}) show that for the $\sigma = 0.01$ and $\sigma = 2.0$ standard MH fails to properly describe the posterior distribution, either accepting too many guesses and partially describing the posterior, or refusing almost all guesses therefore obtaining an insufficient number of samples. On the other hand, RAM adapts the step and for any choice of $\sigma$ the samples we obtain are equally good, with an acceptance ratio near to $\alpha^*$ (Table \ref{tab:RAMalphaStar}).
+where we denoted by $X_i$, $i = 1, 2$ the two components of $X$ and we omitted the normalization constant. This distribution is widely used to test MCMC algorithms \cite{KaS05}. We then consider a real value $\sigma$ in the set $\{0.01, 0.5, 2.0\}$ and target the distribution defined by \eqref{eq:RAMtestPi} either using a standard MH with the proposal distribution given by a zero-centered normal distribution with covariance $\Sigma = \sigma^2 I$, or using RAM with the same choice of covariance structure as an initial guess and $\alpha^* = 0.4$. We run $N = 5000$ iterations of both algorithms and register all the guesses they produce as well as the final acceptance ratio. Results (Figure \ref{fig:RAMexample}) show that for the $\sigma = 0.01$ and $\sigma = 2.0$ standard MH fails to properly describe the posterior distribution, either accepting too many guesses and partially describing the posterior, or refusing almost all guesses therefore obtaining an insufficient number of samples. On the other hand, RAM adapts the step and for any choice of $\sigma$ the samples we obtain are equally good, with an acceptance ratio near to $\alpha^*$ (Table \ref{tab:RAMalphaStar}).
 
 \begin{table}[H]
 	\centering
@@ -262,7 +262,7 @@ where we explicitly added the dependence on $a$, $b$ and $\sigma$. In \eqref{eq:
 \begin{equation}
 	\phi(x) = \frac{1}{\sqrt{2\pi}} \exp(-\frac{x^2}{2}),
 \end{equation}
-and $\Phi$ is the standard Gaussian cumulative distribution function, where we assume that if $b = \infty$ then $\Phi((b-x)/\sigma)$ equals one, and if $a = -\infty$ then $\Phi((a-x)/\sigma)$ equals one. Let us remark that this proposal distribution is not symmetric, therefore $\alpha$ in MH has to take into account the ratio between the proposal distribution evaluated in the old and the new guesses of the parameter. Hence, in this case the acceptance probability is given by
+and $\Phi$ is the standard Gaussian cumulative distribution function, where we assume that if $b = \infty$ then $\Phi((b-x)/\sigma)$ equals one, and if $a = -\infty$ then $\Phi((a-x)/\sigma)$ equals zero. Let us remark that this proposal distribution is not symmetric, therefore $\alpha$ in MH has to take into account the ratio between the proposal distribution evaluated in the old and the new guesses of the parameter. Hence, in this case the acceptance probability is given by
 \begin{equation}
 		\alpha(\theta^{(i)}, \vartheta) = \min\left\{
 		\frac{\pi(\vartheta)\left(\Phi\left((b - \theta^{(i)})/\sigma\right) - \Phi\left((a - \theta^{(i)})/\sigma\right)\right)}
@@ -301,7 +301,7 @@ As far as the practical implementation is concerned, modern programming language
 	}
 \end{algorithm}
 
-It is unclear from the discussion of all the variants of MCMC discussed above how to choose an optimal number of samples $N$. In other words, no convergence criteria for the Markov chain has been presented. An interesting approach in order to monitor the convergence of MCMC consists in mixing several Markov chains \cite{GeS11}. The main idea consists in starting $K$ parallel MCMC with different initial guesses and check the properties of the single chains with respect to the chain resulting from the mixing of all the single chains. Let us denote by $\Theta_i$, with $i = 1, \ldots, K$ the single chains, and by $\Theta_{\mathrm{mix}}$ the mixed chain, i.e.
+It is unclear from the discussion of all the variants of MCMC discussed above how to choose an optimal number of samples $N$. In other words, no convergence criteria for the Markov chain have been presented. An interesting approach in order to monitor the convergence of MCMC consists in mixing several Markov chains \cite{GeS11}. The main idea consists in starting $K$ parallel MCMC with different initial guesses and check the properties of the single chains with respect to the chain resulting from the mixing of all the single chains. Let us denote by $\Theta_i$, with $i = 1, \ldots, K$ the single chains, and by $\Theta_{\mathrm{mix}}$ the mixed chain, i.e.
 \begin{equation}
 	\Theta_{\mathrm{mix}} = \bigcup_{i = 1}^{K} \Theta_i.
 \end{equation}

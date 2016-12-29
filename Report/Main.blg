@@ -1,46 +1,46 @@
-This is BibTeX, Version 0.99d (TeX Live 2015/dev/Debian)
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: Main.aux
 The style file: siam.bst
 Database file #1: anmc.bib.bib
-You've used 16 entries,
+You've used 19 entries,
             2030 wiz_defined-function locations,
-            616 strings with 6296 characters,
-and the built_in function-call counts, 6024 in all, are:
-= -- 591
-> -- 254
+            636 strings with 6778 characters,
+and the built_in function-call counts, 7085 in all, are:
+= -- 692
+> -- 292
 < -- 0
-+ -- 99
-- -- 82
-* -- 463
-:= -- 916
-add.period$ -- 16
-call.type$ -- 16
-change.case$ -- 84
++ -- 114
+- -- 94
+* -- 537
+:= -- 1073
+add.period$ -- 19
+call.type$ -- 19
+change.case$ -- 98
 chr.to.int$ -- 0
-cite$ -- 16
-duplicate$ -- 279
-empty$ -- 445
-format.name$ -- 82
-if$ -- 1297
+cite$ -- 19
+duplicate$ -- 334
+empty$ -- 537
+format.name$ -- 94
+if$ -- 1535
 int.to.chr$ -- 0
-int.to.str$ -- 16
-missing$ -- 19
-newline$ -- 52
-num.names$ -- 34
-pop$ -- 77
+int.to.str$ -- 19
+missing$ -- 23
+newline$ -- 61
+num.names$ -- 40
+pop$ -- 95
 preamble$ -- 2
-purify$ -- 71
+purify$ -- 83
 quote$ -- 0
-skip$ -- 245
+skip$ -- 288
 stack$ -- 0
-substring$ -- 455
-swap$ -- 124
+substring$ -- 530
+swap$ -- 146
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 58
+type$ -- 68
 warning$ -- 0
-while$ -- 66
-width$ -- 18
-write$ -- 147
+while$ -- 77
+width$ -- 21
+write$ -- 175

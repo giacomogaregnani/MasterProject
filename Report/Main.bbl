@@ -37,9 +37,18 @@
 {\sc A.~L. Gibbs and F.~E. Su}, {\em On choosing and bounding probability
   metrics}, Int. Stat. Rev., 70 (2002), pp.~419--435.
 
+\bibitem{Gil08}
+{\sc M.~B. Giles}, {\em Multilevel {M}onte {C}arlo path simulation}, Operations
+  Research, 56 (2008), pp.~607--617.
+
 \bibitem{Gil05}
 {\sc W.~R. Gilks}, {\em {M}arkov chain {M}onte {C}arlo}, Encyclopedia of
   Biostatistics, 4 (2005).
+
+\bibitem{HLW02}
+{\sc E.~Hairer, C.~Lubich, and G.~Wanner}, {\em Geometric numerical
+  integration: structure-preserving algorithms for ordinary differential
+  equations}, Springer-Verlag, Berlin and New York, 2002.
 
 \bibitem{HaW96}
 {\sc E.~Hairer and G.~Wanner}, {\em Solving ordinary differential equations II.
@@ -57,6 +66,12 @@
 \bibitem{KaS05}
 {\sc J.~Kaipio and E.~Somersalo}, {\em Statistical and Computational Inverse
   Problems}, Applied Mathematical Sciences, 160, Springer, 2005.
+
+\bibitem{KeH16}
+{\sc H.~Kersting and P.~Hennig}, {\em Active uncertainty calibration in
+  {B}ayesian {ODE} solvers}, in Proceedings of the 32nd Conference on
+  Uncertainty in Artificial Intelligence (UAI 2016), {AUAI} Press, 2016,
+  pp.~309--318.
 
 \bibitem{KPS94}
 {\sc P.~E. Kloeden, E.~Platen, and H.~Schurz}, {\em Numerical solution of {SDE}

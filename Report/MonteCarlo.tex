@@ -1,6 +1,6 @@
 \subsubsection{Monte Carlo approximation}
 
-Let us consider the numerical method introduced in \eqref{probabilityODE} and the Monte Carlo approximation 
+Let us consider the numerical method introduced in \eqref{eq:probMethod} and the Monte Carlo approximation 
 \begin{equation}\label{eq:MCapproximation}
 \hat Z = \frac{1}{M} \sum_{i = 1}^M \phi\left(U_N^{(i)}\right).
 \end{equation}
@@ -13,7 +13,7 @@ The mean square error (MSE) of $\hat Z$ is given by
 \end{aligned}
 \end{equation} 
 where the second term is bounded thanks to proposition \ref{thm:weakorder} with $C > 0$. In the standard theory of SDE's, the first term is bounded by $CM^{-1}$, where $C$ is a positive constant. In the probabilistic solver we consider in this work, it is possible to bound the first term with a function of the time step $h$. Intuitively, this favorable property comes from the fact that the noise scale is of the same order of magnitude of the time step. 
-\begin{lemma}\label{lem:varMC} Consider the numerical method \eqref{probabilityODE} applied to a one-dimensional ODE with $\Psi$ any explicit Runge-Kutta method on $s$ stages and Assumption \ref{assumption_1}. Then the numerical solution $U_k$ at time $t_k = kh$ satisfies
+\begin{lemma}\label{lem:varMC} Consider the numerical method \eqref{eq:probMethod} applied to a one-dimensional ODE with $\Psi$ any explicit Runge-Kutta method on $s$ stages and Assumption \ref{assumption_1}. Then the numerical solution $U_k$ at time $t_k = kh$ satisfies
 \begin{equation}
 	\Var(U_k) \leq C_1\Var(U_0) + C_2\sigma Q h^{2p}, \quad k = 1, \ldots, N,
 \end{equation}
@@ -65,7 +65,7 @@ We then bound the second term as follows
 	&= C_2 \sigma Q h^2.
 \end{aligned}
 \end{equation}
-Thus, the result is proved for Explicit Euler. Let us consider now any explicit Runge-Kutta method $\Psi$, and let us rewrite $\eqref{probabilityODE}$ as
+Thus, the result is proved for Explicit Euler. Let us consider now any explicit Runge-Kutta method $\Psi$, and let us rewrite \eqref{eq:probMethod} as
 \begin{equation}
 	U_{k+1} = U_k + h\tilde \Psi (U_k) + h^{p + 1/2} (\sigma Q)^{1/2} Z_k,
 \end{equation}
@@ -99,7 +99,7 @@ Finally, we can proceed as explained above in detail in the case of Explicit Eul
 \end{proof}
 
 \noindent We can show a similar result for any implicit Runge-Kutta method. In this case, a restriction on the time step will be required in order to bound the variance of the numerical solution. We will discuss how this restriction is connected with the well-posedeness of the numerical method.
-\begin{lemma}\label{lem:varimRK} Consider the numerical method \eqref{probabilityODE} applied to a one-dimensional ODE with $\Psi$ any explicit or implicit Runge-Kutta method on $s$ stages and Assumption \ref{assumption_1}. Then, if $h$ is small enough, the numerical solution $U_k$ at time $t_k = kh$ satisfies
+\begin{lemma}\label{lem:varimRK} Consider the numerical method \eqref{eq:probMethod} applied to a one-dimensional ODE with $\Psi$ any explicit or implicit Runge-Kutta method on $s$ stages and Assumption \ref{assumption_1}. Then, if $h$ is small enough, the numerical solution $U_k$ at time $t_k = kh$ satisfies
 	\begin{equation}
 	\Var(U_k) \leq C_1\Var(U_0) + C_2\sigma Q h^{2p}, \quad k = 1, \ldots, N,
 	\end{equation}

@@ -116,12 +116,19 @@ We can deduce from the limit in \eqref{eq:CLTMarkov} that the standard deviation
 
 \subsubsection{Numerical experiment}
 
-In this experiment we wish to verify numerically the validity of the batch mean estimator presented above. Therefore, we consider the FitzHug-Nagumo model \eqref{eq:FitzNag} with ten observations $\mathcal{Y}$ equispaced in the time span $0 \leq t \leq 10$. We run MCMC algorithms with approximated likelihood with $h = 0.1$ and growing number of iterations $N = \{1000, 2000, 4000, 8000, 16000, 32000, 64000\}$, and equal starting points. For each value of $N$, we perform $400$ repetitions of the Markov chain and compute the population variance of the estimator $\hat g(\theta)$ as a function of $N$ in order to obtain an estimation of $\sigma^2_g$, where the function $g$ we consider in this experiment is $g(\theta) = \theta^T\theta$. We then compute the batch mean estimator $\hat \sigma_{\mathrm{BM}}$ using $b = \floor{N^{1/2}}$ for each repetition and average the results in order to obtain a function of the number of samples $N$. Results (Figure \ref{fig:BatchMeans}) show that the variance $\sigma^2_g$ converges as predicted linearly with $N$. Moreover, the estimation provided by $\hat \sigma_{\mathrm{BM}}$ is coherent with the theoretical results. Hence, we can conclude that the batch means method provides a consistent estimation of the variance, without running several repetitions of the chains to verify their variance.
+In this experiment we wish to verify numerically the validity of the batch mean estimator presented above. Therefore, we consider the FitzHug-Nagumo model \eqref{eq:FitzNag} with ten observations $\mathcal{Y}$ equispaced in the time span $0 \leq t \leq 10$. We run MCMC algorithms with approximated likelihood with $h = 0.1$ and growing number of iterations $N = \{1000, 2000, 4000, 8000, 16000, 32000, 64000\}$, and equal starting points. For each value of $N$, we perform $400$ repetitions of the Markov chain and compute the population variance of the estimator $\hat g(\theta)$ as a function of $N$ in order to obtain an estimation of $\sigma^2_g$, where the function $g$ we consider in this experiment is $g(\theta) = \theta^T\theta$. We then compute the batch mean estimator $\hat \sigma_{\mathrm{BM}}$ using $b = \floor{N^{1/2}}$ for each repetition and average the results in order to obtain a function of the number of samples $N$. Results (Figure \ref{fig:BatchMeans}) show that the variance $\sigma^2_g$ converges as predicted linearly with $N$. Moreover, the estimation provided by $\hat \sigma_{\mathrm{BM}}$ is coherent with the theoretical results. We remark that the batch mean estimator seems to converge to the true value of the sample variance with a quadratic order with respect to the number of samples. Further theoretical and literature investigations will be necessary to study this behavior. Hence, we can conclude that the batch means method provides a consistent estimation of the variance, without running several repetitions of the chains to verify their variance.
 
-\begin{figure}
+\begin{figure}[t]
 	\centering
-	\resizebox{0.6\linewidth}{!}{\input{plots/ConvBatchMeans.tikz}}
-	\caption{Variance of the Monte Carlo approximation given by MCMC with respect to the number of samples $N$. The convergence to zero is linear with respect to the number of samples. The estimator given by the batch means method gives a good approximation of the variance.}
+	\begin{subfigure}{0.49\linewidth}
+		\centering
+		\resizebox{1.0\linewidth}{!}{\input{plots/ConvBatchMeans.tikz}}
+	\end{subfigure}
+	\begin{subfigure}{0.49\linewidth}
+		\centering
+		\resizebox{1.0\linewidth}{!}{\input{plots/ConvBatchMeans2.tikz}}
+	\end{subfigure}
+	\caption{Variance of the Monte Carlo approximation given by MCMC with respect to the number of samples $N$. The convergence to zero is linear with respect to the number of samples. The estimator given by the batch means method converges to the true value of the variance with a quadratic order.}
 	\label{fig:BatchMeans}
 \end{figure}
 

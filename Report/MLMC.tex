@@ -1,30 +1,32 @@
-\subsection{Multi-level Monte Carlo}
+\subsubsection{Multi-level Monte Carlo}
 
-In this section, we will explain how to apply the Multi-level Monte Carlo method (MLMC) in this frame. Consider the approximation $U_k$ given by \eqref{probabilityODE} to the solution $u(t)$ of \eqref{ODE}. Given $\phi$ a function in $\mathcal C^\infty$, let us denote by $Z = \E(\phi(U_N)), Nh = T$ the expectation of the numerical solution at final time. If a standard Monte Carlo method over $M$ realizations of the numerical solution is applied, the only accessible quantity is
-\begin{equation}\label{MonteCarlo}
-	\hat Z = \frac{1}{M} \sum_{i = 1}^M \phi\left(U_N^{(i)}\right),
-\end{equation}
-where the index $i$ is referred to the $i$-th trajectory. Therefore, the quantity $\hat Z$ is an unbiased estimator of $Z$. Then, the Mean Square Error (MSE) of $\hat Z$ is given by
-\begin{equation}\label{MSEMC}
-\begin{aligned}
-	\MSE(\hat Z) &= \E\left(\hat Z - \phi\left(u(T)\right)\right)^2 \\
-	&= \Var\left(\hat Z\right) + \left(\E\left(\hat Z - \phi\left(u(T)\right)\right)\right)^2 \\
-	&= \frac{C_1}{M} + C_2 h^{2\min\{2p, q\}},
-\end{aligned}
-\end{equation} 
-where we have used Proposition \ref{thm:weakorder} with $C_1, C_2$ positive constants. If we introduce as a measure for the error 
+Let us consider the case in which the initial condition is not deterministic, and therefore the variance of $U_0$ is not equal to zero. In this case, we can bound the MSE of the Monte Carlo estimator introduced in \eqref{eq:MCapproximation} as
 \begin{equation}
-	e = \sqrt{\MSE\left(\hat Z\right)},
+	\MSE(\hat Z) \leq C_1 h^{2\min\{2p, q\}} + C_2 h^{2p} + C_3 \Var(U_0) M^{-1}.
 \end{equation}
-then in order to have $e = \OO(\epl)$, with $\epl$ fixed, one has to set
+We can rewrite the inequality above considering two cases depending on the value of $p$
 \begin{equation}
-	h = \OO\left(\epl^{1 / \min\{2p, q\}} \right), \quad M = \OO(\epl^{-2}).
+	\MSE(\hat Z) \leq \begin{cases} C_1 h^{2p} + C_3 \Var(U_0)M^{-1}, & \text{if } 2p < q, \\
+									C_1 h^{2q} + C_3 \Var(U_0)M^{-1} ,& \text{if } 2p \geq q.
+						\end{cases}
 \end{equation}
-If we measure the cost as the product between the number of timesteps and the number of trajectories, we find easily that in this case
+Hence, in both cases the term in $h^{2p}$ is negligible and we can conclude
 \begin{equation}
-	\mathrm{cost} = \OO\left(\epl^{-2 - 1/\min\{2p, q\}}\right).
+	\MSE(\hat Z) \leq C_1 h^{2\min\{2p, q\}} + C_3 \Var(U_0) M^{-1}.
 \end{equation}
-The idea of MLMC is introducing an \textit{hierarchical sampling}, introducing levels $l = 0, \ldots, L$, which have time step $h_l = T / N^l$ with $N_l = 2^l$. For each level, the number of trajectories is variable and is denoted by $M_l$. The estimator of $Z$ is then constructed as
+Let us introduce as a measure for the error, denoted by $e$, the square root of the MSE, i.e.,
+\begin{equation}
+	e = \sqrt{\MSE(\hat Z)}.
+\end{equation}
+Then, in order to have $e = \OO(\epl)$, with $\epl$ fixed, one has to set
+\begin{equation}
+	h = \OO(\epl^{1 / \min\{2p, q\}}), \quad M = \OO(\epl^{-2}).
+\end{equation}
+If we measure the cost as the product between the number of time steps and the number of trajectories, we find easily that in this case
+\begin{equation}
+	\mathrm{cost} = M \frac{T}{h} = \OO\left(\epl^{-2 - 1/\min\{2p, q\}}\right),
+\end{equation}
+where we assumed that the final time $T$ is $\OO(1)$. If the required accuracy $\epl$ is small, the computational cost needed to obtain an acceptable approximation is extremely big. Hence, in this case we can exploit multi-level techniques as the multi-level Monte Carlo (MLMC) \cite{Gil08}. The idea of MLMC is introducing a \textit{hierarchical sampling}, introducing levels $l = 0, \ldots, L$, which have time step $h_l = T / N^l$ with $N_l = K^l$ for some integer $K$. In the following we will consider for simplicity $K = 2$, even though it is possible to choose optimal $K$ for the cost minimization. For each level, the number of trajectories is variable and is denoted by $M_l$. In the following, we will establish the number of trajectories per level minimizing the computational cost needed to obtain a Monte Carlo estimator. The estimator of $Z$ is then constructed as
 \begin{equation}
 	\bar Z = \sum_{l=0}^L \frac{1}{M_l} \sum_{i = 1}^{M_l}\left( \phi_l^{(i)} - \phi_{l-1}^{(i)} \right), \quad \phi_{l}^{(i)} = \phi \left(U_{N_l}^{(i)}\right).
 \end{equation}
@@ -43,12 +45,15 @@ Then we can compute the MSE of $\bar Z$ as
 	\MSE(\bar Z) &= \E\left(\bar Z - \phi\left(u(T)\right)\right)^2 \\
 	&= \Var\left(\bar Z\right) + \left(\E\left(\bar Z - \phi\left(u(T)\right)\right)\right)^2 \\
 	&= \Var\left(\bar Z\right) + \left(\E\left(\phi\left(U_{N_L}\right) - \phi\left(u(T)\right)\right)\right)^2 \\
-	&= \Var\left(\bar Z\right) + \OO \left(h_L^{2\min\{2p, q\}}\right).
+	&= \Var\left(\bar Z\right) + \OO \left(h_L^{2\min\{2p, q\}}\right),
 \end{aligned}
 \end{equation}
-The variance is then computable as
+where we considered Proposition \ref{thm:weakorder} about the weak order of the method. Exploiting the independence of the sample paths, we can compute the variance as
 \begin{equation}
-	\Var(\bar Z) = \sum_{l=0}^L \frac{1}{M_l^2} \sum_{i=1}^{M_l} \Var\left( \phi_l^{(i)} - \phi_{l-1}^{(i)} \right) = \sum_{l=0}^L \frac{V_l}{M_l}.
+\begin{aligned}
+	\Var(\bar Z) &= \sum_{l=0}^L \frac{1}{M_l^2} \sum_{i=1}^{M_l} \Var( \phi_l^{(i)} - \phi_{l-1}^{(i)}) \\
+	&= \sum_{l=0}^L \frac{M_l}{M_l^2} \Var(\phi_l - \phi_{l-1})= \sum_{l=0}^L \frac{V_l}{M_l}, \quad V_l \defeq \Var(\phi_l - \phi_{l-1}).
+\end{aligned}
 \end{equation}
 Thanks to Proposition \ref{thm:strongConv} it is possible to estimate $V_l$.
 \begin{lemma} If $\phi$ is Lipschitz continuous then 
@@ -57,15 +62,12 @@ Thanks to Proposition \ref{thm:strongConv} it is possible to estimate $V_l$.
 \end{equation}
 with $C > 0$ is a constant independent of $h_l$.
 \end{lemma}
-\begin{proof} Let us recall that for any random variable $Y_1, Y_2$, it is true that
-\begin{equation}
-	 \Var(Y_1 + Y_2) \leq 2 \left(\Var(Y_1) + \Var(Y_2)\right).
-\end{equation}
-Let us consider now the case $l = 0$. In this case
+\begin{proof}
+Let us consider the case $l = 0$. In this case
 \begin{equation}
 	V_0 = \phi_0 - \phi_{-1} = \OO(1),
 \end{equation}
-as $h_0 = T$. For $l \geq 1$, thanks to the property of the variance above 
+as $h_0 = T$. For $l \geq 1$, thanks to \eqref{eq:varProp}
 \begin{equation}
 \begin{aligned}
 	\Var(\phi_l - \phi_{l-1}) &= \Var\left(\phi_l - \phi\left(u(T)\right) + \phi\left(u(T)\right) - \phi_{l-1}\right) \\
@@ -161,7 +163,7 @@ and the computational cost is given by
 \begin{equation}
 \mathrm{cost} = \OO\left(\left|\log_2 \epl^{1/q}\right| \epl^{-2}\right).
 \end{equation}
-Let us remark that in practice the method \eqref{probabilityODE} is tuned so that $p = q$, as in this case neither the strong or the weak order are spoiled by the noise added to the model. Therefore, the first of the three cases presented above is of the highest interest. The plot in Figure \ref{fig:MLMCtheory} shows that in this case MLMC is particularly favorable with respect to Monte Carlo when the integrator has an order $q$ which is small (e.g., $q = 1$).
+Let us remark that in practice the method \eqref{eq:probMethod} is tuned so that $p = q$ in order to introduce a noise of the same magnitude of the numerical error. Therefore, the first of the three cases presented above is the most interesting for practical application of the method.
 
 %\begin{figure}
 %	\centering

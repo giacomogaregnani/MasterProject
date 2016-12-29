@@ -1,7 +1,10 @@
 \subsubsection{Weak convergence}
 
-A result of weak convergence can be proved using a technique of \textit{backward error analysis}. The main idea behind this technique is finding a \textit{modified equation} that the numerical method solves exactly or with a higher accuracy than the original equation. \\
-Let us consider \eqref{ODE} and the numerical method \eqref{probabilityODE}. Using the Lie derivative notation, it is possible to find the differential operators $\mathcal{L}$ and $\diffL^h$ such that for all $\phi \in \mathcal{C}^\infty(\R^d, \R)$ 
+Another relevant feature of stochastic numerical methods is their weak convergence. The following analysis has been carried out in \cite{CGS16}, and we report the main steps in this work. Let us recall the definition of weak order of convergence
+\begin{definition} Define the weak order of convergence. 
+\end{definition}
+\noindent For the numerical method introduced in \eqref{eq:probMethod}, a result of weak convergence can be proved using a technique of \textit{backward error analysis}. The main idea behind this technique is finding a \textit{modified equation} that the numerical method solves exactly or with a higher accuracy than the original equation. \\
+Let us consider \eqref{eq:ODE} and the numerical method \eqref{eq:probMethod}. Using the Lie derivative notation, it is possible to find the differential operators $\mathcal{L}$ and $\diffL^h$ such that for all $\phi \in \mathcal{C}^\infty(\R^d, \R)$ 
 \begin{equation}\label{LieNotation}
 \begin{aligned}
 	\phi(\Phi_h(u)) &= \left(e^{h\diffL} \phi\right)(u), \\
@@ -32,7 +35,7 @@ Therefore,
 \end{aligned}
 \end{equation}
 where $\tilde \diffL^h$ is the \textit{generator} of \eqref{modifiedSDE}. (\ldots all the passages to get to (28) in \cite{CGS16} \ldots).
-\begin{assumption} \label{assumption_3}The function $f$ in \eqref{ODE} is in $\mathcal C^\infty$ and all its derivatives are uniformly bounded in $\R^n$. Furthermore, $f$ is such that for all functions $\phi$ in $\mathcal C ^\infty(\R^n, \R)$ 
+\begin{assumption} \label{assumption_3}The function $f$ in \eqref{eq:ODE} is in $\mathcal C^\infty$ and all its derivatives are uniformly bounded in $\R^n$. Furthermore, $f$ is such that for all functions $\phi$ in $\mathcal C ^\infty(\R^n, \R)$ 
 \begin{equation}
 \begin{aligned}
 	\sup_{u\in\R^n} \left| e^{h\diffL} \phi(u) \right| &\leq (1 + Lh) \sup_{u\in\R^n} \left|\phi(u)\right|, \\
@@ -42,7 +45,7 @@ where $\tilde \diffL^h$ is the \textit{generator} of \eqref{modifiedSDE}. (\ldot
 for some $L > 0$.
 \end{assumption}
 \noindent We can now state the following result about weak convergence.
-\begin{theorem}\label{thm:weakorder} Consider the numerical method \eqref{probabilityODE} and Assumptions \ref{assumption_1}, \ref{assumption_2} and \ref{assumption_3}. Then for any function $\phi$ in $\mathcal{C}^\infty$ endowed with the properties of Assumption \ref{assumption_3},
+\begin{theorem}\label{thm:weakorder} Consider the numerical method \eqref{eq:probMethod} and Assumptions \ref{assumption_1}, \ref{assumption_2} and \ref{assumption_3}. Then for any function $\phi$ in $\mathcal{C}^\infty$ endowed with the properties of Assumption \ref{assumption_3},
 \begin{equation}
 	\left|\phi(u(T)) - \E^h\left(\phi(U_k)\right)\right| \leq Kh^{\min\{2p, q\}}, \quad kh = T,
 \end{equation}
@@ -50,25 +53,25 @@ and
 \begin{equation}
 \left|\E\phi(\tilde u(T)) - \E^h\left(\phi(U_k)\right)\right| \leq Kh^{2p + 1}, \quad kh = T,
 \end{equation}
-with $u$ and $\tilde u$ solutions of \eqref{ODE} and \eqref{modifiedSDE}.
+with $u$ and $\tilde u$ solutions of \eqref{eq:ODE} and \eqref{modifiedSDE}.
 \end{theorem}
 \begin{proof} proof in \cite{CGS16}.
 \end{proof}
 
 \subsubsection{Numerical verification of weak order}
 
-Let us consider for \eqref{ODE} the FitzHugh-Nagumo model, defined by
+Let us consider for \eqref{eq:ODE} the FitzHugh-Nagumo model, defined by
 \begin{equation}\label{eq:FitzNag}
 \begin{aligned}
 	\dv{x_1}{t} &= c\left(x_1 - \frac{x_1^3}{3} + x_2\right), \\
 	\dv{x_2}{t} &= -\frac{1}{c}(x_1 - a + bx_2),
 \end{aligned}
 \end{equation}
-where $a, b, c \in \R$. In particular, we choose $a = 0.2, b = 0.2, c = 3$. We provide the system with the initial condition $x_1(0) = -1, x_2(0) = 1$. We integrate numerically this equation with \eqref{probabilityODE}, using RK4 as $\Psi$. Therefore, Assumption \ref{assumption_2} holds with $q = 4$. Moreover, we consider $Q$ in Assumption \ref{assumption_1} to be $Q = \sigma I$ with $\sigma = 0.1$. We approximate the solution up to time $T = 10$ with $p$ in Assumption \ref{assumption_1} equal to $1, 1.5, 2, 2.5$  and $h$ vary in the range $0.25 / (2^i), i = 0, \ldots, 3$. We approximate $\E^h\left(\phi(U_k)\right)$ using a Monte Carlo simulation over $50000$ trajectories and compare it with the solution computed on a fine grid to obtain an estimation of the weak error. Results (Figure \ref{fig:weakorder}) show that the predicted order $\min\{2p, q\}$ applies in this example. In particular, since $q = 4$, it is possible to notice that no difference in order is detected between the cases $p = 2$ and $p = 2.5$. 
+where $a, b, c \in \R$. In particular, we choose $a = 0.2, b = 0.2, c = 3$. We provide the system with the initial condition $x_1(0) = -1, x_2(0) = 1$. We integrate numerically this equation with \eqref{eq:probMethod}, using RK4 as $\Psi$. Therefore, Assumption \ref{assumption_2} holds with $q = 4$. Moreover, we consider $Q$ in Assumption \ref{assumption_1} to be $Q = \sigma I$ with $\sigma = 0.1$. We approximate the solution up to time $T = 10$ with $p$ in Assumption \ref{assumption_1} equal to $1, 1.5, 2, 2.5$  and $h$ vary in the range $0.25 / (2^i), i = 0, \ldots, 3$. We approximate $\E^h\left(\phi(U_k)\right)$ using a Monte Carlo simulation over $50000$ trajectories and compare it with the solution computed on a fine grid to obtain an estimation of the weak error. Results (Figure \ref{fig:weakorder}) show that the predicted order $\min\{2p, q\}$ applies in this example. In particular, since $q = 4$, it is possible to notice that no difference in order is detected between the cases $p = 2$ and $p = 2.5$. 
 
 \begin{figure}
 \centering
 \resizebox{0.6\linewidth}{!}{\input{plots/weakorder.tikz}}
-\caption{Weak order of convergence of \eqref{probabilityODE} applied to \eqref{eq:FitzNag}.}
+\caption{Weak order of convergence of \eqref{eq:probMethod} applied to \eqref{eq:FitzNag}.}
 \label{fig:weakorder}
 \end{figure}
