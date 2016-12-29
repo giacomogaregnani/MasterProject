@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.3.12)  28 DEC 2016 16:43
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.3.12)  29 DEC 2016 15:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2116,17 +2116,16 @@ Package pdftex.def Info: Logo-eps-converted-to.pdf used on input line 46.
 (pdftex.def)             Requested size: 213.3957pt x 104.01186pt.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2 <./Logo-eps-converted-t
-o.pdf>]) (./Main.toc)
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./Logo-eps-converted-to.pd
+f>]) (./Main.toc)
 \tf@toc=\write5
 \openout5 = `Main.toc'.
 
- [3
+ [2
 
-]
-(./BayesianAnalysis.tex
+] (./BayesianAnalysis.tex
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 26.
- (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
@@ -2143,13 +2142,7 @@ l.37
 <to be read again> 
                    \relax 
 l.58 \begin{equation}
-                     \label{eq:exSDE} [2]pdfTeX warning (ext4): destination wit
-h the same identifier (name{page.3}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.91 I
-      n this simple example the analytical form of any of the quantities of ...
-[3] [4] [5] [6] [7] (./RAMplots.tex
+                     \label{eq:exSDE} [2] [3] [4] [5] [6] [7] (./RAMplots.tex
 Package epstopdf Info: Source file: <plots/MHvsRAM/MH_small.eps>
 (epstopdf)                    date: 2016-11-25 12:21:50
 (epstopdf)                    size: 1666624 bytes
@@ -2162,7 +2155,7 @@ f>
 (epstopdf)             \includegraphics on input line 4.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/MH_small-eps-converted-to.pdf, id=292, 439.6425pt x 330.23375pt>
+<plots/MHvsRAM/MH_small-eps-converted-to.pdf, id=289, 439.6425pt x 330.23375pt>
 File: plots/MHvsRAM/MH_small-eps-converted-to.pdf Graphic file (type pdf)
 <use plots/MHvsRAM/MH_small-eps-converted-to.pdf>
 Package pdftex.def Info: plots/MHvsRAM/MH_small-eps-converted-to.pdf used on in
@@ -2180,7 +2173,7 @@ s-converted-to.pdf plots/MHvsRAM/MH_medium.eps>
 (epstopdf)             \includegraphics on input line 7.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/MH_medium-eps-converted-to.pdf, id=293, 439.6425pt x 330.23375pt
+<plots/MHvsRAM/MH_medium-eps-converted-to.pdf, id=290, 439.6425pt x 330.23375pt
 >
 File: plots/MHvsRAM/MH_medium-eps-converted-to.pdf Graphic file (type pdf)
  <use plots/MHvsRAM/MH_medium-eps-converted-to.pdf>
@@ -2199,7 +2192,7 @@ onverted-to.pdf plots/MHvsRAM/MH_big.eps>
 (epstopdf)             \includegraphics on input line 10.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/MH_big-eps-converted-to.pdf, id=294, 439.6425pt x 330.23375pt>
+<plots/MHvsRAM/MH_big-eps-converted-to.pdf, id=291, 439.6425pt x 330.23375pt>
 File: plots/MHvsRAM/MH_big-eps-converted-to.pdf Graphic file (type pdf)
 
 <use plots/MHvsRAM/MH_big-eps-converted-to.pdf>
@@ -2218,7 +2211,7 @@ s-converted-to.pdf plots/MHvsRAM/RAM_small.eps>
 (epstopdf)             \includegraphics on input line 14.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/RAM_small-eps-converted-to.pdf, id=295, 439.6425pt x 330.23375pt
+<plots/MHvsRAM/RAM_small-eps-converted-to.pdf, id=292, 439.6425pt x 330.23375pt
 >
 File: plots/MHvsRAM/RAM_small-eps-converted-to.pdf Graphic file (type pdf)
  <use plots/MHvsRAM/RAM_small-eps-converted-to.pdf>
@@ -2237,7 +2230,7 @@ ps-converted-to.pdf plots/MHvsRAM/RAM_medium.eps>
 (epstopdf)             \includegraphics on input line 17.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/RAM_medium-eps-converted-to.pdf, id=296, 439.6425pt x 330.23375p
+<plots/MHvsRAM/RAM_medium-eps-converted-to.pdf, id=293, 439.6425pt x 330.23375p
 t>
 File: plots/MHvsRAM/RAM_medium-eps-converted-to.pdf Graphic file (type pdf)
  <use plots/MHvsRAM/RAM_medium-eps-converted-to.pdf>
@@ -2256,7 +2249,7 @@ converted-to.pdf plots/MHvsRAM/RAM_big.eps>
 (epstopdf)             \includegraphics on input line 20.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/RAM_big-eps-converted-to.pdf, id=297, 439.6425pt x 330.23375pt>
+<plots/MHvsRAM/RAM_big-eps-converted-to.pdf, id=294, 439.6425pt x 330.23375pt>
 File: plots/MHvsRAM/RAM_big-eps-converted-to.pdf Graphic file (type pdf)
 
 <use plots/MHvsRAM/RAM_big-eps-converted-to.pdf>
@@ -2269,37 +2262,36 @@ HvsRAM/RAM_small-eps-converted-to.pdf> <./plots/MHvsRAM/RAM_medium-eps-converte
 d-to.pdf> <./plots/MHvsRAM/RAM_big-eps-converted-to.pdf>] [9] [10] [11]) [12] (
 ./probmethod.tex
 (./deterministicmethods.tex [13]
-Underfull \hbox (badness 10000) in paragraph at lines 30--56
+Underfull \hbox (badness 10000) in paragraph at lines 30--66
 
  []
 
 
-Overfull \hbox (2.43333pt too wide) in paragraph at lines 30--56
-[]$ $[]$ 
+Overfull \hbox (4.86665pt too wide) in paragraph at lines 30--66
+[]$ $[]$ $[]$ 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 30--56
+Underfull \hbox (badness 10000) in paragraph at lines 30--66
 
  []
 
 [14]) (./ProbabilisticMotivation.tex [15] (./plots/LorenzTraj.tikz)
 (./plots/LorenzX.tikz) (./plots/LorenzY.tikz) (./plots/LorenzZ.tikz)) [16]
-(./strongconvergence.tex [17] [18]) (./weakconvergence.tex [19] [20]
-(./plots/weakorder.tikz
+[17] (./strongconvergence.tex [18] [19]) (./weakconvergence.tex [20] [21]
+(./plots/weakOrder.tikz
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-)) (./MonteCarlo.tex [21] [22] [23] [24] [25]
+)) (./MonteCarlo.tex [22] [23] [24] [25]
 Underfull \hbox (badness 10000) in paragraph at lines 187--189
 
  []
 
-[26] (./plots/MonteCarloVariance2.tikz
+[26] [27] (./plots/MonteCarloVariance2.tikz
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -2310,15 +2302,14 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-)
-[27]) (./MLMC.tex [28] [29] [30] [31]) (./Stability.tex)) [32]
-(./BayesianODE.tex (./LikelihoodApprox.tex [33] (./NumericalLikelihood.tex
+) [28]) (./MLMC.tex [29] [30] [31] [32]) (./Stability.tex)) [33]
+(./BayesianODE.tex (./LikelihoodApprox.tex [34] (./NumericalLikelihood.tex
 (./plots/LikelihoodFixedTheta.tikz
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-))) (./NumericalExample.tex [34]
+))) (./NumericalExample.tex [35]
 Package epstopdf Info: Source file: <plots/Fitznag.eps>
 (epstopdf)                    date: 2016-12-17 13:52:11
 (epstopdf)                    size: 12957274 bytes
@@ -2330,15 +2321,15 @@ d-to.pdf plots/Fitznag.eps>
 (epstopdf)             \includegraphics on input line 10.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/Fitznag-eps-converted-to.pdf, id=689, 439.6425pt x 330.23375pt>
+<plots/Fitznag-eps-converted-to.pdf, id=693, 439.6425pt x 330.23375pt>
 File: plots/Fitznag-eps-converted-to.pdf Graphic file (type pdf)
 
 <use plots/Fitznag-eps-converted-to.pdf>
 Package pdftex.def Info: plots/Fitznag-eps-converted-to.pdf used on input line 
 10.
 (pdftex.def)             Requested size: 426.79141pt x 320.58836pt.
-) (./Convergence.tex [35] [36 <./plots/Fitznag-eps-converted-to.pdf>] [37] [38]
- [39] (./plots/ConvBatchMeans.tikz
+) (./Convergence.tex [36] [37 <./plots/Fitznag-eps-converted-to.pdf>] [38] [39]
+ [40] (./plots/ConvBatchMeans.tikz
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -2352,7 +2343,7 @@ Missing character: There is no ; in font nullfont!
 ) (./plots/ConvHell.tikz
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-) [40])) [41] (./Main.bbl
+) [41])) [42] (./Main.bbl
 
 Class scrartcl Warning: Usage of deprecated font command `\sc'!
 (scrartcl)              You should note, that in 1994 font command `\sc' has
@@ -2591,7 +2582,7 @@ Class scrartcl Warning: Usage of deprecated font command `\sc'!
 (scrartcl)              But for now, KOMA-Script will replace deprecated `\sc'
 (scrartcl)              by `\normalfont \scshape ' on input line 81.
 
-[42]
+[43]
 
 Class scrartcl Warning: Usage of deprecated font command `\sc'!
 (scrartcl)              You should note, that in 1994 font command `\sc' has
@@ -2622,13 +2613,13 @@ Class scrartcl Warning: Usage of deprecated font command `\sc'!
 
 )
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 26.
- [43]
+ [44]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 26.
  (./Main.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 26.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 26.
 Package rerunfilecheck Info: File `Main.out' has not changed.
-(rerunfilecheck)             Checksum: 71ABAFF26CAE067D989D9A117BD8E691;2465.
+(rerunfilecheck)             Checksum: 209E2398A88DC8167CDCC9E50B50120F;2592.
 
 
 LaTeX Warning: There were multiply-defined labels.
@@ -2636,10 +2627,10 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 26.
  ) 
 Here is how much of TeX's memory you used:
- 35006 strings out of 493304
- 1001634 string characters out of 6139871
- 2285270 words of memory out of 5000000
- 37517 multiletter control sequences out of 15000+600000
+ 35007 strings out of 493304
+ 1002128 string characters out of 6139871
+ 2288481 words of memory out of 5000000
+ 37516 multiletter control sequences out of 15000+600000
  20804 words of font info for 77 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  77i,23n,94p,80836b,2337s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2664,10 +2655,10 @@ fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
 amsfonts/symbols/msbm10.pfb>
-Output written on Main.pdf (46 pages, 5461371 bytes).
+Output written on Main.pdf (46 pages, 5462122 bytes).
 PDF statistics:
- 882 PDF objects out of 1000 (max. 8388607)
- 784 compressed objects within 8 object streams
- 234 named destinations out of 1000 (max. 500000)
+ 887 PDF objects out of 1000 (max. 8388607)
+ 789 compressed objects within 8 object streams
+ 236 named destinations out of 1000 (max. 500000)
  293 words of extra memory for PDF output out of 10000 (max. 10000000)
 

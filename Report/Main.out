@@ -14,17 +14,17 @@
 \BOOKMARK [2][-]{subsection.2.3}{Method properties}{section.2}% 14
 \BOOKMARK [3][-]{subsubsection.2.3.1}{Strong convergence}{subsection.2.3}% 15
 \BOOKMARK [3][-]{subsubsection.2.3.2}{Weak convergence}{subsection.2.3}% 16
-\BOOKMARK [3][-]{subsubsection.2.3.3}{Numerical verification of weak order}{subsection.2.3}% 17
+\BOOKMARK [3][-]{subsubsection.2.3.3}{Numerical experiment - Weak convergence}{subsection.2.3}% 17
 \BOOKMARK [3][-]{subsubsection.2.3.4}{Monte Carlo approximation}{subsection.2.3}% 18
-\BOOKMARK [3][-]{subsubsection.2.3.5}{Numerical experiment}{subsection.2.3}% 19
+\BOOKMARK [3][-]{subsubsection.2.3.5}{Numerical experiment - Monte Carlo}{subsection.2.3}% 19
 \BOOKMARK [3][-]{subsubsection.2.3.6}{Multi-level Monte Carlo}{subsection.2.3}% 20
 \BOOKMARK [3][-]{subsubsection.2.3.7}{Stability analysis}{subsection.2.3}% 21
 \BOOKMARK [1][-]{section.3}{Bayesian inference of the parameters of an ODE}{}% 22
 \BOOKMARK [2][-]{subsection.3.1}{Approximation of the likelihood}{section.3}% 23
-\BOOKMARK [3][-]{subsubsection.3.1.1}{Numerical experiment}{subsection.3.1}% 24
-\BOOKMARK [2][-]{subsection.3.2}{Numerical example}{section.3}% 25
+\BOOKMARK [3][-]{subsubsection.3.1.1}{Numerical experiment - Likelihood}{subsection.3.1}% 24
+\BOOKMARK [2][-]{subsection.3.2}{Numerical experiment - Posterior distributions}{section.3}% 25
 \BOOKMARK [2][-]{subsection.3.3}{Convergence of the posterior distribution}{section.3}% 26
 \BOOKMARK [2][-]{subsection.3.4}{Convergence of the parameter mean}{section.3}% 27
 \BOOKMARK [2][-]{subsection.3.5}{Considerations on the MCMC approximation}{section.3}% 28
-\BOOKMARK [3][-]{subsubsection.3.5.1}{Numerical experiment}{subsection.3.5}% 29
-\BOOKMARK [2][-]{subsection.3.6}{Numerical experiment}{section.3}% 30
+\BOOKMARK [3][-]{subsubsection.3.5.1}{Numerical experiment - Batch means estimator}{subsection.3.5}% 29
+\BOOKMARK [2][-]{subsection.3.6}{Numerical experiment - Convergence of the posterior distribution}{section.3}% 30

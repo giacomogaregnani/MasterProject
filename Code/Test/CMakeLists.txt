@@ -103,3 +103,8 @@ target_link_libraries(sigmaEst Solver)
 add_executable(weakConv weakConvergence.cpp
 		problems.hpp problems.cpp)
 target_link_libraries(weakConv Solver)
+
+add_executable(adaptivity Adaptive.cpp
+		problems.hpp problems.cpp
+		mcmcTools.hpp mcmcTools.cpp)
+target_link_libraries(adaptivity Solver)

@@ -1,0 +1,17 @@
+clear; clc; close all;
+
+resultsEE = dlmread('WeakConvergence.txt');
+resultsMP = dlmread('W
+resultsRK = dlmread('WeakConvergence_RK.txt');
+hEE = resultsEE(:, 1);
+errEE = resultsEE(:, 2);
+hRK = resultsRK(:, 1);
+errRK = resultsRK(:, 2);
+
+loglog(hEE, errEE, 'o-')
+hold on
+loglog(hRK, errRK, '*-')
+loglog(hEE, hEE, 'k--')
+loglog(hRK, hRK.^4, 'k')
+
+legend('errEE', 'errRK', 'slope 1', 'slope 4', 'Location', 'SW')

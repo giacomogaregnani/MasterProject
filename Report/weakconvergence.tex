@@ -58,20 +58,20 @@ with $u$ and $\tilde u$ solutions of \eqref{eq:ODE} and \eqref{modifiedSDE}.
 \begin{proof} proof in \cite{CGS16}.
 \end{proof}
 
-\subsubsection{Numerical verification of weak order}
+\subsubsection{Numerical experiment - Weak convergence}
 
-Let us consider for \eqref{eq:ODE} the FitzHugh-Nagumo model, defined by
+Let us consider the FitzHug-Nagumo model, defined by the following ODE
 \begin{equation}\label{eq:FitzNag}
 \begin{aligned}
-	\dv{x_1}{t} &= c\left(x_1 - \frac{x_1^3}{3} + x_2\right), \\
-	\dv{x_2}{t} &= -\frac{1}{c}(x_1 - a + bx_2),
+	x' &= c\left(x - \frac{x^3}{3} + y\right), && x(0) = -1, \\
+	y' &= -\frac{1}{c}(x - a + by), && y(0) = 1,
 \end{aligned}
 \end{equation}
-where $a, b, c \in \R$. In particular, we choose $a = 0.2, b = 0.2, c = 3$. We provide the system with the initial condition $x_1(0) = -1, x_2(0) = 1$. We integrate numerically this equation with \eqref{eq:probMethod}, using RK4 as $\Psi$. Therefore, Assumption \ref{assumption_2} holds with $q = 4$. Moreover, we consider $Q$ in Assumption \ref{assumption_1} to be $Q = \sigma I$ with $\sigma = 0.1$. We approximate the solution up to time $T = 10$ with $p$ in Assumption \ref{assumption_1} equal to $1, 1.5, 2, 2.5$  and $h$ vary in the range $0.25 / (2^i), i = 0, \ldots, 3$. We approximate $\E^h\left(\phi(U_k)\right)$ using a Monte Carlo simulation over $50000$ trajectories and compare it with the solution computed on a fine grid to obtain an estimation of the weak error. Results (Figure \ref{fig:weakorder}) show that the predicted order $\min\{2p, q\}$ applies in this example. In particular, since $q = 4$, it is possible to notice that no difference in order is detected between the cases $p = 2$ and $p = 2.5$. 
+where $a, b, c$ are real parameters with values $a = 0.2$, $b = 0.2$, $c = 3$. We integrate numerically the equation with \eqref{eq:probMethod}, using EE, MP and RK4 as deterministic method up to final time $T = 1$. Therefore, Assumption \ref{assumption_2} holds with $q = 1$, $q = 2$ and $q = 4$ respectively. We consider that Assumption \ref{assumption_1} is verified with $Q = \sigma I$, where $\sigma = 0.5$ and $I$ is the identity matrix. We then consider for each deterministic solver the value of $p$ to be equal to $q$. Therefore, the weak order of convergence of \eqref{eq:probMethod} is equal to the order of the Runge-Kutta integrator. We let $h$ vary in order to verify the order of convergence and consider 500000 repetitions of the trajectory in order to approximate the expectation of the solution. Furthermore, we consider as function $\phi$ in Theorem \ref{thm:weakorder} to be the Euclidean norm of the solution. In order to compute the error, we use a reference solution computed with RK4 with time step $h = 10^{-7}$. Results (Figure \ref{fig:weakorder}) show that the weak order of convergence of the three considered methods respect the theoretical order predicted in Theorem \ref{thm:weakorder}.
 
 \begin{figure}
 \centering
-\resizebox{0.6\linewidth}{!}{\input{plots/weakorder.tikz}}
+\resizebox{0.6\linewidth}{!}{\input{plots/weakOrder.tikz}}
 \caption{Weak order of convergence of \eqref{eq:probMethod} applied to \eqref{eq:FitzNag}.}
 \label{fig:weakorder}
 \end{figure}

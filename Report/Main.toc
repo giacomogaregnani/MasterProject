@@ -11,20 +11,20 @@
 \contentsline {section}{\numberline {2}Probabilistic Methods for Ordinary Differential Equations}{13}{section.2}
 \contentsline {subsection}{\numberline {2.1}Deterministic methods}{14}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}Motivation of probabilistic methods}{15}{subsection.2.2}
-\contentsline {subsection}{\numberline {2.3}Method properties}{16}{subsection.2.3}
-\contentsline {subsubsection}{\numberline {2.3.1}Strong convergence}{17}{subsubsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3}Method properties}{17}{subsection.2.3}
+\contentsline {subsubsection}{\numberline {2.3.1}Strong convergence}{18}{subsubsection.2.3.1}
 \contentsline {subsubsection}{\numberline {2.3.2}Weak convergence}{20}{subsubsection.2.3.2}
-\contentsline {subsubsection}{\numberline {2.3.3}Numerical verification of weak order}{21}{subsubsection.2.3.3}
+\contentsline {subsubsection}{\numberline {2.3.3}Numerical experiment - Weak convergence}{21}{subsubsection.2.3.3}
 \contentsline {subsubsection}{\numberline {2.3.4}Monte Carlo approximation}{22}{subsubsection.2.3.4}
-\contentsline {subsubsection}{\numberline {2.3.5}Numerical experiment}{27}{subsubsection.2.3.5}
-\contentsline {subsubsection}{\numberline {2.3.6}Multi-level Monte Carlo}{28}{subsubsection.2.3.6}
-\contentsline {subsubsection}{\numberline {2.3.7}Stability analysis}{32}{subsubsection.2.3.7}
-\contentsline {section}{\numberline {3}Bayesian inference of the parameters of an ODE}{33}{section.3}
-\contentsline {subsection}{\numberline {3.1}Approximation of the likelihood}{33}{subsection.3.1}
-\contentsline {subsubsection}{\numberline {3.1.1}Numerical experiment}{34}{subsubsection.3.1.1}
-\contentsline {subsection}{\numberline {3.2}Numerical example}{34}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Convergence of the posterior distribution}{35}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}Convergence of the parameter mean}{37}{subsection.3.4}
-\contentsline {subsection}{\numberline {3.5}Considerations on the MCMC approximation}{38}{subsection.3.5}
-\contentsline {subsubsection}{\numberline {3.5.1}Numerical experiment}{39}{subsubsection.3.5.1}
-\contentsline {subsection}{\numberline {3.6}Numerical experiment}{40}{subsection.3.6}
+\contentsline {subsubsection}{\numberline {2.3.5}Numerical experiment - Monte Carlo}{29}{subsubsection.2.3.5}
+\contentsline {subsubsection}{\numberline {2.3.6}Multi-level Monte Carlo}{29}{subsubsection.2.3.6}
+\contentsline {subsubsection}{\numberline {2.3.7}Stability analysis}{33}{subsubsection.2.3.7}
+\contentsline {section}{\numberline {3}Bayesian inference of the parameters of an ODE}{34}{section.3}
+\contentsline {subsection}{\numberline {3.1}Approximation of the likelihood}{34}{subsection.3.1}
+\contentsline {subsubsection}{\numberline {3.1.1}Numerical experiment - Likelihood}{35}{subsubsection.3.1.1}
+\contentsline {subsection}{\numberline {3.2}Numerical experiment - Posterior distributions}{35}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Convergence of the posterior distribution}{36}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Convergence of the parameter mean}{38}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Considerations on the MCMC approximation}{39}{subsection.3.5}
+\contentsline {subsubsection}{\numberline {3.5.1}Numerical experiment - Batch means estimator}{40}{subsubsection.3.5.1}
+\contentsline {subsection}{\numberline {3.6}Numerical experiment - Convergence of the posterior distribution}{41}{subsection.3.6}

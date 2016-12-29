@@ -1,4 +1,4 @@
-\subsubsection{Numerical experiment}
+\subsubsection{Numerical experiment - Likelihood}
 
 We consider the FitzHug-Nagumo problem defined in \eqref{eq:FitzNag} and the parameters fixed to the true value $\bar\theta = (0.2, 0.2, 3.0)$. We generate ten equispaced observations from initial time $t = 0$ to final time $T = 1$ adding a zero-mean Gaussian perturbation with variance equal to $10^{-2}$ to the two components of a numerical solution computed with a small time step. Then we generate a reference solution using the same small time step without noise in order to have an approximation of $\diffL(\mathcal{Y}|\bar \theta)$ with negligible error. Then we compute 300 realizations of $\diffL_h^M(\mathcal{Y}|\bar \theta)$ using Euler Forward or RK4 as a deterministic integrator with time steps $h$ in the set $h = 0.1\cdot 2^{-i}$ with $i = 0, \ldots, 11$, for Euler Forward and $h = 0.1\cdot2^{-i}$ for $i = 0, \ldots, 6$, for RK4. Hence, we estimate the bias of $\diffL(\mathcal{Y}|\bar \theta)$ with respect to the true value of the likelihood and its variance.
 

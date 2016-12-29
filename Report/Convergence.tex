@@ -114,7 +114,7 @@ In \cite{FlJ10}, the authors suggest to choose $b_N$ to be the square or cubic r
 \end{equation}
 We can deduce from the limit in \eqref{eq:CLTMarkov} that the standard deviation of the MCMC estimator decreases asymptotically linearly with respect to $N^{1/2}$. Therefore, in order to observe the convergence rates with respect to $h$ presented in Section \ref{sec:ParH}, the number of samples of the drawn in the MCMC algorithm will have to be considerably high.
 
-\subsubsection{Numerical experiment}
+\subsubsection{Numerical experiment - Batch means estimator}
 
 In this experiment we wish to verify numerically the validity of the batch mean estimator presented above. Therefore, we consider the FitzHug-Nagumo model \eqref{eq:FitzNag} with ten observations $\mathcal{Y}$ equispaced in the time span $0 \leq t \leq 10$. We run MCMC algorithms with approximated likelihood with $h = 0.1$ and growing number of iterations $N = \{1000, 2000, 4000, 8000, 16000, 32000, 64000\}$, and equal starting points. For each value of $N$, we perform $400$ repetitions of the Markov chain and compute the population variance of the estimator $\hat g(\theta)$ as a function of $N$ in order to obtain an estimation of $\sigma^2_g$, where the function $g$ we consider in this experiment is $g(\theta) = \theta^T\theta$. We then compute the batch mean estimator $\hat \sigma_{\mathrm{BM}}$ using $b = \floor{N^{1/2}}$ for each repetition and average the results in order to obtain a function of the number of samples $N$. Results (Figure \ref{fig:BatchMeans}) show that the variance $\sigma^2_g$ converges as predicted linearly with $N$. Moreover, the estimation provided by $\hat \sigma_{\mathrm{BM}}$ is coherent with the theoretical results. We remark that the batch mean estimator seems to converge to the true value of the sample variance with a quadratic order with respect to the number of samples. Further theoretical and literature investigations will be necessary to study this behavior. Hence, we can conclude that the batch means method provides a consistent estimation of the variance, without running several repetitions of the chains to verify their variance.
 
@@ -132,7 +132,7 @@ In this experiment we wish to verify numerically the validity of the batch mean 
 	\label{fig:BatchMeans}
 \end{figure}
 
-\subsection{Numerical experiment}
+\subsection{Numerical experiment - Convergence of the posterior distribution}
 
 We consider the FitzHug-Nagumo model \eqref{eq:FitzNag} and produce observations $\mathcal{Y}$ at times $t_i = i$ for $i = 1, \ldots, 10$ from a reference solution with additive noise with variance $10^{-2}$. We produce a reference posterior distribution using the result of a MCMC algorithm obtained with a small time step $h$. We then vary $h$ in order to observe the convergence of the posterior distribution towards the reference, as well as the convergence of the Monte Carlo estimation. We consider $100000$ iterations of RAM applied to MCWM. As discussed above, the number of trajectories $M$ used to approximate the numerical likelihood does not have an influence on the convergence rate of the posterior distribution to the true posterior. Therefore, we just fix $M$ to be equal to one. We consider as the function $g$ of the parameter the Euclidean norm, therefore we consider the approximation
 \begin{equation}

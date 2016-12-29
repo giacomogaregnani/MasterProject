@@ -1,0 +1,2 @@
+
+results = dlmread('Adaptivity.txt');
