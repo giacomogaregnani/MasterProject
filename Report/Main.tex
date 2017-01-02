@@ -3,10 +3,25 @@
 \input{Preamble}
 
 \begin{document}
+% title
 \input{Titlepage}
-%\input{Acknow}
 
+% a white page
+\afterpage{\null\newpage}
+\thispagestyle{empty}
 \clearpage
+
+% Acknowledgments
+\input{Acknow}
+\thispagestyle{empty}
+\clearpage
+
+% a white page
+\afterpage{\null\newpage}
+\thispagestyle{empty}
+\clearpage
+
+% Table of contents
 \thispagestyle{empty}
 \tableofcontents
 
@@ -14,6 +29,8 @@
 \pagenumbering{arabic}
 \setcounter{page}{1}
 
+\input{Introduction}
+\newpage
 \input{BayesianAnalysis}
 \newpage
 \input{probmethod}

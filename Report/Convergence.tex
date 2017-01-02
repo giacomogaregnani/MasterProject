@@ -6,7 +6,7 @@ In order to study the convergence, it is necessary to introduce a notion of dist
 \begin{equation}
 	d_{\mathrm{TV}}(\nu,\mu) \defeq \sup_{A\in \mathcal{B}(\mathcal{X})} \left|\nu(A) - \mu(A)\right|.
 \end{equation}
-Moreover, if $\nu$ and $\mu$ admit a densities $f$ and $g$ respectively with respect to a dominating measure $\lambda$, then the total variation distance can be expressed as
+Moreover, if $\nu$ and $\mu$ admit densities $f$ and $g$ respectively with respect to a dominating measure $\lambda$, then the total variation distance can be expressed as
 \begin{equation}
 	d_{\mathrm{TV}}(\nu,\mu) \defeq \frac{1}{2} \int_{\mathcal{X}} (f(x) - g(x))\dd \lambda(x).
 \end{equation}
@@ -21,7 +21,7 @@ Moreover, if $\nu$ and $\mu$ admit a densities $f$ and $g$ respectively with res
 \begin{equation}\label{eq:TVvsHell}
 	\frac{\Hell^2(\mu, \nu)}{2} \leq d_{\mathrm{TV}}(\mu, \nu) \leq \Hell(\mu, \nu).
 \end{equation}
-Let us consider the posterior distribution given by MCMC with approximated likelihood. We can compute the second moment of the Hellinger distance as
+Let us denote by $\pi_h^M$ the target distribution of the MCWM algorithm employing the probabilistic solver with time step $h$ and $M$ realizations of the numerical solution, and by $\pi$ the exact posterior. In the following, we will denote with $\pi$ and $\pi_h^M$ with a slight abuse of notation both the probability measures and their density functions. We can compute the second moment of the Hellinger distance with respect to the random variables $\xi$ as
 \begin{equation}
 \begin{aligned}
 2\E^\xi\left[\Hell^2(\pi(\theta|\mathcal{Y}),\pi^M_h(\theta|\mathcal{Y}))\right] &= \E^\xi\left[\int \left(\sqrt{\pi(\theta|\mathcal{Y})} - \sqrt{\pi^M_h(\theta|\mathcal{Y})}\right)^2 \dd \theta\right] \\
@@ -29,12 +29,14 @@ Let us consider the posterior distribution given by MCMC with approximated likel
 &= \int \E^\xi\left[\left(\sqrt{\diffL(\mathcal{Y}|\theta)} - \sqrt{\diffL^M_h(\mathcal{Y}|\theta)}\right)^2\right] \dd \prior(\theta)  \\
 &= \int \MSE\left(\sqrt{\diffL^M_h(\mathcal Y|\theta)}\right) \dd \prior(\theta) \\
 &\leq \int C(\theta)h^{2q} \dd \prior(\theta) \\
-&= h^{2q} \int C(\theta) \dd \prior(\theta),
+&= h^{2q} \int C(\theta) \dd \prior(\theta) \\
+&\leq h^{2q} \sup_{\theta \in \R^{N_p}} C(\theta) \int \dd\prior(\theta) \\
+&= h^{2q} \sup_{\theta \in \R^{N_p}} C(\theta),
 \end{aligned}
 \end{equation}
 where $C(\theta)$ is the constant appearing in Proposition \ref{prop:MSE}. Let us remark that the constant depends on the Lipschitz constant of the function defining the ODE, which depends non-trivially on $\theta$. Finally, defining 
 \begin{equation}
-	\tilde C \defeq \sqrt{\frac{1}{2} \int C(\theta) \dd \prior(\theta)}, 
+	\tilde C \defeq \sqrt{\frac{1}{2} \sup_{\theta \in \R^{N_p}} C(\theta)}, 
 \end{equation}
 we get the following bound on the second moment of the Hellinger distance between the approximated posterior and the posterior obtained with the exact solution 
 \begin{equation}
@@ -49,8 +51,8 @@ Then, thanks to Jensen's inequality
 \end{equation}
 Let us remark that thanks to \eqref{eq:TVvsHell}, this bound is equally true for the total variation distance. 
 
-\subsection{Convergence of the parameter mean}\label{sec:ParH}
-We are now interested in the convergence of the expectation of the parameter $\theta$ inferred by MCMC. Let us consider a function $g \colon \R^{N_p} \to \R$ such that $g \in L^\infty(\R^{N_p})$. Then, we wish to bound the distance between the expectation of $g(\theta)$ computed with respect to the true measure and to the measure targeted by MCMC implemented with the probabilistc solver and time step $h$. Thanks to the previous result on the total variation distance we get
+\subsection{Convergence of the Monte Carlo approximation}\label{sec:ParH}
+We are now interested in the convergence of the Monte Carlo approximation of the expectation of the parameter $\theta$ given by MCMC. Let us consider a function $g \colon \R^{N_p} \to \R$ such that $g \in L^\infty(\R^{N_p})$. Then, we wish to bound the distance between the expectation of $g(\theta)$ computed with respect to the true measure and to the measure targeted by MCMC implemented with the probabilistc solver and time step $h$. Thanks to the previous result on the total variation distance we get
 \begin{equation}
 \begin{aligned}
 	\E^\xi\abs{\E^\pi\left[g(\theta)\right] - \E^{\pi_h^M}\left[g(\theta)\right]} &= \E^\xi\abs{\int g(\theta)(\pi(\theta|\mathcal{Y}) - \pi_h^M(\theta|\mathcal{Y}))\dd \theta}\\
@@ -62,20 +64,29 @@ We are now interested in the convergence of the expectation of the parameter $\t
 We can now compute the variance of the expectation of $g(\theta)$ computed MCMC and the probabilistic integrator as
 \begin{equation}
 \begin{aligned}
-	\Var^\xi (\E^{\pi_h^M}\left[g(\theta)\right]) &= \Var^\xi \left(\int g(\theta) \pi^M_h (\theta) \dd \theta \right) \\
-	&= \Var^\xi \left(\int g(\theta) \diffL^M_h (\mathcal{Y}|\theta) \dd \prior(\theta) \right) \\
-	&= \int g(\theta) \Var^\xi(\diffL^M_h (\mathcal{Y}|\theta)) \dd \prior(\theta) \\
-	&\leq Ch^{2q} \int g(\theta) \dd \prior(\theta) \\
-	&= \hat C h^{2q},
+	\Var^\xi (\E^{\pi_h^M}\left[g(\theta)\right]) &= \E^\xi\left[\left(\E^{\pi^M_h}\left[g(\theta)\right]
+													-\E^\xi\left[\E^{\pi^M_h}\left[g(\theta)\right]
+													\right]\right)^2\right]\\
+		&= \E^\xi\left[\left(\int g(\theta) \diffL_h^M(\mathcal{Y}|\theta)\dd\prior(\theta) 
+		- \E^\xi\left[\int g(\theta) \diffL_h^M(\mathcal{Y}|\theta)\dd\prior(\theta)\right]
+		\right)^2\right]\\
+		&=\E^\xi\left[\left(\int g(\theta) \left(\diffL_h^M(\mathcal{Y}|\theta)-\E^\xi\left[\diffL_h^M(\mathcal{Y}|\theta)\right]\right)\dd\prior(\theta) 
+		\right)^2\right]\\
+		&\leq \E^\xi\left[\int g^2(\theta) \left(\diffL_h^M(\mathcal{Y}|\theta)-\E^\xi\left[\diffL_h^M(\mathcal{Y}|\theta)\right]\right)^2\dd\prior(\theta) 
+		\right]\\
+		&= \int g^2(\theta) \E^\xi\left[\left(\diffL_h^M(\mathcal{Y}|\theta)-\E^\xi\left[\diffL_h^M(\mathcal{Y}|\theta)\right]\right)^2\right]\dd\prior(\theta) \\
+		&= \int g^2(\theta) \Var^\xi\left(\diffL_h^M(\mathcal{Y}|\theta)\right)\dd\prior(\theta) \\
+		&\leq \norm{g^2}_\infty C h^{2q},
 \end{aligned}
 \end{equation}
-where we applied Proposition \ref{prop:MSE}. Hence, the MSE of this estimation is bounded quadratically with respect to the order of the employed Runge-Kutta method, i.e.,  
+where we applied Jensen's inequality and Proposition \ref{prop:MSE}. Hence, the MSE of this estimation is bounded quadratically with respect to the order of the employed Runge-Kutta method, i.e.,  
 \begin{equation}
 \begin{aligned}
 	\MSE(\E^{\pi_h^M}\left[g(\theta)\right]) &= \E^\xi\left[\E^{\pi_h^M}\left[g(\theta)\right] - \E^{\pi}\left[g(\theta)\right]\right]^2 + \Var^\xi(\E^{\pi_h^M}\left[g(\theta)\right]) \\
 	&\leq C h^{2q}.
 \end{aligned}
 \end{equation}
+Let us remark that the convergence rates given by these results can be verified only if the posterior distribution $\pi_h^M$ is known. Otherwise, the expectations are approximated with a Monte Carlo sum and the statistical error has to be taken into account. In the next section, we will consider the Monte Carlo approximation given by MCMC samples and present a method to estimate the statistical error. 
 
 \subsection{Considerations on the MCMC approximation}
 
@@ -87,7 +98,7 @@ where $\theta^{(i)}$, $i = 1, \ldots, N$, are the samples given by MCMC. Let us 
 \begin{equation}
 	\hat g(\theta) = \frac{1}{N} \sum_{i = 1}^{N} g(\theta^{(i)}).
 \end{equation} 
-It is meaningful to study the relation between $\hat g(\theta)$ and $\E^\pi[g(\theta)]$ with respect to the number of samples $N$. The main issue is given by the Markov chain property of the samples. In standard Monte Carlo, the samples are independent and therefore estimating its mean and variance is straightforward, as well as studying the asymptotic properties with the central limit theorem. A central limit theorem is available for Markov chains under regularity assumptions on the Markov kernel \cite{Jon04}, i.e., with the notation introduced above
+It is meaningful to study the relation between $\hat g(\theta)$ and $\E^\pi[g(\theta)]$ with respect to the number of samples $N$. The main issue is given by the Markov chain property of the samples. In standard Monte Carlo, the samples are independent and therefore estimating their mean and variance is straightforward, as well as studying the asymptotic properties with the central limit theorem. A central limit theorem is available for Markov chains under regularity assumptions on the Markov kernel \cite{Jon04}, i.e., with the notation introduced above
 \begin{equation}\label{eq:CLTMarkov}
 	\sqrt{N}(\hat g(\theta) - \E^\pi[g(\theta)]) \totext{d} \mathcal{N}(0, \sigma^2_g),
 \end{equation}
@@ -116,7 +127,7 @@ We can deduce from the limit in \eqref{eq:CLTMarkov} that the standard deviation
 
 \subsubsection{Numerical experiment - Batch means estimator}
 
-In this experiment we wish to verify numerically the validity of the batch mean estimator presented above. Therefore, we consider the FitzHug-Nagumo model \eqref{eq:FitzNag} with ten observations $\mathcal{Y}$ equispaced in the time span $0 \leq t \leq 10$. We run MCMC algorithms with approximated likelihood with $h = 0.1$ and growing number of iterations $N = \{1000, 2000, 4000, 8000, 16000, 32000, 64000\}$, and equal starting points. For each value of $N$, we perform $400$ repetitions of the Markov chain and compute the population variance of the estimator $\hat g(\theta)$ as a function of $N$ in order to obtain an estimation of $\sigma^2_g$, where the function $g$ we consider in this experiment is $g(\theta) = \theta^T\theta$. We then compute the batch mean estimator $\hat \sigma_{\mathrm{BM}}$ using $b = \floor{N^{1/2}}$ for each repetition and average the results in order to obtain a function of the number of samples $N$. Results (Figure \ref{fig:BatchMeans}) show that the variance $\sigma^2_g$ converges as predicted linearly with $N$. Moreover, the estimation provided by $\hat \sigma_{\mathrm{BM}}$ is coherent with the theoretical results. We remark that the batch mean estimator seems to converge to the true value of the sample variance with a quadratic order with respect to the number of samples. Further theoretical and literature investigations will be necessary to study this behavior. Hence, we can conclude that the batch means method provides a consistent estimation of the variance, without running several repetitions of the chains to verify their variance.
+In this experiment we wish to verify numerically the validity of the batch mean estimator presented above. Therefore, we consider the FitzHug-Nagumo model \eqref{eq:FitzNag} with ten observations $\mathcal{Y}_{10}$ equispaced in the time span $0 \leq t \leq 10$. We run MCMC algorithms with approximated likelihood with $h = 0.1$ and growing number of iterations $N = 10^3 \cdot 2^i$, with $i = 0, 1, \ldots, 6$, and equal starting guesses. For each value of $N$, we perform $400$ repetitions of the Markov chain and compute the population variance of the estimator $\hat g(\theta)$ as a function of $N$ in order to obtain an estimation of $\sigma^2_g$, where the function $g$ we consider in this experiment is $g(\theta) = \theta^T\theta$. We then compute the batch mean estimator $\hat \sigma_{\mathrm{BM}}$ using $b = \floor{N^{1/2}}$ for each repetition and average the results in order to obtain a function of the number of samples $N$. Results (Figure \ref{fig:BatchMeans}) show that the variance $\sigma^2_g$ converges as predicted linearly with $N$. Moreover, the estimation provided by $\hat \sigma_{\mathrm{BM}}$ is coherent with the theoretical results. We remark that the batch mean estimator seems to converge to the true value of the sample variance with a quadratic order with respect to the number of samples. Further theoretical and literature investigations will be necessary to study this behavior. Hence, we can conclude that the batch means method provides a consistent estimation of the variance, without running several repetitions of the chains to verify their variance.
 
 \begin{figure}[t]
 	\centering

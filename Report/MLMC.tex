@@ -4,15 +4,22 @@ Let us consider the case in which the initial condition is not deterministic, an
 \begin{equation}
 	\MSE(\hat Z) \leq C_1 h^{2\min\{2p, q\}} + C_2 h^{2p} + C_3 \Var(U_0) M^{-1}.
 \end{equation}
-We can rewrite the inequality above considering two cases depending on the value of $p$
+We can rewrite the inequality above considering three cases depending on the value of $p$
 \begin{equation}
-	\MSE(\hat Z) \leq \begin{cases} C_1 h^{2p} + C_3 \Var(U_0)M^{-1}, & \text{if } 2p < q, \\
-									C_1 h^{2q} + C_3 \Var(U_0)M^{-1} ,& \text{if } 2p \geq q.
+	\MSE(\hat Z) \leq \begin{cases} C_1 h^{4p} + C_2 h^{2p} + C_3 \Var(U_0) M^{-1}, & \text{if } 2p < q,\\
+									C_1 h^{2q} + C_2 h^{2p} + C_3 \Var(U_0) M^{-1}, & \text{if } q \leq 2p < 2q, \\																		
+									C_1 h^{2q} + C_2 h^{2p} + C_3 \Var(U_0) M^{-1}, & \text{if } 2p \geq 2q,\\
 						\end{cases}
 \end{equation}
-Hence, in both cases the term in $h^{2p}$ is negligible and we can conclude
+Disregarding the higher order terms in $h$, we can write 
 \begin{equation}
-	\MSE(\hat Z) \leq C_1 h^{2\min\{2p, q\}} + C_3 \Var(U_0) M^{-1}.
+	\MSE(\hat Z) \leq \begin{cases} C_1 h^{2p} + C_3 \Var(U_0)M^{-1}, & \text{if } p < q, \\
+									C_1 h^{2q} + C_3 \Var(U_0)M^{-1} ,& \text{if } p \geq q.
+						\end{cases}
+\end{equation}
+Hence, we can write in a compact form
+\begin{equation}
+	\MSE(\hat Z) \leq C_1 h^{2\min\{p, q\}} + C_3 \Var(U_0) M^{-1}.
 \end{equation}
 Let us introduce as a measure for the error, denoted by $e$, the square root of the MSE, i.e.,
 \begin{equation}
@@ -20,11 +27,11 @@ Let us introduce as a measure for the error, denoted by $e$, the square root of 
 \end{equation}
 Then, in order to have $e = \OO(\epl)$, with $\epl$ fixed, one has to set
 \begin{equation}
-	h = \OO(\epl^{1 / \min\{2p, q\}}), \quad M = \OO(\epl^{-2}).
+	h = \OO(\epl^{1 / \min\{p, q\}}), \quad M = \OO(\epl^{-2}).
 \end{equation}
 If we measure the cost as the product between the number of time steps and the number of trajectories, we find easily that in this case
 \begin{equation}
-	\mathrm{cost} = M \frac{T}{h} = \OO\left(\epl^{-2 - 1/\min\{2p, q\}}\right),
+	\mathrm{cost} = M \frac{T}{h} = \OO\left(\epl^{-2 - 1/\min\{p, q\}}\right),
 \end{equation}
 where we assumed that the final time $T$ is $\OO(1)$. If the required accuracy $\epl$ is small, the computational cost needed to obtain an acceptable approximation is extremely big. Hence, in this case we can exploit multi-level techniques as the multi-level Monte Carlo (MLMC) \cite{Gil08}. The idea of MLMC is introducing a \textit{hierarchical sampling}, introducing levels $l = 0, \ldots, L$, which have time step $h_l = T / N^l$ with $N_l = K^l$ for some integer $K$. In the following we will consider for simplicity $K = 2$, even though it is possible to choose optimal $K$ for the cost minimization. For each level, the number of trajectories is variable and is denoted by $M_l$. In the following, we will establish the number of trajectories per level minimizing the computational cost needed to obtain a Monte Carlo estimator. The estimator of $Z$ is then constructed as
 \begin{equation}
@@ -71,7 +78,7 @@ as $h_0 = T$. For $l \geq 1$, thanks to \eqref{eq:varProp}
 \begin{equation}
 \begin{aligned}
 	\Var(\phi_l - \phi_{l-1}) &= \Var\left(\phi_l - \phi\left(u(T)\right) + \phi\left(u(T)\right) - \phi_{l-1}\right) \\
-		&\leq 2\left(\Var\left(\phi_l - \phi\left(u(T)\right)\right) + \Var\left(\phi_{l-1} - \phi\left(u(T)\right)\right)\right)
+		&\leq 2\left(\Var\left(\phi_l - \phi\left(u(T)\right)\right) + \Var\left(\phi_{l-1} - \phi\left(u(T)\right)\right)\right).
 \end{aligned}
 \end{equation}
 Then, considering singularly the two terms and denoting by $K$ the Lipschitz constant of $\phi$

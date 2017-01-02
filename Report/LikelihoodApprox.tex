@@ -1,17 +1,16 @@
 \subsection{Approximation of the likelihood}
 
-An unbiased estimator of the likelihood has to be obtained at each step of the MCMC algorithm in order to compute the acceptance probability. In particular, we approximate the likelihood using the probabilistic solver with time step $h$, thus obtaining the approximation a Monte Carlo estimation obtained with $M$ simulated trajectories with time step $h$, i.e., for each value of $\theta$ we consider
+An unbiased estimator of the likelihood has to be obtained at each step of MH in order to compute the acceptance probability. In particular, we approximate the likelihood using the probabilistic solver with time step $h$, thus obtaining a value $\diffL_h$ such that
 \begin{equation}
-	\diffL(\mathcal Y|\theta) \approx \diffL^h(\mathcal Y|\theta).
+	\diffL(\mathcal Y|\theta) \approx \diffL_h(\mathcal Y|\theta).
 \end{equation}
-Then, we approximate the value of $\diffL^h$ with a Monte Carlo simulation thus obtaining the following unbiased estimator
+The value $\diffL_h$ is not directly computable, therefore we compute a Monte Carlo estimator over with $M$ realizations of the numerical solution and get the value $\diffL_h^M$ such that
 \begin{equation}
-	\diffL_M^h(\mathcal Y | \theta)  \approx \diffL^h(\mathcal Y|\theta).
+	\diffL_h^M (\mathcal Y | \theta)  \approx \diffL_h(\mathcal Y|\theta).
 \end{equation}
-We then use this value for computing the acceptance probability in a MWCM algorithm (see Section \ref{sec:MCWM}) to perform Bayesian inference on the value of the parameter $\theta$. A question which often arises in literature \cite{ADH10, DPD15, PSG12} is how many samples $M$ it would be advisable to choose in order to consider the obtained posterior distribution a good approximation of the true posterior. For each value of $\theta$, we can apply Proposition \ref{prop:MSE}, thus obtaining 
-\begin{equation}
-	\MSE(\diffL_M^h(\mathcal Y | \theta)) \leq C_1 h^{2\min\{2p, q\}} + \frac{C_2}{M} h^{2p}.
+We then use this value for computing the acceptance probability in the frame of a MCWM algorithm (see Section \ref{sec:MCWM}) to perform Bayesian inference on the value of the parameter $\theta$. A question which often arises in literature \cite{ADH10, DPD15, PSG12} is how many samples $M$ it would be advisable to choose in order to consider the obtained posterior distribution a good approximation of the true posterior. For each value of $\theta$, we can apply Proposition \ref{prop:MSE}, thus obtaining 
+\begin{equation}\label{eq:likMSE}
+	\MSE(\diffL_h^M (\mathcal Y | \theta)) \leq C_1 h^{2\min\{2p, q\}} + \frac{C_2}{M} h^{2p}.
 \end{equation}
-Therefore, at each step of the MCMC algorithm we can control with the time step the goodness of the likelihood estimator.
-
+Therefore, at each step of the MCMC algorithm the approximation of the likelihood function depends uniquely on the time step $h$, on the order $q$ of the Runge-Kutta method employed to implement \eqref{eq:probMethod} and on the noise scale $p$ of Assumption \ref{assumption_1}.
 \input{NumericalLikelihood}

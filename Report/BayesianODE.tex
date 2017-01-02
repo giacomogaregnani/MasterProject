@@ -1,9 +1,9 @@
-\section{Bayesian inference of the parameters of an ODE}
+\section{Bayesian inference of the parameters of an ODE}\label{sec:THREE}
 
 We now consider the probabilistic solver introduced in the previous section and study its behavior when used in the context of Bayesian inference. Let us consider $\theta$ a parameter in $\R^{N_p}$, a function $f_\theta\colon \R^d \to \R^d$ depending on the parameter, an element $u_0$ of $\R^d$ and the following ODE 
 \begin{equation}\label{eq:ODEParam}
 \begin{aligned}
-	\dv{u_\theta}{t} (t) &= f_\theta(u_\theta(t)),\\
+	u_\theta' (t) &= f_\theta(u_\theta(t)),\\
 			 u_\theta(0) &= u_0,
 \end{aligned}
 \end{equation}
@@ -28,3 +28,9 @@ If the solution of \eqref{eq:ODEParam} is computable analytically, then thanks t
 \input{LikelihoodApprox}
 \input{NumericalExample}
 \input{Convergence}
+
+\subsection{To do when back in Lausanne}
+
+\begin{itemize}
+	\item Build confidence intervals based on $\hat \sigma_{\mathrm{BM}}$ with RK vs. probabilistic method.
+\end{itemize}

@@ -44,7 +44,7 @@ where $\tilde \diffL^h$ is the \textit{generator} of \eqref{modifiedSDE}. (\ldot
 \end{equation}
 for some $L > 0$.
 \end{assumption}
-\noindent We can now state the following result about weak convergence.
+\noindent We can now state the following result of weak convergence.
 \begin{theorem}\label{thm:weakorder} Consider the numerical method \eqref{eq:probMethod} and Assumptions \ref{assumption_1}, \ref{assumption_2} and \ref{assumption_3}. Then for any function $\phi$ in $\mathcal{C}^\infty$ endowed with the properties of Assumption \ref{assumption_3},
 \begin{equation}
 	\left|\phi(u(T)) - \E^h\left(\phi(U_k)\right)\right| \leq Kh^{\min\{2p, q\}}, \quad kh = T,
@@ -55,8 +55,7 @@ and
 \end{equation}
 with $u$ and $\tilde u$ solutions of \eqref{eq:ODE} and \eqref{modifiedSDE}.
 \end{theorem}
-\begin{proof} proof in \cite{CGS16}.
-\end{proof}
+\noindent The proof of this result can be found in \cite{CGS16}. In the following, we will verify numerically the correctness of this result.
 
 \subsubsection{Numerical experiment - Weak convergence}
 
@@ -67,7 +66,7 @@ Let us consider the FitzHug-Nagumo model, defined by the following ODE
 	y' &= -\frac{1}{c}(x - a + by), && y(0) = 1,
 \end{aligned}
 \end{equation}
-where $a, b, c$ are real parameters with values $a = 0.2$, $b = 0.2$, $c = 3$. We integrate numerically the equation with \eqref{eq:probMethod}, using EE, MP and RK4 as deterministic method up to final time $T = 1$. Therefore, Assumption \ref{assumption_2} holds with $q = 1$, $q = 2$ and $q = 4$ respectively. We consider that Assumption \ref{assumption_1} is verified with $Q = \sigma I$, where $\sigma = 0.5$ and $I$ is the identity matrix. We then consider for each deterministic solver the value of $p$ to be equal to $q$. Therefore, the weak order of convergence of \eqref{eq:probMethod} is equal to the order of the Runge-Kutta integrator. We let $h$ vary in order to verify the order of convergence and consider 500000 repetitions of the trajectory in order to approximate the expectation of the solution. Furthermore, we consider as function $\phi$ in Theorem \ref{thm:weakorder} to be the Euclidean norm of the solution. In order to compute the error, we use a reference solution computed with RK4 with time step $h = 10^{-7}$. Results (Figure \ref{fig:weakorder}) show that the weak order of convergence of the three considered methods respect the theoretical order predicted in Theorem \ref{thm:weakorder}.
+where $a, b, c$ are real parameters with values $a = 0.2$, $b = 0.2$, $c = 3$. We integrate numerically the equation with \eqref{eq:probMethod}, using EE, MP and RK4 as deterministic method up to final time $T = 1$. Therefore, Assumption \ref{assumption_2} holds with $q = 1$, $q = 2$ and $q = 4$ respectively. We consider that Assumption \ref{assumption_1} is verified with $Q = \sigma I$, where $\sigma = 0.5$ and $I$ is the identity matrix. We then consider for each deterministic solver the value of $p$ to be equal to $q$. Therefore, the weak order of convergence of \eqref{eq:probMethod} is equal to the order of the Runge-Kutta integrator. We let $h$ vary in order to verify the order of convergence and consider 500000 repetitions of the trajectory in order to approximate the expectation of the solution and obtain smooth error curves. Furthermore, we consider as function $\phi$ in Theorem \ref{thm:weakorder} to be the Euclidean norm of the solution. In order to compute the error, we use a reference solution computed with RK4 with time step $h = 10^{-7}$, so that the error of the reference solution is negligible. Results (Figure \ref{fig:weakorder}) show that the weak order of convergence of the three considered methods respect the theoretical order predicted in Theorem \ref{thm:weakorder}.
 
 \begin{figure}
 \centering

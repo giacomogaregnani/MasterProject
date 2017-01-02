@@ -3,8 +3,8 @@
 The first property we treat is the strong convergence of the numerical solution. All the results presented can be found in details in \cite{CGS16}. Let us first recall the definition of the strong order of convergence of a numerical method. 
 \begin{definition} General definition of strong order of convergence
 \end{definition}
-\noindent In order to prove a result of strong convergence for the method defined in \eqref{eq:probMethod}, we need to state two assumptions on the random variables $\xi_k$ as well as on the numerical method defined by $\Psi$. 
-\begin{assumption}\label{assumption_1}
+\noindent In order to prove a result of strong convergence for the method defined in \eqref{eq:probMethod}, we need to state two assumptions on the random variables $\xi_k$ as well as on the deterministic part of the probabilistic integrator. 
+\begin{assumption}\label{assumption_1} The random variables $\xi_k(t)$ satisfy
 \begin{equation}
 	\E^h|\xi_k(t)\xi_k(t)^T|^2_F \leq Kt^{2p+1}.
 \end{equation}
@@ -19,7 +19,7 @@ where $p\geq 1$.
 	U_{k+1} = \Psi_h(U_k) + \sqrt{\sigma} h^{p + \frac{1}{2}} Z_k,
 \end{equation}
 where $Z_k$ is a Gaussian random vector with independent entries $Z_{k,i}  \sim\mathcal{N}(0,1), i = 1, \ldots, d$. \\
-An assumption on the numerical method is needed.
+A further assumption on the deterministic component $\Psi$ of the numerical method is needed.
 \begin{assumption}\label{assumption_2}  The function $f$ and a sufficient number of its derivatives are bounded uniformly in $\R^n$ in order to ensure that $f$ is globally Lipschitz and that the numerical flow map $\Psi_h$ has uniform local truncation error of order $q + 1$, i.e., 
 \begin{equation}
 	\sup_{u\in\R^n} |\Psi_t(u) - \Phi_t(u)| \leq Kt^{q+1}.
@@ -35,7 +35,7 @@ An assumption on the numerical method is needed.
 	y_n \leq C_1 \exp(nC_2).
 	\end{equation}
 \end{lemma}
-\noindent Given the two assumptions above and the discrete Gronwall lemma, we can state the result on strong convergence of the numerical method. 
+\noindent Under the two assumptions above we can now state the following result of strong convergence.  
 \begin{theorem}[Strong Convergence]\label{thm:strongConv} Under assumptions \ref{assumption_1} and \ref{assumption_2} it follows that there is $K>0$ such that
 \begin{equation}\label{strongConvDisc}
 	\sup_{0<kh<T} \E^h|u_k - U_K|^2 \leq Kh^{2\min\{p,q\}}.

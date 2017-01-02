@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
 
     // ProbMethod realizations
 
-    double t = 0, h = 0.1, targetVar = 0.01, varNorm, sigma = 0.5;
+    double t = 0, h = 0.01, targetVar = 0.01, varNorm, sigma = 0.5;
     int odeSize = testODE.size;
     // Compute realizations
     //std::vector<ProbMethod<EulerForward>> Solver(M, ProbMethod<EulerForward>(testODE, h, testODE.refParam, 0.5));

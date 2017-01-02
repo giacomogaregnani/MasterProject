@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.3.12)  29 DEC 2016 15:12
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.3.12)  31 DEC 2016 15:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -142,6 +142,12 @@ Package: appendix 2009/09/02 v1.2b extra appendix facilities
 \c@@ppsavesec=\count93
 \c@@ppsaveapp=\count94
 )
+(/usr/share/texlive/texmf-dist/tex/latex/tools/afterpage.sty
+Package: afterpage 1995/10/27 v1.08 After-Page Package (DPC)
+\AP@output=\toks21
+\AP@partial=\box27
+\AP@footins=\box28
+)
 (/usr/share/texlive/texmf-dist/tex/latex/physics/physics.sty
 Package: physics 
 
@@ -246,15 +252,15 @@ Package: l3fp 2014/01/04 v4642 L3 Floating points
 )
 (/usr/share/texlive/texmf-dist/tex/latex/l3kernel/l3box.sty
 Package: l3box 2013/07/28 v4581 L3 Experimental boxes
-\c_empty_box=\box27
-\l_tmpa_box=\box28
-\l_tmpb_box=\box29
-\g_tmpa_box=\box30
-\g_tmpb_box=\box31
+\c_empty_box=\box29
+\l_tmpa_box=\box30
+\l_tmpb_box=\box31
+\g_tmpa_box=\box32
+\g_tmpb_box=\box33
 )
 (/usr/share/texlive/texmf-dist/tex/latex/l3kernel/l3coffins.sty
 Package: l3coffins 2013/12/14 v4624 L3 Coffin code layer
-\l__coffin_internal_box=\box32
+\l__coffin_internal_box=\box34
 \l__coffin_internal_dim=\dimen117
 \l__coffin_offset_x_dim=\dimen118
 \l__coffin_offset_y_dim=\dimen119
@@ -262,14 +268,14 @@ Package: l3coffins 2013/12/14 v4624 L3 Coffin code layer
 \l__coffin_y_dim=\dimen121
 \l__coffin_x_prime_dim=\dimen122
 \l__coffin_y_prime_dim=\dimen123
-\c_empty_coffin=\box33
-\l__coffin_aligned_coffin=\box34
-\l__coffin_aligned_internal_coffin=\box35
-\l_tmpa_coffin=\box36
-\l_tmpb_coffin=\box37
-\l__coffin_display_coffin=\box38
-\l__coffin_display_coord_coffin=\box39
-\l__coffin_display_pole_coffin=\box40
+\c_empty_coffin=\box35
+\l__coffin_aligned_coffin=\box36
+\l__coffin_aligned_internal_coffin=\box37
+\l_tmpa_coffin=\box38
+\l_tmpb_coffin=\box39
+\l__coffin_display_coffin=\box40
+\l__coffin_display_coord_coffin=\box41
+\l__coffin_display_pole_coffin=\box42
 \l__coffin_display_offset_dim=\dimen124
 \l__coffin_display_x_dim=\dimen125
 \l__coffin_display_y_dim=\dimen126
@@ -292,7 +298,7 @@ Package: l3candidates 2014/01/06 v4643 L3 Experimental additions to l3kernel
 \l__box_bottom_new_dim=\dimen132
 \l__box_left_new_dim=\dimen133
 \l__box_right_new_dim=\dimen134
-\l__box_internal_box=\box41
+\l__box_internal_box=\box43
 \l__coffin_bounding_shift_dim=\dimen135
 \l__coffin_left_corner_dim=\dimen136
 \l__coffin_right_corner_dim=\dimen137
@@ -318,7 +324,7 @@ Package: amstext 2000/06/29 v2.01
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0
-\@emptytoks=\toks21
+\@emptytoks=\toks22
 \ex@=\dimen142
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
@@ -338,8 +344,8 @@ LaTeX Info: Redefining \overline on input line 306.
 LaTeX Info: Redefining \ldots on input line 378.
 LaTeX Info: Redefining \dots on input line 381.
 LaTeX Info: Redefining \cdots on input line 466.
-\Mathstrutbox@=\box42
-\strutbox@=\box43
+\Mathstrutbox@=\box44
+\strutbox@=\box45
 \big@size=\dimen144
 LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
@@ -348,21 +354,21 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
 \dotsspace@=\muskip16
 \c@parentequation=\count132
 \dspbrk@lvl=\count133
-\tag@help=\toks22
+\tag@help=\toks23
 \row@=\count134
 \column@=\count135
 \maxfields@=\count136
-\andhelp@=\toks23
+\andhelp@=\toks24
 \eqnshift@=\dimen145
 \alignsep@=\dimen146
 \tagshift@=\dimen147
 \tagwidth@=\dimen148
 \totwidth@=\dimen149
 \lineht@=\dimen150
-\@envbody=\toks24
+\@envbody=\toks25
 \multlinegap=\skip55
 \multlinetaggap=\skip56
-\mathdisplay@stack=\toks25
+\mathdisplay@stack=\toks26
 LaTeX Info: Redefining \[ on input line 2665.
 LaTeX Info: Redefining \] on input line 2666.
 )
@@ -1276,15 +1282,15 @@ LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/amscls/amsthm.sty
 Package: amsthm 2004/08/06 v2.20
-\thm@style=\toks26
-\thm@bodyfont=\toks27
-\thm@headfont=\toks28
-\thm@notefont=\toks29
-\thm@headpunct=\toks30
+\thm@style=\toks27
+\thm@bodyfont=\toks28
+\thm@headfont=\toks29
+\thm@notefont=\toks30
+\thm@headpunct=\toks31
 \thm@preskip=\skip57
 \thm@postskip=\skip58
 \thm@headsep=\skip59
-\dth@everypar=\toks31
+\dth@everypar=\toks32
 )
 (/usr/share/texlive/texmf-dist/tex/latex/mh/mathtools.sty
 Package: mathtools 2013/02/12 v1.13 mathematical typesetting tools
@@ -1332,10 +1338,10 @@ Package: pgfplots 2013/10/03 v1.9 Data Visualization (1.9)
 (/usr/share/texmf/tex/latex/pgf/basiclayer/pgf.sty
 (/usr/share/texmf/tex/latex/pgf/utilities/pgfrcs.sty
 (/usr/share/texmf/tex/generic/pgf/utilities/pgfutil-common.tex
-\pgfutil@everybye=\toks32
+\pgfutil@everybye=\toks33
 )
 (/usr/share/texmf/tex/generic/pgf/utilities/pgfutil-latex.def
-\pgfutil@abb=\box44
+\pgfutil@abb=\box46
 
 (/usr/share/texlive/texmf-dist/tex/latex/ms/everyshi.sty
 Package: everyshi 2001/05/15 v3.00 EveryShipout Package (MS)
@@ -1379,11 +1385,11 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 Package: pgfsys 2010/06/30 v2.10 (rcs-revision 1.37)
 
 (/usr/share/texmf/tex/generic/pgf/utilities/pgfkeys.code.tex
-\pgfkeys@pathtoks=\toks33
-\pgfkeys@temptoks=\toks34
+\pgfkeys@pathtoks=\toks34
+\pgfkeys@temptoks=\toks35
 
 (/usr/share/texmf/tex/generic/pgf/utilities/pgfkeysfiltered.code.tex
-\pgfkeys@tmptoks=\toks35
+\pgfkeys@tmptoks=\toks36
 ))
 \pgf@x=\dimen162
 \pgf@y=\dimen163
@@ -1445,10 +1451,10 @@ Package: pgfcore 2010/04/11 v2.10 (rcs-revision 1.7)
 (/usr/share/texmf/tex/generic/pgf/math/pgfmathparser.code.tex
 \pgfmath@dimen=\dimen170
 \pgfmath@count=\count148
-\pgfmath@box=\box45
-\pgfmath@toks=\toks36
-\pgfmath@stack@operand=\toks37
-\pgfmath@stack@operation=\toks38
+\pgfmath@box=\box47
+\pgfmath@toks=\toks37
+\pgfmath@stack@operand=\toks38
+\pgfmath@stack@operation=\toks39
 )
 (/usr/share/texmf/tex/generic/pgf/math/pgfmathfunctions.code.tex
 (/usr/share/texmf/tex/generic/pgf/math/pgfmathfunctions.basic.code.tex)
@@ -1490,9 +1496,9 @@ File: pgfcorepathusage.code.tex 2008/04/22  (rcs-revision 1.12)
 )
 (/usr/share/texmf/tex/generic/pgf/basiclayer/pgfcorescopes.code.tex
 File: pgfcorescopes.code.tex 2010/09/08  (rcs-revision 1.34)
-\pgfpic=\box46
-\pgf@hbox=\box47
-\pgf@layerbox@main=\box48
+\pgfpic=\box48
+\pgf@hbox=\box49
+\pgf@layerbox@main=\box50
 \pgf@picture@serial@count=\count150
 )
 (/usr/share/texmf/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code.tex
@@ -1527,7 +1533,7 @@ File: pgfcoreimage.code.tex 2010/03/25  (rcs-revision 1.16)
 
 (/usr/share/texmf/tex/generic/pgf/basiclayer/pgfcoreexternal.code.tex
 File: pgfcoreexternal.code.tex 2010/09/01  (rcs-revision 1.17)
-\pgfexternal@startupbox=\box49
+\pgfexternal@startupbox=\box51
 ))
 (/usr/share/texmf/tex/generic/pgf/basiclayer/pgfcorelayers.code.tex
 File: pgfcorelayers.code.tex 2010/08/27  (rcs-revision 1.2)
@@ -1540,7 +1546,7 @@ File: pgfcorepatterns.code.tex 2009/07/02  (rcs-revision 1.3)
 )))
 (/usr/share/texmf/tex/generic/pgf/modules/pgfmoduleshapes.code.tex
 File: pgfmoduleshapes.code.tex 2010/09/09  (rcs-revision 1.13)
-\pgfnodeparttextbox=\box50
+\pgfnodeparttextbox=\box52
 )
 (/usr/share/texmf/tex/generic/pgf/modules/pgfmoduleplot.code.tex
 File: pgfmoduleplot.code.tex 2010/10/22  (rcs-revision 1.8)
@@ -1560,8 +1566,8 @@ Package: pgfcomp-version-1-18 2007/07/23 v2.10 (rcs-revision 1.1)
 Package: pgffor 2010/03/23 v2.10 (rcs-revision 1.18)
 \pgffor@iter=\dimen196
 \pgffor@skip=\dimen197
-\pgffor@stack=\toks39
-\pgffor@toks=\toks40
+\pgffor@stack=\toks40
+\pgffor@toks=\toks41
 ))
 (/usr/share/texmf/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
 Package: tikz 2010/10/13 v2.10 (rcs-revision 1.76)
@@ -1578,8 +1584,8 @@ Normal \dimen register pool exhausted, switching to extended pool.
 \tikz@lastysaved=\dimen256
 \tikzleveldistance=\dimen257
 \tikzsiblingdistance=\dimen258
-\tikz@figbox=\box51
-\tikz@tempbox=\box52
+\tikz@figbox=\box53
+\tikz@tempbox=\box54
 \tikztreelevel=\count153
 \tikznumberofchildren=\count154
 \tikznumberofcurrentchild=\count155
@@ -1599,9 +1605,9 @@ File: tikzlibrarytopaths.code.tex 2008/06/17 v2.10 (rcs-revision 1.2)
 )))
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.code.tex
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotscore.code.tex
-\t@pgfplots@toka=\toks41
-\t@pgfplots@tokb=\toks42
-\t@pgfplots@tokc=\toks43
+\t@pgfplots@toka=\toks42
+\t@pgfplots@tokb=\toks43
+\t@pgfplots@tokc=\toks44
 \pgfplots@tmpa=\dimen259
 \c@pgfplots@coordindex=\count161
 \c@pgfplots@scanlineindex=\count162
@@ -1618,12 +1624,12 @@ Package pgfplots: loading complementary code for your PGF version...
 gfsupp_misc.code.tex)
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pgfplotsoldp
 gfsupp_pgfkeys.code.tex
-\pgfkeys@pathtoks=\toks44
-\pgfkeys@temptoks=\toks45
+\pgfkeys@pathtoks=\toks45
+\pgfkeys@temptoks=\toks46
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pgfplotsoldp
 gfsupp_pgfkeysfiltered.code.tex
-\pgfkeys@tmptoks=\toks46
+\pgfkeys@tmptoks=\toks47
 ))
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pgfplotsoldp
 gfsupp_pgfmathfloat.code.tex
@@ -1640,9 +1646,9 @@ gfsupp_pgflibraryfpu.code.tex)
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pgfplotsoldp
 gfsupp_pgfcorescopes.code.tex
 File: pgfcorescopes.code.tex 2012/11/30  (rcs-revision 1.38)
-\pgfpic=\box53
-\pgf@hbox=\box54
-\pgf@layerbox@main=\box55
+\pgfpic=\box55
+\pgf@hbox=\box56
+\pgf@layerbox@main=\box57
 \pgf@picture@serial@count=\count165
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pgfplotsoldp
@@ -1663,7 +1669,7 @@ x.code.tex)
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/numtable/pgfplotstableshare
 d.code.tex
 \c@pgfplotstable@counta=\count167
-\t@pgfplotstable@a=\toks47
+\t@pgfplotstable@a=\toks48
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsdeque
 .code.tex)
@@ -1708,7 +1714,7 @@ ations.code.tex
 \pgfdecorationsegmentamplitude=\dimen266
 \pgfdecorationsegmentlength=\dimen267
 )
-\tikz@lib@dec@box=\box56
+\tikz@lib@dec@box=\box58
 )
 (/usr/share/texmf/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarydecor
 ations.pathmorphing.code.tex
@@ -1760,10 +1766,10 @@ Package caption Info: KOMA-Script document class.
 (/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count174
-\float@exts=\toks48
-\float@box=\box57
-\@float@everytoks=\toks49
-\@floatcapt=\box58
+\float@exts=\toks49
+\float@box=\box59
+\@float@everytoks=\toks50
+\@floatcapt=\box60
 )
 (/usr/share/texlive/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
 Package: algorithm2e 2013/01/06 v5.00 algorithms environments
@@ -1799,16 +1805,16 @@ subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
 \interspacetitleruled=\dimen284
 \interspacealgoruled=\dimen285
 \interspacetitleboxruled=\dimen286
-\algocf@inoutbox=\box59
-\algocf@inputbox=\box60
+\algocf@inoutbox=\box61
+\algocf@inputbox=\box62
 \AlCapSkip=\skip72
 \AlCapHSkip=\skip73
 \algoskipindent=\skip74
-\algocf@nlbox=\box61
-\algocf@hangingbox=\box62
-\algocf@untilbox=\box63
+\algocf@nlbox=\box63
+\algocf@hangingbox=\box64
+\algocf@untilbox=\box65
 \algocf@skipuntil=\skip75
-\algocf@capbox=\box64
+\algocf@capbox=\box66
 \algoheightruledefault=\skip76
 \algoheightrule=\skip77
 \algotitleheightruledefault=\skip78
@@ -1816,8 +1822,8 @@ subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
 \c@algocfline=\count176
 \c@algocfproc=\count177
 \c@algocf=\count178
-\algocf@algoframe=\box65
-\algocf@algobox=\box66
+\algocf@algoframe=\box67
+\algocf@algobox=\box68
 ) (/usr/share/texlive/texmf-dist/tex/latex/lipsum/lipsum.sty
 Package: lipsum 2011/04/14 v1.2 150 paragraphs of Lorem Ipsum dummy text
 \c@lips@count=\count179
@@ -1826,7 +1832,7 @@ Package: lipsum 2011/04/14 v1.2 150 paragraphs of Lorem Ipsum dummy text
 Package: array 2008/09/09 v2.4c Tabular extension package (FMi)
 \col@sep=\dimen287
 \extrarowheight=\dimen288
-\NC@list=\toks50
+\NC@list=\toks51
 \extratabsurround=\skip80
 \backup@length=\skip81
 )
@@ -1891,7 +1897,7 @@ Package: letltxmacro 2010/09/02 v1.4 Let assignment for LaTeX macros (HO)
 Package: hopatch 2012/05/28 v1.2 Wrapper for package hooks (HO)
 Package: xcolor-patch 2011/01/30 xcolor patch
 Package: atveryend 2011/06/30 v1.8 Hooks at the very end of document (HO)
-Package atveryend Info: \enddocument detected (standard20110627).
+Package atveryend Info: \AP@enddocument detected (standard20110627).
 Package: atbegshi 2011/10/05 v1.16 At begin shipout hook (HO)
 Package: refcount 2011/10/16 v3.4 Data extraction from label references (HO)
 Package: hycolor 2011/01/30 v1.7 Color options for hyperref/bookmark (HO)
@@ -1966,11 +1972,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 \c@definition=\count197
 \c@remark=\count198
 )
-(./Main.aux
-
-LaTeX Warning: Label `fig:MonteCarloVarianceH' multiply defined.
-
-)
+(./Main.aux)
 \openout1 = `Main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
@@ -2030,16 +2032,16 @@ ABD: EveryShipout initializing macros
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count199
 \scratchdimen=\dimen306
-\scratchbox=\box67
+\scratchbox=\box69
 \nofMPsegments=\count200
 \nofMParguments=\count201
-\everyMPshowfont=\toks51
+\everyMPshowfont=\toks52
 Normal \count register pool exhausted, switching to extended pool.
 \MPscratchCnt=\count277
 \MPscratchDim=\dimen307
 \MPnumerator=\count278
 \makeMPintoPDFobject=\count279
-\everyMPtoPDFconversion=\toks52
+\everyMPtoPDFconversion=\toks53
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
@@ -2065,7 +2067,7 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\AtBeginShipoutBox=\box68
+\AtBeginShipoutBox=\box70
 Package hyperref Info: Link coloring OFF on input line 5.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -2108,7 +2110,7 @@ Logo.eps>
 (epstopdf)             \includegraphics on input line 46.
 Package epstopdf Info: Output file is already uptodate.
 
-<Logo-eps-converted-to.pdf, id=127, 757.83125pt x 369.38pt>
+<Logo-eps-converted-to.pdf, id=135, 757.83125pt x 369.38pt>
 File: Logo-eps-converted-to.pdf Graphic file (type pdf)
 
 <use Logo-eps-converted-to.pdf>
@@ -2117,32 +2119,53 @@ Package pdftex.def Info: Logo-eps-converted-to.pdf used on input line 46.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./Logo-eps-converted-to.pd
-f>]) (./Main.toc)
+f>]) [2
+
+] (./Acknow.tex) [3] [4
+
+
+] (./Main.toc)
 \tf@toc=\write5
 \openout5 = `Main.toc'.
 
- [2
+
+[5] (./Introduction.tex)pdfTeX warning (ext4): destination with the same identi
+fier (name{page.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.33 \newpage
+              [1
 
 ] (./BayesianAnalysis.tex
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 26.
+
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 26.
-pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
+pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.37 
-      [1
-
-]pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has
- been already used, duplicate ignored
+      [2]pdfTeX warning (ext4): destination with the same identifier (name{page
+.3}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.58 \begin{equation}
-                     \label{eq:exSDE} [2] [3] [4] [5] [6] [7] (./RAMplots.tex
+                     \label{eq:exSDE} [3]pdfTeX warning (ext4): destination wit
+h the same identifier (name{page.4}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.91 I
+      n this simple example the analytical form of any of the quantities of ...
+[4]pdfTeX warning (ext4): destination with the same identifier (name{page.5}) h
+as been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.125 \begin{equation}
+                       [5] [6] [7] [8] (./RAMplots.tex
 Package epstopdf Info: Source file: <plots/MHvsRAM/MH_small.eps>
 (epstopdf)                    date: 2016-11-25 12:21:50
 (epstopdf)                    size: 1666624 bytes
@@ -2155,7 +2178,7 @@ f>
 (epstopdf)             \includegraphics on input line 4.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/MH_small-eps-converted-to.pdf, id=289, 439.6425pt x 330.23375pt>
+<plots/MHvsRAM/MH_small-eps-converted-to.pdf, id=322, 439.6425pt x 330.23375pt>
 File: plots/MHvsRAM/MH_small-eps-converted-to.pdf Graphic file (type pdf)
 <use plots/MHvsRAM/MH_small-eps-converted-to.pdf>
 Package pdftex.def Info: plots/MHvsRAM/MH_small-eps-converted-to.pdf used on in
@@ -2173,7 +2196,7 @@ s-converted-to.pdf plots/MHvsRAM/MH_medium.eps>
 (epstopdf)             \includegraphics on input line 7.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/MH_medium-eps-converted-to.pdf, id=290, 439.6425pt x 330.23375pt
+<plots/MHvsRAM/MH_medium-eps-converted-to.pdf, id=323, 439.6425pt x 330.23375pt
 >
 File: plots/MHvsRAM/MH_medium-eps-converted-to.pdf Graphic file (type pdf)
  <use plots/MHvsRAM/MH_medium-eps-converted-to.pdf>
@@ -2192,7 +2215,7 @@ onverted-to.pdf plots/MHvsRAM/MH_big.eps>
 (epstopdf)             \includegraphics on input line 10.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/MH_big-eps-converted-to.pdf, id=291, 439.6425pt x 330.23375pt>
+<plots/MHvsRAM/MH_big-eps-converted-to.pdf, id=324, 439.6425pt x 330.23375pt>
 File: plots/MHvsRAM/MH_big-eps-converted-to.pdf Graphic file (type pdf)
 
 <use plots/MHvsRAM/MH_big-eps-converted-to.pdf>
@@ -2211,7 +2234,7 @@ s-converted-to.pdf plots/MHvsRAM/RAM_small.eps>
 (epstopdf)             \includegraphics on input line 14.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/RAM_small-eps-converted-to.pdf, id=292, 439.6425pt x 330.23375pt
+<plots/MHvsRAM/RAM_small-eps-converted-to.pdf, id=325, 439.6425pt x 330.23375pt
 >
 File: plots/MHvsRAM/RAM_small-eps-converted-to.pdf Graphic file (type pdf)
  <use plots/MHvsRAM/RAM_small-eps-converted-to.pdf>
@@ -2230,7 +2253,7 @@ ps-converted-to.pdf plots/MHvsRAM/RAM_medium.eps>
 (epstopdf)             \includegraphics on input line 17.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/RAM_medium-eps-converted-to.pdf, id=293, 439.6425pt x 330.23375p
+<plots/MHvsRAM/RAM_medium-eps-converted-to.pdf, id=326, 439.6425pt x 330.23375p
 t>
 File: plots/MHvsRAM/RAM_medium-eps-converted-to.pdf Graphic file (type pdf)
  <use plots/MHvsRAM/RAM_medium-eps-converted-to.pdf>
@@ -2249,19 +2272,19 @@ converted-to.pdf plots/MHvsRAM/RAM_big.eps>
 (epstopdf)             \includegraphics on input line 20.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/RAM_big-eps-converted-to.pdf, id=294, 439.6425pt x 330.23375pt>
+<plots/MHvsRAM/RAM_big-eps-converted-to.pdf, id=327, 439.6425pt x 330.23375pt>
 File: plots/MHvsRAM/RAM_big-eps-converted-to.pdf Graphic file (type pdf)
 
 <use plots/MHvsRAM/RAM_big-eps-converted-to.pdf>
 Package pdftex.def Info: plots/MHvsRAM/RAM_big-eps-converted-to.pdf used on inp
 ut line 20.
 (pdftex.def)             Requested size: 136.57637pt x 102.58807pt.
-) [8 <./plots/MHvsRAM/MH_small-eps-converted-to.pdf> <./plots/MHvsRAM/MH_medium
+) [9 <./plots/MHvsRAM/MH_small-eps-converted-to.pdf> <./plots/MHvsRAM/MH_medium
 -eps-converted-to.pdf> <./plots/MHvsRAM/MH_big-eps-converted-to.pdf> <./plots/M
 HvsRAM/RAM_small-eps-converted-to.pdf> <./plots/MHvsRAM/RAM_medium-eps-converte
-d-to.pdf> <./plots/MHvsRAM/RAM_big-eps-converted-to.pdf>] [9] [10] [11]) [12] (
-./probmethod.tex
-(./deterministicmethods.tex [13]
+d-to.pdf> <./plots/MHvsRAM/RAM_big-eps-converted-to.pdf>] [10] [11] [12]) [13] 
+(./probmethod.tex
+(./deterministicmethods.tex [14]
 Underfull \hbox (badness 10000) in paragraph at lines 30--66
 
  []
@@ -2276,9 +2299,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 30--66
 
  []
 
-[14]) (./ProbabilisticMotivation.tex [15] (./plots/LorenzTraj.tikz)
-(./plots/LorenzX.tikz) (./plots/LorenzY.tikz) (./plots/LorenzZ.tikz)) [16]
-[17] (./strongconvergence.tex [18] [19]) (./weakconvergence.tex [20] [21]
+[15]) (./ProbabilisticMotivation.tex [16] (./plots/LorenzTraj.tikz)
+(./plots/LorenzX.tikz) (./plots/LorenzY.tikz) (./plots/LorenzZ.tikz)) [17]
+(./strongconvergence.tex [18] [19] [20]) (./weakconvergence.tex [21] [22]
 (./plots/weakOrder.tikz
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -2286,12 +2309,12 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-)) (./MonteCarlo.tex [22] [23] [24] [25]
-Underfull \hbox (badness 10000) in paragraph at lines 187--189
+)) (./MonteCarlo.tex [23] [24] [25] [26]
+Underfull \hbox (badness 10000) in paragraph at lines 192--194
 
  []
 
-[26] [27] (./plots/MonteCarloVariance2.tikz
+[27] [28] (./plots/MonteCarloVariance2.tikz
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -2302,14 +2325,16 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-) [28]) (./MLMC.tex [29] [30] [31] [32]) (./Stability.tex)) [33]
-(./BayesianODE.tex (./LikelihoodApprox.tex [34] (./NumericalLikelihood.tex
+)) (./MLMC.tex [29] [30] [31] [32] [33]) (./Stability.tex)) [34]
+(./BayesianODE.tex (./LikelihoodApprox.tex [35] (./NumericalLikelihood.tex
 (./plots/LikelihoodFixedTheta.tikz
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-))) (./NumericalExample.tex [35]
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+))) (./NumericalExample.tex [36]
 Package epstopdf Info: Source file: <plots/Fitznag.eps>
 (epstopdf)                    date: 2016-12-17 13:52:11
 (epstopdf)                    size: 12957274 bytes
@@ -2321,15 +2346,15 @@ d-to.pdf plots/Fitznag.eps>
 (epstopdf)             \includegraphics on input line 10.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/Fitznag-eps-converted-to.pdf, id=693, 439.6425pt x 330.23375pt>
+<plots/Fitznag-eps-converted-to.pdf, id=732, 439.6425pt x 330.23375pt>
 File: plots/Fitznag-eps-converted-to.pdf Graphic file (type pdf)
 
 <use plots/Fitznag-eps-converted-to.pdf>
 Package pdftex.def Info: plots/Fitznag-eps-converted-to.pdf used on input line 
 10.
 (pdftex.def)             Requested size: 426.79141pt x 320.58836pt.
-) (./Convergence.tex [36] [37 <./plots/Fitznag-eps-converted-to.pdf>] [38] [39]
- [40] (./plots/ConvBatchMeans.tikz
+) (./Convergence.tex [37] [38 <./plots/Fitznag-eps-converted-to.pdf>] [39] [40]
+ [41] (./plots/ConvBatchMeans.tikz
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -2337,13 +2362,14 @@ Missing character: There is no ; in font nullfont!
 (./plots/ConvBatchMeans2.tikz
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-) (./plots/ConvGTheta.tikz
+) [42] (./plots/ConvGTheta.tikz
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-) (./plots/ConvHell.tikz
+)
+(./plots/ConvHell.tikz
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-) [41])) [42] (./Main.bbl
+))) [43] (./Main.bbl
 
 Class scrartcl Warning: Usage of deprecated font command `\sc'!
 (scrartcl)              You should note, that in 1994 font command `\sc' has
@@ -2498,6 +2524,7 @@ Class scrartcl Warning: Usage of deprecated font command `\sc'!
 (scrartcl)              But for now, KOMA-Script will replace deprecated `\sc'
 (scrartcl)              by `\normalfont \scshape ' on input line 54.
 
+[44]
 
 Class scrartcl Warning: Usage of deprecated font command `\sc'!
 (scrartcl)              You should note, that in 1994 font command `\sc' has
@@ -2582,7 +2609,6 @@ Class scrartcl Warning: Usage of deprecated font command `\sc'!
 (scrartcl)              But for now, KOMA-Script will replace deprecated `\sc'
 (scrartcl)              by `\normalfont \scshape ' on input line 81.
 
-[43]
 
 Class scrartcl Warning: Usage of deprecated font command `\sc'!
 (scrartcl)              You should note, that in 1994 font command `\sc' has
@@ -2612,25 +2638,21 @@ Class scrartcl Warning: Usage of deprecated font command `\sc'!
 (scrartcl)              by `\normalfont \scshape ' on input line 90.
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 26.
- [44]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 26.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 43.
+ [45]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 43.
  (./Main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 26.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 26.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 43.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 43.
 Package rerunfilecheck Info: File `Main.out' has not changed.
-(rerunfilecheck)             Checksum: 209E2398A88DC8167CDCC9E50B50120F;2592.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 26.
+(rerunfilecheck)             Checksum: 1550C0E6BD1738E4A2B1E1DF57130025;2728.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 43.
  ) 
 Here is how much of TeX's memory you used:
- 35007 strings out of 493304
- 1002128 string characters out of 6139871
- 2288481 words of memory out of 5000000
- 37516 multiletter control sequences out of 15000+600000
+ 35056 strings out of 493304
+ 1002862 string characters out of 6139871
+ 2290487 words of memory out of 5000000
+ 37551 multiletter control sequences out of 15000+600000
  20804 words of font info for 77 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  77i,23n,94p,80836b,2337s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2655,10 +2677,10 @@ fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
 amsfonts/symbols/msbm10.pfb>
-Output written on Main.pdf (46 pages, 5462122 bytes).
+Output written on Main.pdf (50 pages, 5470828 bytes).
 PDF statistics:
- 887 PDF objects out of 1000 (max. 8388607)
- 789 compressed objects within 8 object streams
- 236 named destinations out of 1000 (max. 500000)
- 293 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 929 PDF objects out of 1000 (max. 8388607)
+ 826 compressed objects within 9 object streams
+ 241 named destinations out of 1000 (max. 500000)
+ 309 words of extra memory for PDF output out of 10000 (max. 10000000)
 

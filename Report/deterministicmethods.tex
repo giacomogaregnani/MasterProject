@@ -12,7 +12,7 @@ Let us give the definition of this class of numerical methods.
 \end{equation}
 where $K_i$ are vectors of $\R^d$ for all $i = 1, \ldots, s$ and are called the stages of the method.
 \end{definition}
-\begin{remark} Runge-Kutta methods are usually defined for non-autonomous systems taking into account evaluation points $c_i$ for $i = 1, \ldots, s$. In our case, we focus on autonomous systems of the form \eqref{eq:ODE}, therefore we do not include the evaluation points $c_i$ in the definition of Runge-Kutta methods. Let us remark that for the consistency of the numerical method it is required that $c_i = \sksum_{j=1}^s a_{ij}$, therefore the coefficients $c_i$ are uniquely defined given the coefficients $a_{ij}$. Moreover, any non-autonomous system can be transformed in autonomous form via a straightforward transformation. 
+\begin{remark} Runge-Kutta methods are usually defined for non-autonomous systems taking into account evaluation points $c_i$ for $i = 1, \ldots, s$. In our case, we focus on autonomous systems of the form \eqref{eq:ODE}, therefore we do not include the evaluation points $c_i$ in the definition of Runge-Kutta methods. Let us remark that for the consistency of the numerical method it is required that $c_i = \sksum_{j=1}^s a_{ij}$, therefore the coefficients $c_i$ are uniquely defined given the coefficients $a_{ij}$. Moreover, any non-autonomous system can be transformed in autonomous form via a straightforward change of variables. 
 \end{remark}
 \noindent Runge-Kutta methods are completely defined by their coefficients $a_{ij}, b_i$. Therefore, these coefficients together with the evaluation points $c_i$, are usually organized graphically in a table called \textit{Butcher tableau}, i.e.,
 \begin{center}
@@ -27,7 +27,7 @@ where $K_i$ are vectors of $\R^d$ for all $i = 1, \ldots, s$ and are called the 
 This graphical representation allows to present in a compact form the numerical method. The family of Runge-Kutta methods is divided in two subsets, explicit and implicit methods.
 \begin{definition} A Runge-Kutta method is explicit if and only if $a_{ij} = 0$ for all $i \leq j \leq s$, otherwise it is implicit. 
 \end{definition}
-\noindent The main difference from an implementation point of view between explicit and implicit methods is that implicit methods require the solution of a nonlinear system of equations at each time step, while explicit methods are completely defined thanks to a recursive process. Therefore, implicit methods require a higher computational cost than explicit methods. On the other side, implicit methods are endowed with favorable properties which are not achievable by explicit methods. In this work, we will mainly use explicit methods, as Monte Carlo simulations will be required and the computational cost given by implicit methods would not be affordable. In particular, we will consider for our examples mainly three numerical schemes, the Explicit Euler (EE), the explicit midpoint (MP) and the classic Runge-Kutta (RK4) method, which are defined by the following Butcher tableaux \\ \\
+\noindent The main difference from an implementation point of view between explicit and implicit methods is that implicit methods require the solution of a nonlinear system of equations at each time step, while explicit methods are completely defined thanks to a recursive process. Therefore, implicit methods require a higher computational cost than explicit methods, as fixed point or Newton iterations have to be employed at each time step to compute the solution. On the other side, implicit methods are endowed with favorable properties which are not achievable by explicit methods. In this work, we will mainly consider explicit methods, as Monte Carlo simulations will be required and the computational cost given by implicit methods would not be affordable. In particular, we will consider for our examples mainly three numerical schemes, the Explicit Euler (EE), the explicit midpoint (MP) and the classic Runge-Kutta (RK4) method, which are defined by the following Butcher tableaux \\ \\
 \begin{minipage}{0.2\linewidth} 
 	\begin{center}
 		(EE)
@@ -64,11 +64,10 @@ This graphical representation allows to present in a compact form the numerical 
 \end{minipage} \\ \\
 As we can remark from their tableaux, these methods are all explicit, with one, two and four stages respectively.
 
-
 One relevant property of Runge-Kutta methods in the frame of this work is the order of convergence, defined as follows. 
 \begin{definition} Let us consider a sufficiently smooth differential equation \eqref{eq:ODE} and one step of the Runge-Kutta method defined in Definition \ref{def:RK}. If there exist $q > 0$ and a positive constant $C$ independent of $h$ such that 
 \begin{equation}
-	\abs{u(h)-U_1} \leq Ch^{q+1},
+	\norm{u(h)-U_1} \leq Ch^{q+1},
 \end{equation}
 then the method has local order $q$. 
 \end{definition} 

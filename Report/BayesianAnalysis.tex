@@ -1,4 +1,4 @@
-\section{Bayesian statistics and Markov chain Monte Carlo}
+\section{Bayesian statistics and Markov chain Monte Carlo}\label{sec:ONE}
 
 In the following section we will briefly discuss the main features of a Bayesian statistical approach, comparing it with the classical inferential statistics. Then, we will present a class of techniques used to practically perform Bayesian inference, the Markov chain Monte Carlo (commonly denoted with the acronym MCMC), discussing some of the possible implementations and properties of these methods.
 \subsection{Bayes' formula}
@@ -121,11 +121,11 @@ where $\theta^{(k)}$, $k = 1, \ldots, N$, is a set of realizations of $\theta$. 
 	}
 }
 \end{algorithm}
-In this paragraph we will introduce one of the most successful MCMC methods, the Metropolis-Hastings method (MH). In MH, the samples forming the Markov chain are generated following a \textit{proposal distribution} $q\colon \R^{N_p} \cross \R^{N_p} \to \R^+$ which satisfies the condition
+In this paragraph we will introduce one of the most successful MCMC algorithms, the Metropolis-Hastings method (MH). In MH, the samples forming the Markov chain are generated following a \textit{proposal distribution} $q\colon \R^{N_p} \cross \R^{N_p} \to \R^+$ which satisfies the condition
 \begin{equation}
 	\int_{\R^{N_p}}q(x, y)\dd y = 1,
 \end{equation}
-thus $q$ is a probability distribution in its second argument. Given the current guess $\theta^{(i)}$, MH proposes the new element of the Markov Chain drawing a value $\vartheta$ from $q(\theta^{(i)}, \cdot)$. The new guess is not automatically accepted as the new element $\theta^{(i+1)}$ of the Markov chain, but it is accepted with a probability, that we denote by $\alpha(\theta^{(i)}, \theta^{(i+1)})$. Formally, the transition kernel $P_{\MH}$ representing the move made by MH from $\theta^{(i)}$ to $\theta^{(i+1)}$ is given by \cite{MLR16}
+thus $q$ is a probability density function in its second argument. Given the current guess $\theta^{(i)}$, MH proposes the new element of the Markov Chain drawing a value $\vartheta$ from $q(\theta^{(i)}, \cdot)$. The new guess is not automatically accepted as the new element $\theta^{(i+1)}$ of the Markov chain, but it is accepted with a probability, that we denote by $\alpha(\theta^{(i)}, \theta^{(i+1)})$. Formally, the transition kernel $P_{\MH}$ representing the move made by MH from $\theta^{(i)}$ to $\theta^{(i+1)}$ is given by \cite{MLR16}
 \begin{equation}
 	P_{\MH}(\theta^{(i)}, \theta^{(i+1)}) = \alpha(\theta^{(i)}, \theta^{(i+1)})q(\theta^{(i)},\theta^{(i+1)}) + \delta_{\theta^{(i)}}(\theta^{(i+1)})\rho(\theta^{(i)}),
 \end{equation}
@@ -133,11 +133,11 @@ where $\delta_x$ is the Dirac delta centered in $x$ and $\rho$ is defined as
 \begin{equation}
 	\rho(\theta^{(i)}) \defeq 1 - \int_{\R^{N_p}}\alpha(\theta^{(i)}, x)q(\theta^{(i)}, x)\dd x.
 \end{equation}
-In words, the expression of the transition kernel $P_{\MH}$ is equivalent to stating that the new guess $\vartheta$ generated from the proposal distribution is accepted with probability $\alpha$ and rejected with probability $1 - \alpha$. Imposing that $P_{\MH}$ satisfies the hypotheses that guarantee the convergence of MCMC, we can get the expression of the acceptance probability in closed form as 
+In words, the expression of the transition kernel $P_{\MH}$ is equivalent to stating that the new guess $\vartheta$ generated from the proposal distribution is accepted with probability $\alpha$ and rejected with probability $1 - \alpha$. Imposing that $P_{\MH}$ satisfies the hypotheses that guarantee the convergence of MCMC \cite{KaS05}, we can get the expression of the acceptance probability in closed form as 
 \begin{equation}\label{eq:MHalpha}
 	\alpha(\theta^{(i)}, \vartheta) = \min\left\{\frac{\pi(\vartheta)q(\vartheta, \theta^{(i)})}{\pi(\theta^{(i)})q(\theta^{(i)}, \vartheta)}, 1\right\}.
 \end{equation}
-As it is possible to remark from its pseudo-code, given in Algorithm \ref{alg:MH}, MH is extremely simple to implement on a computer in any programming language. In fact, the only choice left to the user of a MH algorithm is the proposal distribution $q(x,y)$. Unfortunately, this choice could impact negatively the behavior of MH, slowing dramatically its convergence towards the stationary distribution of the Markov chain. Let us first remark that if the proposal distribution is a symmetric function in its two arguments, i.e., $q(x, y) = q(y, x)$,  the expression of the acceptance probability simplifies to
+As it is possible to remark from its pseudo-code, given in Algorithm \ref{alg:MH}, MH is extremely simple to implement on a computer in any programming language. In fact, the only choice left in practice is the proposal distribution $q(x,y)$. Unfortunately, this choice could impact negatively the behavior of MH, slowing dramatically its convergence towards the stationary distribution of the Markov chain. Let us first remark that if the proposal distribution is a symmetric function in its two arguments, i.e., $q(x, y) = q(y, x)$,  the expression of the acceptance probability simplifies to
 \begin{equation}\label{eq:MHalphasym}
 	\alpha(\theta^{(i)}, \vartheta) = \min\left\{\frac{\pi(\vartheta)}{\pi(\theta^{(i)})}, 1\right\}.
 \end{equation}
@@ -173,9 +173,9 @@ In the following paragraphs we will present two approaches to modify MH targetin
 		Compute $S_{i+1}$ as in \eqref{eq:RAMupdate} \;
 	}
 \end{algorithm}
-In the frame of MH algorithms, it is important to have a control on the \textit{acceptance ratio}, i.e., the ratio of new proposed values $\vartheta$ that are included in the Markov chain $\{\theta^{(i)}\}_{i\geq 0}$. In the MH frame, the acceptance ratio depends on the chosen proposal distribution, as if the new guess produced via the proposal distribution have a low probability of being accepted, a low value of acceptance ratio will result from the algorithm. If the initial proposal distribution does not provide with acceptable values $\vartheta$, it may be necessary to tune it during the advancement of MH. An algorithm which targets this issue is the robust adaptive Metropolis (RAM) \cite{Vih12}. 
+In the frame of MH algorithms, it is important to have a control on the \textit{acceptance ratio}, i.e., the ratio of new proposed values $\vartheta$ that are included in the Markov chain $\{\theta^{(i)}\}_{i\geq 0}$. In the MH frame, the acceptance ratio is strongly related to the chosen proposal distribution, as if the new guess produced via the proposal distribution have a low probability of being accepted, a low value of acceptance ratio will result from the algorithm. On the other hand, if the acceptance rate is too high, the posterior distribution could be explored too slowly. Often, the optimal acceptance rate for MH are considered to be 0.234 or 0.44 \cite{Vih12}. If the initial proposal distribution does not provide with acceptable values $\vartheta$, it may be necessary to tune it during the advancement of MH. An algorithm which targets this issue is the robust adaptive Metropolis (RAM) \cite{Vih12}. 
 
-Let us consider the case a Gaussian proposal distribution $q(x,y)$ as in \eqref{eq:gaussianProp}. At the $n$-th step of MH the new guess $\vartheta$ of the parameter is given by
+Let us consider the case of a Gaussian proposal distribution $q(x,y)$ as in \eqref{eq:gaussianProp}. At the $n$-th step of MH the new guess $\vartheta$ of the parameter is given by
 \begin{equation}
 \vartheta = \theta^{(n)} + z, \quad Z \sim \mathcal{N}(0, \Sigma),
 \end{equation}
@@ -187,11 +187,11 @@ with $S_n$ a lower triangular positive definite matrix and $I$ the identity matr
 \begin{equation}\label{eq:RAMupdate}
 S_{n+1}S_{n+1}^T = S_n\left(I + \eta_n\left(\alpha(\theta^{(n)}, \vartheta) - \alpha^*\right)\frac{z_nz_n^T}{z_n^Tz_n}\right)S_n^T.
 \end{equation}
-Hence, we can compute $S_{n+1}$ as the Cholesky factorization of the right hand side. Let us remark that this update has to be performed at each iteration of RAM, both in case $\vartheta$ is accepted and rejected. The sequence $\left\{\eta_n\right\}_{n\geq 1}$ can be any sequence decaying to zero with $n$. In this work, we consider \cite{Vih12}
+Let us remark that if $S_n$ is symmetric definite positive, then the right hand side of the equality above is symmetric definite positive. Hence, we can compute $S_{n+1}$ with a Cholesky factorization. Let us remark that this update has to be performed at each iteration of RAM, both in case $\vartheta$ is accepted and rejected. The sequence $\left\{\eta_n\right\}_{n\geq 1}$ can be any sequence decaying to zero with $n$. In \cite{Vih12}, the author suggests the choice
 \begin{equation}
-\eta_n = n^{-\gamma}, \quad 0.5 < \gamma \leq 1.
+\eta_n = n^{-\gamma}, \quad 0.5 < \gamma \leq 1,
 \end{equation}
-Often the computational cost needed for the evaluation of the posterior distribution is high with respect to the dimension $N_p$ of the parameter space. Therefore, performing a Cholesky factorization at each iteration, which has a complexity of $\OO(N_p^3)$, does not spoil the performances of RAM with respect to a standard MH. In Algorithm \ref{alg:RAM} we give the pseudo-code for the RAM update.
+which guarantees convergence of RAM to the invariant distribution. Often the computational cost needed for the evaluation of the posterior distribution is high with respect to the dimension $N_p$ of the parameter space. Therefore, performing a Cholesky factorization at each iteration, which has a complexity of $\OO(N_p^3)$, does not spoil the performances of RAM with respect to a standard MH. In Algorithm \ref{alg:RAM} we give the pseudo-code for the RAM update.
 
 We now present a numerical example showing the optimal behavior of RAM. Let us consider a two-dimensional real random variable $X$ whose distribution admits the following density
 \begin{equation}\label{eq:RAMtestPi}
@@ -245,7 +245,7 @@ where the values $\xi^{(i)}$ are realizations of the random variable $\xi$. The 
 \end{equation}
 The pseudo-code of the resulting algorithm is shown in Algorithm \ref{alg:MCWM}. Let us remark that if the estimator $\pi_M(\theta^{(i)})$ at the $i$-th iteration of MCMC is computed at each iteration and not recycled from the previous iterations, the resulting algorithm is often referred to as Monte Carlo within Metropolis (MCWM) \cite{AnR09} or noisy pseudo-marginal Metropolis \cite{MLR16}. Even though recomputing the estimator may be computationally expensive, the resulting Markov chain has an higher acceptance ratio, i.e., it explores the relevant values of the parameter $\theta$ faster, therefore defining better the posterior distribution. The main issue that has been addressed by the research on this kind of pseudo-marginal algorithms is whether the invariant distribution of the Markov chain converges to the marginal posterior distribution of the random variable $\theta$. It has been shown \cite{AnR09, MLR16} that under appropriate assumptions the following properties are valid
 \begin{enumerate}
-	\item the transition kernel $P_M$ given by \eqref{eq:MCWMalpha} converges to an invariant distribution $\pi_M$ with the number of iterations $N$ of MCMC if the number of Monte Carlo draws $M$ is large enough \cite[Theorem 9]{AnR09},
+	\item the transition kernel $P_M$ given by \eqref{eq:MCWMalpha} converges to an invariant distribution $\pi_M$ with respect to the number of iterations $N$ of MCMC if the number of Monte Carlo draws $M$ is large enough \cite[Theorem 9]{AnR09},
 	\item the invariant distribution $\pi_M$ obtained with MCWM converges to the true marginal distribution $\pi$ if $M$ tends to infinity \cite[Theorem 4.1]{MLR16},
 	\item under stronger assumptions, it is possible to obtain convergence rates of $\pi_M$ to $\pi$ with respect to $M$ \cite[Theorem 4.2 and Proposition 4.1]{MLR16}.
 \end{enumerate}
