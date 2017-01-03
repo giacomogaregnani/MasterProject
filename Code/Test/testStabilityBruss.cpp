@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
     int stages = static_cast<int>(std::ceil(sqrt(0.5 * h * lambda))) + 1;
     unsigned long int nStab = static_cast<unsigned long int> (finalTime / h);
     std::cout << "Required number of stages : " << stages << std::endl;
-    RKC stabSolver(testODE.size, testODE.odeFunc, testODE.refParam, stages, 0.0);
+    RKC stabSolver(testODE, testODE.refParam, stages, 0.0);
     t = 0.0;
     solution = testODE.initialCond;
     results << t << "\t" << solution.transpose() << std::endl;

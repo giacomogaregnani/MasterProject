@@ -6,7 +6,7 @@
 #define PI 3.1415926535897
 
 
-std::vector<VectorXd> MetropolisHastings(odeDef odeModel, std::vector<double>& param, double sigma,
+std::vector<VectorXd> MetropolisBruss(odeDef odeModel, std::vector<double>& param, double sigma,
                                          double h, double finalTime, std::vector<VectorXd>& data, std::vector<double>& dataTimes,
                                          VectorXd priorMean, VectorXd priorVariance, int internalMC,
                                          int nStepsMC, double varData, long int* cost, bool posPar,
@@ -34,12 +34,7 @@ std::vector<VectorXd> MetropolisHastings(odeDef odeModel, std::vector<double>& p
         paramVec(i) = param[i];
     }
 
-    /* Butcher butcher(GAUSS, 4);
-    MatrixXd A = butcher.getA();
-    VectorXd b = butcher.getB(); */
-
     // Compute the posterior on the initial guess
-    // impProbMethod solver(odeModel, h, param, sigma, A, b, 4);
     ProbMethod<MidPoint> solver(odeModel, h, param, sigma);
     std::vector<VectorXd> solutionAtDataTimes(nData, VectorXd(odeModel.size));
     for (MCindex = 0; MCindex < internalMC; MCindex++) {

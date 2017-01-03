@@ -2,21 +2,20 @@
 
 // STABILIZED PROBABILISTIC METHOD
 template <class T> 
-sProbMethod<T>::sProbMethod(int n, double timestep,
-							VectorXd initialCond, std::vector<double> paramVec,
-							VectorXd (*func) (VectorXd, std::vector<double>&),
-							double stoch, int nRKCStages, double damping)
+sProbMethod<T>::sProbMethod(odeDef ODE, double timestep,
+							std::vector<double> paramVec, double stoch,
+							int nRKCStages, double damping)
 {
-	detSolver = std::make_shared<T>(n, func, paramVec, nRKCStages, damping);
+	detSolver = std::make_shared<T>(ODE, paramVec, nRKCStages, damping);
 	detSolver->computeStageCoeff(timestep);
-	solution = initialCond;
+	solution = ODE.initialCond;
 	sigma = stoch;
 	rootsigma = sqrt(sigma); 
-	size = n;
+	size = ODE.size;
 	h = timestep;
 	int detOrder = detSolver->getOrder();
 	hfunc = pow(h, detOrder + 0.5);
-	IC = initialCond;
+	IC = ODE.initialCond;
 	parameters = paramVec;
 	nStages = nRKCStages;
 }

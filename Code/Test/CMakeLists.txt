@@ -64,40 +64,37 @@ target_link_libraries(invMeas Solver)
 #		gaussMetropolis.cpp testMH.cpp)
 #target_link_libraries(likEst Solver)
 
-add_executable(mcmcConv testMCMCconvergence.cpp
-		problems.hpp problems.cpp
-		mcmcTools.hpp mcmcTools.cpp
-		Metropolis.cpp sMetropolis.cpp
-		MetropolisConv.cpp
-		#mlMetropolis.cpp
-		impMetropolisConv.cpp
-		smlMetropolis.cpp
-		MetropolisDet.cpp
-		gaussMetropolis.cpp testMH.cpp)
-target_link_libraries(mcmcConv Solver)
+#add_executable(mcmcConv testMCMCconvergence.cpp
+#		problems.hpp problems.cpp
+#		mcmcTools.hpp mcmcTools.cpp
+#		Metropolis.cpp 
+#		sMetropolis.cpp
+#		MetropolisConv.cpp
+#		mlMetropolis.cpp
+#		impMetropolisConv.cpp
+#		smlMetropolis.cpp
+#		MetropolisDet.cpp
+#		gaussMetropolis.cpp 
+#		testMH.cpp)
+#target_link_libraries(mcmcConv Solver)
 
 add_executable(mcmcConvFix MCMCconvFix.cpp
 		problems.hpp problems.cpp
 		mcmcTools.hpp mcmcTools.cpp
-		Metropolis.cpp sMetropolis.cpp
+		Metropolis.cpp
 		MetropolisConv.cpp
-		#mlMetropolis.cpp
 		impMetropolisConv.cpp
-		smlMetropolis.cpp
 		MetropolisDet.cpp
-		gaussMetropolis.cpp testMH.cpp)
+		)
 target_link_libraries(mcmcConvFix Solver)
 
 add_executable(sigmaEst sigmaEst.cpp
 		problems.hpp problems.cpp
 		mcmcTools.hpp mcmcTools.cpp
-		Metropolis.cpp sMetropolis.cpp
+		Metropolis.cpp 
 		MetropolisConv.cpp
-		#mlMetropolis.cpp
 		impMetropolisConv.cpp
-		smlMetropolis.cpp
-		MetropolisDet.cpp
-		gaussMetropolis.cpp testMH.cpp)
+		MetropolisDet.cpp)
 target_link_libraries(sigmaEst Solver)
 
 add_executable(weakConv weakConvergence.cpp
@@ -112,15 +109,12 @@ target_link_libraries(adaptivity Solver)
 add_executable(batchConf batchConfInterval.cpp
 		problems.hpp problems.cpp
 		mcmcTools.hpp mcmcTools.cpp
-		Metropolis.cpp sMetropolis.cpp
+		Metropolis.cpp 
 		MetropolisConv.cpp
-		#mlMetropolis.cpp
 		impMetropolisConv.cpp
-		smlMetropolis.cpp
 		MetropolisDet.cpp
-		gaussMetropolis.cpp testMH.cpp)
+		)
 target_link_libraries(batchConf Solver)
-
 
 # Examples with Brussellator problem
 add_executable(bruss testStabilityBruss.cpp

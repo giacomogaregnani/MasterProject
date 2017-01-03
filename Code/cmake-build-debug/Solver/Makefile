@@ -179,33 +179,6 @@ RungeKutta.cpp.s:
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Solver/CMakeFiles/Solver.dir/build.make Solver/CMakeFiles/Solver.dir/RungeKutta.cpp.s
 .PHONY : RungeKutta.cpp.s
 
-ThirdOrderGauss.o: ThirdOrderGauss.cpp.o
-
-.PHONY : ThirdOrderGauss.o
-
-# target to build an object file
-ThirdOrderGauss.cpp.o:
-	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Solver/CMakeFiles/Solver.dir/build.make Solver/CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.o
-.PHONY : ThirdOrderGauss.cpp.o
-
-ThirdOrderGauss.i: ThirdOrderGauss.cpp.i
-
-.PHONY : ThirdOrderGauss.i
-
-# target to preprocess a source file
-ThirdOrderGauss.cpp.i:
-	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Solver/CMakeFiles/Solver.dir/build.make Solver/CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.i
-.PHONY : ThirdOrderGauss.cpp.i
-
-ThirdOrderGauss.s: ThirdOrderGauss.cpp.s
-
-.PHONY : ThirdOrderGauss.s
-
-# target to generate assembly for a file
-ThirdOrderGauss.cpp.s:
-	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Solver/CMakeFiles/Solver.dir/build.make Solver/CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.s
-.PHONY : ThirdOrderGauss.cpp.s
-
 impProbMethod.o: impProbMethod.cpp.o
 
 .PHONY : impProbMethod.o
@@ -287,33 +260,6 @@ sRungeKutta.cpp.s:
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Solver/CMakeFiles/Solver.dir/build.make Solver/CMakeFiles/Solver.dir/sRungeKutta.cpp.s
 .PHONY : sRungeKutta.cpp.s
 
-smlmc.o: smlmc.cpp.o
-
-.PHONY : smlmc.o
-
-# target to build an object file
-smlmc.cpp.o:
-	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Solver/CMakeFiles/Solver.dir/build.make Solver/CMakeFiles/Solver.dir/smlmc.cpp.o
-.PHONY : smlmc.cpp.o
-
-smlmc.i: smlmc.cpp.i
-
-.PHONY : smlmc.i
-
-# target to preprocess a source file
-smlmc.cpp.i:
-	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Solver/CMakeFiles/Solver.dir/build.make Solver/CMakeFiles/Solver.dir/smlmc.cpp.i
-.PHONY : smlmc.cpp.i
-
-smlmc.s: smlmc.cpp.s
-
-.PHONY : smlmc.s
-
-# target to generate assembly for a file
-smlmc.cpp.s:
-	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Solver/CMakeFiles/Solver.dir/build.make Solver/CMakeFiles/Solver.dir/smlmc.cpp.s
-.PHONY : smlmc.cpp.s
-
 tools.o: tools.cpp.o
 
 .PHONY : tools.o
@@ -356,9 +302,6 @@ help:
 	@echo "... RungeKutta.o"
 	@echo "... RungeKutta.i"
 	@echo "... RungeKutta.s"
-	@echo "... ThirdOrderGauss.o"
-	@echo "... ThirdOrderGauss.i"
-	@echo "... ThirdOrderGauss.s"
 	@echo "... impProbMethod.o"
 	@echo "... impProbMethod.i"
 	@echo "... impProbMethod.s"
@@ -368,9 +311,6 @@ help:
 	@echo "... sRungeKutta.o"
 	@echo "... sRungeKutta.i"
 	@echo "... sRungeKutta.s"
-	@echo "... smlmc.o"
-	@echo "... smlmc.i"
-	@echo "... smlmc.s"
 	@echo "... tools.o"
 	@echo "... tools.i"
 	@echo "... tools.s"

@@ -1143,9 +1143,6 @@
 		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Solver/Structures.hpp">
 			<Option target="Solver"/>
 		</Unit>
-		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Solver/ThirdOrderGauss.cpp">
-			<Option target="Solver"/>
-		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Solver/impProbMethod.cpp">
 			<Option target="Solver"/>
 		</Unit>
@@ -1156,9 +1153,6 @@
 			<Option target="Solver"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Solver/sRungeKutta.hpp">
-			<Option target="Solver"/>
-		</Unit>
-		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Solver/smlmc.cpp">
 			<Option target="Solver"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Solver/tools.cpp">

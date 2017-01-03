@@ -2,6 +2,7 @@
 #define SRUNGEKUTTA_H
 
 #include <Eigen/Dense>
+#include "Structures.hpp"
 
 using namespace Eigen;
 
@@ -26,8 +27,7 @@ private:
 
 	std::vector<VectorXd> K;
 public:	
-	detSROCK(int n, VectorXd (*func) (VectorXd, std::vector<double>&), 
-                 std::vector<double> paramVec, int nRKCStages, double damping);
+	detSROCK(odeDef ODE, std::vector<double> paramVec, int nRKCStages, double damping);
 
 	VectorXd oneStep(VectorXd lastValue, double h, int localStages);
 
@@ -53,8 +53,7 @@ private:
 	VectorXd kCurr;
 
 public:
-	RKC(int n, VectorXd (*func) (VectorXd, std::vector<double>&),
-			 std::vector<double> paramVec, int nRKCStages, double damping);
+	RKC(odeDef ODE, std::vector<double> paramVec, int nRKCStages, double damping);
 
 	VectorXd oneStep(VectorXd lastValue, double h, int localStages);
 

@@ -116,10 +116,9 @@ private:
 
 	int nStages;
 public:
-	sProbMethod(int n, double step,  
-		   VectorXd initialCond, std::vector<double> paramVec,
-		   VectorXd (*func) (VectorXd, std::vector<double>&),
-		   double stoch, int nRCKStages, double damping);
+	sProbMethod(odeDef ODE, double step,
+		   		std::vector<double> paramVec, double stoch,
+				int nRCKStages, double damping);
 
 	VectorXd& getSolution(void);
 
@@ -190,7 +189,7 @@ public:
 };*/
 
 // STABILIZED MULTI-LEVEL MONTE CARLO
-template <class T>
+/* template <class T>
 class sMLMC {
 private:
 	// Solver
@@ -249,10 +248,10 @@ public:
 	double compute(void);
 
 	double gethL(void);
-};
+}; */
 
 // Third order Gauss cubature method
-class ThirdOrderGauss {
+/* class ThirdOrderGauss {
 	// system size
 	int size;
 
@@ -330,6 +329,6 @@ public:
 	MatrixXd getVariance(void);
 
 	double oneStep(VectorXd data, int nSteps);
-};
+}; */
 
 #endif

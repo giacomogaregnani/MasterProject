@@ -5,4 +5,4 @@ Code/data/SigmaExp/*.txt
 Code/data/ProbVsDet/*.txt
 Code/eigen
 Code/build
-Code/cmake-build-debug/*
+Code/cmake-build-debug/**

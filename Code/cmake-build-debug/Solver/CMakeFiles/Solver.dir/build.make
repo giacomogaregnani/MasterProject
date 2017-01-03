@@ -129,33 +129,9 @@ Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.o.provides: Solver/CMakeFiles/Sol
 Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.o.provides.build: Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.o
 
 
-Solver/CMakeFiles/Solver.dir/smlmc.cpp.o: Solver/CMakeFiles/Solver.dir/flags.make
-Solver/CMakeFiles/Solver.dir/smlmc.cpp.o: ../Solver/smlmc.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object Solver/CMakeFiles/Solver.dir/smlmc.cpp.o"
-	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Solver && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solver.dir/smlmc.cpp.o -c /u/anmc/garegnan/Desktop/Project/Code/Solver/smlmc.cpp
-
-Solver/CMakeFiles/Solver.dir/smlmc.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Solver.dir/smlmc.cpp.i"
-	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Solver && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Project/Code/Solver/smlmc.cpp > CMakeFiles/Solver.dir/smlmc.cpp.i
-
-Solver/CMakeFiles/Solver.dir/smlmc.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Solver.dir/smlmc.cpp.s"
-	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Solver && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Project/Code/Solver/smlmc.cpp -o CMakeFiles/Solver.dir/smlmc.cpp.s
-
-Solver/CMakeFiles/Solver.dir/smlmc.cpp.o.requires:
-
-.PHONY : Solver/CMakeFiles/Solver.dir/smlmc.cpp.o.requires
-
-Solver/CMakeFiles/Solver.dir/smlmc.cpp.o.provides: Solver/CMakeFiles/Solver.dir/smlmc.cpp.o.requires
-	$(MAKE) -f Solver/CMakeFiles/Solver.dir/build.make Solver/CMakeFiles/Solver.dir/smlmc.cpp.o.provides.build
-.PHONY : Solver/CMakeFiles/Solver.dir/smlmc.cpp.o.provides
-
-Solver/CMakeFiles/Solver.dir/smlmc.cpp.o.provides.build: Solver/CMakeFiles/Solver.dir/smlmc.cpp.o
-
-
 Solver/CMakeFiles/Solver.dir/RungeKutta.cpp.o: Solver/CMakeFiles/Solver.dir/flags.make
 Solver/CMakeFiles/Solver.dir/RungeKutta.cpp.o: ../Solver/RungeKutta.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object Solver/CMakeFiles/Solver.dir/RungeKutta.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object Solver/CMakeFiles/Solver.dir/RungeKutta.cpp.o"
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Solver && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solver.dir/RungeKutta.cpp.o -c /u/anmc/garegnan/Desktop/Project/Code/Solver/RungeKutta.cpp
 
 Solver/CMakeFiles/Solver.dir/RungeKutta.cpp.i: cmake_force
@@ -179,7 +155,7 @@ Solver/CMakeFiles/Solver.dir/RungeKutta.cpp.o.provides.build: Solver/CMakeFiles/
 
 Solver/CMakeFiles/Solver.dir/sRungeKutta.cpp.o: Solver/CMakeFiles/Solver.dir/flags.make
 Solver/CMakeFiles/Solver.dir/sRungeKutta.cpp.o: ../Solver/sRungeKutta.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object Solver/CMakeFiles/Solver.dir/sRungeKutta.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object Solver/CMakeFiles/Solver.dir/sRungeKutta.cpp.o"
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Solver && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solver.dir/sRungeKutta.cpp.o -c /u/anmc/garegnan/Desktop/Project/Code/Solver/sRungeKutta.cpp
 
 Solver/CMakeFiles/Solver.dir/sRungeKutta.cpp.i: cmake_force
@@ -201,33 +177,9 @@ Solver/CMakeFiles/Solver.dir/sRungeKutta.cpp.o.provides: Solver/CMakeFiles/Solve
 Solver/CMakeFiles/Solver.dir/sRungeKutta.cpp.o.provides.build: Solver/CMakeFiles/Solver.dir/sRungeKutta.cpp.o
 
 
-Solver/CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.o: Solver/CMakeFiles/Solver.dir/flags.make
-Solver/CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.o: ../Solver/ThirdOrderGauss.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object Solver/CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.o"
-	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Solver && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.o -c /u/anmc/garegnan/Desktop/Project/Code/Solver/ThirdOrderGauss.cpp
-
-Solver/CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.i"
-	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Solver && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Project/Code/Solver/ThirdOrderGauss.cpp > CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.i
-
-Solver/CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.s"
-	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Solver && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Project/Code/Solver/ThirdOrderGauss.cpp -o CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.s
-
-Solver/CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.o.requires:
-
-.PHONY : Solver/CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.o.requires
-
-Solver/CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.o.provides: Solver/CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.o.requires
-	$(MAKE) -f Solver/CMakeFiles/Solver.dir/build.make Solver/CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.o.provides.build
-.PHONY : Solver/CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.o.provides
-
-Solver/CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.o.provides.build: Solver/CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.o
-
-
 Solver/CMakeFiles/Solver.dir/tools.cpp.o: Solver/CMakeFiles/Solver.dir/flags.make
 Solver/CMakeFiles/Solver.dir/tools.cpp.o: ../Solver/tools.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object Solver/CMakeFiles/Solver.dir/tools.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object Solver/CMakeFiles/Solver.dir/tools.cpp.o"
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Solver && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solver.dir/tools.cpp.o -c /u/anmc/garegnan/Desktop/Project/Code/Solver/tools.cpp
 
 Solver/CMakeFiles/Solver.dir/tools.cpp.i: cmake_force
@@ -254,10 +206,8 @@ Solver_OBJECTS = \
 "CMakeFiles/Solver.dir/ProbMethod.cpp.o" \
 "CMakeFiles/Solver.dir/sProbMethod.cpp.o" \
 "CMakeFiles/Solver.dir/impProbMethod.cpp.o" \
-"CMakeFiles/Solver.dir/smlmc.cpp.o" \
 "CMakeFiles/Solver.dir/RungeKutta.cpp.o" \
 "CMakeFiles/Solver.dir/sRungeKutta.cpp.o" \
-"CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.o" \
 "CMakeFiles/Solver.dir/tools.cpp.o"
 
 # External object files for target Solver
@@ -266,14 +216,12 @@ Solver_EXTERNAL_OBJECTS =
 Solver/libSolver.a: Solver/CMakeFiles/Solver.dir/ProbMethod.cpp.o
 Solver/libSolver.a: Solver/CMakeFiles/Solver.dir/sProbMethod.cpp.o
 Solver/libSolver.a: Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.o
-Solver/libSolver.a: Solver/CMakeFiles/Solver.dir/smlmc.cpp.o
 Solver/libSolver.a: Solver/CMakeFiles/Solver.dir/RungeKutta.cpp.o
 Solver/libSolver.a: Solver/CMakeFiles/Solver.dir/sRungeKutta.cpp.o
-Solver/libSolver.a: Solver/CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.o
 Solver/libSolver.a: Solver/CMakeFiles/Solver.dir/tools.cpp.o
 Solver/libSolver.a: Solver/CMakeFiles/Solver.dir/build.make
 Solver/libSolver.a: Solver/CMakeFiles/Solver.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX static library libSolver.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX static library libSolver.a"
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Solver && $(CMAKE_COMMAND) -P CMakeFiles/Solver.dir/cmake_clean_target.cmake
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Solver && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Solver.dir/link.txt --verbose=$(VERBOSE)
 
@@ -285,10 +233,8 @@ Solver/CMakeFiles/Solver.dir/build: Solver/libSolver.a
 Solver/CMakeFiles/Solver.dir/requires: Solver/CMakeFiles/Solver.dir/ProbMethod.cpp.o.requires
 Solver/CMakeFiles/Solver.dir/requires: Solver/CMakeFiles/Solver.dir/sProbMethod.cpp.o.requires
 Solver/CMakeFiles/Solver.dir/requires: Solver/CMakeFiles/Solver.dir/impProbMethod.cpp.o.requires
-Solver/CMakeFiles/Solver.dir/requires: Solver/CMakeFiles/Solver.dir/smlmc.cpp.o.requires
 Solver/CMakeFiles/Solver.dir/requires: Solver/CMakeFiles/Solver.dir/RungeKutta.cpp.o.requires
 Solver/CMakeFiles/Solver.dir/requires: Solver/CMakeFiles/Solver.dir/sRungeKutta.cpp.o.requires
-Solver/CMakeFiles/Solver.dir/requires: Solver/CMakeFiles/Solver.dir/ThirdOrderGauss.cpp.o.requires
 Solver/CMakeFiles/Solver.dir/requires: Solver/CMakeFiles/Solver.dir/tools.cpp.o.requires
 
 .PHONY : Solver/CMakeFiles/Solver.dir/requires

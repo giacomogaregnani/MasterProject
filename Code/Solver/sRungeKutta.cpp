@@ -2,18 +2,16 @@
 #include <iostream>
 #include <cmath>
 
-detSROCK::detSROCK(int n, VectorXd (*func) (VectorXd, std::vector<double>&),
-                   std::vector<double> paramVec,
-                   int stages, double damping)
+detSROCK::detSROCK(odeDef ODE, std::vector<double> paramVec, int stages, double damping)
 {
-	f = func;
-	size = n;
+	f = ODE.odeFunc;
+	size = ODE.size;
 	parameters = paramVec;
-	nStages = stages;	
+	nStages = stages;
 	omegaZero = 1.0 + damping / (stages * stages);
-	chebCoeff.resize(nStages + 1);	
+	chebCoeff.resize(nStages + 1);
 	computeChebCoeff(omegaZero);
-	stageCoeff.resize(nStages + 1);	
+	stageCoeff.resize(nStages + 1);
 	K.resize(nStages + 1);
 	for (auto it : K) {
 		it.resize(size);
@@ -78,12 +76,11 @@ void detSROCK::computeStageCoeff(double h)
 }
 
 // Classic first order RKC method
-RKC::RKC(int n, VectorXd (*func) (VectorXd, std::vector<double>&),
-		 std::vector<double> paramVec,
+RKC::RKC(odeDef ODE, std::vector<double> paramVec,
 		 int stages, double damping)
 {
-	f = func;
-	size = n;
+	f = ODE.odeFunc;
+	size = ODE.size;
 	parameters = paramVec;
 	nStages = stages;
 	kOld.resize(size);
