@@ -1,0 +1,31 @@
+\subsection{Numerical example - Brussellator}
+
+Let us consider the following parabolic PDE
+\begin{equation}
+\left \{
+\begin{aligned}
+	\pdv{u}{t} &= 1 + u^2v + \alpha \pdv[2]{u}{x}, && u = u(x, t)\\
+	\pdv{v}{t} &= 3u - u^2v + \alpha \pdv[2]{v}{x}, && v = v(x, t), \quad x \in \Omega = (0, 1), \quad t \geq 0 \\
+	u(0, t) &= u(1, t) = 1, \\
+	v(0, t) &= v(1, t) = 3, \\
+	u(x, 0) &= 1 + \sin(2\pi x), \\
+	v(x, 0) &= 3,
+\end{aligned}\right.
+\end{equation}
+where $a$, $b$ and $\alpha$ are real parameters. The equation is the Brussellator problem \cite{HaW96}, modeling the quantity of two substances $u$ and $v$ in a chemical reaction. Let us consider a spatial discretization of the domain $\Omega$ on equispaced points $x_i$, where $i = 0, \ldots, N + 1$, with distance $\Delta x = 1 / (N + 1)$. Then, the PDE above can be transformed to a system of ODE's with the method of line, which yields for the internal points
+\begin{equation}\label{eq:BRUSS}
+\begin{aligned}
+u_i &= 1 + u_i^2v_i - 4u_i + \frac{\alpha}{\Delta x^2}(u_{i-1} - 2u_{i} + u_{i+1}), \\
+v_i &= 3u_i - u_i^2v_i + \frac{\alpha}{\Delta x^2}(v_{i-1}-2v_i + v_{i+1}), && i = 1, \ldots, N.
+\end{aligned}
+\end{equation}
+The boundary conditions are then retrieved imposing
+\begin{equation}
+\begin{aligned}
+	u_0(t) &= u_{N+1}(t) = 1,  \\
+	v_0(t) &= v_{N+1}(t) = 3, \\
+	u_i(0) &= 1 + 0.5\sin(2\pi x_i), && i = 1, \ldots, N, \\
+	v_i(0) &= 3, && i = 1, \ldots, N.
+\end{aligned}
+\end{equation}
+

@@ -70,11 +70,11 @@ int main(int argc, char* argv[])
     }
 
     // PARAMETERS OF THE CHAIN
-    int nMCMC = 100000;
+    int nMCMC = 50000;
 
     // DEFINE THE PROBABILISTIC INTEGRATOR
     double sigma = 0.5;
-    double h = 0.01;
+    double h = 0.1;
     int nMC = 1;
 
     // Initialize chains

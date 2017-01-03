@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.10.29)  2 JAN 2017 10:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.10.29)  3 JAN 2017 11:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2318,7 +2318,7 @@ Missing character: There is no ; in font nullfont!
 (./plots/ConvHell.tikz
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-))) [43] (./Main.bbl
+)) (./StiffProblems.tex [43])) [44] (./Main.bbl
 
 Class scrartcl Warning: Usage of deprecated font command `\sc'!
 (scrartcl)              You should note, that in 1994 font command `\sc' has
@@ -2473,7 +2473,6 @@ Class scrartcl Warning: Usage of deprecated font command `\sc'!
 (scrartcl)              But for now, KOMA-Script will replace deprecated `\sc'
 (scrartcl)              by `\normalfont \scshape ' on input line 54.
 
-[44]
 
 Class scrartcl Warning: Usage of deprecated font command `\sc'!
 (scrartcl)              You should note, that in 1994 font command `\sc' has
@@ -2558,6 +2557,7 @@ Class scrartcl Warning: Usage of deprecated font command `\sc'!
 (scrartcl)              But for now, KOMA-Script will replace deprecated `\sc'
 (scrartcl)              by `\normalfont \scshape ' on input line 81.
 
+[45]
 
 Class scrartcl Warning: Usage of deprecated font command `\sc'!
 (scrartcl)              You should note, that in 1994 font command `\sc' has
@@ -2586,21 +2586,21 @@ Class scrartcl Warning: Usage of deprecated font command `\sc'!
 (scrartcl)              But for now, KOMA-Script will replace deprecated `\sc'
 (scrartcl)              by `\normalfont \scshape ' on input line 90.
 
-) [45]
+) [46]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 43.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 43.
  (./Main.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 43.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 43.
 Package rerunfilecheck Info: File `Main.out' has not changed.
-(rerunfilecheck)             Checksum: 1550C0E6BD1738E4A2B1E1DF57130025;2728.
+(rerunfilecheck)             Checksum: D19737C4D6E5F86AAF02D114A436D300;2733.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 43.
  ) 
 Here is how much of TeX's memory you used:
- 38079 strings out of 493105
- 1104390 string characters out of 6137071
- 2424064 words of memory out of 5000000
- 40641 multiletter control sequences out of 15000+600000
+ 38088 strings out of 493105
+ 1104530 string characters out of 6137071
+ 2424127 words of memory out of 5000000
+ 40646 multiletter control sequences out of 15000+600000
  20804 words of font info for 77 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  76i,23n,112p,80836b,2489s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2625,10 +2625,10 @@ fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
 amsfonts/symbols/msbm10.pfb>
-Output written on Main.pdf (50 pages, 5469875 bytes).
+Output written on Main.pdf (51 pages, 5472100 bytes).
 PDF statistics:
- 929 PDF objects out of 1000 (max. 8388607)
- 826 compressed objects within 9 object streams
- 241 named destinations out of 1000 (max. 500000)
+ 934 PDF objects out of 1000 (max. 8388607)
+ 830 compressed objects within 9 object streams
+ 242 named destinations out of 1000 (max. 500000)
  309 words of extra memory for PDF output out of 10000 (max. 10000000)
 
