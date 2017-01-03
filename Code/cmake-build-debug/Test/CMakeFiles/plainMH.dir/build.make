@@ -43,10 +43,10 @@ RM = /u/anmc/garegnan/Downloads/clion-2016.2.3/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /u/anmc/garegnan/Desktop/Code
+CMAKE_SOURCE_DIR = /u/anmc/garegnan/Desktop/Project/Code
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /u/anmc/garegnan/Desktop/Code/cmake-build-debug
+CMAKE_BINARY_DIR = /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include Test/CMakeFiles/plainMH.dir/depend.make
@@ -59,16 +59,16 @@ include Test/CMakeFiles/plainMH.dir/flags.make
 
 Test/CMakeFiles/plainMH.dir/plainMH.cpp.o: Test/CMakeFiles/plainMH.dir/flags.make
 Test/CMakeFiles/plainMH.dir/plainMH.cpp.o: ../Test/plainMH.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object Test/CMakeFiles/plainMH.dir/plainMH.cpp.o"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/plainMH.dir/plainMH.cpp.o -c /u/anmc/garegnan/Desktop/Code/Test/plainMH.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object Test/CMakeFiles/plainMH.dir/plainMH.cpp.o"
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/plainMH.dir/plainMH.cpp.o -c /u/anmc/garegnan/Desktop/Project/Code/Test/plainMH.cpp
 
 Test/CMakeFiles/plainMH.dir/plainMH.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/plainMH.dir/plainMH.cpp.i"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Code/Test/plainMH.cpp > CMakeFiles/plainMH.dir/plainMH.cpp.i
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Project/Code/Test/plainMH.cpp > CMakeFiles/plainMH.dir/plainMH.cpp.i
 
 Test/CMakeFiles/plainMH.dir/plainMH.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/plainMH.dir/plainMH.cpp.s"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Code/Test/plainMH.cpp -o CMakeFiles/plainMH.dir/plainMH.cpp.s
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Project/Code/Test/plainMH.cpp -o CMakeFiles/plainMH.dir/plainMH.cpp.s
 
 Test/CMakeFiles/plainMH.dir/plainMH.cpp.o.requires:
 
@@ -83,16 +83,16 @@ Test/CMakeFiles/plainMH.dir/plainMH.cpp.o.provides.build: Test/CMakeFiles/plainM
 
 Test/CMakeFiles/plainMH.dir/mcmcTools.cpp.o: Test/CMakeFiles/plainMH.dir/flags.make
 Test/CMakeFiles/plainMH.dir/mcmcTools.cpp.o: ../Test/mcmcTools.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object Test/CMakeFiles/plainMH.dir/mcmcTools.cpp.o"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/plainMH.dir/mcmcTools.cpp.o -c /u/anmc/garegnan/Desktop/Code/Test/mcmcTools.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object Test/CMakeFiles/plainMH.dir/mcmcTools.cpp.o"
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/plainMH.dir/mcmcTools.cpp.o -c /u/anmc/garegnan/Desktop/Project/Code/Test/mcmcTools.cpp
 
 Test/CMakeFiles/plainMH.dir/mcmcTools.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/plainMH.dir/mcmcTools.cpp.i"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Code/Test/mcmcTools.cpp > CMakeFiles/plainMH.dir/mcmcTools.cpp.i
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Project/Code/Test/mcmcTools.cpp > CMakeFiles/plainMH.dir/mcmcTools.cpp.i
 
 Test/CMakeFiles/plainMH.dir/mcmcTools.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/plainMH.dir/mcmcTools.cpp.s"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Code/Test/mcmcTools.cpp -o CMakeFiles/plainMH.dir/mcmcTools.cpp.s
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Project/Code/Test/mcmcTools.cpp -o CMakeFiles/plainMH.dir/mcmcTools.cpp.s
 
 Test/CMakeFiles/plainMH.dir/mcmcTools.cpp.o.requires:
 
@@ -107,16 +107,16 @@ Test/CMakeFiles/plainMH.dir/mcmcTools.cpp.o.provides.build: Test/CMakeFiles/plai
 
 Test/CMakeFiles/plainMH.dir/testMH.cpp.o: Test/CMakeFiles/plainMH.dir/flags.make
 Test/CMakeFiles/plainMH.dir/testMH.cpp.o: ../Test/testMH.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object Test/CMakeFiles/plainMH.dir/testMH.cpp.o"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/plainMH.dir/testMH.cpp.o -c /u/anmc/garegnan/Desktop/Code/Test/testMH.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object Test/CMakeFiles/plainMH.dir/testMH.cpp.o"
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/plainMH.dir/testMH.cpp.o -c /u/anmc/garegnan/Desktop/Project/Code/Test/testMH.cpp
 
 Test/CMakeFiles/plainMH.dir/testMH.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/plainMH.dir/testMH.cpp.i"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Code/Test/testMH.cpp > CMakeFiles/plainMH.dir/testMH.cpp.i
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Project/Code/Test/testMH.cpp > CMakeFiles/plainMH.dir/testMH.cpp.i
 
 Test/CMakeFiles/plainMH.dir/testMH.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/plainMH.dir/testMH.cpp.s"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Code/Test/testMH.cpp -o CMakeFiles/plainMH.dir/testMH.cpp.s
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Project/Code/Test/testMH.cpp -o CMakeFiles/plainMH.dir/testMH.cpp.s
 
 Test/CMakeFiles/plainMH.dir/testMH.cpp.o.requires:
 
@@ -143,8 +143,8 @@ Test/plainMH: Test/CMakeFiles/plainMH.dir/mcmcTools.cpp.o
 Test/plainMH: Test/CMakeFiles/plainMH.dir/testMH.cpp.o
 Test/plainMH: Test/CMakeFiles/plainMH.dir/build.make
 Test/plainMH: Test/CMakeFiles/plainMH.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable plainMH"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/plainMH.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable plainMH"
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/plainMH.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 Test/CMakeFiles/plainMH.dir/build: Test/plainMH
@@ -158,10 +158,10 @@ Test/CMakeFiles/plainMH.dir/requires: Test/CMakeFiles/plainMH.dir/testMH.cpp.o.r
 .PHONY : Test/CMakeFiles/plainMH.dir/requires
 
 Test/CMakeFiles/plainMH.dir/clean:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && $(CMAKE_COMMAND) -P CMakeFiles/plainMH.dir/cmake_clean.cmake
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && $(CMAKE_COMMAND) -P CMakeFiles/plainMH.dir/cmake_clean.cmake
 .PHONY : Test/CMakeFiles/plainMH.dir/clean
 
 Test/CMakeFiles/plainMH.dir/depend:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /u/anmc/garegnan/Desktop/Code /u/anmc/garegnan/Desktop/Code/Test /u/anmc/garegnan/Desktop/Code/cmake-build-debug /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/CMakeFiles/plainMH.dir/DependInfo.cmake --color=$(COLOR)
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /u/anmc/garegnan/Desktop/Project/Code /u/anmc/garegnan/Desktop/Project/Code/Test /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/CMakeFiles/plainMH.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : Test/CMakeFiles/plainMH.dir/depend
 

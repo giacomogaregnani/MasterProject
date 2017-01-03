@@ -108,3 +108,27 @@ add_executable(adaptivity Adaptive.cpp
 		problems.hpp problems.cpp
 		mcmcTools.hpp mcmcTools.cpp)
 target_link_libraries(adaptivity Solver)
+
+add_executable(batchConf batchConfInterval.cpp
+		problems.hpp problems.cpp
+		mcmcTools.hpp mcmcTools.cpp
+		Metropolis.cpp sMetropolis.cpp
+		MetropolisConv.cpp
+		#mlMetropolis.cpp
+		impMetropolisConv.cpp
+		smlMetropolis.cpp
+		MetropolisDet.cpp
+		gaussMetropolis.cpp testMH.cpp)
+target_link_libraries(batchConf Solver)
+
+
+# Examples with Brussellator problem
+add_executable(bruss testStabilityBruss.cpp
+		problems.hpp problems.cpp)
+target_link_libraries(bruss Solver)
+
+add_executable(brussMCMC mcmcBruss.cpp
+		problems.hpp problems.cpp
+		mcmcTools.hpp mcmcTools.cpp
+		MetropolisBruss.cpp)
+target_link_libraries(brussMCMC Solver)

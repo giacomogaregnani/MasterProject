@@ -43,10 +43,10 @@ RM = /u/anmc/garegnan/Downloads/clion-2016.2.3/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /u/anmc/garegnan/Desktop/Code
+CMAKE_SOURCE_DIR = /u/anmc/garegnan/Desktop/Project/Code
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /u/anmc/garegnan/Desktop/Code/cmake-build-debug
+CMAKE_BINARY_DIR = /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include Test/CMakeFiles/LorenzTraj.dir/depend.make
@@ -59,16 +59,16 @@ include Test/CMakeFiles/LorenzTraj.dir/flags.make
 
 Test/CMakeFiles/LorenzTraj.dir/LorenzPlotTrajectories.cpp.o: Test/CMakeFiles/LorenzTraj.dir/flags.make
 Test/CMakeFiles/LorenzTraj.dir/LorenzPlotTrajectories.cpp.o: ../Test/LorenzPlotTrajectories.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object Test/CMakeFiles/LorenzTraj.dir/LorenzPlotTrajectories.cpp.o"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LorenzTraj.dir/LorenzPlotTrajectories.cpp.o -c /u/anmc/garegnan/Desktop/Code/Test/LorenzPlotTrajectories.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object Test/CMakeFiles/LorenzTraj.dir/LorenzPlotTrajectories.cpp.o"
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LorenzTraj.dir/LorenzPlotTrajectories.cpp.o -c /u/anmc/garegnan/Desktop/Project/Code/Test/LorenzPlotTrajectories.cpp
 
 Test/CMakeFiles/LorenzTraj.dir/LorenzPlotTrajectories.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/LorenzTraj.dir/LorenzPlotTrajectories.cpp.i"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Code/Test/LorenzPlotTrajectories.cpp > CMakeFiles/LorenzTraj.dir/LorenzPlotTrajectories.cpp.i
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Project/Code/Test/LorenzPlotTrajectories.cpp > CMakeFiles/LorenzTraj.dir/LorenzPlotTrajectories.cpp.i
 
 Test/CMakeFiles/LorenzTraj.dir/LorenzPlotTrajectories.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LorenzTraj.dir/LorenzPlotTrajectories.cpp.s"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Code/Test/LorenzPlotTrajectories.cpp -o CMakeFiles/LorenzTraj.dir/LorenzPlotTrajectories.cpp.s
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Project/Code/Test/LorenzPlotTrajectories.cpp -o CMakeFiles/LorenzTraj.dir/LorenzPlotTrajectories.cpp.s
 
 Test/CMakeFiles/LorenzTraj.dir/LorenzPlotTrajectories.cpp.o.requires:
 
@@ -83,16 +83,16 @@ Test/CMakeFiles/LorenzTraj.dir/LorenzPlotTrajectories.cpp.o.provides.build: Test
 
 Test/CMakeFiles/LorenzTraj.dir/problems.cpp.o: Test/CMakeFiles/LorenzTraj.dir/flags.make
 Test/CMakeFiles/LorenzTraj.dir/problems.cpp.o: ../Test/problems.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object Test/CMakeFiles/LorenzTraj.dir/problems.cpp.o"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LorenzTraj.dir/problems.cpp.o -c /u/anmc/garegnan/Desktop/Code/Test/problems.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object Test/CMakeFiles/LorenzTraj.dir/problems.cpp.o"
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LorenzTraj.dir/problems.cpp.o -c /u/anmc/garegnan/Desktop/Project/Code/Test/problems.cpp
 
 Test/CMakeFiles/LorenzTraj.dir/problems.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/LorenzTraj.dir/problems.cpp.i"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Code/Test/problems.cpp > CMakeFiles/LorenzTraj.dir/problems.cpp.i
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Project/Code/Test/problems.cpp > CMakeFiles/LorenzTraj.dir/problems.cpp.i
 
 Test/CMakeFiles/LorenzTraj.dir/problems.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LorenzTraj.dir/problems.cpp.s"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Code/Test/problems.cpp -o CMakeFiles/LorenzTraj.dir/problems.cpp.s
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Project/Code/Test/problems.cpp -o CMakeFiles/LorenzTraj.dir/problems.cpp.s
 
 Test/CMakeFiles/LorenzTraj.dir/problems.cpp.o.requires:
 
@@ -118,8 +118,8 @@ Test/LorenzTraj: Test/CMakeFiles/LorenzTraj.dir/problems.cpp.o
 Test/LorenzTraj: Test/CMakeFiles/LorenzTraj.dir/build.make
 Test/LorenzTraj: Solver/libSolver.a
 Test/LorenzTraj: Test/CMakeFiles/LorenzTraj.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable LorenzTraj"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/LorenzTraj.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable LorenzTraj"
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/LorenzTraj.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 Test/CMakeFiles/LorenzTraj.dir/build: Test/LorenzTraj
@@ -132,10 +132,10 @@ Test/CMakeFiles/LorenzTraj.dir/requires: Test/CMakeFiles/LorenzTraj.dir/problems
 .PHONY : Test/CMakeFiles/LorenzTraj.dir/requires
 
 Test/CMakeFiles/LorenzTraj.dir/clean:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && $(CMAKE_COMMAND) -P CMakeFiles/LorenzTraj.dir/cmake_clean.cmake
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && $(CMAKE_COMMAND) -P CMakeFiles/LorenzTraj.dir/cmake_clean.cmake
 .PHONY : Test/CMakeFiles/LorenzTraj.dir/clean
 
 Test/CMakeFiles/LorenzTraj.dir/depend:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /u/anmc/garegnan/Desktop/Code /u/anmc/garegnan/Desktop/Code/Test /u/anmc/garegnan/Desktop/Code/cmake-build-debug /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/CMakeFiles/LorenzTraj.dir/DependInfo.cmake --color=$(COLOR)
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /u/anmc/garegnan/Desktop/Project/Code /u/anmc/garegnan/Desktop/Project/Code/Test /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/CMakeFiles/LorenzTraj.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : Test/CMakeFiles/LorenzTraj.dir/depend
 

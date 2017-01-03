@@ -43,10 +43,10 @@ RM = /u/anmc/garegnan/Downloads/clion-2016.2.3/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /u/anmc/garegnan/Desktop/Code
+CMAKE_SOURCE_DIR = /u/anmc/garegnan/Desktop/Project/Code
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /u/anmc/garegnan/Desktop/Code/cmake-build-debug
+CMAKE_BINARY_DIR = /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include Test/CMakeFiles/plotter.dir/depend.make
@@ -59,16 +59,16 @@ include Test/CMakeFiles/plotter.dir/flags.make
 
 Test/CMakeFiles/plotter.dir/plotTrajectories.cpp.o: Test/CMakeFiles/plotter.dir/flags.make
 Test/CMakeFiles/plotter.dir/plotTrajectories.cpp.o: ../Test/plotTrajectories.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object Test/CMakeFiles/plotter.dir/plotTrajectories.cpp.o"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/plotter.dir/plotTrajectories.cpp.o -c /u/anmc/garegnan/Desktop/Code/Test/plotTrajectories.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object Test/CMakeFiles/plotter.dir/plotTrajectories.cpp.o"
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/plotter.dir/plotTrajectories.cpp.o -c /u/anmc/garegnan/Desktop/Project/Code/Test/plotTrajectories.cpp
 
 Test/CMakeFiles/plotter.dir/plotTrajectories.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/plotter.dir/plotTrajectories.cpp.i"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Code/Test/plotTrajectories.cpp > CMakeFiles/plotter.dir/plotTrajectories.cpp.i
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Project/Code/Test/plotTrajectories.cpp > CMakeFiles/plotter.dir/plotTrajectories.cpp.i
 
 Test/CMakeFiles/plotter.dir/plotTrajectories.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/plotter.dir/plotTrajectories.cpp.s"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Code/Test/plotTrajectories.cpp -o CMakeFiles/plotter.dir/plotTrajectories.cpp.s
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Project/Code/Test/plotTrajectories.cpp -o CMakeFiles/plotter.dir/plotTrajectories.cpp.s
 
 Test/CMakeFiles/plotter.dir/plotTrajectories.cpp.o.requires:
 
@@ -83,16 +83,16 @@ Test/CMakeFiles/plotter.dir/plotTrajectories.cpp.o.provides.build: Test/CMakeFil
 
 Test/CMakeFiles/plotter.dir/problems.cpp.o: Test/CMakeFiles/plotter.dir/flags.make
 Test/CMakeFiles/plotter.dir/problems.cpp.o: ../Test/problems.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object Test/CMakeFiles/plotter.dir/problems.cpp.o"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/plotter.dir/problems.cpp.o -c /u/anmc/garegnan/Desktop/Code/Test/problems.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object Test/CMakeFiles/plotter.dir/problems.cpp.o"
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/plotter.dir/problems.cpp.o -c /u/anmc/garegnan/Desktop/Project/Code/Test/problems.cpp
 
 Test/CMakeFiles/plotter.dir/problems.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/plotter.dir/problems.cpp.i"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Code/Test/problems.cpp > CMakeFiles/plotter.dir/problems.cpp.i
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Project/Code/Test/problems.cpp > CMakeFiles/plotter.dir/problems.cpp.i
 
 Test/CMakeFiles/plotter.dir/problems.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/plotter.dir/problems.cpp.s"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Code/Test/problems.cpp -o CMakeFiles/plotter.dir/problems.cpp.s
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Project/Code/Test/problems.cpp -o CMakeFiles/plotter.dir/problems.cpp.s
 
 Test/CMakeFiles/plotter.dir/problems.cpp.o.requires:
 
@@ -118,8 +118,8 @@ Test/plotter: Test/CMakeFiles/plotter.dir/problems.cpp.o
 Test/plotter: Test/CMakeFiles/plotter.dir/build.make
 Test/plotter: Solver/libSolver.a
 Test/plotter: Test/CMakeFiles/plotter.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable plotter"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/plotter.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable plotter"
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/plotter.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 Test/CMakeFiles/plotter.dir/build: Test/plotter
@@ -132,10 +132,10 @@ Test/CMakeFiles/plotter.dir/requires: Test/CMakeFiles/plotter.dir/problems.cpp.o
 .PHONY : Test/CMakeFiles/plotter.dir/requires
 
 Test/CMakeFiles/plotter.dir/clean:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && $(CMAKE_COMMAND) -P CMakeFiles/plotter.dir/cmake_clean.cmake
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && $(CMAKE_COMMAND) -P CMakeFiles/plotter.dir/cmake_clean.cmake
 .PHONY : Test/CMakeFiles/plotter.dir/clean
 
 Test/CMakeFiles/plotter.dir/depend:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /u/anmc/garegnan/Desktop/Code /u/anmc/garegnan/Desktop/Code/Test /u/anmc/garegnan/Desktop/Code/cmake-build-debug /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/CMakeFiles/plotter.dir/DependInfo.cmake --color=$(COLOR)
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /u/anmc/garegnan/Desktop/Project/Code /u/anmc/garegnan/Desktop/Project/Code/Test /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/CMakeFiles/plotter.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : Test/CMakeFiles/plotter.dir/depend
 

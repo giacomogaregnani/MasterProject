@@ -43,10 +43,10 @@ RM = /u/anmc/garegnan/Downloads/clion-2016.2.3/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /u/anmc/garegnan/Desktop/Code
+CMAKE_SOURCE_DIR = /u/anmc/garegnan/Desktop/Project/Code
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /u/anmc/garegnan/Desktop/Code/cmake-build-debug
+CMAKE_BINARY_DIR = /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include Test/CMakeFiles/plotGauss.dir/depend.make
@@ -59,16 +59,16 @@ include Test/CMakeFiles/plotGauss.dir/flags.make
 
 Test/CMakeFiles/plotGauss.dir/plotGaussTrajectories.cpp.o: Test/CMakeFiles/plotGauss.dir/flags.make
 Test/CMakeFiles/plotGauss.dir/plotGaussTrajectories.cpp.o: ../Test/plotGaussTrajectories.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object Test/CMakeFiles/plotGauss.dir/plotGaussTrajectories.cpp.o"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/plotGauss.dir/plotGaussTrajectories.cpp.o -c /u/anmc/garegnan/Desktop/Code/Test/plotGaussTrajectories.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object Test/CMakeFiles/plotGauss.dir/plotGaussTrajectories.cpp.o"
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/plotGauss.dir/plotGaussTrajectories.cpp.o -c /u/anmc/garegnan/Desktop/Project/Code/Test/plotGaussTrajectories.cpp
 
 Test/CMakeFiles/plotGauss.dir/plotGaussTrajectories.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/plotGauss.dir/plotGaussTrajectories.cpp.i"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Code/Test/plotGaussTrajectories.cpp > CMakeFiles/plotGauss.dir/plotGaussTrajectories.cpp.i
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Project/Code/Test/plotGaussTrajectories.cpp > CMakeFiles/plotGauss.dir/plotGaussTrajectories.cpp.i
 
 Test/CMakeFiles/plotGauss.dir/plotGaussTrajectories.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/plotGauss.dir/plotGaussTrajectories.cpp.s"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Code/Test/plotGaussTrajectories.cpp -o CMakeFiles/plotGauss.dir/plotGaussTrajectories.cpp.s
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Project/Code/Test/plotGaussTrajectories.cpp -o CMakeFiles/plotGauss.dir/plotGaussTrajectories.cpp.s
 
 Test/CMakeFiles/plotGauss.dir/plotGaussTrajectories.cpp.o.requires:
 
@@ -83,16 +83,16 @@ Test/CMakeFiles/plotGauss.dir/plotGaussTrajectories.cpp.o.provides.build: Test/C
 
 Test/CMakeFiles/plotGauss.dir/problems.cpp.o: Test/CMakeFiles/plotGauss.dir/flags.make
 Test/CMakeFiles/plotGauss.dir/problems.cpp.o: ../Test/problems.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object Test/CMakeFiles/plotGauss.dir/problems.cpp.o"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/plotGauss.dir/problems.cpp.o -c /u/anmc/garegnan/Desktop/Code/Test/problems.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object Test/CMakeFiles/plotGauss.dir/problems.cpp.o"
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/plotGauss.dir/problems.cpp.o -c /u/anmc/garegnan/Desktop/Project/Code/Test/problems.cpp
 
 Test/CMakeFiles/plotGauss.dir/problems.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/plotGauss.dir/problems.cpp.i"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Code/Test/problems.cpp > CMakeFiles/plotGauss.dir/problems.cpp.i
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /u/anmc/garegnan/Desktop/Project/Code/Test/problems.cpp > CMakeFiles/plotGauss.dir/problems.cpp.i
 
 Test/CMakeFiles/plotGauss.dir/problems.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/plotGauss.dir/problems.cpp.s"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Code/Test/problems.cpp -o CMakeFiles/plotGauss.dir/problems.cpp.s
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /u/anmc/garegnan/Desktop/Project/Code/Test/problems.cpp -o CMakeFiles/plotGauss.dir/problems.cpp.s
 
 Test/CMakeFiles/plotGauss.dir/problems.cpp.o.requires:
 
@@ -118,8 +118,8 @@ Test/plotGauss: Test/CMakeFiles/plotGauss.dir/problems.cpp.o
 Test/plotGauss: Test/CMakeFiles/plotGauss.dir/build.make
 Test/plotGauss: Solver/libSolver.a
 Test/plotGauss: Test/CMakeFiles/plotGauss.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable plotGauss"
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/plotGauss.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable plotGauss"
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/plotGauss.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 Test/CMakeFiles/plotGauss.dir/build: Test/plotGauss
@@ -132,10 +132,10 @@ Test/CMakeFiles/plotGauss.dir/requires: Test/CMakeFiles/plotGauss.dir/problems.c
 .PHONY : Test/CMakeFiles/plotGauss.dir/requires
 
 Test/CMakeFiles/plotGauss.dir/clean:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test && $(CMAKE_COMMAND) -P CMakeFiles/plotGauss.dir/cmake_clean.cmake
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test && $(CMAKE_COMMAND) -P CMakeFiles/plotGauss.dir/cmake_clean.cmake
 .PHONY : Test/CMakeFiles/plotGauss.dir/clean
 
 Test/CMakeFiles/plotGauss.dir/depend:
-	cd /u/anmc/garegnan/Desktop/Code/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /u/anmc/garegnan/Desktop/Code /u/anmc/garegnan/Desktop/Code/Test /u/anmc/garegnan/Desktop/Code/cmake-build-debug /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test /u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/CMakeFiles/plotGauss.dir/DependInfo.cmake --color=$(COLOR)
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /u/anmc/garegnan/Desktop/Project/Code /u/anmc/garegnan/Desktop/Project/Code/Test /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/CMakeFiles/plotGauss.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : Test/CMakeFiles/plotGauss.dir/depend
 

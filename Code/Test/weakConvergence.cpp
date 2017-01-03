@@ -44,13 +44,13 @@ int main(int argc, char* argv[]) {
 
     // Reference no-noise solution
     double hRef = 1e-7;
-    unsigned long int nRef = 1e7; 
+    unsigned long int nRef = 1e7;
     std::cout << "Reference solution time step : " << hRef << std::endl;
     RungeKutta SolverRef(testODE, testODE.refParam);
     VectorXd refSolution = testODE.initialCond;
     double t = 0;
 
-    for (unsigned long int j = 0; j < nRef; j++) {   
+    for (unsigned long int j = 0; j < nRef; j++) {
         refSolution = SolverRef.oneStep(refSolution, hRef);
         t = t + hRef;
     }
@@ -67,7 +67,7 @@ int main(int argc, char* argv[]) {
 
         // Compute realizations
         unsigned long int i;
-        #pragma omp parallel for num_threads(30) private(i, t)
+#pragma omp parallel for num_threads(30) private(i, t)
         for (i = 0; i < M; i++) {
             ProbMethod<MidPoint> Solver(testODE, h, testODE.refParam, 0.5);
             t = 0.0;

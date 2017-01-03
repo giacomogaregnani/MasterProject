@@ -48,10 +48,10 @@ RM = /u/anmc/garegnan/Downloads/clion-2016.2.3/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /u/anmc/garegnan/Desktop/Code
+CMAKE_SOURCE_DIR = /u/anmc/garegnan/Desktop/Project/Code
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /u/anmc/garegnan/Desktop/Code/cmake-build-debug
+CMAKE_BINARY_DIR = /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles /u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /u/anmc/garegnan/Desktop/Code/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -124,6 +124,45 @@ Solver/fast:
 .PHONY : Solver/fast
 
 #=============================================================================
+# Target rules for targets named brussMCMC
+
+# Build rule for target.
+brussMCMC: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 brussMCMC
+.PHONY : brussMCMC
+
+# fast build rule for target.
+brussMCMC/fast:
+	$(MAKE) -f Test/CMakeFiles/brussMCMC.dir/build.make Test/CMakeFiles/brussMCMC.dir/build
+.PHONY : brussMCMC/fast
+
+#=============================================================================
+# Target rules for targets named bruss
+
+# Build rule for target.
+bruss: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 bruss
+.PHONY : bruss
+
+# fast build rule for target.
+bruss/fast:
+	$(MAKE) -f Test/CMakeFiles/bruss.dir/build.make Test/CMakeFiles/bruss.dir/build
+.PHONY : bruss/fast
+
+#=============================================================================
+# Target rules for targets named weakConv
+
+# Build rule for target.
+weakConv: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 weakConv
+.PHONY : weakConv
+
+# fast build rule for target.
+weakConv/fast:
+	$(MAKE) -f Test/CMakeFiles/weakConv.dir/build.make Test/CMakeFiles/weakConv.dir/build
+.PHONY : weakConv/fast
+
+#=============================================================================
 # Target rules for targets named sigmaEst
 
 # Build rule for target.
@@ -135,6 +174,19 @@ sigmaEst: cmake_check_build_system
 sigmaEst/fast:
 	$(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/build
 .PHONY : sigmaEst/fast
+
+#=============================================================================
+# Target rules for targets named batchConf
+
+# Build rule for target.
+batchConf: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 batchConf
+.PHONY : batchConf
+
+# fast build rule for target.
+batchConf/fast:
+	$(MAKE) -f Test/CMakeFiles/batchConf.dir/build.make Test/CMakeFiles/batchConf.dir/build
+.PHONY : batchConf/fast
 
 #=============================================================================
 # Target rules for targets named mcmcConvFix
@@ -150,17 +202,17 @@ mcmcConvFix/fast:
 .PHONY : mcmcConvFix/fast
 
 #=============================================================================
-# Target rules for targets named jacobian
+# Target rules for targets named plainMHconv
 
 # Build rule for target.
-jacobian: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 jacobian
-.PHONY : jacobian
+plainMHconv: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 plainMHconv
+.PHONY : plainMHconv
 
 # fast build rule for target.
-jacobian/fast:
-	$(MAKE) -f Test/CMakeFiles/jacobian.dir/build.make Test/CMakeFiles/jacobian.dir/build
-.PHONY : jacobian/fast
+plainMHconv/fast:
+	$(MAKE) -f Test/CMakeFiles/plainMHconv.dir/build.make Test/CMakeFiles/plainMHconv.dir/build
+.PHONY : plainMHconv/fast
 
 #=============================================================================
 # Target rules for targets named LorenzTraj
@@ -174,6 +226,19 @@ LorenzTraj: cmake_check_build_system
 LorenzTraj/fast:
 	$(MAKE) -f Test/CMakeFiles/LorenzTraj.dir/build.make Test/CMakeFiles/LorenzTraj.dir/build
 .PHONY : LorenzTraj/fast
+
+#=============================================================================
+# Target rules for targets named nonZeroVar
+
+# Build rule for target.
+nonZeroVar: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 nonZeroVar
+.PHONY : nonZeroVar
+
+# fast build rule for target.
+nonZeroVar/fast:
+	$(MAKE) -f Test/CMakeFiles/nonZeroVar.dir/build.make Test/CMakeFiles/nonZeroVar.dir/build
+.PHONY : nonZeroVar/fast
 
 #=============================================================================
 # Target rules for targets named invMeas
@@ -215,6 +280,19 @@ plotGauss/fast:
 .PHONY : plotGauss/fast
 
 #=============================================================================
+# Target rules for targets named adaptivity
+
+# Build rule for target.
+adaptivity: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 adaptivity
+.PHONY : adaptivity
+
+# fast build rule for target.
+adaptivity/fast:
+	$(MAKE) -f Test/CMakeFiles/adaptivity.dir/build.make Test/CMakeFiles/adaptivity.dir/build
+.PHONY : adaptivity/fast
+
+#=============================================================================
 # Target rules for targets named testBE
 
 # Build rule for target.
@@ -226,58 +304,6 @@ testBE: cmake_check_build_system
 testBE/fast:
 	$(MAKE) -f Test/CMakeFiles/testBE.dir/build.make Test/CMakeFiles/testBE.dir/build
 .PHONY : testBE/fast
-
-#=============================================================================
-# Target rules for targets named plainMH
-
-# Build rule for target.
-plainMH: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 plainMH
-.PHONY : plainMH
-
-# fast build rule for target.
-plainMH/fast:
-	$(MAKE) -f Test/CMakeFiles/plainMH.dir/build.make Test/CMakeFiles/plainMH.dir/build
-.PHONY : plainMH/fast
-
-#=============================================================================
-# Target rules for targets named refSol
-
-# Build rule for target.
-refSol: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 refSol
-.PHONY : refSol
-
-# fast build rule for target.
-refSol/fast:
-	$(MAKE) -f Test/CMakeFiles/refSol.dir/build.make Test/CMakeFiles/refSol.dir/build
-.PHONY : refSol/fast
-
-#=============================================================================
-# Target rules for targets named plainMHconv
-
-# Build rule for target.
-plainMHconv: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 plainMHconv
-.PHONY : plainMHconv
-
-# fast build rule for target.
-plainMHconv/fast:
-	$(MAKE) -f Test/CMakeFiles/plainMHconv.dir/build.make Test/CMakeFiles/plainMHconv.dir/build
-.PHONY : plainMHconv/fast
-
-#=============================================================================
-# Target rules for targets named testInv
-
-# Build rule for target.
-testInv: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 testInv
-.PHONY : testInv
-
-# fast build rule for target.
-testInv/fast:
-	$(MAKE) -f Test/CMakeFiles/testInv.dir/build.make Test/CMakeFiles/testInv.dir/build
-.PHONY : testInv/fast
 
 #=============================================================================
 # Target rules for targets named plotter
@@ -331,6 +357,32 @@ testVar/fast:
 	$(MAKE) -f Test/CMakeFiles/testVar.dir/build.make Test/CMakeFiles/testVar.dir/build
 .PHONY : testVar/fast
 
+#=============================================================================
+# Target rules for targets named refSol
+
+# Build rule for target.
+refSol: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 refSol
+.PHONY : refSol
+
+# fast build rule for target.
+refSol/fast:
+	$(MAKE) -f Test/CMakeFiles/refSol.dir/build.make Test/CMakeFiles/refSol.dir/build
+.PHONY : refSol/fast
+
+#=============================================================================
+# Target rules for targets named plainMH
+
+# Build rule for target.
+plainMH: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 plainMH
+.PHONY : plainMH
+
+# fast build rule for target.
+plainMH/fast:
+	$(MAKE) -f Test/CMakeFiles/plainMH.dir/build.make Test/CMakeFiles/plainMH.dir/build
+.PHONY : plainMH/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -340,22 +392,26 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Solver"
+	@echo "... brussMCMC"
+	@echo "... bruss"
+	@echo "... weakConv"
 	@echo "... sigmaEst"
+	@echo "... batchConf"
 	@echo "... mcmcConvFix"
-	@echo "... jacobian"
+	@echo "... plainMHconv"
 	@echo "... LorenzTraj"
+	@echo "... nonZeroVar"
 	@echo "... invMeas"
 	@echo "... binary"
 	@echo "... plotGauss"
+	@echo "... adaptivity"
 	@echo "... testBE"
-	@echo "... plainMH"
-	@echo "... refSol"
-	@echo "... plainMHconv"
-	@echo "... testInv"
 	@echo "... plotter"
 	@echo "... mcmcConv"
 	@echo "... testMerge"
 	@echo "... testVar"
+	@echo "... refSol"
+	@echo "... plainMH"
 .PHONY : help
 
 

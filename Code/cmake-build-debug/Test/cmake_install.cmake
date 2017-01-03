@@ -1,4 +1,4 @@
-# Install script for directory: /u/anmc/garegnan/Desktop/Code/Test
+# Install script for directory: /u/anmc/garegnan/Desktop/Project/Code/Test
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

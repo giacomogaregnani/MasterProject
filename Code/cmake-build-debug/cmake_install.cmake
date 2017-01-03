@@ -1,4 +1,4 @@
-# Install script for directory: /u/anmc/garegnan/Desktop/Code
+# Install script for directory: /u/anmc/garegnan/Desktop/Project/Code
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,8 +34,8 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Solver/cmake_install.cmake")
-  include("/u/anmc/garegnan/Desktop/Code/cmake-build-debug/Test/cmake_install.cmake")
+  include("/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Solver/cmake_install.cmake")
+  include("/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/cmake_install.cmake")
 
 endif()
 
@@ -47,5 +47,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/u/anmc/garegnan/Desktop/Code/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

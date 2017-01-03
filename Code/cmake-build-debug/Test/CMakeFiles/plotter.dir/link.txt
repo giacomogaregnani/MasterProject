@@ -1,1 +1,1 @@
-/usr/bin/c++    -fopenmp -std=c++11 -g   CMakeFiles/plotter.dir/plotTrajectories.cpp.o CMakeFiles/plotter.dir/problems.cpp.o  -o plotter -rdynamic ../Solver/libSolver.a 
+/usr/bin/c++    -Wall -fopenmp -std=c++11 -g   CMakeFiles/plotter.dir/plotTrajectories.cpp.o CMakeFiles/plotter.dir/problems.cpp.o  -o plotter -rdynamic ../Solver/libSolver.a 
