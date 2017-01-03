@@ -8,13 +8,9 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/u/anmc/garegnan/Desktop/Project/Code/Test/Metropolis.cpp" "/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/CMakeFiles/mcmcConvFix.dir/Metropolis.cpp.o"
   "/u/anmc/garegnan/Desktop/Project/Code/Test/MetropolisConv.cpp" "/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/CMakeFiles/mcmcConvFix.dir/MetropolisConv.cpp.o"
   "/u/anmc/garegnan/Desktop/Project/Code/Test/MetropolisDet.cpp" "/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/CMakeFiles/mcmcConvFix.dir/MetropolisDet.cpp.o"
-  "/u/anmc/garegnan/Desktop/Project/Code/Test/gaussMetropolis.cpp" "/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/CMakeFiles/mcmcConvFix.dir/gaussMetropolis.cpp.o"
   "/u/anmc/garegnan/Desktop/Project/Code/Test/impMetropolisConv.cpp" "/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/CMakeFiles/mcmcConvFix.dir/impMetropolisConv.cpp.o"
   "/u/anmc/garegnan/Desktop/Project/Code/Test/mcmcTools.cpp" "/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/CMakeFiles/mcmcConvFix.dir/mcmcTools.cpp.o"
   "/u/anmc/garegnan/Desktop/Project/Code/Test/problems.cpp" "/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/CMakeFiles/mcmcConvFix.dir/problems.cpp.o"
-  "/u/anmc/garegnan/Desktop/Project/Code/Test/sMetropolis.cpp" "/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/CMakeFiles/mcmcConvFix.dir/sMetropolis.cpp.o"
-  "/u/anmc/garegnan/Desktop/Project/Code/Test/smlMetropolis.cpp" "/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/CMakeFiles/mcmcConvFix.dir/smlMetropolis.cpp.o"
-  "/u/anmc/garegnan/Desktop/Project/Code/Test/testMH.cpp" "/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/CMakeFiles/mcmcConvFix.dir/testMH.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

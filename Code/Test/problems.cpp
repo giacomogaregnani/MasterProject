@@ -301,7 +301,7 @@ void setProblem(odeDef* odeModel)
 			odeModel->odeFunc = &robertson;
 			break;
 		case BRUSS:
-			odeModel->size = 300;
+			odeModel->size = 100;
 			(odeModel->initialCond).resize(odeModel->size);
 			double x;
 			for (int i = 0; i < odeModel->size / 2; i++) {

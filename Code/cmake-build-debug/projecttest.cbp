@@ -867,58 +867,6 @@
 					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="mcmcConv">
-				<Option output="/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/mcmcConv" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Project/Code/data&quot;"/>
-					<Add directory="/u/anmc/garegnan/Desktop/Project/Code/eigen"/>
-					<Add directory="/u/anmc/garegnan/Desktop/Project/Code/Solver"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
-					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
-					<Add directory="/usr/include/x86_64-linux-gnu"/>
-					<Add directory="/usr/include"/>
-					<Add directory="/usr/include/c++/4.9"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
-					<Add directory="/usr/include/c++/4.9/backward"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 mcmcConv"/>
-					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="mcmcConv/fast">
-				<Option output="/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/mcmcConv" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Project/Code/data&quot;"/>
-					<Add directory="/u/anmc/garegnan/Desktop/Project/Code/eigen"/>
-					<Add directory="/u/anmc/garegnan/Desktop/Project/Code/Solver"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
-					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
-					<Add directory="/usr/include/x86_64-linux-gnu"/>
-					<Add directory="/usr/include"/>
-					<Add directory="/usr/include/c++/4.9"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
-					<Add directory="/usr/include/c++/4.9/backward"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 mcmcConv/fast"/>
-					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
 			<Target title="testMerge">
 				<Option output="/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/testMerge" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test"/>
@@ -1171,7 +1119,6 @@
 			<Option target="sigmaEst"/>
 			<Option target="batchConf"/>
 			<Option target="mcmcConvFix"/>
-			<Option target="mcmcConv"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Test/MetropolisBruss.cpp">
 			<Option target="brussMCMC"/>
@@ -1180,22 +1127,14 @@
 			<Option target="sigmaEst"/>
 			<Option target="batchConf"/>
 			<Option target="mcmcConvFix"/>
-			<Option target="mcmcConv"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Test/MetropolisDet.cpp">
 			<Option target="sigmaEst"/>
 			<Option target="batchConf"/>
 			<Option target="mcmcConvFix"/>
-			<Option target="mcmcConv"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Test/batchConfInterval.cpp">
 			<Option target="batchConf"/>
-		</Unit>
-		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Test/gaussMetropolis.cpp">
-			<Option target="sigmaEst"/>
-			<Option target="batchConf"/>
-			<Option target="mcmcConvFix"/>
-			<Option target="mcmcConv"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Test/generateRefSol.cpp">
 			<Option target="refSol"/>
@@ -1204,7 +1143,6 @@
 			<Option target="sigmaEst"/>
 			<Option target="batchConf"/>
 			<Option target="mcmcConvFix"/>
-			<Option target="mcmcConv"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Test/invMeasure.cpp">
 			<Option target="invMeas"/>
@@ -1219,7 +1157,6 @@
 			<Option target="mcmcConvFix"/>
 			<Option target="plainMHconv"/>
 			<Option target="adaptivity"/>
-			<Option target="mcmcConv"/>
 			<Option target="plainMH"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Test/mcmcTools.hpp">
@@ -1229,7 +1166,6 @@
 			<Option target="mcmcConvFix"/>
 			<Option target="plainMHconv"/>
 			<Option target="adaptivity"/>
-			<Option target="mcmcConv"/>
 			<Option target="plainMH"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Test/nonZeroVar.cpp">
@@ -1261,7 +1197,6 @@
 			<Option target="adaptivity"/>
 			<Option target="testBE"/>
 			<Option target="plotter"/>
-			<Option target="mcmcConv"/>
 			<Option target="testVar"/>
 			<Option target="refSol"/>
 		</Unit>
@@ -1279,24 +1214,11 @@
 			<Option target="adaptivity"/>
 			<Option target="testBE"/>
 			<Option target="plotter"/>
-			<Option target="mcmcConv"/>
 			<Option target="testVar"/>
 			<Option target="refSol"/>
 		</Unit>
-		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Test/sMetropolis.cpp">
-			<Option target="sigmaEst"/>
-			<Option target="batchConf"/>
-			<Option target="mcmcConvFix"/>
-			<Option target="mcmcConv"/>
-		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Test/sigmaEst.cpp">
 			<Option target="sigmaEst"/>
-		</Unit>
-		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Test/smlMetropolis.cpp">
-			<Option target="sigmaEst"/>
-			<Option target="batchConf"/>
-			<Option target="mcmcConvFix"/>
-			<Option target="mcmcConv"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Test/testBackEul.cpp">
 			<Option target="testBE"/>
@@ -1304,14 +1226,7 @@
 		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Test/testBinary.cpp">
 			<Option target="binary"/>
 		</Unit>
-		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Test/testMCMCconvergence.cpp">
-			<Option target="mcmcConv"/>
-		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Test/testMH.cpp">
-			<Option target="sigmaEst"/>
-			<Option target="batchConf"/>
-			<Option target="mcmcConvFix"/>
-			<Option target="mcmcConv"/>
 			<Option target="plainMH"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Test/testMHconv.cpp">

@@ -1,1 +1,1 @@
-/usr/bin/c++    -Wall -fopenmp -std=c++11 -g   CMakeFiles/plainMH.dir/plainMH.cpp.o CMakeFiles/plainMH.dir/mcmcTools.cpp.o CMakeFiles/plainMH.dir/testMH.cpp.o  -o plainMH -rdynamic 
+/usr/bin/c++    -fopenmp -std=c++11 -g   CMakeFiles/plainMH.dir/plainMH.cpp.o CMakeFiles/plainMH.dir/mcmcTools.cpp.o CMakeFiles/plainMH.dir/testMH.cpp.o  -o plainMH -rdynamic 

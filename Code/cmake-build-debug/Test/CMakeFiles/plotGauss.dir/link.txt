@@ -1,1 +1,1 @@
-/usr/bin/c++    -Wall -fopenmp -std=c++11 -g   CMakeFiles/plotGauss.dir/plotGaussTrajectories.cpp.o CMakeFiles/plotGauss.dir/problems.cpp.o  -o plotGauss -rdynamic ../Solver/libSolver.a 
+/usr/bin/c++    -fopenmp -std=c++11 -g   CMakeFiles/plotGauss.dir/plotGaussTrajectories.cpp.o CMakeFiles/plotGauss.dir/problems.cpp.o  -o plotGauss -rdynamic ../Solver/libSolver.a 

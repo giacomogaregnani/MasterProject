@@ -319,19 +319,6 @@ plotter/fast:
 .PHONY : plotter/fast
 
 #=============================================================================
-# Target rules for targets named mcmcConv
-
-# Build rule for target.
-mcmcConv: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 mcmcConv
-.PHONY : mcmcConv
-
-# fast build rule for target.
-mcmcConv/fast:
-	$(MAKE) -f Test/CMakeFiles/mcmcConv.dir/build.make Test/CMakeFiles/mcmcConv.dir/build
-.PHONY : mcmcConv/fast
-
-#=============================================================================
 # Target rules for targets named testMerge
 
 # Build rule for target.
@@ -407,7 +394,6 @@ help:
 	@echo "... adaptivity"
 	@echo "... testBE"
 	@echo "... plotter"
-	@echo "... mcmcConv"
 	@echo "... testMerge"
 	@echo "... testVar"
 	@echo "... refSol"

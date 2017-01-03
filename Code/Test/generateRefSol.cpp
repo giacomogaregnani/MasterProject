@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
     // =========================
     // INITIALIZATION
     // =========================
-    problems problem = FITZNAG;
+    problems problem = BRUSS;
 
     // Set problem
     odeDef testODE;
@@ -27,10 +27,10 @@ int main(int argc, char* argv[])
     //
 
     std::vector<double> paramList = testODE.refParam;
-    std::string filepath("refSolFitznag.txt");
+    std::string filepath("refSolBruss.txt");
     // equispaced values from 0 to finalTime
     double finalTime = 10.0;
-    unsigned int nData = 1;
+    unsigned int nData = 10;
     double noiseStdDev = 0.1;
     // =========================
 

@@ -6,11 +6,10 @@
 #define PI 3.1415926535897
 
 
-std::vector<VectorXd> MetropolisBruss(odeDef odeModel, std::vector<double>& param, double sigma,
-                                         double h, double finalTime, std::vector<VectorXd>& data, std::vector<double>& dataTimes,
-                                         VectorXd priorMean, VectorXd priorVariance, int internalMC,
-                                         int nStepsMC, double varData, long int* cost, bool posPar,
-                                         std::vector<double>& likelihoods, std::default_random_engine& generator)
+std::vector<VectorXd> MetropolisBruss(odeDef odeModel, std::vector<double> &param, double sigma, double h, double finalTime,
+                                      std::vector<VectorXd> &data, std::vector<double> &dataTimes, VectorXd priorMean, VectorXd priorVariance,
+                                      int internalMC, int nStepsMC, double varData, long int *cost, std::vector<double> &likelihoods,
+                                      std::default_random_engine &generator)
 {
     // Initialize stuff
     int nParam = static_cast<int>(param.size());
@@ -34,14 +33,23 @@ std::vector<VectorXd> MetropolisBruss(odeDef odeModel, std::vector<double>& para
         paramVec(i) = param[i];
     }
 
+    // Parameters of the Brussellator
+    int N = odeModel.size / 2;
+    double NplusOneSqd = static_cast<double> ((N + 1) * (N + 1));
+    // stiffness index
+    double lambda = 4 * param[0] * NplusOneSqd;
+
+    // Number of stages to ensure stability
+    int nStages = static_cast<int>(std::ceil(sqrt(0.5 * h * lambda))) + 1;
+
     // Compute the posterior on the initial guess
-    ProbMethod<MidPoint> solver(odeModel, h, param, sigma);
+    sProbMethod<RKC> solver(odeModel, h, param, sigma, nStages, 0.0);
     std::vector<VectorXd> solutionAtDataTimes(nData, VectorXd(odeModel.size));
     for (MCindex = 0; MCindex < internalMC; MCindex++) {
         double t = 0;
         int count = 0;
         while (t < finalTime) {
-            solver.oneStep(generator, h);
+            solver.oneStep(generator, h, nStages);
             t = t + h;
             if (std::abs(t - dataTimes[count]) < h / 10.0) {
                 solutionAtDataTimes[count++] = solver.getSolution();
@@ -66,13 +74,13 @@ std::vector<VectorXd> MetropolisBruss(odeDef odeModel, std::vector<double>& para
 
     for (int i = 1; i < nStepsMC; i++)
     {
-        if (i % 50 == 0) {
-            printf("iteration: %d \n", i);
-            /* std::cout << "iteration: " << i << std::endl;
+        if (i % 20 == 0) {
+            std::cout << "iteration: " << i << std::endl;
             std::cout << "likelihood: " << oldLike << std::endl;
             std::cout << "step: " << std::endl << S << std::endl;
             std::cout << "prior: " << oldPrior << std::endl;
-            std::cout << "param: " << paramVec.transpose() << std::endl; */
+            std::cout << "param: " << paramVec.transpose() << std::endl;
+            std::cout << "n Stages: " << nStages << std::endl;
         }
 
         // Generate new guess for parameter
@@ -82,29 +90,27 @@ std::vector<VectorXd> MetropolisBruss(odeDef odeModel, std::vector<double>& para
                 w(j) = normal(wGenerator);
             }
             paramVecN = paramVec + S * w;
-            if (posPar) {
-                if (paramVecN(0) > 0) {
-                    isPositive = true;
-                    oldGauss = phi(paramVec(0) / (S(0, 0) * S(0, 0)));
-                    newGauss = phi(paramVecN(0) / (S(0, 0) * S(0, 0)));
-                }
-            } else {
+            if (paramVecN(0) > 0) {
                 isPositive = true;
+                oldGauss = phi(paramVec(0) / (S(0, 0) * S(0, 0)));
+                newGauss = phi(paramVecN(0) / (S(0, 0) * S(0, 0)));
             }
         }
         for (int j = 0; j < nParam; j++) {
             paramStd[j] = paramVecN(j);
         }
 
+        lambda = 4 * paramStd[0] * NplusOneSqd;
+        nStages = static_cast<int>(std::ceil(sqrt(0.5 * h * lambda))) + 1;
 
         // Compute likelihood for the new parameter
         for (MCindex = 0; MCindex < internalMC; MCindex++) {
-            ProbMethod<MidPoint> solverNew(odeModel, h, paramStd, sigma);
+            sProbMethod<RKC> solverNew(odeModel, h, paramStd, sigma, nStages, 0.0);
             std::vector<VectorXd> solutionAtDataTimesPar(nData, VectorXd(odeModel.size));
             double t = 0;
             int count = 0;
             while (t < finalTime) {
-                solverNew.oneStep(generator, h);
+                solverNew.oneStep(generator, h, nStages);
                 t = t + h;
                 if (std::abs(t - dataTimes[count]) < h / 10.0) {
                     solutionAtDataTimesPar[count] = solverNew.getSolution();
@@ -129,14 +135,17 @@ std::vector<VectorXd> MetropolisBruss(odeDef odeModel, std::vector<double>& para
             paramStd[j] = paramVec(j);
         }
 
+        lambda = 4 * paramStd[0] * NplusOneSqd;
+        nStages = static_cast<int>(std::ceil(sqrt(0.5 * h * lambda))) + 1;
+
         // Compute likelihood for the old parameter
         for (MCindex = 0; MCindex < internalMC; MCindex++) {
-            ProbMethod<MidPoint> solverOld(odeModel, h, paramStd, sigma);
+            sProbMethod<RKC> solverOld(odeModel, h, paramStd, sigma, nStages, 0.0);
             std::vector<VectorXd> solutionAtDataTimesPar(nData, VectorXd(odeModel.size));
             double t = 0;
             int count = 0;
             while (t < finalTime) {
-                solverOld.oneStep(generator, h);
+                solverOld.oneStep(generator, h, nStages);
                 t = t + h;
                 if (std::abs(t - dataTimes[count]) < h / 10.0) {
                     solutionAtDataTimesPar[count] = solverOld.getSolution();
@@ -159,11 +168,8 @@ std::vector<VectorXd> MetropolisBruss(odeDef odeModel, std::vector<double>& para
 
         // Compute probability of acceptance
         double alpha;
-        if (posPar) {
-            alpha = std::min<double>(0.0, (l + prior + log(oldGauss)) - (oldParamL + oldPrior + log(newGauss)));
-        } else {
-            alpha = std::min<double>(0.0, (l + prior) - (oldParamL + oldPrior));
-        }
+        alpha = std::min<double>(0.0, (l + prior + log(oldGauss)) - (oldParamL + oldPrior + log(newGauss)));
+
         // Update the chain
         if (u < alpha) {
             paramVec = paramVecN;

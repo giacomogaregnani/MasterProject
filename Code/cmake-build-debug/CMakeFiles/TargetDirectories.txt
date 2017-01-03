@@ -20,7 +20,6 @@
 /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/CMakeFiles/adaptivity.dir
 /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/CMakeFiles/testBE.dir
 /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/CMakeFiles/plotter.dir
-/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/CMakeFiles/mcmcConv.dir
 /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/CMakeFiles/testMerge.dir
 /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/CMakeFiles/testVar.dir
 /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/CMakeFiles/refSol.dir
