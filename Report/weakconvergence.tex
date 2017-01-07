@@ -1,20 +1,24 @@
 \subsubsection{Weak convergence}
 
 Another relevant feature of stochastic numerical methods is their weak convergence. The following analysis has been carried out in \cite{CGS16}, and we report the main steps in this work. Let us recall the definition of weak order of convergence
-\begin{definition} Define the weak order of convergence. 
+\begin{definition} Given the equation \eqref{eq:ODE}, the probabilistic method \eqref{eq:probMethod} is said to have a weak order of convergence $r$ if there exists a constant $C$ such that, for any function $\phi$ sufficiently smooth
+	\begin{equation}
+	\sup_{t_k = kh} \abs{\E[\phi(U_k)] - \phi(u(t_k))} \leq Ch^r,
+	\end{equation}
+for $h$ small enough.
 \end{definition}
 \noindent For the numerical method introduced in \eqref{eq:probMethod}, a result of weak convergence can be proved using a technique of \textit{backward error analysis}. The main idea behind this technique is finding a \textit{modified equation} that the numerical method solves exactly or with a higher accuracy than the original equation. \\
 Let us consider \eqref{eq:ODE} and the numerical method \eqref{eq:probMethod}. Using the Lie derivative notation, it is possible to find the differential operators $\mathcal{L}$ and $\diffL^h$ such that for all $\phi \in \mathcal{C}^\infty(\R^d, \R)$ 
 \begin{equation}\label{LieNotation}
 \begin{aligned}
 	\phi(\Phi_h(u)) &= \left(e^{h\diffL} \phi\right)(u), \\
-	\E\phi(U_1 | U_0 = u) &= \left(e^{h\diffL^h}\phi\right)(u).
+	\E[\phi(U_1 | U_0 = u)] &= \left(e^{h\diffL^h}\phi\right)(u).
 \end{aligned}
 \end{equation}
 In particular, $\diffL = f \cdot \nabla$ and the explicit definition of $\diffL^h$ is not needed in this scope. \\
 We now introduced a modified ODE
 \begin{equation}\label{modifiedODE}
-	\dv{\hat u}{t} = f^h(\hat u), 
+	\hat u' = f^h(\hat u), 
 \end{equation}
 and a modified SDE
 \begin{equation}\label{modifiedSDE}
@@ -34,7 +38,7 @@ Therefore,
 	\tilde \diffL^h &= f^h \cdot \nabla + \frac{1}{2} h^{2p} Q : \nabla^2,
 \end{aligned}
 \end{equation}
-where $\tilde \diffL^h$ is the \textit{generator} of \eqref{modifiedSDE}. (\ldots all the passages to get to (28) in \cite{CGS16} \ldots).
+where the scalar product $A : B$ in $\R^{d\times d}$ is defined as $A : B = \tr(A^TB)$. The operator $\tilde \diffL^h$ is the \textit{generator} of \eqref{modifiedSDE}. Introducing the modified equations above, it is possible to study the weak error between the solution of \eqref{eq:ODE} and the numerical solution given by the probabilistic integrator \cite{CGS16}. In particular, this is achievable considering the approximation given by the probabilistic integrator of the solution of the modified SDE \eqref{modifiedSDE}. Let us introduce for completeness the following assumption, needed to prove the result of weak convergence. 
 \begin{assumption} \label{assumption_3}The function $f$ in \eqref{eq:ODE} is in $\mathcal C^\infty$ and all its derivatives are uniformly bounded in $\R^n$. Furthermore, $f$ is such that for all functions $\phi$ in $\mathcal C ^\infty(\R^n, \R)$ 
 \begin{equation}
 \begin{aligned}
@@ -47,11 +51,11 @@ for some $L > 0$.
 \noindent We can now state the following result of weak convergence.
 \begin{theorem}\label{thm:weakorder} Consider the numerical method \eqref{eq:probMethod} and Assumptions \ref{assumption_1}, \ref{assumption_2} and \ref{assumption_3}. Then for any function $\phi$ in $\mathcal{C}^\infty$ endowed with the properties of Assumption \ref{assumption_3},
 \begin{equation}
-	\left|\phi(u(T)) - \E^h\left(\phi(U_k)\right)\right| \leq Kh^{\min\{2p, q\}}, \quad kh = T,
+	\abs{\phi(u(T)) - \E[\phi(U_k)]} \leq Kh^{\min\{2p, q\}}, \quad kh = T,
 \end{equation}
 and 
 \begin{equation}
-\left|\E\phi(\tilde u(T)) - \E^h\left(\phi(U_k)\right)\right| \leq Kh^{2p + 1}, \quad kh = T,
+	\abs{\E[\phi(\tilde u(T))] - \E[\phi(U_k)]} \leq Kh^{2p + 1}, \quad kh = T,
 \end{equation}
 with $u$ and $\tilde u$ solutions of \eqref{eq:ODE} and \eqref{modifiedSDE}.
 \end{theorem}

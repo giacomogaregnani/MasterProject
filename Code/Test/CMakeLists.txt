@@ -53,6 +53,10 @@ add_executable(invMeas invMeasure.cpp
 		problems.hpp problems.cpp)
 target_link_libraries(invMeas Solver)
 
+add_executable(varH varh.cpp
+		problems.hpp problems.cpp)
+target_link_libraries(varH Solver)
+
 #add_executable(likEst likelihoodEstimator.cpp
 #		problems.hpp problems.cpp
 #		mcmcTools.hpp mcmcTools.cpp

@@ -1,8 +1,14 @@
-\subsection{Numerical example - Brussellator}
+\subsection{Stiff ODE's - The Brusselator problem}
+
+\begin{figure}[t]
+	\centering
+	\resizebox{0.8\linewidth}{!}{\input{plots/Bruss.tikz}}
+	\caption{Solution of the Brusselator problem, $u$ species.}
+	\label{fig:BrussSol}
+\end{figure}
 
 Let us consider the following parabolic PDE
 \begin{equation}
-\left \{
 \begin{aligned}
 	\pdv{u}{t} &= 1 + u^2v + \alpha \pdv[2]{u}{x}, && u = u(x, t)\\
 	\pdv{v}{t} &= 3u - u^2v + \alpha \pdv[2]{v}{x}, && v = v(x, t), \quad x \in \Omega = (0, 1), \quad t \geq 0 \\
@@ -10,9 +16,9 @@ Let us consider the following parabolic PDE
 	v(0, t) &= v(1, t) = 3, \\
 	u(x, 0) &= 1 + \sin(2\pi x), \\
 	v(x, 0) &= 3,
-\end{aligned}\right.
+\end{aligned}
 \end{equation}
-where $a$, $b$ and $\alpha$ are real parameters. The equation is the Brussellator problem \cite{HaW96}, modeling the quantity of two substances $u$ and $v$ in a chemical reaction. Let us consider a spatial discretization of the domain $\Omega$ on equispaced points $x_i$, where $i = 0, \ldots, N + 1$, with distance $\Delta x = 1 / (N + 1)$. Then, the PDE above can be transformed to a system of ODE's with the method of line, which yields for the internal points
+where $\alpha$ is a positive parameter. The equation is the Brusselator problem \cite{HaW96}, modeling the quantity of two substances $u$ and $v$ in a chemical reaction. Let us consider a spatial discretization of the domain $\Omega$ on equispaced points $x_i$, where $i = 0, \ldots, N + 1$, with distance $\Delta x = 1 / (N + 1)$. Then, the PDE above can be transformed to a system of ODE's with the method of lines, which yields for the internal points
 \begin{equation}\label{eq:BRUSS}
 \begin{aligned}
 u_i &= 1 + u_i^2v_i - 4u_i + \frac{\alpha}{\Delta x^2}(u_{i-1} - 2u_{i} + u_{i+1}), \\
@@ -28,4 +34,65 @@ The boundary conditions are then retrieved imposing
 	v_i(0) &= 3, && i = 1, \ldots, N.
 \end{aligned}
 \end{equation}
+The solution $u(x, t)$ obtained solving numerically \eqref{eq:BRUSS} for time $0 \leq t \leq 10$ is displayed in Figure \ref{fig:BrussSol}. Let us consider $\alpha$ as an unknown parameter and the problem of inferring its value with the MCMC techniques explained in the previous sections. Moreover, let us consider as admissible values for $\alpha$ the interval $I_\alpha = [0, \alpha_{\max}]$. Therefore, we apply the technique explained in Section \ref{sec:MCMCbounded}, with a truncated Gaussian distribution as the proposal distribution of MH. The ODE \eqref{eq:BRUSS} is stiff for large values of $N$, and therefore using an explicit as the deterministic component in \eqref{eq:probMethod} like, for example, EE or RK4, yields restrictions on the time step. In particular, it is possible to prove by linearization and considering the eigenvalues of the discrete Laplacian that the stiffness index $\lambda$ of \eqref{eq:BRUSS} is given by
+\begin{equation}
+	\lambda = 4 \alpha (N+1)^2.
+\end{equation}
+\noindent Therefore, if we consider the time step restriction for EE and since $\alpha$ is bounded we have
+\begin{equation}
+	h < \frac{1}{8\alpha(N+1)^2} \leq \frac{1}{8\alpha_{\max}(N+1)^2} \eqdef \bar h 
+\end{equation} 
+Hence, if we use EE in \eqref{eq:probMethod} in MCMC we have to approximate the likelihood with time step $\bar h$, which yields a computational cost per iteration of given by
+\begin{equation}
+	\mathrm{cost}_{\mathrm{EE}} = \frac{T}{h} = 8T \alpha_{\max}(N+1)^2,
+\end{equation}
+where we measure the cost in terms of number of evaluations of the function $f$ defining the ODE. Since in most of MCMC applications the number of iterations required to have an accurate Monte Carlo estimation is in the order of magnitude of $\OO(10^4)$ to $\OO(10^6)$, the computational cost required to perform the whole algorithm is extremely high. In order to have a lower computational cost, we can use a stabilized method like RKC. Let us recall that given a time step $h$, RKC is stable if the number of stages satisfies
+\begin{equation}
+	s \geq \max\left\{2, \left\lceil\sqrt{\frac{1}{2}h\lambda}\right\rceil \right\}.
+\end{equation}
+\begin{table}[t]
+	\centering
+	\begin{tabular}{lccccc}
+		\toprule
+		Method & EE & \multicolumn{4}{c}{RKC} \\ 
+		\cmidrule{3-6}
+		$h$ & $4.98\cdot 10^{-7}$ & $10^{-1}$ & $10^{-3}$ & $10^{-5}$ & $10^{-7}$   \\
+		$s$ & - & 225 & 23 & 3 & 2 \\
+		cost & $2 \cdot 10^{7}$ & $2.25 \cdot 10^{4}$ & $2.3 \cdot 10^{5}$ & $3 \cdot 10^{6}$  & $2 \cdot 10^{8}$ \\
+		\bottomrule
+	\end{tabular}
+	\caption{Theoretical number of function evaluations required by EE and RKC per iteration of MCMC. }
+	\label{tab:EEvsRKC}
+\end{table}
+\noindent Therefore, we can ensure the stability of the method for each of the admissible values $\alpha$ in $I_\alpha$ setting the number of stages $s$ to of RKC to be equal to $\bar s$ defined as
+\begin{equation}\label{eq:nStagesRKC}
+	\bar s = \max\left\{2, \left\lceil \sqrt{2h\alpha_{\max}(N+1)^2} \right\rceil\right\}.
+\end{equation}
+In this case, the number of function evaluations per iteration of MCMC is given by
+\begin{equation}\label{eq:RKCcost}
+	\mathrm{cost}_{\mathrm{RKC}} = \frac{T}{h}\bar s = \frac{T}{h} \max\left\{2, \left\lceil \sqrt{2h\alpha_{\max}(N+1)^2} \right\rceil\right\}.
+\end{equation}
+Let us remark that in practice we can keep the time step fixed and adapt the number of stages with respect to the current guess of the parameter $\alpha$ in MCMC. Therefore, the expression \eqref{eq:RKCcost} is an upper bound of the actual number of function evaluations required by RKC. Let us consider the spatial discretization to be defined by $N = 500$, $\alpha_{\max} = 1$. In this case, the value of $\bar h$ for EE is $4.9801\cdot 10^{-7}$. We can now consider the time step of RKC to assume values $10^{-1}, 10^{-3}, 10^{-5}, 10^{-7}$ and compare the computational cost for the two methods. In Table \ref{tab:EEvsRKC} we show the computational cost required by the two methods, as well as the number of stages $s$ required by RKC in order to ensure stability with respect to the time step $h$. It is possible to remark that in this application RKC requires a computational cost up to four orders of magnitude smaller than EE. \\
 
+\subsubsection{Numerical experiment - Brusselator}
+We consider the Brusselator problem with $N = 100$ and the true value of $\alpha$ equal to 0.02 and generate synthetic observations $\mathcal{Y}_{10}$ at times $t_i = 1, 2, \ldots 10$ employing RK4 with a fine time step with observational variance $0.01$. We consider the interval of admissible value for the parameters to be $I_\alpha = [0, 1]$ and perform 50000 iterations of the MCWM algorithm with RAM. At each iteration, we consider $M = 1$ trajectory of the probabilistic solver with RKC as determinstic component and time step $h$ variable in the set $\{0.2, 0.1, 0.05, 0.025, 0.0125\}$. The starting value for all chains is $\alpha^{(0)} = 0.5$. We adapt the number of stages in the MCMC algorithm with \eqref{eq:nStagesRKC}, so that the numerical method is stable. In Table \ref{tab:BrussRKCresults} we show the Monte Carlo estimation $\hat \alpha$ of the parameter for all values of $h$, together with the mean number of stages required to perform the integration, as well as the mean computational cost per iteration. It is possible to remark that the mean number of stages required required by RKC is sensibly lower than the theoretical bound \eqref{eq:nStagesRKC}, as well as the computational cost. This is due to the fact that the upper bound $\alpha_{\max}$ of the interval $I_\alpha$ is never reached by the MCMC algorithm and the accepted values of the Markov chain are close to the true value of $\alpha$. 
+
+ \begin{table}[t]
+ 	\centering
+ 	\begin{tabular}{lccccc}
+ 		\toprule
+ 		$h$ & 0.2 & 0.1 & 0.05 & 0.025 & 0.125   \\
+		\midrule
+ 		$\hat \alpha$ &0.02509 & 0.020448 & 0.01996 & 0.02055 & 0.01990 \\
+ 		mean $s$ & 11.89  & 7.87 & 6.00 & 4.92 & 4.00 \\
+ 		mean cost & $0.59\cdot 10^3$ & $0.79\cdot 10^3$ & $1.20\cdot 10^3$ & $1.97\cdot 10^3$  & $3.20\cdot 10^3$ \\
+ 		$\bar s$ \eqref{eq:nStagesRKC}  & 64 & 46 & 32 & 23 & 16 \\ 
+ 		max cost \eqref{eq:RKCcost} & $3.2 \cdot 10^3$ & $4.6 \cdot 10^3$ & $6.4 \cdot 10^3$ & $9.2 \cdot 10^3$ & $12.8 \cdot 10^3$ \\  
+ 		\bottomrule
+ 	\end{tabular}
+ 	\caption{Summary of numerical results for the Brusselator problem.}
+ 	\label{tab:BrussRKCresults}
+ \end{table}
+       
+ 
+   

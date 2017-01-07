@@ -13,6 +13,6 @@ hGrid = 1 / (size(U, 2) - 1);
 X = 0 : hGrid : 1;
 
 [XX, TT] = meshgrid(X, t(:));
-surf(XX, TT, V(:, :), 'edgecolor', 'none')
+surf(XX, TT, U(:, :), 'edgecolor', 'none')
 xlabel('x')
 ylabel('t')

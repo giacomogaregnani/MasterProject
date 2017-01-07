@@ -47,7 +47,7 @@ In the Bayesian frame the estimation of $\theta$ follows a completely different 
 \end{equation}
 Let us analyze separately the two terms of this equation.
 \begin{itemize}
-	\item Given a set of observations $y_i$, $i = 1, \ldots, N_d$, and an observational model the likelihood $\diffL(Y|\theta)$ can be evaluated. For example, in the Gaussian case introduced in \eqref{eq:GaussianNoise} analytical formulas for the likelihood are available.
+	\item Given a set of observations $y_i$, $i = 1, \ldots, N_d$, and an observational model the likelihood $\diffL(\mathcal{Y}|\theta)$ can be evaluated. For example, in the Gaussian case introduced in \eqref{eq:GaussianNoise} analytical formulas for the likelihood are available.
 	\item The prior distribution $\prior(\theta)$ has to be established before the observation are obtained. This is a crucial part of the process of Bayesian inference, since in practice if the prior distribution is wrong or inadmissible, the obtained posterior may be negatively affected by this choice.
 \end{itemize}
 The two approaches give both equally valid results but in a completely different spirit. While in classical statistics the model driving an experiment is predetermined and its parameters are computed using observations, in the Bayesian frame the object of study is the model behind the parameter itself, which is revealed by the observations.
@@ -173,13 +173,13 @@ In the following paragraphs we will present two approaches to modify MH targetin
 		Compute $S_{i+1}$ as in \eqref{eq:RAMupdate} \;
 	}
 \end{algorithm}
-In the frame of MH algorithms, it is important to have a control on the \textit{acceptance ratio}, i.e., the ratio of new proposed values $\vartheta$ that are included in the Markov chain $\{\theta^{(i)}\}_{i\geq 0}$. In the MH frame, the acceptance ratio is strongly related to the chosen proposal distribution, as if the new guess produced via the proposal distribution have a low probability of being accepted, a low value of acceptance ratio will result from the algorithm. On the other hand, if the acceptance rate is too high, the posterior distribution could be explored too slowly. Often, the optimal acceptance rate for MH are considered to be 0.234 or 0.44 \cite{Vih12}. If the initial proposal distribution does not provide with acceptable values $\vartheta$, it may be necessary to tune it during the advancement of MH. An algorithm which targets this issue is the robust adaptive Metropolis (RAM) \cite{Vih12}. 
+In the frame of MH algorithms, it is important to have a control on the \textit{acceptance ratio}, i.e., the ratio of new proposed values $\vartheta$ that are included in the Markov chain $\{\theta^{(i)}\}_{i\geq 0}$. In the MH frame, the acceptance ratio is strongly related to the chosen proposal distribution, as if the new guess produced via the proposal distribution have a low probability of being accepted, a low value of acceptance ratio will result from the algorithm. On the other hand, if the acceptance ratio is too high, the posterior distribution could be explored too slowly. Often, the optimal acceptance ratio for MH are considered to be 0.234 or 0.44 \cite{Vih12}. If the initial proposal distribution does not provide with acceptable values $\vartheta$, it may be necessary to tune it during the advancement of MH. An algorithm which targets this issue is the robust adaptive Metropolis (RAM) \cite{Vih12}. 
 
 Let us consider the case of a Gaussian proposal distribution $q(x,y)$ as in \eqref{eq:gaussianProp}. At the $n$-th step of MH the new guess $\vartheta$ of the parameter is given by
 \begin{equation}
 \vartheta = \theta^{(n)} + z, \quad Z \sim \mathcal{N}(0, \Sigma),
 \end{equation}
-where $\Sigma$ is the covariance matrix. It is possible to build a sequence of matrices such that the convergence properties of MH are not spoiled and the acceptance rate is asymptotically equal to a given value $\alpha^*$ \cite{Vih12}. This is obtained through the following update 
+where $\Sigma$ is the covariance matrix. It is possible to build a sequence of matrices such that the convergence properties of MH are not spoiled and the acceptance ratio is asymptotically equal to a given value $\alpha^*$ \cite{Vih12}. This is obtained through the following update 
 \begin{equation}
 \vartheta = \theta_k + S_n z_n, \quad Z_n \sim \mathcal{N}(0, I),
 \end{equation}
@@ -251,7 +251,7 @@ The pseudo-code of the resulting algorithm is shown in Algorithm \ref{alg:MCWM}.
 \end{enumerate}
 Let us consider the example provided in Section \ref{sect:exBayes}. If we choose an SDE which does not admit a closed-form solution, it is impossible to evaluate the posterior distribution, as the likelihood function does not admit an analytical expression. On the other hand, there exists a large variety of numerical methods \cite{KPS94} that we can apply together with a Monte Carlo approximation to compute an estimator of the likelihood, thus obtaining a value $\pi_M$ as in \eqref{eq:MCWMestimators}. Hence, while it is impossible in this case to get the exact value of the posterior distribution, we can approximate it through an auxiliary simulation. Therefore, it is possible to apply a MCWM algorithm and obtain an approximation of $\pi(\theta)$ in this case as well.
 
-\subsubsection{How to deal with inadmissible parameter values}
+\subsubsection{How to deal with inadmissible parameter values}\label{sec:MCMCbounded}
 
 Let us consider without loss of generality a one-dimensional real parameter $\theta$ that can assume values only on a subset of $\R$. For instance, let us consider as the parameter space the interval $I = [a, b]$. If a Gaussian proposal function $q(x, y)$ is adopted in the implementation of MH, the unboundedness of the support of the proposal distribution results in a new guess $\vartheta$ which takes values outside $I$ with a non-zero probability. In this case, we choose to adopt as proposal function a \textit{truncated Gaussian distribution}. The new guess $\vartheta$ is generated by $q(\theta^{(i)}, \cdot)$, which is a truncated Gaussian distribution of mean $\theta^{(i)}$ and fixed variance $\sigma$. The analytical expression of $q$ in this case is given by
 \begin{equation}\label{eq:truncGauss}

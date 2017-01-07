@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
     // =========================
 
 	// REFERENCE SOLUTION
-	double hRef = 0.00001;
+	double hRef = 0.0001;
 	int nSteps = int (finalTime / hRef);
 
 	// Prepare structures for data acquisition

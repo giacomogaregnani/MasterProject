@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.10.29)  3 JAN 2017 11:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.10.29)  6 JAN 2017 14:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2056,36 +2056,41 @@ Package epstopdf Info: Source file: <Logo.eps>
 (epstopdf)                    size: 39285 bytes
 (epstopdf)             Command: <repstopdf --outfile=Logo-eps-converted-to.pdf 
 Logo.eps>
-(epstopdf)             \includegraphics on input line 46.
+(epstopdf)             \includegraphics on input line 47.
 Package epstopdf Info: Output file is already uptodate.
 
-<Logo-eps-converted-to.pdf, id=135, 757.83125pt x 369.38pt>
+<Logo-eps-converted-to.pdf, id=139, 757.83125pt x 369.38pt>
 File: Logo-eps-converted-to.pdf Graphic file (type pdf)
 
 <use Logo-eps-converted-to.pdf>
-Package pdftex.def Info: Logo-eps-converted-to.pdf used on input line 46.
-(pdftex.def)             Requested size: 213.3957pt x 104.01186pt.
+Package pdftex.def Info: Logo-eps-converted-to.pdf used on input line 47.
+(pdftex.def)             Requested size: 192.05482pt x 93.60728pt.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./Logo-eps-converted-to.pd
 f>]) [2
 
-] (./Acknow.tex) [3] [4
+] (./Acknow.tex
+Underfull \hbox (badness 10000) in paragraph at lines 3--4
+
+ []
+
+) [3] [4
 
 
 ] (./Main.toc)
 \tf@toc=\write5
 \openout5 = `Main.toc'.
 
+ [5] [6
 
-[5] (./Introduction.tex)pdfTeX warning (ext4): destination with the same identi
-fier (name{page.1}) has been already used, duplicate ignored
+
+] (./Introduction.tex)pdfTeX warning (ext4): destination with the same identifi
+er (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.33 \newpage
-              [1
-
-] (./BayesianAnalysis.tex
+l.38 \newpage
+              [1] (./BayesianAnalysis.tex
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 26.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
@@ -2114,7 +2119,12 @@ as been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.125 \begin{equation}
-                       [5] [6] [7] [8] (./RAMplots.tex
+                       [5]pdfTeX warning (ext4): destination with the same iden
+tifier (name{page.6}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.143 \end{equation}
+                     [6] [7] [8] (./RAMplots.tex
 Package epstopdf Info: Source file: <plots/MHvsRAM/MH_small.eps>
 (epstopdf)                    date: 2016-11-14 09:40:56
 (epstopdf)                    size: 1666624 bytes
@@ -2127,7 +2137,7 @@ f>
 (epstopdf)             \includegraphics on input line 4.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/MH_small-eps-converted-to.pdf, id=322, 439.6425pt x 330.23375pt>
+<plots/MHvsRAM/MH_small-eps-converted-to.pdf, id=330, 439.6425pt x 330.23375pt>
 File: plots/MHvsRAM/MH_small-eps-converted-to.pdf Graphic file (type pdf)
 <use plots/MHvsRAM/MH_small-eps-converted-to.pdf>
 Package pdftex.def Info: plots/MHvsRAM/MH_small-eps-converted-to.pdf used on in
@@ -2145,7 +2155,7 @@ s-converted-to.pdf plots/MHvsRAM/MH_medium.eps>
 (epstopdf)             \includegraphics on input line 7.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/MH_medium-eps-converted-to.pdf, id=323, 439.6425pt x 330.23375pt
+<plots/MHvsRAM/MH_medium-eps-converted-to.pdf, id=331, 439.6425pt x 330.23375pt
 >
 File: plots/MHvsRAM/MH_medium-eps-converted-to.pdf Graphic file (type pdf)
  <use plots/MHvsRAM/MH_medium-eps-converted-to.pdf>
@@ -2164,7 +2174,7 @@ onverted-to.pdf plots/MHvsRAM/MH_big.eps>
 (epstopdf)             \includegraphics on input line 10.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/MH_big-eps-converted-to.pdf, id=324, 439.6425pt x 330.23375pt>
+<plots/MHvsRAM/MH_big-eps-converted-to.pdf, id=332, 439.6425pt x 330.23375pt>
 File: plots/MHvsRAM/MH_big-eps-converted-to.pdf Graphic file (type pdf)
 
 <use plots/MHvsRAM/MH_big-eps-converted-to.pdf>
@@ -2183,7 +2193,7 @@ s-converted-to.pdf plots/MHvsRAM/RAM_small.eps>
 (epstopdf)             \includegraphics on input line 14.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/RAM_small-eps-converted-to.pdf, id=325, 439.6425pt x 330.23375pt
+<plots/MHvsRAM/RAM_small-eps-converted-to.pdf, id=333, 439.6425pt x 330.23375pt
 >
 File: plots/MHvsRAM/RAM_small-eps-converted-to.pdf Graphic file (type pdf)
  <use plots/MHvsRAM/RAM_small-eps-converted-to.pdf>
@@ -2202,7 +2212,7 @@ ps-converted-to.pdf plots/MHvsRAM/RAM_medium.eps>
 (epstopdf)             \includegraphics on input line 17.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/RAM_medium-eps-converted-to.pdf, id=326, 439.6425pt x 330.23375p
+<plots/MHvsRAM/RAM_medium-eps-converted-to.pdf, id=334, 439.6425pt x 330.23375p
 t>
 File: plots/MHvsRAM/RAM_medium-eps-converted-to.pdf Graphic file (type pdf)
  <use plots/MHvsRAM/RAM_medium-eps-converted-to.pdf>
@@ -2221,7 +2231,7 @@ converted-to.pdf plots/MHvsRAM/RAM_big.eps>
 (epstopdf)             \includegraphics on input line 20.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/RAM_big-eps-converted-to.pdf, id=327, 439.6425pt x 330.23375pt>
+<plots/MHvsRAM/RAM_big-eps-converted-to.pdf, id=335, 439.6425pt x 330.23375pt>
 File: plots/MHvsRAM/RAM_big-eps-converted-to.pdf Graphic file (type pdf)
 
 <use plots/MHvsRAM/RAM_big-eps-converted-to.pdf>
@@ -2234,23 +2244,28 @@ HvsRAM/RAM_small-eps-converted-to.pdf> <./plots/MHvsRAM/RAM_medium-eps-converte
 d-to.pdf> <./plots/MHvsRAM/RAM_big-eps-converted-to.pdf>] [10] [11] [12]) [13] 
 (./probmethod.tex
 (./deterministicmethods.tex [14]
-Underfull \hbox (badness 10000) in paragraph at lines 30--66
+Underfull \hbox (badness 10000) in paragraph at lines 30--67
 
  []
 
 
-Overfull \hbox (4.86665pt too wide) in paragraph at lines 30--66
+Overfull \hbox (4.86665pt too wide) in paragraph at lines 30--67
 []$ $[]$ $[]$ 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 30--66
+Underfull \hbox (badness 10000) in paragraph at lines 30--67
 
  []
 
-[15]) (./ProbabilisticMotivation.tex [16] (./plots/LorenzTraj.tikz)
-(./plots/LorenzX.tikz) (./plots/LorenzY.tikz) (./plots/LorenzZ.tikz)) [17]
-(./strongconvergence.tex [18] [19] [20]) (./weakconvergence.tex [21] [22]
+[15] [16]
+LaTeX Font Info:    Try loading font information for U+bbm on input line 101.
+ (/usr/share/texlive/texmf-dist/tex/latex/bbm-macros/ubbm.fd
+File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
+) [17])
+(./ProbabilisticMotivation.tex [18] (./plots/LorenzTraj.tikz)
+(./plots/LorenzX.tikz) (./plots/LorenzY.tikz) (./plots/LorenzZ.tikz)) [19]
+(./strongconvergence.tex [20] [21] [22]) (./weakconvergence.tex [23] [24]
 (./plots/weakOrder.tikz
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -2258,12 +2273,12 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-)) (./MonteCarlo.tex [23] [24] [25] [26]
+)) (./MonteCarlo.tex [25] [26] [27] [28] [29]
 Underfull \hbox (badness 10000) in paragraph at lines 192--194
 
  []
 
-[27] [28] (./plots/MonteCarloVariance2.tikz
+[30] (./plots/MonteCarloVariance2.tikz
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -2274,8 +2289,9 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-)) (./MLMC.tex [29] [30] [31] [32] [33]) (./Stability.tex)) [34]
-(./BayesianODE.tex (./LikelihoodApprox.tex [35] (./NumericalLikelihood.tex
+)
+[31]) (./MLMC.tex [32] [33] [34] [35]) (./Stability.tex [36])) [37]
+(./BayesianODE.tex (./LikelihoodApprox.tex [38] (./NumericalLikelihood.tex
 (./plots/LikelihoodFixedTheta.tikz
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -2283,7 +2299,7 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-))) (./NumericalExample.tex [36]
+))) (./NumericalExample.tex [39]
 Package epstopdf Info: Source file: <plots/Fitznag.eps>
 (epstopdf)                    date: 2016-11-29 16:53:07
 (epstopdf)                    size: 12957274 bytes
@@ -2295,15 +2311,15 @@ d-to.pdf plots/Fitznag.eps>
 (epstopdf)             \includegraphics on input line 10.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/Fitznag-eps-converted-to.pdf, id=732, 439.6425pt x 330.23375pt>
+<plots/Fitznag-eps-converted-to.pdf, id=774, 439.6425pt x 330.23375pt>
 File: plots/Fitznag-eps-converted-to.pdf Graphic file (type pdf)
 
 <use plots/Fitznag-eps-converted-to.pdf>
 Package pdftex.def Info: plots/Fitznag-eps-converted-to.pdf used on input line 
 10.
 (pdftex.def)             Requested size: 426.79141pt x 320.58836pt.
-) (./Convergence.tex [37] [38 <./plots/Fitznag-eps-converted-to.pdf>] [39] [40]
- [41] (./plots/ConvBatchMeans.tikz
+) (./Convergence.tex [40] [41 <./plots/Fitznag-eps-converted-to.pdf>] [42] [43]
+ [44] (./plots/ConvBatchMeans.tikz
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -2311,14 +2327,20 @@ Missing character: There is no ; in font nullfont!
 (./plots/ConvBatchMeans2.tikz
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-) [42] (./plots/ConvGTheta.tikz
+) [45] (./plots/ConvGTheta.tikz
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 )
 (./plots/ConvHell.tikz
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-)) (./StiffProblems.tex [43])) [44] (./Main.bbl
+)) (./StiffProblems.tex (./plots/Bruss.tikz) [46]
+[47]
+Underfull \hbox (badness 10000) in paragraph at lines 74--76
+
+ []
+
+[48])) [49] (./Main.bbl
 
 Class scrartcl Warning: Usage of deprecated font command `\sc'!
 (scrartcl)              You should note, that in 1994 font command `\sc' has
@@ -2557,7 +2579,7 @@ Class scrartcl Warning: Usage of deprecated font command `\sc'!
 (scrartcl)              But for now, KOMA-Script will replace deprecated `\sc'
 (scrartcl)              by `\normalfont \scshape ' on input line 81.
 
-[45]
+[50]
 
 Class scrartcl Warning: Usage of deprecated font command `\sc'!
 (scrartcl)              You should note, that in 1994 font command `\sc' has
@@ -2586,49 +2608,63 @@ Class scrartcl Warning: Usage of deprecated font command `\sc'!
 (scrartcl)              But for now, KOMA-Script will replace deprecated `\sc'
 (scrartcl)              by `\normalfont \scshape ' on input line 90.
 
-) [46]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 43.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 43.
+
+Class scrartcl Warning: Usage of deprecated font command `\sc'!
+(scrartcl)              You should note, that in 1994 font command `\sc' has
+(scrartcl)              been defined for compatiblitiy to Script 2.0 only.
+(scrartcl)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrartcl)              shouldn't use such commands any longer and within
+(scrartcl)              KOMA-Script usage of `\sc' is definitely deprecated.
+(scrartcl)              See `fntguide.pdf' for more information about
+(scrartcl)              recommended font commands.
+(scrartcl)              Note also, that KOMA-Script will remove the definition
+(scrartcl)              of `\sc' anytime until release of about version 3.20.
+(scrartcl)              But for now, KOMA-Script will replace deprecated `\sc'
+(scrartcl)              by `\normalfont \scshape ' on input line 95.
+
+) [51]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 48.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 48.
  (./Main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 43.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 43.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 48.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 48.
 Package rerunfilecheck Info: File `Main.out' has not changed.
-(rerunfilecheck)             Checksum: D19737C4D6E5F86AAF02D114A436D300;2733.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 43.
+(rerunfilecheck)             Checksum: 2D869BF4BEAC48D6E3866A9A77C490B7;2832.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 48.
  ) 
 Here is how much of TeX's memory you used:
- 38088 strings out of 493105
- 1104530 string characters out of 6137071
- 2424127 words of memory out of 5000000
- 40646 multiletter control sequences out of 15000+600000
- 20804 words of font info for 77 fonts, out of 8000000 for 9000
+ 43968 strings out of 493105
+ 1319168 string characters out of 6137071
+ 3159470 words of memory out of 5000000
+ 46497 multiletter control sequences out of 15000+600000
+ 21498 words of font info for 84 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 76i,23n,112p,80836b,2489s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pf
-b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf
--dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/symbols/msbm10.pfb>
-Output written on Main.pdf (51 pages, 5472100 bytes).
+ 76i,23n,112p,81020b,13833s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </u/anmc/garegnan/.texmf-var/fonts/pk/ljfour/public/bbm/bbm10.657pk></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/symbols/msbm10.pfb>
+Output written on Main.pdf (57 pages, 5554756 bytes).
 PDF statistics:
- 934 PDF objects out of 1000 (max. 8388607)
- 830 compressed objects within 9 object streams
- 242 named destinations out of 1000 (max. 500000)
- 309 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1008 PDF objects out of 1200 (max. 8388607)
+ 898 compressed objects within 9 object streams
+ 260 named destinations out of 1000 (max. 500000)
+ 317 words of extra memory for PDF output out of 10000 (max. 10000000)
 

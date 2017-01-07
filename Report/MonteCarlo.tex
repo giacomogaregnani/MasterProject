@@ -118,7 +118,7 @@ Applying \eqref{eq:indepProof} and \eqref{eq:lipschitzVar} we get thanks to Assu
 \begin{equation}
 	\Var(U_k) \leq 2\Var(U_{k-1}) + 2h^2C_L^2 \Var(U_k) + Q h^3.
 \end{equation}
-Hence, defining the coefficient $\beta > 0$ as 
+Hence, defining the coefficient $\beta$ as 
 \begin{equation}
 	\beta = \frac{1}{1 - 2h^2C_L^2}, 
 \end{equation}
@@ -126,7 +126,7 @@ and if the time step $h$ is bounded by
 \begin{equation}
 	h < \frac{1}{\sqrt{2}C_L},
 \end{equation}
-then $\beta^{-1} > 0$ and we can deduce
+then $\beta > 0$ and we can deduce
 \begin{equation}
 \begin{aligned}
 	\frac{1}{2}\Var(U_k) &\leq \beta(\Var(U_{k-1}) + \frac{1}{2}Q h^3) \\
@@ -179,12 +179,12 @@ Substituting this inequality in \eqref{eq:partialLemRKI} we get
 \begin{equation}
 \begin{aligned}
 \frac{1}{2}\Var(U_k) &\leq \left(1 + h^2s\frac{2C_L^2}{1 - \alpha}\exp(\frac{\alpha(s-1)}{1-\alpha})\sksum_{i=1}^s b_i^2\right)\Var(U_{k-1}) + \frac{1}{2}Q h^{2p+1} \\
-&\leq \left(1 + h^2s\frac{2C_L^2}{1 - \alpha}\exp(\frac{\alpha(s-1)}{1-\alpha})\max_{i=1,\ldots,s} b_i^2\right)\Var(U_{k-1}) + \frac{1}{2}Q h^{2p+1}.
+&\leq \left(1 + h^2s^2\frac{2C_L^2}{1 - \alpha}\exp(\frac{\alpha(s-1)}{1-\alpha})\max_{i=1,\ldots,s} b_i^2\right)\Var(U_{k-1}) + \frac{1}{2}Q h^{2p+1}.
 \end{aligned}
 \end{equation}
 If we define the constant $\hat C > 0$ as 
 \begin{equation}
-\hat C \defeq s\frac{2C_L^2}{1 - \alpha}\exp(\frac{\alpha(s-1)}{1-\alpha})\max_{i=1,\ldots,s} b_i^2,
+\hat C \defeq s^2\frac{2C_L^2}{1 - \alpha}\exp(\frac{\alpha(s-1)}{1-\alpha})\max_{i=1,\ldots,s} b_i^2,
 \end{equation}
 we get
 \begin{equation}
@@ -209,7 +209,7 @@ thus obtaining the desired result.
 	\begin{equation}
 	\abs{F(X) - F(Y)} = h\abs{f(X) - f(Y)} \leq hC_L \abs{X - Y}.
 	\end{equation}
-	Hence, we have to impose $h < 1 / C_L$, which is the same requirement of Lemma \ref{lem:varimRK}. 
+	Hence, we have to impose $h < 1 / C_L$, which is only sightly less restrictive than the bound on $h$ required by Lemma \ref{lem:varimRK}. 
 \end{remark}
 
 \noindent We can now consider the MSE of the estimator $\hat Z$ introduced in \eqref{eq:MCapproximation}.

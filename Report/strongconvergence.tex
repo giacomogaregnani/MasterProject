@@ -1,16 +1,20 @@
 \subsubsection{Strong convergence}
 
 The first property we treat is the strong convergence of the numerical solution. All the results presented can be found in details in \cite{CGS16}. Let us first recall the definition of the strong order of convergence of a numerical method. 
-\begin{definition} General definition of strong order of convergence
+\begin{definition} Given the equation \eqref{eq:ODE}, the probabilistic method \eqref{eq:probMethod} is said to have a strong order of convergence $r$ if there exists a constant $C$ such that
+\begin{equation}
+	\sup_{t_k = kh} \E\abs{U_k - u(t_k)} \leq Ch^r,
+\end{equation}
+for $h$ small enough.
 \end{definition}
 \noindent In order to prove a result of strong convergence for the method defined in \eqref{eq:probMethod}, we need to state two assumptions on the random variables $\xi_k$ as well as on the deterministic part of the probabilistic integrator. 
 \begin{assumption}\label{assumption_1} The random variables $\xi_k(t)$ satisfy
 \begin{equation}
-	\E^h|\xi_k(t)\xi_k(t)^T|^2_F \leq Kt^{2p+1}.
+	\E|\xi_k(t)\xi_k(t)^T|^2_F \leq Kt^{2p+1}.
 \end{equation}
 Furthermore, there exists a matrix $Q$ independent of $h$ such that 
 \begin{equation}
-	\E^h[\xi_k(h)\xi_h(h)^T] = Qh^{2p+1},
+	\E[\xi_k(h)\xi_h(h)^T] = Qh^{2p+1},
 \end{equation}
 where $p\geq 1$.
 \end{assumption}
@@ -38,11 +42,11 @@ A further assumption on the deterministic component $\Psi$ of the numerical meth
 \noindent Under the two assumptions above we can now state the following result of strong convergence.  
 \begin{theorem}[Strong Convergence]\label{thm:strongConv} Under assumptions \ref{assumption_1} and \ref{assumption_2} it follows that there is $K>0$ such that
 \begin{equation}\label{strongConvDisc}
-	\sup_{0<kh<T} \E^h|u_k - U_K|^2 \leq Kh^{2\min\{p,q\}}.
+	\sup_{0<kh<T} \E|u_k - U_K|^2 \leq Kh^{2\min\{p,q\}}.
 \end{equation}
 Furthermore
 \begin{equation}\label{strongConvCont}
-	\sup_{0\leq t \leq T} \E^h|u(t) - U(t)| \leq Kh^{\min\{p, q\}}.
+	\sup_{0\leq t \leq T} \E|u(t) - U(t)| \leq Kh^{\min\{p, q\}}.
 \end{equation}
 \end{theorem}
 \noindent Let us report for a matter of completeness the proof of the first inequality. The second result regards the convergence of a continuous interpolation of the numerical solution on grid points, where the interpolation has to be intended as a stochastic process depending on a continuous random variable $\xi(t)$. 
@@ -62,23 +66,23 @@ Therefore
 \end{align}
 Taking the expectation and under Assumption \ref{assumption_1}
 \begin{equation}
-	\E^h|e_{k+1}|^2 = \E^h|\Phi_h(u_k) - \Phi_h(u_k - e_k) - \epsilon_k|^2 + \OO(h^{2p + 1}).
+	\E|e_{k+1}|^2 = \E|\Phi_h(u_k) - \Phi_h(u_k - e_k) - \epsilon_k|^2 + \OO(h^{2p + 1}).
 \end{equation}
 Developing the square and since $\Phi_h$ is Lipschitz continuous with constant $(1 + Lh)$ and $\epsilon_k = \OO(h^{q+1})$ thanks to Assumption \ref{assumption_2}
 \begin{align}
-	\E^h|e_{k+1}|^2 \leq &(1 + Lh)^2 \E^h|e_k|^2 + \E^h\left|\left(h^{\frac{1}{2}}(\Phi_h(u_k) - \Phi_h(u_k - e_k), h^{-\frac{1}{2}}\epsilon_k\right)\right| \\
+	\E|e_{k+1}|^2 \leq &(1 + Lh)^2 \E|e_k|^2 + \E\left|\left(h^{\frac{1}{2}}(\Phi_h(u_k) - \Phi_h(u_k - e_k), h^{-\frac{1}{2}}\epsilon_k\right)\right| \\
 						 &+ \OO\left(h^{2q+2}\right) + \OO\left(h^{2p + 1}\right). 
 \end{align}
 Then, using Cauchy-Schwarz on the inner product
 \begin{align}
-	\E^h|e_{k+1}|^2 &\leq \left(1 + \OO\left(h\right)\right)\E^h|e_k|^2 + \OO\left(h^{2q + 1}\right) + \OO\left(h^{2p + 1}\right) \\
-	&\leq C_1 h \E^h|e_k|^2 + \E|e_k|^2 + \OO\left(h^{2q + 1}\right) + \OO\left(h^{2p + 1}\right) \\
-	&\leq C_1 h \sum_{i = 0}^{k}\E^h|e_i|^2 + \OO\left(h^{-1}\right)\left(\OO\left(h^{2q + 1}\right) + \OO\left(h^{2p + 1}\right)\right)\\
-	&\leq C_1 h \sum_{i = 0}^{k}\E^h|e_i|^2 + \OO\left(h^{2q}\right) + \OO\left(h^{2p}\right).
+	\E|e_{k+1}|^2 &\leq \left(1 + \OO\left(h\right)\right)\E|e_k|^2 + \OO\left(h^{2q + 1}\right) + \OO\left(h^{2p + 1}\right) \\
+	&\leq C_1 h \E|e_k|^2 + \E|e_k|^2 + \OO\left(h^{2q + 1}\right) + \OO\left(h^{2p + 1}\right) \\
+	&\leq C_1 h \sum_{i = 0}^{k}\E|e_i|^2 + \OO\left(h^{-1}\right)\left(\OO\left(h^{2q + 1}\right) + \OO\left(h^{2p + 1}\right)\right)\\
+	&\leq C_1 h \sum_{i = 0}^{k}\E|e_i|^2 + \OO\left(h^{2q}\right) + \OO\left(h^{2p}\right).
 \end{align}
 Therefore by Proposition \ref{thm:Gronwall}
 \begin{align}
-	\E^h|e_{k}|^2 &\leq C_2 h^{2\min\{p,q\}} \exp(C_1kh)\\ 
+	\E|e_{k}|^2 &\leq C_2 h^{2\min\{p,q\}} \exp(C_1kh)\\ 
 		      &\leq C_2 h^{2\min\{p,q\}} \exp(C_1T) \\	
 		      &\leq Ch^{2\min\{p,q\}},
 \end{align}  	

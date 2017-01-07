@@ -42,9 +42,9 @@ std::vector<VectorXd> MetropolisHastings(odeDef odeModel, std::vector<double>& p
 										 std::vector<double>& likelihoods, std::default_random_engine& generator);
 
 std::vector<VectorXd> MetropolisBruss(odeDef odeModel, std::vector<double> &param, double sigma, double h, double finalTime,
-									  std::vector<VectorXd> &data, std::vector<double> &dataTimes, VectorXd priorMean, VectorXd priorVariance,
-									  int internalMC, int nStepsMC, double varData, long int *cost, std::vector<double> &likelihoods,
-									  std::default_random_engine &generator);
+                                      std::vector<VectorXd> &data, std::vector<double> &dataTimes, VectorXd priorMean, VectorXd priorVariance,
+                                      int internalMC, int nStepsMC, double varData, long int *cost, std::vector<double> &likelihoods,
+                                      std::default_random_engine &generator, std::vector<int> &allStages);
 
 void StoppedMetropolis(std::vector<VectorXd>& mcmcPath, odeDef odeModel, std::vector<double>& param, double sigma,
 					   double h, double finalTime, std::vector<VectorXd>& data, std::vector<double>& dataTimes,

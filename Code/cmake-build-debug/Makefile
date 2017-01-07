@@ -202,6 +202,19 @@ mcmcConvFix/fast:
 .PHONY : mcmcConvFix/fast
 
 #=============================================================================
+# Target rules for targets named varH
+
+# Build rule for target.
+varH: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 varH
+.PHONY : varH
+
+# fast build rule for target.
+varH/fast:
+	$(MAKE) -f Test/CMakeFiles/varH.dir/build.make Test/CMakeFiles/varH.dir/build
+.PHONY : varH/fast
+
+#=============================================================================
 # Target rules for targets named plainMHconv
 
 # Build rule for target.
@@ -385,6 +398,7 @@ help:
 	@echo "... sigmaEst"
 	@echo "... batchConf"
 	@echo "... mcmcConvFix"
+	@echo "... varH"
 	@echo "... plainMHconv"
 	@echo "... LorenzTraj"
 	@echo "... nonZeroVar"

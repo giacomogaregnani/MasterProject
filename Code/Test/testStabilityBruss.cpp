@@ -11,7 +11,7 @@ int main(int argc, char* argv[]) {
     odeDef testODE;
     testODE.ode = problem;
     setProblem(&testODE);
-    double finalTime = 10.0;
+    double finalTime = 50.0;
 
     // =========================
     // Solution

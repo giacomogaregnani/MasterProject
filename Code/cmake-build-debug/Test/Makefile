@@ -201,6 +201,21 @@ mcmcConvFix/fast:
 .PHONY : mcmcConvFix/fast
 
 # Convenience name for target.
+Test/CMakeFiles/varH.dir/rule:
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/varH.dir/rule
+.PHONY : Test/CMakeFiles/varH.dir/rule
+
+# Convenience name for target.
+varH: Test/CMakeFiles/varH.dir/rule
+
+.PHONY : varH
+
+# fast build rule for target.
+varH/fast:
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/varH.dir/build.make Test/CMakeFiles/varH.dir/build
+.PHONY : varH/fast
+
+# Convenience name for target.
 Test/CMakeFiles/plainMHconv.dir/rule:
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f CMakeFiles/Makefile2 Test/CMakeFiles/plainMHconv.dir/rule
 .PHONY : Test/CMakeFiles/plainMHconv.dir/rule
@@ -935,6 +950,7 @@ problems.cpp.o:
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/problems.cpp.o
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/batchConf.dir/build.make Test/CMakeFiles/batchConf.dir/problems.cpp.o
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/problems.cpp.o
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/varH.dir/build.make Test/CMakeFiles/varH.dir/problems.cpp.o
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/LorenzTraj.dir/build.make Test/CMakeFiles/LorenzTraj.dir/problems.cpp.o
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/nonZeroVar.dir/build.make Test/CMakeFiles/nonZeroVar.dir/problems.cpp.o
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/invMeas.dir/build.make Test/CMakeFiles/invMeas.dir/problems.cpp.o
@@ -958,6 +974,7 @@ problems.cpp.i:
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/problems.cpp.i
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/batchConf.dir/build.make Test/CMakeFiles/batchConf.dir/problems.cpp.i
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/problems.cpp.i
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/varH.dir/build.make Test/CMakeFiles/varH.dir/problems.cpp.i
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/LorenzTraj.dir/build.make Test/CMakeFiles/LorenzTraj.dir/problems.cpp.i
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/nonZeroVar.dir/build.make Test/CMakeFiles/nonZeroVar.dir/problems.cpp.i
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/invMeas.dir/build.make Test/CMakeFiles/invMeas.dir/problems.cpp.i
@@ -981,6 +998,7 @@ problems.cpp.s:
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/sigmaEst.dir/build.make Test/CMakeFiles/sigmaEst.dir/problems.cpp.s
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/batchConf.dir/build.make Test/CMakeFiles/batchConf.dir/problems.cpp.s
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/mcmcConvFix.dir/build.make Test/CMakeFiles/mcmcConvFix.dir/problems.cpp.s
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/varH.dir/build.make Test/CMakeFiles/varH.dir/problems.cpp.s
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/LorenzTraj.dir/build.make Test/CMakeFiles/LorenzTraj.dir/problems.cpp.s
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/nonZeroVar.dir/build.make Test/CMakeFiles/nonZeroVar.dir/problems.cpp.s
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/invMeas.dir/build.make Test/CMakeFiles/invMeas.dir/problems.cpp.s
@@ -1208,6 +1226,33 @@ testVarMC.cpp.s:
 	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/testVar.dir/build.make Test/CMakeFiles/testVar.dir/testVarMC.cpp.s
 .PHONY : testVarMC.cpp.s
 
+varh.o: varh.cpp.o
+
+.PHONY : varh.o
+
+# target to build an object file
+varh.cpp.o:
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/varH.dir/build.make Test/CMakeFiles/varH.dir/varh.cpp.o
+.PHONY : varh.cpp.o
+
+varh.i: varh.cpp.i
+
+.PHONY : varh.i
+
+# target to preprocess a source file
+varh.cpp.i:
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/varH.dir/build.make Test/CMakeFiles/varH.dir/varh.cpp.i
+.PHONY : varh.cpp.i
+
+varh.s: varh.cpp.s
+
+.PHONY : varh.s
+
+# target to generate assembly for a file
+varh.cpp.s:
+	cd /u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug && $(MAKE) -f Test/CMakeFiles/varH.dir/build.make Test/CMakeFiles/varH.dir/varh.cpp.s
+.PHONY : varh.cpp.s
+
 weakConvergence.o: weakConvergence.cpp.o
 
 .PHONY : weakConvergence.o
@@ -1248,6 +1293,7 @@ help:
 	@echo "... sigmaEst"
 	@echo "... batchConf"
 	@echo "... mcmcConvFix"
+	@echo "... varH"
 	@echo "... edit_cache"
 	@echo "... plainMHconv"
 	@echo "... LorenzTraj"
@@ -1343,6 +1389,9 @@ help:
 	@echo "... testVarMC.o"
 	@echo "... testVarMC.i"
 	@echo "... testVarMC.s"
+	@echo "... varh.o"
+	@echo "... varh.i"
+	@echo "... varh.s"
 	@echo "... weakConvergence.o"
 	@echo "... weakConvergence.i"
 	@echo "... weakConvergence.s"

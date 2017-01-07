@@ -399,6 +399,58 @@
 					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="varH">
+				<Option output="/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/varH" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Project/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Project/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Project/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 varH"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="varH/fast">
+				<Option output="/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/varH" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DDATA_PATH=&quot;/u/anmc/garegnan/Desktop/Project/Code/data&quot;"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Project/Code/eigen"/>
+					<Add directory="/u/anmc/garegnan/Desktop/Project/Code/Solver"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 varH/fast"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="plainMHconv">
 				<Option output="/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test/plainMHconv" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/u/anmc/garegnan/Desktop/Project/Code/cmake-build-debug/Test"/>
@@ -1190,6 +1242,7 @@
 			<Option target="sigmaEst"/>
 			<Option target="batchConf"/>
 			<Option target="mcmcConvFix"/>
+			<Option target="varH"/>
 			<Option target="LorenzTraj"/>
 			<Option target="nonZeroVar"/>
 			<Option target="invMeas"/>
@@ -1207,6 +1260,7 @@
 			<Option target="sigmaEst"/>
 			<Option target="batchConf"/>
 			<Option target="mcmcConvFix"/>
+			<Option target="varH"/>
 			<Option target="LorenzTraj"/>
 			<Option target="nonZeroVar"/>
 			<Option target="invMeas"/>
@@ -1240,6 +1294,9 @@
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Test/testVarMC.cpp">
 			<Option target="testVar"/>
+		</Unit>
+		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Test/varh.cpp">
+			<Option target="varH"/>
 		</Unit>
 		<Unit filename="/u/anmc/garegnan/Desktop/Project/Code/Test/weakConvergence.cpp">
 			<Option target="weakConv"/>

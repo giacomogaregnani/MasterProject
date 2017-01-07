@@ -64,9 +64,9 @@ int main(int argc, char* argv[])
     }
 
     // INITIAL MCMC GUESS
-    VectorXd paramGuess(nParam);
+    std::vector<double> paramGuess(nParam);
     for (size_t i = 0; i < nParam; i++) {
-        paramGuess(i) = paramList[i];
+        paramGuess[i] = 0.5;
     }
 
     // PARAMETERS OF THE CHAIN
@@ -74,29 +74,37 @@ int main(int argc, char* argv[])
 
     // DEFINE THE PROBABILISTIC INTEGRATOR
     double sigma = 0.5;
-    double h = 0.1;
+    std::vector<double> hVec = {0.2};
+    for (int i = 0; i < 4; i++) {
+        hVec.push_back(hVec.back() / 2.0);
+    }
     int nMC = 1;
 
     // Initialize chains
-    std::vector<VectorXd> mcmcPath;
-    long int cost = 0;
-    std::vector<double> likelihoods = {};
 
-    mcmcPath = MetropolisBruss(odeModel, paramList, sigma,
-                               h, finalTime, data, times,
-                               priorMean, priorVariance, nMC,
-                               nMCMC, varData, &cost,
-                               likelihoods, generator);
+    int i;
+    #pragma omp parallel for num_threads(5) private(i)
+    for (i = 0; i < 5; i++) {
+        std::vector<VectorXd> mcmcPath;
+        long int cost = 0;
+        std::vector<double> likelihoods = {};
+        std::vector<int> nStages = {};
 
-    // WRITE RESULTS ON FILE
-    std::ofstream thetas;
-    std::string thetaFileName = std::string(DATA_PATH) + "/Bruss/" + argv[1] + strTime
-                                + std::to_string(static_cast<int>(h * 1e5)) + ".txt";
-    thetas.open(thetaFileName, std::ofstream::out | std::ofstream::trunc);
-    for (auto it : mcmcPath) {
-        thetas << it.transpose() << "\n";
+        mcmcPath = MetropolisBruss(odeModel, paramGuess, sigma, hVec[i], finalTime, data, times, priorMean,
+                                   priorVariance, nMC, nMCMC, varData, &cost, likelihoods, generator, nStages);
+
+        // WRITE RESULTS ON FILE
+        std::ofstream thetas;
+        std::string thetaFileName = std::string(DATA_PATH) + "/Bruss/" + argv[1] + strTime
+                                    + std::to_string(static_cast<int>(hVec[i] * 1e5)) + ".txt";
+        thetas.open(thetaFileName, std::ofstream::out | std::ofstream::trunc);
+
+        int count = 0;
+        for (auto it : mcmcPath) {
+            thetas << it.transpose() << "\t" << nStages[count++] << "\n";
+        }
+        thetas.close();
     }
-    thetas.close();
 
     return 0;
 }

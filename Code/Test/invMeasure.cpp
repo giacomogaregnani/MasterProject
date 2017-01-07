@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
     // random generator
     default_random_engine generator{(unsigned int) time(NULL)};
 
-    for (int k = 0; k < 12; k++) {
+    for (int k = 0; k < 5; k++) {
 
         hRef /= 2;
         cout << "h = " << hRef << endl;
@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
         GAResults.open(fullPath, ios::out | ofstream::trunc);
 
         // Number of realizations per solver
-        size_t nRealizations = 100;
+        size_t nRealizations = 10000;
 
         vector<VectorXd> fTimeEE(nRealizations);
         vector<VectorXd> fTimeEI(nRealizations);

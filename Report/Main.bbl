@@ -86,6 +86,11 @@
   properties of {M}arkov chain {M}onte {C}arlo simulation methods based on the
   particle filter}, J. Econometrics, 171 (2012), pp.~134--151.
 
+\bibitem{HoK71}
+{\sc P.~van~der Houwen and J.~Kok}, {\em Numerical solution of a minimax
+  problem}, tech. rep., Mathematical Centre, Amsterdam, 1971.
+\newblock Report TW 124/71.
+
 \bibitem{Vih12}
 {\sc M.~Vihola}, {\em Robust adaptive {M}etropolis algorithm with coerced
   acceptance rate}, Stat. Comput., 22 (2012), pp.~997--1008.

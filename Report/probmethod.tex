@@ -9,14 +9,14 @@ Let us consider $f\colon \R^d \to \R^d$ and the following ODE
 	u(0)  &= u_0, && u_0 \in \R^d.
 \end{aligned}
 \end{equation}
-Given a time step $h >0$, we now consider a discretization of the time interval $[0, T]$ defined as $t_k = kh$, with $k = 0, \ldots, N$, and with $T = Nh$. Let us now consider the numerical solution numerical solution $U_k$ at time $t_k$ given by a Runge-Kutta methods. We can write one step of the time integration as 
+Given a time step $h >0$, we now consider a discretization of the time interval $[0, T]$ defined as $t_k = kh$, with $k = 0, \ldots, N$, and with $T = Nh$. Let us now consider the numerical solution numerical solution $U_k$ at time $t_k$ given by a Runge-Kutta method. We can write one step of the time integration as 
 \begin{equation}\label{numericalODE}
 \begin{aligned}
 	U_{k+1} &= \Psi_h(U_k), \quad k = 0, \ldots, N-1, \\
 	U_{0} &= u_0, 
 \end{aligned}
 \end{equation}
-where $\Psi$ defines the flow map of a Runge-Kutta method. In the following section, we will briefly introduce Runge-Kutta methods and some of their properties, thus deriving the notation above. The probabilistic method we considered in this work, first introduced in \cite{CGS16}, considers independent identically distributed (i.i.d.) random variables $\xi_k$, which will explicitly depend on the discretization step $h$, and add them at each step of the numerical integration, i.e., 
+where $\Psi$ defines the flow map of the Runge-Kutta method. In the following section, we will briefly introduce Runge-Kutta methods and some of their properties, thus deriving the notation above. The probabilistic method we considered in this work, first introduced in \cite{CGS16}, considers independent identically distributed (i.i.d.) random variables $\xi_k$, which will explicitly depend on the discretization step $h$, and add them at each step of the numerical integration, i.e., 
 \begin{equation}\label{eq:probMethod}
 \begin{aligned}
 	U_{k+1} &= \Psi_h(U_k) + \xi_k(h), \\
@@ -43,7 +43,3 @@ Finally, we will discuss the case where this favorable convergence property is n
 \input{MonteCarlo}
 \input{MLMC}
 \input{Stability}
-
-
-
-

@@ -9,7 +9,7 @@
 std::vector<VectorXd> MetropolisBruss(odeDef odeModel, std::vector<double> &param, double sigma, double h, double finalTime,
                                       std::vector<VectorXd> &data, std::vector<double> &dataTimes, VectorXd priorMean, VectorXd priorVariance,
                                       int internalMC, int nStepsMC, double varData, long int *cost, std::vector<double> &likelihoods,
-                                      std::default_random_engine &generator)
+                                      std::default_random_engine &generator, std::vector<int> &allStages)
 {
     // Initialize stuff
     int nParam = static_cast<int>(param.size());
@@ -17,6 +17,7 @@ std::vector<VectorXd> MetropolisBruss(odeDef odeModel, std::vector<double> &para
     VectorXd paramVecN(nParam);
     std::vector<VectorXd> mcmcPath(nStepsMC, VectorXd(nParam));
     likelihoods.resize(static_cast<size_t>(nStepsMC));
+    allStages.resize(static_cast<size_t>(nStepsMC));
     VectorXd w(nParam);
     std::vector<double> paramStd(nParam);
     std::default_random_engine wGenerator{(unsigned int) time(NULL)};
@@ -60,9 +61,10 @@ std::vector<VectorXd> MetropolisBruss(odeDef odeModel, std::vector<double> &para
     }
     oldLike /= internalMC;
     oldPrior = evalLogPrior(paramVec, priorMean, priorVariance, nParam);
-    cost += nOdeSteps * internalMC;
+    cost += nStages * nOdeSteps;
     mcmcPath[0] = paramVec;
     likelihoods[0] = oldLike;
+    allStages[0] = nStages;
 
     // Initialize RAM
     double gamma = 0.01;
@@ -102,6 +104,7 @@ std::vector<VectorXd> MetropolisBruss(odeDef odeModel, std::vector<double> &para
 
         lambda = 4 * paramStd[0] * NplusOneSqd;
         nStages = static_cast<int>(std::ceil(sqrt(0.5 * h * lambda))) + 1;
+        allStages[i] = nStages;
 
         // Compute likelihood for the new parameter
         for (MCindex = 0; MCindex < internalMC; MCindex++) {
@@ -125,7 +128,6 @@ std::vector<VectorXd> MetropolisBruss(odeDef odeModel, std::vector<double> &para
             l += lVec[j];
         }
         l /= internalMC;
-        // *cost += nOdeSteps * internalMC;
 
         // Compute prior on the new parameter
         prior = evalLogPrior(paramVecN, priorMean, priorVariance, nParam);
