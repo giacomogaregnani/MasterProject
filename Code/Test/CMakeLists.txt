@@ -57,6 +57,10 @@ add_executable(varH varh.cpp
 		problems.hpp problems.cpp)
 target_link_libraries(varH Solver)
 
+add_executable(varHSto varhSto.cpp
+		problems.hpp problems.cpp)
+target_link_libraries(varHSto Solver)
+
 #add_executable(likEst likelihoodEstimator.cpp
 #		problems.hpp problems.cpp
 #		mcmcTools.hpp mcmcTools.cpp

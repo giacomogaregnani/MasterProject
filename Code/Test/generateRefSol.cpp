@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
     // =========================
     // INITIALIZATION
     // =========================
-    problems problem = BRUSS;
+    problems problem = LORENZ;
 
     // Set problem
     odeDef testODE;
@@ -27,9 +27,9 @@ int main(int argc, char* argv[])
     //
 
     std::vector<double> paramList = testODE.refParam;
-    std::string filepath("refSolBruss.txt");
+    std::string filepath("refSolLorenz.txt");
     // equispaced values from 0 to finalTime
-    double finalTime = 10.0;
+    double finalTime = 20.0;
     unsigned int nData = 10;
     double noiseStdDev = 0.1;
     // =========================
@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
     // =========================
 
 	// REFERENCE SOLUTION
-	double hRef = 0.0001;
+	double hRef = 0.000001;
 	int nSteps = int (finalTime / hRef);
 
 	// Prepare structures for data acquisition
