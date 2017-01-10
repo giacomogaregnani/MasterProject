@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
 
     // Write all results
     ofstream EEResults, EIResults, MPResults, GAResults;
-    string fullPath = string(DATA_PATH) + "/invMeasMP_hTestSto.txt";
+    string fullPath = string(DATA_PATH) + "/invMeasRK_hTestSto.txt";
     EEResults.open(fullPath, ios::out | ofstream::trunc);
 
     // Number of realizations per solver
@@ -48,7 +48,7 @@ int main(int argc, char* argv[]) {
     #pragma omp parallel for num_threads(30) private(index)
     for (index = 0; index < nRealizations; index++) {
         // Initialize the solvers
-        ProbMethod<MidPoint> EESolver(testODE, hRef, paramList, 0.5);
+        ProbMethod<RungeKutta> EESolver(testODE, hRef, paramList, 0.5);
 
         printf("traj %zu\n", index);
         for (int i = 0; i < nSteps; i++) {

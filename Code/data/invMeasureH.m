@@ -2,10 +2,10 @@ clc; clear; close all;
 
 
 % Variable h, deterministic
-yLorenz = dlmread('invMeasEE_hTest.txt');
+yLorenz = dlmread('invMeasEI_hTest.txt');
 phi = @(y) sum(y.^2, 2);
 phiY = phi(yLorenz);
-h = 0.025 * (0.999 .^ [0 : 4999]);
+h = 0.025 * (0.999 .^ [0 : 599]);
 intPhi = trapz(fliplr(h), fliplr(phiY));
 intPhiNorm = 1 / (max(h)-min(h)) * intPhi;
 
@@ -23,7 +23,7 @@ title('deterministic, variable $h$')
 intPhiMeasure = trapz(evalPoints, f .* evalPoints);
 
 % Fixed h, probabilistic
-yLorenzSto = dlmread('invMeasEE_hTestSto.txt');
+yLorenzSto = dlmread('invMeasRK_hTestSto.txt');
 phiYSto = phi(yLorenzSto);
 intPhiStoNorm = mean(phiYSto);
 

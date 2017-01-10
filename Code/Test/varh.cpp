@@ -26,8 +26,8 @@ int main(int argc, char* argv[]) {
     // Generate a set of trajectories
     // =========================
 
-    std::vector<double> timeStepVec = {0.0125};
-    unsigned int nTimeSteps = 5000;
+    std::vector<double> timeStepVec = {0.1};
+    unsigned int nTimeSteps = 600;
     for (size_t i = 0; i < nTimeSteps; i++) {
         timeStepVec.push_back(timeStepVec.back() * 0.999);
     }
@@ -35,10 +35,14 @@ int main(int argc, char* argv[]) {
 
     // Output file
     ofstream EEResults;
-    string fullPath = string(DATA_PATH) + "/invMeasMP_hTest" + ".txt";
+    string fullPath = string(DATA_PATH) + "/invMeasEI_hTest" + ".txt";
     EEResults.open(fullPath, ios::out | ofstream::trunc);
 
     std::vector<VectorXd> results(nTimeSteps);
+
+    Butcher butcherTable(RADAU, 2);
+    MatrixXd A = butcherTable.getA();
+    VectorXd b = butcherTable.getB();
 
     unsigned int i;
     #pragma omp parallel for num_threads(30) private(i)
@@ -56,7 +60,7 @@ int main(int argc, char* argv[]) {
         // Initialize solver
         VectorXd solution(testODE.size);
         VectorXd oldSolution(testODE.size);
-        MidPoint EESolver(testODE, paramList);
+        ImplicitRK EESolver(testODE, paramList, A, b, 4);
         double time, hLoc;
 
         printf("timestep : %f\n", timeStep);
