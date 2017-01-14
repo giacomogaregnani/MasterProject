@@ -1,0 +1,138 @@
+\documentclass{scrartcl}
+
+\input{Preamble}
+
+\begin{document}
+	
+\section{Random time stepping}
+
+Let us consider $f\colon\R^d\to\R^d$ and the ODE 
+\begin{equation}
+	y' = f(y), \quad y(0) = y_0 \in \R^d.
+\end{equation}
+Given a time step $h > 0$, the Explicit Euler method applied to this ODE reads
+\begin{equation}
+	y_{n+1} = y_n + h f(y_n).
+\end{equation}
+Let us consider the ODE to be chaotic, i.e., integrating the equation with different time steps leads to different numerical solutions. The idea is to choose at each time $t_n$ the time step as the realization of a random variable $H_n$ in order to quantify the uncertainty introduced by the numerical method. The following assumptions are needed in the following.
+\begin{assumption}\label{as:assumptionH} The i.i.d. random variables $H_n$ satisfy 
+	\begin{enumerate}
+		\item $H_n > 0$ a.s.,
+		\item there exists $h > 0$ such that $\E[H_n] = h$ for all $n = 0, 1, \ldots$,
+		\item there exists a function $A\colon\R\to\R$ with $A(h) \to 0$ when $h \to 0$ such that the first three integer moments of the random variables $Z_n$ defined as
+		\begin{equation}
+			Z_n \defeq \frac{1}{A(h)}(H_n - h)
+		\end{equation}
+		satisfy
+		\begin{equation}
+			\E[Z_n] = 0, \quad \E[Z_n^2] = h, \quad \E[Z_n^3] = 0.
+		\end{equation}
+	\end{enumerate}
+\end{assumption}
+\noindent Integrating with variable time step $H_n$ gives the discrete stochastic process $\{Y_n\}_{n\geq 0}$ defined as
+\begin{equation}\label{eq:numHSto}
+	Y_{n+1} = Y_n + H_n f(Y_n).
+\end{equation}
+We can write equivalently $Y_n$ as 
+\begin{equation}
+\begin{aligned}
+	Y_{n+1} &= Y_n + H_n f(Y_n) \\
+	&= Y_n + hf(Y_n) + (H_n - h)f(Y_n) \\
+	&= Y_n + hf(Y_n) + A(h)f(Y_n)Z_n,
+\end{aligned}
+\end{equation}
+where $Z_n$ are the r.v. of Assumption \ref{as:assumptionH}. Let us consider $\tilde Y$ the solution of the SDE
+\begin{equation}\label{eq:modifiedSDE}
+	\dd \tilde Y = f(\tilde Y) \dd t + A(h) f(\tilde Y) \dd W(t), \quad \tilde Y(0) = y_0,
+\end{equation}
+where $W(t)$ for $t > 0$ is a standard one-dimensional Wiener process. Then, the following result of local weak convergence holds.
+\begin{theorem} If the sequence $\{H_n\}_{n\geq 0}$ satisfies Assumption \ref{as:assumptionH}, then for any smooth function $\phi$ and $n = 1, 2, \ldots$, the numerical solution $Y_n$ given by \eqref{eq:numHSto} and the solution $\tilde Y$ of \eqref{eq:modifiedSDE} satisfy 
+\begin{equation}\label{eq:weakOrder}
+	\abs{\E[\phi(Y_n) - \phi(\tilde Y(nh))]} \leq Ch,
+\end{equation}
+where $C$ is a positive real constant.
+\end{theorem}
+\begin{example}\label{ex:uniformH} Given $h > 0$, let us consider the random variables $H_n$ to be drawn from an uniform distribution 
+	\begin{equation}
+		H_n \iid \mathcal{U}(0, 2h).
+	\end{equation}
+	Then, points 1. and 2. of Assumption \ref{as:assumptionH} are trivially verified. Point 3. is verified considering
+	\begin{equation}
+		A(h) = \sqrt{\frac{h}{3}},
+	\end{equation} 
+	as in this case the random variables $Z_n$ are distributed following
+	\begin{equation}
+		Z_n \iid \mathcal{U}(-\sqrt{3h}, \sqrt{3h}),
+	\end{equation}
+	and therefore the odd moments are trivially equal to zero and
+	\begin{equation}	
+		\E[Z_n^2] = \frac{1}{12}(2\sqrt{3h})^2 = h. 
+	\end{equation}
+\end{example}
+
+\subsection{Numerical examples}
+\subsubsection{Weak order}
+\begin{figure}[t]
+	\centering
+	\resizebox{0.6\linewidth}{!}{\input{plots/weakOrderLocalH.tikz}}
+	\caption{Weak order}
+	\label{fig:WeakOrder}
+\end{figure}
+In this first example we consider the one-dimensional ODE
+\begin{equation}
+	f'(y) = \lambda y, \quad y(0) = 1. 
+\end{equation}
+with $\lambda = 1$, and final time $T = 1$. Let us remark that in practice we adapt the last time step so that the numerical solution is computed exactly up to time $T$. We consider the random variables $H_n$ and the function $A(h)$ given in example \ref{ex:uniformH}. The SDE \eqref{eq:modifiedSDE} then reads
+\begin{equation}
+	\tilde Y = \lambda \tilde Y \dd t + \sqrt{\frac{h}{3}} \lambda \tilde Y \dd W(t),
+\end{equation}
+and therefore the exact solution is given by
+\begin{equation}
+	\tilde Y(t) = \exp(\left(\lambda - \frac{h}{6}\lambda^2\right)t + \sqrt{\frac{h}{3}}\lambda W(t)).
+\end{equation}
+We consider $\phi$ in \eqref{eq:weakOrder} to be the identity function and compute the weak order for $h = 0.5 \cdot 2^{-i}$, with $i = 0, \ldots, 7$ with $M = 10^4$ trajectories of the numerical solution and $10^6$ realizations of the exact solution $\tilde Y(T)$. Results (Figure \ref{fig:WeakOrder}) show that the weak order of convergence one seems to be verified.
+
+\subsubsection{Distribution of the solution}
+
+We consider the Lorenz system 
+\begin{equation}\label{eq:Lorenz}
+\begin{aligned}
+x' &= \sigma(y - x), \quad &&x(0) = -10,\\
+y' &= x(\rho - z) - y, \quad &&y(0) = -1,\\
+z' &= xy - \beta z, \quad &&z(0) = 40.
+\end{aligned}
+\end{equation}
+with $\sigma = 10$, $\rho = 28$, $\beta = 8/3$, so that the system has chaotic behavior. Moreover, we consider final time $T = 100$ and the function $\phi(x) = x^Tx$. We consider $h = 0.01$ and $5\cdot 10^3$ trajectories of the following numerical solutions
+\begin{itemize}
+	\item ODE solver with random solver, time steps $H_n$ distributed as in example \ref{ex:uniformH},
+	\item SDE \eqref{eq:modifiedSDE} with Euler-Maruyama and fixed time step $h$,
+	\item probabilistic ODE solver \cite{CGS16} with fixed time step $h$.
+\end{itemize}  
+Thus, we consider the value of $\phi$ applied to the numerical solution at final time $T$. Empirical results (Figure \ref{fig:distributionPhi}) show that the distribution of $\phi(\tilde Y)$ and of $Y_N$ present the same behavior for the three methods above.
+
+\begin{figure}[t]
+	\begin{subfigure}{0.49\linewidth}
+		\centering
+		\resizebox{1.0\linewidth}{!}{\input{plots/ODEHistHLoc.tikz}}
+	\end{subfigure}
+	\begin{subfigure}{0.49\linewidth}
+		\centering
+		\resizebox{1.0\linewidth}{!}{\input{plots/SDEHistHLoc.tikz}}
+	\end{subfigure}
+	\begin{subfigure}{0.49\linewidth}
+		\centering
+		\resizebox{1.0\linewidth}{!}{\input{plots/PROBHistHLoc.tikz}}
+	\end{subfigure}
+	\begin{subfigure}{0.49\linewidth}
+		\centering
+		\resizebox{1.0\linewidth}{!}{\input{plots/ScatterVarH.tikz}}
+	\end{subfigure}
+	\caption{Empirical distribution of $\phi(Y)$ for $Y$ alternatively the solution of the ODE with stochastic time stepping, the SDE \eqref{eq:modifiedSDE} and the probabilistic solver. Scatter plot of the solution at final time computed with the three methods (blue = ODE, random time stepping; red = SDE \eqref{eq:modifiedSDE} with Euler-Maruyama; yellow = Probabilistic solver \cite{CGS16}).}
+	\label{fig:distributionPhi}
+\end{figure}
+
+
+\bibliographystyle{siam}
+\bibliography{anmc}
+
+\end{document}

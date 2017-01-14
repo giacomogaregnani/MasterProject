@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.10.29)  10 JAN 2017 18:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.10.29)  14 JAN 2017 15:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1921,6 +1921,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 \c@assumption=\count192
 \c@definition=\count193
 \c@remark=\count194
+\c@example=\count195
 )
 (./Main.aux)
 \openout1 = `Main.aux'.
@@ -1980,16 +1981,16 @@ File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
 ABD: EveryShipout initializing macros
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count195
+\scratchcounter=\count196
 \scratchdimen=\dimen308
 \scratchbox=\box68
-\nofMPsegments=\count196
-\nofMParguments=\count197
+\nofMPsegments=\count197
+\nofMParguments=\count198
 \everyMPshowfont=\toks52
-\MPscratchCnt=\count198
+\MPscratchCnt=\count199
 \MPscratchDim=\dimen309
-\MPnumerator=\count199
-\makeMPintoPDFobject=\count200
+\MPnumerator=\count200
+\makeMPintoPDFobject=\count201
 \everyMPtoPDFconversion=\toks53
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
@@ -2024,7 +2025,8 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count201
+Normal \count register pool exhausted, switching to extended pool.
+\c@section@level=\count277
 )
 LaTeX Info: Redefining \ref on input line 5.
 LaTeX Info: Redefining \pageref on input line 5.
@@ -2070,26 +2072,30 @@ Package pdftex.def Info: Logo-eps-converted-to.pdf used on input line 47.
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./Logo-eps-converted-to.pd
 f>]) [2
 
-] (./Acknow.tex
+] (./Abstract.tex) [3] [4
+
+
+]
+(./Acknow.tex
 Underfull \hbox (badness 10000) in paragraph at lines 3--4
 
  []
 
-) [3] [4
+) [5] [6
 
 
 ] (./Main.toc)
 \tf@toc=\write5
 \openout5 = `Main.toc'.
 
- [5] [6
+ [7] [8
 
 
 ] (./Introduction.tex)pdfTeX warning (ext4): destination with the same identifi
 er (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.38 \newpage
+l.48 \newpage
               [1] (./BayesianAnalysis.tex
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 26.
 
@@ -2124,7 +2130,17 @@ tifier (name{page.6}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.143 \end{equation}
-                     [6] [7] [8] (./RAMplots.tex
+                     [6]pdfTeX warning (ext4): destination with the same identi
+fier (name{page.7}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.177 
+       [7]pdfTeX warning (ext4): destination with the same identifier (name{pag
+e.8}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.201 
+       [8] (./RAMplots.tex
 Package epstopdf Info: Source file: <plots/MHvsRAM/MH_small.eps>
 (epstopdf)                    date: 2016-11-14 09:40:56
 (epstopdf)                    size: 1666624 bytes
@@ -2137,7 +2153,7 @@ f>
 (epstopdf)             \includegraphics on input line 4.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/MH_small-eps-converted-to.pdf, id=335, 439.6425pt x 330.23375pt>
+<plots/MHvsRAM/MH_small-eps-converted-to.pdf, id=342, 439.6425pt x 330.23375pt>
 File: plots/MHvsRAM/MH_small-eps-converted-to.pdf Graphic file (type pdf)
 <use plots/MHvsRAM/MH_small-eps-converted-to.pdf>
 Package pdftex.def Info: plots/MHvsRAM/MH_small-eps-converted-to.pdf used on in
@@ -2155,7 +2171,7 @@ s-converted-to.pdf plots/MHvsRAM/MH_medium.eps>
 (epstopdf)             \includegraphics on input line 7.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/MH_medium-eps-converted-to.pdf, id=336, 439.6425pt x 330.23375pt
+<plots/MHvsRAM/MH_medium-eps-converted-to.pdf, id=343, 439.6425pt x 330.23375pt
 >
 File: plots/MHvsRAM/MH_medium-eps-converted-to.pdf Graphic file (type pdf)
  <use plots/MHvsRAM/MH_medium-eps-converted-to.pdf>
@@ -2174,7 +2190,7 @@ onverted-to.pdf plots/MHvsRAM/MH_big.eps>
 (epstopdf)             \includegraphics on input line 10.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/MH_big-eps-converted-to.pdf, id=337, 439.6425pt x 330.23375pt>
+<plots/MHvsRAM/MH_big-eps-converted-to.pdf, id=344, 439.6425pt x 330.23375pt>
 File: plots/MHvsRAM/MH_big-eps-converted-to.pdf Graphic file (type pdf)
 
 <use plots/MHvsRAM/MH_big-eps-converted-to.pdf>
@@ -2193,7 +2209,7 @@ s-converted-to.pdf plots/MHvsRAM/RAM_small.eps>
 (epstopdf)             \includegraphics on input line 14.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/RAM_small-eps-converted-to.pdf, id=338, 439.6425pt x 330.23375pt
+<plots/MHvsRAM/RAM_small-eps-converted-to.pdf, id=345, 439.6425pt x 330.23375pt
 >
 File: plots/MHvsRAM/RAM_small-eps-converted-to.pdf Graphic file (type pdf)
  <use plots/MHvsRAM/RAM_small-eps-converted-to.pdf>
@@ -2212,7 +2228,7 @@ ps-converted-to.pdf plots/MHvsRAM/RAM_medium.eps>
 (epstopdf)             \includegraphics on input line 17.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/RAM_medium-eps-converted-to.pdf, id=339, 439.6425pt x 330.23375p
+<plots/MHvsRAM/RAM_medium-eps-converted-to.pdf, id=346, 439.6425pt x 330.23375p
 t>
 File: plots/MHvsRAM/RAM_medium-eps-converted-to.pdf Graphic file (type pdf)
  <use plots/MHvsRAM/RAM_medium-eps-converted-to.pdf>
@@ -2231,7 +2247,7 @@ converted-to.pdf plots/MHvsRAM/RAM_big.eps>
 (epstopdf)             \includegraphics on input line 20.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/MHvsRAM/RAM_big-eps-converted-to.pdf, id=340, 439.6425pt x 330.23375pt>
+<plots/MHvsRAM/RAM_big-eps-converted-to.pdf, id=347, 439.6425pt x 330.23375pt>
 File: plots/MHvsRAM/RAM_big-eps-converted-to.pdf Graphic file (type pdf)
 
 <use plots/MHvsRAM/RAM_big-eps-converted-to.pdf>
@@ -2311,7 +2327,7 @@ d-to.pdf plots/Fitznag.eps>
 (epstopdf)             \includegraphics on input line 10.
 Package epstopdf Info: Output file is already uptodate.
 
-<plots/Fitznag-eps-converted-to.pdf, id=780, 439.6425pt x 330.23375pt>
+<plots/Fitznag-eps-converted-to.pdf, id=787, 439.6425pt x 330.23375pt>
 File: plots/Fitznag-eps-converted-to.pdf Graphic file (type pdf)
 
 <use plots/Fitznag-eps-converted-to.pdf>
@@ -2624,20 +2640,20 @@ Class scrartcl Warning: Usage of deprecated font command `\sc'!
 (scrartcl)              by `\normalfont \scshape ' on input line 95.
 
 ) [53]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 50.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 50.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 60.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 60.
  (./Main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 50.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 50.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 60.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 60.
 Package rerunfilecheck Info: File `Main.out' has not changed.
 (rerunfilecheck)             Checksum: 2A46B9BAE16D8FF55D2FF29B96A21C19;2895.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 50.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 60.
  ) 
 Here is how much of TeX's memory you used:
- 44017 strings out of 493105
- 1757829 string characters out of 6137071
- 4263789 words of memory out of 5000000
- 46532 multiletter control sequences out of 15000+600000
+ 44031 strings out of 493105
+ 1757986 string characters out of 6137071
+ 4263888 words of memory out of 5000000
+ 46542 multiletter control sequences out of 15000+600000
  21498 words of font info for 84 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  76i,23n,112p,159246b,13833s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2662,10 +2678,10 @@ type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
 ts/symbols/msbm10.pfb>
-Output written on Main.pdf (59 pages, 5655969 bytes).
+Output written on Main.pdf (61 pages, 5657074 bytes).
 PDF statistics:
- 1031 PDF objects out of 1200 (max. 8388607)
- 918 compressed objects within 10 object streams
- 265 named destinations out of 1000 (max. 500000)
+ 1039 PDF objects out of 1200 (max. 8388607)
+ 924 compressed objects within 10 object streams
+ 266 named destinations out of 1000 (max. 500000)
  325 words of extra memory for PDF output out of 10000 (max. 10000000)
 

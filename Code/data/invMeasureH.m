@@ -5,7 +5,7 @@ clc; clear; close all;
 yLorenz = dlmread('invMeasEI_hTest.txt');
 phi = @(y) sum(y.^2, 2);
 phiY = phi(yLorenz);
-h = 0.025 * (0.999 .^ [0 : 599]);
+h = 0.025 * (0.999 .^ [0 : 4999]);
 intPhi = trapz(fliplr(h), fliplr(phiY));
 intPhiNorm = 1 / (max(h)-min(h)) * intPhi;
 
@@ -19,6 +19,8 @@ histogram(phiY, 'normalization', 'pdf', 'facealpha' , .5)
 xlabel('\Phi(Y)')
 ylabel('pdf')
 title('deterministic, variable $h$')
+ylim([0, 1.2 * 1e-3])
+xlim([0, 3*10^3])
 
 intPhiMeasure = trapz(evalPoints, f .* evalPoints);
 
