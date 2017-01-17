@@ -15,11 +15,11 @@ int main(int argc, char* argv[]) {
     // =========================
     // INITIALIZATION
     // =========================
-    problems problem = TEST1D;
+    problems problem = LORENZ;
     odeDef testODE;
     testODE.ode = problem;
     setProblem(&testODE);
-    testODE.refParam[0] = 0.5;
+    // testODE.refParam[0] = 0.5;
     vector<double> paramList = testODE.refParam;
     // =========================
 
@@ -27,16 +27,20 @@ int main(int argc, char* argv[]) {
     // Generate a set of trajectories
     // =========================
 
-    size_t nTimeSteps = 12;
-    std::vector<double> h = {0.1};
+    size_t nTimeSteps = 1;
+    std::vector<double> h = {0.01};
     for (size_t i = 0; i < nTimeSteps - 1; i++) {
         h.push_back(h.back() / 2.0);
     }
 
-    double finalTime = 10.0;
-    unsigned int nTrajectories = 10;
+    double finalTime = 40.0;
+    unsigned int nTrajectories = 100;
 
     std::default_random_engine generator{(unsigned int) time(NULL)};
+
+    Butcher butcher(RADAU, 2);
+    MatrixXd A = butcher.getA();
+    VectorXd b = butcher.getB();
 
     for (auto meanTimeStep : h) {
 
@@ -44,18 +48,27 @@ int main(int argc, char* argv[]) {
 
         // Output file
         ofstream EEResults;
-        string fullPath = string(DATA_PATH) + "/invMeasRK_hTest" +
+        string fullPath = string(DATA_PATH) + "/invMeasMPLorenz" +
                 std::to_string(static_cast<int>(meanTimeStep * 1e5)) + ".txt";
         EEResults.open(fullPath, ios::out | ofstream::trunc);
+        ofstream fullResults;
+        string fullFullPath = string(DATA_PATH) + "/invMeasMPLorenzFull" +
+                          std::to_string(static_cast<int>(meanTimeStep * 1e5)) + ".txt";
+        fullResults.open(fullFullPath, ios::out | ofstream::trunc);
 
         // Generator of time steps
-        std::uniform_real_distribution<double> hDistribution(0.0, 2 * meanTimeStep);
+        // std::uniform_real_distribution<double> hDistribution(0.0, 2 * meanTimeStep);
+        std::uniform_real_distribution<double> hDistribution(meanTimeStep - pow(meanTimeStep, 2.5),
+                                                             meanTimeStep + pow(meanTimeStep, 2.5));
+
 
         // All trajectories
         std::vector<VectorXd> results(nTrajectories);
 
+        int meanNSteps = static_cast<int> (finalTime / meanTimeStep);
+
         unsigned int j = 0;
-        #pragma omp parallel for num_threads(30) private(j)
+        //#pragma omp parallel for num_threads(30) private(j)
         for (j = 0; j < nTrajectories; j++) {
 
             // Initialize solver
@@ -66,22 +79,29 @@ int main(int argc, char* argv[]) {
             MidPoint EESolver(testODE, paramList);
             oldSolution = testODE.initialCond;
 
-            // Integrate up to final time
-            time = 0.0;
+            /* hLoc = hDistribution(generator);
+            solution = EESolver.oneStep(oldSolution, hLoc); */
 
-            while (time < finalTime) {
+            // Integrate up to final time
+             time = 0.0;
+
+            fullResults << "0" << "\t" << testODE.initialCond.transpose() << std::endl;
+
+            for (int i = 0; i < meanNSteps; i++) {
+            // while (time < finalTime) {
                 hLoc = hDistribution(generator);
                 solution = EESolver.oneStep(oldSolution, hLoc);
                 time = time + hLoc;
                 oldOldSolution = oldSolution;
+                fullResults << time << "\t" << solution.transpose() << std::endl;
                 oldSolution = solution;
             }
 
             // Check if we got to the right time
-            if (time > finalTime) {
+            /* if (time > finalTime) {
                 hLoc = finalTime - (time - hLoc);
                 solution = EESolver.oneStep(oldOldSolution, hLoc);
-            }
+            } */
 
             results[j] = solution;
         }
@@ -91,6 +111,7 @@ int main(int argc, char* argv[]) {
         }
 
         EEResults.close();
+        fullResults.close();
     }
 
     return 0;
