@@ -6,3 +6,5 @@ Code/data/ProbVsDet/*.txt
 Code/eigen
 Code/build
 Code/cmake-build-debug/**
+Poster_Orane/*
+Garegnani_PDM.pdf

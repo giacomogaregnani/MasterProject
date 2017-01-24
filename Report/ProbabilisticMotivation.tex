@@ -10,7 +10,7 @@ z' &= xy - \beta z, \quad &&z(0) = 40.
 \end{aligned}
 \end{equation}
 Edward Lorenz discovered in 1963 that for certain values of the parameters $\rho$, $\sigma$ and $\beta$ this equation has a chaotic behavior, i.e., small variations of the initial conditions result in completely different solutions of the system. A sample trajectory of the solution in the state space is depicted in Figure \ref{fig:LorenzTraj}. \\
-Let us consider $\sigma = 10$, $\rho = 28$, $\beta = 8/3$. For this value, the solution has indeed a chaotic behavior. We solve the equation with a time step $h = 0.01$ using the probabilistic solver implemented with the Gauss collocation method on two stages, an implicit Runge-Kutta scheme of fourth order defined by the following Butcher tableau
+Let us consider $\sigma = 10$, $\rho = 28$, $\beta = 8/3$. For this values, the solution has indeed a chaotic behavior. We solve the equation with a time step $h = 0.01$ using the probabilistic solver implemented with the Gauss collocation method on two stages, an implicit Runge-Kutta scheme of fourth order defined by the following Butcher tableau
 \begin{center}
 	\begin{tabular}{c|cc}
 		$1/2-\sqrt{3}/6$ & 1/4 & $1/4-\sqrt{3}/6$ \\

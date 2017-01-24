@@ -1,6 +1,6 @@
-\subsection{Convergence of the posterior distribution}
+\subsection{Convergence of the posterior distribution}\label{sec:PosteriorConvergence}
 
-We wish to study the convergence of the posterior distribution obtained using the probabilistic method with respect to the true posterior distribution. In the following, we consider only the distance between the target distributions given by an exact algorithm and the target distribution of the MCMC with approximated likelihood, disregarding the error due to the MCMC approximation. This assumption is rather strong, as the convergence of MCMC can be slow depending on the initial condition, the prior distribution and the proposal distribution. \\
+We wish to study the convergence of the posterior distribution obtained using the probabilistic method with respect to the true posterior distribution. In the following, we consider only the distance between the target distributions given by an exact algorithm and the target distribution of the MCMC with approximated likelihood, disregarding the error due to the MCMC approximation. This assumption is rather strong, as the convergence of MCMC can be slow depending on the initial guess $\theta^{(0)}$, the prior distribution and the proposal distribution. \\
 In order to study the convergence, it is necessary to introduce a notion of distance between two probability measures. A standard measure is the \textit{total variation distance}, defined in the following.
 \begin{definition} Given two probability measures $\nu$ and $\mu$ on a measurable space $(\mathcal{X}, \mathcal{B}(\mathcal{X}))$, the total variation distance between $\nu$ and $\mu$ is defined as
 \begin{equation}
@@ -27,8 +27,13 @@ Let us denote by $\pi_h^M$ the target distribution of the MCWM algorithm employi
 2\E^\xi\left[\Hell^2(\pi(\theta|\mathcal{Y}),\pi^M_h(\theta|\mathcal{Y}))\right] &= \E^\xi\left[\int \left(\sqrt{\pi(\theta|\mathcal{Y})} - \sqrt{\pi^M_h(\theta|\mathcal{Y})}\right)^2 \dd \theta\right] \\
 &= \E^\xi\left[\int \left(\sqrt{\prior(\theta) \diffL(\mathcal{Y}|\theta)} - \sqrt{\prior(\theta) \diffL^M_h(\mathcal{Y}|\theta)}\right)^2 \dd \theta \right]\\
 &= \int \E^\xi\left[\left(\sqrt{\diffL(\mathcal{Y}|\theta)} - \sqrt{\diffL^M_h(\mathcal{Y}|\theta)}\right)^2\right] \dd \prior(\theta)  \\
-&= \int \MSE\left(\sqrt{\diffL^M_h(\mathcal Y|\theta)}\right) \dd \prior(\theta) \\
-&\leq \int C(\theta)h^{2q} \dd \prior(\theta) \\
+&= \int \MSE\left(\sqrt{\diffL^M_h(\mathcal Y|\theta)}\right) \dd \prior(\theta).
+\end{aligned}
+\end{equation}
+We now consider \eqref{eq:likMSE} and that Assumption \ref{assumption_1} is verified with $p = q$, thus deducing
+\begin{equation}
+\begin{aligned}
+2\E^\xi\left[\Hell^2(\pi(\theta|\mathcal{Y}),\pi^M_h(\theta|\mathcal{Y}))\right] &\leq \int C(\theta)h^{2q} \dd \prior(\theta) \\
 &= h^{2q} \int C(\theta) \dd \prior(\theta) \\
 &\leq h^{2q} \sup_{\theta \in \R^{N_p}} C(\theta) \int \dd\prior(\theta) \\
 &= h^{2q} \sup_{\theta \in \R^{N_p}} C(\theta),
@@ -71,15 +76,20 @@ We can now compute the variance of the expectation of $g(\theta)$ computed MCMC 
 		- \E^\xi\left[\int g(\theta) \diffL_h^M(\mathcal{Y}|\theta)\dd\prior(\theta)\right]
 		\right)^2\right]\\
 		&=\E^\xi\left[\left(\int g(\theta) \left(\diffL_h^M(\mathcal{Y}|\theta)-\E^\xi\left[\diffL_h^M(\mathcal{Y}|\theta)\right]\right)\dd\prior(\theta) 
-		\right)^2\right]\\
-		&\leq \E^\xi\left[\int g^2(\theta) \left(\diffL_h^M(\mathcal{Y}|\theta)-\E^\xi\left[\diffL_h^M(\mathcal{Y}|\theta)\right]\right)^2\dd\prior(\theta) 
+		\right)^2\right].
+\end{aligned}
+\end{equation}
+Applying Jensen's inequality on the inner expectation we get
+\begin{equation}
+\begin{aligned}
+		\Var^\xi (\E^{\pi_h^M}\left[g(\theta)\right]) &\leq \E^\xi\left[\int g^2(\theta) \left(\diffL_h^M(\mathcal{Y}|\theta)-\E^\xi\left[\diffL_h^M(\mathcal{Y}|\theta)\right]\right)^2\dd\prior(\theta) 
 		\right]\\
 		&= \int g^2(\theta) \E^\xi\left[\left(\diffL_h^M(\mathcal{Y}|\theta)-\E^\xi\left[\diffL_h^M(\mathcal{Y}|\theta)\right]\right)^2\right]\dd\prior(\theta) \\
 		&= \int g^2(\theta) \Var^\xi\left(\diffL_h^M(\mathcal{Y}|\theta)\right)\dd\prior(\theta) \\
 		&\leq \norm{g^2}_\infty C h^{2q},
 \end{aligned}
 \end{equation}
-where we applied Jensen's inequality and Proposition \ref{prop:MSE}. Hence, the MSE of this estimation is bounded quadratically with respect to the order of the employed Runge-Kutta method, i.e.,  
+where we exploited Proposition \ref{prop:MSE}. Hence, the MSE of this estimation is bounded quadratically with respect to the order of the employed Runge-Kutta method, i.e.,  
 \begin{equation}
 \begin{aligned}
 	\MSE(\E^{\pi_h^M}\left[g(\theta)\right]) &= \E^\xi\left[\E^{\pi_h^M}\left[g(\theta)\right] - \E^{\pi}\left[g(\theta)\right]\right]^2 + \Var^\xi(\E^{\pi_h^M}\left[g(\theta)\right]) \\
@@ -150,7 +160,7 @@ We consider the FitzHug-Nagumo model \eqref{eq:FitzNag} and produce observations
 \begin{equation}
 	\norm{\theta} \approx 10^{-6} \sum_{i = 1}^{10^6} \norm{\theta^{(i)}}.
 \end{equation}
-Results	(Figure \ref{fig:ConvergenceMCMC}) show the convergence obtained averaging 10 realizations of the entire MCMC chain used in order to simulate the expectation with respect to the random variable $\sigma$.
+Results	(Figure \ref{fig:ConvergenceMCMC}) show the convergence obtained averaging 10 realizations of the entire MCMC chain used in order to simulate the expectation with respect to the random variable $\sigma$. It is possible to remark that the convergence rates deduced theoretically in sections \ref{sec:ParH} and \ref{sec:PosteriorConvergence} are not clearly observed in practice.
 
 \begin{figure}[t]
 	\centering

@@ -52,9 +52,9 @@ Let us analyze separately the two terms of this equation.
 \end{itemize}
 The two approaches give both equally valid results but in a completely different spirit. While in classical statistics the model driving an experiment is predetermined and its parameters are computed using observations, in the Bayesian frame the object of study is the model behind the parameter itself, which is revealed by the observations.
 
-\subsubsection{An example: parametrized differential equations}\label{sect:exBayes}
+\subsubsection{Example - parametrized differential equations}\label{sect:exBayes}
 
-In this paragraph we present a simple example that is useful to understand Bayesian inference of parameters in general and the scope of this work in particular. Let us consider the probability space $(\Omega, \mathcal{F}, P)$, a one-dimensional standard Wiener process $\left\{W(t)\right\}_{t\geq 0}$ and a filtration $\left\{\mathcal{F}(t)\right\}_{t\geq 0}$ such that $W(t)$ is $\mathcal{F}(t)$ measurable. Moreover, let us consider the following one-dimensional stochastic differential equation (SDE)
+In this paragraph we present a simple example that is useful to understand Bayesian inference of parameters in general and the scope of this work in particular. Let us consider the probability space $(\Omega, \mathcal{F}, P)$, a one-dimensional standard Wiener process $\left\{W(t)\right\}_{t\geq 0}$ and a filtration $\left\{\mathcal{F}(t)\right\}_{t\geq 0}$ such that $W(t)$ is $\mathcal{F}(t)$-measurable. Moreover, let us consider the following one-dimensional stochastic differential equation (SDE)
 \begin{equation}\label{eq:exSDE}
 \begin{aligned}
 	dX(t) &= \lambda X(t) \dd t + \mu X(t) dW(t), && 0 < t < T, \\
@@ -94,15 +94,15 @@ In this simple example the analytical form of any of the quantities of Bayes' fo
 
 Markov chain Monte Carlo methods (MCMC) are a class of techniques used to perform Bayesian analyses \cite{Gil05, KaS05}. In the following we will present the main idea behind the method as well as some examples of their implementation. 
 
-Let us consider a model which has a random variable $X$ as its outcome parametrized by a parameter $\theta$ and a set of observations $\mathcal{Y}_i = \left\{y_1, y_2, \ldots, y_i\right\}$, $i = 1, \ldots, N_d$, providing information regarding $X$. Then, thanks to Bayes' rule, we can construct the posterior distribution of $\theta$ by Bayes' rule
+Let us consider a model which has a random variable $X$ as its outcome parametrized by a parameter $\theta$ and a set of observations $\mathcal{Y}_i = \left\{y_1, y_2, \ldots, y_i\right\}$, $i = 1, \ldots, N_d$, providing information regarding $X$. Then, thanks to Bayes' rule, we can construct the posterior distribution of $\theta$ as
 \begin{equation}
 	\pi(\theta|\mathcal{Y}_i) \propto \prior(\theta) \diffL(\mathcal{Y}_i|\theta).
 \end{equation}
 As in the previous paragraphs, let us assume that $\theta$ is a real-valued parameter of dimension $N_p$. If the parameter space has a high dimension, it is computationally expensive exploring all the possible values in order to build the posterior distribution, especially if evaluating the model connecting $\theta$ and the random variable $X$ is non-trivial. If we are interested in knowing the expectation of some measurable function $g\colon \R^{N_p} \to \R$ of $\theta$ we can proceed by the following Monte Carlo evaluation
 \begin{equation}\label{eq:MonteCarloMCMC}
-	 \E\left[g(\theta)\right]= \int_{\R^{N_p}} g(\theta)\pi(\dd\theta|\mathcal{Y}_i) \approx \frac{1}{N}\sum_{k = 1}^{N} g(\theta^{(k)}),
+	 \E^\pi\left[g(\theta)\right]= \int_{\R^{N_p}} g(\theta)\pi(\dd\theta|\mathcal{Y}_i) \approx \frac{1}{N}\sum_{k = 1}^{N} g(\theta^{(k)}),
 \end{equation}
-where $\theta^{(k)}$, $k = 1, \ldots, N$, is a set of realizations of $\theta$. While the equality in the equation follows from the definition of expectation, there is no guarantee that the Monte Carlo estimator will be a good approximation of the expectation regardless of the samples. MCMC techniques consist in generating samples such that the Monte Carlo approximation is valid without exploring the whole parameter space,  which would lead to an unaffordable computational time on any modern computer. As the name of the methods suggests, given an initial guess $\theta^{(0)}$, MCMC builds a discrete Markov chain $\{\theta^{(i)}\}_{i\geq 0}$ such that the Monte Carlo approximation in \eqref{eq:MonteCarloMCMC} is valid. Formally, this is achieved considering a \textit{transition kernel} $P$ which given the current element of the chain $\theta^{(i)}$ produces the next guess $\theta^{(i+1)}$. Under a set of assumptions on $P$ \cite{KaS05}, we have the theoretical guarantee that the samples $\theta^{(i)}$ are drawn from the same \textit{stationary distribution} for $i$ large enough. We can build many transition kernels having this property, and any valid choice of $P$ leads to a different MCMC method. In the following, we will present the widely-used \textit{Metropolis-Hastings} algorithm, as well as two of its variants that were necessary for our work.
+where $\theta^{(k)}$, $k = 1, \ldots, N$, is a set of realizations of $\theta$ and $\E^\pi$ denotes the expectation with respect to the distribution $\pi$. While the equality in the equation follows from the definition of expectation, there is no guarantee that the Monte Carlo estimator will be a good approximation of the expectation regardless of the samples. MCMC techniques consist in generating samples such that the Monte Carlo approximation is valid without exploring the whole parameter space,  which would lead to an unaffordable computational time on any modern computer. As the name of the methods suggests, given an initial guess $\theta^{(0)}$, MCMC builds a discrete Markov chain $\{\theta^{(i)}\}_{i\geq 0}$ such that the Monte Carlo approximation in \eqref{eq:MonteCarloMCMC} is valid. Formally, this is achieved considering a \textit{transition kernel} $P$ which given the current element of the chain $\theta^{(i)}$ produces the next guess $\theta^{(i+1)}$. Under a set of assumptions on $P$ \cite{KaS05}, we have the theoretical guarantee that the samples $\theta^{(i)}$ are drawn from the same \textit{stationary distribution} for $i$ large enough. We can build many transition kernels having this property, and any valid choice of $P$ leads to a different MCMC method. In the following, we will present the widely-used \textit{Metropolis-Hastings} algorithm, as well as two of its variants which are necessary in later stages of this work.
 
 \subsubsection{Metropolis-Hastings algorithm}
 \begin{algorithm}[t]
@@ -121,7 +121,7 @@ where $\theta^{(k)}$, $k = 1, \ldots, N$, is a set of realizations of $\theta$. 
 	}
 }
 \end{algorithm}
-In this paragraph we will introduce one of the most successful MCMC algorithms, the Metropolis-Hastings method (MH). In MH, the samples forming the Markov chain are generated following a \textit{proposal distribution} $q\colon \R^{N_p} \cross \R^{N_p} \to \R^+$ which satisfies the condition
+In this paragraph we introduce one of the most successful MCMC algorithms, the Metropolis-Hastings method (MH). In MH, the samples forming the Markov chain are generated following a \textit{proposal distribution} $q\colon \R^{N_p} \cross \R^{N_p} \to \R^+$ which satisfies the condition
 \begin{equation}
 	\int_{\R^{N_p}}q(x, y)\dd y = 1,
 \end{equation}
@@ -152,7 +152,7 @@ Two main issues have to be taken into account before moving on to the practical 
 	\item What is a good choice for the proposal function $q(x, \cdot)$?
 	\item How can we modify MH in case it is not possible, or not practical, to evaluate the posterior distribution $\pi(\theta)$?
 \end{enumerate}
-In the following paragraphs we will present two approaches to modify MH targeting these two questions. 
+In the following paragraphs we present two approaches to modify MH targeting these two questions. 
 
 \subsubsection{An adaptive approach}
 \begin{algorithm}[t]
@@ -187,17 +187,17 @@ with $S_n$ a lower triangular positive definite matrix and $I$ the identity matr
 \begin{equation}\label{eq:RAMupdate}
 S_{n+1}S_{n+1}^T = S_n\left(I + \eta_n\left(\alpha(\theta^{(n)}, \vartheta) - \alpha^*\right)\frac{z_nz_n^T}{z_n^Tz_n}\right)S_n^T.
 \end{equation}
-Let us remark that if $S_n$ is symmetric definite positive, then the right hand side of the equality above is symmetric definite positive. Hence, we can compute $S_{n+1}$ with a Cholesky factorization. Let us remark that this update has to be performed at each iteration of RAM, both in case $\vartheta$ is accepted and rejected. The sequence $\left\{\eta_n\right\}_{n\geq 1}$ can be any sequence decaying to zero with $n$. In \cite{Vih12}, the author suggests the choice
+Let us remark that if $S_n$ is symmetric positive definite, then the right hand side of the equality above is symmetric positive definite. Hence, we can compute $S_{n+1}$ with a Cholesky factorization. This update has to be performed at each iteration of RAM, both in case $\vartheta$ is accepted and rejected. The sequence $\left\{\eta_n\right\}_{n\geq 1}$ can be any sequence decaying to zero with $n$. In \cite{Vih12}, the author suggests the choice
 \begin{equation}
 \eta_n = n^{-\gamma}, \quad 0.5 < \gamma \leq 1,
 \end{equation}
-which guarantees convergence of RAM to the invariant distribution. Often the computational cost needed for the evaluation of the posterior distribution is high with respect to the dimension $N_p$ of the parameter space. Therefore, performing a Cholesky factorization at each iteration, which has a complexity of $\OO(N_p^3)$, does not spoil the performances of RAM with respect to a standard MH. In Algorithm \ref{alg:RAM} we give the pseudo-code for the RAM update.
+which guarantees convergence of RAM to the invariant distribution. Often the computational cost needed for the evaluation of the posterior distribution is high with respect to the dimension $N_p$ of the parameter space. Therefore, performing a Cholesky factorization at each iteration, which has a complexity of $\OO(N_p^3)$, does not spoil the per-iteration cost of RAM with respect to a standard MH in a relevant manner. In Algorithm \ref{alg:RAM} we give the pseudo-code for the RAM update.
 
 We now present a numerical example showing the optimal behavior of RAM. Let us consider a two-dimensional real random variable $X$ whose distribution admits the following density
 \begin{equation}\label{eq:RAMtestPi}
 	\pi(X) \propto \exp(-10(X_1^2 - X_2)^2 - (X_1 - 0.25)^4),
 \end{equation}
-where we denoted by $X_i$, $i = 1, 2$ the two components of $X$ and we omitted the normalization constant. This distribution is widely used to test MCMC algorithms \cite{KaS05}. We then consider a real value $\sigma$ in the set $\{0.01, 0.5, 2.0\}$ and target the distribution defined by \eqref{eq:RAMtestPi} either using a standard MH with the proposal distribution given by a zero-centered normal distribution with covariance $\Sigma = \sigma^2 I$, or using RAM with the same choice of covariance structure as an initial guess and $\alpha^* = 0.4$. We run $N = 5000$ iterations of both algorithms and register all the guesses they produce as well as the final acceptance ratio. Results (Figure \ref{fig:RAMexample}) show that for the $\sigma = 0.01$ and $\sigma = 2.0$ standard MH fails to properly describe the posterior distribution, either accepting too many guesses and partially describing the posterior, or refusing almost all guesses therefore obtaining an insufficient number of samples. On the other hand, RAM adapts the step and for any choice of $\sigma$ the samples we obtain are equally good, with an acceptance ratio near to $\alpha^*$ (Table \ref{tab:RAMalphaStar}).
+where we denoted by $X_i$, $i = 1, 2$ the two components of $X$ and we omitted the normalization constant. This distribution is widely used to test MCMC algorithms \cite{KaS05}. We then consider a real value $\sigma$ in the set $\{0.01, 0.5, 2.0\}$ and target the distribution defined by \eqref{eq:RAMtestPi} either using a standard MH with the proposal distribution given by a zero-centered normal distribution with covariance $\Sigma = \sigma^2 I$, or using RAM with the same choice of covariance structure as an initial guess and $\alpha^* = 0.4$. We run $N = 5000$ iterations of both algorithms and register all the guesses they produce as well as the final acceptance ratio. Results (Figure \ref{fig:RAMexample}) show that for the $\sigma = 0.01$ and $\sigma = 2.0$ standard MH fails to properly describe the posterior distribution, either accepting too many guesses and partially describing the posterior, or refusing almost all guesses therefore obtaining an insufficient number of samples. On the other hand, RAM adapts the proposal and for any choice of $\sigma$ the samples we obtain are equally good, with an acceptance ratio near to $\alpha^*$ (Table \ref{tab:RAMalphaStar}).
 
 \begin{table}[H]
 	\centering
@@ -223,7 +223,7 @@ where we denoted by $X_i$, $i = 1, 2$ the two components of $X$ and we omitted t
 	Compute $\pi(\theta_0)$ \;
 	\For{$i = 0, \ldots, N$}{
 		Draw $\vartheta$ from $q(\theta^{(i)}, \cdot)$ \;
-		Compute the estimators $\pi_M(\theta^{(i)}, \xi)$ and $\pi_M(\vartheta, \xi)$ as in \eqref{eq:MCWMestimators} \;
+		Compute the estimators $\pi_M(\theta^{(i)})$ and $\pi_M(\vartheta)$ as in \eqref{eq:MCWMestimators} \;
 		Compute the acceptance probability $\alpha_M(\theta^{(i)}, \vartheta)$ as in \eqref{eq:MCWMalpha}\;
 		Draw $u$ from $\mathcal{U}(0, 1)$ \;
 		\eIf{$\alpha > u$} {
@@ -243,13 +243,13 @@ where the values $\xi^{(i)}$ are realizations of the random variable $\xi$. The 
 \begin{equation}\label{eq:MCWMalpha}
 	\alpha_M(\theta^{(i)}, \vartheta) = \min\left\{\frac{\pi_M(\vartheta)q(\vartheta, \theta^{(i)})}{\pi_M(\theta^{(i)})q(\theta^{(i)}, \vartheta)}, 1\right\}.
 \end{equation}
-The pseudo-code of the resulting algorithm is shown in Algorithm \ref{alg:MCWM}. Let us remark that if the estimator $\pi_M(\theta^{(i)})$ at the $i$-th iteration of MCMC is computed at each iteration and not recycled from the previous iterations, the resulting algorithm is often referred to as Monte Carlo within Metropolis (MCWM) \cite{AnR09} or noisy pseudo-marginal Metropolis \cite{MLR16}. Even though recomputing the estimator may be computationally expensive, the resulting Markov chain has an higher acceptance ratio, i.e., it explores the relevant values of the parameter $\theta$ faster, therefore defining better the posterior distribution. The main issue that has been addressed by the research on this kind of pseudo-marginal algorithms is whether the invariant distribution of the Markov chain converges to the marginal posterior distribution of the random variable $\theta$. It has been shown \cite{AnR09, MLR16} that under appropriate assumptions the following properties are valid
+The pseudo-code of the resulting algorithm is shown in Algorithm \ref{alg:MCWM}. Let us remark that if the estimator $\pi_M(\theta^{(i)})$ at the $i$-th iteration of MCMC is computed at each iteration and not recycled from the previous iterations, the resulting algorithm is often referred to as Monte Carlo within Metropolis (MCWM) \cite{AnR09} or noisy pseudo-marginal Metropolis \cite{MLR16}. Even though recomputing the estimator may be computationally expensive, the resulting Markov chain has an higher acceptance ratio, i.e., it explores the relevant values of the parameter $\theta$ faster, therefore defining better the posterior distribution \cite{CGS16, MLR16}. The main issue that has been addressed by the research on this kind of pseudo-marginal algorithms is whether the invariant distribution of the Markov chain converges to the marginal posterior distribution of the random variable $\theta$. It has been shown \cite{AnR09, MLR16} that under appropriate assumptions the following properties are valid
 \begin{enumerate}
 	\item the transition kernel $P_M$ given by \eqref{eq:MCWMalpha} converges to an invariant distribution $\pi_M$ with respect to the number of iterations $N$ of MCMC if the number of Monte Carlo draws $M$ is large enough \cite[Theorem 9]{AnR09},
 	\item the invariant distribution $\pi_M$ obtained with MCWM converges to the true marginal distribution $\pi$ if $M$ tends to infinity \cite[Theorem 4.1]{MLR16},
 	\item under stronger assumptions, it is possible to obtain convergence rates of $\pi_M$ to $\pi$ with respect to $M$ \cite[Theorem 4.2 and Proposition 4.1]{MLR16}.
 \end{enumerate}
-Let us consider the example provided in Section \ref{sect:exBayes}. If we choose an SDE which does not admit a closed-form solution, it is impossible to evaluate the posterior distribution, as the likelihood function does not admit an analytical expression. On the other hand, there exists a large variety of numerical methods \cite{KPS94} that we can apply together with a Monte Carlo approximation to compute an estimator of the likelihood, thus obtaining a value $\pi_M$ as in \eqref{eq:MCWMestimators}. Hence, while it is impossible in this case to get the exact value of the posterior distribution, we can approximate it through an auxiliary simulation. Therefore, it is possible to apply a MCWM algorithm and obtain an approximation of $\pi(\theta)$ in this case as well.
+Let us consider the example provided in Section \ref{sect:exBayes}. If we choose an SDE which does not admit a closed-form solution, it is impossible to evaluate the posterior distribution, as the likelihood function does not admit an analytical expression. On the other hand, there exists a large variety of numerical methods \cite{KPS94} that we can apply together with a Monte Carlo approximation to compute an estimator of the likelihood, thus obtaining a value $\pi_M$ as in \eqref{eq:MCWMestimators}. Hence, while it is impossible in this case to get the exact value of the posterior distribution, we can approximate it through an auxiliary simulation. Therefore, it is possible to apply a MCWM algorithm and obtain an approximation of $\pi(\theta)$ as well in this case.
 
 \subsubsection{How to deal with inadmissible parameter values}\label{sec:MCMCbounded}
 
@@ -262,7 +262,7 @@ where we explicitly added the dependence on $a$, $b$ and $\sigma$. In \eqref{eq:
 \begin{equation}
 	\phi(x) = \frac{1}{\sqrt{2\pi}} \exp(-\frac{x^2}{2}),
 \end{equation}
-and $\Phi$ is the standard Gaussian cumulative distribution function, where we assume that if $b = \infty$ then $\Phi((b-x)/\sigma)$ equals one, and if $a = -\infty$ then $\Phi((a-x)/\sigma)$ equals zero. Let us remark that this proposal distribution is not symmetric, therefore $\alpha$ in MH has to take into account the ratio between the proposal distribution evaluated in the old and the new guesses of the parameter. Hence, in this case the acceptance probability is given by
+and $\Phi$ is the standard Gaussian cumulative distribution function, where we assume that if $b = \infty$ then $\Phi((b-x)/\sigma)$ equals one, and if $a = -\infty$ then $\Phi((a-x)/\sigma)$ equals zero. Let us remark that this proposal distribution is not symmetric in its arguments, therefore $\alpha$ in MH has to take into account the ratio between the proposal distribution evaluated in the old and the new guesses of the parameter. Hence, in this case the acceptance probability is given by
 \begin{equation}
 		\alpha(\theta^{(i)}, \vartheta) = \min\left\{
 		\frac{\pi(\vartheta)\left(\Phi\left((b - \theta^{(i)})/\sigma\right) - \Phi\left((a - \theta^{(i)})/\sigma\right)\right)}
