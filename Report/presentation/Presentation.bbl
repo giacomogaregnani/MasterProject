@@ -19,6 +19,11 @@ Doucet, A., Pitt, M.~K., Deligiannidis, G., and Kohn, R. (2015).
   an unbiased likelihood estimator.
 \newblock {\em Biometrika}, pages 1 -- 19.
 
+\bibitem[Giles, 2008]{Gil08}
+Giles, M.~B. (2008).
+\newblock Multilevel {M}onte {C}arlo path simulation.
+\newblock {\em Operations Research}, 56(3):607--617.
+
 \bibitem[Gilks, 2005]{Gil05}
 Gilks, W.~R. (2005).
 \newblock {M}arkov chain {M}onte {C}arlo.

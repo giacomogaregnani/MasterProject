@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.10.29)  24 JAN 2017 15:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.10.29)  25 JAN 2017 17:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2018,34 +2018,36 @@ Package: xparse 2014/09/15 v5423 L3 Experimental document command parser
 . Defining command \homework with sig. '' on line 764.
 .................................................
 )
+(/usr/share/texlive/texmf-dist/tex/latex/appendixnumberbeamer/appendixnumberbea
+mer.sty)
 \c@problemTh=\count288
 \c@assumption=\count289
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\\' on input line 41.
+(hyperref)                removing `\\' on input line 49.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\\' on input line 41.
+(hyperref)                removing `\\' on input line 49.
 
 (./Presentation.aux)
 \openout1 = `Presentation.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 53.
+LaTeX Font Info:    ... okay on input line 53.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -2111,7 +2113,7 @@ e
 ))
 ABD: EveryShipout initializing macros
 \AtBeginShipoutBox=\box77
-Package hyperref Info: Link coloring OFF on input line 45.
+Package hyperref Info: Link coloring OFF on input line 53.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -2121,66 +2123,66 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count296
 )
-LaTeX Info: Redefining \ref on input line 45.
-LaTeX Info: Redefining \pageref on input line 45.
-LaTeX Info: Redefining \nameref on input line 45.
+LaTeX Info: Redefining \ref on input line 53.
+LaTeX Info: Redefining \pageref on input line 53.
+LaTeX Info: Redefining \nameref on input line 53.
 
 (./Presentation.out) (./Presentation.out)
 \@outlinefile=\write5
 \openout5 = `Presentation.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 45.
+(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 53.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 45.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 53.
 \symnumbers=\mathgroup6
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 45.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 45.
+(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 53.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 53.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 45.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 53.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 45.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 45.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 53.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 53.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 45.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 53.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 45.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 45.
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 53.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 53.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 45.
+(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 53.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 45.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 45.
+(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 53.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 53.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 45.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 53.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 45.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 53.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 45.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 53.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 45.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 53.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmr/bx/n on input line 45.
+(Font)                  OT1/cmss/bx/n --> OT1/cmr/bx/n on input line 53.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmss/bx/n on input line 45.
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/bx/n on input line 53.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 45.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 53.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 45.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 53.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/bx/n on input line 45.
-LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 45.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/bx/n on input line 53.
+LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 53.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `normal'
-(Font)                  OT1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 4
-5.
+(Font)                  OT1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 5
+3.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
 (Font)                  OT1/cmss/bx/it --> OT1/mathkerncmss/m/sl on input line 
-45.
+53.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
 (Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on inp
-ut line 45.
+ut line 53.
 
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/translator/dicts/translator-bas
 ic-dictionary/translator-basic-dictionary-English.dict
@@ -2206,13 +2208,13 @@ Dictionary: translator-numbers-dictionary, Language: English
 orem-dictionary/translator-theorem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
-LaTeX Info: Redefining \includegraphics on input line 45.
+LaTeX Info: Redefining \includegraphics on input line 53.
 
 
 Package pgfplots Warning: running in backwards compatibility mode (unsuitable t
 ick labels; missing features). Consider writing \pgfplotsset{compat=1.11} into 
 your preamble.
- on input line 45.
+ on input line 53.
 
 (/usr/share/texlive/texmf-dist/tex/latex/ucs/ucsencs.def
 File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
@@ -2222,25 +2224,25 @@ Package caption Info: End \AtBeginDocument code.
  (./Presentation.nav)
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <4> not available
-(Font)              size <5> substituted on input line 47.
+(Font)              size <5> substituted on input line 55.
 
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2
 
 ]
-LaTeX Font Info:    Try loading font information for U+msa on input line 78.
+LaTeX Font Info:    Try loading font information for U+msa on input line 86.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 78.
+LaTeX Font Info:    Try loading font information for U+msb on input line 86.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Try loading font information for OT1+mathkerncmss on input 
-line 78.
+line 86.
 
 (/usr/share/texlive/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2013/03/27 Fontinst v1.933 font definitions for OT1/ma
@@ -2253,7 +2255,7 @@ thkerncmss.
 ] [5
 
 ]
-Overfull \hbox (2.40607pt too wide) detected at line 128
+Overfull \hbox (2.40607pt too wide) detected at line 136
 \OT1/mathkerncmss/m/sl/10.95 P[]\OT1/cmss/m/n/10.95 (\OML/cmm/m/it/10.95 ^^R[];
  ^^R[]\OT1/cmss/m/n/10.95 ) [] \OML/cmm/m/it/10.95 \OT1/cmss/m/n/10.95 (\OML/c
 mm/m/it/10.95 ^^R[]; ^^R[]\OT1/cmss/m/n/10.95 )\OT1/mathkerncmss/m/sl/10.95 q\O
@@ -2266,7 +2268,7 @@ OT1/cmss/m/n/10.95 )\OML/cmm/m/it/10.95 ;
 [6
 
 ]
-Overfull \vbox (15.38824pt too high) detected at line 149
+Overfull \vbox (15.38824pt too high) detected at line 157
  []
 
 [7
@@ -2287,15 +2289,15 @@ Package epstopdf Info: Source file: <../plots/MHvsRAM/MH_small.eps>
 (epstopdf)                    size: 335798 bytes
 (epstopdf)             Command: <repstopdf --outfile=../plots/MHvsRAM/MH_small-
 eps-converted-to.pdf ../plots/MHvsRAM/MH_small.eps>
-(epstopdf)             \includegraphics on input line 242.
+(epstopdf)             \includegraphics on input line 250.
 Package epstopdf Info: Output file is already uptodate.
 
-<../plots/MHvsRAM/MH_small-eps-converted-to.pdf, id=105, 439.6425pt x 330.23375
+<../plots/MHvsRAM/MH_small-eps-converted-to.pdf, id=108, 439.6425pt x 330.23375
 pt>
 File: ../plots/MHvsRAM/MH_small-eps-converted-to.pdf Graphic file (type pdf)
  <use ../plots/MHvsRAM/MH_small-eps-converted-to.pdf>
 Package pdftex.def Info: ../plots/MHvsRAM/MH_small-eps-converted-to.pdf used on
- input line 242.
+ input line 250.
 (pdftex.def)             Requested size: 98.335pt x 73.861pt.
 Package epstopdf Info: Source file: <../plots/MHvsRAM/MH_medium.eps>
 (epstopdf)                    date: 2016-11-14 09:41:04
@@ -2306,15 +2308,15 @@ o.pdf>
 (epstopdf)                    size: 179253 bytes
 (epstopdf)             Command: <repstopdf --outfile=../plots/MHvsRAM/MH_medium
 -eps-converted-to.pdf ../plots/MHvsRAM/MH_medium.eps>
-(epstopdf)             \includegraphics on input line 242.
+(epstopdf)             \includegraphics on input line 250.
 Package epstopdf Info: Output file is already uptodate.
 
-<../plots/MHvsRAM/MH_medium-eps-converted-to.pdf, id=106, 439.6425pt x 330.2337
+<../plots/MHvsRAM/MH_medium-eps-converted-to.pdf, id=109, 439.6425pt x 330.2337
 5pt>
 File: ../plots/MHvsRAM/MH_medium-eps-converted-to.pdf Graphic file (type pdf)
  <use ../plots/MHvsRAM/MH_medium-eps-converted-to.pdf>
 Package pdftex.def Info: ../plots/MHvsRAM/MH_medium-eps-converted-to.pdf used o
-n input line 242.
+n input line 250.
 (pdftex.def)             Requested size: 98.335pt x 73.861pt.
 Package epstopdf Info: Source file: <../plots/MHvsRAM/MH_big.eps>
 (epstopdf)                    date: 2016-11-14 09:41:11
@@ -2325,15 +2327,15 @@ df>
 (epstopdf)                    size: 90949 bytes
 (epstopdf)             Command: <repstopdf --outfile=../plots/MHvsRAM/MH_big-ep
 s-converted-to.pdf ../plots/MHvsRAM/MH_big.eps>
-(epstopdf)             \includegraphics on input line 242.
+(epstopdf)             \includegraphics on input line 250.
 Package epstopdf Info: Output file is already uptodate.
 
-<../plots/MHvsRAM/MH_big-eps-converted-to.pdf, id=107, 439.6425pt x 330.23375pt
+<../plots/MHvsRAM/MH_big-eps-converted-to.pdf, id=110, 439.6425pt x 330.23375pt
 >
 File: ../plots/MHvsRAM/MH_big-eps-converted-to.pdf Graphic file (type pdf)
  <use ../plots/MHvsRAM/MH_big-eps-converted-to.pdf>
 Package pdftex.def Info: ../plots/MHvsRAM/MH_big-eps-converted-to.pdf used on i
-nput line 242.
+nput line 250.
 (pdftex.def)             Requested size: 98.335pt x 73.861pt.
 Package epstopdf Info: Source file: <../plots/MHvsRAM/RAM_small.eps>
 (epstopdf)                    date: 2016-11-14 09:41:20
@@ -2344,15 +2346,15 @@ o.pdf>
 (epstopdf)                    size: 203368 bytes
 (epstopdf)             Command: <repstopdf --outfile=../plots/MHvsRAM/RAM_small
 -eps-converted-to.pdf ../plots/MHvsRAM/RAM_small.eps>
-(epstopdf)             \includegraphics on input line 242.
+(epstopdf)             \includegraphics on input line 250.
 Package epstopdf Info: Output file is already uptodate.
 
-<../plots/MHvsRAM/RAM_small-eps-converted-to.pdf, id=108, 439.6425pt x 330.2337
+<../plots/MHvsRAM/RAM_small-eps-converted-to.pdf, id=111, 439.6425pt x 330.2337
 5pt>
 File: ../plots/MHvsRAM/RAM_small-eps-converted-to.pdf Graphic file (type pdf)
  <use ../plots/MHvsRAM/RAM_small-eps-converted-to.pdf>
 Package pdftex.def Info: ../plots/MHvsRAM/RAM_small-eps-converted-to.pdf used o
-n input line 242.
+n input line 250.
 (pdftex.def)             Requested size: 98.335pt x 73.861pt.
 Package epstopdf Info: Source file: <../plots/MHvsRAM/RAM_medium.eps>
 (epstopdf)                    date: 2016-11-14 09:41:26
@@ -2363,15 +2365,15 @@ to.pdf>
 (epstopdf)                    size: 193327 bytes
 (epstopdf)             Command: <repstopdf --outfile=../plots/MHvsRAM/RAM_mediu
 m-eps-converted-to.pdf ../plots/MHvsRAM/RAM_medium.eps>
-(epstopdf)             \includegraphics on input line 242.
+(epstopdf)             \includegraphics on input line 250.
 Package epstopdf Info: Output file is already uptodate.
 
-<../plots/MHvsRAM/RAM_medium-eps-converted-to.pdf, id=109, 439.6425pt x 330.233
+<../plots/MHvsRAM/RAM_medium-eps-converted-to.pdf, id=112, 439.6425pt x 330.233
 75pt>
 File: ../plots/MHvsRAM/RAM_medium-eps-converted-to.pdf Graphic file (type pdf)
  <use ../plots/MHvsRAM/RAM_medium-eps-converted-to.pdf>
 Package pdftex.def Info: ../plots/MHvsRAM/RAM_medium-eps-converted-to.pdf used 
-on input line 242.
+on input line 250.
 (pdftex.def)             Requested size: 98.335pt x 73.861pt.
 Package epstopdf Info: Source file: <../plots/MHvsRAM/RAM_big.eps>
 (epstopdf)                    date: 2016-11-14 09:41:31
@@ -2382,15 +2384,15 @@ pdf>
 (epstopdf)                    size: 187762 bytes
 (epstopdf)             Command: <repstopdf --outfile=../plots/MHvsRAM/RAM_big-e
 ps-converted-to.pdf ../plots/MHvsRAM/RAM_big.eps>
-(epstopdf)             \includegraphics on input line 242.
+(epstopdf)             \includegraphics on input line 250.
 Package epstopdf Info: Output file is already uptodate.
 
-<../plots/MHvsRAM/RAM_big-eps-converted-to.pdf, id=110, 439.6425pt x 330.23375p
+<../plots/MHvsRAM/RAM_big-eps-converted-to.pdf, id=113, 439.6425pt x 330.23375p
 t>
 File: ../plots/MHvsRAM/RAM_big-eps-converted-to.pdf Graphic file (type pdf)
  <use ../plots/MHvsRAM/RAM_big-eps-converted-to.pdf>
 Package pdftex.def Info: ../plots/MHvsRAM/RAM_big-eps-converted-to.pdf used on 
-input line 242.
+input line 250.
 (pdftex.def)             Requested size: 98.335pt x 73.861pt.
  [11
 
@@ -2407,17 +2409,22 @@ ed-to.pdf> <../plots/MHvsRAM/RAM_big-eps-converted-to.pdf>] [12
 
 ] [16
 
-] [17
+]
+(../plots/LorenzX.tikz) (../plots/LorenzY.tikz)
+Overfull \vbox (2.33179pt too high) detected at line 354
+ []
+
+[17
 
 ] [18
 
+] [19
+
 ]
-Overfull \vbox (7.47037pt too high) detected at line 403
+Overfull \vbox (7.47037pt too high) detected at line 410
  []
 
-[19
-
-] [20
+[20
 
 ] [21
 
@@ -2425,12 +2432,122 @@ Overfull \vbox (7.47037pt too high) detected at line 403
 
 ] [23
 
-] (./Presentation.bbl) [24
+] [24
 
 ] [25
 
-
 ] [26
+
+] [27
+
+] [28
+
+] (../plots/MonteCarloVariance2.tikz
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+) (../plots/MonteCarloVariance3.tikz
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+) [29
+
+] [30
+
+] [31
+
+] [32
+
+] [33
+
+] [34
+
+] [35
+
+]
+(../plots/LikelihoodFixedTheta.tikz
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+) [36
+
+] [37
+
+]
+Package epstopdf Info: Source file: <../plots/Fitznag.eps>
+(epstopdf)                    date: 2016-11-29 16:53:07
+(epstopdf)                    size: 12957274 bytes
+(epstopdf)             Output file: <../plots/Fitznag-eps-converted-to.pdf>
+(epstopdf)                    date: 2016-11-29 16:53:21
+(epstopdf)                    size: 3706127 bytes
+(epstopdf)             Command: <repstopdf --outfile=../plots/Fitznag-eps-conve
+rted-to.pdf ../plots/Fitznag.eps>
+(epstopdf)             \includegraphics on input line 745.
+Package epstopdf Info: Output file is already uptodate.
+
+<../plots/Fitznag-eps-converted-to.pdf, id=315, 439.6425pt x 330.23375pt>
+File: ../plots/Fitznag-eps-converted-to.pdf Graphic file (type pdf)
+
+<use ../plots/Fitznag-eps-converted-to.pdf>
+Package pdftex.def Info: ../plots/Fitznag-eps-converted-to.pdf used on input li
+ne 745.
+(pdftex.def)             Requested size: 245.83282pt x 184.65248pt.
+
+Overfull \vbox (0.28093pt too high) detected at line 745
+ []
+
+[38
+
+ <../plots/Fitznag-eps-converted-to.pdf>] [39
+
+] [40
+
+] [41
+
+]
+Overfull \hbox (11.38304pt too wide) detected at line 821
+[] []
+ []
+
+[42
+
+]
+Overfull \hbox (9.61652pt too wide) detected at line 842
+[] []
+ []
+
+[43
+
+] [44
+
+] [45
+
+] [46
+
+] [47
+
+] [48
+
+]
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\translate ' on input line 928.
+
+(./Presentation.bbl) [49
+
+] [50
+
+
+] [51
+
+
+] [52
 
 
 ]
@@ -2443,29 +2560,28 @@ Overfull \vbox (7.47037pt too high) detected at line 403
 \tf@snm=\write8
 \openout8 = `Presentation.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 479.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 479.
-
-(./Presentation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 479.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 479.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 937.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 937.
+ (./Presentation.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 937.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 937.
 Package rerunfilecheck Info: File `Presentation.out' has not changed.
-(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
+(rerunfilecheck)             Checksum: D9694BC855D0C50CCAD6B8D6DEDF7609;41.
 
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 479.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 937.
  ) 
 Here is how much of TeX's memory you used:
- 36824 strings out of 493105
- 844704 string characters out of 6137071
- 1074741 words of memory out of 5000000
- 39529 multiletter control sequences out of 15000+600000
- 12986 words of font info for 47 fonts, out of 8000000 for 9000
+ 37597 strings out of 493105
+ 990092 string characters out of 6137071
+ 1620262 words of memory out of 5000000
+ 40221 multiletter control sequences out of 15000+600000
+ 21897 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 58i,13n,78p,10434b,683s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 66i,22n,117p,10421b,2488s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texli
@@ -2474,18 +2590,21 @@ f-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/ty
 pe1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
 blic/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmss9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cms
-sbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10
-.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Presentation.pdf (26 pages, 1381004 bytes).
+msfonts/cm/cmss17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+ss9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi12.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi17.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on Presentation.pdf (52 pages, 5217853 bytes).
 PDF statistics:
- 319 PDF objects out of 1000 (max. 8388607)
- 246 compressed objects within 3 object streams
- 66 named destinations out of 1000 (max. 500000)
- 115 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 493 PDF objects out of 1000 (max. 8388607)
+ 388 compressed objects within 4 object streams
+ 119 named destinations out of 1000 (max. 500000)
+ 128 words of extra memory for PDF output out of 10000 (max. 10000000)
 
