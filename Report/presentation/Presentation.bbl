@@ -1,0 +1,59 @@
+\def\cprime{$'$}
+\begin{thebibliography}{}
+
+\bibitem[Andrieu et~al., 2010]{ADH10}
+Andrieu, C., Doucet, A., and Holenstein, R. (2010).
+\newblock Particle {M}arkov chain {M}onte {C}arlo methods.
+\newblock {\em J. R. Stat. Soc. Ser. B. Stat. Methodol.}, pages 269 -- 342.
+
+\bibitem[Conrad et~al., 2016]{CGS16}
+Conrad, P.~R., Girolami, M., S{\"a}rkk{\"a}, S., Stuart, A., and Zygalakis, K.
+  (2016).
+\newblock Statistical analysis of differential equations: introducing
+  probability measures on numerical solutions.
+\newblock {\em Stat. Comput.}
+
+\bibitem[Doucet et~al., 2015]{DPD15}
+Doucet, A., Pitt, M.~K., Deligiannidis, G., and Kohn, R. (2015).
+\newblock Efficient implementation of {M}arkov chain {M}onte {C}arlo when using
+  an unbiased likelihood estimator.
+\newblock {\em Biometrika}, pages 1 -- 19.
+
+\bibitem[Giles, 2008]{Gil08}
+Giles, M.~B. (2008).
+\newblock Multilevel {M}onte {C}arlo path simulation.
+\newblock {\em Operations Research}, 56(3):607--617.
+
+\bibitem[Gilks, 2005]{Gil05}
+Gilks, W.~R. (2005).
+\newblock {M}arkov chain {M}onte {C}arlo.
+\newblock {\em Encyclopedia of Biostatistics}, 4.
+
+\bibitem[Hairer et~al., 2002]{HLW02}
+Hairer, E., Lubich, C., and Wanner, G. (2002).
+\newblock {\em Geometric numerical integration: structure-preserving algorithms
+  for ordinary differential equations}.
+\newblock Springer-Verlag, Berlin and New York.
+
+\bibitem[Kaipio and Somersalo, 2005]{KaS05}
+Kaipio, J. and Somersalo, E. (2005).
+\newblock {\em Statistical and Computational Inverse Problems}.
+\newblock Applied Mathematical Sciences, 160. Springer.
+
+\bibitem[Kersting and Hennig, 2016]{KeH16}
+Kersting, H. and Hennig, P. (2016).
+\newblock Active uncertainty calibration in {B}ayesian {ODE} solvers.
+\newblock In {\em Proceedings of the 32nd Conference on Uncertainty in
+  Artificial Intelligence (UAI 2016)}, pages 309--318. {AUAI} Press.
+
+\bibitem[Medina-Aguayo et~al., 2016]{MLR16}
+Medina-Aguayo, F.~J., Lee, A., and Roberts, G.~O. (2016).
+\newblock Stability of noisy {M}etropolis--{H}astings.
+\newblock {\em Stat. Comput.}, 26(6):1187--1211.
+
+\bibitem[Vihola, 2012]{Vih12}
+Vihola, M. (2012).
+\newblock Robust adaptive {M}etropolis algorithm with coerced acceptance rate.
+\newblock {\em Stat. Comput.}, 22(5):997--1008.
+
+\end{thebibliography}

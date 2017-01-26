@@ -2,7 +2,7 @@
 \contentsline {section}{\numberline {2}Bayesian statistics and Markov chain Monte Carlo}{2}{section.2}
 \contentsline {subsection}{\numberline {2.1}Bayes' formula}{2}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}Parametrized models}{3}{subsection.2.2}
-\contentsline {subsubsection}{\numberline {2.2.1}An example: parametrized differential equations}{4}{subsubsection.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.1}Example - parametrized differential equations}{4}{subsubsection.2.2.1}
 \contentsline {subsection}{\numberline {2.3}Markov chain Monte Carlo methods}{5}{subsection.2.3}
 \contentsline {subsubsection}{\numberline {2.3.1}Metropolis-Hastings algorithm}{6}{subsubsection.2.3.1}
 \contentsline {subsubsection}{\numberline {2.3.2}An adaptive approach}{7}{subsubsection.2.3.2}

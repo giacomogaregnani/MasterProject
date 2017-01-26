@@ -2,7 +2,7 @@
 \BOOKMARK [1][-]{section.2}{Bayesian statistics and Markov chain Monte Carlo}{}% 2
 \BOOKMARK [2][-]{subsection.2.1}{Bayes' formula}{section.2}% 3
 \BOOKMARK [2][-]{subsection.2.2}{Parametrized models}{section.2}% 4
-\BOOKMARK [3][-]{subsubsection.2.2.1}{An example: parametrized differential equations}{subsection.2.2}% 5
+\BOOKMARK [3][-]{subsubsection.2.2.1}{Example - parametrized differential equations}{subsection.2.2}% 5
 \BOOKMARK [2][-]{subsection.2.3}{Markov chain Monte Carlo methods}{section.2}% 6
 \BOOKMARK [3][-]{subsubsection.2.3.1}{Metropolis-Hastings algorithm}{subsection.2.3}% 7
 \BOOKMARK [3][-]{subsubsection.2.3.2}{An adaptive approach}{subsection.2.3}% 8
