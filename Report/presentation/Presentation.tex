@@ -46,7 +46,7 @@
 
 \title{Probabilistic solvers for ODE's \\ and Bayesian inference of parametrized models}
 \subtitle{Master Project - Master in CSE}
-\author{Giacomo Garegnani \\ Supervisor: Prof. Assyr Abdulle \\ Experts: Prof. Fabio Nobile, Dr. Kostas Zygalakis}
+\author{Giacomo Garegnani \\ Supervisor: Prof. Assyr Abdulle \\ Expert: Dr. Kostas Zygalakis}
 \institute{EPFL}
 \date{02/02/2017}
 
@@ -108,47 +108,25 @@
 			 \E^\pi\left[g(\theta)\right] = \int_{\R^{N_p}} g(\theta)\pi(\dd\theta\mid\mathcal{Y})  \approx \frac{1}{N}\sum_{k = 1}^{N} g(\theta^{(k)}),
 	\end{equation*}
 	where $\theta^{(k)}$ are realizations of $\theta$. \\[0.5cm]
-	\underline{Problem.} How do we generate samples $\theta^{(k)}$, with $k = 1, \ldots, N$ so that the approximation above holds? \\
+	\underline{Problem.} Generate samples $\theta^{(k)}$, with $k = 1, \ldots, N$ so that the approximation above holds
 	$\rightsquigarrow$ MCMC \cite[e.g.]{Gil05} \\[0.5cm]
-	\underline{Idea.} Generate samples $\theta^{(k)}$, with from a Markov chain with kernel $P$ until the chain reaches its stationary distribution. Different choices of the Markov kernel lead to different MCMC algorithms.	
+	\underline{Idea.} Generate samples $\theta^{(k)}$ from a Markov chain with kernel $P$ until the chain reaches its \textit{stationary distribution}. Different choices of the Markov kernel lead to different MCMC algorithms.	
 \end{frame}
 
 \begin{frame}
 	\frametitle{Bayesian inference and MCMC}
-	\framesubtitle{Metropolis-Hastings}		
-	
-	\underline{Metropolis-Hastings (MH).} Choose a \textit{proposal distribution} $q(x,y)$ such that
-	\begin{equation*}
-		\int_{\R^{N_p}}q(x, y)\dd y = 1,
-	\end{equation*}
-	Then, given current sample $\theta^{(i)}$, the transition kernel $P_{\mathrm{MH}}$ giving $\theta^{(i+1)}$ is defined as
-	\begin{equation*}
-		P_{\mathrm{MH}}(\theta^{(i)}, \theta^{(i+1)}) \defeq \alpha(\theta^{(i)}, \theta^{(i+1)})q(\theta^{(i)},\theta^{(i+1)}) + \delta_{\theta^{(i)}}(\theta^{(i+1)})\rho(\theta^{(i)}),
-	\end{equation*}
-	where $\alpha(\theta^{(i)}, \vartheta)$ is the \textit{acceptance probability} and is given by
-	\begin{equation*}\label{eq:MHalpha}
-		\alpha(\theta^{(i)}, \vartheta) = \min\left\{\frac{\pi(\vartheta)q(\vartheta, \theta^{(i)})}{\pi(\theta^{(i)})q(\theta^{(i)}, \vartheta)}, 1\right\},
-	\end{equation*}
-	and $\rho$ is defined as
-	\begin{equation*}
-	 	\rho(\theta^{(i)}) \defeq 1 - \int_{\R^{N_p}}\alpha(\theta^{(i)}, x)q(\theta^{(i)}, x)\dd x.
-	\end{equation*}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Bayesian inference and MCMC}
-	\framesubtitle{Metropolis-Hastings - Pseudocode}
+	\framesubtitle{Metropolis-Hastings}
 	\begin{algorithm}[H]	
 		\begin{algorithmic}
-			\STATE Given $\theta^{(0)} \in \R^{N_p}, N \in \N_0$.
+			\STATE Given $\theta^{(0)} \in \R^{N_p}, N \in \N_0$, $q(x, y)\colon \int q(x,y)\dd y = 1$;
 			\FOR{$i = 0, \ldots, N$}
 			\STATE Draw $\vartheta$ from $q(\theta^{(i)}, \cdot)$;
-			\STATE Compute the acceptance probability $\alpha(\theta^{(i)}, \vartheta)$ as $$\alpha(\theta^{(i)}, \vartheta) = \min\left\{\frac{\pi(\vartheta)q(\vartheta, \theta^{(i)})}{\pi(\theta^{(i)})q(\theta^{(i)}, \vartheta)}, 1\right\};$$
+			\STATE Compute \textit{acceptance probability} $\alpha(\theta^{(i)}, \vartheta)$ as $$\alpha(\theta^{(i)}, \vartheta) = \min\left\{\frac{\pi(\vartheta)q(\vartheta, \theta^{(i)})}{\pi(\theta^{(i)})q(\theta^{(i)}, \vartheta)}, 1\right\};$$
 			\STATE Draw $u$ from $\mathcal{U}(0, 1)$;
 			\IF{$\alpha > u$}
-			\STATE Accept $\vartheta$, set $\theta_{i+1} = \vartheta$; 
+			\STATE Accept $\vartheta$, set $\theta^{(i+1)} = \vartheta$; 
 			\ELSE
-			\STATE set $\theta_{i+1} = \theta^{(i)}$
+			\STATE set $\theta^{(i+1)} = \theta^{(i)}$;
 			\ENDIF
 			\ENDFOR
 		\end{algorithmic}
@@ -162,13 +140,13 @@
 	
 	\underline{Remark.} If the proposal distribution is symmetric, i.e., $q(x,y) = q(y,x)$, then 
 	\begin{equation*}
-		\alpha(\theta^{(i)}, \vartheta) = \min\left\{\frac{\pi(\vartheta)}{\pi(\theta^{(i)})}, 1\right\}.
+		\alpha(\theta^{(i)}, \vartheta) = \min\left\{\frac{\pi(\vartheta)q(\vartheta, \theta^{(i)})}{\pi(\theta^{(i)})q(\theta^{(i)}, \vartheta)}, 1\right\} = \min\left\{\frac{\pi(\vartheta)}{\pi(\theta^{(i)})}, 1\right\}.
 	\end{equation*}
 	For example, Gaussian proposal \cite{KaS05}
 	\begin{equation*}
 		q(x, y) \propto \exp(-\frac{1}{2}(x - y)^T\Sigma^{-1}(x - y)).
 	\end{equation*}
-	\underline{Problems.} Two main problems
+	\underline{Problems.} 
 	\begin{enumerate}
 		\item How to choose an efficient proposal distribution?
 		\item How to modify MH if it is not possible to evaluate the posterior distribution?
@@ -182,7 +160,7 @@
 	\underline{Problem.} Bad proposal distribution $q(x,y) \implies$ inefficient algorithms. Measure efficiency with \textit{acceptance ratio}. \\[0.5cm]
 	\underline{Idea.} Adapt $q(x,y)$ to obtain a chosen acceptance ratio $\alpha^*$. Choose $q(x,y)$ Gaussian, the new guess $\vartheta$ is 
 	\begin{equation*}
-		\vartheta = \theta_k + S_n z_n, \quad Z_n \sim \mathcal{N}(0, I),
+		\vartheta = \theta^{(n)} + S_n z_n, \quad Z_n \sim \mathcal{N}(0, I),
 	\end{equation*}
 	where $S_n \in \R^{N_p\times N_p}$ is lower triangular definite positive. Then, 
 	\begin{equation*}
@@ -205,7 +183,10 @@
 		\item standard MH with Gaussian proposal with covariance $\sigma I$,
 		\item RAM with $S_0 = \sigma I$ and $\alpha^* = 0.4$.
 	\end{itemize}
-	Draw $N = 5000$ samples and compute final acceptance ratio $\bar \alpha$.
+	Draw $N = 5000$ samples and compute obtained acceptance ratio as
+	\begin{equation*}
+		\bar \alpha = \frac{\text{n. of accepted samples } \vartheta}{N}
+	\end{equation*}
 \end{frame}
 
 
@@ -300,27 +281,6 @@
 
 \begin{frame}
 	\frametitle{Probabilistic solvers for ODE's}
-	\framesubtitle{Deterministic methods \cite{HLW02}}
-	
-	Deterministic component $\rightsquigarrow$ Runge-Kutta methods.
-	\begin{definition}[Runge-Kutta methods] Given $s \in \N^*$, $(b_i)_{i=1}^s$, $(a_{ij})_{i,j=1}^s$, $h > 0$, one step of an $s$-stage Runge-Kutta method is 
-		\begin{equation*}
-		\begin{aligned}
-		K_i &= f(U_0 + h\sksum_{j=1}^s a_{ij}K_j), && i = 1, \ldots, s, \\
-		U_1 &= U_0 + h \sksum_{i=1}^s b_i K_i.
-		\end{aligned}
-		\end{equation*}
-		The method is of order $q$ if $\exists C > 0$ independent of $h$ such that
-		\begin{equation*}
-			\norm{u(h)-U_1} \leq Ch^{q+1}.
-		\end{equation*}
-	\end{definition}
-	Monte Carlo computations $\rightsquigarrow$ Explicit methods privileged.
-	
-\end{frame}
-
-\begin{frame}
-	\frametitle{Probabilistic solvers for ODE's}
 	\framesubtitle{Method motivation}
 	
 	Consider chaotic differential equation, e.g., Lorenz system
@@ -328,7 +288,8 @@
 	\begin{aligned}
 		x' &= \sigma(y - x), \quad &&x(0) = -10,\\
 		y' &= x(\rho - z) - y, \quad &&y(0) = -1,\\
-		z' &= xy - \beta z, \quad &&z(0) = 40.
+		z' &= xy - \beta z, \quad &&z(0) = 40,\\
+		\sigma &= 10, \quad \rho = 28, \quad \beta = \frac{8}{3}.
 	\end{aligned}
 	\end{equation*}
 	Small perturbation $\implies$ uncontrollable deviation of the solution. \\

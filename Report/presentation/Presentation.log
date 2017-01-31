@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.10.29)  25 JAN 2017 17:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.10.29)  31 JAN 2017 14:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2255,29 +2255,16 @@ thkerncmss.
 ] [5
 
 ]
-Overfull \hbox (2.40607pt too wide) detected at line 136
-\OT1/mathkerncmss/m/sl/10.95 P[]\OT1/cmss/m/n/10.95 (\OML/cmm/m/it/10.95 ^^R[];
- ^^R[]\OT1/cmss/m/n/10.95 ) [] \OML/cmm/m/it/10.95 \OT1/cmss/m/n/10.95 (\OML/c
-mm/m/it/10.95 ^^R[]; ^^R[]\OT1/cmss/m/n/10.95 )\OT1/mathkerncmss/m/sl/10.95 q\O
-T1/cmss/m/n/10.95 (\OML/cmm/m/it/10.95 ^^R[]; ^^R[]\OT1/cmss/m/n/10.95 ) + \OML
-/cmm/m/it/10.95 ^^N[]\OT1/cmss/m/n/10.95 (\OML/cmm/m/it/10.95 ^^R[]\OT1/cmss/m/
-n/10.95 )\OML/cmm/m/it/10.95 ^^Z\OT1/cmss/m/n/10.95 (\OML/cmm/m/it/10.95 ^^R[]\
-OT1/cmss/m/n/10.95 )\OML/cmm/m/it/10.95 ;
+Overfull \vbox (15.38824pt too high) detected at line 135
  []
 
 [6
 
-]
-Overfull \vbox (15.38824pt too high) detected at line 157
- []
-
-[7
+] [7
 
 ] [8
 
 ] [9
-
-] [10
 
 ]
 Package epstopdf Info: Source file: <../plots/MHvsRAM/MH_small.eps>
@@ -2289,15 +2276,15 @@ Package epstopdf Info: Source file: <../plots/MHvsRAM/MH_small.eps>
 (epstopdf)                    size: 335798 bytes
 (epstopdf)             Command: <repstopdf --outfile=../plots/MHvsRAM/MH_small-
 eps-converted-to.pdf ../plots/MHvsRAM/MH_small.eps>
-(epstopdf)             \includegraphics on input line 250.
+(epstopdf)             \includegraphics on input line 231.
 Package epstopdf Info: Output file is already uptodate.
 
-<../plots/MHvsRAM/MH_small-eps-converted-to.pdf, id=108, 439.6425pt x 330.23375
+<../plots/MHvsRAM/MH_small-eps-converted-to.pdf, id=101, 439.6425pt x 330.23375
 pt>
 File: ../plots/MHvsRAM/MH_small-eps-converted-to.pdf Graphic file (type pdf)
  <use ../plots/MHvsRAM/MH_small-eps-converted-to.pdf>
 Package pdftex.def Info: ../plots/MHvsRAM/MH_small-eps-converted-to.pdf used on
- input line 250.
+ input line 231.
 (pdftex.def)             Requested size: 98.335pt x 73.861pt.
 Package epstopdf Info: Source file: <../plots/MHvsRAM/MH_medium.eps>
 (epstopdf)                    date: 2016-11-14 09:41:04
@@ -2308,15 +2295,15 @@ o.pdf>
 (epstopdf)                    size: 179253 bytes
 (epstopdf)             Command: <repstopdf --outfile=../plots/MHvsRAM/MH_medium
 -eps-converted-to.pdf ../plots/MHvsRAM/MH_medium.eps>
-(epstopdf)             \includegraphics on input line 250.
+(epstopdf)             \includegraphics on input line 231.
 Package epstopdf Info: Output file is already uptodate.
 
-<../plots/MHvsRAM/MH_medium-eps-converted-to.pdf, id=109, 439.6425pt x 330.2337
+<../plots/MHvsRAM/MH_medium-eps-converted-to.pdf, id=102, 439.6425pt x 330.2337
 5pt>
 File: ../plots/MHvsRAM/MH_medium-eps-converted-to.pdf Graphic file (type pdf)
  <use ../plots/MHvsRAM/MH_medium-eps-converted-to.pdf>
 Package pdftex.def Info: ../plots/MHvsRAM/MH_medium-eps-converted-to.pdf used o
-n input line 250.
+n input line 231.
 (pdftex.def)             Requested size: 98.335pt x 73.861pt.
 Package epstopdf Info: Source file: <../plots/MHvsRAM/MH_big.eps>
 (epstopdf)                    date: 2016-11-14 09:41:11
@@ -2327,15 +2314,15 @@ df>
 (epstopdf)                    size: 90949 bytes
 (epstopdf)             Command: <repstopdf --outfile=../plots/MHvsRAM/MH_big-ep
 s-converted-to.pdf ../plots/MHvsRAM/MH_big.eps>
-(epstopdf)             \includegraphics on input line 250.
+(epstopdf)             \includegraphics on input line 231.
 Package epstopdf Info: Output file is already uptodate.
 
-<../plots/MHvsRAM/MH_big-eps-converted-to.pdf, id=110, 439.6425pt x 330.23375pt
+<../plots/MHvsRAM/MH_big-eps-converted-to.pdf, id=103, 439.6425pt x 330.23375pt
 >
 File: ../plots/MHvsRAM/MH_big-eps-converted-to.pdf Graphic file (type pdf)
  <use ../plots/MHvsRAM/MH_big-eps-converted-to.pdf>
 Package pdftex.def Info: ../plots/MHvsRAM/MH_big-eps-converted-to.pdf used on i
-nput line 250.
+nput line 231.
 (pdftex.def)             Requested size: 98.335pt x 73.861pt.
 Package epstopdf Info: Source file: <../plots/MHvsRAM/RAM_small.eps>
 (epstopdf)                    date: 2016-11-14 09:41:20
@@ -2346,15 +2333,15 @@ o.pdf>
 (epstopdf)                    size: 203368 bytes
 (epstopdf)             Command: <repstopdf --outfile=../plots/MHvsRAM/RAM_small
 -eps-converted-to.pdf ../plots/MHvsRAM/RAM_small.eps>
-(epstopdf)             \includegraphics on input line 250.
+(epstopdf)             \includegraphics on input line 231.
 Package epstopdf Info: Output file is already uptodate.
 
-<../plots/MHvsRAM/RAM_small-eps-converted-to.pdf, id=111, 439.6425pt x 330.2337
+<../plots/MHvsRAM/RAM_small-eps-converted-to.pdf, id=104, 439.6425pt x 330.2337
 5pt>
 File: ../plots/MHvsRAM/RAM_small-eps-converted-to.pdf Graphic file (type pdf)
  <use ../plots/MHvsRAM/RAM_small-eps-converted-to.pdf>
 Package pdftex.def Info: ../plots/MHvsRAM/RAM_small-eps-converted-to.pdf used o
-n input line 250.
+n input line 231.
 (pdftex.def)             Requested size: 98.335pt x 73.861pt.
 Package epstopdf Info: Source file: <../plots/MHvsRAM/RAM_medium.eps>
 (epstopdf)                    date: 2016-11-14 09:41:26
@@ -2365,15 +2352,15 @@ to.pdf>
 (epstopdf)                    size: 193327 bytes
 (epstopdf)             Command: <repstopdf --outfile=../plots/MHvsRAM/RAM_mediu
 m-eps-converted-to.pdf ../plots/MHvsRAM/RAM_medium.eps>
-(epstopdf)             \includegraphics on input line 250.
+(epstopdf)             \includegraphics on input line 231.
 Package epstopdf Info: Output file is already uptodate.
 
-<../plots/MHvsRAM/RAM_medium-eps-converted-to.pdf, id=112, 439.6425pt x 330.233
+<../plots/MHvsRAM/RAM_medium-eps-converted-to.pdf, id=105, 439.6425pt x 330.233
 75pt>
 File: ../plots/MHvsRAM/RAM_medium-eps-converted-to.pdf Graphic file (type pdf)
  <use ../plots/MHvsRAM/RAM_medium-eps-converted-to.pdf>
 Package pdftex.def Info: ../plots/MHvsRAM/RAM_medium-eps-converted-to.pdf used 
-on input line 250.
+on input line 231.
 (pdftex.def)             Requested size: 98.335pt x 73.861pt.
 Package epstopdf Info: Source file: <../plots/MHvsRAM/RAM_big.eps>
 (epstopdf)                    date: 2016-11-14 09:41:31
@@ -2384,47 +2371,49 @@ pdf>
 (epstopdf)                    size: 187762 bytes
 (epstopdf)             Command: <repstopdf --outfile=../plots/MHvsRAM/RAM_big-e
 ps-converted-to.pdf ../plots/MHvsRAM/RAM_big.eps>
-(epstopdf)             \includegraphics on input line 250.
+(epstopdf)             \includegraphics on input line 231.
 Package epstopdf Info: Output file is already uptodate.
 
-<../plots/MHvsRAM/RAM_big-eps-converted-to.pdf, id=113, 439.6425pt x 330.23375p
+<../plots/MHvsRAM/RAM_big-eps-converted-to.pdf, id=106, 439.6425pt x 330.23375p
 t>
 File: ../plots/MHvsRAM/RAM_big-eps-converted-to.pdf Graphic file (type pdf)
  <use ../plots/MHvsRAM/RAM_big-eps-converted-to.pdf>
 Package pdftex.def Info: ../plots/MHvsRAM/RAM_big-eps-converted-to.pdf used on 
-input line 250.
+input line 231.
 (pdftex.def)             Requested size: 98.335pt x 73.861pt.
- [11
+ [10
 
  <../plots/MHvsRAM/MH_small-eps-converted-to.pdf> <../plots/MHvsRAM/MH_medium-e
 ps-converted-to.pdf> <../plots/MHvsRAM/MH_big-eps-converted-to.pdf> <../plots/M
 HvsRAM/RAM_small-eps-converted-to.pdf> <../plots/MHvsRAM/RAM_medium-eps-convert
-ed-to.pdf> <../plots/MHvsRAM/RAM_big-eps-converted-to.pdf>] [12
+ed-to.pdf> <../plots/MHvsRAM/RAM_big-eps-converted-to.pdf>] [11
+
+] [12
 
 ] [13
 
 ] [14
 
-] [15
+]
+(../plots/LorenzX.tikz) (../plots/LorenzY.tikz)
+Overfull \vbox (2.33179pt too high) detected at line 315
+ []
+
+[15
 
 ] [16
 
+] [17
+
 ]
-(../plots/LorenzX.tikz) (../plots/LorenzY.tikz)
-Overfull \vbox (2.33179pt too high) detected at line 354
+Overfull \vbox (7.47037pt too high) detected at line 371
  []
 
-[17
-
-] [18
+[18
 
 ] [19
 
-]
-Overfull \vbox (7.47037pt too high) detected at line 410
- []
-
-[20
+] [20
 
 ] [21
 
@@ -2438,10 +2427,6 @@ Overfull \vbox (7.47037pt too high) detected at line 410
 
 ] [26
 
-] [27
-
-] [28
-
 ] (../plots/MonteCarloVariance2.tikz
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -2453,7 +2438,11 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-) [29
+) [27
+
+] [28
+
+] [29
 
 ] [30
 
@@ -2463,10 +2452,6 @@ Missing character: There is no ; in font nullfont!
 
 ] [33
 
-] [34
-
-] [35
-
 ]
 (../plots/LikelihoodFixedTheta.tikz
 Missing character: There is no ; in font nullfont!
@@ -2475,9 +2460,9 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-) [36
+) [34
 
-] [37
+] [35
 
 ]
 Package epstopdf Info: Source file: <../plots/Fitznag.eps>
@@ -2488,41 +2473,45 @@ Package epstopdf Info: Source file: <../plots/Fitznag.eps>
 (epstopdf)                    size: 3706127 bytes
 (epstopdf)             Command: <repstopdf --outfile=../plots/Fitznag-eps-conve
 rted-to.pdf ../plots/Fitznag.eps>
-(epstopdf)             \includegraphics on input line 745.
+(epstopdf)             \includegraphics on input line 706.
 Package epstopdf Info: Output file is already uptodate.
 
-<../plots/Fitznag-eps-converted-to.pdf, id=315, 439.6425pt x 330.23375pt>
+<../plots/Fitznag-eps-converted-to.pdf, id=299, 439.6425pt x 330.23375pt>
 File: ../plots/Fitznag-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ../plots/Fitznag-eps-converted-to.pdf>
 Package pdftex.def Info: ../plots/Fitznag-eps-converted-to.pdf used on input li
-ne 745.
+ne 706.
 (pdftex.def)             Requested size: 245.83282pt x 184.65248pt.
 
-Overfull \vbox (0.28093pt too high) detected at line 745
+Overfull \vbox (0.28093pt too high) detected at line 706
  []
 
-[38
+[36
 
- <../plots/Fitznag-eps-converted-to.pdf>] [39
+ <../plots/Fitznag-eps-converted-to.pdf>] [37
 
-] [40
+] [38
 
-] [41
+] [39
 
 ]
-Overfull \hbox (11.38304pt too wide) detected at line 821
+Overfull \hbox (11.38304pt too wide) detected at line 782
 [] []
  []
 
-[42
+[40
 
 ]
-Overfull \hbox (9.61652pt too wide) detected at line 842
+Overfull \hbox (9.61652pt too wide) detected at line 803
 [] []
  []
 
-[43
+[41
+
+] [42
+
+] [43
 
 ] [44
 
@@ -2530,24 +2519,20 @@ Overfull \hbox (9.61652pt too wide) detected at line 842
 
 ] [46
 
-] [47
-
-] [48
-
 ]
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\translate ' on input line 928.
+(hyperref)                removing `\translate ' on input line 889.
 
-(./Presentation.bbl) [49
+(./Presentation.bbl) [47
+
+] [48
+
+
+] [49
+
 
 ] [50
-
-
-] [51
-
-
-] [52
 
 
 ]
@@ -2560,11 +2545,11 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 \tf@snm=\write8
 \openout8 = `Presentation.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 937.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 937.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 898.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 898.
  (./Presentation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 937.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 937.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 898.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 898.
 Package rerunfilecheck Info: File `Presentation.out' has not changed.
 (rerunfilecheck)             Checksum: D9694BC855D0C50CCAD6B8D6DEDF7609;41.
 
@@ -2572,13 +2557,13 @@ Package rerunfilecheck Info: File `Presentation.out' has not changed.
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 937.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 898.
  ) 
 Here is how much of TeX's memory you used:
- 37597 strings out of 493105
- 990092 string characters out of 6137071
- 1620262 words of memory out of 5000000
- 40221 multiletter control sequences out of 15000+600000
+ 37585 strings out of 493105
+ 989978 string characters out of 6137071
+ 1619657 words of memory out of 5000000
+ 40214 multiletter control sequences out of 15000+600000
  21897 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  66i,22n,117p,10421b,2488s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2601,10 +2586,10 @@ ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Presentation.pdf (52 pages, 5217853 bytes).
+Output written on Presentation.pdf (50 pages, 5213660 bytes).
 PDF statistics:
- 493 PDF objects out of 1000 (max. 8388607)
- 388 compressed objects within 4 object streams
- 119 named destinations out of 1000 (max. 500000)
+ 480 PDF objects out of 1000 (max. 8388607)
+ 377 compressed objects within 4 object streams
+ 114 named destinations out of 1000 (max. 500000)
  128 words of extra memory for PDF output out of 10000 (max. 10000000)
 
