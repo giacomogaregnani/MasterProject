@@ -331,7 +331,7 @@
 
 \begin{frame}
 	\frametitle{Probabilistic solvers for ODE's}
-	\framesubtitle{Method properties - strong convergence \cite{CGS16}}
+	\framesubtitle{Method properties - strong and weak convergence \cite{CGS16}}
 	
 	\underline{Recall.} The probabilistic method is defined as
 	\begin{equation*}
@@ -339,19 +339,13 @@
 	\end{equation*}
 	for suitable random variables $\xi_k(h)$. \\[0.5cm]
 	
-	It is possible to prove a result of strong convergence.
-	
-	\begin{definition}[Strong convergence] The probabilistic method has strong order $r$ if $\exists C > 0$ independent of $h$ such that for $h$ small enough
-		\begin{equation*}
-			\sup_{t_k = kh} \E\abs{U_k - u(t_k)} \leq Ch^r.
-		\end{equation*}
-	\end{definition}
+	Under two assumptions, it is possible to prove results of weak and strong convergence.
 	
 \end{frame}
 	
 \begin{frame}
 	\frametitle{Probabilistic solvers for ODE's}
-	\framesubtitle{Method properties - strong convergence \cite{CGS16}}
+	\framesubtitle{Method properties - strong and weak convergence \cite{CGS16}}
 	
 	\begin{assumption}[Variance of random variables] The variables $\xi_k(t)$ satisfy for $p \geq 1$
 		\begin{equation*}
@@ -372,52 +366,22 @@
 
 \begin{frame}
 	\frametitle{Probabilistic solvers for ODE's}
-	\framesubtitle{Method properties - strong convergence \cite{CGS16}}
+	\framesubtitle{Method properties - strong and weak convergence \cite{CGS16}}
 	
 	\begin{theorem}[Strong Convergence] Under the assumptions above, there exists $K>0$ such that
 		\begin{equation*}
-		\sup_{0<kh<T} \E|u_k - U_K|^2 \leq Kh^{2\min\{p,q\}}.
+		\sup_{0<kh<T} \E|u(t_k) - U_K|^2 \leq Kh^{2\min\{p,q\}}.
 		\end{equation*}
 	\end{theorem}
 	
-	\underline{Idea of the proof.} Compute truncation error between exact and numerical solutions, divide deterministic and probabilistic contribution and derive a recurrence on the error. Apply then discrete Gronwall's lemma to bound the error.
-\end{frame}
-
-\begin{frame}
-	\frametitle{Probabilistic solvers for ODE's}
-	\framesubtitle{Method properties - weak convergence \cite{CGS16}}
-
-	\begin{definition}[Weak convergence] The probabilistic method has weak order $r$ if $\exists C > 0$ independent of $h$ such that for any function $\phi$ sufficiently smooth
-		\begin{equation*}
-		\sup_{t_k = kh} \abs{\E[\phi(U_k)] - \phi(u(t_k))} \leq Ch^r,
-		\end{equation*}
-		for $h$ small enough.
-	\end{definition}
-	
-	\underline{Idea.} Introduce a modified SDE 
-	\begin{equation*}
-		\dd{\tilde u} = f^h{\tilde u}\dd{t} + \sqrt{h^{2p} Q} \dd{W},
-	\end{equation*}
-	and study the convergence of $U_k$ and $\tilde u$ to $u$ for $h \to 0$.
-\end{frame}
-
-\begin{frame}
-	\frametitle{Probabilistic solvers for ODE's}
-	\framesubtitle{Method properties - weak convergence \cite{CGS16}}
-
 	\begin{theorem}[Weak convergence] For any function $\phi$ sufficiently smooth
 		\begin{equation*}
-		\abs{\phi(u(T)) - \E[\phi(U_k)]} \leq Kh^{\min\{2p, q\}}, \quad kh = T,
-		\end{equation*}
-		and 
-		\begin{equation*}
-		\abs{\E[\phi(\tilde u(T))] - \E[\phi(U_k)]} \leq Kh^{2p + 1}, \quad kh = T.
+		\abs{\phi(u(T)) - \E[\phi(U_k)]} \leq Kh^{\min\{2p, q\}}, \quad kh = T.
 		\end{equation*}
 	\end{theorem}
 	
-	\underline{Idea of the proof.} Use techniques of backwards error analysis, finding a modified ODE and SDE such that the numerical error is of higher order.
-	
 \end{frame}
+
 
 %%%%%%%%%%%%%%%%%%%% MONTE CARLO %%%%%%%%%%%%%%%%%%%%%%%
 
@@ -427,7 +391,7 @@
 	
 	\underline{Problem.} Study convergence of Monte Carlo approximations. \\[0.5cm]
 	Numerical solution $\rightsquigarrow$ $\mathcal Q_h$ (inaccessible), \\
-	$M$ samples of numerical solution  $\rightsquigarrow$ $Q_h^M$ (accessible), \\
+	$M$ samples of numerical solution  $\rightsquigarrow$ $\mathcal Q_h^M$ (accessible), \\
 	Exact solution $\rightsquigarrow$ $\delta_u$. \\[0.5cm]
 	
 	Convergence scheme, we expect
@@ -607,7 +571,7 @@
 		\item convergence of Monte Carlo estimators,
 		\item multi-level techniques for random initial conditions.
 	\end{enumerate}
-	In particular, we found that the MSE of the Monte Carlo estimator converges \textbf{independently of the number of samples} for deterministic $U_0$.
+	In particular, we found that the MSE of the Monte Carlo estimator converges \textbf{independently on the number of samples} for deterministic $U_0$.
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -883,7 +847,7 @@
 		\item analyzed a probabilistic solver for ODE's studying weak and strong convergence \cite{CGS16}, as well as the behavior of Monte Carlo estimates (novel contribution),
 		\item performed Bayesian inference of parametric ODE's and study the convergence of posterior distributions and Monte Carlo estimates.
 	\end{enumerate}
-	In future work, we will be concerned with a classification of the problems for which a probabilistic interpretation is needed. In particular, we believe chaotic ODE's (e.g., Lorenz) have to be regarded with utmost attention.
+	In future work, we will explore a classification of the problems for which a probabilistic interpretation is needed. In particular, we believe chaotic ODE's (e.g., Lorenz) have to be regarded with utmost attention.
 \end{frame}
 
 \appendix

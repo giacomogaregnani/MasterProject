@@ -31,7 +31,7 @@ yminorticks=true,
 mark size = 3,
 axis background/.style={fill=white},
 legend style={at={(0.97,0.03)},anchor=south east,legend cell align=left,align=left,draw=white!15!black},
-ticklabel style={font=\LARGE},legend style={font=\Large},title style={font=\Large}
+ticklabel style={font=\LARGE},legend style={font=\LARGE},title style={font=\Large}
 ]
 \addplot [color=mycolor1,solid,mark=o,mark options={solid}]
   table[row sep=crcr]{%
