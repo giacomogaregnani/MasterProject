@@ -1,0 +1,23 @@
+\section{Conclusions and future work}
+
+In this work we considered the probabilistic method \eqref{eq:probMethod} that has been recently introduced to solve numerically ODE's. We reported the properties of weak and strong convergence, and analyzed the impact of the variation of time step and number of trajectories on Monte Carlo approximations. Moreover, we considered Bayesian inverse problems involving ODE's and showed how to effectively implement MCMC algorithms using \eqref{eq:probMethod}, investigating theoretically and with numerical experiments how posterior distributions and Monte Carlo approximations are influenced by an approximation of the likelihood function. Finally, we showed how these methods apply in case of stiff problems arising from the spatial discretization of parabolic PDE's, performing a theoretical and practical cost analysis involving the Brusselator problem.
+
+We believe future research will have to regard the motivation behind probabilistic solver, i.e., a classification of the ODE's for which it is relevant to perform a probabilistic rather than deterministic analysis. In particular, we believe chaotic systems of differential equations should be considered with the utmost attention, as they present non-trivial distributions of the long-term numerical solution. Let us consider for example the Lorenz system \eqref{eq:Lorenz}, with initial condition and parameter values given in section \ref{sec:probMotivation} chosen so that the system has a chaotic behavior. As discussed above, fixing a time step $h$ in this case and integrating up to final time could result in a solution which is not punctually correct due to the sensibility of the system on perturbations. 
+
+\begin{figure}[t]
+	\begin{subfigure}{0.49\linewidth}
+		\centering
+		\resizebox{1.0\linewidth}{!}{\input{plots/detHist.tikz}}
+	\end{subfigure}
+	\begin{subfigure}{0.49\linewidth}
+		\centering
+		\resizebox{1.0\linewidth}{!}{\input{plots/probHist.tikz}}
+	\end{subfigure}
+	\caption{Distribution of the value of $\phi(U_N)$ obtained with variable time step $h$ and the deterministic solver, and with $M$ realizations of the probabilistic solver with fixed $h$. The histogram represents the normalized occurrences of the value of $\phi(\cdot)$ applied to the numerical solution, while the thick blue line represents the fitted empirical density function.}
+	\label{fig:densities}
+\end{figure}
+
+Given a time step $h$, let us denote by $U_k(h)$ the numerical solution at time $t_k = kh$ obtained using a deterministic Runge-Kutta method, and by $U_k^\xi(h)$ the solution obtained with \eqref{eq:probMethod} at the same time, where we write explicitly the dependence on the time step. Moreover, let us consider a maximal time step $h_{\max}$, which could be given for example by a stability limit time step for the chosen Runge-Kutta method, and a minimal time step $h_{\min}$. By varying the time step $h$ in the range $[h_{\min}, h_{\max}]$ and integrating with the deterministic Runge-Kutta method the equation up to a fixed final time $T$ we obtain a distribution of numerical solutions $U_N(h)$, with $N = Th^{-1}$, which is non-trivial thanks to the chaotic behavior of the differential equation. On the other side, we can integrate the equation fixing the time step to a value $\bar h$ and sampling $M$ times the probabilistic solver, thus obtaining a distribution of numerical solutions $U_N^{\xi^{(i)}}(\bar h)$, with $N = T\bar h^{-1}$ and $i = 1, \ldots, M$. An interesting research topic will be analyzing whether the two obtained distributions describe the same behavior of the ODE. 
+
+We perform a first numerical experiment by choosing $5 \cdot 10^3$ values of the time step for the deterministic MP in the range $[1.68 \cdot 10^{-4}, 2.5 \cdot 10^{-2}]$, as well as $10^4$ realizations of the probabilistic solver implemented with MP and time step $10^{-3}$. We then integrate the Lorenz equation up to final time $T = 200$ with both methods, thus considering the distribution of the functional $\phi(U) = U^TU$ applied to the numerical solution. Results (Figure \ref{fig:densities}) show that the two methods lead to empirical distributions with almost identical shape, thus sustaining our hypothesis that the probabilistic solver could be employed to quantify the uncertainty due to the chaotic behavior of the ODE. 
+

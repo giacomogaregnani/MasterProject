@@ -1,0 +1,79 @@
+\documentclass{scrartcl}
+
+\input{Preamble}
+
+\begin{document}
+	
+\section*{Idea}
+
+Let us consider $f\colon \R^d \to \R^d$ and the differential equation
+\begin{equation}\label{eq:ODE}
+	u' = f(u), \quad u(0) = u_0 \in \R^d.
+\end{equation}
+Moreover, let us consider the Runge-Kutta approximation $U_k(h)$ at time $t_k = kh$ depending on the time step $h > 0$, i.e.
+\begin{equation}\label{eq:Deterministic}
+	U_k(h) = \Psi_h(U_{k-1}), \quad U_0(h) = u_0,
+\end{equation} 
+where $\Psi_t(\cdot)$ is the numerical flow of the RK method applied to \eqref{eq:ODE}. Finally, we consider $U_k^\xi(h)$ the solution given by the probabilistic solver with time step $h$ and r.v. $\xi$, i.e.
+\begin{equation}\label{eq:Probabilistic}
+	U_k^\xi(h) = \Psi_h(U_{k-1}) + \xi_k(h),
+\end{equation}
+where we use the same RK method as deterministic part. Now consider \eqref{eq:ODE} to be chaotic (e.g. Lorenz). In this case, since the system is chaotic, integrating with two different time steps $h_1$ and $h_2$ we get two different numerical solutions, hence the punctual solution with obtained with any time steps is not reliable (motivation of Probabilistic method).
+
+Given a limit time step $h_{\max}$ (e.g., the maximum time step for which $\Psi$ is stable applied to \eqref{eq:ODE}), we could think of the numerical solution as depending continuously on the time step $h$, and then we could consider the long time behavior of the numerical solution w.r.t. $h$. For example, we could investigate if there exists a measure $\mu^{h_{\max}}$ such that for a function $\Phi\colon\R^d\to\R$ we have 
+\begin{equation}\label{eq:detEquality}
+	\lim_{N\to\infty} \frac{1}{h_{\max}} \int_{0}^{h_{\max}} \Phi(U_N(s))\dd s =
+	\int_{\R^d} \Phi(y)\dd \mu^{h_{\max}}(y),
+\end{equation}
+where $U_N$ is the \textbf{deterministic} numerical solution \eqref{eq:Deterministic}. It is clear that if the ODE is not chaotic (e.g., test equation with $\lambda < 0$), at long term all the numerical solutions with different time steps will converge to the same stable value (e.g., zero), therefore $\mu = \delta$ for some Dirac delta. Now considering the probabilistic solver with fixed time step $h$, we could have a measure $\nu^{h,M}$ such that
+\begin{equation}\label{eq:probEquality}
+	\lim_{N\to\infty} \frac{1}{M} \sum_{i=1}^M \Phi(U_N^{\xi^{(i)}}(h)) =  
+	\int_{\R^d} \Phi(y)\dd \nu^{h,M}(y),
+\end{equation}
+where $\xi^{(i)}$ are realizations of $\xi$ for $i = 1, \ldots, M$. Now, are $\mu^{h_{\max}}$ and $\nu^{h,M}$ approximations of the same probability measure?
+
+\subsection*{Numerical example}
+
+Consider the Lorenz system 
+\begin{equation}\label{eq:Lorenz}
+\begin{aligned}
+x' &= \sigma(y - x), \quad &&x(0) = -10,\\
+y' &= x(\rho - z) - y, \quad &&y(0) = -1,\\
+z' &= xy - \beta z, \quad &&z(0) = 40.
+\end{aligned}
+\end{equation}
+with $\sigma = 10$, $\rho = 28$, $\beta = 8/3$, so that the system has chaotic behavior. We consider final time $T = 200$ and the explicit midpoint as RK. Moreover, we consider
+\begin{itemize}
+	\item deterministic solver with variable $h$ (4000 different values of $h$ in the range $[1.68 \cdot 10^{-4}, 2.5 \cdot 10^{-2}]$)
+	\item probabilistic solver with fixed $h = 1 \cdot 10^{-3}$, and $M = 10^4$ trajectories
+	\item the function $\Phi\colon\R^3\to\R$ defined as $$\Phi(x) = x^Tx.$$ 
+\end{itemize}
+Then we consider the value of the functional $\Phi$ applied to the solution at final time obtained with the deterministic solver and probabilistic solver (Figure \ref{fig:densities}). Numerical results of the integrals in \eqref{eq:detEquality} and \eqref{eq:probEquality} displayed in Table \ref{tab:numResults} seem to confirm the idea that $\mu^{h_{\max}}$ and $\nu^{h,M}$ tend to the same measure. The integrals with respect to the measure are computed assuming the two measures admit a density function and approximating the density function from data (blue lines in plots).
+
+\begin{figure}[t]
+\begin{subfigure}{0.49\linewidth}
+	\centering
+	\resizebox{1.0\linewidth}{!}{\input{plots/detHist.tikz}}
+\end{subfigure}
+\begin{subfigure}{0.49\linewidth}
+	\centering
+	\resizebox{1.0\linewidth}{!}{\input{plots/probHist.tikz}}
+\end{subfigure}
+\caption{Density of $\Phi(Y)$.}
+\label{fig:densities}
+\end{figure}
+
+\begin{table}[t]
+	\centering
+	\begin{tabular}{cccc}
+		\toprule
+		$\frac{1}{h_{\max} - h_{\min}} \int_{h_{\min}}^{h_{\max}} \Phi(U_N(s))\dd s$ & $\int_{\R^3} \Phi(y)\dd \mu^{h_{\max}}(y)$ & $\frac{1}{M} \sum_{i=1}^M \Phi(U_N^{\xi^{(i)}}(h))$ & $\int_{\R^3} \Phi(y)\dd \nu^{h,M}(y)$ \\ 
+		\midrule
+		769.9 & 759.0 & 763.1 & 763.3 \\
+		\bottomrule
+	\end{tabular}
+	\caption{Numerical results.}
+	\label{tab:numResults}
+\end{table}
+
+\end{document}

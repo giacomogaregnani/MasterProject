@@ -1,0 +1,280 @@
+\subsubsection{Monte Carlo approximation}\label{sec:MonteCarlo}
+
+Let us consider the numerical method introduced in \eqref{eq:probMethod} and the Monte Carlo approximation 
+\begin{equation}\label{eq:MCapproximation}
+\hat Z = \frac{1}{M} \sum_{i = 1}^M \phi\left(U_N^{(i)}\right).
+\end{equation}
+The mean square error (MSE) of $\hat Z$ is given by
+\begin{equation}\label{eq:MCMSE}
+\begin{aligned}
+	\MSE(\hat Z) &= \E\left[\left(\hat Z - \phi\left(u(T)\right)\right)^2\right] \\
+	&= \Var(\hat Z) + \E\left[\hat Z - \phi\left(u(T)\right)\right]^2 \\
+	&\leq \Var(\hat Z) + C h^{2\min\{2p, q\}},
+\end{aligned}
+\end{equation} 
+where the second term is bounded thanks to proposition \ref{thm:weakorder} with $C > 0$. In the standard theory of SDE's, the first term is bounded by $CM^{-1}$, where $C$ is a positive constant. In the probabilistic solver we consider in this work, it is possible to bound the first term with a function of the time step $h$. Intuitively, this favorable property comes from the fact that the noise scale is of the same order of magnitude of the time step. 
+\begin{lemma}\label{lem:varMC} Consider the numerical method \eqref{eq:probMethod} applied to a one-dimensional ODE with $\Psi$ any explicit Runge-Kutta method on $s$ stages and Assumption \ref{assumption_1}. Then the numerical solution $U_k$ at time $t_k = kh$ satisfies
+\begin{equation}
+	\Var(U_k) \leq C_1\Var(U_0) + C_2Q h^{2p}, \quad k = 1, \ldots, N,
+\end{equation}
+with $C_1$, $C_2$ positive constants.
+\end{lemma}
+\begin{proof} Let us consider as the numerical integrator $\Psi$ the Explicit Euler method and $p = 1$, coherently with the common choice that $p$ is equal to the order or the deterministic integrator. Then, we can write the numerical solution $U_{k+1}$ as
+\begin{equation}
+	U_{k+1} = U_k + hf(U_k) + \xi_k(h).
+\end{equation}
+Then, thanks to Assumption \ref{assumption_1}, we can compute the variance of $U_{k+1}$ as 
+\begin{equation}\label{eq:indepProof}
+	\begin{aligned}
+		\Var(U_{k+1}) &= \Var(U_k + hf(U_k)) + h^3Q \\
+		&\leq 2\Var(U_k) + 2h^2 \Var(f(U_k)) + h^3Q,
+	\end{aligned}
+\end{equation}
+where $Q > 0$ and we exploited that for any random variables $X$, $Y$,
+\begin{equation}\label{eq:varProp}
+	\Var(X + Y) \leq 2\Var(X) + 2\Var(Y).
+\end{equation}
+Since $f$ is Lipschitz continuous with constant $C_L$, we can bound the second term in the sum above as
+\begin{equation}\label{eq:lipschitzVar}
+	\begin{aligned}
+		\Var(f(U_k)) &= \Var(f(U_k) - f(\E\left[U_k\right])) \\
+		&\leq \E\left[(f(U_k) - f(\E\left[U_k\right]))^2\right] \\
+		&\leq C_L^2\E\left[(U_k - \E(U_k))^2\right] \\
+		&= C_L^2 \Var(U_k).
+	\end{aligned}
+\end{equation}
+Hence, we find
+\begin{equation}
+\begin{aligned}
+	\frac{1}{2}\Var(U_{k+1}) &\leq (1 + C_L^2h^2)\Var(U_k) + \frac{1}{2}Q h^3 \\
+	&\leq (1 + C_L^2h^2)^2 \Var(U_{k-1}) + \frac{1}{2}Q h^3 (1 + C_L^2h^2) + \frac{1}{2}Q h^3 \\
+	&\leq (1 + C_L^2h^2)^k \Var(U_0) + \frac{1}{2}Q h^3 \sum_{i = 0}^{k - 1}(1 + C_L^2h^2)^i \\
+	&\leq \exp(C_L^2T^2) \Var(U_0) + \frac{1}{2}Q h^3 \sum_{i = 0}^{k - 1}(1 + C_L^2h^2)^i \\
+	&= C_1 \Var(U_0) + \frac{1}{2}Q h^3 \sum_{i = 0}^{k - 1}(1 + C_L^2h^2)^i. \\
+\end{aligned}
+\end{equation}
+We then bound the second term as follows
+\begin{equation}\label{eq:boundOfSum}
+\begin{aligned}
+	Q h^3 \sum_{i = 0}^{k - 1}(1 + C_L^2h^2)^i &=  \frac{(1 + C_L^2h^2)^k - 1}{h^2C_L^2}Qh^3 \\
+	&\leq  \frac{\exp(kC_L^2h^2) - 1}{C_L^2}Qh \\ 
+	&\leq  \frac{\exp(TC_L^2h) - 1}{C_L^2}Qh.
+\end{aligned}
+\end{equation}
+We then exploit the Taylor expansion of the exponential function and write
+\begin{equation}
+\begin{aligned}
+	Qh^3 \sum_{i = 0}^{k - 1}(1 + C_L^2h^2)^i &\leq \frac{Qh}{C_L^2} \sum_{i = 1}^{\infty} \frac{(TC_L^2h)^i}{i!} \\
+	&\leq \left(\frac{1}{C_L^2T} \sum_{i = 1}^{\infty} \frac{(T^2C_L^2)^i}{i!}\right)Q h^2 \\
+	&= \frac{\exp(T^2C_L^2) - 1}{C_L^2T} Q h^2 \\
+	&= C_2 Q h^2.
+\end{aligned}
+\end{equation}
+Thus, the result is proved for Explicit Euler. Let us consider now any explicit Runge-Kutta method $\Psi$, and let us rewrite \eqref{eq:probMethod} as
+\begin{equation}
+	U_{k+1} = U_k + h\tilde \Psi (U_k) + \xi_k(h),
+\end{equation}
+where $\tilde\Psi(x) \defeq h^{-1}(\Psi(x) - x)$ is given by
+\begin{equation}
+	\tilde\Psi(U_k) = \sum_{i = 1}^{s} b_i K_i,
+\end{equation} 
+and $K_i$, $i = 1, \ldots, s$, are the stages of the Runge-Kutta method. Then, proceeding as above
+\begin{equation}
+	\Var(U_{k+1}) \leq 2\Var(U_k) + 2h^2 \Var(\tilde \Psi (U_k)) + Q h^{2p + 1}.
+\end{equation}
+Let us consider the second term. A direct bound, following from a generalization on $s$ terms of \eqref{eq:varProp} is
+\begin{equation}\label{eq:temp}
+	\Var(\tilde \Psi (U_k)) \leq s\sum_{i = 1}^{s} b_i^2 \Var(K_i).
+\end{equation}
+Hence, we can consider the variance of each stage singularly. Since we are only considering explicit Runge-Kutta method, it is possible to estimate the single variances recursively
+\begin{equation}
+	\begin{aligned}
+		\Var(K_1) &= \Var(f(U_k)) \leq C_L^2 \Var(U_k), \\
+		\Var(K_2) &= \Var(f(U_k + ha_{21}K_1)) \leq C_L^2 \Var(U_k + ha_{21}K_1) \\
+		&\leq 2C_L^2 (\Var(U_k) + h^2a_{21}^2\Var(K_1)) \\
+		&\leq 2C_L^2 (1 + T^2a_{21}^2C_L^2)\Var(U_k) \leq C \Var(U_k) \\
+		\implies \Var(K_i) &\leq \Var(f(U_k + h \sksum_{j=1}^{i-1}a_{ij}K_j)) \leq C \Var(U_k), \: \forall i = 2, \ldots, s,
+	\end{aligned}
+\end{equation}
+where $C$ is a positive varying from one line to another depending on $C_L$, $T$ and the coefficients of the Runge-Kutta method. We then substitute in \eqref{eq:temp} and get
+\begin{equation}
+	\Var(U_{k+1}) \leq 2 (1 + Csh^2\sksum_{i=1}^{s}b_i^2) \Var(U_k) + Q h^{2p + 1}. \\
+\end{equation}
+Finally, we can proceed as explained above in detail in the case of Explicit Euler and recur over $k$ to obtain the desired bound. 
+\end{proof}
+
+\noindent We can show a similar result for any implicit Runge-Kutta method. In this case, a restriction on the time step will be required in order to bound the variance of the numerical solution. We will discuss how this restriction is connected with the well-posedeness of the numerical method.
+\begin{lemma}\label{lem:varimRK} Consider the numerical method \eqref{eq:probMethod} applied to a one-dimensional ODE with $\Psi$ any explicit or implicit Runge-Kutta method on $s$ stages and Assumption \ref{assumption_1}. Then, if $h$ is small enough, the numerical solution $U_k$ at time $t_k = kh$ satisfies
+	\begin{equation}
+	\Var(U_k) \leq C_1\Var(U_0) + C_2Q h^{2p}, \quad k = 1, \ldots, N,
+	\end{equation}
+	with $C_1$, $C_2$ positive constants.
+\end{lemma}
+\begin{proof} Let us consider as $\Psi$ the Implicit Euler method and $p = 1$. Then, we can write one step of the probabilistic method as
+\begin{equation}
+	U_{k} = U_{k-1} + hf(U_{k}) + \xi_k(h).
+\end{equation}
+Applying \eqref{eq:indepProof} and \eqref{eq:lipschitzVar} we get thanks to Assumption \ref{assumption_1}
+\begin{equation}
+	\Var(U_k) \leq 2\Var(U_{k-1}) + 2h^2C_L^2 \Var(U_k) + Q h^3.
+\end{equation}
+Hence, defining the coefficient $\beta$ as 
+\begin{equation}
+	\beta = \frac{1}{1 - 2h^2C_L^2}, 
+\end{equation}
+and if the time step $h$ is bounded by
+\begin{equation}
+	h < \frac{1}{\sqrt{2}C_L},
+\end{equation}
+then $\beta > 0$ and we can deduce
+\begin{equation}
+\begin{aligned}
+	\frac{1}{2}\Var(U_k) &\leq \beta(\Var(U_{k-1}) + \frac{1}{2}Q h^3) \\
+	&\leq \beta^k \Var(U_0) + \frac{1}{2}\left(\sum_{i = 1}^{k} \beta^i\right) Q h^3 \\
+	&\leq \beta^N \Var(U_0) + \frac{1}{2}T \beta^N Q h^2,
+\end{aligned}
+\end{equation}
+which proves the result for the Implicit Euler method. For any implicit or explicit Runge-Kutta method we can write one step of the probabilistic method as
+\begin{equation}
+U_k = U_{k-1} + h\sum_{i=1}^{s}b_iK_i + \xi_k(h).
+\end{equation}
+Then thanks to \eqref{eq:varProp}, \eqref{eq:lipschitzVar} and Assumption \ref{assumption_1} we obtain
+\begin{equation}\label{eq:partialLemRKI}
+\Var(U_k) \leq 2 \Var(U_{k-1}) + 2h^2\Var(\sksum_{i=1}^{s}b_i K_i) + Q h^{2p + 1}.
+\end{equation}
+Let us consider the second term in the bound above. Thanks to the generalization on $s$ terms of \eqref{eq:varProp} we get
+\begin{equation}
+\Var(\textstyle \sum_{i=1}^{s}b_i K_i) \leq s \sum_{i=1}^s b_i^2 \Var(K_i).
+\end{equation}
+Considering now the variance of all single stages of the Runge-Kutta scheme, we can exploit \eqref{eq:lipschitzVar} and \eqref{eq:varProp} to get
+\begin{equation}
+\begin{aligned}
+\Var(K_i) &= \Var(f(U_{k-1} + h\sksum_{j=1}^{s}a_{ij}K_j)) \\
+&\leq C_L^2 \Var(U_{k-1} + h\sksum_{j=1}^{s}a_{ij}K_j) \\
+&\leq 2C_L^2 \Var(U_{k-1}) + 2C_L^2h^2\Var(\sksum_{j=1}^{s}a_{ij}K_j)\\
+&\leq 2C_L^2 \Var(U_{k-1}) + 2C_L^2h^2s\max_{i,j=1,\ldots,s}a_{ij}^2 \sksum_{j=1}^{s}\Var(K_j).
+\end{aligned}
+\end{equation}
+Let us define the constant $\alpha > 0$ as
+\begin{equation}
+\alpha = 2C_L^2h^2s\max_{i,j=1,\ldots,s}a_{ij}^2.
+\end{equation}
+Then, if the time step $h$ satisfies
+\begin{equation}
+h < \frac{1}{C_L}\left(\frac{1}{2s\max_{i,j=1,\ldots,s}a_{ij}^2}\right)^{1/2},
+\end{equation}
+we have that $1 - \alpha$ is positive and therefore we can bound the variance of the $i$-th Runge-Kutta stage as
+\begin{equation}
+\Var(K_i) \leq \frac{2C_L^2}{1 - \alpha} \Var(U_{k-1}) + \frac{\alpha}{1-\alpha}\sksum_{j=1, j\neq i}^{s}\Var(K_j). 
+\end{equation}
+If for each $i$ we consider a numbering of the Runge-Kutta stages such that $i = s$, we can rewrite the inequality above as
+\begin{equation}
+\Var(K_s) \leq \frac{2C_L^2}{1 - \alpha} \Var(U_{k-1}) + \frac{\alpha}{1-\alpha}\sksum_{j=1}^{s-1}\Var(K_j).
+\end{equation}
+Therefore we can apply the discrete Gronwall inequality (Proposition \ref{thm:Gronwall}) and get
+\begin{equation}
+\Var(K_i) \leq \frac{2C_L^2}{1 - \alpha} \Var(U_{k-1})\exp(\frac{\alpha(s-1)}{1-\alpha}).
+\end{equation}
+Substituting this inequality in \eqref{eq:partialLemRKI} we get
+\begin{equation}
+\begin{aligned}
+\frac{1}{2}\Var(U_k) &\leq \left(1 + h^2s\frac{2C_L^2}{1 - \alpha}\exp(\frac{\alpha(s-1)}{1-\alpha})\sksum_{i=1}^s b_i^2\right)\Var(U_{k-1}) + \frac{1}{2}Q h^{2p+1} \\
+&\leq \left(1 + h^2s^2\frac{2C_L^2}{1 - \alpha}\exp(\frac{\alpha(s-1)}{1-\alpha})\max_{i=1,\ldots,s} b_i^2\right)\Var(U_{k-1}) + \frac{1}{2}Q h^{2p+1}.
+\end{aligned}
+\end{equation}
+If we define the constant $\hat C > 0$ as 
+\begin{equation}
+\hat C \defeq s^2\frac{2C_L^2}{1 - \alpha}\exp(\frac{\alpha(s-1)}{1-\alpha})\max_{i=1,\ldots,s} b_i^2,
+\end{equation}
+we get
+\begin{equation}
+\frac{1}{2}\Var(U_k) \leq (1 + \hat C h^2)^k \Var(U_0) + \frac{1}{2} Qh^{2p+1}\sksum_{i=0}^{k-1} (1 + \hat C h^2)^i.
+\end{equation}
+For the second term we proceed as in \eqref{eq:boundOfSum} and get for a constant $\tilde C > 0$ \\
+\begin{equation}
+\begin{aligned}
+\frac{1}{2}\Var(U_k) &\leq (1 + \hat C h^2)^k \Var(U_0) + \tilde C Q h^{2p} \\
+&\leq \exp(\hat C T^2)\Var(U_0) + \tilde C Q h^{2p},
+\end{aligned}
+\end{equation}
+thus obtaining the desired result.
+\end{proof}
+\begin{remark} Let us remark that in the limit for $h$ going to zero, the coefficient $\alpha$ defined for the Implicit Euler method tends to one. Therefore, asymptotically the variance of the numerical solution is bounded independently of the Lipschitz constant defining the ODE. Conversely, for any explicit Runge-Kutta method the constant depends on $C_L$ for any value of $h$.
+\end{remark}
+\begin{remark} The requirement on the time step $h$ of Lemma \ref{lem:varimRK} is reasonable because it is required by the numerical method for its well-posedness. Let us denote by $F$ the function defining one step of the probabilistic Implicit Euler, i.e., 
+	\begin{equation}
+	F(X) = U_{k-1} + hf(X) + \xi_k(h).
+	\end{equation}
+	In order to apply Banach's fixed point theorem and therefore admit the existence of a fixed point $U_{k}$, $F$ has to be a contraption. Therefore, evaluating $F$ on two points $X$ and $Y$, we get
+	\begin{equation}
+	\abs{F(X) - F(Y)} = h\abs{f(X) - f(Y)} \leq hC_L \abs{X - Y}.
+	\end{equation}
+	Hence, we have to impose $h < 1 / C_L$, which is only sightly less restrictive than the bound on $h$ required by Lemma \ref{lem:varimRK}. 
+\end{remark}
+
+\noindent We can now consider the MSE of the estimator $\hat Z$ introduced in \eqref{eq:MCapproximation}.
+\begin{theorem}\label{prop:MSE} Under the assumptions of Lemma \ref{lem:varMC} and if $\phi$ is Lipschitz continuous with constant $C_L$, the following bound for the MSE of $\hat Z$ is valid
+\begin{equation}
+\MSE(\hat Z) \leq C_1 h^{2\min\{2p, q\}} + \frac{C_2}{M} (\Var(U_0) + h^{2p}).
+\end{equation}	
+\end{theorem}
+\begin{proof} The samples $U_N^{(i)}$ are independent and identically distributed as $U_N$, hence
+\begin{equation}
+\begin{aligned}
+	\Var(\hat Z) &= \Var\left(\frac{1}{M} \sum_{i = 1}^M \phi\left(U_N^{(i)}\right)\right) \\
+	&= \frac{1}{M^2} \sum_{i = 1}^M \Var\left(\phi\left(U_N\right)\right) \\
+	&= \frac{1}{M} \Var\left(\phi\left(U_N\right)\right). \\
+\end{aligned}
+\end{equation}
+Since the function $\phi$ is Lipschitz continuous we can use \eqref{eq:lipschitzVar} and Lemma \ref{lem:varMC} and get
+\begin{equation}
+\Var(\hat Z) \leq \frac{C}{M} \Var(U_N) \leq \frac{C}{M} (\Var(U_0) + h^{2p})
+\end{equation}
+thus obtaining the following bound for the MSE of $\hat Z$ 
+\begin{equation}
+	\MSE(\hat Z) \leq C_1 h^{2\min\{2p, q\}} + \frac{C_2}{M} (\Var(U_0) + h^{2p})
+\end{equation}
+\end{proof}
+\begin{remark}
+Let us remark that in case the initial condition $U_0$ is a known deterministic value, i.e., $\Var(U_0)$ is equal to zero, and the noise scale $p$ is chosen equal to the order of the Runge-Kutta integrator $q$, the bound of the MSE can be rewritten simply as 
+\begin{equation}
+	\MSE(\hat Z) \leq C_1 h^{2q} + C_2 \frac{h^{2q}}{M}.
+\end{equation}
+\end{remark}
+\begin{remark} In \cite{CGS16} the authors argue that a reasonable choice for the noise scale $p$ is the order of the deterministic solver $q$, thus for a deterministic initial condition the result above is valid. This result is extremely favourable from the point of view of computational cost. Let us assume that the a tolerance $\epl$ and that the numerical error is measured by means of the square root of the MSE. Then, in order to attain this tolerance we have to impose
+\begin{equation}
+	h = \OO(\epl^{1/q}),
+\end{equation}
+without any condition on the number of trajectories $M$, which we can consider to be $\OO(1)$. Hence, the computational cost is 
+\begin{equation}
+	\mathrm{cost} = \frac{MT}{h} = \OO(\epl^{-1/q}),
+\end{equation}
+where we considered the final time $T$ to be $\OO(1)$.
+\end{remark}
+\begin{remark} In this section we considered only the one-dimensional case ($f\colon \R\to\R$) for a matter of clarity in the notation. However, all the results above are equally valid in the multi-dimensional case without any further assumption.
+\end{remark}
+
+\subsubsection{Numerical experiment - Monte Carlo}
+
+\begin{figure}
+\centering
+\begin{subfigure}{0.49\linewidth}
+	\centering
+	\resizebox{1.0\linewidth}{!}{\input{plots/MonteCarloVariance2.tikz}}
+	\caption{Variation of the time step.}
+	\label{fig:MonteCarloVarianceH}
+\end{subfigure}
+\begin{subfigure}{0.49\linewidth}
+	\centering
+	\resizebox{1.0\linewidth}{!}{\input{plots/MonteCarloVariance3.tikz}}
+	\caption{Variation of the number of trajectories.}
+	\label{fig:MonteCarloVarianceM}
+\end{subfigure}
+\caption{Variance and squared bias of the Monte Carlo estimator $\hat Z$ with Explicit Euler and RK4 applied to \eqref{eq:FitzNag}. The two components of the MSE have the same order of convergence with respect to the time step $h$. Conversely, the order of convergence with respect to the number of trajectories $M$ with fixed $h$ of the variance of $\hat Z$ is equal to one for both methods}
+\label{fig:MonteCarloVariance}
+\end{figure}
+
+
+We consider the FitzHug-Nagumo problem introduced in \eqref{eq:FitzNag} with the same initial conditions and parameter values and integrate it up to the final time $T = 10$ with the probabilistic integrator. We choose the function $\phi$ to be given by $\phi(X) = X^TX$ and generate a reference solution $Z$ with RK4 computed on a fine time step. We choose as deterministic integrator EE and RK4 and the noise scale $p$ equal to $q$, i.e., one and four respectively. We choose $M = 10$ and the time step $h = 0.5 / 2^i$ with $i = 0, 1, \ldots, 11$. Then we compute $300$ times the estimator $\hat Z$ for all the values of the time step, thus estimating its variance and bias. Numerical results (Figure \ref{fig:MonteCarloVarianceH}) confirm the theoretical bound presented in Lemma \ref{lem:varMC}, as the order of convergence of the variance of $\hat{Z}$ to zero is of order $2$ and $8$ with respect to $h$ for Explicit Euler and RK4 respectively independently of $M$. We perform another experiment fixing the value of $h$ to $0.5$ and varying the number of trajectories in the values $M = 2^i$ with $i = 0, 1, \ldots, 9$. As in the first experiment, we compute 300 times $\hat Z$ in order to estimate its variance. Results (Figure \ref{fig:MonteCarloVarianceM}) show that the variance has an order equal to $1$ for both the methods with respect to $M^{-1}$, thus confirming the theoretical result.
+
+

@@ -1,0 +1,62 @@
+% This file was created by matlab2tikz.
+%
+%The latest EFupdates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=4.717in,
+height=3.721in,
+at={(0.791in,0.502in)},
+scale only axis,
+xmode=log,
+xmin=0.001,
+xmax=0.1,
+xminorticks=true,
+ymode=log,
+ymin=0.001,
+ymax=1,
+yminorticks=true,
+mark size = 3,
+xmajorgrids,
+ymajorgrids,
+xlabel = {$h$},
+xlabel style = {font = \LARGE},
+axis background/.style={fill=white},
+legend style={at={(0.97,0.03)},anchor=south east,legend cell align=left,align=left,draw=white!15!black},
+ticklabel style={font=\LARGE},legend style={font=\LARGE},title style={font=\LARGE}
+]
+\addplot [color=mycolor1,solid,mark=o,mark options={solid}]
+  table[row sep=crcr]{%
+0.04	0.1123258357954\\
+0.02857	0.0727138687866972\\
+0.0204	0.0481898817135708\\
+0.0147	0.0315365035547742\\
+0.01052	0.0205454707551366\\
+0.00751	0.0140770405527581\\
+0.00537	0.00899400013529372\\
+0.00384	0.00595686479536912\\
+0.00274	0.0037036370712952\\
+};
+\addlegendentry{$|\|\hat \theta\| - \|\theta\| |$};
+
+\addplot [color=black,dashed]
+  table[row sep=crcr]{%
+0.04	0.04\\
+0.02857	0.02857\\
+0.0204	0.0204\\
+0.0147	0.0147\\
+0.01052	0.01052\\
+0.00751	0.00751\\
+0.00537	0.00537\\
+0.00384	0.00384\\
+0.00274	0.00274\\
+};
+\addlegendentry{slope 1};
+
+\end{axis}
+\end{tikzpicture}%

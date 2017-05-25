@@ -1,0 +1,54 @@
+add_definitions(-DDATA_PATH="${PROJECT_SOURCE_DIR}/matlabPlots/")
+
+include_directories("${PROJECT_SOURCE_DIR}/RKSolver")
+include_directories("${PROJECT_SOURCE_DIR}/RKRandomStep")
+include_directories("${PROJECT_SOURCE_DIR}/Utilities")
+include_directories("${PROJECT_SOURCE_DIR}/MCMCLib")
+
+add_executable(randomTest RandomTest.cpp)
+target_link_libraries(randomTest RandomStep)
+
+add_executable(randomSol RandomSolutions.cpp)
+target_link_libraries(randomSol RandomStep)
+
+add_executable(weakConv WeakConvergenceTest.cpp)
+target_link_libraries(weakConv RandomStep)
+
+add_executable(strongConv StrongConvergenceTest.cpp)
+target_link_libraries(strongConv RandomStep UtilitiesGG)
+
+add_executable(strongConvOne StrongConvergenceOneStep.cpp)
+target_link_libraries(strongConvOne RandomStep UtilitiesGG)
+
+add_executable(MCConv MonteCarloTest.cpp)
+target_link_libraries(MCConv RandomStep)
+
+add_executable(refSol ReferenceSolution.cpp)
+target_link_libraries(refSol RungeKuttaSolver)
+
+add_executable(genObs GenerateObservations.cpp)
+target_link_libraries(genObs RungeKuttaSolver)
+
+add_executable(strongConvAdd StrongConvergenceAdd.cpp)
+target_link_libraries(strongConvAdd RandomStep UtilitiesGG)
+
+add_executable(weakConvAdd WeakConvergenceAdd.cpp)
+target_link_libraries(weakConvAdd RandomStep UtilitiesGG)
+
+add_executable(RandVSAdd RandStepVsAddNoise.cpp)
+target_link_libraries(RandVSAdd RandomStep UtilitiesGG)
+
+add_executable(LorenzIC LorenzVariableIC.cpp)
+target_link_libraries(LorenzIC RandomStep UtilitiesGG)
+
+add_executable(SpaceMeans SpaceMeans.cpp)
+target_link_libraries(SpaceMeans RandomStep UtilitiesGG)
+
+add_executable(TimeMeans TimeMeans.cpp)
+target_link_libraries(TimeMeans RandomStep UtilitiesGG)
+
+add_executable(Invariants InvariantCons.cpp)
+target_link_libraries(Invariants RandomStep UtilitiesGG)
+
+add_executable(Inverse ODEParam.cpp)
+target_link_libraries(Inverse RandomStep UtilitiesGG MCMC)

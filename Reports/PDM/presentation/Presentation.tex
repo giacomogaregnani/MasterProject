@@ -1,0 +1,862 @@
+\documentclass{beamer}
+
+\usetheme{Warsaw}
+\usecolortheme{orchid}
+
+\usepackage{algorithm,algorithmic}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{pgfplots} 
+\usepackage{graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage{tikz}
+\usepackage{bbm}
+\usepackage{subcaption}
+\usepackage{mathtools}
+\usepackage{lipsum}
+\usepackage{color}
+\usepackage{physics}
+\usepackage{appendixnumberbeamer}
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\newcommand{\eqtext}[1]{\ensuremath{\stackrel{#1}{=}}}
+\newcommand{\leqtext}[1]{\ensuremath{\stackrel{#1}{\leq}}}
+\newcommand{\diffL}{\mathcal{L}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\epl}{\varepsilon}
+\newcommand{\defeq}{\coloneqq}
+\newcommand{\uDarcy}{\color{red}{u}}
+\newcommand{\sksum}{\textstyle\sum}
+\newcommand{\MSE}{\operatorname{MSE}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\Hell}{d_{\mathrm{Hell}}}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{problemTh}{Problem}
+\newtheorem{assumption}{Assumption}
+\renewcommand{\phi}{\varphi}
+\definecolor{mygray}{gray}{0.8}
+\newcommand{\eqdef}{\eqqcolon}
+
+% Add numbers and take out navigation symbols
+\setbeamertemplate{footline}[frame number]
+\beamertemplatenavigationsymbolsempty
+
+\title{Probabilistic solvers for ODE's \\ and Bayesian inference of parametrized models}
+\subtitle{Master Project - Master in CSE}
+\author{Giacomo Garegnani \\ Supervisor: Prof. Assyr Abdulle \\ Expert: Dr. Kostas Zygalakis}
+\institute{EPFL}
+\date{02/02/2017}
+
+\begin{document}
+
+\frame{\titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% OUTLINE %%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+	\frametitle{Outline of the presentation}
+	\begin{enumerate}
+		\item Introduction on Bayesian inference and MCMC
+		\item Probabilistic solvers for ODE's
+		\item Bayesian inference inverse problems with differential equations
+	\end{enumerate}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PART ONE %%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+	\frametitle{Bayesian inference and MCMC}
+	\framesubtitle{Bayes' formula}
+	
+	Consider $\Omega$ event space, $\mathcal{A}$  $\sigma$-algebra, $P$ probability measure and $(\Omega, \mathcal{A}, P)$. Given $A$, $B$ in $\Omega$, Bayes' formula reads 
+	\begin{equation*}
+		P(A\mid B) = \frac{P(B\mid A)P(A)}{P(B)} \propto P(B\mid A)P(A).
+	\end{equation*}
+	Normalization constant $P(B)$ can be replaced as
+	\begin{equation*}
+		P(A\mid B) = \frac{P(B\mid A)P(A)}{\int_{\Omega}P(B\mid A)P(A)},
+	\end{equation*}
+	as $P(A\mid B)$ is a probability distribution.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bayesian inference and MCMC}
+	\framesubtitle{Bayesian inference}
+	
+	\underline{Problem.} Consider two events $A$, $B$ in $\Omega$ and the probability space $(\Omega, \mathcal{A}, P)$. We want to infer the probability distribution of $A$ given $B$ as
+	\begin{equation*}
+		\underbrace{\pi(A\mid B)}_{\text{posterior}} \propto \overbrace{\mathcal{Q}(A)}^{\text{prior}} \underbrace{\mathcal{L}(B \mid A)}_{\text{likelihood}}
+	\end{equation*}
+	In models parametrized by a parameter $\theta$, we deduce the distribution of $\theta$ through observations $\mathcal{Y}_n = \{y_1, y_2, \ldots, y_n\}$ as
+	\begin{equation*}
+		\pi(\theta\mid\mathcal{Y}_n) \propto \mathcal{Q}(\theta) \mathcal{L}(\mathcal{Y}_n \mid \theta).
+	\end{equation*}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bayesian inference and MCMC}
+	\framesubtitle{MCMC - motivation}
+	
+	\underline{Goal.} Approximate the expectation under the distribution $\pi(\theta \mid \mathcal{Y})$ of a functional of the parameter $\theta \in \R^{N_p}$ with a Monte Carlo sum, i.e.,
+	\begin{equation*}\label{eq:MonteCarlo}
+			 \E^\pi\left[g(\theta)\right] = \int_{\R^{N_p}} g(\theta)\pi(\dd\theta\mid\mathcal{Y})  \approx \frac{1}{N}\sum_{k = 1}^{N} g(\theta^{(k)}),
+	\end{equation*}
+	where $\theta^{(k)}$ are realizations of $\theta$. \\[0.5cm]
+	\underline{Problem.} Generate samples $\theta^{(k)}$, with $k = 1, \ldots, N$ so that the approximation above holds
+	$\rightsquigarrow$ MCMC \cite[e.g.]{Gil05} \\[0.5cm]
+	\underline{Idea.} Generate samples $\theta^{(k)}$ from a Markov chain with kernel $P$ until the chain reaches its \textit{stationary distribution}. Different choices of the Markov kernel lead to different MCMC algorithms.	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bayesian inference and MCMC}
+	\framesubtitle{Metropolis-Hastings}
+	\begin{algorithm}[H]	
+		\begin{algorithmic}
+			\STATE Given $\theta^{(0)} \in \R^{N_p}, N \in \N_0$, $q(x, y)\colon \int q(x,y)\dd y = 1$;
+			\FOR{$i = 0, \ldots, N$}
+			\STATE Draw $\vartheta$ from $q(\theta^{(i)}, \cdot)$;
+			\STATE Compute \textit{acceptance probability} $\alpha(\theta^{(i)}, \vartheta)$ as $$\alpha(\theta^{(i)}, \vartheta) = \min\left\{\frac{\pi(\vartheta)q(\vartheta, \theta^{(i)})}{\pi(\theta^{(i)})q(\theta^{(i)}, \vartheta)}, 1\right\};$$
+			\STATE Draw $u$ from $\mathcal{U}(0, 1)$;
+			\IF{$\alpha > u$}
+			\STATE Accept $\vartheta$, set $\theta^{(i+1)} = \vartheta$; 
+			\ELSE
+			\STATE set $\theta^{(i+1)} = \theta^{(i)}$;
+			\ENDIF
+			\ENDFOR
+		\end{algorithmic}
+		\caption{Metropolis-Hastings.}
+	\end{algorithm}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bayesian inference and MCMC}
+	\framesubtitle{Metropolis-Hastings - Observations}
+	
+	\underline{Remark.} If the proposal distribution is symmetric, i.e., $q(x,y) = q(y,x)$, then 
+	\begin{equation*}
+		\alpha(\theta^{(i)}, \vartheta) = \min\left\{\frac{\pi(\vartheta)q(\vartheta, \theta^{(i)})}{\pi(\theta^{(i)})q(\theta^{(i)}, \vartheta)}, 1\right\} = \min\left\{\frac{\pi(\vartheta)}{\pi(\theta^{(i)})}, 1\right\}.
+	\end{equation*}
+	For example, Gaussian proposal \cite{KaS05}
+	\begin{equation*}
+		q(x, y) \propto \exp(-\frac{1}{2}(x - y)^T\Sigma^{-1}(x - y)).
+	\end{equation*}
+	\underline{Problems.} 
+	\begin{enumerate}
+		\item How to choose an efficient proposal distribution?
+		\item How to modify MH if it is not possible to evaluate the posterior distribution?
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bayesian inference and MCMC}
+	\framesubtitle{Robust adaptive Metropolis (RAM) \cite{Vih12}}
+	
+	\underline{Problem.} Bad proposal distribution $q(x,y) \implies$ inefficient algorithms. Measure efficiency with \textit{acceptance ratio}. \\[0.5cm]
+	\underline{Idea.} Adapt $q(x,y)$ to obtain a chosen acceptance ratio $\alpha^*$. Choose $q(x,y)$ Gaussian, the new guess $\vartheta$ is 
+	\begin{equation*}
+		\vartheta = \theta^{(n)} + S_n z_n, \quad Z_n \sim \mathcal{N}(0, I),
+	\end{equation*}
+	where $S_n \in \R^{N_p\times N_p}$ is lower triangular definite positive. Then, 
+	\begin{equation*}
+		S_{n+1}S_{n+1}^T = S_n\left(I + \eta_n\left(\alpha(\theta^{(n)}, \vartheta) - \alpha^*\right)\frac{z_nz_n^T}{z_n^Tz_n}\right)S_n^T,
+	\end{equation*}
+	where $\eta_n \xrightarrow{n\to\infty} 0$.
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bayesian inference and MCMC}
+	\framesubtitle{Robust adaptive Metropolis \cite{Vih12}, numerical experiment}
+	
+	Two-dimensional distribution $\pi$ with density \cite{KaS05}
+	\begin{equation*}
+		\pi(X) \propto \exp(-10(X_1^2 - X_2)^2 - (X_1 - 0.25)^4),
+	\end{equation*}
+	Setting of the experiment. Given $\sigma = \{0.01, 0.5, 2.0\}$, compare
+	\begin{itemize}
+		\item standard MH with Gaussian proposal with covariance $\sigma I$,
+		\item RAM with $S_0 = \sigma I$ and $\alpha^* = 0.4$.
+	\end{itemize}
+	Draw $N = 5000$ samples and compute obtained acceptance ratio as
+	\begin{equation*}
+		\bar \alpha = \frac{\text{n. of accepted samples } \vartheta}{N}
+	\end{equation*}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Bayesian inference and MCMC}
+	\framesubtitle{Robust adaptive Metropolis \cite{Vih12}, numerical experiment}
+	\begin{figure}[t]
+		\centering
+		\begin{subfigure}{0.32\linewidth}
+			\centering
+			\tiny{$\bar \alpha = 0.96$}
+			\includegraphics[width=1\linewidth]{../plots/MHvsRAM/MH_small}
+		\end{subfigure}
+		\begin{subfigure}{0.32\linewidth}
+			\centering
+			\tiny{$\bar \alpha = 0.35$}
+			\includegraphics[width=1\linewidth]{../plots/MHvsRAM/MH_medium}
+		\end{subfigure}
+		\begin{subfigure}{0.32\linewidth}
+			\centering
+			\tiny{$\bar \alpha = 0.06$}
+			\includegraphics[width=1\linewidth]{../plots/MHvsRAM/MH_big}
+		\end{subfigure}
+		
+		\begin{subfigure}{0.32\linewidth}
+			\centering
+			\tiny{$\bar \alpha = 0.43$}
+			\includegraphics[width=1\linewidth]{../plots/MHvsRAM/RAM_small}
+		\end{subfigure}
+		\begin{subfigure}{0.32\linewidth}
+			\centering
+			\tiny{$\bar \alpha = 0.40$}
+			\includegraphics[width=1\linewidth]{../plots/MHvsRAM/RAM_medium}
+		\end{subfigure}
+		\begin{subfigure}{0.32\linewidth}
+			\centering
+			\tiny{$\bar \alpha = 0.38$}
+			\includegraphics[width=1\linewidth]{../plots/MHvsRAM/RAM_big}
+		\end{subfigure}
+	\end{figure}
+	Samples produced by MH and RAM for the distribution with standard MH (first row) and RAM (second row).
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bayesian inference and MCMC}
+	\framesubtitle{Pseudo-marginal MCMC \cite{ADH10, DPD15, MLR16}}
+	
+	\underline{Problem.} Impossible to evaluate $\pi(\theta)$ (no closed form available). \\[0.5cm]
+	\underline{Idea.} Find evaluable $\pi(\theta, \xi)$ that admits $\pi(\theta)$ as marginal distribution, then compute
+	\begin{equation*}
+		\hat \pi_M(\theta) = \frac{1}{M} \sum_{i = 1}^{M} \pi(\theta, \xi^{(i)}),
+	\end{equation*}
+	with $\xi^{(i)}$, $i = 1, \ldots, M$ realizations of $\xi$. Use $\hat \pi_M$ for $\alpha(\theta^{(i)}, \vartheta)$. \\[0.5cm]
+	\underline{Remark.} The rest of MH is unchanged.	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PART TWO %%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+	\frametitle{Outline of the presentation}
+	\begin{enumerate}
+		\item \color{mygray} Introduction on Bayesian inference and MCMC
+		\item \color{black} Probabilistic solvers for ODE's
+		\item Bayesian inference inverse problems with differential equations
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Probabilistic solvers for ODE's}
+	\framesubtitle{Method presentation \cite{CGS16}}
+	
+	\underline{Problem.} Given $f\colon\R^d\to\R^d$ and the autonomous ODE 
+	\begin{equation*}
+		u'(t) = f(u), \quad	u(0) = u_0, 
+	\end{equation*}
+	build a probabilistic numerical solution. There exists flow map $\Phi_t(y)$ such that
+	\begin{equation*}
+		u(t) = \Phi_t(u_0).
+	\end{equation*}
+	\underline{Idea.} Given $h > 0$, the flow map of a Runge-Kutta method $\Psi_h(y)$ is
+	\begin{equation*}
+		u_{k+1} = \Psi_h(u_k), \quad k = 0, 1, \ldots,
+	\end{equation*}
+	consider $\xi_k(h)$ i.i.d. random variables in $\R^d$ and compute
+	\begin{equation*}
+		U_{k+1} = \underbrace{\Psi_h(U_k)}_{\text{deterministic}} + \overbrace{\xi_k(h)}^{\text{random}}, \quad k = 0, 1, \ldots,
+	\end{equation*}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Probabilistic solvers for ODE's}
+	\framesubtitle{Method motivation}
+	
+	Consider chaotic differential equation, e.g., Lorenz system
+	\begin{equation*}\label{eq:Lorenz}
+	\begin{aligned}
+		x' &= \sigma(y - x), \quad &&x(0) = -10,\\
+		y' &= x(\rho - z) - y, \quad &&y(0) = -1,\\
+		z' &= xy - \beta z, \quad &&z(0) = 40,\\
+		\sigma &= 10, \quad \rho = 28, \quad \beta = \frac{8}{3}.
+	\end{aligned}
+	\end{equation*}
+	Small perturbation $\implies$ uncontrollable deviation of the solution. \\
+	Deterministic solvers not reliable for any time step $h > 0$. \\
+	$\rightsquigarrow$ Family of $M$ probabilistic numerical solutions.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Probabilistic solvers for ODE's}
+	\framesubtitle{Method motivation}
+	
+	\begin{figure}[t]
+		\centering
+		\begin{subfigure}{1\linewidth}
+			\resizebox{1.0\linewidth}{!}{\input{../plots/LorenzX.tikz}}
+		\end{subfigure}
+		\begin{subfigure}{1\linewidth}
+			\resizebox{1.0\linewidth}{!}{\input{../plots/LorenzY.tikz}}
+		\end{subfigure}
+	\end{figure}
+
+	Components $x$ and $y$ of Lorenz system with deterministic solver (thick black) and probabilistic solver (light gray). Gauss method on 2 stages as $\Psi_h(y)$.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Probabilistic solvers for ODE's}
+	\framesubtitle{Method properties}
+	
+	Relevant properties analyzed
+	\begin{itemize}
+		\item strong order of convergence,
+		\item weak order of convergence,
+		\item behavior of Monte Carlo approximations.
+	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%% STRONG AND WEAK %%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+	\frametitle{Probabilistic solvers for ODE's}
+	\framesubtitle{Method properties - strong and weak convergence \cite{CGS16}}
+	
+	\underline{Recall.} The probabilistic method is defined as
+	\begin{equation*}
+		U_{k+1} = \Psi_h(U_k) + \xi_k(h), \quad k = 0, 1, \ldots,
+	\end{equation*}
+	for suitable random variables $\xi_k(h)$. \\[0.5cm]
+	
+	Under two assumptions, it is possible to prove results of weak and strong convergence.
+	
+\end{frame}
+	
+\begin{frame}
+	\frametitle{Probabilistic solvers for ODE's}
+	\framesubtitle{Method properties - strong and weak convergence \cite{CGS16}}
+	
+	\begin{assumption}[Variance of random variables] The variables $\xi_k(t)$ satisfy for $p \geq 1$
+		\begin{equation*}
+			\E|\xi_k(t)\xi_k(t)^T|^2_F \leq Kt^{2p+1}.
+		\end{equation*}
+		Furthermore, there exists a matrix $Q$ independent of $h$ such that 
+		\begin{equation*}
+		\E[\xi_k(h)\xi_h(h)^T] = Qh^{2p+1},
+		\end{equation*}
+	\end{assumption}
+		
+	\begin{assumption}[Order of the deterministic component] The function $f$ and a sufficient number of its derivatives are bounded uniformly in $\R^n$ in order to ensure that $f$ is globally Lipschitz and that the numerical flow map $\Psi_h$ has uniform local truncation error of order $q + 1$, i.e., 
+		\begin{equation*}
+			\sup_{u\in\R^n} |\Psi_t(u) - \Phi_t(u)| \leq Kt^{q+1}.
+		\end{equation*}
+	\end{assumption}	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Probabilistic solvers for ODE's}
+	\framesubtitle{Method properties - strong and weak convergence \cite{CGS16}}
+	
+	\begin{theorem}[Strong Convergence] Under the assumptions above, there exists $K>0$ such that
+		\begin{equation*}
+		\sup_{0<kh<T} \E|u(t_k) - U_K|^2 \leq Kh^{2\min\{p,q\}}.
+		\end{equation*}
+	\end{theorem}
+	
+	\begin{theorem}[Weak convergence] For any function $\phi$ sufficiently smooth
+		\begin{equation*}
+		\abs{\phi(u(T)) - \E[\phi(U_k)]} \leq Kh^{\min\{2p, q\}}, \quad kh = T.
+		\end{equation*}
+	\end{theorem}
+	
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%% MONTE CARLO %%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+	\frametitle{Probabilistic solvers for ODE's}
+	\framesubtitle{Method properties - Monte Carlo}
+	
+	\underline{Problem.} Study convergence of Monte Carlo approximations. \\[0.5cm]
+	Numerical solution $\rightsquigarrow$ $\mathcal Q_h$ (inaccessible), \\
+	$M$ samples of numerical solution  $\rightsquigarrow$ $\mathcal Q_h^M$ (accessible), \\
+	Exact solution $\rightsquigarrow$ $\delta_u$. \\[0.5cm]
+	
+	Convergence scheme, we expect
+	\begin{equation*}
+	\mathcal Q_h^M \xrightarrow{M\to \infty} \mathcal Q_h \xrightarrow{h\to 0} \delta_u.
+	\end{equation*}
+	Second convergence already treated, first unclear \cite{KeH16}.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Probabilistic solvers for ODE's}
+	\framesubtitle{Method properties - Monte Carlo}
+	
+	Consider $\phi$ a regular function, $M$ trajectories of the numerical solution and the estimator
+	\begin{equation*}
+		\hat Z = \frac{1}{M} \sum_{i = 1}^M \phi\left(U_N^{(i)}\right).
+	\end{equation*}
+	\underline{Goal.} Estimate the convergence of the MSE of $\hat Z$. \\[0.5cm]
+	\underline{Remark.} Thanks to weak convergence result,
+	\begin{equation*}
+		\MSE(\hat Z) \leq \Var(\hat Z) + C h^{2\min\{2p, q\}}.
+	\end{equation*}
+	$\rightsquigarrow$ bound the variance of $\hat Z$ with a function of $h$ and $M$.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Probabilistic solvers for ODE's}
+	\framesubtitle{Method properties - Monte Carlo}	
+	
+	Consider only one-dimensional problems and bound the variance of the numerical solution. Recall that
+	\begin{equation*}
+		\E[\xi_k(h)^2] = Qh^{2p + 1}.
+	\end{equation*}
+	
+	\begin{lemma}[Variance of the numerical solution] Consider a one-dimensional ODE and the probabilistic method with $\Psi$ any Runge-Kutta scheme on $s$ stages. Then, if $h$ is small enough, $\exists C_1, C_2 > 0$ such that
+		\begin{equation*}
+		\Var(U_k) \leq C_1\Var(U_0) + C_2Q h^{2p}, \quad k = 1, \ldots, N.
+		\end{equation*}		
+	\end{lemma}
+	
+	\underline{Remark.} If the initial condition is deterministic, the variance is bounded by 
+	\begin{equation*}
+		\Var(U_k) \leq C_2Qh^{2p}.
+	\end{equation*}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Probabilistic solvers for ODE's}
+	\framesubtitle{Method properties - Monte Carlo}	
+	
+	Assume $\phi$ is Lipschitz with constant $C_L$, then
+	\begin{equation*}
+		\Var(\phi(U_k)) \leq C_L^2 \Var(U_k).
+	\end{equation*}
+	Therefore, the following result is trivially proved.
+	
+	\begin{theorem}[Bound of the MSE] The following bound for the MSE of $\hat Z$ is valid
+		\begin{equation*}
+			\MSE(\hat Z) \leq C_1 h^{2\min\{2p, q\}} + \frac{C_2}{M} (\Var(U_0) + h^{2p}).
+		\end{equation*}	
+	\end{theorem}
+	
+	\underline{Remark.} If the initial condition is deterministic
+	\begin{equation*}
+		\MSE(\hat Z) = \OO(h^{2\min\{2p, q\}}) + \OO(M^{-1}h^{2p}),
+	\end{equation*}
+	hence depending on $p$ and $q$ one can choose $M = \OO(1)$.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Probabilistic solvers for ODE's}
+	\framesubtitle{Method properties - Monte Carlo (numerical experiment)}		
+	
+	\underline{Goal.} Verify the properties of Monte Carlo estimators derived above. Test problem is the FitzHug-Nagumo equation
+	
+	\begin{equation*}
+	\begin{aligned}
+	x' &= c\left(x - \frac{x^3}{3} + y\right), && x(0) = -1, \\
+	y' &= -\frac{1}{c}(x - a + by), && y(0) = 1,
+	\end{aligned}
+	\end{equation*}
+	Use order one and order four methods, Euler Explicit and fourth-order Runge-Kutta.\\
+	\begin{minipage}{0.3\linewidth} 
+		\begin{center}
+			(EE)
+			\begin{tabular}{c|c}
+				$0$ & 0 \\
+				\hline 
+				&$1$ 
+			\end{tabular}
+		\end{center}
+	\end{minipage}
+	\begin{minipage}{0.6\linewidth} 
+		\begin{center}
+			(RK4)
+			\begin{tabular}{c|cccc}
+				$0$ & 0 & 0 & 0 & 0\\
+				$1/2$ & 1/2 & 0 & 0 & 0\\
+				$1/2$ & 0 & 1/2 & 0 & 0\\
+				$1$ & 0 & 0 & 1 & 0\\
+				\hline 
+				&$1/6$ & 1/3 & 1/3 & 1/6
+			\end{tabular}
+		\end{center}
+	\end{minipage}
+
+	
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Probabilistic solvers for ODE's}
+	\framesubtitle{Method properties - Monte Carlo (numerical experiment)}	
+	
+	\begin{figure}
+		\centering
+		\begin{subfigure}{0.49\linewidth}
+			\centering
+			\resizebox{1.0\linewidth}{!}{\input{../plots/MonteCarloVariance2.tikz}}
+			\caption{Variation of $h$.}
+		\end{subfigure}
+		\begin{subfigure}{0.49\linewidth}
+			\centering
+			\resizebox{1.0\linewidth}{!}{\input{../plots/MonteCarloVariance3.tikz}}
+			\caption{Variation of $M$.}
+		\end{subfigure}
+	\end{figure}
+	
+	\underline{Numerical experiment.} Deterministic methods Explicit Euler and 4th-order Runge-Kutta, deterministic $U_0$ and $p = q$. Compute variance and bias of $\hat Z$ varying $h$ and $M$.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Probabilistic solvers for ODE's}
+	\framesubtitle{Method properties - MLMC}
+	
+	\underline{Recall.} Bound on the MSE
+	\begin{equation*}
+		\MSE(\hat Z) \leq C_1 h^{2\min\{2p, q\}} + C_2 M^{-1} (\Var(U_0) + h^{2p}).
+	\end{equation*}	
+	
+	\underline{Problem.} If $\Var(U_0) > 0$, convergence with $h$ is not valid anymore. In this case
+	\begin{equation*}
+		\MSE(\hat Z) \leq C_1 h^{2\min\{p, q\}} + C_2 \Var(U_0) M^{-1}.
+	\end{equation*}	
+	If the two contributions are balanced and the error is measured as $\MSE(\hat Z)^{1/2}$ we obtain
+	\begin{equation*}
+		\mathrm{cost} = M \frac{T}{h} = \OO\left(\epl^{-2 - 1/\min\{p, q\}}\right),
+	\end{equation*}
+	where $\epl$ is the desired accuracy.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Probabilistic solvers for ODE's}
+	\framesubtitle{Method properties - MLMC}	
+
+	\underline{Idea.} Apply multi-level techniques to reduce computational cost. Applying standard MLMC \cite{Gil08} we get
+	\begin{equation*}
+	\mathrm{cost} = \begin{cases}	\OO(\abs{\log_2\epl^{1/q}}\epl^{-2}), & \text{if } q \leq p, \\
+						   	\OO(\abs{\log_2\epl^{1/2p}}\epl^{-2}), & \text{if } q \geq 2p, \\	
+						   	\OO(\abs{\log_2\epl^{1/q}}\epl^{-2}), & \text{if } p < q \leq 2p. \\	
+			\end{cases}
+	\end{equation*}	
+	\underline{Remark.} Computational cost is remarkably lower than in standard Monte Carlo. \textbf{Not necessary if deterministic initial condition}.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Probabilistic solvers for ODE's}
+	\framesubtitle{Method properties - summary}
+	
+	We considered the probabilistic method for ODE's
+	\begin{equation*}
+		U_{k+1} = \Psi_h(U_k) + \xi_k(h), \quad k = 0, 1, \ldots,
+	\end{equation*}
+	and studied
+	\begin{enumerate}
+		\item weak and strong convergence \cite{CGS16},
+		\item convergence of Monte Carlo estimators,
+		\item multi-level techniques for random initial conditions.
+	\end{enumerate}
+	In particular, we found that the MSE of the Monte Carlo estimator converges \textbf{independently on the number of samples} for deterministic $U_0$.
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PART THREE %%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+	\frametitle{Outline of the presentation}
+	\begin{enumerate}
+		\item \color{mygray} Introduction on Bayesian inference and MCMC
+		\item Probabilistic solvers for ODE's
+		\item \color{black} Bayesian inference inverse problems with differential equations
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bayesian inverse problems involving ODE's}
+	\framesubtitle{Problem statement}
+	
+	Consider $\theta$ unknown parameter in $\R^{N_p}$ (true value $\bar \theta$) and
+	\begin{equation*}
+		u_\theta' (t) = f_\theta(u_\theta(t)), \quad u_\theta(0) = u_0.
+	\end{equation*}
+	Consider observations 
+	\begin{equation*}
+			\mathcal{Y}_N = \{y_1, y_2, \ldots, y_N\}, \quad y_i = u_{\bar\theta}(t_i) + \epl_i, \quad \epl_i \sim \mathcal{N}(0, \Gamma).
+	\end{equation*}
+	\underline{Goal.} Apply Bayesian inference techniques to get distribution of $\theta$ with
+	\begin{equation*}
+		\pi(\theta\mid\mathcal Y_N) \propto \overbrace{\mathcal{Q}(\theta)}^{\text{prior (known)}}
+										  \underbrace{\mathcal{L}(\mathcal Y_N\mid \theta)}_{\text{likelihood (unknown)}},
+	\end{equation*}
+	where the likelihood is not known since the ODE has no closed form solution $u_\theta(t)$.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bayesian inverse problems involving ODE's}
+	\framesubtitle{Approximation of the likelihood}
+	
+	\underline{Problem.} Approximate $\mathcal{L}(\mathcal Y_N\mid u_\theta(t))$. Probabilistic integrator with time step $h$ gives 
+	\begin{equation*}
+		\diffL(\mathcal Y\mid\theta) \approx \diffL_h(\mathcal Y\mid\theta),
+	\end{equation*} 
+	but $\diffL_h$ is not accessible, repeated sampling with $M$ trajectories
+	\begin{equation*}
+		\diffL(\mathcal Y\mid\theta) \approx \diffL^M_h(\mathcal Y\mid\theta).
+	\end{equation*}
+	Hence, for each value of $\theta$ we have 
+	\begin{equation*}
+		\pi^M_h(\theta\mid\mathcal Y_N) \xrightarrow{M\to\infty} \pi_h(\theta\mid\mathcal Y_N) \xrightarrow{h\to 0} \pi(\theta\mid\mathcal Y_N).
+	\end{equation*}
+	Result on MSE of probabilistic method implies 
+	\begin{equation*}
+		\MSE(\diffL_h^M (\mathcal Y \mid \theta)) \leq C_1 h^{2\min\{2p, q\}} + \frac{C_2}{M} h^{2p}.
+	\end{equation*}
+	$\rightsquigarrow$ \textbf{Run pseudo-marginal MCMC.}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bayesian inverse problems involving ODE's}
+	\framesubtitle{Approximation of the likelihood - numerical experiment}
+	
+	\begin{figure}
+		\centering
+		\resizebox{0.6\linewidth}{!}{\input{../plots/LikelihoodFixedTheta.tikz}}
+	\end{figure}	
+	Approximation of the likelihood for FitzHug-Nagumo problem. Reference solution obtained with RK4 and fine time-step, ten observations $\mathcal{Y}_{10}$ at equispaced times between $t_1 = 1$ and $t_{10} = 10$. Probabilistic method with $p = q$.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bayesian inverse problems involving ODE's}
+	\framesubtitle{Quality of posterior distributions}
+	
+	Why the probabilistic integrator and not a deterministic Runge-Kutta method?
+	Consider the FitzHug-Nagumo problem
+	\begin{equation*}
+	\begin{aligned}
+		x' &= c\left(x - \frac{x^3}{3} + y\right), && x(0) = -1, \\
+		y' &= -\frac{1}{c}(x - a + by), && y(0) = 1,
+	\end{aligned}
+	\end{equation*}
+	with parameter $\theta = (a, b, c)^T$. \\
+	Empirically \cite{CGS16} the posterior accounts better for the numerical error with the probabilistic method. \\[0.5cm]
+	\underline{Experiment.} Run 50000 iterations of RAM with deterministic method and RAM applied to pseudo-marginal MCMC with probabilistic method.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bayesian inverse problems involving ODE's}
+	\framesubtitle{Quality of posterior distributions - numerical experiment}
+	
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.8\linewidth]{../plots/Fitznag}
+	\end{figure}
+	Posterior distribution for $\theta$. Probabilistic method (blue dots), deterministic method (red dots), true value (thick green).
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bayesian inverse problems involving ODE's}
+	\framesubtitle{Convergence of posterior distribution}
+	
+	\underline{Problem.} Determine how the posterior $\pi_h^M$ converges to the true posterior $\pi$ with respect to $h$ and $M$.\\[0.5cm]
+	\underline{Assumptions.} Consider the following assumptions
+	\begin{enumerate}
+		\item probabilistic integrator with $p = q$,
+		\item $\pi$ and $\pi_h^M$ admit densities $\pi(x)$ and $\pi_h^M(x)$,
+		\item denote as $\E^\xi[\cdot]$ and $\E^\pi[\cdot]$ the expectation with respect to the r.v. $\xi$ and the distribution $\pi$ respectively.
+	\end{enumerate}
+	\vspace{0.5cm}
+	\underline{Notion of distance.} We consider the Hellinger distance, i.e., given distributions $\mu$ and $\nu$ with densities $f$ and $g$
+	\begin{equation*}
+		\Hell^2(\mu, \nu) \defeq \frac{1}{2}\int_{\R^n}\left(\sqrt{f(x)} - \sqrt{g(x)}\right)^2\dd x
+	\end{equation*}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bayesian inverse problems involving ODE's}
+	\framesubtitle{Convergence of posterior distribution}
+	
+	\underline{Recall.} With $p = q$ we have, thanks to the result on Monte Carlo estimators we have, for any fixed $\theta \in \R^{N_p}$
+	\begin{equation*}
+	\begin{aligned}
+		\MSE(\diffL_h^M (\mathcal Y \mid \theta)) &= \E^\xi[(\diffL(\mathcal Y \mid \theta) - \diffL_h^M (\mathcal Y \mid \theta)^2] \\
+		&\leq C(\theta) h^{2q}.
+	\end{aligned}
+	\end{equation*}
+	We can then derive the convergence result
+	\begin{equation*}
+		\E^\xi[\Hell(\pi(\theta\mid\mathcal{Y}),\pi^M_h(\theta\mid\mathcal{Y}))] \leq \left(\sqrt{\frac{1}{2} \sup_{\theta \in \R^{N_p}} C(\theta)}\right) h^q.
+	\end{equation*}
+	Hence, convergence is independent of $M$.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bayesian inverse problems involving ODE's}
+	\framesubtitle{Convergence of parameter expectation}
+	
+	\underline{Problem.} Consider $g \colon \R^{N_p}\to\R$ and the Monte Carlo approximation
+	\begin{equation*}
+		 \E^\pi\left[g(\theta)\right]  \approx \frac{1}{N}\sum_{k = 1}^{N} g(\theta^{(k)}).
+	\end{equation*}
+	Running MCMC with approximated likelihood $\diffL_h^M$, the Monte Carlo estimation approximates
+	\begin{equation*}
+		\E^{\pi_h^M}\left[g(\theta)\right]  \approx \frac{1}{N}\sum_{k = 1}^{N} g(\theta^{(k)}).
+	\end{equation*}
+	
+	\vspace{0.5cm}
+	\underline{Goal.} Estimate in terms of $h$ and $M$ the quantity
+	\begin{equation*}
+		\MSE[\E^{\pi_h^M}\left[g(\theta)\right]] = \E^\xi[(\E^{\pi_h^M}\left[g(\theta)\right] - \E^\pi\left[g(\theta)\right])^2].
+	\end{equation*}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bayesian inverse problems involving ODE's}
+	\framesubtitle{Convergence of parameter expectation}	
+	
+	It is possible to show that
+	\begin{equation*}
+	\begin{aligned}
+		&\E^\xi\abs{\E^\pi\left[g(\theta)\right] - \E^{\pi_h^M}\left[g(\theta)\right]} \leq \norm{g}_\infty C h^{q}, \\
+		&\Var^\xi (\E^{\pi_h^M}\left[g(\theta)\right]) \leq  \norm{g^2}_\infty C h^{2q}.
+	\end{aligned}
+	\end{equation*}
+	Hence, we have
+	\begin{equation*}
+	\begin{aligned}
+		\MSE[\E^{\pi_h^M}\left[g(\theta)\right]] &= (\E^\xi[\E^\pi\left[g(\theta)\right] - \E^{\pi_h^M}\left[g(\theta)\right]])^2 + \Var^\xi (\E^{\pi_h^M}\left[g(\theta)\right]) \\
+		&\leq C \norm{g}_\infty^2 h^{2q}.
+	\end{aligned}
+	\end{equation*}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bayesian inverse problems involving ODE's}
+	\framesubtitle{Stiff problems}
+	
+	We consider the parabolic PDE (Brusselator problem)
+	\begin{equation*}
+	\begin{aligned}
+		\pdv{u}{t} &= 1 + u^2v + \alpha \pdv[2]{u}{x}, && u = u(x, t)\\
+		\pdv{v}{t} &= 3u - u^2v + \alpha \pdv[2]{v}{x}, && v = v(x, t), \quad x \in \Omega = (0, 1), \quad t \geq 0 \\
+		u(0, t) &= u(1, t) = 1, \\
+		v(0, t) &= v(1, t) = 3, \\
+		u(x, 0) &= 1 + \sin(2\pi x), \\
+		v(x, 0) &= 3.
+	\end{aligned}
+	\end{equation*}
+	Discretization with the method of lines on $N+2$ points leads to a stiff system of ODE's with stiffness index 
+	\begin{equation*}
+		\lambda = 4 \alpha (N+1)^2.
+	\end{equation*}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bayesian inverse problems involving ODE's}
+	\framesubtitle{Stiff problems}
+	
+	\underline{Goal.} Estimate from observations the parameter $\alpha$. The stiffness index
+	\begin{equation*}
+		\lambda = 4 \alpha (N+1)^2.
+	\end{equation*}
+	varies with respect to $\alpha$. How to obtain stable approximations of $\diffL(\mathcal{Y}\mid\alpha)$? \\[0.5cm]
+	
+	\underline{Idea.} Consider $\alpha$ to be bounded in $I_\alpha = [0, \alpha_{\max}]$ and use MCMC with truncated Gaussian proposal $q(x,y)$. \\[0.5cm]
+	
+	\underline{Problem.} Using explicit Euler as deterministic component we obtain the time step restriction
+	\begin{equation*}
+		h < \frac{1}{8\alpha(N+1)^2} \leq \frac{1}{8\alpha_{\max}(N+1)^2} \eqdef \bar h 
+	\end{equation*} 
+	$\rightsquigarrow$ high computational cost
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bayesian inverse problems involving ODE's}
+	\framesubtitle{Stiff problems}
+	
+	\underline{Idea.} Use stabilized explicit method Runge-Kutta-Chebyshev of first order on $s$ stages as deterministic component. It is known that if 
+	\begin{equation*}
+		s \geq \max\left\{2, \left\lceil\sqrt{\frac{1}{2}h\lambda}\right\rceil \right\},
+	\end{equation*}
+	the method is stable. Therefore, the maximum number of stages is
+	\begin{equation*}
+		\bar s = \max\left\{2, \left\lceil \sqrt{2h\alpha_{\max}(N+1)^2} \right\rceil\right\}.
+	\end{equation*}
+	Furthermore, \textbf{we can adapt $s$ during MCMC} to be the minimum number of step required for stability at each guess $\alpha^{(i)}$.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bayesian inverse problems involving ODE's}
+	\framesubtitle{Stiff problems - numerical result}
+	 \begin{table}[t]
+	 	\centering
+	 	\begin{tabular}{lccccc}
+	 		\hline
+	 		$h$ & 0.2 & 0.1 & 0.05 & 0.025 & 0.0125   \\
+	 		\hline
+	 		$\hat \alpha$ $(\cdot 10^{-2})$ &2.509 & 2.0448 & 1.996 & 2.055 & 1.990 \\
+	 		mean $s$ & 11.89  & 7.87 & 6.00 & 4.92 & 4.00 \\
+	 		mean cost ($\cdot 10^3$) & $0.59$ & $0.79$ & $1.20$ & $1.97$  & $3.20$ \\
+	 		$\bar s$   & 64 & 46 & 32 & 23 & 16 \\ 
+	 		max cost ($\cdot 10^3$) & $3.2$ & $4.6$ & $6.4$ & $9.2$ & $12.8$ \\  
+	 		\hline
+	 	\end{tabular}
+	 \end{table}
+	Results obtained with observations given by true value $\bar \alpha = 0.02$ and $I_\alpha = [0, 1]$. Computational cost $=$ n. of function evaluations.\\[0.5cm]
+	\underline{Remark.} With explicit Euler the minimum value of time step is $\bar h = 4.98\cdot 10^{-7}$ with computational cost per iteration $2 \cdot 10^{7}$. \\
+	$\rightsquigarrow$ remarkable computational gain.
+		
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bayesian inverse problems involving ODE's}
+	\framesubtitle{Summary}
+	
+	We considered Bayesian inference inverse problems involving ODE's and studied
+	\begin{enumerate}
+		\item convergence of the likelihood estimator $\diffL_h^M(\mathcal{Y} \mid \theta)$,
+		\item qualitative behavior of deterministic vs. probabilistic approximation,
+		\item convergence of the posterior distribution in the Hellinger distance,
+		\item convergence of the expected value under approximated posterior,
+		\item application of stabilized explicit methods in stiff problems.
+	\end{enumerate}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conclusion and future work}
+	
+	In this project, we 
+	\begin{enumerate}
+		\item presented a survey on existing MCMC techniques to perform Bayesian inference,
+		\item analyzed a probabilistic solver for ODE's studying weak and strong convergence \cite{CGS16}, as well as the behavior of Monte Carlo estimates (novel contribution),
+		\item performed Bayesian inference of parametric ODE's and study the convergence of posterior distributions and Monte Carlo estimates.
+	\end{enumerate}
+	In future work, we will explore a classification of the problems for which a probabilistic interpretation is needed. In particular, we believe chaotic ODE's (e.g., Lorenz) have to be regarded with utmost attention.
+\end{frame}
+
+\appendix
+\begin{frame}[allowframebreaks]
+	\frametitle{References}
+	
+	\setbeamertemplate{bibliography item}[text]
+	\bibliographystyle{apalike}
+	\bibliography{../anmc}
+\end{frame}
+
+\end{document}

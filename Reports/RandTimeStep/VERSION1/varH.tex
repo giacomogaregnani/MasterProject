@@ -1,0 +1,636 @@
+\documentclass{siamart1116}
+
+% basics
+\usepackage[left=3cm,right=3cm,top=3cm,bottom=4cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage[title,titletoc]{appendix}
+\usepackage{afterpage}
+\usepackage{enumitem}   
+
+% maths
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\newsiamremark{assumption}{Assumption}
+\newsiamremark{remark}{Remark}
+\newsiamremark{example}{Example}
+\numberwithin{theorem}{section}
+
+% plots
+\usepackage{pgfplots} 
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{subcaption}
+\usepackage{here}
+\usepackage[labelfont=bf]{caption}
+
+% tables
+\usepackage{booktabs}
+
+% title and authors
+\newcommand{\TheTitle}{A probabilistic integrator of ordinary differential equations based on Runge-Kutta methods with random selection of the time steps} 
+\newcommand{\TheAuthors}{A. Abdulle, G. Garegnani}
+\headers{Probabilistic integrator of ODEs with random time steps}{\TheAuthors}
+\title{{\TheTitle}}
+\author{Assyr Abdulle\thanks{Mathematics Section, \'Ecole Polytechnique F\'ed\'erale de Lausanne (\email{assyr.abdulle@epfl.ch})}
+	\and
+	Giacomo Garegnani\thanks{Mathematics Section, \'Ecole Polytechnique F\'ed\'erale de Lausanne (\email{giacomo.garegnani@epfl.ch})}}
+
+% my commands 
+\DeclarePairedDelimiter{\ceil}{\left\lceil}{\right\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\|}{\|}
+\renewcommand{\phi}{\varphi}
+\newcommand{\eqtext}[1]{\ensuremath{\stackrel{#1}{=}}}
+\newcommand{\leqtext}[1]{\ensuremath{\stackrel{#1}{\leq}}}
+\newcommand{\iid}{\ensuremath{\stackrel{\text{i.i.d.}}{\sim}}}
+\newcommand{\totext}[1]{\ensuremath{\stackrel{#1}{\to}}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\epl}{\varepsilon}
+\newcommand{\diffL}{\mathcal{L}}
+\newcommand{\prior}{\mathcal{Q}}
+\newcommand{\defeq}{\coloneqq}
+\newcommand{\eqdef}{\eqqcolon}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\E}{\operatorname{\mathbb{E}}}
+\newcommand{\MSE}{\operatorname{MSE}}
+\newcommand{\trace}{\operatorname{tr}}
+\newcommand{\MH}{\mathrm{MH}}
+\newcommand{\ttt}{\texttt}
+\newcommand{\Hell}{d_{\mathrm{Hell}}}
+\newcommand{\sksum}{\textstyle\sum}
+\newcommand{\dd}{\mathrm{d}}
+
+
+\ifpdf
+\hypersetup{
+	pdftitle={\TheTitle},
+	pdfauthor={\TheAuthors}
+}
+\fi
+
+\begin{document}
+	
+\maketitle	
+
+\begin{abstract}
+\end{abstract}
+
+\section{Introduction}
+
+\section{Random time stepping}
+
+Let us consider $f\colon\R^d\to\R^d$ and the ODE
+\begin{equation}\label{eq:ODE}
+	y' = f(y), \quad y(0) = y_0 \in \R^d.
+\end{equation}
+We can write the solution $y(t)$ in terms of the flow of the ODE, i.e., the function $\phi\colon\R\times\R^d\to\R^d$ such that 
+\begin{equation}
+	y(t) = \phi(t, y_0).
+\end{equation}
+Let us consider a Runge-Kutta method for \eqref{eq:ODE}. Given a time step $h$, we can write the numerical solution at $y_n$ approximation of $y(t_n)$, with $t_n = nh$ in terms of the numerical flow $\Psi\colon\R\times\R^d\to\R^d$, which is uniquely determined by the coefficients of the method, as
+\begin{equation}
+	y_n = \Psi(h, y_{n-1}).
+\end{equation}
+If the ODE is chaotic, integrating the equation with different time steps leads to different numerical solutions. In order to describe the uncertainty of the numerical solution, we choose at each time $t_n$ the time step as the realization of a random variable $H_n$. Therefore, the numerical solution is given by a discrete stochastic process $\{Y_n\}_{n\geq 0}$ such that
+\begin{equation}\label{eq:numHSto}
+	Y_n = \Psi(H_n, Y_{n-1}).
+\end{equation}
+This probabilistic numerical method shares the basic idea with \cite{CGS16}. 
+
+\section{Strong order analysis}
+
+We wish to deduce a result of strong convergence for the numerical method \eqref{eq:numHSto}. 
+\begin{definition} The numerical method \eqref{eq:numHSto} has strong local order $r$ for \eqref{eq:ODE} if there exists a constant $C > 0$ such that
+	\begin{equation}
+	\E\abs{Y_1 - y(h)} \leq Ch^{r+1}.
+	\end{equation}
+\end{definition} 
+\noindent In the following we will establish the assumptions needed to prove a result of strong convergence. First of all, we state a regularity assumption on the exact flow $\phi(t,y)$.
+\begin{assumption} The exact flow $\phi(t,y)$ of \eqref{eq:ODE} is smooth in both its variables and there exists a constant $L > 0$ such that 
+	\begin{equation}
+		\norm{\phi(t, y) - \phi(s, y)} \leq L|t - s|, \forall y \in \R^d
+ 	\end{equation}
+\end{assumption}
+\noindent The following assumption on the random variables $\{H_n\}_{n\geq 0}$ is needed for strong convergence.
+\begin{assumption}\label{as:hStrong} The i.i.d. random variables $H_n$ satisfy for all $n = 1, 2, \ldots$
+	\begin{enumerate}
+		\item $H_n > 0$ a.s.,
+		\item there exists $h > 0$ such that $\E[H_n] = h$ and $\E[H_n^i] \leq Ch^i$ for all $i = 1, 2, \ldots$,
+		\item there exists $p \geq 1$ such that the random variables $Z_n \defeq H_n - h$ satisfy
+		\begin{equation}
+		\E\abs{Z_n}^2 = Ch^{2p}.
+		\end{equation}
+	\end{enumerate}
+\end{assumption}
+\begin{remark} The second of the assumptions above implies that
+	\begin{equation}
+	\begin{aligned}
+	\E|H_n|^2 &= \E|Z_n|^2 - \E[h^2 - 2hH_n]
+	&\leq Ch^{2p} + h^2
+	\end{aligned}
+	\end{equation}	
+\end{remark}
+\begin{example}\label{ex:uniformH} An example of random variables $H_n$ satisfying the properties above is given by
+	\begin{equation}
+		H_n \iid \mathcal{U}(h-h^p, h+h^p), \quad 0 < h \leq 1, \quad p \geq 1.
+	\end{equation}
+	Let us verify all the assumptions above for this choice of the time steps
+	\begin{enumerate}
+		\item $H_n > 0$ a.s. trivially since $h \leq 1$,
+		\item $\E[H_n] = h$ since 
+		\begin{equation}
+			\E[H_n] = \frac{1}{2}(h + h^p + h - h^p) = h.
+		\end{equation}
+		For higher order moments, let us recall that the moment generating function $\mu_{m}(U)$ of a random variable $U \sim \mathcal{U}(a,b)$ is given by
+		\begin{equation}
+			\mu_m(U) =  \frac{b^{m+1} - a^{m+1}}{m(b-a)}.
+		\end{equation}
+		Hence, for the variables $H_n$ we have
+		\begin{equation}
+		\begin{aligned}
+			\mu_{(m-1)}(H_n) &= \frac{(h + h^p)^{m} - (h - h^p)^{m}}{2mh^p}\\
+			&= \frac{\sum_{k=0}^m \alpha_k h^{m-k}(h^{pk} - (-h^p)^k)}{2mh^p}, \quad \alpha_k = \binom{m}{k},
+		\end{aligned}
+		\end{equation}
+		where we used the Newton's binomial formula. Then, let us remark that for all even values $k$ the elements of the sum above are zero. Therefore, for $m$ even, we have
+		\begin{equation}
+		\begin{aligned}
+			\mu_{(m-1)}(H_n) &= \frac{\sum_{k=0}^{m/2 - 1} \alpha_{2k + 1} h^{m-(2k+1)}2h^{p(2k+1)}}{2mh^p}\\
+			&= \frac{h^{m-1}\sum_{k=0}^{m/2 - 1} \alpha_{2k + 1} h^{2k(p-1)}}{m},
+		\end{aligned}
+		\end{equation}
+		while for $m$ odd, we have
+		\begin{equation}
+		\begin{aligned}
+			\mu_{(m-1)}(H_n) &= \frac{\sum_{k=0}^{(m-1)/2} \alpha_{2k + 1} h^{m-(2k+1)}2h^{p(2k+1)}}{2mh^p}\\
+			&= \frac{h^{m-1}\sum_{k=0}^{(m-1)/2} \alpha_{2k + 1} h^{2k(p-1)}}{m}.
+		\end{aligned}
+		\end{equation}
+		In both cases, since $h < 1$ and $p \geq 1$, we have that $h^{2k(p-1)} < 1$, therefore there exists a positive constant $C$ such that
+		\begin{equation}
+			\E[H_n^m] \leq Ch^m, \quad \forall m \geq 1.
+		\end{equation}
+		\item The random variables $Z_n = H_n - h$ are $Z_n \sim \mathcal{U}(-h^p, h^p)$. Therefore
+		\begin{equation}
+			\E[Z_n^2] = \frac{4h^{2p}}{12} = \frac{1}{3}h^{2p}.
+		\end{equation}
+	\end{enumerate}
+\end{example}
+\noindent The following assumption on the numerical flow is needed.
+\begin{assumption}\label{as:PsiStrong} The following statements on the Runge-Kutta method defined by the numerical flow $\Psi\colon\R\times\R^d\to\R^d$ \eqref{eq:numHSto} are true.
+	\begin{enumerate}[label=(\roman*),topsep=5pt]
+		\item\label{as:PsiStrong_Order} The Runge-Kutta method has local order $q$, i.e., there exists a constant $C > 0$ such that
+			\begin{equation}
+				\sup_{y\in\R^d} \abs{\Psi(h, y) - \phi(h, y)} \leq Ch^{q+1}.
+			\end{equation}
+		\item\label{as:PsiStrong_Time} The function $t \mapsto \Psi(t, y)$ is of class $\mathcal{C}^2(\R_+)$ and there exists a constant $M > 0$ such that 
+			\begin{equation}
+				\abs{\frac{\partial^i\Psi(0, y)}{\partial t}} \leq M, \quad i = 1, 2, \: \forall y \in \R^d.
+			\end{equation} 
+			Moreover, the function $t \mapsto \Psi(t, y)$ is Lipschitz of constant $L_\Psi$, i.e., 
+			\begin{equation}\label{eq:LipschitzPsiT}
+				\norm{\Psi(t, y) - \Psi(s, y)} \leq L_\Psi \abs{t - s}, \quad \forall t, s > 0.
+			\end{equation}
+		\item\label{as:PsiStrong_Space} There exists a constant $L$ such that function $y \mapsto \Psi(h, y)$ is Lipschitz with constant $(1 + hL)$, i.e.
+			\begin{equation}\label{eq:LipschitzPsiY}
+				\norm{\Psi(h, y) - \Psi(h, z)} \leq (1 + hL) \norm{y - z}, \quad \forall y, z \in \R^d.
+			\end{equation}
+	\end{enumerate}
+\end{assumption}
+\begin{remark} Let us remark that the first condition above implies for $f$ sufficiently smooth that
+	\begin{equation}
+		\sup_{n = 1, 2, \ldots} \abs{\Psi(h, y_n) - \phi(nh, y_0)} \leq Ch^{q},
+	\end{equation}
+	i.e., the Runge-Kutta method has global order $q$.
+\end{remark}
+\noindent The strong convergence of \eqref{eq:numHSto} can now be proved. 
+\begin{theorem}[Strong local order] Under Assumptions \ref{as:hStrong} and \ref{as:PsiStrong} the numerical solution $Y_1$ given by one step of \eqref{eq:numHSto} satisfies 
+	\begin{equation}
+	\E\abs{Y_1 - y(h)} \leq C h^{\min\{q + 1, p\}},
+	\end{equation}
+	where $C$ is a real positive constant independent of $h$.
+\end{theorem}
+\begin{proof} We apply the triangular inequality and get
+	\begin{equation}\label{eq:firstStepStrong}
+	\begin{aligned}
+	\E\abs{\Psi(H, y_0) - \phi(h, y_0)} &\leq \E\abs{\Psi(H, y_0) - \Psi(h, y_0)} + \E\abs{\Psi(h, y_0) - \phi(h, y_0)} \\
+	&\leq \E\abs{\Psi(H, y_0) - \Psi(h, y_0)} + C_1h^{q+1},
+	\end{aligned}
+	\end{equation}
+	where we exploited Assumption \ref{as:PsiStrong}. Developing the first term in Taylor series and applying the triangular inequality we have
+	\begin{equation}
+	\begin{aligned}
+	\E\abs{\Psi(H, y_0) - \Psi(h, y_0)} &= \E\big|\Psi(0, y_0) + H\partial_t{\Psi} (0, y_0) + R(H) \\
+	&\quad - \Psi(0, y_0) - h\partial_t{\Psi} (0, y_0) - R(h) \big| \\
+	&\leq \E\big|(H - h)\partial_t{\Psi} (0, y_0)\big| + \E|R(H) - R(h)|.
+	\end{aligned}
+	\end{equation}
+	Let us consider the reminder terms in integral form
+	\begin{equation}
+	\begin{aligned}
+	\E|R(H) - R(h)| &= \E\Big| \int_{0}^{H}\partial_{tt}\Psi (s, y_0)(H-s)\dd s - \int_{0}^{h}\partial_{tt}\Psi (s, y_0)(h-s)\dd s \Big|\\
+	&= \E\Big| \int_{0}^{H}\partial_{tt}\Psi (s, y_0)(H-s)\dd s - \int_{0}^{H}\partial_{tt}\Psi (s, y_0)(h-s)\dd s \\
+	&\quad - \int_{H}^{h}\partial_{tt}\Psi (s, y_0)(h-s)\dd s \Big|\\
+	&= \E\Big| \int_{0}^{H}\partial_{tt}\Psi (s, y_0)(H-h)\dd s - \int_{H}^{h}\partial_{tt}\Psi (s, y_0)(h-s)\dd s\Big|.
+	\end{aligned}
+	\end{equation}
+	Applying the triangular inequality and thanks to Assumption \ref{as:PsiStrong} we can therefore bound the difference with
+	\begin{equation}
+	\begin{aligned}
+	\E|R(H) - R(h)| &\leq \E\Big|\int_{0}^{H}\partial_{tt}\Psi (s, y_0)(H-h)\dd s \Big| + \E\Big|  \int_{H}^{h}\partial_{tt}\Psi (s, y_0)(h-s)\dd s \Big| \\
+	&\leq M \E|H(H-h)| + \frac{1}{2}M\E|H-h|^2 \\
+	&\leq M (\E|H|^2)^{1/2}(\E|H-h|^2)^{1/2} + \frac{1}{2}Mh^{2p}\\
+	&\leq M(Ch^{2p} + h^2)^{1/2}h^p + \frac{1}{2}Mh^{2p}\\
+	&\leq M h^{p+1} + \frac{1}{2}h^{2p},
+	\end{aligned} 
+	\end{equation}
+	where we exploited Assumption \ref{as:hStrong}. Hence, we find 
+	\begin{equation}
+	\begin{aligned}
+	\E\abs{\Psi(H, y_0) - \Psi(h, y_0)} &\leq \E|(H-h)\partial_t{\Psi} (0, y_0)| + M h^{p+1} + \frac{1}{2}h^{2p} \\
+	&\leq M\E|H - h| +  M h^{p+1} + \frac{1}{2}h^{2p}\\
+	&\leq M(\E|H-h|^2)^{1/2} +  M h^{p+1} + \frac{1}{2}h^{2p} \\
+	&\leq Mh^p + M h^{p+1} + \frac{1}{2}h^{2p} \\
+	&\leq C_2 h^p
+	\end{aligned}
+	\end{equation}
+	where we applied Assumption \ref{as:hStrong} and Jensen's inequality. Substituting in \eqref{eq:firstStepStrong}, we get
+	\begin{equation}
+	\E\abs{Y_1 - y(h)} \leq C_1h^{q+1} + C_2 h^{p} \leq Ch^{\min\{q+1, p\}},
+	\end{equation}
+	which is the desired result.
+\end{proof}
+\noindent Alternative proof.
+\begin{proof}
+	By triangular and Jensen's inequalities, and since $\Psi$ is Lipschitz with constant $L$ in the first variable,
+	\begin{equation}
+	\begin{aligned}
+		\E\abs{\Psi(H, y_0) - \phi(h, y_0)} &\leq \E\abs{\Psi(H, y_0) - \Psi(h, y_0)} + \E\abs{\Psi(h, y_0) - \phi(h, y_0)} \\
+		&\leq L \E\abs{H - h} + C_1 h^{q+1} \\
+		&\leq L (\E\abs{H - h}^{2})^{1/2} + C_1 h^{q+1}\\
+		&\leq L h^p + C_1 h^{q+1} \\
+		&\leq C h^{\min\{p, q+1\}},
+	\end{aligned}
+	\end{equation}
+	which is the desired result.
+\end{proof}
+\noindent A result on strong global convergence is needed when integrating \eqref{eq:ODE} from time $t_0 = 0$ to a final time $T$.
+\begin{theorem}[Strong global order]\label{thm:StrongOrder} Under Assumptions \ref{as:hStrong} and \ref{as:PsiStrong} the numerical solution $Y_n$ given by \eqref{eq:numHSto} satisfies 
+	\begin{equation}\label{eq:StrongGlobalClaim}
+	\sup_{n=1,2, \ldots} \E\abs{Y_n - y(nh)} \leq C h^{\min\{q, p-1/2\}},
+	\end{equation}
+	where $C$ is a real positive constant independent of $h$.
+\end{theorem}
+\begin{proof} Let us define the times $t_n = nh$, for $n = 0, 1, \ldots$, and the random variables $\{T_n\}_{n\geq 0}$ as
+	\begin{equation}
+		T_n \defeq \sum_{i=1}^{n} H_n.
+	\end{equation}
+	Thanks to Assumption \ref{as:hStrong}, the expectation of $T_n$ satisfies
+	\begin{equation}
+		\E[T_n] = \sum_{i=1}^{n}\E[H_n] = t_n,
+	\end{equation} 
+	and the second moment of the scaled variables satisfy
+	\begin{equation}
+	\begin{aligned}
+		\E|T_n - t_n|^2 &= \E\Big|\sum_{i=1}^{n}(H_n - h)\Big|^2 \\
+		&\leq \sum_{i = 1}^{n}(\E|H_n - h|^2) \\
+		&\leq Cnh^{2p} \\
+		&\leq Ch^{2p-1}, 
+	\end{aligned} 
+	\end{equation}
+	where we assumed $n = \OO(h^{-1})$ and we exploited Jensen's inequality. Therefore, we can bound the error at the $n+1$-th iteration as
+	\begin{equation}
+	\begin{aligned}
+		\E|Y_{n+1} - y(t_{n+1})| &= \E|\Psi(H_n, Y_n) - \phi(t_{n+1},y_0)|\\
+		&\leq \E|\Psi(H_n, Y_n) - \phi(T_{n+1}, y_0)| + \E|\phi(T_{n+1}, y_0) - \phi(t_{n+1},y_0)| \\
+		&\leq C\E|H^q|+ L\E|T_{n+1} - t_{n+1}|\\
+		&\leq Ch^q + L(\E|T_{n+1} - t_{n+1}|^2)^{1/2}\\
+		&\leq Ch^q + Lh^{p - 1/2}\\
+		&\leq Ch^{\min\{q, p-1/2\}},
+	\end{aligned}
+	\end{equation}
+	which is the desired result.
+\end{proof}
+
+\section{Weak order analysis}
+
+We apply techniques of backwards error analysis. Let us introduce the operators $\diffL$ and $\diffL^h$ such that, if $Y_1$ is the first value produced by the numerical scheme described above, 
+\begin{equation}
+\begin{aligned}
+	\Phi(\phi(h, y)) &= e^{h\diffL}\Phi(y),\\
+	\E \Phi(Y_1\mid Y_0 = y) &= e^{h\diffL^h}\Phi(y),
+\end{aligned}
+\end{equation}
+for all functions $\Phi$ in $\mathcal{C}^{\infty}(\R^d, \R)$. Then we consider the following Taylor expansions
+\begin{equation}
+\begin{aligned}
+	\Phi(Y_1) &= \Phi(\Psi(H, Y_0)) \\
+	&= \Phi\left(\Psi(h, Y_0) + (H-h)\partial_t\Psi (h, Y_0) + \frac{1}{2}(H-h)^2\partial_{tt}\Psi(h,Y_0) + \OO(\abs{H - h}^3)\right)\\
+	&= \Phi(\Psi(h, Y_0)) + \left[(H - h)\partial_t\Psi(h, Y_0)+\frac{1}{2}(H-h)^2\partial_{tt}\Psi(h,Y_0)\right] \cdot \nabla\Phi(\Psi(h, Y_0))\\
+	&\quad + \frac{1}{2}(H - h)^2 \partial_t{\Psi} (h, Y_0) \partial_t{\Psi} (h, Y_0)^T \colon \nabla^2\Phi(\Psi(h, Y_0)) + \OO(\abs{H - h}^3),
+\end{aligned}
+\end{equation}
+where we denote by $\nabla^2\Phi$ the Hessian matrix of $\Phi$, and by $\colon$ the inner product on matrices defined by $A\colon B = \trace(A^TB)$. Taking the conditional expectation with respect to $Y_0 = y$ we get
+\begin{equation}
+\begin{aligned}
+	e^{h\diffL^h}\Phi(y) - \Phi(\Psi(h, y)) &= \frac{1}{2} Ch^{2p}\partial_{tt}\Psi(h,y)\cdot \nabla\Phi(\Psi(h,y))\\
+	&\quad + \frac{1}{2} Ch^{2p}\partial_t{\Psi} (h, y) \partial_t{\Psi} (h, y)^T \colon \nabla^2\Phi(\Psi(h, y)) + \OO(h^{3p}),
+\end{aligned}
+\end{equation}
+where we exploited Hölder inequality for the last term. Moreover, expanding $\Phi$ in $y$ we get
+\begin{equation}
+\begin{aligned}
+	\Phi(\Psi(h, y)) &= \Phi\left(\Psi(0, y) + h\partial_t{\Psi} (0, y) + \OO(h^2)\right) \\
+	&= \Phi(y) + \OO(h).
+\end{aligned}
+\end{equation}
+which implies
+\begin{equation}\label{eq:DistanceProbDet}
+\begin{aligned}
+	e^{h\diffL^h}\Phi(y) - \Phi(\Psi(h, y)) &= \frac{1}{2} Ch^{2p}\partial_{tt}\Psi(h, y) \cdot \nabla\Phi(y)\\
+	&\quad +\frac{1}{2}Ch^{2p}\partial_t{\Psi} (h, y) \partial_t{\Psi} (h, y)^T \colon \nabla^2\Phi(y) + \OO(h^{2p+1}).
+\end{aligned}
+\end{equation}
+Consider now the modified equations
+\begin{align}
+	\hat y' &= f^h(\hat y), \label{eq:ModifiedODE} \\
+	\begin{split}
+	\dd\tilde y &= \Big(f^h(\tilde y) + \frac{1}{2}Ch^{2p-1}\partial_{tt}\Psi(h,\tilde y)\Big) \dd t \label{eq:ModifiedSDE}\\
+	&\quad + \sqrt{Ch^{2p-1}\partial_t{\Psi} (h, \tilde y)\partial_t\Psi (h,\tilde y)^T} \dd W,
+	\end{split}
+\end{align}
+and the differential operators $\hat \diffL$ and $\tilde \diffL$ such that
+\begin{equation}
+\begin{aligned}
+	\Phi(\hat y(h) \mid \hat y(0) = y) &= (e^{h\hat{\diffL}}\Phi)(y)\\
+	\E\Phi(\tilde y(h)\mid \tilde y(0) = y) &= (e^{h\tilde{\diffL}}\Phi)(y),
+\end{aligned}
+\end{equation}
+which means
+\begin{equation}
+\begin{aligned}
+	\hat \diffL &= f^h \cdot \nabla,\\
+	\tilde \diffL &= \left(f^h + \frac{1}{2}Ch^{2p-1}\partial_{tt}\Psi(h, \cdot)\right) \cdot \nabla \\
+	&\quad + \frac{1}{2}Ch^{2p-1}\partial_t{\Psi} (h, \cdot) \partial_t{\Psi} (h, \cdot)^T \colon \nabla^2.
+\end{aligned}
+\end{equation}
+The function $f^h$ is chosen such that \cite{HNW93}
+\begin{equation}\label{eq:DistanceModDet}
+	e^{h\hat \diffL}\Phi(y) - \Phi(\Psi(h, y))	= \OO(h^{q+2+l}),
+\end{equation}
+where $l$ is the number of functions added to $f$ depending on the chosen numerical method. Let us compute the distance between the generator of the SDE and the modified ODE
+\begin{equation}
+	e^{h\tilde \diffL}\Phi(y) - e^{h\hat \diffL}\Phi(y) = e^{hf^h\cdot \nabla}(e^{\frac{1}{2}Ch^{2p}(\partial_{tt}\Psi(h,\cdot) \cdot \nabla + \partial_t{\Psi} (h, \cdot) \partial_t{\Psi} (h, \cdot)^T\colon\nabla^2)}-I)\Phi(y).
+\end{equation}
+Expanding with Taylor the two factors we get
+\begin{equation}\label{eq:DistanceSDEMod}
+\begin{aligned}
+	e^{h\tilde \diffL}\Phi(y) - e^{h\hat \diffL}\Phi(y) &= (I + \OO(h))\Big(\frac{1}{2}Ch^{2p}\partial_{tt}\Psi(h, \cdot) \cdot \nabla\\
+	&\quad + \frac{1}{2}Ch^{2p} \partial_t{\Psi} (h, \cdot) \partial_t{\Psi} (h, \cdot)^T\colon\nabla^2 + \OO(h^{4p})\Big)\Phi(y)\\
+	&= \frac{1}{2}Ch^{2p}\partial_{tt}\Psi(h, y) \cdot \nabla \Phi(y) \\
+	&\quad + \frac{1}{2}Ch^{2p}\partial_t{\Psi} (h, y) \partial_t{\Psi} (h, y)^T\colon\nabla^2\Phi(y) + \OO(h^{2p + 1})
+\end{aligned}
+\end{equation}
+Now considering \eqref{eq:DistanceProbDet} and \eqref{eq:DistanceModDet}, we have
+\begin{equation}\label{eq:DistanceProbMod}
+\begin{aligned}
+	e^{h\diffL^h}\Phi(y) - e^{h\hat \diffL}\Phi(y) &= \frac{1}{2}Ch^{2p}\partial_{tt}\Psi(h, y) \cdot \nabla \Phi(y) \\
+	&\quad + \frac{1}{2}Ch^{2p}\partial_t{\Psi} (h, y) \partial_t{\Psi} (h, y)^T \colon \nabla^2\Phi(y) \\
+	&\quad + \OO(h^{2p+1}) + \OO(h^{q+2+l}).
+\end{aligned}
+\end{equation}
+Then, combining \eqref{eq:DistanceSDEMod} and \eqref{eq:DistanceProbMod} we then get the distance between the probabilistic method and the solution of the SDE as
+\begin{equation}
+	e^{h\tilde \diffL}\Phi(y) - e^{h\diffL^h}\Phi(y) = \OO(h^{2p+1}) + \OO(h^{q+2+l}).
+\end{equation}
+Choosing $l = 2p - 1 - q$ we have the balance between the two terms and
+\begin{equation}\label{eq:DistanceSDEProb}
+	e^{h\tilde \diffL}\Phi(y) - e^{h\diffL^h}\Phi(y) = \OO(h^{2p+1}),
+\end{equation}
+which is the one-step weak error between the probabilistic numerical method and the modified SDE. For the original equation, let us remark that thanks to Assumption \ref{as:PsiStrong} we have
+\begin{equation}\label{eq:DistanceExactDet}
+	e^{h\diffL}\Phi(y) - \Phi(\Psi(h, y)) = \OO(h^{q+1}).
+\end{equation}
+Combining \eqref{eq:DistanceExactDet} and \eqref{eq:DistanceProbDet} we have the one-step weak error of the probabilistic method on the original ODE, i.e., 
+\begin{equation}\label{eq:LocalWeakError}
+	e^{h\diffL}\Phi(y) - e^{h\diffL^h}\Phi(y) = \OO(h^{\min\{2p, q+1\}}).
+\end{equation}
+In order to obtain a result on the global order of convergence we need a further stability assumption, which is the same as Assumption 3 in \cite{CGS16}.
+
+\begin{assumption}\label{as:Stability} The function $f$ is in $\mathcal{C}^\infty(\R^d, \R^d)$ and all its derivatives are uniformly bounded on $\R^d$. Furthermore, $f$ is such that the operators $e^{h\diffL}$ and $e^{h\diffL^h}$ satisfy, for all functions $\Phi\in\C^{\infty}(\R^d, \R)$ and a positive constant $L$
+	\begin{equation}
+	\begin{aligned}
+		\sup_{u\in\R^d} \abs{e^{h\diffL}\Phi(u)} &\leq (1 + Lh)\sup_{u\in\R^d}\abs{\Phi(u)},\\
+		\sup_{u\in\R^d} \abs{e^{h\diffL^h}\Phi(u)} &\leq (1 + Lh)\sup_{u\in\R^d}\abs{\Phi(u)}.
+	\end{aligned}
+	\end{equation}
+\end{assumption}
+
+We can now state the main result on weak convergence. Let us remark that the theorem and its proof are similar to Theorem 2.4 in \cite{CGS16}.
+
+\begin{theorem}\label{thm:weakOrder} Under Assumptions \ref{as:hStrong}, \ref{as:PsiStrong} and \ref{as:Stability} there exists a constant $C > 0$ such that for all functions $\phi\colon\R^d\to\R$ in $\mathcal{C}^\infty(\R^d,\R)$
+	\begin{equation}
+		\abs{\phi(u(T)) - \E\phi(U_N)} \leq Ch^{\min\{2p - 1, q\}},
+	\end{equation}
+	where $u(t)$ is the solution of \eqref{eq:ODE} and $T = Nh$. Moreover, 
+	\begin{equation}
+		\abs{\phi(\tilde u(T)) - \E\phi(U_N)} \leq Ch^{2p},		
+	\end{equation}
+	where $\tilde u(t)$ is the solution of \eqref{eq:ModifiedSDE}.
+\end{theorem}
+
+\begin{proof} Let us introduce the following notation
+	\begin{equation}
+	\begin{aligned}
+		w_k &= \Phi(y(t_k) \mid y(0) = y_0)\\
+		W_k &= \E\Phi(Y_k \mid Y_0 = y_0).
+	\end{aligned}
+	\end{equation}
+	Then by the triangular inequality we have
+	\begin{equation}
+	\begin{aligned}
+		\abs{w_k - W_k} \leq \abs{e^{h\diffL}w_{k-1} - e^{h\diffL^h}w_{k-1}} + \abs{e^{h\diffL^h}w_{k-1} - e^{h\diffL^h}W_{k-1}}.
+	\end{aligned}
+	\end{equation}
+	Applying \eqref{eq:LocalWeakError} to the first term and Assumption \ref{as:Stability} to the second, we have
+	\begin{equation}
+		\abs{w_k - W_k} \leq Ch^{\min\{2p, q + 1\}} + (1 + Lh)\abs{w_{k-1} - W_{k-1}}.
+	\end{equation} 
+	Proceeding iteratively on the index $k$ and noticing that $w_0 = W_0$, we obtain
+	\begin{equation}
+	\begin{aligned}
+		\abs{w_k - W_k} &\leq C k h^{\min\{2p, q + 1\}}\\
+		&\leq C T h^{\min\{2p - 1, q\}},	
+	\end{aligned}
+	\end{equation}
+	which proves the first inequality. The proof of the second inequality follows the same steps as above considering $w_k = \E\Phi(\tilde y\mid \tilde y(0) = y_0)$ and applying \eqref{eq:DistanceSDEProb}. 
+\end{proof}
+
+\section{Monte Carlo estimators}
+We are interested in understanding the behavior of Monte Carlo estimator drawn from the numerical solution \eqref{eq:numHSto}. Given a function $\Phi\colon\R^d\to\R$ which is for simplicity $\mathcal{C}^\infty(\R^d, \R)$ with Lipschitz constant $L_\Phi$, we consider the mean square error (MSE) of the estimator $\hat Z$ defined as
+\begin{equation}
+	\hat Z = M^{-1} \sksum_{i = 1}^M \Phi(Y_N^{(i)}),
+\end{equation}
+where $T = hN$ is the final time, $M$ is the number of trajectories and we denote by $Y_N^{(i)}$ the realizations of the solution for $i = 1, 2, \ldots, M$. It is trivial to remark that 
+\begin{equation}
+\begin{aligned}
+	\MSE(\hat Z) &= \E(\hat Z - Z)^2\\
+	&= \Var(\hat Z) + \big(\E(\hat Z - Z)\big)^2.
+\end{aligned}
+\end{equation}
+Hence, thanks to the result of Theorem \ref{thm:weakOrder}, we have
+\begin{equation}\label{eq:MSEDecomposition}
+	\MSE(\hat Z) = \Var(\hat Z) + \OO(h^{2\min\{q, 2p - 1\}}).
+\end{equation}
+The variance of the estimator can be trivially bounded exploiting the Lipschitz continuity of $\Phi$ and the independence of the samples by
+\begin{equation}\label{eq:MSELipschitz}
+	\Var\hat Z \leq M^{-1} L_\Phi^2 \Var Y_N.
+\end{equation}
+Let us consider the variance of the solution after one step. By definition of the numerical flow $\Psi$ and considering the mean time step $h$, we have for any $k = 1, 2, \ldots, N$,
+\begin{equation}
+\begin{aligned}
+	\Var(Y_k \mid Y_{k-1} = y) &= \Var(\Psi(H_k, y) - \Psi(h, y))\\
+	&\leq \E(\Psi(H_k, y) - \Psi(h, y))^2,
+\end{aligned}
+\end{equation}
+where we exploited the definition of variance. If $\Psi$ is Lipschitz in the first variable with constant $L_\Psi$, we have
+\begin{equation}\label{eq:VarianceOneStep}
+	\Var (Y_k \mid Y_{k-1} = y) \leq L_\Psi^2\E(H_k - h)^2 = L_\Psi^2 C h^{2p},
+\end{equation}
+where the constants $C$ and $p$ are given in Assumption \ref{as:hStrong}.
+\begin{theorem}\label{thm:MSEMonteCarlo} Under Assumptions \ref{as:hStrong} and \ref{as:PsiStrong}, the MSE of the Monte Carlo estimator satisfies
+	\begin{equation}
+		\MSE(\hat Z) \leq C h^{2\min\{q, 2p -1\}},
+	\end{equation}
+	where $C$ is a positive constant independent of $h$.
+\end{theorem}
+\begin{proof} Thanks to \eqref{eq:MSEDecomposition} and \eqref{eq:MSELipschitz}, we just have to show
+	\begin{equation}
+		\Var Y_N \leq \hat C h^{2p - 1},
+	\end{equation}
+	for a positive constant $\hat C$. Let us recall that for any couple of random variables $X$, $Y$ the following inequality is valid
+	\begin{equation}
+		\Var(X + Y) \leq 2\Var X + 2 \Var Y.
+	\end{equation}
+	Hence, we can consider the exact solution $y(t)$ of \eqref{eq:ODE} and compute
+	\begin{equation}
+		\Var Y_N \leq 2 \Var\big(\Psi(H_{N-1}, Y_{N-1}) - \Psi(H_{N-1}, y(t_{N-1}))\big) + 2 \Var \Psi(H_{N-1}, y(t_{N-1})).
+	\end{equation}
+	For the first term we consider point \ref{as:PsiStrong_Space} of Assumption \ref{as:PsiStrong}, while for the second term we exploit \eqref{eq:VarianceOneStep}, thus obtaining
+	\begin{equation}
+	\begin{aligned}
+		\Var Y_N &\leq 2(1 + hL)^2 \Var\big(Y_{N-1} - y(t_{N-1})\big) + 2 L_\Psi^2 C h^{2p}\\
+		&= 2(1 + hL)^2 \Var Y_{N-1} + 2 L_\Psi^2 C h^{2p}.
+	\end{aligned}
+	\end{equation}
+	Hence, iterating over the index $N$ and since $Y_0 = y_0$, \color{red} unfinished \color{black}.
+\end{proof}
+
+\section{Invariant measures} Dynamical systems as \eqref{eq:ODE} {\color{red} can} admit an attractor $\mathcal{A} \subset \R^d$ endowed with an invariant measure $\mu$. {\color{red} Practically, the attractor $\mathcal{A}$ is the set where the trajectories are constrained in the long-time behavior.} In particular, given a function $\Phi$ in $\mathcal{C}^\infty(\R^d, \R)$, the dynamical system admits an invariant measure $\mu$ such that
+\begin{equation}\label{eq:InvMeasureDef}
+	\lim_{T \to \infty} T^{-1} \int_0^T \Phi(\phi(t, y_0))\dd t = \int_{\mathcal{A}} \Phi(x) \mu(\dd x),
+\end{equation}
+where $\phi(t, y)$ is the flow of \eqref{eq:ODE} with initial condition $y\in\R^d$. If, for example, the system converges towards a stable fixed point $x_0$ regardless of the initial condition, the attractor would just be $x_0$ and the invariant measure the Dirac delta $\delta_{x_0}$. Hence, a non-trivial invariant measure is provided by systems having cyclic or chaotic behavior at long-time. Numerically, the left hand side of the expression above can be approximated by considering time large enough and a discrete set of points, i.e.,
+\begin{equation}
+	\lim_{T \to \infty} T^{-1} \int_0^T \Phi(\phi(t, y_0))\dd t \approx N^{-1} \sksum_{i=0}^N \phi(y_i),
+\end{equation}
+where $y_i$ is any approximation of $\phi(t_i, y_0)$, $t_i = hi$ for a time step $h > 0$ and $N$ is large enough. Another approach could be approximating the right hand side of \eqref{eq:InvMeasureDef} by a Monte Carlo average on the realizations $Y^{(i)}_N$ of \eqref{eq:numHSto}, i.e.,
+\begin{equation}
+	\int_{\mathcal{A}} \Phi(x) \mu(\dd x) \approx M^{-1} \sksum_{i=0}^M \phi(Y^{(i)}_N).
+\end{equation}
+Again, $N$ should be large enough so that the trajectories of \eqref{eq:ODE} are already contained in the attractor $\mathcal{A}$.
+
+\section{Numerical experiments} 
+We show numerical experiments verifying the theoretical results presented above.
+
+\subsection{Strong order of convergence}
+
+\begin{table}[t]
+	\centering
+	\begin{tabular}{lcccccccccc}
+		\toprule
+		Method & \multicolumn{5}{c}{ET} & \multicolumn{5}{c}{RK4} \\ 
+		\cmidrule(l{2pt}r{2pt}){2-6} \cmidrule(l{2pt}r{2pt}){7-11} 
+		$q$ & \multicolumn{5}{c}{2} & \multicolumn{5}{c}{4} \\
+		$p$ & 1 & 1.5 & 2 & 2.5 & 3 & 3 & 3.5 & 4 & 4.5 & 5\\
+		$\min\{q, p - 1/2\}$ & 0.5 & 1 & 1.5 & 2 & 2 & 2.5 & 3 & 3.5 & 4 & 4 \\
+		strong order & 0.52 & 1.01 & 1.52 & 2.02 & 2.01 & 2.50 & 2.99 & 3.55 & 3.99 & 3.98 \\
+		\bottomrule
+	\end{tabular}
+	\caption{Strong order of convergence for the random time-stepping explicit trapezoidal (ET) and fourth-order Runge-Kutta (RK4) as a function of the value of $p$ of Assumption \ref{as:hStrong}.}
+	\label{tab:NumericalResultsStrongOrder}
+\end{table}
+
+We now verify the weak order of convergence predicted in Theorem \ref{thm:weakOrder}. We consider the FitzHug-Nagumo equation, which is defined as
+\begin{equation}\label{eq:FitzNag}
+\begin{aligned}
+y_1' &= c\big(y_1 - \frac{y_1^3}{3} + y_2\big), && y_1(0) = -1, \\
+y_2' &= -\frac{1}{c}(y_1 - a + by_2), && y_2(0) = 1,
+\end{aligned}
+\end{equation}
+where $a, b, c$ are real parameters with values $a = 0.2$, $b = 0.2$, $c = 3$. We integrate the equation from time $t_0 = 0$ to final time $T = 1$. The reference solution is generated with an high order method on a fine time scale. We consider as deterministic solvers the explicit trapezoidal rule and the classic fourth order Runge-Kutta method, which verify Assumption \ref{as:PsiStrong} with $q = 2$ and $q = 4$ respectively. Moreover, we consider random time steps as in Example \ref{ex:uniformH}, where we vary $p$ in order to verify the order of convergence predicted in Theorem \ref{thm:StrongOrder}. We vary the mean time step $h$ taken by the random time steps $H_n$ in the range $h_i = 0.01^{i}$, with $i = 0, 1, \ldots, 4$. Then, we simulate $10^4$ realizations of the numerical solution $Y_{N_i}$, with $N_i = T / h_i$ for $i = 0, 1, \ldots, 4$, and compute the approximate strong order of convergence for each value of $h$ with a Monte Carlo mean. Results (Table \ref{tab:NumericalResultsStrongOrder}) show that the orders predicted theoretically by Proposition \ref{thm:StrongOrder} are confirmed numerically. 
+
+\subsection{Weak order of convergence}
+We now verify the weak order of convergence predicted in Theorem \ref{thm:weakOrder}. For this experiment we consider the ODE \eqref{eq:FitzNag} as well, with the same time scale and parameters as above. The reference solution at final time is generated in this case as well with an high-order method on a fine time scale. The deterministic integrators we choose in this experiment are the explicit trapezoidal rule and the classic fourth-order Runge-Kutta method. The mean time step varies in the range $h_i = 0.1\cdot 2^{-i}$ with $i = 0, 1, \ldots, 5$, and we vary the value of $p$ in Assumption \ref{as:hStrong} in order to verify the theoretical result of Theorem \ref{thm:weakOrder}. The function $\Phi\colon\R^d\to\R$ of the solution we consider is defined as $\phi(x) = x^Tx$. Finally, we consider $10^6$ trajectories of the numerical solution in order to approximate the expectation with a Monte Carlo sum. Results (Table \ref{tab:NumericalResultsWeakOrder}) show that the order of convergence predicted theoretically is confirmed by numerical experiments. 
+
+\begin{table}[t]
+	\centering
+	\begin{tabular}{lcccccccc}
+		\toprule
+		Method & \multicolumn{3}{c}{ET} & \multicolumn{5}{c}{RK4} \\ 
+		\cmidrule(l{2pt}r{2pt}){2-4} \cmidrule(l{2pt}r{2pt}){5-9} 
+		$q$ & \multicolumn{3}{c}{2} & \multicolumn{5}{c}{4} \\
+		$p$ & 1 & 1.5 & 2 & 1 & 1.5 & 2 & 3 & 4\\
+		$\min\{q, 2p - 1\}$ & 1 & 2 & 2 & 1 & 2 & 3 & 4 & 4 \\
+		weak order & 0.98 & 2.06 & 2.12 & 0.90 & 1.96 & 3.01 & 3.97 & 4.08 \\
+		\bottomrule
+	\end{tabular}
+	\caption{Weak order of convergence for the random time-stepping explicit trapezoidal (ET) and fourth-order Runge-Kutta (RK4) as a function of the value of $p$ of Assumption \ref{as:hStrong}.}
+	\label{tab:NumericalResultsWeakOrder}
+\end{table}
+
+\subsection{Invariant measure of the Lorenz system} 
+Let us consider the Lorenz equations, which are defined by the following system of ODEs
+\begin{equation}\label{eq:Lorenz}
+\begin{aligned}
+	x' &= \sigma(y - x), \quad &&x(0) = -10,\\
+	y' &= x(\rho - z) - y, \quad &&y(0) = -1,\\
+	z' &= xy - \beta z, \quad &&z(0) = 40.
+\end{aligned}
+\end{equation}
+with parameters values. $\sigma = 10$, $\rho = 28$, $\beta = 8/3$. It has been shown \cite{LOR63} that with these values for the parameters, the solution of \eqref{eq:Lorenz} has a chaotic behavior. Nonetheless, the system admits a strange attractor $\mathcal{A}$ and a {\color{red} unique invariant SRB measure $\mu$ with support on $\mathcal{A}$ \cite{Tuc99, HoM07}}. We are interested to approximate the density of the invariant measure using either the probabilistic solver \eqref{eq:numHSto} or the method described in \cite{CGS16}, both implemented with the explicit trapezoidal rule. We consider final time $T = 100$, time step $h = 0.1$ and $M = 5\cdot10^4$ realizations of both the numerical solutions. Then, we approximate with a kernel density estimation the value of the density in each realization, i.e., for each value $x \in \R^3$ we consider the estimator $\hat f_\mu(x)$ given by
+\begin{equation}
+	\hat f_\mu(x) = M^{-1}\sksum_{i=1}^{M} K(x - Y_N^{(i)}),
+\end{equation}
+where $Y_N^{(i)} \in \R^3$ are the realizations of the numerical solution of \eqref{eq:Lorenz}. The function $K\colon\R^d\to\R$ is a Gaussian kernel given by 
+\begin{equation}
+	K(x) = (2\pi)^{(-d/2)}\det(H)^{(-1/2)}e^{-x^TH^{-1}x/2},
+\end{equation}
+where the covariance bandwidth $H$ is a diagonal matrix of $\R^{d\times d}$ whose entries are chosen with Silverman's rule of thumb \cite{Sil86}, i.e.,
+\begin{equation}
+	H_{i,i}^{1/2} = \Big(\frac{4}{n(d + 2)}\Big) ^ {1 / (d + 4)} \sigma_i,
+\end{equation}
+and where $\sigma_i$ are the component-wise population standard deviations of the data. Results (Figure \ref{fig:LorenzDensity}) {\color{red} show} that the two methods provide with similar results.
+
+\begin{figure}[t]
+	\begin{subfigure}[b]{0.49\textwidth}
+		\includegraphics[width=\linewidth]{plots/LorenzDensStep}
+		\caption{Random time-stepping.}
+	\end{subfigure}	
+	\begin{subfigure}[b]{0.49\textwidth}
+		\includegraphics[width=\linewidth]{plots/LorenzDensAdd}
+		\caption{Additive noise \cite{CGS16}.}
+	\end{subfigure}
+	\caption{Estimation of the density $f_\mu$ of the invariant measure $\mu$ of system \eqref{eq:Lorenz} on numerical realizations. The color scale represents the magnitude of the density function.}
+	\label{fig:LorenzDensity}
+\end{figure}
+
+\bibliographystyle{siamplain}
+\bibliography{anmc}
+
+\end{document}

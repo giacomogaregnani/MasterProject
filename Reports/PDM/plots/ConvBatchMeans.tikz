@@ -1,0 +1,71 @@
+% This file was created by matlab2tikz.
+%
+%The latest EFupdates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=4.717in,
+height=3.721in,
+at={(0.791in,0.502in)},
+scale only axis,
+xmode=log,
+xmin=1000,
+xmax=100000,
+xminorticks=true,
+xlabel={$N$},
+xlabel style = {font=\LARGE},
+ymode=log,
+ymin=1e-05,
+ymax=0.01,
+yminorticks=true,
+ymajorgrids,
+xmajorgrids,
+mark size = 3,
+axis background/.style={fill=white},
+legend style={legend cell align=left,align=left,draw=white!15!black},
+ticklabel style={font=\LARGE},legend style={font=\LARGE},title style={font=\LARGE}
+]
+\addplot [color=mycolor1,solid,mark=o,mark options={solid}]
+  table[row sep=crcr]{%
+1000	0.00319872069944162\\
+2000	0.0015198533552747\\
+4000	0.000861085186590669\\
+8000	0.000351717575842792\\
+16000	0.000167008594366653\\
+32000	7.63488996761454e-05\\
+64000	3.71915765755024e-05\\
+};
+\addlegendentry{$\Var^\pi(\hat g(\theta))$};
+
+\addplot [color=mycolor2,solid,mark=asterisk,mark options={solid}]
+  table[row sep=crcr]{%
+1000	0.00205474165782296\\
+2000	0.00121491896622609\\
+4000	0.000640684648553251\\
+8000	0.000331430067672156\\
+16000	0.00016174899548401\\
+32000	7.69800956282351e-05\\
+64000	3.69556790826172e-05\\
+};
+\addlegendentry{$\hat \sigma^2_{\mathrm{BM}}/N$};
+
+\addplot [color=black,dashed]
+  table[row sep=crcr]{%
+1000	0.001\\
+2000	0.0005\\
+4000	0.00025\\
+8000	0.000125\\
+16000	6.25e-05\\
+32000	3.125e-05\\
+64000	1.5625e-05\\
+};
+\addlegendentry{slope -1};
+
+\end{axis}
+\end{tikzpicture}%

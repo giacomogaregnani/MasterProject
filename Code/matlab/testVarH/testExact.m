@@ -23,7 +23,7 @@ hMean = 0.5;
 expODE = zeros(nTrajectories, 1);
 hVec = hMean;
 
-for j = 1 : 8
+for j = 1 : 7
     for i = 1 : nTrajectories
         
         % Impose IC
@@ -59,7 +59,7 @@ expSDE = zeros(nTrajectories, 1);
 
 hMean = 0.5;
 
-for j = 1 : 8
+for j = 1 : 7
     for i = 1 : 10^6
         
         W = sqrt(T) * randn(1);

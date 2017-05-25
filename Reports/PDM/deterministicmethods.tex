@@ -1,0 +1,158 @@
+\subsection{Deterministic methods}
+
+The deterministic numerical methods we consider in this work belong to the class of Runge-Kutta methods. The properties of Runge-Kutta methods are extensively treated, for example, in \cite{HLW02, HaW96}. In the following, we recall the definition of the method as well as some basic properties. \\
+Let us give the definition of this class of numerical methods.
+\begin{definition}\label{def:RK} Let us consider \eqref{eq:ODE}, $s \in \N^*$ and real numbers $b_i$, for $i = 1, \ldots, s$, and $a_{ij}$, for $i, j = 1, \ldots, s$. Moreover, let us consider a time step $h > 0$ and a time discretization $t_k = kh$ for $k = 0, \ldots, N$, with $t_N = T$. An $s$-stage Runge-Kutta method is given by
+\begin{equation}
+\begin{aligned}
+	U_0 &= u_0, \\
+	K_i &= f(U_k + h\sksum_{j=1}^s a_{ij}K_j), && i = 1, \ldots, s, \\
+	U_{k+1} &= U_k + h \sksum_{i=1}^s b_i K_i, && k = 0, \ldots, N-1,
+\end{aligned}
+\end{equation}
+where $K_i$ are vectors of $\R^d$ for all $i = 1, \ldots, s$.
+\end{definition}
+\begin{remark} Runge-Kutta methods are usually defined for non-autonomous systems taking into account evaluation points $c_i$ for $i = 1, \ldots, s$. In our case, we focus on autonomous systems of the form \eqref{eq:ODE}, therefore we do not include the evaluation points $c_i$ in the definition of Runge-Kutta methods. Let us remark that for the consistency of the numerical method it is required that $c_i = \sksum_{j=1}^s a_{ij}$, therefore the coefficients $c_i$ are uniquely defined given the coefficients $a_{ij}$. Moreover, any non-autonomous system can be transformed in autonomous form via a straightforward change of variables. 
+\end{remark}
+\noindent Runge-Kutta methods are completely defined by their coefficients $a_{ij}, b_i$. Therefore, these coefficients together with the evaluation points $c_i$, are usually organized graphically in a table called \textit{Butcher tableau}, i.e.,
+\begin{center}
+	\begin{tabular}{c|ccc}
+		$c_1$ & $a_{11}$ & $\ldots$ & $a_{1s}$\\
+		$\vdots$ & $\vdots$ & & $\vdots$ \\
+		$c_s$ & $a_{s1}$ & $\ldots$ & $a_{ss}$\\
+		\hline 
+		&$b_1$ & $\ldots$ & $b_s$
+	\end{tabular}
+\end{center}
+This graphical representation allows to present in a compact form the numerical method. The family of Runge-Kutta methods is divided in two subsets, explicit and implicit methods.
+\begin{definition} A Runge-Kutta method is explicit if and only if $a_{ij} = 0$ for all $i \leq j \leq s$, otherwise it is implicit. 
+\end{definition}
+\noindent The main difference from an implementation point of view between explicit and implicit methods is that implicit methods require the solution of a nonlinear system of equations at each time step, while explicit methods are completely defined thanks to a recursive process. Therefore, implicit methods require a higher computational cost than explicit methods, as fixed point or Newton iterations have to be employed at each time step to compute the solution. On the other side, implicit methods are endowed with favorable properties which are not achievable by explicit methods. In this work, we will mainly consider explicit methods, as Monte Carlo simulations will be required and the computational cost given by implicit methods would not be affordable. In particular, we will consider for our examples mainly three numerical schemes, the Explicit Euler (EE), the explicit midpoint (MP) and the classic Runge-Kutta (RK4) method, which are defined by the following Butcher tableaux \\ \\
+\begin{minipage}{0.2\linewidth} 
+	\begin{center}
+		(EE)
+		\begin{tabular}{c|c}
+			$0$ & 0 \\
+			\hline 
+			&$1$ 
+		\end{tabular}
+	\end{center}
+\end{minipage}
+\begin{minipage}{0.3\linewidth} 
+	\begin{center}
+		(MP)
+		\begin{tabular}{c|cc}
+			0 & 0 & 0 \\
+			1/2 & 1/2 & 0 \\
+			\hline 
+			& 0 & 1 
+		\end{tabular}
+	\end{center}
+\end{minipage}
+\begin{minipage}{0.5\linewidth} 
+	\begin{center}
+		(RK4)
+		\begin{tabular}{c|cccc}
+			$0$ & 0 & 0 & 0 & 0\\
+			$1/2$ & 1/2 & 0 & 0 & 0\\
+			$1/2$ & 0 & 1/2 & 0 & 0\\
+			$1$ & 0 & 0 & 1 & 0\\
+			\hline 
+			&$1/6$ & 1/3 & 1/3 & 1/6
+		\end{tabular}
+	\end{center}
+\end{minipage} \\ \\
+As we can remark from their tableaux, these methods are all explicit, with one, two and four stages respectively. \\
+One relevant property of Runge-Kutta methods in the frame of this work is the order of convergence, defined as follows. 
+\begin{definition} Let us consider a sufficiently smooth differential equation \eqref{eq:ODE} and the numerical solution $U_1$ given by one step of the Runge-Kutta method defined in Definition \ref{def:RK}. If there exist $q > 0$ and a positive constant $C$ independent of $h$ such that 
+\begin{equation}
+	\norm{u(h)-U_1} \leq Ch^{q+1},
+\end{equation}
+then the method has local order $q$. 
+\end{definition} 
+\noindent It is possible to verify \cite{HLW02} that EE has local order 1, MP has local order 2 and RK4 has local order 4. \\
+The notation in \eqref{numericalODE} is derived from the notion of exact and numerical flow map of the differential equation \eqref{eq:ODE}. Let us consider the function $\Phi \colon \R^d \to \R^d$ such that the solution $u$ is given by
+\begin{equation}
+	u(t) = \Phi_t(u_0),
+\end{equation}
+i.e., the flow of the differential equation $\Phi$ maps the initial condition into the solution at time $t$. In the same way, we can write the solution at a time $t_2$ given the solution at time $t_1 < t_2$ as 
+\begin{equation}
+	u(t_2) = \Phi_{t_2 - t_1}(u(t_1)).
+\end{equation}
+The numerical solution given by a Runge-Kutta method can be as well written in terms of a flow map. If we consider a time step $h$ and the solution $U_k$ at the time step $t_k$, then we can write in a compact form the numerical solution at time $t_{k+1}$ as
+\begin{equation}
+	U_{k+1} = \Psi_h(U_k),
+\end{equation}
+where the function $\Psi\colon\R^d\to\R^d$ is the numerical flow map of the Runge-Kutta method. Let us remark that the function $\Psi$ is uniquely determined by the coefficients $a_{ij}, b_i$ introduced above. \\
+Stability is one of the main concerns when applying Runge-Kutta methods to a stable ODE \cite{HaW96}. In particular, when integrating numerically a \textit{stiff} equation the stability of the numerical method is fundamental. There are no precise definitions of the stiffness of a differential equation. In general, we can say that a stable equation \eqref{eq:ODE} is stiff when $\max \abs{\Re{\lambda_i}}$ is large, where $\lambda_i$, with $i = 1, \ldots, d$, are the eigenvalues of the Jacobian of the function $f$ defining the ODE evaluated at some value $\hat u$. Often, the value $L = \max \abs{\Re{\lambda_i}}$ is referred to as the \textit{stiffness index} of the differential equation. For example, when parabolic Partial Differential Equations (PDE's) are discretized in space with the method of lines or with the Finite Elements Methods, the temporal ODE's arising from the discretization are often stiff. In order to introduce the basic stability definitions for Runge-Kutta methods, we have to consider the following test equation
+\begin{equation}\label{eq:testProblem}
+\begin{aligned}
+	u(t) &= \lambda u, && \lambda < 0, \: t > 0,\\
+	u(0) &= u_0.
+\end{aligned}
+\end{equation}
+Applying a Runge-Kutta method to the test equation allows to deduce its stability properties for any sufficiently smooth equation \eqref{eq:ODE} thanks to a linearization procedure. The following result is needed for this introduction about stability. 
+\begin{theorem} Consider a $s$-stage Runge-Kutta method defined by coefficients $b_i$, $a_{ij}$ applied to the test problem \eqref{eq:testProblem}. Then, it is possible to write one step of the method as
+\begin{equation}
+	U_1 = R(h\lambda) U_0,
+\end{equation}
+where $R(z)$ is a rational function given by
+\begin{equation}
+	R(z) = 1 + b^Tz(I - zA)^{-1} \mathbbm{1},
+\end{equation}
+where $I$ is the identity matrix in $\R^{s\times s}$ and 
+\begin{equation}
+\begin{aligned}
+	b &= \begin{pmatrix}b_1& b_2& \ldots & b_s\end{pmatrix}^T, \\
+	A &= (a_{ij})_{i,j = 1}^s, \\
+	\mathbbm{1} &= \begin{pmatrix} 1 & 1 & \ldots & 1 \end{pmatrix}^T \in \R^s.
+\end{aligned}
+\end{equation}
+\end{theorem}
+\noindent The function $R(z)$ above defines the main stability concepts of the numerical integrator, and therefore is called the \textit{stability function} of the Runge-Kutta method. In particular, the numerical approximation of the solution of \eqref{eq:testProblem} at time $t_k = kh$ is given by 
+\begin{equation}
+	U_k = R(h\lambda)^k U_0. 	
+\end{equation}
+Therefore, if we require that the numerical solution remains bounded, we have to impose 
+\begin{equation}
+	\abs{R(h\lambda)} \leq 1. 
+\end{equation}
+This defines the stability domain of the Runge-Kutta method.
+\begin{definition} The stability domain S of any Runge-Kutta method is 
+\begin{equation}
+	S \defeq \{z \in \C \colon\abs{R(z)} \leq 1\}.
+\end{equation}
+\end{definition}
+\noindent Studying the domain $S$ we can the stability properties of the numerical method, such as the $A$-stability.
+\begin{definition} A numerical method is called $A$-stable if
+\begin{equation}
+	S \supset \C^{-}, \quad \C^{-} \defeq \{z\in\C \colon \Re(z) < 0\}.
+\end{equation}
+\end{definition}
+\noindent Let us remark that numerical methods which are $A$-stable do not introduce any restriction on the time step when applied to the test equation. Moreover, it is possible to show that explicit Runge-Kutta methods are never $A$-stable. This is due to the fact that for explicit methods $R(z)$ is a polynomial, therefore it diverges when $z \to -\infty$. Hence, in order to ensure $A$-stability, it is necessary to consider implicit methods. Let us consider for example EE. Its stability function is given by
+\begin{equation}
+	R_{\mathrm{EE}}(z) = 1 + z. 
+\end{equation} 
+Since $z = h\lambda$ and in order to ensure stability, the time step $h$ has to satisfy
+\begin{equation}\label{eq:EEhRestriction}
+	h \leq \frac{1}{2\abs{\lambda}}.
+\end{equation}
+If we consider a problem where $\lambda$ is large in absolute value, integrating the ODE with EE implies a high computational cost. All explicit numerical method have condition on the time step similar to \eqref{eq:EEhRestriction}. On the other hand, as we have explained above, in order to compute the numerical solution with an implicit method it is necessary to solve a nonlinear system at each iteration of the time integration. Hence, for an equal time step $h$, the computational cost for implicit methods is considerably higher than for explicit methods, and it is not possible to predict a priori the number of function evaluations needed to achieve a fixed tolerance. In order to overcome this issue, stabilized explicit methods based on Chebyshev polynomials have been studied. In this work, we consider the Runge-Kutta-Chebyshev (RKC) method \cite{HoK71}. Given a number of stages $s$ in $\N^*$, with $s \geq 2$, one step of RKC applied to \eqref{eq:ODE} is defined by the following recursion
+\begin{equation}
+\begin{aligned}
+	g_0 &= U_0, \\
+	g_1 &= U_0 + \frac{h}{s^2} f(U_0),\\
+	g_i &= \frac{2h}{s^2}f(g_{i-1}) + 2g_{i-1} - g_{i-2}, && i = 2, \ldots, s, \\
+	U_1 &= g_s.
+\end{aligned}
+\end{equation}
+Thanks to the properties of Chebyshev polynomials, we have that the stability polynomial $R_s(z)$ of a $s$-stage RKC method is such that
+\begin{equation}
+	\abs{R_s(z)} \leq 1 \iff z \in [-2s^2, 0].
+\end{equation}
+Let us remark that the size of the stability domain on the real negative axis increases quadratically with the number of stages of the method, which corresponds to the number of function evaluations required to perform one temporal step. Hence, if $\lambda < 0$ and given an arbitrary time step $h$, RKC is stable provided that the number of stages satisfies
+\begin{equation}
+	s \geq \max\left\{2, \sqrt{\frac{1}{2}h\lambda}\right\}.
+\end{equation}
+Finally, it is possible to show that RKC has order one. For all the reasons above, it is clear that RKC methods are well suited for approximating the solution of stiff equations with large real negative eigenvalues, as, e.g., discretized parabolic PDE's. \\
+The basic definitions and properties introduced above are sufficient for understanding the analysis of the probabilistic numerical method introduced in \eqref{eq:probMethod}. In the following, we will motivate the numerical method as well as study some of its features.

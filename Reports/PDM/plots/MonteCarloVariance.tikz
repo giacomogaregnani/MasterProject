@@ -1,0 +1,119 @@
+% This file was created by matlab2tikz.
+%
+%The latest EFupdates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
+\definecolor{mycolor3}{rgb}{0.92900,0.69400,0.12500}%
+\definecolor{mycolor4}{rgb}{0.49400,0.18400,0.55600}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=4.717in,
+height=3.721in,
+at={(0.791in,0.502in)},
+scale only axis,
+xmode=log,
+xmin=0.0001,
+xmax=1,
+xminorticks=false,
+xlabel={$h$},
+xlabel style = {font=\Large},
+xmajorgrids,
+ymajorgrids,
+ymode=log,
+ymin=1e-20,
+ymax=100000,
+yminorticks=true,
+ylabel={$\Var(\hat Z) $},
+ylabel style = {font=\Large},
+axis background/.style={fill=white},
+legend style={at={(0.03,0.03)},anchor=south west,legend cell align=left,align=left,draw=white!15!black},
+ticklabel style={font=\large},legend style={font=\Large},title style={font=\Large}
+]
+\addplot [color=mycolor1,solid,mark=o,mark options={solid}]
+  table[row sep=crcr]{%
+0.5	7.19045168319719\\
+0.25	6.65565569154254\\
+0.125	2.53782190246748\\
+0.0625	0.440153295065605\\
+0.03125	0.0840259318815202\\
+0.015625	0.0188575161060823\\
+0.0078125	0.003805308169278\\
+0.00390625	0.0009838706515792\\
+0.001953125	0.0002389431575145\\
+0.0009765625	6.00748680406e-05\\
+};
+\addlegendentry{$\Var(\hat Z_{\mathrm{EF}, 100})$};
+
+\addplot [color=mycolor2,solid,mark=o,mark options={solid}]
+  table[row sep=crcr]{%
+0.5	68.8372637361011\\
+0.25	71.9890228462295\\
+0.125	26.499347350151\\
+0.0625	4.78370660260369\\
+0.03125	0.916378907506344\\
+0.015625	0.164683172425876\\
+0.0078125	0.0389773756177351\\
+0.00390625	0.0085433226663227\\
+0.001953125	0.0022019944029973\\
+0.0009765625	0.0005569178778742\\
+};
+\addlegendentry{$\Var(\hat Z_{\mathrm{EF}, 10})$};
+
+\addplot [color=mycolor3,solid,mark=o,mark options={solid}]
+  table[row sep=crcr]{%
+0.5	0.0177204065551102\\
+0.25	0.0001679633835797\\
+0.125	9.495482692e-07\\
+0.0625	4.0707969e-09\\
+0.03125	1.97018e-11\\
+0.015625	6.85e-14\\
+0.0078125	3e-16\\
+};
+\addlegendentry{$\Var(\hat Z_{\mathrm{RK}, 100})$};
+
+\addplot [color=mycolor4,solid,mark=o,mark options={solid}]
+  table[row sep=crcr]{%
+0.5	0.13031719977894\\
+0.25	0.0022015634046683\\
+0.125	1.0959543021e-05\\
+0.0625	4.83020775e-08\\
+0.03125	2.358861e-10\\
+0.015625	7.66e-13\\
+0.0078125	3.6e-15\\
+};
+\addlegendentry{$\Var(\hat Z_{\mathrm{RK}, 10})$};
+
+\addplot [color=black,dashed]
+  table[row sep=crcr]{%
+0.5	0.25\\
+0.25	0.0625\\
+0.125	0.015625\\
+0.0625	0.00390625\\
+0.03125	0.0009765625\\
+0.015625	0.000244140625\\
+0.0078125	6.103515625e-05\\
+0.00390625	1.52587890625e-05\\
+0.001953125	3.814697265625e-06\\
+0.0009765625	9.5367431640625e-07\\
+};
+\addlegendentry{slope 2};
+
+\addplot [color=black,solid]
+  table[row sep=crcr]{%
+0.5	0.00390625\\
+0.25	1.52587890625e-05\\
+0.125	5.96046447753906e-08\\
+0.0625	2.3283064365387e-10\\
+0.03125	9.09494701772928e-13\\
+0.015625	3.5527136788005e-15\\
+0.0078125	1.38777878078145e-17\\
+};
+\addlegendentry{slope 8};
+
+\end{axis}
+\end{tikzpicture}%

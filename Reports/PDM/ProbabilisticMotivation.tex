@@ -1,0 +1,44 @@
+\subsection{Motivation of probabilistic methods}\label{sec:probMotivation}
+
+Chaotic ODE's are a class of equations whose solution depends strongly on the initial condition. In particular, a small perturbation to the state of the system can lead to a completely different solution. Therefore, when we integrate numerically a chaotic equation, the deviation from the exact solution due to the discretization error can lead to providing numerical solutions which are far from the exact solution. Hence, in this case probabilistic methods can be applied to provide probability distributions instead of potentially wrong punctual solutions.\\
+One of the most famous examples of chaotic ODE's is the Lorenz system. This ODE is defined by
+\begin{equation}\label{eq:Lorenz}
+\begin{aligned}
+x' &= \sigma(y - x), \quad &&x(0) = -10,\\
+y' &= x(\rho - z) - y, \quad &&y(0) = -1,\\
+z' &= xy - \beta z, \quad &&z(0) = 40.
+\end{aligned}
+\end{equation}
+Edward Lorenz discovered in 1963 that for certain values of the parameters $\rho$, $\sigma$ and $\beta$ this equation has a chaotic behavior, i.e., small variations of the initial conditions result in completely different solutions of the system. A sample trajectory of the solution in the state space is depicted in Figure \ref{fig:LorenzTraj}. \\
+Let us consider $\sigma = 10$, $\rho = 28$, $\beta = 8/3$. For this values, the solution has indeed a chaotic behavior. We solve the equation with a time step $h = 0.01$ using the probabilistic solver implemented with the Gauss collocation method on two stages, an implicit Runge-Kutta scheme of fourth order defined by the following Butcher tableau
+\begin{center}
+	\begin{tabular}{c|cc}
+		$1/2-\sqrt{3}/6$ & 1/4 & $1/4-\sqrt{3}/6$ \\
+		$1/2+\sqrt{3}/6$ & $1/4+\sqrt{3}/6$ & 1/4 \\
+		\hline 
+		& 1/2 & 1/2 
+	\end{tabular}
+\end{center} 
+In Figure \ref{fig:Lorenz} we show 10 realizations of the numerical solution given by the probabilistic solver and the numerical solution without any added perturbation from initial time $t = 0$ to final time $T = 20$. We can remark that all the trajectories given by the probabilistic solver coincide with the punctual solution up to a time $\bar t$, approximately equal to 12, where the random perturbation force the numerical solution on another trajectory. 
+
+\begin{figure}[t]
+	\centering
+	\resizebox{0.7\linewidth}{!}{\input{plots/LorenzTraj.tikz}}
+	\caption{Trajectory of the solution of the Lorenz system in the state space.}
+	\label{fig:LorenzTraj}
+\end{figure}
+
+\begin{figure}[t]
+	\centering
+	\begin{subfigure}{1\linewidth}
+		\resizebox{1.0\linewidth}{!}{\input{plots/LorenzX.tikz}}
+	\end{subfigure}
+	\begin{subfigure}{1\linewidth}
+		\resizebox{1.0\linewidth}{!}{\input{plots/LorenzY.tikz}}
+	\end{subfigure}
+	\begin{subfigure}{1\linewidth}
+		\resizebox{1.0\linewidth}{!}{\input{plots/LorenzZ.tikz}}
+	\end{subfigure}
+	\caption{Solution of the Lorenz system obtained with the deterministic solver (thick black) and realizations of the solution obtained with the probabilistic solver (light gray).}
+	\label{fig:Lorenz}
+\end{figure}

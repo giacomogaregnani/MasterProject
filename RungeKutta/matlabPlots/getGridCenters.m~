@@ -1,0 +1,15 @@
+function Grid = getGridCenters(origin, r, nElem)
+
+dim = length(nElem);
+
+Grid = zeros(prod(nElem), dim);
+
+for i = 1 : nElem(1)
+    for j = 1 : nElem(2)
+        for k = 1 : nElem(3)
+            Grid(nElem(1) * nElem(2) * k + nElem(1) * j + i, :) = ...
+                [origin + i * r(1), origin + j * r(2), origin + j * r(3)] ...
+                + r / 2;
+        end
+    end
+end

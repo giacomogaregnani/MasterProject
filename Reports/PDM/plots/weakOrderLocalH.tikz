@@ -1,0 +1,61 @@
+% This file was created by matlab2tikz.
+%
+%The latest EFupdates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=4.717in,
+height=3.721in,
+at={(0.791in,0.502in)},
+scale only axis,
+xmode=log,
+xmin=0.001,
+xmax=1,
+xminorticks=true,
+xlabel={$h$},
+xlabel style = {font = \Large},
+xmajorgrids,
+ymajorgrids,
+yminorgrids,
+ymode=log,
+ymin=0.001,
+ymax=1,
+yminorticks=false,
+axis background/.style={fill=white},
+legend style={at={(0.97,0.03)},anchor=south east,legend cell align=left,align=left,draw=white!15!black},
+ticklabel style={font=\Large},legend style={font=\Large},title style={font=\Large},
+mark size = 3
+]
+\addplot [color=mycolor1,solid,mark=o,mark options={solid}]
+  table[row sep=crcr]{%
+0.5	0.486196033858052\\
+0.25	0.317096456934064\\
+0.125	0.186608048115359\\
+0.0625	0.102288496105347\\
+0.03125	0.0536560915748252\\
+0.015625	0.0272008305415445\\
+0.0078125	0.0138350975923238\\
+0.00390625	0.0069150656036725\\
+};
+\addlegendentry{weak error};
+
+\addplot [color=black,dashed]
+  table[row sep=crcr]{%
+0.5	0.5\\
+0.25	0.25\\
+0.125	0.125\\
+0.0625	0.0625\\
+0.03125	0.03125\\
+0.015625	0.015625\\
+0.0078125	0.0078125\\
+0.00390625	0.00390625\\
+};
+\addlegendentry{slope 1};
+
+\end{axis}
+\end{tikzpicture}%

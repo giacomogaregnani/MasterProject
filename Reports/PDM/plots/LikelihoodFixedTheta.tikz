@@ -1,0 +1,125 @@
+% This file was created by matlab2tikz.
+%
+%The latest EFupdates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
+\definecolor{mycolor3}{rgb}{0.92900,0.69400,0.12500}%
+\definecolor{mycolor4}{rgb}{0.49400,0.18400,0.55600}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=4.65in,
+height=3.685in,
+at={(0.78in,0.497in)},
+scale only axis,
+xmode=log,
+xmin=1e-05,
+xmax=0.2,
+xminorticks=true,
+xmajorgrids,
+ymajorgrids,
+xlabel={$h$},
+xlabel style = {font=\Large},
+ymode=log,
+ymin=1e-25,
+ymax=100000,
+yminorticks=true,
+mark size = 3,
+axis background/.style={fill=white},
+legend style={at={(0.03,0.03)},anchor=south west,legend cell align=left,align=left,draw=white!15!black},
+ticklabel style={font=\Large},legend style={font=\LARGE},title style={font=\Large}
+]
+\addplot [color=mycolor1,solid,mark=o,mark options={solid}]
+  table[row sep=crcr]{%
+0.1	152.40285890697\\
+0.05	15.0297723366959\\
+0.025	1.622064894367\\
+0.0125	0.245883345545411\\
+0.00625	0.0419951733022408\\
+0.003125	0.00863645199805523\\
+0.0015625	0.00214939046093994\\
+0.00078125	0.000473378166729877\\
+0.000390625	0.00012171354847693\\
+0.0001953125	3.61539589880665e-05\\
+9.765625e-05	7.35843899567676e-06\\
+4.8828125e-05	2.00603661030911e-06\\
+};
+\addlegendentry{$\Var(\diffL^h_M)$, EE};
+
+\addplot [color=mycolor2,solid,mark=asterisk,mark options={solid}]
+  table[row sep=crcr]{%
+0.1	6.04599135651302e-06\\
+0.05	3.40675451330916e-08\\
+0.025	1.50790252227762e-10\\
+0.0125	5.16324189950121e-13\\
+0.00625	1.9467469819001e-15\\
+0.003125	6.763689931673e-18\\
+0.0015625	2.9811655337e-20\\
+};
+\addlegendentry{$\Var(\diffL^h_M)$, RK};
+
+\addplot [color=mycolor3,solid,mark=+,mark options={solid}]
+  table[row sep=crcr]{%
+0.1	1489.94500365821\\
+0.05	135.895613310291\\
+0.025	17.7752309641098\\
+0.0125	2.81110597557495\\
+0.00625	0.531377491242425\\
+0.003125	0.115688833138768\\
+0.0015625	0.0281828582477648\\
+0.00078125	0.00629035903035823\\
+0.000390625	0.00165537979125842\\
+0.0001953125	0.00037965972386549\\
+9.765625e-05	8.69516182542916e-05\\
+4.8828125e-05	2.37754855783276e-05\\
+};
+\addlegendentry{$\E[\diffL - \diffL^h_M]^2$, EE};
+
+\addplot [color=mycolor4,solid,mark=triangle,mark options={solid,rotate=90}]
+  table[row sep=crcr]{%
+0.1	0.00019144049901202\\
+0.05	5.82638410963337e-07\\
+0.025	2.11531160318506e-09\\
+0.0125	8.23470525936426e-12\\
+0.00625	2.81351837106436e-14\\
+0.003125	1.09523279390305e-16\\
+0.0015625	4.14205891877e-19\\
+};
+\addlegendentry{$\E[\diffL - \diffL^h_M]^2$, RK};
+
+\addplot [color=black,dashed]
+  table[row sep=crcr]{%
+0.1	1\\
+0.05	0.25\\
+0.025	0.0625\\
+0.0125	0.015625\\
+0.00625	0.00390625\\
+0.003125	0.0009765625\\
+0.0015625	0.000244140625\\
+0.00078125	6.103515625e-05\\
+0.000390625	1.52587890625e-05\\
+0.0001953125	3.814697265625e-06\\
+9.765625e-05	9.5367431640625e-07\\
+4.8828125e-05	2.38418579101563e-07\\
+};
+\addlegendentry{slope 2};
+
+\addplot [color=black,solid]
+  table[row sep=crcr]{%
+0.1	1e-06\\
+0.05	3.90625e-09\\
+0.025	1.52587890625e-11\\
+0.0125	5.96046447753906e-14\\
+0.00625	2.3283064365387e-16\\
+0.003125	9.09494701772929e-19\\
+0.0015625	3.5527136788005e-21\\
+};
+\addlegendentry{slope 8};
+
+\end{axis}
+
+\end{tikzpicture}%

@@ -1,0 +1,159 @@
+\documentclass{siamart1116}
+
+% basics
+\usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage[title,titletoc]{appendix}
+\usepackage{afterpage}
+\usepackage{enumitem}   
+\setlist[enumerate]{topsep=3pt,itemsep=3pt,label=(\roman*)}
+
+% maths
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bbm}
+\newsiamremark{assumption}{Assumption}
+\newsiamremark{remark}{Remark}
+\newsiamremark{example}{Example}
+\numberwithin{theorem}{section}
+
+% plots
+\usepackage{pgfplots} 
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage[font=normal]{subcaption}
+\usepackage{here}
+\usepackage[labelfont=bf]{caption}
+\setlength{\belowcaptionskip}{-5pt}
+
+% tables
+\usepackage{booktabs}
+
+% title and authors
+\newcommand{\TheTitle}{Random mesh FEM} 
+\newcommand{\TheAuthors}{A. Abdulle, G. Garegnani}
+\headers{Random mesh FEM}{\TheAuthors}
+\title{{\TheTitle}}
+\author{Assyr Abdulle\thanks{Mathematics Section, \'Ecole Polytechnique F\'ed\'erale de Lausanne (\email{assyr.abdulle@epfl.ch})}
+	\and
+	Giacomo Garegnani\thanks{Mathematics Section, \'Ecole Polytechnique F\'ed\'erale de Lausanne (\email{giacomo.garegnani@epfl.ch})}}
+
+% my commands 
+\DeclarePairedDelimiter{\ceil}{\left\lceil}{\right\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\|}{\|}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\Pr}{\mathbb{P}}
+\newcommand{\eqtext}[1]{\ensuremath{\stackrel{#1}{=}}}
+\newcommand{\leqtext}[1]{\ensuremath{\stackrel{#1}{\leq}}}
+\newcommand{\iid}{\ensuremath{\stackrel{\text{i.i.d.}}{\sim}}}
+\newcommand{\totext}[1]{\ensuremath{\stackrel{#1}{\to}}}
+\newcommand{\rightarrowtext}[1]{\ensuremath{\stackrel{#1}{\longrightarrow}}}
+\newcommand{\leftrightarrowtext}[1]{\ensuremath{\stackrel{#1}{\longleftrightarrow}}}
+\newcommand{\pdv}[2]{\ensuremath\partial_{#2}#1}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\epl}{\varepsilon}
+\newcommand{\diffL}{\mathcal{L}}
+\newcommand{\prior}{\mathcal{Q}}
+\newcommand{\defeq}{\coloneqq}
+\newcommand{\eqdef}{\eqqcolon}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\E}{\operatorname{\mathbb{E}}}
+\newcommand{\MSE}{\operatorname{MSE}}
+\newcommand{\trace}{\operatorname{tr}}
+\newcommand{\MH}{\mathrm{MH}}
+\newcommand{\ttt}{\texttt}
+\newcommand{\Hell}{d_{\mathrm{Hell}}}
+\newcommand{\sksum}{\textstyle\sum}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ind}[1]{\mathbbm{1}_{#1}}
+
+
+\ifpdf
+\hypersetup{
+	pdftitle={\TheTitle},
+	pdfauthor={\TheAuthors}
+}
+\fi
+
+\begin{document}
+	
+\maketitle	
+
+\section{Idea} Consider $\Omega$ a convex polygon in $\R^d$, with $d = 1, 2, 3$ and the elliptic PDE with Dirichlet boundary conditions
+\begin{equation}
+\begin{aligned}
+	-\diffL u &= f, && \text{in } \Omega,\\
+	u &= g, && \text{on } \partial\Omega.
+\end{aligned}
+\end{equation}
+Given a Hilbert space $V$ weak formulation (assume $a(u, u) = \norm{u}_a^2$)
+\begin{equation}
+	\text{Find } u \in V \text{ such that } a(u,v) = F(v) \text{ for all } v \in V.
+\end{equation}
+Galerkin formulation. Consider discretization parameter $h > 0$ and a mesh $T_h$ (usual hypotheses). Consider the space $V_h \subset V$ defined as
+\begin{equation}
+	V_h = \{v \in \mathcal{C}^0(\Omega) \colon v|_{K} \in \mathcal{P}_1, \; \forall K \in T_h\} \cap V.
+\end{equation}
+Given internal vertices $\{x_i\}_{i=1}^N$, then
+\begin{equation}
+	V_h = \mathrm{span}\{\phi_i\}_{i=1}^N,
+\end{equation}
+where $\phi_i \in V_h$ and $\phi_i(x_k) = \delta_{ik}$ for $i, k = 1, \ldots, N$. Galerkin formulation then reads
+\begin{equation}
+	\text{Find } u_h \in V_h \text{ such that } a(u_h,v_h) = F(v_h) \text{ for all } v_h \in V_h.
+\end{equation}
+Consider now a new set of random internal vertices $\{X_i\}_{i=1}^N$ such that
+\begin{enumerate}
+	\item $\E X_i = x_i$, 
+	\item $\Var X_i = Ch^{2p}$, for a constant $C > 0$.
+\end{enumerate}
+for all $i = 1, \ldots, N$. Random mesh $\mathcal{T}_h$ is built using the nodes $\{X_i\}_{i=1}^N$ from $T_h$ maintaining connections between vertices with same indices (in 1D it is easy, in 2D/3D is it possible to maintain hypotheses of mesh quality?). Then consider
+\begin{equation}
+	\mathcal{V}_h = \{v \in \mathcal{C}^0(\Omega) \colon v|_{K} \in \mathcal{P}_1, \; \forall K \in \mathcal{T}_h\} \cap V.
+\end{equation}
+i.e., $\mathcal{V}_h = \mathrm{span}\{\Phi_i\}_{i=1}^N$, where $\Phi_i \in \mathcal{V}_h$ and $\Phi_i(X_k) = \delta_{ik}$. We then have the random-mesh Galerkin formulation
+\begin{equation}
+	\text{Find } U_h \in \mathcal{V}_h \text{ such that } a(U_h,V_h) = F(V_h) \text{ for all } V_h \in \mathcal{V}_h.
+\end{equation}
+\underline{Goal.} What is
+\begin{align}
+	&\E \norm{U_h - u}_V, \\
+	&\abs{\E G(U_h) - G(u)}. 
+\end{align}
+
+\section{One-dimensional case} Consider deterministic uniform mesh (spacing $h$) and perturbation r.v.s  such that
+\begin{equation}
+	X_i = x_i + hP_i, \quad P_i \sim \mathcal{U}(-h^{p-1}/2, h^{p-1}/2).
+\end{equation}
+($1/2$ so that the ordering does not change). Consider basis functions deterministic case
+\begin{equation}
+	\phi_i(x) =	\frac{x - x_{i-1}}{x_i - x_{i-1}} \ind{(x_{i-1}, x_i)}(x) + \frac{x_{i+1} - x}{x_{i+1} - x_i} \ind{(x_i, x_{i+1})}(x).
+\end{equation}
+The random basis functions are given analogously by
+\begin{equation}
+\Phi_i(x) =	\frac{x - X_{i-1}}{X_i - X_{i-1}} \ind{(X_{i-1},X_i)}(x) + \frac{X_{i+1} - x}{X_{i+1} - X_i}\ind{(X_i, X_{i+1})}(x). 
+\end{equation}
+Let us denote by $\Phi_{i,1}(x)$ and $\Phi_{i,1}(x)$ the two components of the sum above so that $\Phi_i(x) = \Phi_{i, 1}(x) + \Phi_{i, 2}(x)$. Via the definition of the random variables we rewrite $\Phi_{i, 1}(x)$ with elementary operations as 
+\begin{equation}
+\begin{aligned}
+	\Phi_{i, 1}(x) &= \frac{x - x_{i-1} - hP_{i-1}}{x_i - x_{i-1} + h(P_i - P_{i-1})}\ind{(X_{i-1},X_i)}(x) \\
+	&= \frac{x - x_{i-1} - hP_{i-1}}{h(1 + P_i - P_{i-1})}\ind{(X_{i-1},X_i)}(x) \\
+	&= \frac{1}{1 + P_i - P_{i-1}}\Big(\frac{x - x_{i-1}}{h} - P_{i-1}\Big)\ind{(X_{i-1},X_i)}(x)
+\end{aligned}
+\end{equation}
+Analogously 
+\begin{equation}
+	\Phi_{i, 2}(x) = \frac{1}{1 + P_{i+1} - P_i}\Big(\frac{x_{i+1} - x}{h} + P_{i+1}\Big)\ind{(X_i,X_{i+1})}(x)
+\end{equation}
+
+
+
+%\bibliographystyle{siamplain}
+%\bibliography{anmc}
+\end{document}
