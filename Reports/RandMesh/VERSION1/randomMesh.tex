@@ -72,6 +72,7 @@
 \newcommand{\sksum}{\textstyle\sum}
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\ind}[1]{\mathbbm{1}_{#1}}
+\newcommand{\sign}{\operatorname{\mathrm{sgn}}}
 
 
 \ifpdf
@@ -133,27 +134,133 @@ i.e., $\mathcal{V}_h = \mathrm{span}\{\Phi_i\}_{i=1}^N$, where $\Phi_i \in \math
 \end{equation}
 ($1/2$ so that the ordering does not change). Consider basis functions deterministic case
 \begin{equation}
-	\phi_i(x) =	\frac{x - x_{i-1}}{x_i - x_{i-1}} \ind{(x_{i-1}, x_i)}(x) + \frac{x_{i+1} - x}{x_{i+1} - x_i} \ind{(x_i, x_{i+1})}(x).
+	\phi_i(x) =	\underbrace{\frac{x - x_{i-1}}{h} \ind{(x_{i-1}, x_i)}(x)}_{\phi_{i,1}(x)} 
+	          + \underbrace{\frac{x_{i+1} - x}{h} \ind{(x_i, x_{i+1})}(x)}_{\phi_{i,2}(x)} .
 \end{equation}
 The random basis functions are given analogously by
 \begin{equation}
-\Phi_i(x) =	\frac{x - X_{i-1}}{X_i - X_{i-1}} \ind{(X_{i-1},X_i)}(x) + \frac{X_{i+1} - x}{X_{i+1} - X_i}\ind{(X_i, X_{i+1})}(x). 
+	\Phi_i(x) =	\frac{x - X_{i-1}}{X_i - X_{i-1}} \ind{(X_{i-1},X_i)}(x) + \frac{X_{i+1} - x}{X_{i+1} - X_i}\ind{(X_i, X_{i+1})}(x). 
 \end{equation}
 Let us denote by $\Phi_{i,1}(x)$ and $\Phi_{i,1}(x)$ the two components of the sum above so that $\Phi_i(x) = \Phi_{i, 1}(x) + \Phi_{i, 2}(x)$. Via the definition of the random variables we rewrite $\Phi_{i, 1}(x)$ with elementary operations as 
-\begin{equation}
+\begin{equation}\label{eq:BasisFctBeforeIndFct}
 \begin{aligned}
 	\Phi_{i, 1}(x) &= \frac{x - x_{i-1} - hP_{i-1}}{x_i - x_{i-1} + h(P_i - P_{i-1})}\ind{(X_{i-1},X_i)}(x) \\
 	&= \frac{x - x_{i-1} - hP_{i-1}}{h(1 + P_i - P_{i-1})}\ind{(X_{i-1},X_i)}(x) \\
-	&= \frac{1}{1 + P_i - P_{i-1}}\Big(\frac{x - x_{i-1}}{h} - P_{i-1}\Big)\ind{(X_{i-1},X_i)}(x)
+	&= \underbrace{\frac{1}{1 + P_i - P_{i-1}}}_{C_{i,i-1}}\Big(\frac{x - x_{i-1}}{h} - P_{i-1}\Big)\ind{(X_{i-1},X_i)}(x).
 \end{aligned}
 \end{equation}
-Analogously 
+Analogously,
 \begin{equation}
-	\Phi_{i, 2}(x) = \frac{1}{1 + P_{i+1} - P_i}\Big(\frac{x_{i+1} - x}{h} + P_{i+1}\Big)\ind{(X_i,X_{i+1})}(x)
+	\Phi_{i, 2}(x) =  \underbrace{\frac{1}{1 + P_{i+1} - P_i}}_{C_{i+1, i}}\Big(\frac{x_{i+1} - x}{h} + P_{i+1}\Big)\ind{(X_i,X_{i+1})}(x).
 \end{equation}
-
-
-
+Consider the indicator function in $\Phi_{i, 1}$. Let us denote by $A = (x_{i-1}, x_i)$. Then (dropping the dependence on x of the indicator functions)
+\begin{equation}
+\begin{aligned}
+\ind{(X_{i-1}, X_i)} = &\ind{A\cup (X_{i-1}, x_{i-1}) \cup (x_i, X_i)}\ind{\{P_{i-1} < 0\}}\ind{\{P_i > 0\}} \\
+					 + &\ind{(A \cup (X_{i-1}, x_{i-1})) \cap (X_i, x_i)^C}\ind{\{P_{i-1} < 0\}}\ind{\{P_i < 0\}} \\
+					 + &\ind{(A \cup (x_i, X_i)) \cap (x_{i-1}, X_{i-1})^C}\ind{\{P_{i-1} > 0\}}\ind{\{P_i > 0\}} \\
+					 + &\ind{A \cap (x_{i-1}, X_{i-1})^C \cap (X_i, x_i)^C}\ind{\{P_{i-1} > 0\}}\ind{\{P_i < 0\}},
+\end{aligned}
+\end{equation}
+applying the properties of the indicator function we thus have
+\begin{equation}
+\begin{aligned}
+\ind{(X_{i-1}, X_i)} = &\Big(\ind{A} + \ind{(X_{i-1}, x_{i-1})} + \ind{(x_i, X_i)}\Big)\ind{\{P_{i-1} < 0\}}\ind{\{P_i > 0\}} \\
+					 + &\Big(\big(\ind{A} + \ind{(X_{i-1}, x_{i-1})}\big)\big(1 - \ind{(X_i, x_i)}\big)\Big)\ind{\{P_{i-1} < 0\}}\ind{\{P_i < 0\}} \\
+					 + &\Big(\big(\ind{A} + \ind{(x_i, X_i)}\big)\big(1 - \ind{(x_{i-1}, X_{i-1})}\big)\Big)\ind{\{P_{i-1} > 0\}}\ind{\{P_i > 0\}} \\
+					 + &\Big(\ind{A}\big(1 - \ind{(x_{i-1}, X_{i-1})}\big)\big(1 - \ind{(X_i, x_i)}\big)\Big)\ind{\{P_{i-1} > 0\}}\ind{\{P_i < 0\}}.
+\end{aligned}
+\end{equation}
+Hence
+\begin{equation}
+\begin{aligned}
+\ind{(X_{i-1}, X_i)} = \ind{A} + &\big(\ind{(X_{i-1}, x_{i-1})} + \ind{(x_i, X_i)}\big)\ind{\{P_{i-1} < 0\}}\ind{\{P_i > 0\}} \\
+				     + &\big(\ind{(X_{i-1}, x_{i-1})} - \ind{(X_{i-1}, x_{i-1})}\ind{(X_i, x_i)} - \ind{A}\ind{(X_i, x_i)}\big)\ind{\{P_{i-1} < 0\}}\ind{\{P_i < 0\}} \\
+				     + &\big(\ind{(x_i, X_i)} - \ind{(x_i, X_i)}\ind{(x_{i-1}, X_{i-1})} - \ind{A}\ind{(x_{i-1}, X_{i-1})}\big)\ind{\{P_{i-1} > 0\}}\ind{\{P_i > 0\}} \\
+				     + &\big(\ind{A}\ind{(x_{i-1}, X_{i-1})}\ind{(X_i, x_i)} - \ind{A}\ind{(X_i, x_i)} - \ind{A}\ind{(x_{i-1}, X_{i-1})}\big)\ind{\{P_{i-1} > 0\}}\ind{\{P_i < 0\}}.
+\end{aligned}
+\end{equation}
+This expression can be simplified as
+\begin{equation}
+\begin{aligned}
+\ind{(X_{i-1}, X_i)} = \ind{A} + &\big(\ind{(X_{i-1}, x_{i-1})} + \ind{(x_i, X_i)}\big)\ind{\{P_{i-1} < 0\}}\ind{\{P_i > 0\}} \\
+					 + &\big(\ind{(X_{i-1}, x_{i-1})} - \ind{(X_i, x_i)}\big)\ind{\{P_{i-1} < 0\}}\ind{\{P_i < 0\}} \\
+					 + &\big(\ind{(x_i, X_i)} - \ind{(x_{i-1}, X_{i-1})}\big)\ind{\{P_{i-1} > 0\}}\ind{\{P_i > 0\}} \\
+					 - &\big(\ind{(X_i, x_i)} + \ind{(x_{i-1}, X_{i-1})})\ind{\{P_{i-1} > 0\}}\ind{\{P_i < 0\}}.
+\end{aligned}
+\end{equation}
+Regrouping the terms
+\begin{equation}
+\begin{aligned}
+\ind{(X_{i-1}, X_i)} = \ind{A} + &\ind{(X_{i-1}, x_{i-1})}\ind{\{P_{i-1} < 0\}}\big(\ind{\{P_i > 0\}} + \ind{\{P_i < 0\}}\big)\\
+					 - &\ind{(x_{i-1}, X_{i-1})}\ind{\{P_{i-1} > 0\}}\big(\ind{\{P_i > 0\}} + \ind{\{P_i < 0\}}\big) \\
+					 + &\ind{(x_i, X_i)}\ind{\{P_i > 0\}}\big(\ind{\{P_{i-1} > 0\}} + \ind{\{P_{i-1} < 0\}}\big) \\
+					 - &\ind{(X_i, x_i)}\ind{\{P_i < 0\}}\big(\ind{\{P_{i-1} > 0\}} + \ind{\{P_{i-1} < 0\}}\big).
+\end{aligned}
+\end{equation}
+Hence, we get the final expression
+\begin{equation}
+\begin{aligned}
+\ind{(X_{i-1}, X_i)} = \ind{A} &+ \ind{(X_{i-1}, x_{i-1})}\ind{\{P_{i-1} < 0\}} - \ind{(x_{i-1}, X_{i-1})}\ind{\{P_{i-1} > 0\}}	\\
+							   &+ \ind{(x_i, X_i)}\ind{\{P_i > 0\}} - \ind{(X_i, x_i)}\ind{\{P_i < 0\}}.
+\end{aligned}
+\end{equation}
+Plugging the expression of $\ind{(X_{i-1}, X_i)}$ into the randomized basis functions \eqref{eq:BasisFctBeforeIndFct} and recalling that $A = (x_{i-1}, x_i)$ we get
+\begin{equation}
+\begin{aligned}
+	\Phi_{i, 1}(x) &= C_{i, i-1}\Big(\frac{x - x_{i-1}}{h} - P_{i-1}\Big)\ind{(x_{i-1}, x_i)}(x) \\
+				   &+ C_{i, i-1}\Big(\frac{x - x_{i-1}}{h} - P_{i-1}\Big)\big(\ind{(X_{i-1}, x_{i-1})}(x)\ind{\{P_{i-1} < 0\}} - \ind{(x_{i-1}, X_{i-1})}(x)\ind{\{P_{i-1} > 0\}}\big)\\
+				   &+ C_{i, i-1}\Big(\frac{x - x_{i-1}}{h} - P_{i-1}\Big)\big(\ind{(x_i, X_i)}(x)\ind{\{P_i > 0\}} - \ind{(X_i, x_i)}(x)\ind{\{P_i < 0\}}\big).
+\end{aligned}
+\end{equation}
+Replacing the definition of $\phi_{i, 1}$, we get
+\begin{equation}
+\begin{aligned}
+	\Phi_{i, 1}(x) &= C_{i, i-1}\phi_{i, 1}(x) - C_{i, i-1}P_{i-1}\ind{(x_{i-1}, x_i)}(x) \\
+				   &+ C_{i, i-1}\Big(\frac{x - x_{i-1}}{h} - P_{i-1}\Big)\big(\ind{(X_{i-1}, x_{i-1})}(x)\ind{\{P_{i-1} < 0\}} - \ind{(x_{i-1}, X_{i-1})}(x)\ind{\{P_{i-1} > 0\}}\big)\\
+				   &+ C_{i, i-1}\Big(\frac{x - x_{i-1}}{h} - P_{i-1}\Big)\big(\ind{(x_i, X_i)}(x)\ind{\{P_i > 0\}} - \ind{(X_i, x_i)}(x)\ind{\{P_i < 0\}}\big).
+\end{aligned}
+\end{equation}
+We can apply the same reasoning to $\Phi_{i, 2}(x)$. In particular ($A = (x_i, x_{i+1})$ in this case)
+\begin{equation}
+\begin{aligned}
+\ind{(X_i, X_{i+1})} = \ind{A} &+ \ind{(X_i, x_i)}\ind{\{P_i < 0\}} - \ind{(x_i, X_i)}\ind{\{P_i > 0\}}	\\
+							   &+ \ind{(x_{i+1}, X_{i+1})}\ind{\{P_{i+1} > 0\}} - \ind{(X_{i+1}, x_{i+1})}\ind{\{P_{i+1} < 0\}}.
+\end{aligned}
+\end{equation}
+Then
+\begin{equation}
+\begin{aligned}
+	\Phi_{i, 2}(x) &= C_{i+1, i}\phi_{i, 1}(x) + C_{i+1, i}P_{i+1}\ind{(x_i, x_{i+1})}(x) \\
+	&+ C_{i+1, i}\Big(\frac{x_{i+1}-x}{h} + P_{i+1}\Big)\big(\ind{(X_i, x_i)}(x)\ind{\{P_i < 0\}} - \ind{(x_i, X_i)}(x)\ind{\{P_i > 0\}}\big)\\
+	&+ C_{i+1, i}\Big(\frac{x_{i+1}-x}{h} + P_{i+1}\Big)\big(\ind{(x_{i+1}, X_{i+1})}(x)\ind{\{P_{i+1} > 0\}} - \ind{(X_{i+1}, x_{i+1})}(x)\ind{\{P_{i+1} < 0\}}\big).
+\end{aligned}
+\end{equation}
+Let us remark that the random coefficient $C_{i, i-1}$ can be expanded (for any $i$) as
+\begin{equation}
+	C_{i, i-1} = \frac{1}{1 - (P_{i-1} - P_{i})} = 1 + \underbrace{\sum_{n=1}^\infty (P_{i-1}-P_i)^n}_{\tilde C_{i, i-1}}.
+\end{equation}
+In expectation (for $n = 1$ we have a zero)
+\begin{equation}
+	\E \tilde C_{i, i-1} = \OO(h^{2p-2}).
+\end{equation}
+Hence,
+\begin{equation}
+\begin{aligned}
+	\Phi_i(x) &= \phi_i(x) + \tilde C_{i, i-1} \phi_{i, 1}(x) + \tilde C_{i+1, i} \phi_{i, 2}(x)\\
+	&- C_{i, i-1}P_{i-1}\ind{(x_{i-1}, x_i)}(x) + C_{i+1, i}P_{i+1}\ind{(x_i, x_{i+1})}(x) \\
+	&+ C_{i, i-1}\Big(\frac{x - x_{i-1}}{h} - P_{i-1}\Big)\big(\ind{(X_{i-1}, x_{i-1})}(x)\ind{\{P_{i-1} < 0\}} - \ind{(x_{i-1}, X_{i-1})}(x)\ind{\{P_{i-1} > 0\}}\big)\\
+	&+ C_{i, i-1}\Big(\frac{x - x_{i-1}}{h} - P_{i-1}\Big)\big(\ind{(x_i, X_i)}(x)\ind{\{P_i > 0\}} - \ind{(X_i, x_i)}(x)\ind{\{P_i < 0\}}\big)\\
+	&+ C_{i+1, i}\Big(\frac{x_{i+1}-x}{h} + P_{i+1}\Big)\big(\ind{(X_i, x_i)}(x)\ind{\{P_i < 0\}} - \ind{(x_i, X_i)}(x)\ind{\{P_i > 0\}}\big)\\
+	&+ C_{i+1, i}\Big(\frac{x_{i+1}-x}{h} + P_{i+1}\Big)\big(\ind{(x_{i+1}, X_{i+1})}(x)\ind{\{P_{i+1} > 0\}} - \ind{(X_{i+1}, x_{i+1})}(x)\ind{\{P_{i+1} < 0\}}\big).	
+\end{aligned}
+\end{equation}
+In expectation
+\begin{equation}
+\begin{aligned}
+	\E\Phi_i(x) &= \phi_i(x) + (1 + \OO(h^{2p-2})) (\phi_{i, 1}(x) + \phi_{i, 2}(x))
+\end{aligned}
+\end{equation}
 %\bibliographystyle{siamplain}
 %\bibliography{anmc}
 \end{document}
