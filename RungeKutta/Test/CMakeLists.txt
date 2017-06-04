@@ -50,5 +50,14 @@ target_link_libraries(TimeMeans RandomStep UtilitiesGG)
 add_executable(Invariants InvariantCons.cpp)
 target_link_libraries(Invariants RandomStep UtilitiesGG)
 
+add_executable(InvariantsExplosion InvariantExplTime.cpp)
+target_link_libraries(InvariantsExplosion RandomStep UtilitiesGG)
+
+add_executable(HamError HamiltonianError.cpp)
+target_link_libraries(HamError RandomStep UtilitiesGG)
+
+add_executable(traj GenerateTrajectories.cpp)
+target_link_libraries(traj RandomStep UtilitiesGG)
+
 add_executable(Inverse ODEParam.cpp)
 target_link_libraries(Inverse RandomStep UtilitiesGG MCMC)

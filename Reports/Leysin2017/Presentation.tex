@@ -1,0 +1,157 @@
+\documentclass{beamer}
+
+\usetheme{Madrid}
+\usecolortheme{dolphin}
+
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage{mathtools}
+\usepackage{appendixnumberbeamer}
+\usepackage{enumitem}
+\usepackage{centernot}
+\setitemize{label=-, leftmargin=*}
+
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\|}{\|}
+\renewcommand{\Pr}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\E}{\operatorname{\mathbb{E}}}
+\newcommand{\iid}{\ensuremath{\stackrel{\text{i.i.d.}}{\sim}}}
+\renewcommand{\phi}{\varphi}
+
+% Theorem blocks
+\newenvironment<>{greenblock}[1][]{%
+\setbeamercolor{block title}{fg=white,bg=green!40!black}%
+\begin{block}#2{#1}}{\end{block}}
+\newenvironment<>{redblock}[1][]{%
+\setbeamercolor{block title}{fg=white,bg=red!75!black}%
+\begin{block}#2{#1}}{\end{block}}
+
+% Add numbers and take out navigation symbols
+\setbeamertemplate{footline}[frame number]
+\beamertemplatenavigationsymbolsempty
+
+% Text starts always from the top of the frame
+\newenvironment{frameT}{\begin{frame}[t]}{\end{frame}}
+
+\title{Probabilistic Runge-Kutta methods for ODEs}
+\author{Giacomo Garegnani - ANMC}
+\institute{MATHICSE retreat}
+\date{June 2017}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frameT}
+	\frametitle{Motivation}
+	
+	\begin{example} Lorenz system ($\sigma = 10$, $\rho = 28$, $\beta = 8/3$)
+		\begin{equation}\label{eq:Lorenz}
+			\begin{aligned}
+				y_1' &= \sigma(y_2 - y_1), \quad &&y_1(0) = -10,\\
+				y_2' &= y_1(\rho - y_3) - y_2, \quad &&y_2(0) = -1,\\
+				y_3' &= y_1y_2 - \beta y_3, \quad &&y_3(0) = 40.
+			\end{aligned}
+		\end{equation}
+	\end{example}
+	\begin{figure}
+		\includegraphics[]{Lorenz}
+		\caption{Deterministic (black) and probabilistic (grey) numerical solutions of \eqref{eq:Lorenz}}
+	\end{figure}
+\end{frameT}
+
+\begin{frameT}
+	\frametitle{Problem statement}
+	
+	Consider $f\colon\R^d\to\R$ and the ODE
+	\begin{equation}
+		y' = f(y), \quad y(0) = y_0.
+	\end{equation}
+	Flow of the equation $\phi_t$: for any $y_0\in\R^d$
+	\begin{equation}
+		y(t) = \phi_t(y_0).
+	\end{equation}
+	One-step Runge-Kutta method: numerical flow $\Psi_h$ such that
+	\begin{equation}\label{eq:NumericalFlow}
+		y_{n+1} = \Psi_h(y_n).
+	\end{equation}
+	\begin{problem}
+		Modify \eqref{eq:NumericalFlow} in order to give a probabilistic numerical solution.
+	\end{problem}
+\end{frameT}
+
+\begin{frameT}
+	\frametitle{Existing method}
+	
+	Additive noise \cite{CGS16}. Build stochastic process $\{Y_n\}_{n=1, 2, \ldots}$
+	\begin{equation}
+		Y_{n+1} = \underbrace{\Psi_h(Y_n)}_{\text{deterministic}} + \underbrace{\xi_n(h)}_{\text{random}},
+	\end{equation}
+	where $\{\xi_n\}_{n=1,2,\ldots}$ i.i.d. random variables s.t. for $p > 1$ and $Q \in \R^{d\times d}$
+	\begin{equation}
+		\E\xi_n(h) = 0, \quad \E \xi_n(h) \xi_n(h)^T = Qh^{2p+1}.
+	\end{equation}
+	
+	\only<2-5>{
+	\begin{greenblock}[Properties]
+		If $\Psi_h$ is of order $q$ and for $\Phi\colon\R^d\to\R$ smooth
+		\begin{itemize}
+			\item<3-5> Strong convergence: $\E\norm{y(hn)-Y_n} \leq Ch^{\min\{p, q\}}$,
+			\item<4-5> Weak convergence: $\abs{\Phi\big(y(hn)\big) - \E\Phi(Y_n)} \leq Ch^{\min\{2p, q\}}$,
+			\item<5> Good qualitative behavior in Bayesian inverse problems.
+		\end{itemize}
+	\end{greenblock}
+	}
+	
+	\only<6-7>{
+	\begin{redblock}[Issues]
+		\begin{itemize}
+			\item<6-7> Robustness: $\Psi_h(Y_{n-1}) > 0 \centernot\implies \Pr(Y_n > 0) = 0$,
+			\item<7> Geometric properties are not conserved. For example if $I(y) = y^TSy$,
+			\begin{equation}
+				I(Y_1) = I(y_0) + 2\xi_0(h)^T S  \Psi_h(y_0) + \xi_0(h)^T S \xi_0(h).
+			\end{equation}
+		\end{itemize}
+	\end{redblock}
+	}
+\end{frameT}
+
+\begin{frameT}
+	\frametitle{Method proposal}
+	
+	Intrinsic noise: Random time-stepping Runge-Kutta (RTS-RK)
+	\begin{equation}
+		Y_{n+1} = \Psi_{H_n}(Y_n),
+	\end{equation}
+	where $\{H_n\}_{n=1,2,\ldots}$ i.i.d. random variables s.t. for $h, C > 0$ and $p > 1$
+	\begin{equation}
+		H_n > 0 \text{ a.s.}, \quad \E H_n = h, \quad \Var H_n = Ch^{2p}.
+	\end{equation} 
+	For example $H_n \iid \mathcal{U}(h-h^p, h+h^p)$ is a suitable choice.
+	
+	\only<2-6>{
+	\begin{greenblock}[Properties]
+		\begin{itemize}
+			\item<3-6> Strong and weak convergence equivalent to additive noise method,
+			\item<4-6> Good qualitative behavior in Bayesian inverse problems,
+			\item<5-6> If $\Psi_h$ conserves an invariant $I(y)$, then so do RTS-RK,
+			\item<6-6> Simplecticity is guaranteed for $\Psi_h$ symplectic.
+		\end{itemize}
+	\end{greenblock}
+	}
+	
+\end{frameT}
+
+\appendix
+\begin{frame}[allowframebreaks, t]
+	\frametitle{References}
+	
+	\setbeamertemplate{bibliography item}[text]
+	\bibliographystyle{apalike}
+	\bibliography{anmc}
+\end{frame}
+
+\end{document}

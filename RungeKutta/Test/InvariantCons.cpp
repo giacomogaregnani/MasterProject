@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
+#include <cmath>
 
 double angularMomentum(VectorXd v)
 {
@@ -13,7 +14,7 @@ double hamKepler(VectorXd v)
     return 0.5 * (v(0) * v(0) + v(1) * v(1)) - 1.0 / (sqrt(v(2) * v(2) + v(3) * v(3)));
 }
 
-double HamHenon(VectorXd v)
+double hamHenon(VectorXd v)
 {
     return 0.5 * (v(0) * v(0) + v(1) * v(1)) +
            0.5 * (v(2) * v(2) + v(3) * v(3)) +
@@ -26,31 +27,33 @@ double HamHenon(VectorXd v)
 
 int main(int argc, char* argv[])
 {
-    if (argc < 7) {
+    if (argc < 8) {
         throw std::invalid_argument("Number of inputs must be 6: \n"
                                     "Number of time step reduction\n"
                                     "Max. time step\n"
-                                    "Number of revolutions\n"
+                                    "Final time\n"
                                     "Number of MC samples\n"
                                     "File name for output\n"
                                     "Write everything (input 'full' "
                                             " do only one time step)"
                                             " or just result \n"
+                                    "exponent p\n"
                                     "==========================");
     }
 
 
     // ODE
     odeDef ODE;
-    ODE.ode = KEPLERPERT;
+    ODE.ode = KEPLER;
     setProblem(&ODE);
     std::vector<double> param = ODE.refParam;
 
     // Numerical method
     Butcher tableau(IMPMID, IMPLICIT, 0);
+    double p = std::atof(argv[7]);
 
     // Integration parameters
-    double T = std::atof(argv[3]) * 2 * PI, h = std::atof(argv[2]);
+    double T = std::atof(argv[3]), h = std::atof(argv[2]);
     unsigned int nMC = static_cast<unsigned int>(std::stoul(argv[4]));
     unsigned int nExp = static_cast<unsigned int>(std::stoul(argv[1]));
     unsigned int N = static_cast<unsigned int>(T / h);
@@ -69,8 +72,8 @@ int main(int argc, char* argv[])
     if (!strcmp(argv[6],"full")) {
 
         // Initialization
-        RungeKuttaAddNoise Method(&generator, ODE,
-                                  param, tableau, h, 2.0);
+        RungeKuttaRandomH Method(&generator, ODE,
+                                 param, tableau, h, p);
 
         for (unsigned int k = 0; k < nMC; k++) {
             output << std::fixed << std::setprecision(20)
@@ -80,9 +83,16 @@ int main(int argc, char* argv[])
             VectorXd solution = ODE.initialCond;
 
             double numMomentum;
+
             for (unsigned int i = 0; i < N; i++) {
                 solution = Method.oneStep(solution);
                 numMomentum = fInvariant(solution);
+
+                if (numMomentum != numMomentum) {
+                    output.close();
+                    throw std::out_of_range("Solution diverged \n");
+                }
+
                 output << solution.transpose() << "\t"
                        << numMomentum << std::endl;
             }
@@ -94,34 +104,39 @@ int main(int argc, char* argv[])
         for (unsigned int j = 0; j < nExp; j++) {
 
             // Initialization
-            RungeKuttaAddNoise Method(&generator, ODE,
-                                      param, tableau, h, 2.0);
+            RungeKuttaRandomH Method(&generator, ODE,
+                                      param, tableau, h, p);
 
             // Output file
-            output << h << "\t";
             std::cout << std::fixed << std::setprecision(8)
                       << "Computation for h = " << h << std::endl;
 
             VectorXd solution = ODE.initialCond;
             double refInvariant = fInvariant(ODE.initialCond);
             double errInvariantMax = 0, errInvariantTime = 0;
+            double numMomentum;
 
             for (unsigned int i = 0; i < N; i++) {
                 solution = Method.oneStep(solution);
-                errInvariantTime = std::abs(fInvariant(solution) - refInvariant);
+                numMomentum = fInvariant(solution);
+                errInvariantTime = std::abs(numMomentum - refInvariant);
+                // output << h * i << "\t" << errInvariantTime << std::endl;
+
                 if (errInvariantTime > errInvariantMax) {
                     errInvariantMax = errInvariantTime;
                 }
+
+                if (numMomentum != numMomentum) {
+                    break;
+                }
             }
 
-            output << errInvariantMax << std::endl;
-
+            output << h << "\t" << errInvariantMax << std::endl;
             std::cout << std::fixed << std::setprecision(20)
                       << "Invariant error = " << errInvariantMax
                       << std::endl;
             h /= 2;
             N *= 2;
-
         }
         output.close();
     }

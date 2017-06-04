@@ -1,17 +1,9 @@
-%% Parameters
 clc; close all; clear;
-
-nExp = 10;
-h = 0.01 ./ (2.^[0 : nExp - 1]);
 
 %% Read and compute error
 
-E = zeros(nExp, 1);
+results = dlmread('invariantError.txt');
 
-figure
+loglog(results(:, 1), results(:, 2), 'o-')
 hold on
-Inv = dlmread('IMConvergence.txt');
-E = abs(Inv(:, 1) - Inv(:, 2));
-
-figure
-loglog(h, E);
+loglog(results(:, 1), results(:, 1).^2, 'k--')

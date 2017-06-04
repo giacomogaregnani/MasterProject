@@ -583,35 +583,6 @@ which is the desired result.
 \end{proof}
 Let us remark that Theorem \ref{thm:SymplecticRandH} is trivially proved from Theorem \ref{thm:QuadraticInvariants} for any deterministic method which conserves quadratic first integrals, as this property implies symplecticity for a one-step numerical method. It is though interesting that a similar reasoning can be applied to the additive noise method \eqref{eq:ProbMethAddNoise}, which does not conserve quadratic first integrals.
 
-{\color{red} New starts here}
-
-Techniques of backwards error analysis can be used to prove the long-time accuracy of the geometric integrator. Let us consider the system \eqref{eq:ODEHam} and a time transformation $t \leftrightarrow \tau$ defined by a function $s(p, q)$ such that $\dd t / \dd \tau = s(p, q)$. Then, the Hamiltonian system can be written by the chain rule as
-\begin{equation}\label{eq:ODEHamModif}
-	\begin{pmatrix} p' \\ q' \end{pmatrix} = s(p, q) J \nabla H(p, q),
-\end{equation}
-where the notation $p'$, $q'$ stands for the derivative with respect to $\tau$. We now search a random time transformation $t = \Theta(\tau)$ such that integrating \eqref{eq:ODEHamModif} with a constant time step $h$ is equivalent to integrating \eqref{eq:ODEHam} with our random time-stepping technique. Since the time transformation is independent of $p$ and $q$, we then have
-\begin{equation}\label{eq:ODEHamModifRand}
-	\begin{pmatrix} p' \\ q' \end{pmatrix} = J \nabla \big(\Theta'(\tau) H(p, q)\big),
-\end{equation} 
-which is still an Hamiltonian system with random Hamiltonian $\tilde H(p, q) = \Theta'(\tau) H(p, q)$.
- 
-The first requirement on $\Theta$ is that it is positive, i.e., $\Theta(t) > 0$ for any $t$. In addition we impose on the nodes
-\begin{equation}
-	T_k \defeq \sksum_{i=0}^{k-1}H_k = \Theta (kh)
-\end{equation}
-The random variables $T_k$ satisfy $\E T_k = kh$, which means that the function $\Theta$ has to satisfy $\E \Theta(t) = t$. In order to define time in the modified system between the nodes we proceed by a continuous linear interpolation \textbf{\color{red} Is it necessary?}
-\begin{equation}
-	\Theta (t) =(1 - s) T_k + sT_{k+1}, \quad t_k \leq t < t_{k+1}, \quad 0 \leq s < 1.
-\end{equation}
-The expectation of $\Theta(t)$ outside the nodes is by linearity
-\begin{equation}
-	\E \Theta(t) = (k + s) h , \quad 0 \leq s < 1
-\end{equation}
-With this definition of $\Theta$, the derivative $\Theta'$ is not well defined on the nodes (it is in the weak sense\ldots) 
-\textbf{\color{red} With this time transformation the system \eqref{eq:ODEHamModifRand} is not smooth. Is it still possible to prove results of long time accuracy?}
-
-{\color{red} New ends here}
-
 \begin{theorem}\label{thm:SymplecticAddNoise} If the deterministic integrator identified by the flow $\Psi_h$ is symplectic, then the additive noise probabilistic method \eqref{eq:ProbMethAddNoise} is symplectic.
 \end{theorem}
 \begin{proof} If the flow of the deterministic integrator is $\Psi_h(y)$, the flow of the probabilistic method is given by $\tilde\Psi_h(y) = \Psi_h(y) + \xi_k(h)$. Since $\xi_k(h)$ is independent of $y$, we have $\pdv{\tilde\Psi_h(y)}{y} = \pdv{\Psi_h(y)}{y}$, which proves the result.	
