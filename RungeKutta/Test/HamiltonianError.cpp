@@ -2,8 +2,6 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-#include <cmath>
-
 
 int main(int argc, char* argv[])
 {
@@ -19,12 +17,13 @@ int main(int argc, char* argv[])
 
     // ODE
     odeDef ODE;
-    ODE.ode = KEPLER;
+    ODE.ode = KEPLERPERT;
     setProblem(&ODE);
     std::vector<double> param = ODE.refParam;
 
     // Numerical method
     Butcher tableau(IMPMID, IMPLICIT, 0);
+    Butcher tableauRef(GAUSS4, IMPLICIT, 0);
     double p = std::atof(argv[5]);
 
     // Integration parameters
@@ -40,7 +39,7 @@ int main(int argc, char* argv[])
     output.open(outputFilename, std::ofstream::out | std::ofstream::trunc);
 
     // Reference solution
-    RungeKutta refSolver(ODE, param, tableau);
+    RungeKutta refSolver(ODE, param, tableauRef);
     double hRef = h / 50;
     unsigned int NRef = static_cast<unsigned int>(T / hRef);
     std::vector<VectorXd> refSolution;
@@ -55,18 +54,15 @@ int main(int argc, char* argv[])
 
     // Initialization
     RungeKuttaRandomH Method(&generator, ODE,
-                             param, tableau, h, p);
+                             param, tableauRef, h, p);
 
-    for (unsigned int k = 0; k < nMC; k++) {
+    VectorXd solution = ODE.initialCond;
+    double error;
 
-        VectorXd solution = ODE.initialCond;
-        double error;
-
-        for (unsigned int i = 0; i < N; i++) {
-            solution = Method.oneStep(solution);
-            error = (refSolution[i] - solution).norm() / refSolution[i].norm();
-            output << h * (i+1) << "\t" << error << std::endl;
-        }
+    for (unsigned int i = 0; i < N; i++) {
+        solution = Method.oneStep(solution);
+        error = (refSolution[i] - solution).norm();
+        output << h * (i+1) << "\t" << error << std::endl;
     }
 
     output.close();

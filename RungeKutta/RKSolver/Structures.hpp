@@ -36,7 +36,8 @@ enum methods {
     IMPMID,
     IMPEULER,
     IMPTRAPEZ,
-    SSTAGETRAPEZ
+    SSTAGETRAPEZ,
+    GAUSS4
 };
 
 // Explicit or Implicit

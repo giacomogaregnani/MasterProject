@@ -10,6 +10,8 @@
 \usepackage{appendixnumberbeamer}
 \usepackage{enumitem}
 \usepackage{centernot}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
 \setitemize{label=-, leftmargin=*}
 
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
@@ -37,6 +39,7 @@
 \newenvironment{frameT}{\begin{frame}[t]}{\end{frame}}
 
 \title{Probabilistic Runge-Kutta methods for ODEs}
+\subtitle{Chaotic problems and geometric properties}
 \author{Giacomo Garegnani - ANMC}
 \institute{MATHICSE retreat}
 \date{June 2017}
@@ -132,17 +135,69 @@
 	\end{equation} 
 	For example $H_n \iid \mathcal{U}(h-h^p, h+h^p)$ is a suitable choice.
 	
-	\only<2-6>{
+	\only<2-5>{
 	\begin{greenblock}[Properties]
 		\begin{itemize}
-			\item<3-6> Strong and weak convergence equivalent to additive noise method,
-			\item<4-6> Good qualitative behavior in Bayesian inverse problems,
-			\item<5-6> If $\Psi_h$ conserves an invariant $I(y)$, then so do RTS-RK,
-			\item<6-6> Simplecticity is guaranteed for $\Psi_h$ symplectic.
+			\item<2-5> Strong and weak convergence equivalent to additive noise method,
+			\item<3-5> Good qualitative behavior in Bayesian inverse problems,
+			\item<4-5> If $\Psi_h$ conserves an invariant $I(y)$, then so do RTS-RK,
+			\item<5-5> Simplecticity is guaranteed for $\Psi_h$ symplectic.
 		\end{itemize}
 	\end{greenblock}
 	}
 	
+\end{frameT}
+
+\begin{frameT}
+	\frametitle{Numerical example}
+	
+	Hénon-Heiles problem \cite{HeH64}. Hamiltonian function ($p, q \in \R^2$)
+	
+	\begin{equation}
+		H(p, q) = \frac{1}{2}\norm{p}^2 + \frac{1}{2}\norm{q}^2 + q_1^2q_2 - \frac{1}{3}q_2^3,
+	\end{equation}
+	
+	Corresponding system of ODEs 
+	\begin{equation}\label{eq:HenHei}
+	\begin{aligned}
+		p' &= -\nabla_q H(p, q), &&p(0) = p_0 \in \R^2,\\
+		q' &= \nabla_p H(p, q), &&q(0) = q_0 \in \R^2.
+	\end{aligned}
+	\end{equation}
+	
+	\only<2>{
+	\begin{greenblock}[Problem properties \cite{HLW06}]
+		\begin{itemize}
+			\item Chaotic regime for $H(p, q) > 1/8$,
+			\item Hamiltonian is conserved $\implies$ use symplectic integrator.
+		\end{itemize}
+	\end{greenblock}
+	}
+\end{frameT}
+
+\begin{frame}
+	\frametitle{Numerical results}
+	\begin{tikzpicture}[remember picture,overlay]
+	\node at (4.2,0) (A) {RTS-RK};
+	\node at (7.9,0) (B){Additive noise};
+	\end{tikzpicture}
+	\begin{figure}
+		\begin{center}
+			\begin{tabular}{c@{\hspace{0.3cm}}c}
+				\includegraphics[]{HHStep} & \includegraphics[]{HHAdd} \\
+			\end{tabular}
+		\end{center}		
+	\end{figure}
+\end{frame}
+
+\begin{frameT}
+	\frametitle{Numerical results}
+	\begin{figure}
+		\begin{tabular}{l}
+			\includegraphics[]{HHStepChaos2} \\
+			\includegraphics[]{HHStepChaos}
+		\end{tabular}
+	\end{figure}
 \end{frameT}
 
 \appendix

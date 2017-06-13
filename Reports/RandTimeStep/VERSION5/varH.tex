@@ -551,95 +551,64 @@ It is known that no Runge-Kutta method can conserve any polynomial invariant of 
 \end{theorem}
 \begin{proof} The proof is the same as the proof of Theorem \ref{thm:QuadraticInvariants}.
 \end{proof}
-{\color{shade}
-A class of dynamical systems of particular interest for their geometric properties are the Hamiltonian systems. Given a function $E(p, q)$, called the Hamiltonian, with $p$ and $q$ in $\R^d$, they can be written as
-\begin{equation}\label{eq:ODEHams}
-\begin{pmatrix} p' \\ q' \end{pmatrix} = J^{-1}\nabla E(p, q), \quad \begin{pmatrix} p(0) \\ q(0) \end{pmatrix} = \begin{pmatrix} p_0 \\ q_0 \end{pmatrix},
+
+\subsection{Hamiltonian systems} A class of dynamical systems of particular interest for their geometric properties are the Hamiltonian systems. Given a function $E(p, q)$, called the Hamiltonian, with $p$ and $q$ in $\R^d$, they can be written as
+\begin{equation}\label{eq:ODEHam}
+y' = J^{-1}\nabla E(y), \quad y(0) = y_0,
 \end{equation}
 where the matrix $J\in\R^{2d \times 2d}$ is defined as
 \begin{equation}
-	J = \begin{pmatrix} \mathbf{0} & I \\ -I & \mathbf{0} \end{pmatrix},
+J = \begin{pmatrix} \mathbf{0} & I \\ -I & \mathbf{0} \end{pmatrix},
 \end{equation}
 and where $I$ and $\mathbf{0}$ are respectively the identity and the zero matrices in $\R^{d\times d}$. It is well-known that the flow $\phi_t\colon\R^{2d}\to\R^{2d}$ of any system of the form \eqref{eq:ODEHam} is symplectic, i.e., 
-\begin{equation}\label{eq:SymplecticSystems}
-	\pdv{\phi_t(y)}{y}^T J \pdv{\phi_t(y)}{y} = J, \quad  
+\begin{equation}\label{eq:SymplecticSystem}
+\pdv{\phi_t(y)}{y}^T J \pdv{\phi_t(y)}{y} = J, \quad  
 \end{equation}
 where we denote by $y\in \R^{2d}$ the vector $(p, q)^T$. Condition \eqref{eq:SymplecticSystem} is equivalent in a geometric sense to saying that the flow $\phi_t$ of the system conserves areas in the phase space. In a natural manner, the flow $\Psi_h$ of a one-step numerical method for \eqref{eq:ODEHam} is called symplectic it satisfies
 \begin{equation}\label{eq:SymplecticMethod}
-	\pdv{\Psi_h(y)}{y}^T J \pdv{\Psi_h(y)}{y} = J.
+\pdv{\Psi_h(y)}{y}^T J \pdv{\Psi_h(y)}{y} = J.
 \end{equation}
 It has been pointed out \cite{SkG92, HLW06} that applying an adaptive step size technique to a symplectic method can spoil the properties of simplecticity in the long-time behavior. In particular, Skeel and Gear \cite{SkG92} write any adaptive technique in function of a map $\vartheta(y, h)$ such that the $k$-th time step $h_k$ is selected as $h_k = h\vartheta(y_k, h)$, where $h$ is a base value for the time step. Hence, in order to have again a symplectic method, the new condition to be satisfied is
 \begin{equation}
-	V^T J V = J, \quad V = \pdv{\Psi_{h\vartheta(y, h)}(y)}{y} + h\pdv{\Psi_{h\vartheta(y, h)}(y)}{h}\pdv{h\vartheta(y, h)}{y}^T.
+V^T J V = J, \quad V = \pdv{\Psi_{h\vartheta(y, h)}(y)}{y} + h\pdv{\Psi_{h\vartheta(y, h)}(y)}{h}\pdv{h\vartheta(y, h)}{y}^T.
 \end{equation}
 In view of this condition, we can state a result of symplecticity for our numerical scheme.
 \begin{theorem}\label{thm:SymplecticRandH} If the flow $\Psi_h$ of the deterministic integrator is symplectic, then the flow of the random time-stepping probabilistic method \eqref{eq:ProbMethVarH} is symplectic.
 \end{theorem}
 \begin{proof} We can consider the random mapping $\vartheta(y_k, h) = \Theta_k$ such that $H_k = h\vartheta(y_k, h) = h\Theta_k$, where $\{\Theta_k\}_{k \geq 0}$ is a sequence of i.i.d. random variables such that $\Theta_k > 0$ a.s., $\E\Theta_k = 1$ and $\Var\Theta_k = h^{2p - 2}$ for any $k$ so that $H_k$ satisfies Assumption \ref{as:hStrong}. Then the probabilistic method \eqref{eq:ProbMethVarH} can be written as $Y_{k+1} = \Psi_{\Theta_k h}(Y_{k})$. Since the mapping $\vartheta(y, h)$ is independent of $y$, we have
-\begin{equation}
+	\begin{equation}
 	V \defeq \pdv{\Psi_{\Theta_k h}(y)}{y} + h\pdv{\Psi_{\Theta_k h}(y)}{h}\pdv{\vartheta(y, h)}{y}^T = \pdv{\Psi_{\Theta_k h}(y)}{y}.
-\end{equation}
-Hence, we apply the simplecticity of the deterministic method and get
-\begin{equation}
+	\end{equation}
+	Hence, we apply the simplecticity of the deterministic method and get
+	\begin{equation}
 	V^T J V = J,
-\end{equation}
-which is the desired result.
+	\end{equation}
+	which is the desired result.
 \end{proof}
-Let us remark that Theorem \ref{thm:SymplecticRandH} is trivially proved from Theorem \ref{thm:QuadraticInvariants} for any deterministic method which conserves quadratic first integrals, as this property implies symplecticity for a one-step numerical method. It is though interesting that a similar reasoning can be applied to the additive noise method \eqref{eq:ProbMethAddNoise}, which does not conserve quadratic first integrals.
-\begin{theorem}\label{thm:SymplecticAddNoise} If the deterministic integrator identified by the flow $\Psi_h$ is symplectic, then the additive noise probabilistic method \eqref{eq:ProbMethAddNoise} is symplectic.
+The long-time behavior of symplectic integrators can be analyzed with techniques of backward error analysis \cite{HLW06}. Let us recall that the values $\{Y_k\}_{k\geq 1}$ still approximate the solution $y(t)$ on an evenly spaced time grid with spacing $h$. The flow $\psi_h$ of the one-step probabilistic numerical method can therefore be expressed as
+\begin{equation}
+	\psi_h(y_0) = \Psi_{\Theta_0 h}(y_0),
+\end{equation}
+where $\Psi_h$ is the flow of the deterministic method. Hence, expanding the numerical flow, we have
+\begin{equation}\label{eq:NumFlowExp}
+	\psi_h(y_0) = y_0 + \Theta_0 h f(y_0) + (\Theta_0 h)^2 d_2(y_0)  + (\Theta_0 h)^3 d_3(y_0) + \ldots, 
+\end{equation}
+where the functions $\{d_i\}_{i\geq 2}$ are determined by the coefficients of the Runge-Kutta method $\Psi_h$ and by the derivatives of $f$. Since $\Theta_0$ is independent of $f$ and $y_0$, and considering $F(y) = \Theta_0 f(y)$, we can rewrite \eqref{eq:NumFlowExp} as
+\begin{equation}
+	\psi_h(y_0) = y_0 + h F(y_0) + h^2 D_2(y_0)  + h^3 D_3(y_0) + \ldots, 
+\end{equation}
+where now the functions $\{D_i\}_{i\geq 2}$ depend on the derivatives of $F$. We now consider the modified equation
+\begin{equation}\label{eq:ODEHamModif}
+	\tilde y' = F(\tilde y) + hF_2(\tilde y) + h^2F_3(\tilde y) + \ldots,
+\end{equation}
+such that formally $Y_1 = \tilde y(h)$. Since $\psi_h(y)$ is symplectic, it is known that there exist functions $\{E_i\}_{i\geq 2}$ such that $F_i = J^{-1}\nabla E_i$, i.e., \eqref{eq:ODEHamModif} is Hamiltonian. The existence of an Hamiltonian modified equation guarantees that all the standard results of long time conservation of energy and linear growth of the error of the numerical solution hold for the probabilistic method. 
+
+Let us remark that Theorem \ref{thm:SymplecticRandH} is trivially proved from Theorem \ref{thm:QuadraticInvariants} for any deterministic method which conserves quadratic first integrals, as this property implies symplecticity for a one-step numerical method. It is though interesting that a similar reasoning can be applied to the additive noise method \eqref{eq:ProbMethAddNoise}, which does not conserve quadratic first integrals. 
+\begin{theorem}\label{thm:SymplecticAddNoise} If the flow $\Psi_h$ of the deterministic integrator is symplectic, then the flow of the additive noise probabilistic method \eqref{eq:ProbMethAddNoise} is symplectic.
 \end{theorem}
 \begin{proof} If the flow of the deterministic integrator is $\Psi_h(y)$, the flow of the probabilistic method is given by $\tilde\Psi_h(y) = \Psi_h(y) + \xi_k(h)$. Since $\xi_k(h)$ is independent of $y$, we have $\pdv{\tilde\Psi_h(y)}{y} = \pdv{\Psi_h(y)}{y}$, which proves the result.	
-\end{proof}}
+\end{proof}
 
-\subsection{Hamiltonian systems} A class of dynamical systems of particular interest for their geometric properties are the Hamiltonian systems. Given a function $E\colon \R^{2d}\to\R$, called the Hamiltonian, they can be written as
-\begin{equation}\label{eq:ODEHam}
-	y' = J^{-1}\nabla E(y), \quad y(0) = y_0 \in \R^{2d},
-\end{equation}
-where the matrix $J\in\R^{2d \times 2d}$ is defined as
-\begin{equation}
-	J = \begin{pmatrix} \mathbf{0} & I \\ -I & \mathbf{0} \end{pmatrix},
-\end{equation}
-and where $I$ and $\mathbf{0}$ are respectively the identity and the zero matrices in $\R^{d\times d}$. It is well-known that the flow $\phi_t\colon\R^{2d}\to\R^{2d}$ of any system of the form \eqref{eq:ODEHam} is symplectic, i.e., 
-\begin{equation}\label{eq:SymplecticSystem}
-	\pdv{\phi_t(y)}{y}^T J \pdv{\phi_t(y)}{y} = J.
-\end{equation}
-Symplectic integrators as the implicit midpoint rule or the Störmer-Verlet method have flows mimicking this geometric property and are therefore employed to integrate \eqref{eq:ODEHam}. The main benefit of symplectic integrators is that the error estimates on the Hamiltonian are valid over exponentially long time, thus guaranteeing an accurate solution over a long time span. This result can be proved via techniques of backward error analysis, defining a modified equation for which the numerical integrator is exact. It is however unclear if this favorable property holds in case of random time steps. In order to build a modified system for our numerical integrator, we follow the idea proposed by Hairer \cite{Hai97}, who bases the choice of time step on the value of the numerical solution itself. In our case, the choice is independent of the solution, but it can vary through time. We therefore consider a stochastic process $\theta_h(t)$ such that the time steps $\{H_k\}_{k\geq 0}$ are obtained as
-\begin{equation}
-	H_k = h\theta_h(kh), \quad k = 0, 1, \ldots.
-\end{equation}
-In order for the time steps $\{H_k\}_{k \geq 0}$ to be i.i.d. and satisfy Assumption \ref{as:hStrong}, we have $\theta_h(t) \eqtext{D} H_k / h$ for all $t = kh$, $k = 0, 1, \ldots$, while between the grid points we only require $\theta_h(t) > 0$ almost surely. We now consider the random Hamiltonian $K(y, t)$ defined as
-\begin{equation}
-	K(y, t) = \theta_h(t)E(y),
-\end{equation}
-and whose associated Hamiltonian system is 
-\begin{equation}\label{eq:ODEHamPert}
-	Y' = \theta_h(t) J^{-1} \nabla E(Y), \quad Y(0) = y_0.
-\end{equation}
-Let us remark that this is a random ODE (RODE), and $Y(t)$ is a stochastic process with values in $\R^{2d}$. However, for each realization of the stochastic process $\theta_h(t)$, \eqref{eq:ODEHamPert} is a non-autonomous ODE. Nonetheless, it is true that the solution of \eqref{eq:ODEHamPert} satisfies 
-\begin{equation}
-	Y(t) = y(\alpha_h(t)),
-\end{equation}
-where $y(t)$ is the solution of \eqref{eq:ODEHam} and $\alpha_h(t)$ is the integral stochastic process defined by $\theta_h(t)$, i.e.,
-\begin{equation}
-	\alpha_h(t) = \int_{0}^{t} \theta_h(s) \dd s.
-\end{equation}
-Thanks to this equality, the flow $\Phi_t(y)$ of \eqref{eq:ODEHamPert} satisfies $\Phi_t(y) = \phi_{\alpha_h(t)}(y)$ for any $y \in \R^{2d}$. Hence, the flow $\Phi_t$ is symplectic and for a symplectic numerical method $\Psi_h$ with constant time step $h$ it is possible to find formally a modified equation of the form
-\begin{equation}
-	\tilde Y' = J^{-1}K(\tilde Y, t) + h J^{-1}K_1(\tilde Y, t) + h^2 J^{-1}K_2(\tilde Y, t) + \ldots,
-\end{equation}
-such that $\tilde Y'(nh) = Y_n$, where $Y_n$ is the solution obtained applying $n$ times $\Psi_h$ to the perturbed equation \eqref{eq:ODEHamPert}. Moreover, it has been proved \cite[Theorem 4]{Hai97} that there exists a modified Hamiltonian $\tilde E(y, t)$ such that
-\begin{equation}
-	Y_n = \tilde y(nh),
-\end{equation}
-where $\tilde y$ satisfies the modified equation
-\begin{equation}
-	\tilde y' = J^{-1} \nabla \tilde E(y, t).
-\end{equation}
-Moreover, it is possible to show that $\tilde E$ satisfies
-\begin{equation}
-	\tilde E(y, t) = E(y) + h^rE_r(y, t) + h^{r+1}E_{r+1}(y, t) + \ldots,
-\end{equation}
-where $r$ is the order of convergence of $\Psi_h$. 
 
 \section{Numerical experiments}\label{sec:NumericalExperiments}
 

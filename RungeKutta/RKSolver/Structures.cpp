@@ -90,6 +90,21 @@ Butcher::Butcher(methods chosenMethod, ExplicitImplicit type, int s)
             b(0) = 0.5;
             b(1) = 0.5;
             break;
+        case GAUSS4:
+            stages = 2;
+
+            A.resize(stages, stages);
+            b.resize(stages);
+
+            A(0, 0) = 0.25;
+            A(0, 1) = 0.25 - sqrt(3) / 6.0;
+            A(1, 0) = 0.25 + sqrt(3) / 6.0;
+            A(1, 1) = 0.25;
+
+            b(0) = 0.5;
+            b(1) = 0.5;
+
+            break;
         case SSTAGETRAPEZ:
             stages = 5;
             A.resize(stages, stages);
