@@ -5,7 +5,7 @@ class RungeKuttaRandomH {
 private:
     std::shared_ptr<RungeKutta> RKMethod;
 
-    std::default_random_engine* randomGenerator;
+    std::default_random_engine *randomGenerator;
 
     std::uniform_real_distribution<double> unifDistribution;
 
@@ -16,7 +16,9 @@ private:
     double timeStepOrder;
 
 public:
-    RungeKuttaRandomH(std::default_random_engine* generator,
+    RungeKuttaRandomH() {};
+
+    RungeKuttaRandomH(std::default_random_engine *generator,
                       odeDef ODE, std::vector<double> paramVec,
                       Butcher tableau,
                       double meanTimeStep,

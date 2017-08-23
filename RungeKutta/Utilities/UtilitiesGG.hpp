@@ -13,7 +13,7 @@ using namespace Eigen;
 VectorXd loadRefSolution(std::string& fileName, int solSize);
 
 void loadObservations(std::vector<double>& obsTimes, std::vector<VectorXd>& obs,
-                      std::string& fileName, int solSize);
+                      std::string& fileName, int solSize, double* noise);
 
 void computeOrderOfConvergence(std::vector<double>& errors,
                                std::vector<double>& orders,

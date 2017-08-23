@@ -1,35 +1,36 @@
 #include "MCMC.hpp"
 
-
-MCMC::MCMC(std::normal_distribution<double>::param_type& proposalParam,
-           ProbDensFunc *prior, LikelihoodFunc *likelihood,
-           std::vector<VectorXd>& observations,
-           unsigned long nMCMC, bool RAM, VectorXd initGuess,
-           double desiredAlpha):
-        prior(prior),
-        likelihood(likelihood),
+MCMC::MCMC(VectorXd& initGuess,
+           std::normal_distribution<double>::param_type& proposalParam,
+           double (*post) (VectorXd& theta),
+           unsigned long nMCMC,
+           bool RAM, double desiredAlpha):
+        posterior(post),
         nMCMC(nMCMC),
-        RAM(RAM),
-        observations(observations)
+        RAM(RAM)
 {
     probGen.param(std::uniform_real_distribution<double>::param_type(0.0, 1.0));
     samples = {initGuess};
-    sizeParam = initGuess.size();
+    sizeParam = static_cast<unsigned int> (initGuess.size());
     if (RAM) {
-        RAMUpdate.init(proposalParam.stddev(), desiredAlpha, initGuess.size());
+        RAMUpdate.init(proposalParam.stddev(), desiredAlpha, sizeParam);
         proposal.param(std::normal_distribution<double>::param_type(0.0, 1.0));
     } else {
         proposal.param(proposalParam);
     }
 }
 
-std::vector<VectorXd>& MCMC::compute(std::default_random_engine* generator)
+std::vector<VectorXd>& MCMC::compute(std::default_random_engine* generator, bool noisy)
 {
-    double newPosterior, newLikelihood, newPrior,
-           oldPosterior, oldLikelihood, oldPrior, alpha, currBest;
+    double newPosterior, oldPosterior, alpha;
+    VectorXd currEstimate;
+    currEstimate = samples.back();
     unsigned long accRatio = 0;
 
     VectorXd increment(sizeParam), proposedValue(sizeParam);
+
+    // Compute posterior on first guess
+    oldPosterior = posterior(samples.back());
 
     for (unsigned long i = 0; i < nMCMC; i++) {
 
@@ -44,46 +45,69 @@ std::vector<VectorXd>& MCMC::compute(std::default_random_engine* generator)
         }
 
         // evaluate posterior on new guess
-        newLikelihood = likelihood->LIK(proposedValue, observations);
-        newPrior = prior->PDF(proposedValue);
-        newPosterior = newPrior + newLikelihood;
+        newPosterior = posterior(proposedValue);
 
-        // re-evaluate posterior on old guess
-        oldLikelihood = likelihood->LIK(samples.back(), observations);
-        oldPrior = prior->PDF(samples.back());
-        oldPosterior = oldPrior + oldLikelihood;
+        // For the noisy algorithm, re-evaluate on old guess
+        if (noisy) {
+            oldPosterior = posterior(samples.back());
+        }
 
         // compute probability
         alpha = newPosterior - oldPosterior;
-        alpha = std::min(1.0, exp(alpha));
+        alpha = std::min(0.0, alpha);
 
         // Update chain
-        if (probGen(*generator) < alpha) {
+        if (std::log(probGen(*generator)) < alpha) {
             samples.push_back(proposedValue);
             oldPosterior = newPosterior;
             ++accRatio;
-            currBest = newLikelihood;
         } else {
             samples.push_back(samples.back());
         }
 
+        // Update current estimate
+        currEstimate = currEstimate * static_cast<double>(i + 1) / (i + 2)
+                       + samples.back() * 1.0 / (i + 2);
+
         if (RAM) {
-            RAMUpdate.update(increment, alpha);
+            RAMUpdate.update(increment, exp(alpha));
         }
 
-        if (i % 100 == 0) {
+        if (i % 1000 == 0) {
             std::cout << "Completed " << i << " iterations out of " << nMCMC << std::endl
-                      << "Parameter value = " << samples.back().transpose() << std::endl
-                      << "log-likelihood = " <<  currBest << std::endl;
+                      << "Current estimate = " << currEstimate.transpose() << std::endl
+                      << "Last accepted value = " << samples.back().transpose() << std::endl
+                      << "Current acc. ratio = " << 1.0 / (i + 1) * accRatio << std::endl
+                      << "Current posterior = " << oldPosterior << std::endl
+                      << "==============================" << std::endl;
         }
     }
 
-    std::cout << "=====================" << std::endl
-              << "MCMC END WITH "
-              << std::fixed << std::setprecision(3)
-              << static_cast<double>(accRatio) / nMCMC
-              << " ACCEPTANCE RATIO." << std::endl
-              << "=====================" << std::endl;
+    // Take 10% burn-in out
+    unsigned long burnIn = nMCMC / 10;
+    samples.erase(samples.begin(), samples.begin() + burnIn);
+
+    // Compute MCMC estimate
+    VectorXd finalEstimate = VectorXd::Zero(currEstimate.size());
+    for (auto it : samples) {
+        finalEstimate += it;
+    }
+    finalEstimate /= (nMCMC - burnIn);
+
+    std::cout << std::fixed << std::setprecision(3)
+              << "=====================" << std::endl
+              << "MCMC ESTIMATE:" << std::endl
+              << finalEstimate.transpose() << std::endl
+              << " ACCEPTANCE RATIO: " << static_cast<double>(accRatio) / nMCMC << std::endl;
+
+    if (RAM) {
+        std::cout << "FINAL COVARIANCE MATRIX (proposal)" << std::endl
+                  << RAMUpdate.getS() * RAMUpdate.getS().transpose() << std::endl
+                  << "=====================" << std::endl;
+    } else {
+        std::cout << "=====================" << std::endl;
+    }
+
 
     return samples;
 }

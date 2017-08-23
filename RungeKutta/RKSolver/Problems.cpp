@@ -397,6 +397,51 @@ MatrixXd HenHeilJ(VectorXd argument, std::vector<double>& param)
     return result;
 }
 
+VectorXd Toda(VectorXd argument, std::vector<double>& param)
+{
+    VectorXd result(6);
+
+    result << -1.0 * exp(argument(3) - argument(4)) + exp(argument(5) - argument(3)),
+              exp(argument(3) - argument(4)) - exp(argument(4) - argument(5)),
+              exp(argument(4) - argument(5)) - exp(argument(5) - argument(3)),
+              argument(0),
+              argument(1),
+              argument(2);
+
+    return result;
+}
+
+MatrixXd TodaJ(VectorXd argument, std::vector<double>& param)
+{
+    MatrixXd result = MatrixXd::Zero(6, 6);
+
+    // p1
+    result(0, 3) = -exp(argument(3) - argument(4)) - exp(argument(5) - argument(3));
+    result(0, 4) = exp(argument(3) - argument(4));
+    result(0, 5) = exp(argument(5) - argument(3));
+
+    // p2
+    result(1, 3) = exp(argument(3) - argument(4));
+    result(1, 4) = -1.0 * exp(argument(3) - argument(4)) - exp(argument(4) - argument(5));
+    result(1, 5) = exp(argument(4) - argument(5));
+
+    // p3
+    result(2, 3) = exp(argument(5) - argument(3));
+    result(2, 4) = exp(argument(4) - argument(5));
+    result(2, 5) = -1.0 * exp(argument(4) - argument(5)) - exp(argument(5) - argument(3));
+
+    // q1
+    result(3, 0) = 1.0;
+
+    // q2
+    result(4, 1) = 1.0;
+
+    // q3
+    result(5, 2) = 1.0;
+
+    return result;
+}
+
 void setProblem(odeDef* odeModel)
 {
     switch (odeModel->ode) {
@@ -574,6 +619,20 @@ void setProblem(odeDef* odeModel)
 
             odeModel->odeFunc = &HenHeil;
             odeModel->odeJac = &HenHeilJ;
+            odeModel->refParam = {};
+            break;
+        case TODA:
+            odeModel->size = 6;
+            (odeModel->initialCond).resize(odeModel->size);
+            (odeModel->initialCond)(0) = -1.5;
+            (odeModel->initialCond)(1) = 1.0;
+            (odeModel->initialCond)(2) = 0.5;
+            (odeModel->initialCond)(3) = 1.0;
+            (odeModel->initialCond)(4) = 2.0;
+            (odeModel->initialCond)(5) = -1.0;
+
+            odeModel->odeFunc = &Toda;
+            odeModel->odeJac = &TodaJ;
             odeModel->refParam = {};
             break;
         case POISSON:

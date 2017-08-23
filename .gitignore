@@ -11,11 +11,15 @@ RungeKutta/build
 RungeKutta/matlabPlots/GAIO-master/**
 RungeKutta/.idea
 RungeKutta/cmake-build-debug/**
+RungeKutta/getpot-c++/**
 
 RandomPDE/eigen
 RandomPDE/build
 RandomPDE/.idea
 RandomPDE/cmake-build-debug/**
+RandomPDE/matlabPlots/**/*.mat
+RandomPDE/matlabPlots/**/*.txt
+RandomPDE/matlabPlots/FEM_library/**
 
 Reports/**/*.aux
 Reports/**/*.eps
@@ -26,3 +30,5 @@ Reports/**/*.out
 Reports/**/*.synctex.gz
 Reports/**/*.bbl
 Reports/Poster_Orane/**
+
+matlabCode/**

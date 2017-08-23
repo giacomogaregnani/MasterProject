@@ -1,0 +1,93 @@
+clc; clear; close all;
+%% PLOT DENSITIES OF SOME PARAMETERS
+
+filename = 'resultsTenIntSmallNoise3_';
+N = [10, 20, 40, 60, 80];
+colors = {'red', 'blue', 'black', 'cyan', 'green'};
+
+for n = N
+    load([filename, num2str
+
+
+nLeg = cell(length(N) + 1, 1);
+for i = 1 : length(N)
+    nLeg{i} = num2str(N(i));
+end
+nLeg{length(N) + 1} = 'Truth';
+
+thetaPlot = 3 : 5;
+
+for i = 1 : length(thetaPlot)
+    figure
+    hold on
+    a1(i) = gca;
+    
+    figure
+    hold on
+    a2(i) = gca;
+end
+
+for i = 1 : length(thetaPlot)
+    for j = 1 : i - 1
+        figure
+        hold on
+        a2D(i, j) = gca;
+        
+        figure
+        hold on
+        a2DPr(i, j) = gca;
+    end
+end
+
+q = 1;
+for n = N
+    
+    load([filename, num2str(n)])
+    
+    k = 1;
+    for j = thetaPlot
+        if n == N(end)
+            plotDensitiesMCMC(thetaAllProbEff(j, :), thetaRef(j), a1(k), true);
+            plotDensitiesMCMC(thetaAllEff(j, :), thetaRef(j), a2(k), true);
+        else
+            plotDensitiesMCMC(thetaAllProbEff(j, :), thetaRef(j), a1(k), false);
+            plotDensitiesMCMC(thetaAllEff(j, :), thetaRef(j), a2(k), false);
+        end
+        k = k + 1;
+    end
+    
+    for k = 1 : length(thetaPlot)
+        for j = 1 : k - 1
+            plotDensitiesMCMC2(thetaAllEff([thetaPlot(k), thetaPlot(j)], :), colors{q}, a2D(k, j));
+            plotDensitiesMCMC2(thetaAllProbEff([thetaPlot(k), thetaPlot(j)], :), colors{q}, a2DPr(k, j));
+        end
+    end
+    
+    q = q + 1;
+end
+
+k = 1;
+lag = 0.15;
+for j = thetaPlot
+    xLim = [thetaRef(j) - lag, thetaRef(j) + lag];
+    set(a1(k), 'xLim', xLim);
+    set(a2(k), 'xLim', xLim);
+    set(a1(k), 'yTick', []);
+    set(a2(k), 'yTick', []);
+    legend(a1(k), nLeg)
+    legend(a2(k), nLeg)
+    k = k + 1;
+end
+
+for k = 1 : length(thetaPlot)
+    for j = 1 : k - 1
+        t1 = thetaRef(thetaPlot(k)); t2 = thetaRef(thetaPlot(j));
+%         set(a2D(k, j), 'xLim', [t1 - lag, t1 + lag]);
+%         set(a2DPr(k, j), 'xLim', [t1 - lag, t1 + lag]);
+%         set(a2D(k, j), 'yLim', [t2 - lag, t2 + lag]);        
+%         set(a2DPr(k, j), 'yLim', [t2 - lag, t2 + lag]);      
+        plot(a2D(k, j), t1, t2, 'xk')
+        plot(a2DPr(k, j), t1, t2, 'xk')
+    end
+end
+

@@ -5,4 +5,7 @@ project(randomPDE)
 
 include_directories(${CMAKE_SOURCE_DIR}/eigen)
 
-add_subdirectory(FirstTests)
+add_subdirectory(MCMCLib)
+add_subdirectory(OneDimElliptic)
+add_subdirectory(TestPDE)
+add_subdirectory(InversePDE)

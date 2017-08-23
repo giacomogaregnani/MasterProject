@@ -16,6 +16,8 @@ private:
     Butcher RKInfo;
 
 public:
+    RungeKutta() {};
+
     RungeKutta(odeDef ODE,
                std::vector<double> paramVec,
                Butcher tableau);

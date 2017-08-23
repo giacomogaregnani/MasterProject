@@ -59,5 +59,5 @@ target_link_libraries(HamError RandomStep UtilitiesGG)
 add_executable(traj GenerateTrajectories.cpp)
 target_link_libraries(traj RandomStep UtilitiesGG)
 
-add_executable(Inverse ODEParam.cpp)
-target_link_libraries(Inverse RandomStep UtilitiesGG MCMC)
+add_executable(OdeInverse OdeInverse.cpp)
+target_link_libraries(OdeInverse RandomStep UtilitiesGG MCMC)

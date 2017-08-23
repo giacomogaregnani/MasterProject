@@ -23,7 +23,8 @@ enum problems {
     PEROX,
     KEPLER,
     KEPLERPERT,
-    HENHEIL
+    HENHEIL,
+    TODA
 };
 
 // Collection of classic RK methods

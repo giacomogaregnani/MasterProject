@@ -1,0 +1,23 @@
+figure
+confInt1 = [minLimKappa(meshRef.x), fliplr(avgKappa(meshRef.x))];
+confInt2 = [maxLimKappa(meshRef.x), fliplr(avgKappa(meshRef.x))];
+plot(meshRef.x, kappaTheta(meshRef.x), 'r');
+hold on
+plot(meshRef.x, avgKappa(meshRef.x), 'b');
+M = 1000;
+G = linspace(0,1,M).';
+myGmap = horzcat(G, G, ones(size(G)));
+colormap(myGmap)
+F = fill([meshRef.x, fliplr(meshRef.x)], confInt1, 'b', ...
+    'linestyle', '--', 'facealpha', 0.4);
+F2 = fill([meshRef.x, fliplr(meshRef.x)], confInt2, 'b', ...
+    'linestyle', '--', 'facealpha', 0.4);
+cdata = get(F, 'ydata')
+% cdata = [avgKappa(meshRef.x), fliplr(avgKappa(meshRef.x))]' - get(F, 'ydata');
+cdata2 = get(F2, 'ydata');
+% cdata2 = get(F, 'ydata') - [avgKappa(meshRef.x), fliplr(avgKappa(meshRef.x))]';
+cdata = 1 - (cdata - min(cdata))/(max(cdata)-min(cdata));
+cdata2 = (cdata2 - min(cdata2))/(max(cdata2)-min(cdata2));
+set(F, 'CData', cdata, 'FaceColor', 'interp')
+set(F2, 'CData', cdata2, 'FaceColor', 'interp')
+legend('true', 'average', 'confidence 0.95', 'Location', 'best')

@@ -1,0 +1,37 @@
+\documentclass{scrartcl}
+
+% basics
+\usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage{afterpage}
+\usepackage{enumitem}   
+\setlist[enumerate]{topsep=3pt,itemsep=3pt,label=(\roman*)}
+
+% maths
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\title{Projet de Master proposals}
+\author{Assyr Abdulle, Giacomo Garegnani}
+\date{Fall semester 2017-18}
+
+\begin{document}
+	\maketitle
+	
+	\section{Invariant measure approximation}
+	\underline{Goal}. Investigate (and propose) methods for the approximation of nontrivial invariant measures of chaotic ODEs (and SDEs).\\
+	\underline{Literature research}. What is the state of the art for ODEs? Covering-based methods (e.g., Dellnitz et al. 1997) with Galerkin approximation of Frobenius-Perron operator are expensive (and old).\\
+	\underline{First research question}. Random time-stepping (AA \& GG, work in progress) or additive noise (Conrad et al. 2016) on Runge-Kutta could be useful? Comparison with fully Bayesian approach (e.g., Kersting and Hennig 2017). 
+	
+	\section{Adaptive random time-stepping for stiff equations}
+	\underline{Goal.} Propose an adaptive time-stepping technique combined with RTS-RK for stiff equations with non-trivial invariant measures (or chaotic behavior).\\
+	\underline{Literature research} 
+	
+	\section{Probabilistic FEM for PDEs}
+	\underline{Goal.} Investigate random meshing (AA \& GG, work in progress) vs. basis functions perturbations (Conrad et al. 2016) and fully Bayesian meshless methods (Cockayne et al. 2017).\\
+	\underline{Coding challenge.} Find conditions on mesh perturbations in $d$-dimensional domains and implement modifications on matrix and RHS assemblers.\\
+	\underline{First research question.} Performance in the approximation of forward problem using random meshing vs. basis functions perturbations vs. meshless methods. Convergence and stability analysis for random meshing in the $d$-dimensional case.\\
+	\underline{Second research question.} After a study of Bayesian inverse problems, test unknown parameters estimation with the different proposed methods. How to quantify the convergence of the posterior distribution? Analysis of different MCMC techniques and post-processing.
+		
+\end{document}

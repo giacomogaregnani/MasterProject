@@ -14,7 +14,7 @@ VectorXd loadRefSolution(std::string& fileName, int solSize)
 }
 
 void loadObservations(std::vector<double>& obsTimes, std::vector<VectorXd>& obs,
-                      std::string& fileName, int solSize)
+                      std::string& fileName, int solSize, double* noise)
 {
     std::fstream input(fileName, std::ofstream::in);
     unsigned int nObs;
@@ -30,6 +30,7 @@ void loadObservations(std::vector<double>& obsTimes, std::vector<VectorXd>& obs,
         }
     }
 
+    input >> *noise;
 }
 
 void computeOrderOfConvergence(std::vector<double>& errors,

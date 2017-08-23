@@ -1,0 +1,287 @@
+\documentclass{scrartcl}
+
+% basics
+\usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage[title,titletoc]{appendix}
+\usepackage{afterpage}
+\usepackage{enumitem}   
+\setlist[enumerate]{topsep=3pt,itemsep=3pt,label=(\roman*)}
+
+% maths
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bbm}
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\numberwithin{definition}{section}
+\numberwithin{remark}{section}
+
+% tables
+\usepackage{booktabs}
+
+% plots
+\usepackage{graphicx}
+\usepackage{pgfplots} 
+\usepackage{tikz}
+\usepackage[labelfont=bf]{caption}
+\setlength{\belowcaptionskip}{-5pt}
+\usepackage{here}
+\usepackage[font=normal]{subcaption}
+
+% title and authors
+\title{Summer School - Probabilistic Numerics}
+\author{Giacomo Garegnani}
+\date{Dobbiaco - June 2017}
+
+% my commands 
+\DeclarePairedDelimiter{\ceil}{\left\lceil}{\right\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\|}{\|}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\Pr}{\mathbb{P}}
+\newcommand{\eqtext}[1]{\ensuremath{\stackrel{#1}{=}}}
+\newcommand{\leqtext}[1]{\ensuremath{\stackrel{#1}{\leq}}}
+\newcommand{\iid}{\ensuremath{\stackrel{\text{i.i.d.}}{\sim}}}
+\newcommand{\totext}[1]{\ensuremath{\stackrel{#1}{\to}}}
+\newcommand{\rightarrowtext}[1]{\ensuremath{\stackrel{#1}{\longrightarrow}}}
+\newcommand{\leftrightarrowtext}[1]{\ensuremath{\stackrel{#1}{\longleftrightarrow}}}
+\newcommand{\pdv}[2]{\ensuremath\partial_{#2}#1}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\epl}{\varepsilon}
+\newcommand{\diffL}{\mathcal{L}}
+\newcommand{\prior}{\mathcal{Q}}
+\newcommand{\defeq}{\coloneqq}
+\newcommand{\eqdef}{\eqqcolon}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\E}{\operatorname{\mathbb{E}}}
+\newcommand{\MSE}{\operatorname{MSE}}
+\newcommand{\trace}{\operatorname{tr}}
+\newcommand{\MH}{\mathrm{MH}}
+\newcommand{\ttt}{\texttt}
+\newcommand{\Hell}{d_{\mathrm{Hell}}}
+\newcommand{\sksum}{\textstyle\sum}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ind}[1]{\mathbbm{1}_{#1}}
+\newcommand{\gauss}{\mathcal{N}}
+\newcommand{\GP}{\mathcal{GP}}
+\definecolor{shade}{RGB}{100, 100, 100}
+
+
+\begin{document}
+\maketitle
+
+This brief report summarizes the topics highlighted in the Dobbiaco Summer School 2017, which took place from the 19 June to the 23 June 2017. Speakers were Philipp Hennig (Max Planck Institute for Intelligent Systems), and Chris Oates (Newcastle university and Alan Turing institute).
+
+\section{A machine learning approach to Probabilistic Numerics}
+
+In this first part, we summarize results of probabilistic numerics in which prior and posterior distributions are Gaussians. We show how considering the Gaussian distribution allows translating a probabilistic problem into linear algebra computations, thus showing an application on the computation of approximate integrals and on the solution of ordinary differential equations (ODEs).
+
+\subsection{Motivation: Gaussian distribution and linear algebra}
+Gaussian random variables offer a solid framework for Bayesian inference and therefore the implementation of efficient probabilistic numerical methods. Due to their exponential structure, Gaussian random variables are a natural choice in order to treat inference with the instruments of linear algebra. In particular, if we denote by $p(x) = \gauss(x; \mu, \Sigma)$ a Gaussian distribution with mean $x$ and covariance $\Sigma$, it is true that 
+\begin{itemize}
+	\item products of Gaussians are Gaussians $$\gauss(x;a,A)\gauss(x;b,B) = \gauss(x;c,C)\gauss(a;b,A+B),$$
+	\item marginals of Gaussians are Gaussians 
+	\begin{equation}
+		\int \gauss\left[\begin{pmatrix}x \\ y\end{pmatrix}; \begin{pmatrix}\mu_x \\ \mu_y\end{pmatrix}, \begin{pmatrix} \Sigma_{xx} & \Sigma_{xy} \\ \Sigma_{yx} & \Sigma_{yy} \end{pmatrix}\right] \dd y = \gauss(x;\mu_x, \Sigma_{xx}),
+	\end{equation}
+	\item conditionals of Gaussians are Gaussians $$p(x\mid y) = \gauss\big(x;\mu_x + \Sigma_{xy}\Sigma_{yy}^{-1}(y - \mu_y), \Sigma_{xx} - \Sigma_{xy}\Sigma_{yy}^{-1}\Sigma_{yx}\big),$$
+	\item linear projections of Gaussians are Gaussians $$p(z) = \gauss(z; \mu, \Sigma) \implies p(Az) = \gauss(Az, A\mu, A\Sigma A^T). $$
+\end{itemize}
+These properties show that the family of Gaussian distributions is closed with respect to all the operations needed for Bayesian inference, and computation of resulting distributions is only done in terms of linear algebra of means and covariance structures.
+
+\subsection{Gaussian processes}
+The fundamental instrument in order to build probabilistic numerics methods based on Gaussian distributions are Gaussian processes. First of all, the notion of a Mercer kernel is needed.
+\begin{definition}[Mercer Kernel] A function $k \colon \mathbb{X}\times\mathbb{X}\to\R$ is a Mercer kernel if, for any finite collection $X = [x_1, \ldots, x_N]$, the matrix $k_{XX}\in\R^{N\times N}$, with $(k_{XX})_{ij} = k(x_i, x_j)$, is positive semidefinite. 
+\end{definition}
+Provided with a definition of Mercer kernel, a Gaussian process is directly defined.
+\begin{definition} Let $\mu\colon\mathbb{X}\to \R$ be any function and $k \colon \mathbb{X}\times\mathbb{X}\to\R$ a Mercer kernel. A Gaussian process $p(f) = \GP(f;\mu,k)$ is a probability distribution over the function $f \colon \mathbb{X} \to \R$, such that every finite restriction to function values $f_X \defeq [f(x_1), \ldots, f(x_N)]$ is a Gaussian distribution $p(f_X) = \gauss(f_X; \mu_X, k_{XX})$.
+\end{definition}
+The most common example of Gaussian process is the (one-dimensional) Wiener process $W$, whose distribution can be seen as $p(w) = \GP(w; 0, k_w)$, where $k_w(x, x') = \min\{x, x'\}$. The first application of Gaussian processes is learning in a Bayesian fashion a function from data. In fact, given a valid kernel $k$ and a function $\mu$, we can set the prior distribution over a space of function $f\colon \mathbb{X} \to \R$ to be
+\begin{equation}
+	p(f) = \GP(f; \mu, k).
+\end{equation}
+Let us consider then a set of data $\{(x_i, G_i)\}_{i=1}^N$, where $x_i \in \mathbb{X}$ and $G_i \in \R$. We furthermore consider $G_i = g(x_i) + \epl$, where $\epl$ is a random disturbance such that $\epl \sim \gauss(0, \sigma^2)$. The posterior distribution, i.e., $p(f\mid G)$, is then Gaussian. In fact, if we consider a set of points $\{X_i\}_{i=1}^M$ where we wish to know the value of the mean and variance of the posterior distribution, we can simply obtain that by
+\begin{align}
+	\mu(X) &= k_{xX}(k_{xx} + \sigma^2 I)^{−1}G,\\
+	\Sigma(X) &= k_{XX} - k_{xX}(k_{xx} + \sigma^2 I)^{-1}k_{Xx},
+\end{align}
+where $x$ and $X$ are the vectors of the observations $\{x_i\}_{i=1}^N$ and $\{X_i\}_{i=1}^M$.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[]{posterior}
+	\caption{Posterior distribution. Parameters $g = sin(2x)$ (black line), observation noise $\sigma = 0.1$ (red circles), exponential kernel $k(x, y) = \exp(-(x - y)^2/2)$. Mean of the posterior (thick blue) and standard deviations (dashed blue).} 
+\end{figure}
+
+\subsection{Approximate integrals with $\GP$}
+Given $F \in \R^{d\times d}$ and $L \in \R^d$, let us consider the $d$-dimensional SDE 
+\begin{equation}
+	\dd x(t) = F x(t) \dd t + L \dd W_t.
+\end{equation}
+This equation, with $x(t_0) = x_0$, locally describes the behavior of a Gaussian process $p(x)$ defined as
+\begin{equation}
+	p(x) = \GP\big(x; e^{F(t-t_0)}, k\big), \quad k(t, t') = \int_{t_0}^{t\land t'} e^{F(t-\tau)}LL^Te^{F^T(t'-\tau)} \dd\tau.
+\end{equation}
+A discrete sampling of the Gaussian process leads to a Markov chain whose transition probability is given by $p(x_{t_i+1}\mid x_{t_i}) = \gauss(x_{t_{i+1}}; A_{t_i}x_{t_i}, Q_{t_i})$, where
+\begin{equation}\label{eq:MatrixMarkov}
+	A_{t_i} = e^{F(t_{i+1} - t_i)}, \quad Q_{t_i} = \int_{0}^{t_{i+1}-t_i} e^{F\tau}LL^T e^{F\tau}\dd \tau.
+\end{equation}
+Consider the problem of integrating a known function $f\colon \mathbb{X} \to \R$ in a probabilistic manner. At the continuous time level, we consider the following SDE
+\begin{equation}\label{eq:SDEInt}
+	\dd z(x) = \begin{pmatrix} 0 & 1 \\ 0 & 0\end{pmatrix} z(x) \dd x + \begin{pmatrix} 0 \\ 1 \end{pmatrix} \dd W_t,
+\end{equation}
+where the vector $z(x)$ encodes $z(x) = \big(\int_{x_0}^x f(\tilde x) \dd \tilde x, f(x)\big)^T$. The aim is constructing a Gaussian process $p(z \mid f) = \GP(z; m, P)$, i.e., finding the evolution in space of the mean $m$ and variance $P$. If we consider an evenly spaced grid with spacing $h$ and following the procedure above for a general SDE, we get the matrices
+\begin{equation}
+	A(h) = \begin{pmatrix} 1 & h \\ 0 & 1\end{pmatrix}, \quad Q(h) = \begin{pmatrix} h^3/3 & h^2/2 \\ h^2/2 & h	\end{pmatrix}.
+\end{equation}
+These matrices are computed via \eqref{eq:MatrixMarkov} and give the update formula for the Markov process defined by \eqref{eq:SDEInt}. Moreover, we have to consider the observations, which are given by the value of the function $f$ on the grid points. These are accounted for in a Kalman filter setting \cite{Sar13} via the matrix $H = (0, 1)$ and the scalar $R = 0$ (noiseless observations). For each point in the grid, there are two phases
+\begin{enumerate}
+	\item Update mean and covariance of $z$ (\textit{prediction step}) via the Markov chain generator by 
+	\begin{equation}
+		m^{-} \leftarrow Am, \quad P^{-} \leftarrow A(h)PA(h)^T + Q.		
+	\end{equation}
+	\item Consider the observations $y = f(x) - Hm^{-}$, and update mean and covariance accordingly (\textit{update step}) via
+	\begin{equation}
+		m \leftarrow m^{-} + Ky, \quad P \leftarrow (I - KH)P^{-},
+	\end{equation}
+	where $K = P^{-}H^T/(HP^{-}H^T)$ is known as the \textit{Kalman gain}.
+\end{enumerate}
+It is possible to find that following these updates, the mean of the integral (i.e., $m_1$) is given by the classical trapezoidal rule. The covariance structure $P$ is adding information about the uncertainty on the computation of the integral.
+
+\subsection{An ODE solver based on $\GP$}
+The simple linear algebra structure descending from Gaussian processes enables to formulate ODE solvers actively updating a posterior distribution over the numerical solution with a slight increase in computational cost with respect to classical solvers. The first example of a Bayesian solver for ODEs has been prematurely proposed by J. Skilling \cite{Ski92}, and is an active area of research (e.g., H. Kersting and P. Hennig \cite{KeH16} and M. Schober, D.K. Duvenaud, P. Hennig \cite{SDH14}).
+
+Let us consider $f\colon \R^d\times\R \to \R$ and the ODE
+\begin{equation}
+	y'(t) = f(y(t), t), \quad y(0) = y_0 \in \R^d.
+\end{equation}
+The main idea behind Bayesian solvers of ODEs descends practically from the probabilistic interpretation of approximate integrals, and their algorithms exploit the typical updates of Kalman filters. In particular, we consider the SDE
+\begin{equation}
+	\dd z(x) = \begin{pmatrix} 0 & 1 \\ 0 & 0\end{pmatrix} z(x) \dd x + \begin{pmatrix} 0 \\ \theta \end{pmatrix} \dd W_t,
+\end{equation}
+which is the same as \eqref{eq:SDEInt}, with a relaxation parameter $\theta$. Computing the matrices with \eqref{eq:MatrixMarkov}, one gets
+\begin{equation}
+	A(h) = \begin{pmatrix} 1 & h \\ 0 & 1\end{pmatrix}, \quad Q(h) = \theta^2 \begin{pmatrix} h^3/3 & h^2/2 \\ h^2/2 & h	\end{pmatrix}.
+\end{equation}
+Conversely to the computation of integrals, in this case the points in which evaluating the function $f$ are unknown a priori. Hence, after the \textit{prediction step} and before the \textit{update step}, observations are generated as $y_i = f(Hm_i^{-}, t_i)$. It is possible to show \cite{SDH14} that considering these matrices the prediction step is equivalent to a step of the Explicit Euler method, while after the update step the value of $m$ is equal to that of the trapezoidal rule. Overall, the mean of the method converges in order two to the true solution of the ODE. 
+
+Kersting and Hennig \cite{KeH16} show that it possible to build higher order methods just enlarging the dimension of the state space of the SDE \eqref{eq:SDEInt}. In particular, considering matrices
+\begin{equation}
+	F = \begin{pmatrix} 0 & 1 & 0 &   & \cdots & 0 \\
+						  & 0 & 1 & 0 & \cdots & 0 \\
+						  &   & \ddots & \ddots & \ddots & \vdots \\
+						  & & & 0 & 1& 0  \\
+						  & & & & 0 & 1 \\
+						  & & & & & 0    
+		\end{pmatrix} \in \R^{q+1\times q+1}, \quad L = \begin{pmatrix} 0 \\ 0 \\ \vdots \\ 0 \\ \theta \end{pmatrix} \in \R^{q+1}, 
+\end{equation}
+it is possible to get a method whose mean is converging with order $q$ to the true solution. In particular, it has been shown (Hennig, Osborne, Girolami, unpublished) that for $q = 1,2,3,4$ and a careful choice of the evaluation times the method descending from this choice of matrices is locally equivalent to Runge-Kutta methods of order $q$.
+
+\section{A general framework of Bayesian numerical methods}
+
+In this section, we consider a general definition and application of Bayesian numerical methods, which has been first formalized by A. Stuart \cite{Stu10}.
+
+\subsection{A definition of Bayesian numerical methods}
+
+Many probabilistic methods have been proposed for the solution of classical problems of numerical analysis. Not all of them though can be classified as being Bayesian. Any numerical method can be written in terms of
+\begin{itemize}
+	\item An unobservable quantity $x \in \mathcal{X}$,
+	\item A quantity of interest $Q(x) \in \mathcal{Q}$, 
+	\item An information operator $x \mapsto A(x) \in \mathcal{A}$, where $\dim\mathcal{A} = n < \infty$.
+\end{itemize}
+The goal of deterministic method is to find $Q(x)$ using the information given by $A(x)$. For example, we can consider the problem of integrating a function $x(t)$. Then our information $A(x)$ will be a set of points $\{x(t_i)\}_{i=1}^n$, and our quantity of interest will be $Q(x) = \int x(t) \dd t$. Given $a \in \mathcal{A}$, the numerical method can be encoded by some function $b\colon\mathcal{A}\to\mathcal{Q}$ such that the output of the method is $b(a)$. In the Bayesian framework, a prior distribution on the unobservable quantity $x$ has to be specified, and we will denote it by $P_x$, and the result is a posterior distribution $P_{x\mid a}$ which is used to approximate $Q(x)$. 
+\begin{definition}\label{def:BPNM} A numerical method $B(P_x, a)$ is \textit{Bayesian} if and only if 
+	\begin{equation}
+		B(P_x, a) = Q_\# P_{x\mid a},
+	\end{equation}
+	where $Q_\#P_{x\mid a}$ is the \textit{push forward measure} associated to $Q$ and $P_{x\mid a}$, i.e., for any operator $T$, set $S$ and measure $\mu$, the measure such that
+	\begin{equation}
+		(T_\# \mu)(S) = \mu\big(T^{-1}(S)\big),
+	\end{equation}
+	where $T^{-1}$ denotes the counter-image of $S$ through $T$.
+\end{definition}
+\begin{remark} If we denote the set of measures on a set $\Omega$ as $\mathcal P_{\Omega}$, then $P_x \in \mathcal{P}_{\mathcal{X}}$ and $B(P_x, a) \in \mathcal{P}_{\mathcal{Q}}$.	
+\end{remark}
+This rigorous and restrictive definition of a Bayesian probabilistic numerical method has been proposed by J. Cockayne et al. \cite{COS17}. In this work, it is possible to find an interesting classification of several probabilistic solvers present in literature.
+
+\subsection{Well-posedeness of Bayesian numerical methods}
+
+From the definition above it is unclear how the posterior distribution $P_{x\mid a} \in \mathcal P_{\mathcal X}$ over the unobservable quantity $x$ is defined. In the finite-dimensional case (i.e., $\dim \mathcal X < \infty$), it is possible to work with the Lebesgue measure and hence Bayes' rule states
+\begin{equation}
+	p(x\mid a) = \frac{p(a\mid x)p(x)}{p(a)}.
+\end{equation}
+In our setting, the unobservable quantity $x$ is in an infinite dimensional space $\mathcal X$ (e.g., if $x$ is the solution of a differential equation $\mathcal X$ is a functional space). Hence, it is necessary to work with Radon-Nikodym derivatives, i.e.,
+\begin{equation}
+	\frac{\dd P_{x\mid a}}{\dd P_x} = \frac{p(a\mid x)}{p(a)}.
+\end{equation}
+Let us remark that the quantity on the right of the equality is well defined as $\dim \mathcal A = n < \infty$. Depending on the prior $P_x$, even Radon-Nikodym derivatives could be undefined, and it is necessary to give more structure to the spaces $\mathcal X$, $\mathcal Q$ and $\mathcal A$ in order to define the posterior distribution $P_{x\mid a}$. A detailed treatment of these conditions, including the theory of \textit{disintegration}, is given by Cockayne et al. \cite{COS17}. In this work, an overview of the methods available to sample from $P_{x\mid a}$ is given. In particular, if $P_x$ is Gaussian, Monte Carlo methods are available to fulfill this purpose efficiently.
+ 
+\subsection{Probabilistic solution of PDEs}
+
+Consider a domain $\Omega \subset \R^d$, two operators $\mathcal{D}$ and $\mathcal{B}$ and the partial differential equation
+\begin{equation}
+\begin{aligned}
+	\mathcal{D} x(t) &= g(t), && t \in \Omega, \\
+	\mathcal{B} x(t) &= b(t), && t \in \partial \Omega.
+\end{aligned}
+\end{equation}
+A deterministic method to approximate the solution $x(t)$ with a function $\hat x(t)$ is the \textit{symmetric collocation}. Given a function $k\colon \Omega^2 \to \R$, the numerical solution is given by
+\begin{equation}
+	\hat x(t) = \sum_{i=1}^{N} w_i \bar{\mathcal{D}} k(t, t_i),
+\end{equation}
+where $\{w_i\}_{i=1}^N$ are real weights and $\bar{\mathcal{D}}$ is the adjoint of $\mathcal{D}$. if $T = (t_1, t_2, \ldots, t_N)^T$ and $\mathbf{g} = (g(t_1), g(t_2), \ldots, g(t_N))^T$, then the weights are given by
+\begin{equation}
+	\mathbf{w} = [\mathcal{D} \bar{\mathcal{D}}K(T,T)]^{-1}\mathbf{g},
+\end{equation}
+where $K(T, T')$ is the matrix with elements $[K(T, T')]_{ij} = k(t_i, t'_j)$. Then the numerical solution is
+\begin{equation}
+	\hat x(t) = \bar{\mathcal{D}}K(t,T)[\mathcal{D} \bar{\mathcal{D}}K(T,T)]^{-1}\mathbf{g}.
+\end{equation}
+This numerical method can be extended naturally to a Bayesian probabilistic method. Let us consider a Gaussian prior $P_x \colon x \sim \GP(0,k)$ and the information operator
+\begin{equation}
+	A(x) = \begin{pmatrix} \mathcal{D}x(t_1) \\ \vdots \\ \mathcal{D}x(t_N) \end{pmatrix}
+	     = \begin{pmatrix} g(t_1) \\ \vdots \\ g(t_N) \end{pmatrix},
+\end{equation}
+with furthermore $Q(x) = x$. The posterior $P_{x\mid a}$ is then a $\GP$ (see Section 1), and has parameters $m$ and $\Sigma$ given by
+\begin{equation}\label{eq:meanVarFwdPr}
+\begin{aligned}
+	m(t) &= \bar{\mathcal{D}}K(t,T)[\mathcal{D} \bar{\mathcal{D}}K(T,T)]^{-1}\mathbf{g}, \implies \text{deterministic method}\\
+	\Sigma(t, t') &= k(t, t') - \bar{\mathcal{D}}K(t, T))[\mathcal{D} \bar{\mathcal{D}}K(T,T)]^{-1}\mathcal{D}K(T, t').
+\end{aligned}
+\end{equation}
+For this method, if $h$ is the fill distance (i.e., the maximum distance between two points $t_i$ and $t_j$ in the domain $\Omega$) it is possible to prove that under the posterior
+\begin{equation}
+	P_{x\mid a}\{x': \norm{x'-x}_{L^2(\Omega)} < \epl \} = 1 - \OO(\epl^{-1}h^{2\beta - 2\rho - d}),
+\end{equation}
+where $\beta$ is related to the choice of the kernel $k$, $\rho$ is the order of $\mathcal D$ and $d$ is the dimensionality of the problem.
+
+Defining a posterior distribution over the solution $x$ can be exploited in inverse problems. Let us consider $\mathcal D = \mathcal D_\theta$ for an unknown parameter $\theta$. In classical Bayesian inverse problems, it is possible to reconstruct its value via MCMC algorithms, where for a set of data $\mathcal Y$, the likelihood function $\diffL(\mathcal{Y} \mid \theta)$ is approximated via a deterministic algorithm. This can lead to posterior distributions over the parameter $\theta$ which are concentrated far from its true value. This considerations have been presented both in works strictly related with Bayesian forward problems (Cockayne et al, \cite{COS16}), and where the forward problem is solved with a non-Bayesian probabilistic integrator (Conrad et al, \cite{CGS16}). If a posterior distribution $P_{x\mid a}$ is given, the likelihood can be computed via marginalization as
+\begin{equation}
+\begin{aligned}
+	&\diffL(\mathcal{Y} \mid \theta) \propto \int p(y\mid \theta, x)\dd P_{x\mid a} \\
+	&\implies \mathcal{Y}\mid \theta \sim \gauss(m, \Gamma + \Sigma),
+\end{aligned}
+\end{equation}
+where $\Gamma$ is the variance structure of the observational noise, and $m$, $\Sigma$ are given in \eqref{eq:meanVarFwdPr}. Such an approximation of the likelihood can be exploited in a Monte Carlo algorithm (MCMC) for determining the posterior distribution $P_{\theta\mid\mathcal{Y}}$.
+
+\section{Final considerations}
+
+The methods proposed in the first section of this report were presented by P. Hennig, while the second part is related to the work of C. Oates. 
+
+In the first part, the proposed methods have a clear practical interest in applications of machine learning and artificial intelligence. In fact, the main goal of these methods is maintaining a low computational cost, which translates in low computational times and efficiency, while providing a complete probabilistic interpretation of the numerical solution. Although indisputably interesting, these methods lack rigorous classic numerical analysis and seem too tailored for specific purposes. 
+
+In the second part, a complete theoretical analysis of Bayesian methods in the statistics sense is developed. It is undeniable that such a classification effort is relevant. However, in this case the issue is the opposite with respect to the first part, as no attention is devoted to the development and analysis of concrete numerical schemes. In any case, the complete theoretical framework for forward and inverse Bayesian problems, given especially the work of A. Stuart \cite{Stu10} and Cockayne et al. \cite{COS17}, can be relevant for the analysis of particular methods. Finally, even after a discussion with C. Oates it is unclear why a Bayesian approach, intended in the sense of Definition \ref{def:BPNM}, should be preferred to any probabilistic method as, e.g., the one of the probabilistic methods presented in \cite{CGS16} or of our RTS-RK method.
+
+\bibliographystyle{siam}
+\bibliography{Dobbiaco}
+\end{document}
