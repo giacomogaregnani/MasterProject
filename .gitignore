@@ -21,6 +21,14 @@ RandomPDE/matlabPlots/**/*.mat
 RandomPDE/matlabPlots/**/*.txt
 RandomPDE/matlabPlots/FEM_library/**
 
+SDECode/eigen
+SDECode/build
+SDECode/.idea
+SDECode/cmake-build-debug/**
+SDECode/matlabPlots/**/*.mat
+SDECode/matlabPlots/**/*.txt
+SDECode/matlabPlots/FEM_library/**
+
 Reports/**/*.aux
 Reports/**/*.eps
 Reports/**/*.log

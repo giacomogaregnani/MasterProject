@@ -1,0 +1,1 @@
+/usr/bin/c++    -fopenmp -std=c++11 -Wall -g   CMakeFiles/genObs.dir/GenerateObservations.cpp.o  -o genObs -rdynamic ../RKSolver/libRungeKuttaSolver.a 

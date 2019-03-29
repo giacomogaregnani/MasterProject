@@ -1,0 +1,228 @@
+\documentclass[10pt]{article}
+
+\input{ex_shared}
+
+\begin{document}
+\maketitle	
+
+Let $(\Omega, \mathcal A, P)$ be a probability space and consider the scalar Ornstein--Uhlenbeck process
+\begin{equation}\label{eq:OU}
+\begin{aligned}
+	\dd X_t(\omega, a) &= -a X_t(\omega, a) \; \dd t + \sqrt{2\Sigma} \; \dd W_t(\omega),\\
+	X_0(\omega, a) &= x \in \R,
+\end{aligned}
+\end{equation}
+where $a$ is an unknown parameter with true value $a^\dagger \in \R^+$ and $\Sigma \in \R$ is fixed. Moreover, we consider the initial condition $x\in\R$ to be deterministic and independent of $a$. Let us define the forward mapping $\mathcal G\colon \Omega \times \R \to \R^N$ as
+\begin{equation}\label{eq:ForwardMap}
+	\mathcal G(\omega, a) \mapsto \mathcal X_N = \{X_{t_j}(\omega, a)\}_{j=1}^N,
+\end{equation}
+for a sequence of time instants $t_j$ defined as $t_j = jh$, for $h > 0$ and for $j = 1, \ldots, N$, $t_N = T$. We are given a set of observations $\mathcal Y_N \in \R^n$ of the process $X_t$ as
+\begin{equation}\label{eq:Observations}
+	\mathcal Y_N = \mathcal G(\omega^\dagger, a^\dagger) + \eta,
+\end{equation}
+where $\eta$ is an additive Gaussian source of noise distributed as $\eta \sim \mathcal N(0, \sigma^2_\eta I_N)$, where $I_d$ is the identity in $d$ dimensions, and $\omega^\dagger \in \Omega$ is a fixed event. As in \eqref{eq:ForwardMap}, we consider $\mathcal Y_N = \{Y_{t_j}(\omega, a)\}_{j=1}^N$. In the following, we denote by $\mathcal N(x; \mu, \sigma^2)$ the density of a Gaussian random variable of mean $\mu$ and variance $\sigma^2$ evaluated at a point $x$, i.e.,
+\begin{equation}
+	\mathcal N(x; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left\{ \frac{(x - \mu)^2}{2\sigma^2} \right\}.
+\end{equation}
+Fixed a Gaussian prior $p(a) = \mathcal N(a; 0, \sigma^2_a)$ on the drift coefficient, our goal is to compute the posterior distribution $p(a \mid \mathcal Y_N)$ of the parameter given the observations in a Bayesian framework. First, we apply Bayes' rule to obtain
+\begin{equation}
+\begin{aligned}
+	p(a, \mathcal X_N \mid \mathcal Y_N) &\propto p(a, \mathcal X_N) \, p(\mathcal Y_N \mid a, \mathcal X_N)\\
+	&\propto p(a) \, p(\mathcal X_N \mid a) \, p(\mathcal Y_N \mid a, \mathcal X_N),
+\end{aligned}
+\end{equation}
+which, thanks to the observation model and to the Markov property of $X_t$, can be written as
+\begin{equation}\label{eq:JointPosterior}
+\begin{aligned}
+	p(a, \mathcal X_N \mid \mathcal Y_N) &\propto p(a) \, p(\mathcal X_N \mid a) \prod_{j=1}^{N} p(Y_{t_j} \mid X_{t_j}, a)\\
+	&= p(a) \, \prod_{j=1}^{N} p(X_{t_j} \mid X_{t_{j-1}}, a) \prod_{j=1}^{N} p(Y_{t_j} \mid X_{t_j}, a)
+\end{aligned}
+\end{equation}
+Then, in order to obtain the marginal posterior of the parameter, one has to integrate out $\mathcal X_N$ and get the posterior distribution of the parameter
+\begin{equation}\label{eq:MarginalPosterior}
+	p(a \mid \mathcal Y_N) \propto \int p(a, \mathcal X_N \mid \mathcal Y_N) \, \dd \mathcal X_N
+\end{equation}
+Let us compute the terms in \eqref{eq:JointPosterior} separately. First, the prior is given by $p(a) = \mathcal N(a; 0, \sigma^2_a)$. Then, for the likelihood term we have $p(Y_{t_j} \mid X_{t_j}, a) = \mathcal N(X_{t_j}; Y_{t_j}, \sigma_\eta^2)$. Finally, due to the distribution of the OU process we get
+\begin{equation}
+	p(X_{t_j} \mid X_{t_{j-1}}, a) = \mathcal N\big(X_{t_j}; e^{-ah}X_{t_{j-1}}, a^{-1}\Sigma(1 - e^{-2ah})\big).
+\end{equation}
+For $h$ small enough, we can consider the transition probability of the Euler--Maruyama method applied to \eqref{eq:OU}, which reads
+\begin{equation}
+	p(X_{t_j} \mid X_{t_{j-1}}, a) = \mathcal N\big(X_{t_j}; (1-ah)X_{t_{j-1}}, 2\Sigma h\big),
+\end{equation}
+which is a good approximation of the true transition probability and allows for a simpler treatment. 
+
+\subsection*{Analytical posterior for the drift coefficient}
+
+\subsubsection*{Noiseless observations}
+
+We consider
+\begin{equation}\label{eq:Langevin}
+\begin{aligned}
+\dd X_t &= -a \nabla V(X_t) \; \dd t + \sqrt{2\beta^{-1}} \; \dd W_t(\omega),\\
+X_0 &= x \in \R,
+\end{aligned}
+\end{equation}
+and an EM sequence $\mathcal X = \{X_n\}_{n=0}^N$ with time step $h$. The approximated MLE $\hat a_{N, h}$ for $a$ is given by
+\begin{equation}
+\hat a_{N, h} = - \frac{\sum_{n=0}^{N-1} \langle \nabla V(X_n), X_{n+1} - X_n\rangle}{\sum_{n=0}^{N-1} \abs{\nabla V(X_n)}^2 h}.
+\end{equation}
+In the Bayesian framework, if no noise is added to the observations $\mathcal X$ and for a prior $a \sim \mu_0$ with density $P(a)$ we have
+\begin{equation}
+P(a \mid \mathcal X) \propto P(\mathcal X \mid a) \, P(a).
+\end{equation}
+Let us consider $\mu_0 = \mathcal U(A)$, where $A = \{\text{admissible values for } a \}$. Then, maximising $P(a \mid \mathcal X)$ is equivalent to maximising $P(\mathcal X \mid a)$ and therefore the MAP estimator $\tilde a_{N, h}$ is equal to the MLE estimator $\hat a_{N, h}$. For a Gaussian prior $\mu_0 = \mathcal N(\mu_a, \sigma^2_a)$, we get
+\begin{equation}
+\tilde a_{N, h} = - \beta\sigma_a^2 \frac{\sum_{n=0}^{N-1} \langle \nabla V(X_n), X_{n+1} - X_n\rangle}{-1 + \sigma_a^2 \beta \sum_{n=0}^{N-1} \abs{\nabla V(X_n)}^2 h} - \frac{\mu_a}{-1 + \sigma_a^2 \beta \sum_{n=0}^{N-1} \abs{\nabla V(X_n)}^2 h}.
+\end{equation}
+Hence, in the limit $N \to \infty$, we have, independently of $\mu_a$ and $\sigma_a$,
+\begin{equation}
+\lim_{N\to \infty} \tilde a_{N, h} = \lim_{N\to \infty} \hat a_{N, h}.
+\end{equation}
+
+\subsubsection*{Noisy observations}
+
+We first state a known result on Gaussian densities we will employ extensively in the computations below.
+\begin{lemma}\label{lem:GaussianDensities} Let $p(x) = \mathcal N(x; \mu_p, \sigma^2_p)$ and $q(x) = \mathcal N(x; \mu_q, \sigma^2_q)$. Then
+	\begin{equation}
+		p(x) q(x) = Z \, \mathcal N(x; \mu_{pq}, \sigma^2_{pq}),
+	\end{equation}
+	where
+	\begin{equation}
+			\mu_{pq} = \frac{\mu_p \sigma^2_q + \mu_q \sigma^2}{\sigma^2_p + \sigma^2_q}, \quad \sigma^2_{pq} = \frac{\sigma^2_p \sigma^2_q}{\sigma^2_p + \sigma^2_q},
+	\end{equation}
+	and where
+	\begin{equation}
+		Z = \mathcal N(\mu_p; \mu_q, \sigma^2_p + \sigma^2_q).
+	\end{equation}
+\end{lemma}
+\begin{proof} Find a reliable reference.
+\end{proof}
+Moreover, we will use the relation valid for any $c \in \R$ 
+\begin{equation}\label{eq:GaussianConstant}
+	\mathcal N(cx; \mu, \sigma^2) = \frac1c \mathcal N(x; c^{-1}\mu, c^{-2}\sigma^2). 
+\end{equation}
+In the following, we omit all constants which are independent of $\mathcal X_N$ and $a$. Let us compute the posterior for one single observation $Y_{t_1}$, where $t_1 = h$. In this case, the transition probability is given by $p(X_{t_1} \mid X_{t_0}, a) = \mathcal N(X_{t_1}; (1-ah)X_{t_0}, 2\Sigma h)$, and the observation likelihood is $p(Y_{t_1} \mid X_{t_1}, a) = \mathcal N(Y_{t_1}; X_{t_1}, 2\sigma_\eta^2)$, which by symmetry can be rewritten as
+$p(Y_{t_1} \mid X_{t_1}, a) = \mathcal N(X_{t_1}; Y_{t_1}, 2\sigma_\eta^2)$. Thanks to Lemma \ref{lem:GaussianDensities} we have
+\begin{equation}
+	\mathcal N(X_{t_1}; (1-ah)X_{t_0}, 2\Sigma h) \; \mathcal N(X_{t_1}; Y_{t_1}, \sigma_\eta^2) = Z_0(a) \, \mathcal N(X_{t_1}; \mu_1, \sigma_1^2), 
+\end{equation}
+where $\mu_1$ and $\sigma_1^2$ are given by
+\begin{equation}
+\begin{aligned}
+	\mu_1 &= \frac{(1-ah)X_{t_0} \sigma_\eta^2 + 2 Y_{t_1}\Sigma h}{2\Sigma h + \sigma_\eta^2},\\
+	\sigma_1^2 &= \frac{2\Sigma h \sigma_\eta^2}{2\Sigma h + \sigma_\eta^2}, 
+\end{aligned}
+\end{equation}
+and where $Z_0(a)$ reads
+\begin{equation}
+	Z_0(a) = \mathcal N((1-ah)X_{t_0}; Y_{t_1}, \sigma_\eta^2 + 2\Sigma h),
+\end{equation}
+which can be rewritten using \eqref{eq:GaussianConstant} as
+\begin{equation}\label{eq:ZXT0}
+	Z_0(a) = \frac{1}{1 - ah} \mathcal N\big(X_{t_0}; (1-ah)^{-1} Y_{t_1}, (1-ah)^{-2} (\sigma_\eta^2 + 2\Sigma h)\big)
+\end{equation}
+In general, in the following we will write
+\begin{equation}
+\begin{aligned}
+	\mu_j &= \frac{(1-ah)X_{t_{j-1}} \sigma_\eta^2 + 2 Y_{t_j}\Sigma h}{2\Sigma h + \sigma_\eta^2},\\
+	\sigma_j^2 &= \frac{2\Sigma h \sigma_\eta^2}{2\Sigma h + \sigma_\eta^2}, 
+\end{aligned}
+\end{equation}
+and
+\begin{equation}
+\begin{aligned}
+	Z_j(a) &= \mathcal N((1-ah)X_{t_j}; Y_{t_{j+1}}, \sigma_\eta^2 + 2\Sigma h)\\
+	&= \frac{1}{1 - ah} \mathcal N\big(X_{t_j}; (1-ah)^{-1} Y_{t_{j+1}}, (1-ah)^{-2} (\sigma_\eta^2 + 2\Sigma h)\big).
+\end{aligned}
+\end{equation}
+Finally, we get
+\begin{equation}
+\begin{aligned}
+	p(a \mid \mathcal Y_1) &= \int p(a, \mathcal X_N \mid \mathcal Y_N)\, \dd \mathcal X_N\\
+	&\propto \int p(a) \, p(X_{t_1} \mid X_{t_0}, a) \, p(Y_{t_1} \mid X_{t_0}, a) \, \dd X_{t_1} \\
+	&= p(a) \, Z_0(a) \int \mathcal N(X_{t_1}; \mu_1, \sigma_1^2)\, \dd X_{t_1} = p(a) \, Z_0(a),
+\end{aligned}
+\end{equation}
+and the marginal posterior on the drift coefficient is therefore given in closed form. Let us now consider a second observation $Y_{t_2}$ at time $t_2 = 2h$. In this case and thanks to the computations above, we have
+\begin{equation}\label{eq:TwoObs}
+	p(a \mid \mathcal Y_2) \propto p(a) \, Z_0(a) \int \mathcal N(X_{t_1}; \mu_1, \sigma_1^2) \, Z_1(a) \, \mathcal N(X_{t_2}; \mu_2, \sigma_2^2) \, \dd X_{t_2} \dd X_{t_1}.
+\end{equation}
+Let us compute the product $\mathcal N(X_{t_1}; \mu_1, \sigma_1^2) \, Z_1(a)$. Thanks to the relation \eqref{eq:ZXT0}, we have
+\begin{equation}
+	\mathcal N(X_{t_1}; \mu_1, \sigma_1^2) \, Z_1(a) \propto \frac{1}{1 - ah} \, \mathcal N(X_{t_1}; \mu_1, \sigma_1^2) \, \mathcal N\big(X_{t_1}; (1-ah)^{-1} Y_{t_2}, (1-ah)^{-2} (\sigma_\eta^2 + 2\Sigma h)\big),
+\end{equation}
+which gives thanks to Lemma \ref{lem:GaussianDensities}
+\begin{equation}
+	\mathcal N(X_{t_1}; \mu_1, \sigma_1^2) \, Z_1(a) \propto \btilde Z_1(a) \, \mathcal N (X_{t_1}; \tilde \mu_1, \tilde \sigma_1^2),
+\end{equation}
+where 
+\begin{equation}
+\begin{aligned}
+	\tilde \mu_1 &= \frac{\mu_1 (1-ah)^{-2} (\sigma_\eta^2 + 2\Sigma h) + (1-ah)^{-1} Y_{t_2} \sigma_1^2}{\sigma_1^2 + (1-ah)^{-2} (\sigma_\eta^2 + 2\Sigma h)},\\
+	\tilde \sigma_1^2 &= \frac{\sigma_1^2(1-ah)^{-2} (\sigma_\eta^2 + 2\Sigma h)}{\sigma_1^2 + (1-ah)^{-2} (\sigma_\eta^2 + 2\Sigma h)},
+\end{aligned}
+\end{equation}
+and where
+\begin{equation}
+%\begin{aligned}
+	\btilde Z_1(a) =  \frac{1}{1-ah} \mathcal N(\mu_1; (1-ah)^{-1} Y_{t_2}, \sigma_1^2 + (1-ah)^{-2} (\sigma_\eta^2 + 2\Sigma h))\\
+%	&= \mathcal N\big((1-ah)\mu_1; Y_{t_2}, (1-ah)^2 \sigma_1^2 + (\sigma_\eta^2 + 2\Sigma h)\big).
+%\end{aligned}
+\end{equation}
+%We introduce for the following the notation
+%\begin{equation}
+%	\btilde Z_j(a) = \mathcal N\big((1-ah)\mu_j; Y_{t_{j+1}}, (1-ah)^2 \sigma_j^2 + (\sigma_\eta^2 + 2\Sigma h)\big).
+%\end{equation}
+Replacing back into \eqref{eq:TwoObs}, one gets
+\begin{equation}
+\begin{aligned}
+	p(a \mid \mathcal Y_2) &\propto p(a) \, Z_0(a) \, \btilde Z_1(a) \int \mathcal N(X_{t_1}; \tilde \mu_1, \tilde \sigma_1^2)  \int \mathcal N(X_{t_2}; \mu_2, \sigma_2^2) \, \dd X_{t_2} \, \dd X_{t_1}\\
+	&= p(a) \, Z_0(a) \, \btilde Z_1(a).
+\end{aligned}
+\end{equation}
+A recursive argument gives now the following result.
+\begin{theorem} {\color{red} Maybe} The posterior distribution on the drift coefficient corresponding to $N$ observations is given by
+	\begin{equation}
+		p(a \mid \mathcal Y_N) \propto p(a) \, Z_0(a) \prod_{j=1}^{N-1} \btilde Z_j(a). 
+	\end{equation}
+	{\color{red} NO!}
+\end{theorem}
+\begin{proof} The result is obtained through an inductive argument. In particular, we first show
+	\begin{equation}\label{eq:FactorizationInduction}
+		p(a, \mathcal X_N \mid \mathcal Y_N) \propto p(a) \, Z_0(a) \Big(\prod_{j=1}^{N-1} \btilde Z_j(a)\Big) \, \mathcal N(X_{t_N}; \mu_N, \sigma_N^2) \prod_{j=1}^{N-1} \mathcal N(X_{t_j}; \tilde \mu_j, \tilde \sigma_j^2).
+	\end{equation}
+	The base cases $N = 1$ and $N = 2$ are treated above. Let us suppose the equality above to be true for $\mathcal X_{N-1}$ and $\mathcal Y_{N-1}$. Then
+	\begin{equation}
+	\begin{aligned}
+		p(a, \mathcal X_N \mid \mathcal Y_N) &\propto p(a) \, \prod_{j=1}^{N} p(X_{t_j} \mid X_{t_{j-1}}, a) \prod_{j=1}^{N} p(Y_{t_j} \mid X_{t_j}, a) \\
+		&= p(a, \mathcal X_{N-1} \mid \mathcal Y_{N-1}) \, p(X_{t_N} \mid X_{t_{N-1}}) \, p(Y_{t_N} \mid X_{t_N}, a)\\
+		&\propto p(a) \, Z_0(a) \Big(\prod_{j=1}^{N-2} \btilde Z_j(a)\Big) \, \mathcal N(X_{t_{N-1}}; \mu_{N-1}, \sigma_{N-1}^2) \prod_{j=1}^{N-2} \mathcal N(X_{t_j}; \tilde \mu_j, \tilde \sigma_j^2)\\
+		&\quad \times Z_{N-1}(a) \, \mathcal N(X_{t_N}; \mu_N, \sigma_N^2).
+	\end{aligned}
+	\end{equation}
+	Computations similar to the case $N = 2$ lead to 
+	\begin{equation}
+		Z_{N-1}(a) \, \mathcal N(X_{t_{N-1}}; \mu_{N-1}, \sigma_{N-1}^2) = \btilde Z_{N-1}(a) \, \mathcal N(X_{t_{N-1}}; \tilde \mu_{N-1}, \tilde \sigma^2_{N-1}),
+	\end{equation}
+	which shows \eqref{eq:FactorizationInduction}. Let us now remark that for each $j$, $\tilde Z_j$ depends only on $\mu_j$, which in turn depends only on $X_{t_{j-1}}$.
+	Hence, 
+	\begin{equation}
+	\begin{aligned}
+		\frac{p(a \mid \mathcal Y_N)}{p(a) \, Z_0(a)} &\propto  \int \Big(\prod_{j=1}^{N-1} \btilde Z_j(a)\Big) \, \mathcal N(X_{t_N}; \mu_N, \sigma_N^2) \prod_{j=1}^{N-1} \mathcal N(X_{t_1}; \tilde \mu_j, \tilde \sigma_j^2) \, \dd \mathcal X_N\\
+		&=  \int \cdots \int \Big(\prod_{j=1}^{N-1} \btilde Z_j(a)\Big) \,  \prod_{j=1}^{N-1} \mathcal N(X_{t_j}; \tilde \mu_j, \tilde \sigma_j^2) \int \mathcal N(X_{t_N}; \mu_N, \sigma_N^2) \, \dd X_{t_N} \, \dd \mathcal X_{N-1} \\
+		&=  \int \cdots \int \Big(\prod_{j=1}^{N-1} \btilde Z_j(a)\Big) \,  \prod_{j=1}^{N-2} \mathcal N(X_{t_j}; \tilde \mu_j, \tilde \sigma_j^2) \int \mathcal N(X_{t_{N-1}}; \tilde \mu_{N-1}, \tilde \sigma_{N-1}^2) \, \dd X_{t_{N-1}} \, \dd \mathcal X_{N-2} \\
+		&=  \int \cdots \int \Big(\prod_{j=1}^{N-2} \btilde Z_j(a)\Big) \,  \prod_{j=1}^{N-3} \mathcal N(X_{t_j}; \tilde \mu_j, \tilde \sigma_j^2) \int \btilde Z_{N-1}(a) \, \mathcal N(X_{t_{N-2}}; \tilde \mu_{N-2}, \tilde \sigma_{N-1}^2) \, \dd X_{t_{N-2}} \, \dd \mathcal X_{N-3} \\
+	\end{aligned}
+	\end{equation}
+	{\color{red} The recursion looks worse than I thought.}
+\end{proof}
+
+\subsubsection*{Monte Carlo approach}
+
+Explain strategy (Particle Filter).
+
+\textbf{First experiment.} Parameters: $T = 10$, $\sigma_\eta = 0.1$, $M = 400$, $h = $
+%\bibliographystyle{siamplain}
+%\bibliography{anmc}
+\end{document}

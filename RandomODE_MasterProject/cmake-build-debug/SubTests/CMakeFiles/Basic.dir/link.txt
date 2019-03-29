@@ -1,0 +1,1 @@
+/usr/bin/c++   -g   CMakeFiles/Basic.dir/BasicTest.cpp.o  -o Basic -rdynamic ../Subdivision/libSubdivision.a ../RKSolver/libRungeKuttaSolver.a 

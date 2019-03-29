@@ -1,0 +1,281 @@
+\documentclass[a0paper,fontscale=0.292]{baposter}
+
+\usepackage[vlined]{algorithm2e}
+\usepackage{times}
+\usepackage{calc}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{relsize}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{caption}
+\usetikzlibrary{plotmarks}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usetikzlibrary{shapes,snakes}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage[T1]{fontenc}
+\usepackage{ae}
+\usetikzlibrary{patterns}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% My Style %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{color}
+
+\definecolor{dunkelgrau}{gray}{0.1}
+\definecolor{hellgrau}{gray}{0.95}
+\definecolor{mittelgrau}{gray}{0.8}
+\definecolor{dunkelblau}{rgb}{0,0,0.85}
+\definecolor{lightblue}{RGB}{194,225,224}
+
+\definecolor{dunkelgelb}{RGB}{255,255,0}
+% \definecolor{hellgelb}{RGB}{0,0,0}
+
+% \newcommand{hellgelb}{dunkelgelb!30!white}
+
+\definecolor{dunkelgrun}{rgb}{0,0.6,0}
+\definecolor{hellgrun}{RGB}{224,255,224}
+
+\definecolor{beige}{RGB}{255,200,0}
+
+\usepackage{amsfonts,amsmath}
+\usepackage{stmaryrd}
+\usepackage{enumerate}
+\usepackage{mathabx}
+\usepackage{graphicx}
+\usepackage{multirow}
+
+\newtheorem{notation}{Notation}
+\newtheorem{remark}{Remark}
+\newtheorem{assumption}{Assumption}
+\newtheorem{convention}{Convention}
+\newtheorem{assumption*}{Assumption}
+
+\newenvironment{enumi}{\begin{enumerate}[\upshape (i)]}{\end{enumerate}}
+
+
+
+
+
+\newcommand{\asp}[1]{(\textbf{#1})}
+\input{../../../../TexFiles/newcommands}
+
+
+\newcommand{\rsl}{($L^2$)}
+\newcommand{\rsh}{($H^1$)}
+\newcommand{\rsd}{(DD)}
+\newcommand{\rsa}{(AD)}
+
+\DeclareMathOperator{\dive}{div}
+\DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\Pe}{Pe}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Begin of Document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Here starts the poster
+%%---------------------------------------------------------------------------
+%% Format it to your taste with the options
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{poster}{
+ % Show grid to help with alignment
+ grid=false,
+ % Column spacing
+ colspacing=.7em,
+ columns=2,
+ % Color style
+ headerColorOne=lightblue,
+ borderColor=cyan!60!white!90!black,
+%  headerColorOne=beige!60!white,
+%  borderColor=beige!180!white,
+ % Format of textbox
+ textborder=faded,
+ % Format of text header
+ headerborder=open,
+ headershape=roundedright,
+ headershade=plain,
+ background=none,
+ bgColorOne=cyan!10!white,
+ headerheight=0.1\textheight}
+ % Eye Catcher can be put here if you like
+ {
+ }
+ % Title
+ {\sc\Huge Optimization-based coupling method for \\ \vspace{0.1in} multiscale problems}
+% 	Discontinuous Galerkin Finite Element Heterogeneous Multiscale Method for Advection-Diffusion Problems with Multiple Scales}
+ % Authors
+ {\vspace*{0.2em} Assyr Abdulle, \underline{Orane Jecker}\\[0.5em]
+ {\texttt{assyr.abdulle@epfl.ch, orane.jecker@epfl.ch}}}
+ % University logo can be put here if you like
+ {
+ \includegraphics[width=4cm]{EPFL_LOG_QUADRI_Red}
+ }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Now define the boxes that make up the poster
+%%%---------------------------------------------------------------------------
+%%% Each box has a name and can be placed absolutely or relatively.
+%%% The only inconvenience is that you can only specify a relative position 
+%%% towards an already declared box. So if you have a box attached to the 
+%%% bottom, one to the top and a third one which should be inbetween, you 
+%%% have to specify the top and bottom boxes before you specify the middle 
+%%% box.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \headerbox{Goal}{name=goal,column=0,row=0,span=1}{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{minipage}{4in}Assume that in some region $\omega$ of a domain $ \Omega$ homogenization methods fail and fine scale solver must be used instead. A coupling between the fine and coarse solvers should be done.
+\end{minipage}
+\begin{minipage}{4in}
+ 	\begin{align*}
+ 	&\text{\textbf{Question.} What boundary data should be used on the interface?}\\
+ 	&\text{\textbf{Classical global-local.} Use homogenized solution $\uzero$ \cite{OdV00}}.	\\
+ 	&\textbf{Drawbacks.} \text{expensive to compute $\uzero$; depends on the quality of $\uzero$.}\\
+ &\fcolorbox{dunkelgelb!90!black}{dunkelgelb!20!white}{\parbox{.4in}{\textbf{Goal.}}} \text{ Find better boundary data.}
+ 	\end{align*}	
+\end{minipage}
+}
+\headerbox{Multiscale elliptic problem}{name=modelproblem,column=0,row=0,span=1, below=goal}{
+  \begin{minipage}{2.3in}
+   Let $\Omega\subset \R^d$ be a bounded domain and consider: find $u\in H^1_0(\Omega)$ such that
+   \begin{align*}
+   -\div(a\grad u)=f, &\text{ in }\Omega,\\
+     + B.C., &\text{ on } \Gamma,
+   \end{align*} with highly heterogeneous uniformly bounded tensor $a$ or source term $f$.\\
+   \fcolorbox{dunkelgelb!90!black}{dunkelgelb!20!white}{\parbox{.35in}{ \textbf{Idea.}}} Introduce an overlap and solve a minimization problem with constraints.
+  \end{minipage}\hspace{0.2in}
+  \begin{minipage}{2in}
+  	\centering{
+  	\includegraphics[width=1.7in]{situation_poster}
+  	\captionof{figure}{Domain decomposition}}
+  \end{minipage}
+  }
+
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \headerbox{Optimization-Based coupling method}{name=method,column=0,span=1,below=modelproblem}{\textbf{Optimization-based method} \cite{AbJ15}. Find $(u_1, u_2)\in H^1(\omega_1)\times H^1_{\Gamma}(\omega_2)$
+  	\[
+  	\min \frac{1}{2}\normL{u_1-u_2}{2}{\omega_0}^2 \text{ such that} \begin{cases}
+  	\fcolorbox{blue}{cyan!60!white!90!black}{$-\div(a\grad u_1) =f \phantom{0} $ in $\omega_1, \un  u_1=\theta_1$  on $\Gamma_1$},\\
+  	\vspace{-0.3cm}\\
+  	\fcolorbox{green}{hellgrun}{$-\div(\azero\grad u_2)=f^0 $  in $\omega_2, \un u_2=\theta_2 $ on $\Gamma_2$}.
+  	\end{cases}
+  	\]
+Introducing Lagrange multipliers for each constraints, $(u_1, u_2)$ is given as a critical point of a saddle point problem.\\
+}
+ 
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   \headerbox{FE Optimization Based Coupling}{name=FEobc,column=1,span=1,row=0}{Let $V^p(\omega_1, \Thtilde)$, $V^p_{\Gamma}(\omega_2, \TH)$, and $S^q(\Kdj, \Th)$ be FE spaces with\\
+   $ \displaystyle h, \htilde <\eps, \text{and} H>>h$.
+
+\begin{center}
+  		\includegraphics[width=3in]{mesh_poster}
+  		\captionof{figure}{Mesh over $\Omega$}
+\end{center}
+ 	
+  \fcolorbox{blue}{cyan!60!white!90!black}{\parbox{2.5cm}{Fine scale solver}}
+Find $\uhone=\uhonezero + \vhone$, with $\uhonezero\in V^p_0(\omega_1, \Thtilde)$, such that 
+\[ B_{1}(\uhonezero, \whtilde):=\int_{\omega_1}a \nabla \uhonezero\nabla \whtilde \d x=\int_{\omega_1}f \whtilde\d x, \forall \whtilde \in V^p_0(\omega_1, \Thtilde).\]
+
+  
+ \fcolorbox{green}{hellgrun}{\parbox{2.5cm}{FE-HMM solver}} Find $\uhtwo=\uhtwozero + \vhtwo$, with $\uhtwozero\in V^p_{0}(\omega_2, \TH)$ such that $\forall w_H\in V^p_0(\omega_2, \TH)$ \[
+ B_{2}(\uhtwozero, w_{H}):=\hspace{-0.2cm} \sum_{K\in \TH} \sum_{j=1}^J \frac{w_{j,K}}{|\Kdj|}\int_{\Kdj}\hspace{-0.2cm}a\nabla u^h_j \nabla w^h_j\d x=\int_{\omega_2}\hspace{-0.2cm}f^0w_H \d x,
+ \]where $u^h_j,w^h_j$ are solutions of a micro problem involving $a$ on $\Kdj$. The solution $\vhone$ and $\vhtwo$ are the critical point of
+ \begin{align*}
+ \mathcal{L}(\vhone, \lhone, \vhtwo, \lhtwo)&=\frac{1}{2}\normL{(\uhonezero+ \vhone)-(\uhtwozero+ \vhtwo)}{2}{\omega_0}^2 \\
+ &- B_1(\vhone, \lhone)- B_{2}(\vhtwo, \lhtwo).
+ \end{align*}
+ }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\headerbox{Algorithm}{name=algo,column=1,row=0,below=FEobc}{
+%$\bullet$ \text{ Find } $\uonezero^{\htilde} \in  V^p_0(\omega_1, \Thtilde)$: $B_{1}^ {\htilde}(\uonezero^{\htilde}, w^{\htilde})= \int_{\omega_1}f w^{\htilde}\d x$, $\forall w^{\htilde} \in V^p_0(\omega_1, \Thtilde)$.
+%$\bullet$ \text{ Find } $\utwozero^{H} \in  V^p_0(\omega_2, \TH)$: $B_{2}^ {H}(\utwozero^{H}, w^{\htilde})= \int_{\omega_1}f w^{\htilde}\d x$, $\forall w^{\htilde} \in V^p_0(\omega_1, \Thtilde)$.
+%$\bullet$ \text{ Find } $\uonezero^{\htilde} \in  V^p_0(\omega_1, \Thtilde)$: $B_{1}^ {\htilde}(\uonezero^{\htilde}, w^{\htilde})= \int_{\omega_1}f w^{\htilde}\d x$, $\forall w^{\htilde} \in V^p_0(\omega_1, \Thtilde)$.
+%}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   \headerbox{A Priori Error Estimates}{name=apriori,column=1,row=0,below=FEobc}{
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ Let $u_{\htilde, H}$ be the numerical coupling solution. It holds  \[
+    \normH{u-u_{\htilde, H}}{1}{\omega} \leq C \lpar \htilde |u|_{2, \omega_1} + \frac{C}{\tau} \big(\eps + \text{err}_{HMM, L^2}\big)\rpar,
+    \]where $\tau=\text{dist}(\Gamma_1, \Gamma_2)$. The $\eps$ term comes from the bound $\normL{u-\uzero}{2}{\omega_0}$ and 
+ $
+    \text{err}_{HMM, L^2}\leq C\big(H^2 + \lpar \frac{h}{\eps}\rpar^2 + \text{err}_{mod}\big).
+   $}
+
+ 
+  	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%w  }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   \headerbox{Numerical Experiments}{name=numexp,column=0,span=2,row=0,below=apriori}{
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{minipage}{9in} %Let $\Omega=[0,1]^2$, $\eps=1/10$ and consider
+%$\displaystyle
+%	a(x_1,x_2)=\frac{1}{6}\Bigg( \frac{1.1 + \sin\big(2\pi \frac{x_1}{\eps} \frac{x_2}{\eps}\big)} {1.1 + \sin\big(2\pi \frac{x_2}{\eps} \big)} +\sin(4x_1^2 x_2^2) + 2\Bigg).
+%$
+%The source term is given by random peaks in $\omega$.
+\end{minipage}\\
+\newline
+\newline
+\begin{minipage}{7in}
+\begin{tikzpicture}
+\node[inner sep=0pt] (tensor) at (0,0)
+{\includegraphics[width=1.8in]{poster_tensor}};
+\draw [thick, white](-.505,-0.2425) --(0.145, -0.2425)--(0.145,0.3425 )--(-.505, 0.3425)--cycle;
+\draw [thick, white](-.396,-0.145) --(0.044, -0.145)--(0.044,0.245 )--(-.396, 0.245)--cycle;
+\node[inner sep=0pt] (source) at (4.5,0)
+{\includegraphics[width=1.8in]{poster_source}};
+\draw (0,-2) node {Tensor $a$ over $\Omega$};
+\draw (4.5,-2) node {Source $f$ over $\Omega$};
+\draw (9,-2) node {Reference solution};
+\draw (13.5,-2) node {Numerical coupling solution};
+\draw [white](-.505,-0.28) node[below] {\footnotesize{$\omega_1$}};
+\draw [white](-.1,0.1) node[below] {\footnotesize{$\omega$}};
+\node[inner sep=0pt] (tensor) at (9,0)
+{\includegraphics[width=1.8in]{poster_uexact}};
+\node[inner sep=0pt] (tensor) at (13.5,0)
+{\includegraphics[width=1.8in]{poster_ucoupling}};
+\node[inner sep=0pt] (tensor) at (18,0)
+{\includegraphics[width=1.5in]{error}};
+\begin{scope}[shift={(17,-2)}] 
+\draw (0,0) -- 
+plot[mark=*, mark options={fill=black}] (0.25,0) -- (0.5,0) 
+node[right]{$||u-u_{\htilde,H}||_{H^1(\omega)}$};
+\draw [red](0,-0.5) -- 
+plot[mark=square*, mark options={fill=red}] (0.25,-0.5) -- (0.5,-0.5)
+node[right]{$||u-u^{GL}_{\htilde,H}||_{H^1(\omega)}$};
+\end{scope}
+\end{tikzpicture}
+\end{minipage}
+}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    \headerbox{Highlights}{name=highlights,column=0,row=0,above=bottom}{
+%  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   \vspace*{4cm}
+%    }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   \headerbox{References}{name=references,column=0,span=2,above=bottom}{
+
+    \bibliographystyle{plain}
+%  \renewcommand{\section}[2]{\vskip 0.05em}
+%  \begin{thebibliography}{3}
+%
+% \end{thebibliography}
+\bibliography{../../../../TexFiles/anmc}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   }
+
+
+\end{poster}%
+%
+\end{document}

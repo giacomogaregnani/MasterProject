@@ -1,0 +1,2 @@
+/u/anmc/garegnan/Desktop/Project/MinimumProject/build/Library/CMakeFiles/Class.dir
+/u/anmc/garegnan/Desktop/Project/MinimumProject/build/Tests/CMakeFiles/Test.dir

@@ -1,0 +1,49 @@
+\subsection{Estimation of the exit time}
+
+The numerical and theoretical path we followed in the previous paragraphs enables us to build a Montecarlo simulation that we exploit to estimate the mean exit time from a domain with the solution of the uncertain Darcy problem as a transport field. Thanks to all the theoretical and numerical considerations we reported above, we can perform efficiently and accurately the estimation of the exit time \textit{for each realization} of the Darcy problem. Therefore, it is sufficient to average over different realizations of the Darcy problem in order to obtain an estimation of the exit time, as in Algorithm \ref{alg:MCofMC}. We consider the square domain $D = [-1, 1]^2$ and the parameters listed in Table \ref{tab:MCPar}. We vary the value of $\sigma$ and generate 100 solutions of the Darcy problem for each value of $\sigma$, estimating the exit time with $10^4$ trajectories for each realization. The results we obtain are in Table \ref{tab:MCofMC}. We remark that if the value of $\sigma$ is negligible with respect to the magnitude of the transport field the exit time stabilizes on a value of approximately four seconds.
+
+\begin{algorithm}[t]
+\caption{Estimation of the exit time}
+\KwData{number of realizations $M_r$, number of trajectories $M_t$}
+\KwResult{Estimate of the exit time $\bar\tau$}
+\For{$i = 1, \dots, M_r$ }{
+	Generate the random field $A$ \;
+	Find the solution of the Darcy problem \;
+	Interpolate the velocity field on a structured grid of size $\Delta_u$ \;
+	Estimate $\tau_i$ using CEM with step size $\Delta_u$ over $M_t$ trajectories \;
+ }
+$\bar \tau = 1/M_r \sum_{i = 1}^{M_r} \tau_i$ \;
+\label{alg:MCofMC}
+\end{algorithm}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ccccccccc}
+\toprule
+\multicolumn{4}{c}{Random field} & \multicolumn{1}{c}{Darcy} & \multicolumn{1}{c}{FEM} & \multicolumn{1}{c}{Interpolation} & \multicolumn{2}{c}{Trajectories} \\ 
+\cmidrule{1-4} \cmidrule{8-9}
+$\nu$    & $L_c$ & $\sigma_A$ & $\Delta_A$ & $p_0$ & $\Delta_p$ & $\Delta_u$ & $X_0$ & $T$ \\
+\midrule
+0.5 & 0.05 & 1 & 0.0039 & 1 & $5\cdot 10^{-3}$ & 0.0625 & $\begin{pmatrix} -0.8, & 0 \end{pmatrix}^T$ & 20\\
+\bottomrule
+\end{tabular}
+\caption{Parameters for the estimation of the exit time in the Darcy case}
+\label{tab:MCPar}
+\end{table}
+
+\begin{table}[H]
+\centering
+ 	\begin{tabular}{lccccccc}
+	\toprule
+	$\sigma$ & 1 & 0.7 & 0.3 & 0.1 & $10^{-2}$ & $10^{-3}$ & $10^{-4}$ \\
+	\midrule
+	$\tau$ & 0.4718 & 0.9906 & 3.1318 & 3.9437 & 4.2634 & 3.9767 & 3.9906 \\
+	\bottomrule
+\end{tabular}
+\caption{Results of exit time estimations in the Darcy case for different values of $\sigma$.}
+\label{tab:MCofMC}
+\end{table}
+
+
+
+

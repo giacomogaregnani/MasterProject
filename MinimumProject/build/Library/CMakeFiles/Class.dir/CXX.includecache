@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/u/anmc/garegnan/Desktop/Project/MinimumProject/Library/Class.cpp
+Class.hpp
+/u/anmc/garegnan/Desktop/Project/MinimumProject/Library/Class.hpp
+
+/u/anmc/garegnan/Desktop/Project/MinimumProject/Library/Class.hpp
+SubLibrary/FunctionCollections.hpp
+/u/anmc/garegnan/Desktop/Project/MinimumProject/Library/SubLibrary/FunctionCollections.hpp
+
+/u/anmc/garegnan/Desktop/Project/MinimumProject/Library/SubLibrary/FunctionCollections.cpp
+FunctionCollections.hpp
+/u/anmc/garegnan/Desktop/Project/MinimumProject/Library/SubLibrary/FunctionCollections.hpp
+
+/u/anmc/garegnan/Desktop/Project/MinimumProject/Library/SubLibrary/FunctionCollections.hpp
+

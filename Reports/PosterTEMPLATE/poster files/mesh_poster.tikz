@@ -1,0 +1,4 @@
+\begin{tikzpicture}
+ 	\node at (0,0){		\includegraphics[width=1.4in]{mesh_poster}};
+ 	\draw (-1,-1) node[above]{ H};
+ \end{tikzpicture}

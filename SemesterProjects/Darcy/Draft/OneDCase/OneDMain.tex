@@ -1,0 +1,24 @@
+\subsection{Numerical Experiments}
+In the following we present a series of experiments on test cases in order to verify the properties of the methods presented above. All experiments are performed using Montecarlo simulations to approximate the mean exit time and the exit probability. For each realization (or trajectory) of the Brownian motion we compute $\tau$ and $\phi$ using DEM or CEM. We denote by $M$ the number of simulated trajectories and approximate the quantities of interest as
+\begin{equation}\label{eq:MonteCarlo}
+\begin{aligned}
+	\E(\tau_h^d) &\approx \frac{1}{M} \sum_{j=1}^M (\tau_h^d)_j, \\
+	\E(\tau_h^c) &\approx \frac{1}{M} \sum_{j=1}^M (\tau_h^c)_j, \\
+	\E(\phi_h^d) &\approx \frac{1}{M} \sum_{j=1}^M (\phi_h^d)_j, \\	
+	\E(\phi_h^c) &\approx \frac{1}{M} \sum_{j=1}^M (\phi_h^c)_j, \\	
+\end{aligned}
+\end{equation}
+where $(\tau_h^d)_j, (\phi_h^d)_j$ denote the values of $\tau$ and $\phi$ given by the $j$-th trajectory of DEM (respectively CEM). 
+\subsubsection{One-Dimensional Case}
+We consider problem \eqref{eq:GeneralModel} in case $d = 1$. Given $f,g$ defined on an interval $D = \left[l,r\right]$ and a Brownian motion $W(t)$, let us consider the following one dimensional SDE
+\begin{equation}\label{eq:OneDModel}
+\left \{
+\begin{aligned}
+	dX(t) &= f(X(t)) dt + g(X(t))dW(t), && 0 < t \leq T, \\
+	X(0)  &= X_0, && X_0 \in D.
+\end{aligned} \right .
+\end{equation}
+In this case, the boundary of $D$ consists of the two points $\{l,r\}$. In order for the problem of the determination of $\tau$ to be meaningful, at least one of the two points should be endowed with a killing boundary condition. 
+\input{OneDCase/OneDExperimentsTau}
+\input{OneDCase/OneDExperimentsPhi}
+

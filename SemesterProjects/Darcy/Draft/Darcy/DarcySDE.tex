@@ -1,0 +1,40 @@
+\subsection{Solution of the SDE}
+
+Once the Finite Element approximation $\hat{u}$ of the velocity field is available, it is possible to approximate by means of DEM and CEM the solution of \eqref{eq:GeneralDarcySDE}. The values of the numerical solution $X_h$ can take any value in $D$, therefore it is necessary that the velocity field is defined in any point in $D$. If an interpolation of $\hat{u}$ is performed at each step, both DEM and CEM lose in computational efficiency. Hence, an interpolation of $\hat{u}$ has to be performed before the numerical integration of the SDE. Therefore, we define a grid with spacing $\Delta_u$, interpolating the values of $\hat{u}$ in the center of each square defined by the grid (Figure \ref{fig:GridVelocity}). Let us denote by $Q$ the set of the interpolation points, whose elements are defined by
+\begin{equation}\label{eq:InterpMatrix}
+	\{Q\}_{ij} = \begin{pmatrix} -1 + (i-0.5)\Delta_u, & -1 + (j-0.5)\Delta_u \end{pmatrix}^T, \quad i,j = 1, \dots, \frac{2}{\Delta_u} =: N_u.
+\end{equation}
+We compute two matrices $U_x, U_y$ of $\mathbb{R}^{N_u \times N_u}$ containing the values of the two components of $\hat{u}$ interpolated on the points of $Q$. Then, the velocity field is considered to be piecewise constant in each square of the grid defined by $\Delta_u$. Therefore, if we denote by $\tilde{u}$ the transport field for the SDE, at the $i$-th step of the integration $\tilde{u}$ is evaluated as follows
+\begin{equation}\label{eq:VelEval}
+	\tilde{u}(X_h(t_i)) = \begin{pmatrix}	U_x(\ceil{(X_{h,1}(t_i)+1)/\Delta_u},\ceil{(X_{h,2}(t_i)+1)/\Delta_u}) \\
+					U_y(\ceil{(X_{h,1}(t_i)+1)/\Delta_u},\ceil{(X_{h,2}(t_i)+1)/\Delta_u}) \end{pmatrix},
+\end{equation}
+where $X_{h,1}, X_{h,2}$ denote the first and second components of $X_h$ and $U_x(i,j)$ represents the element $(i,j)$ of the matrix $U_x$ (respectively $U_y$). Let us remark that this operation involves only an evaluation of a matrix at each timestep, which is an operation of negligible computational cost. This implies a relevant improvement with respect to interpolating the solution at each timestep, which is on the other side a costly operation. Then, given the step size $h$, one step of DEM will be defined as
+\begin{equation}\label{eq:DEMDarcy}
+	X^d_{h,i+1} = \tilde{u}(X^d_{h,i}) h + \sigma (W(t_{i+1}) - W(t_i)).
+\end{equation}
+Given an input initial value $X_0$ for \eqref{eq:GeneralDarcySDE}, we approximate the solution using DEM and CEM using the strategy above. The theoretical investigation presented in Section 3 guarantees that if the interpolation and the element size chosen for the Finite Element approximation tend to zero, the solution will tend to the exact solution of \eqref{eq:DarcyProblem} for each realization of $A$. Unfortunately, the requirements of smoothness that we included in Section 3 are not satisfied by the solution of \eqref{eq:DarcyProblem}, unless $\nu$ is strictly bigger than one, as the random field and therefore the solution $u$ would be Lipschitz continuous. We hope that numerically the solution will in practice provide reasonable results even for a rough transport field. In Figure \ref{fig:TrajSDEDarcy} we display fifteen trajectories for $X_0 = (-0.8,-0.8)^T$ with two different step sizes. The choice of the initial point is made in order to observe reflections on the lower boundary of the domain $D$ on which we compute the solution, as well as the killing boundary at the right side. 
+
+\begin{figure}[t]
+    \centering
+    \resizebox{0.6\linewidth}{!}{\input{Darcy/Pictures/Grid.tikz} }  
+    \caption{Grid used for interpolation of $\hat{u}$. Dots represent the interpolation points.}
+    \label{fig:GridVelocity}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \begin{subfigure}{0.49\linewidth}
+        \centering
+        \resizebox{1\linewidth}{!}{\input{Darcy/Pictures/SDEBig.tikz} }  
+        \caption{Big timestep.}
+    \end{subfigure}
+    \begin{subfigure}{0.49\linewidth}
+        \centering
+        \resizebox{1\linewidth}{!}{\input{Darcy/Pictures/SDESmall.tikz} }  
+        \caption{Small timestep .}
+    \end{subfigure}    
+    \caption{Trajectories of the numerical solution of \eqref{eq:GeneralDarcySDE} with DEM.}
+    \label{fig:TrajSDEDarcy}
+\end{figure}
+

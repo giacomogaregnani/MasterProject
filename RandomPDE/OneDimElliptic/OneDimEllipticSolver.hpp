@@ -42,6 +42,7 @@ private:
     // Coefficient
     double (*kappa) (double, VectorXd&);
     VectorXd kappaVec;
+    bool isVectorKappa;
 
     // RHS
     double (*f) (double);
@@ -72,8 +73,12 @@ private:
 public:
     Solver() {};
 
-    Solver(double (*kappa) (double, VectorXd&),
-           double (*f) (double),
+    Solver(double (*cond) (double, VectorXd&),
+           double (*RHS) (double),
+           double xMin, double xMax, double h,
+           double leftBC, double rightBC);
+
+    Solver(double (*RHS) (double),
            double xMin, double xMax, double h,
            double leftBC, double rightBC);
 

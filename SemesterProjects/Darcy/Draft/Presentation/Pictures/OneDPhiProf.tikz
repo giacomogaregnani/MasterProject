@@ -1,0 +1,78 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=4.44in,
+height=3.531in,
+at={(0.745in,0.496in)},
+scale only axis,
+title = {$\sigma = 2, T = 1$},
+title style = {font = \Large},
+xmin=-1,
+xmax=1,
+xlabel={$X_0$},
+xlabel style={font=\Large},
+xmajorgrids,
+ymin=0.55,
+ymax=1,
+ylabel={$\Phi$},
+ylabel style={font=\Large},
+ymajorgrids,
+axis background/.style={fill=white},
+axis x line*=bottom,
+axis y line*=left,
+legend pos = north east,
+legend style={legend cell align=left,align=left,draw=white!15!black,font = \Large}
+]
+\addplot [color=red,dashed,mark=o,mark options={solid}]
+  table[row sep=crcr]{%
+-1	1\\
+-0.777777777777778	0.8933\\
+-0.555555555555556	0.8272\\
+-0.333333333333333	0.7665\\
+-0.111111111111111	0.7122\\
+0.111111111111111	0.6607\\
+0.333333333333333	0.62\\
+0.555555555555556	0.595\\
+0.777777777777778	0.5797\\
+1	0.5731\\
+};
+\addlegendentry{DEM};
+
+\addplot [color=blue,dashed,mark=asterisk,mark options={solid}]
+  table[row sep=crcr]{%
+-1	1\\
+-0.777777777777778	0.9328\\
+-0.555555555555556	0.8722\\
+-0.333333333333333	0.8132\\
+-0.111111111111111	0.7571\\
+0.111111111111111	0.7103\\
+0.333333333333333	0.6718\\
+0.555555555555556	0.6451\\
+0.777777777777778	0.6305\\
+1	0.6266\\
+};
+\addlegendentry{CEM};
+
+\addplot [color=black,dashed,mark=triangle,mark options={solid,rotate=90}]
+  table[row sep=crcr]{%
+-1	1\\
+-0.777777777777778	0.932548077502788\\
+-0.555555555555556	0.870181977112059\\
+-0.333333333333333	0.810303153980793\\
+-0.111111111111111	0.754108688988762\\
+0.111111111111111	0.70469446885863\\
+0.333333333333333	0.665180416423286\\
+0.555555555555556	0.63727357440893\\
+0.777777777777778	0.621019342130665\\
+1	0.615785886384429\\
+};
+\addlegendentry{Exact};
+
+\end{axis}
+\end{tikzpicture}%

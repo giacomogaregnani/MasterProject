@@ -1,0 +1,1 @@
+/usr/bin/c++    -fopenmp -std=c++11 -Wall -g   CMakeFiles/cast.dir/testCast.cpp.o  -o cast -rdynamic 

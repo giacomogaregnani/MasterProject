@@ -1,0 +1,16 @@
+*.bbl
+*.aux
+*.log
+*.blg
+ForPlots_Report/
+*.tex~
+*.m~
+*.toc
+*.lof
+*.eps
+*.tikz~
+Draft/Darcy/Pictures
+DarcyFreeFem/Matrix.txt
+Darcy/SolFiles
+MCofMC/SolFiles
+OneDCase/CMCS_FEM1D

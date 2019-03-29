@@ -1,0 +1,1 @@
+/usr/bin/c++    -fopenmp -std=c++11 -Wall -g   CMakeFiles/refSol.dir/ReferenceSolution.cpp.o  -o refSol -rdynamic ../RKSolver/libRungeKuttaSolver.a 

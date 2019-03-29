@@ -1,0 +1,31 @@
+\section{The uncertain Darcy problem}
+The methods for approximating the mean exit time have been investigated in a general frame. In the following we will consider \eqref{eq:GeneralModel} with $f\colon \mathbb{R}^2 \rightarrow \mathbb{R}^2$ given by the solution of the uncertain Darcy problem. 
+
+\subsection{Problem statement}
+Let us consider a domain $D \subset \mathbb{R}^2$. Let us define the Neumann boundaries of $D$ as $\Gamma_N$, its inlet boundary as $\Gamma_{in}$ and its outlet boundary as $\Gamma_{out}$. Then, we search the solution of the following problem
+\begin{equation}
+	\label{eq:DarcyProblem}
+	\left \{
+  	\begin{aligned}
+		u &= -A \nabla p, && \text{in } D, \\
+		\nabla\cdot u &= 0, && \text{in } D, \\
+		p &= p_0, && \text{on } \Gamma_{in},\\
+		p &= 0, && \text{on } \Gamma_{out}, \\
+		\nabla p &= 0, && \text{on } \Gamma_N,
+	\end{aligned} \right.
+\end{equation}
+where $A$ is a random field. The solution $u$ of this equation is used as transport field in equation \eqref{eq:GeneralModel}, which can be therefore written as
+\begin{equation}\label{eq:GeneralDarcySDE}
+  	\left \{
+  	\begin{aligned}
+    		dX(t) &= u(X) dt + \sigma dW(t), && 0 < t \leq T, \\
+    		X(0)  &= X_0, 	 	     && X_0 \in D,
+  	\end{aligned} \right.
+\end{equation} 
+where we set the boundary conditions to be reflecting on $\Gamma_N$ and killing on both $\Gamma_{in},\Gamma_{out}$.
+
+\input{Darcy/Darcy}
+\input{Darcy/DarcySDE}
+\input{Darcy/Summary}
+\input{Darcy/MCofMC}
+

@@ -1,0 +1,112 @@
+\begin{frame}
+\frametitle{Outline of the presentation}
+\begin{itemize}
+	\item \color{mygray} Expected exit time from a domain
+	\begin{itemize} \color{mygray}
+		\item[--] Setting
+		\item[--] Numerical methods
+		\item[--] Numerical experiments
+	\end{itemize} \color{black}
+	\item Theoretical investigation: perturbed SDE's 
+	\item The uncertain Darcy's problem 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Theoretical investigation - Motivation}
+Consider the velocity field $\uDarcy$ solution of the Darcy's problem and an approximation $\color{blue} \tilde u$ of $\uDarcy$. Consider then the SDE
+\begin{equation*}
+	\left \{
+	\begin{aligned}
+		dX(t) &= \uDarcy (X(t)) \color{black} dt + \sigma dW(t), && 0 \leq t \leq T, \\
+		X(0) &= X_0 \in D, \\
+	\end{aligned} \right.
+\end{equation*}
+and the SDE
+\begin{equation*}
+	\left \{
+	\begin{aligned}
+		d\tilde X(t) &= \color{blue} \tilde u(\tilde X(t)) \color{black} dt + \sigma dW(t), && 0 \leq t \leq T, \\
+		\tilde X(0) &= X_0 \in D, \\
+	\end{aligned} \right.
+\end{equation*}
+\underline{Problem}. If $\color{blue} \tilde u$ converges to $\uDarcy$, does $\tilde X(t)$ converge to $X(t)$? What is the effect on the order of convergence of numerical methods?
+\end{frame}
+
+\begin{frame}
+\frametitle{Theoretical investigation - Convergence of the solution}
+In an abstract form, consider $f\colon \R \to \R$ and the SDE
+\begin{equation*}
+\left \{
+\begin{aligned}
+	dX(t) &= f(X(t))dt + \sigma dW(t), && 0 < t \leq T, \\
+	X(0) &= X_0,
+\end{aligned} \right .
+\end{equation*}
+Consider a perturbation of the transport field $f^\epl\colon \R \rightarrow \R$ and
+\begin{equation*}
+\left \{
+\begin{aligned}
+	dX^\epl(t) &= f^\epl(X^\epl(t))dt + \sigma dW(t), && 0 < t \leq T, \\
+	X^\epl(0) &= X_0.
+\end{aligned} \right .
+\end{equation*}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Theoretical investigation - Convergence of the solution}
+\begin{proposition} If the following assumptions are verified for a constant $K > 0$
+\begin{enumerate}
+	\item $|f(x) - f(y)| \leq K|x - y|, \: \forall x,y \in \R$,
+	\item $|f(x)| \leq K(1 + |x|), \: \forall x \in \R$,
+\end{enumerate}
+and if the solution $X^\epl(t)$ of the perturbed SDE exists, then
+\begin{equation*}
+	\E \sup_{0 \leq t \leq T} |X^\epl(t) - X(t)|^2 \leq  2T^2 \|f - f^\epl\|_{\infty}^2 e^{2K^2T^2}.
+\end{equation*}
+\end{proposition}
+\underline{Remark}. We proved similar results for two independent Brownian motions $W_1, W_2$ and in the $d$-dimensional case.
+\end{frame}
+
+\begin{frame}
+\frametitle{Theoretical investigation - Numerical convergence}
+Consider the Euler-Maruyama method applied to the perturbed SDE
+\begin{equation*}
+\left \{
+\begin{aligned}
+	X^\epl_{n+1} &= X^\epl_n + f^\epl(X^\epl_n)h + \sigma (W(t_{n+1}) - W(t_n)), && n = 0, \dots, N - 1, \\
+	X^\epl_0 &= X_0.
+\end{aligned} \right .
+\end{equation*}
+\underline{Problem}. Determine the convergence of $X^\epl_n$ to $X(t)$ with respect to $h$ and $\epl$.
+\end{frame}
+
+\begin{frame}
+\frametitle{Theoretical investigation - Numerical convergence}
+\begin{proposition} If the following assumptions are verified for a constant $K > 0$
+\begin{enumerate}
+	\item $|f(x) - f(y)| \leq K|x - y|, \: \forall x,y \in \R$,
+	\item $|f(x)| \leq K(1 + |x|), \: \forall x \in \R$,
+\end{enumerate}
+and if the solution $X^\epl(t)$ of the perturbed SDE exists, then
+\begin{equation*}
+	\sup_{n = 0, \dots, N} \E \|X(nh) - X^\epl_n\| \leq C h +  \|f^\epl - f\|_{\infty} \frac{e^{KT} - 1}{K}, 
+\end{equation*}
+with $C$ a real constant independent of $h$ and depending only on the final time $T$ and the Lipschitz constant $K$ of $f$.
+\end{proposition}
+\underline{Idea of the proof}. Use triangular inequality summing and subtracting the variable $X_n$ given by Euler-Maruyama applied to the non-perturbed equation.
+\end{frame}
+
+\begin{frame}
+\frametitle{Theoretical investigation - Numerical convergence}
+\underline{Remark}. If $D$ is a square domain and $f^\epl$ is a piece-wise constant interpolation of $f$ on a regular grid of equal size $\epl$ in the two directions
+\begin{equation*}
+	\sup_{n = 0, \dots, N} \E \|X(nh) - X^\epl_n\| = O(h) + O(\epl).
+\end{equation*}
+Therefore, set $h = O(\epl)$ to avoid extra computational cost. 
+
+\vspace{0.5cm}
+\underline{Numerical experiments confirm this behaviour.}
+
+\end{frame}

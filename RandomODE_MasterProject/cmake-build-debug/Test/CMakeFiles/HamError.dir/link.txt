@@ -1,0 +1,1 @@
+/usr/bin/c++    -fopenmp -std=c++11 -Wall -g   CMakeFiles/HamError.dir/HamiltonianError.cpp.o  -o HamError -rdynamic ../RKRandomStep/libRandomStep.a ../Utilities/libUtilitiesGG.a ../RKSolver/libRungeKuttaSolver.a 

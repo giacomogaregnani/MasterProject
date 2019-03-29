@@ -1,0 +1,115 @@
+\documentclass{article}
+
+% basics
+\usepackage{vmargin}
+\usepackage[utf8x]{inputenc}
+\usepackage[title,titletoc]{appendix}
+\usepackage{afterpage}
+\usepackage{enumitem}   
+\setlist[enumerate]{topsep=3pt,itemsep=3pt,label=(\roman*)}
+
+% maths
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\theoremstyle{theorem}
+\newtheorem{theorem}{Theorem}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+
+% tables
+\usepackage{booktabs}
+
+% plots
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,positioning,fit,matrix}
+\usepackage[labelfont=bf]{caption}
+\setlength{\belowcaptionskip}{-5pt}
+\usepackage{here}
+\usepackage[font=normal]{subcaption}
+
+% title and authors
+\title{\LARGE{Annual report -- Giacomo Garegnani}}
+\author{}
+\date{}
+
+% my commands 
+\DeclarePairedDelimiter{\ceil}{\left\lceil}{\right\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\|}{\|}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\Pr}{\mathbb{P}}
+\newcommand{\eqtext}[1]{\ensuremath{\stackrel{#1}{=}}}
+\newcommand{\leqtext}[1]{\ensuremath{\stackrel{#1}{\leq}}}
+\newcommand{\iid}{\ensuremath{\stackrel{\text{i.i.d.}}{\sim}}}
+\newcommand{\totext}[1]{\ensuremath{\stackrel{#1}{\to}}}
+\newcommand{\rightarrowtext}[1]{\ensuremath{\stackrel{#1}{\longrightarrow}}}
+\newcommand{\leftrightarrowtext}[1]{\ensuremath{\stackrel{#1}{\longleftrightarrow}}}
+\newcommand{\pdv}[2]{\ensuremath\partial_{#2}#1}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\epl}{\varepsilon}
+\newcommand{\diffL}{\mathcal{L}}
+\newcommand{\prior}{\mathcal{Q}}
+\newcommand{\defeq}{\coloneqq}
+\newcommand{\eqdef}{\eqqcolon}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\E}{\operatorname{\mathbb{E}}}
+\newcommand{\MSE}{\operatorname{MSE}}
+\newcommand{\trace}{\operatorname{tr}}
+\newcommand{\MH}{\mathrm{MH}}
+\newcommand{\ttt}{\texttt}
+\newcommand{\Hell}{d_{\mathrm{Hell}}}
+\newcommand{\sksum}{{\textstyle\sum}}
+\newcommand{\dd}{\mathrm{d}}
+\definecolor{shade}{RGB}{100, 100, 100}
+\definecolor{bordeaux}{RGB}{128, 0, 50}
+\newcommand{\corr}[1]{{\color{bordeaux}#1}}
+
+\begin{document}
+	\maketitle
+		
+	\subsection*{Objectives -- State of research -- Future plans}
+	
+	Our primary research objective is designing and analysing probabilistic numerical methods for differential equations. These schemes, which can be applied to problems which are both deterministic or with an intrinsic stochastic nature, have the goal of replacing a classic error estimate with a probability measure, which eventually provides a richer uncertainty quantification of the accuracy of classical solvers.
+	
+	After having designed a method for ordinary differential equations, whose analysis has been consistently improved over the last twelve months, we worked on a novel method for elliptic partial differential equations. While the performances of the latter method are promising and could be applied to a wide range of problems, the analysis of probabilistic \textit{a-posteriori} error estimates still lacks rigour in some key passages, and should be therefore improved.
+	
+	During the last year, the co-supervision (with Professor A. Abdulle) of a Semester project by Wojciech Reise was an opportunity to dig into the theory of the so-called filtering methods for differential equations. The semester project was highly satisfactory and helped us improve our comprehension of this class of methods. More recently, the co-supervision (with Professor A. Abdulle) of an ongoing Master project by Andrea Zanoni is and will be an opportunity to study ensemble Kalman filter methods for Bayesian inverse problems involving multi-scale elliptic equations.
+		
+	Finally, another more recent direction of research, in collaboration with Professor G. Pavliotis (Imperial College), is the proposal and analysis of Bayesian algorithms for inverse problems involving multi-scale stochastic differential equations, with a particular focus on the effects of sub-sampling. This project could benefit of the co-supervision and advice of Professor A. Stuart (Caltech), whom I will most likely visit for a short period during 2019. 
+	
+	Summarising, the future plans of research involve mainly the two following directions
+	\begin{itemize}[label=-]
+		\item completing the analysis and a set of numerical experiments for our probabilistic solver of elliptic differential equations,
+		\item design and analysis of Bayesian methods for inverse problems involving multi-scale stochastic differential equations. 
+	\end{itemize}
+		
+	\subsection*{Scientific publications -- participation to meetings}
+	
+	Our journal article \cite{AbG18} has been submitted for publication and is undergoing the process of review. A second article on probabilistic solvers for elliptic differential equations is in preparation \cite{AbG19}. As far as participation to meetings is concerned, in the last twelve months I
+	\begin{itemize}[label=-]
+		\item gave a seminar at the Max Planck Institute for Intelligent Systems (Tübingen, March 2018),
+		\item gave a talk at Swiss Numerics Day (Zürich, April 2018),
+		\item joined the SAMSI-Lloyds-Turing Workshop on Probabilistic Numerical Methods (London, April 2018),
+		\item gave a long talk at the MATHICSE Retreat (Sainte-Croix, June 2018), 
+		\item gave a talk at the special session ``Structure Preserving Numerical Methods'' at the AIMS Conference on Dynamical Systems, Differential Equations and Applications (Taipei, July 2018),
+		\item gave a talk at the FoMICS-DADSi Summer School on Data Assimilation (Lugano, September 2018).
+	\end{itemize}	
+
+	\bibliographystyle{siam}
+	\bibliography{biblio}
+
+\end{document}

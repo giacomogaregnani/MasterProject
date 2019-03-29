@@ -1,0 +1,27 @@
+\subsubsection{Adaptivity}
+We apply to a test case the adaptivity procedure explained in section \ref{sec:Adapt}. In particular, we fix $f = 0, g = \sigma = 1, T = 3$ and $X_0 = (0,0)^T$ in the square domain $D = \left[-1,1\right]^2$ with pure killing boundary conditions. We vary $l$ in \eqref{eq:Adaptivity} in the range $l = 0, \dots, 7$ and we consider three methods
+\begin{enumerate}
+	\item Adaptive method with $h_0 = T, h_{int} = 2^{-l}h_0, h_{bound} = 2^{-2l}h_0$,
+	\item DEM with $h = h_{bound}$ for each timestep,
+	\item CEM with $h = h_{int}$ for each timestep,
+\end{enumerate}
+Since $h_{bound} \sim h_ {int}^2$, we expect the three methods to have an error of order $O(h_{int})$ when estimating the mean exit time. In Figure \ref{fig:AdaptErr} it is possible to remark that the error is in fact of order $O(h_{int})$ for the three methods. Moreover, the methods have approximately the same error, \textit{i.e.}, the constant multiplying $h_{int}$ is the same for the three methods. In order to choose which method performs better from the point of view of computational cost, we compute the mean number of timesteps that they perform in order to estimate the exit time. From Figure \ref{fig:AdaptCost} it is clear that CEM with $h_{int}$ for every timestep performs better than the other two methods, with the adaptive procedure applied to DEM which implies lower computational time than DEM with constant timestep equal to $h_{bound}$. We can conclude that the approach based on Brownian bridge proposed in \cite{Gobet2001} has better performances when estimating the mean exit time from a domain.
+
+\begin{figure}[t]
+    \centering
+    \begin{subfigure}{0.49\linewidth}
+        \centering
+        \resizebox{1\linewidth}{!}{\input{TwoDCase/AdaptErr.tikz} }  
+        \caption{Convergence of the methods.}
+        \label{fig:AdaptErr}
+    \end{subfigure}
+    \begin{subfigure}{0.49\linewidth}
+        \centering
+        \resizebox{1\linewidth}{!}{\input{TwoDCase/AdaptCost.tikz} }  
+        \caption{Computational cost.}
+        \label{fig:AdaptCost}
+    \end{subfigure}    
+    \caption{Estimation of $\tau$ in the square domain with mixed boundary conditions. Comparison between DEM with fixed or adaptive step size.}
+    \label{fig:AdaptResults}
+\end{figure}
+

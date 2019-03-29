@@ -200,38 +200,43 @@ MatrixXd brussJ(VectorXd argument, std::vector<double>& param)
     return result;
 }
 
-// For Poisson test, a class allows to form the matrix only once
-MatrixXd Poisson::A(10, 10);
+// For Heat test, a class allows to form the matrix only once
+SparseMatrix<double> Heat::A(1, 1);
 
-VectorXd Poisson::initialCond(10);
+VectorXd Heat::initialCond(1);
 
-VectorXd Poisson::poissonTest(VectorXd argument, std::vector<double>& param) {
-    long int N = argument.size();
-    VectorXd result(N);
+VectorXd Heat::heatF(VectorXd argument, std::vector<double> &param)
+{
     return A * argument * param[0];
 }
 
-MatrixXd Poisson::poissonTestJ(VectorXd argument, std::vector<double> &param)
+MatrixXd Heat::heatJ(VectorXd argument, std::vector<double> &param)
 {
-    return A;
+    return MatrixXd(A) * param[0];
 }
 
-VectorXd Poisson::poissonExact(std::vector<double> &param, double time)
+VectorXd Heat::poissonExact(std::vector<double> &param, double time)
 {
-    return (A * time).exp() * initialCond;
+    return (MatrixXd(A) * time).exp() * initialCond;
 }
 
-Poisson::Poisson(int N)
+Heat::Heat(int N)
 {
-    A = MatrixXd::Zero(N, N);
-    for (int i = 0; i < N - 1; i++) {
-        A(i, i) = -2.0;
-        A(i, i + 1) = 1.0;
-        A(i + 1, i) = 1.0;
+    A.resize(N-1, N-1);
+    initialCond.resize(N-1);
+
+    std::vector<Triplet<double>> coeffs;
+    for (int i = 0; i < N-2; i++) {
+        coeffs.push_back(Triplet<double>(i, i, -2.0));
+        coeffs.push_back(Triplet<double>(i, i+1, 1.0));
+        coeffs.push_back(Triplet<double>(i+1, i, 1.0));
     }
-    A(N - 1, N - 1) = -2.0;
+    coeffs.push_back(Triplet<double>(N-2, N-2, -2.0));
 
-    for (int i = 0; i < N; i++) {
+    A.setFromTriplets(coeffs.begin(), coeffs.end());
+    A *= (N * N);
+
+    for (int i = 0; i < N-1; i++) {
         initialCond(i) = 1.0;
     }
 }
@@ -442,7 +447,7 @@ MatrixXd TodaJ(VectorXd argument, std::vector<double>& param)
     return result;
 }
 
-void setProblem(odeDef* odeModel)
+void setProblem(odeDef* odeModel, int nHeat)
 {
     switch (odeModel->ode) {
         case FITZNAG:
@@ -635,17 +640,16 @@ void setProblem(odeDef* odeModel)
             odeModel->odeJac = &TodaJ;
             odeModel->refParam = {};
             break;
-        case POISSON:
-            Poisson P(10);
-            odeModel->size = 10;
+        case HEAT:
+            Heat P(nHeat);
+            odeModel->size = nHeat - 1;
             (odeModel->initialCond).resize(odeModel->size);
             odeModel->initialCond = P.initialCond;
-            odeModel->odeFunc = &P.poissonTest;
-            odeModel->odeJac = &P.poissonTestJ;
+            odeModel->odeFunc = &P.heatF;
+            odeModel->odeJac = &P.heatJ;
             odeModel->exactSol = &P.poissonExact;
             (odeModel->refParam).resize(1);
             (odeModel->refParam)[0] = 1.0;
             break;
     }
 }
-

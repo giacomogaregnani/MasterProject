@@ -1,0 +1,55 @@
+\documentclass{scrartcl}
+
+% basics
+\usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage{afterpage}
+\usepackage{enumitem}   
+\setlist[enumerate]{topsep=3pt,itemsep=3pt,label=(\roman*)}
+
+% maths
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+	
+	All of these are standard results and definitions. The class of sub-Gaussian random variables is quite large, so it would be a good choice for our random step sizes.
+	
+	\begin{definition} A random variable $X \in \R$ is called sub-Gaussian of parameter $\sigma^2$ if $\E X = 0$ and its moment generating function satisfies
+		\begin{equation*}
+			\E \exp(sX) \leq \exp\left(\frac{\sigma^2s^2}{2}\right), \quad \forall s \in \R.
+		\end{equation*}
+	\end{definition}
+	
+	\noindent These random variables have light tails, i.e., their densities (if they exists) are decaying rapidly at infinity. As a consequence, all random variables taking values in a bounded set are sub-Gaussian.
+	
+	\begin{lemma} Let $X$ be sub-Gaussian of parameter $\sigma^2$. Then for any $t > 0$ it holds
+		\begin{equation*}
+			\Pr(X > t) \leq \exp\left(-\frac{t^2}{2\sigma^2}\right), \quad \Pr(X < -t) \leq \exp\left(-\frac{t^2}{2\sigma^2}\right).
+		\end{equation*}
+	\end{lemma}
+	
+	\noindent The absolute moments of these random variables are bounded with functions of the parameter $\sigma^2$.
+	
+	\begin{lemma} Let $X$ be a random variable such that 
+		\begin{equation*}
+			\Pr(|X| > t) \leq 2 \exp\left(-\frac{t^2}{2\sigma^2}\right).
+		\end{equation*}
+		Then for any positive integer $k \geq 1$,
+		\begin{equation*}
+			\E |X|^k \leq (2\sigma^2)^{k/2}k\Gamma(k/2).
+		\end{equation*}		
+	\end{lemma}
+	
+	\noindent In our case, we could choose the step sizes $H$ such that the random variable $Z = H - h$ is sub-Gaussian of parameter $\sigma^2 = h^{2p}$. This excludes the log-normal distribution (heavy-tailed).
+	
+\end{document}

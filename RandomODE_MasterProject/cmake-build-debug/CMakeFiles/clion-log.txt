@@ -1,0 +1,4 @@
+/amd/smana3/root/vol/vol2/anmc/garegnan/Downloads/clion-2016.2.3/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /u/anmc/garegnan/Desktop/Project/RandomODE_MasterProject
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /u/anmc/garegnan/Desktop/Project/RandomODE_MasterProject/cmake-build-debug

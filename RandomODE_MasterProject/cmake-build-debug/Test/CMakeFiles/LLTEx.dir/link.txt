@@ -1,0 +1,1 @@
+/usr/bin/c++    -fopenmp -std=c++11 -Wall -g   CMakeFiles/LLTEx.dir/LLTexample.cpp.o  -o LLTEx -rdynamic 

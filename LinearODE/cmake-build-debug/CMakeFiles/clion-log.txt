@@ -1,0 +1,4 @@
+/net/smana3/vol/vol2/anmc/garegnan/Desktop/Programs/clion-2017.3.2/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /u/anmc/garegnan/Desktop/Project/LinearODE
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /u/anmc/garegnan/Desktop/Project/LinearODE/cmake-build-debug

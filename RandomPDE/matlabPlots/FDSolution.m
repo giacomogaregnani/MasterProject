@@ -7,7 +7,7 @@ clc; clear; close all
 L = 22;
 spaceSpan = [-L/2, L/2];
 
-h = 0.1;
+h = 0.25;
 N = L / h;
 
 %% Build the matrices 
@@ -57,7 +57,7 @@ xValues = [spaceSpan(1) : h : spaceSpan(2)]';
 uZero = sin(2 * pi * xValues(1 : end - 1) / L);
 % uZero = zeros(length(xValues) - 1, 1); uZero(2 : 5) = 0.6;
 
-timeSpan = [0, 200];
+timeSpan = [0, 400];
 fODE = @(t, x) -1 * (A(x) + B * x + C * x);
 
 [T, U] = ode23s(fODE, timeSpan, uZero);
@@ -67,6 +67,9 @@ U = [U, U(:, 1)];
 
 %% Plot
 
+figure
+% surf(xValues, T, U, 'edgecolor', 'none')
+view(2)
 contourf(xValues, T, U, 20)
 colorbar
 

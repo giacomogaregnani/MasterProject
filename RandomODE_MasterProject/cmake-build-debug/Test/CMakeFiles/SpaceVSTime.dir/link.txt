@@ -1,0 +1,1 @@
+/usr/bin/c++    -fopenmp -std=c++11 -Wall -g   CMakeFiles/SpaceVSTime.dir/SpaceMeans.cpp.o  -o SpaceVSTime -rdynamic ../RKRandomStep/libRandomStep.a ../Utilities/libUtilitiesGG.a ../RKSolver/libRungeKuttaSolver.a 

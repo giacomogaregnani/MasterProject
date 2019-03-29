@@ -1,0 +1,2 @@
+/usr/bin/ar cr libClass.a  CMakeFiles/Class.dir/Class.cpp.o CMakeFiles/Class.dir/SubLibrary/FunctionCollections.cpp.o
+/usr/bin/ranlib libClass.a

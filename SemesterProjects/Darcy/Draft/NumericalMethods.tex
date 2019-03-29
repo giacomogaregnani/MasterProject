@@ -1,0 +1,101 @@
+\subsection{Numerical Methods}
+ 
+\subsubsection{Discrete Euler-Maruyama}
+Given $N \in \mathbb{N}$ let us define a partition of $[0,T]$ as $P_h = \{t_i\}_{i=0}^{N}, t_i = ih, h = T/N$. The Discrete Euler-Maruyama method (DEM) for problem \eqref{eq:GeneralModel} is defined as follows
+\begin{equation}\label{eq:DEM}
+	\left \{
+	\begin{aligned}
+		X_{h,i+1}^d &= f(X_{h,i}^d)h + g(X_{h,i}^d)(W(t_{i+1}) - W(t_{i})),  \\
+		X_{h,0}^d &= X_0.
+	\end{aligned} \right .
+\end{equation} 
+The exit time $\tau$ is approximated with the quantity $\tau_h^d$ defined as 
+\begin{equation}\label{eq:TauDEM}
+	\tau_h^d = \min\{\tau_{h,e}^d,T\}, \text{ where } \tau_{h,e}^d = h\min \{i \colon X_{h,i}^d \notin D\}.
+\end{equation}
+We approximate analogously $\phi$ as
+\begin{equation}\label{eq:PhiDEM}
+	 \phi_h^d = \mathbbm{1}_{\{T < \tau_{h,e}^d\}}F(X_{h,N}^d).
+\end{equation}
+It has been shown \cite{Gobet2000, Gobet2010, Higham2013} that under appropriate assumptions on the functions $f$ and $g$, as well as the domain $D$ and its boundary, the weak error of the method for approximating the values of interest is of order 1/2, \textit{i.e.},
+\begin{align}\label{eq:ConvDEMTau}
+	|\mathbb{E}(\tau_h^d) - \mathbb{E}(\tau)| &= O(\sqrt{h}), \\
+	|\mathbb{E}(\phi_h^d) - \mathbb{E}(\phi)| &= O(\sqrt{h}).
+\end{align}	
+It is known that the weak error for Euler-Maruyama is of order 1, therefore there is a loss of 1/2 in case of killing and reflecting boundaries \cite[Chapter 14]{Kloeden1992}. This is due to the missed exits, \textit{i.e.}, a part of the solution which lays outside the domain connecting two discrete values that are inside the domain. An example of a missed exit is depicted in Figure \ref{fig:MissedExit}, where the solution computed with a large step size $h$ stays in the domain, while with a smaller step size one can conclude that the solution has actually exited the domain. The methods that we present in the following implement two different strategies to correct this behaviour.
+
+\begin{figure}[t]
+    \centering
+    \resizebox{0.6\linewidth}{!}{\input{MissedExit.tikz} }  
+    \caption{An example of missed exit from a two dimensional domain $D$. The trajectory computed with the small step size exits the domain, while for the big step size the exit is not detected.}
+    \label{fig:MissedExit}
+\end{figure}
+ 
+\subsubsection{Continuous Euler-Maruyama. }
+Let us consider the partition $P_h$ of $[0,T]$ as above. The Continuous Euler-Maruyama (CEM) method is defined as
+\begin{equation}\label{eq:CEM}
+	\left \{
+	\begin{aligned}
+		X_h^c(t) &= f(X_h^c(t_i))(t-t_i) + g(X_h^c(t_i))(W(t) - W(t_{i})),  && t_i < t \leq t_{i+1},\\
+		X_h^c(0) &= X_0.
+	\end{aligned} \right .
+\end{equation} 
+Let us remark that in case the particle does not exit the domain, $X_h^c(t_i) = X_{h,i}^d$ for all $t_i \in P_h$. It is possible to compute the probability that a particle has exited the domain at a time $t$ between two consecutive timesteps $t_i,t_{i+1}$ when $D$ is an half-space with the following formula \cite{Gobet2001}
+\begin{equation}\label{eq:CEMProb}
+	\Pr (\exists t \in [ t_i,t_{i+1} ] \quad X_h^c(t) \notin D | X_h^c(t_i) = x_i, X_h^c(t_{i+1}) = x_{i+1}) = p(x_i,x_{i+1},h),
+\end{equation}
+with $p(x_i,x_{i+1},h)$ given by
+\begin{equation}\label{eq:CEMProbHalfSpace}
+	p(x_i,x_{i+1},h) = \exp\Big(-2\frac{[n\cdot(x_i - z_i)][n\cdot(x_{i+1} - z_i)]}{hn\cdot (gg^T(x_i)n)}\Big),
+\end{equation}
+where $z_i$ is the projection of $x_i$ on $\partial D$ and $n$ is the vector normal to $\partial D$ in $z_i$ pointing outwards $D$. At each timestep $t_{i+1}$ we compute the probability $p(x_i,x_{i+1},h)$, and then simulate a variable $U$ distributed uniformly in the interval $\left[0,1\right]$, thus obtaining a realization $\tilde U_i$. Hence, we conclude that the particle has left the domain for a time $t$ in $(t_i,t_{i+1})$ if $\tilde U_i$ is smaller than $p(x_i,x_{i+1},h)$. This procedure is equivalent to simulating a Bernoulli variable of parameter $p(x_i,x_{i+1},h)$ at each timestep. Therefore, we approximate the exit time as
+\begin{equation}\label{eq:TauCEM}
+\begin{aligned}
+	\tau_h^c &= \min \{T,\tau_{h,e}^c\}, \\
+	\text{ where } \tau_{h,e}^c &= \min\{h\min\{i \colon X_h^c(t_i) \notin D\}, h\min\{i \colon \tilde U_i < p(X_h^c(t_{i-1}),X_h^c(t_i),h) \}\}.
+\end{aligned}
+\end{equation}
+In the same way as in DEM, we can approximate $\phi$ as
+\begin{equation}\label{eq:PhiCEM}
+	\phi_h^c = \mathbbm{1}_{\{T < \tau_{h,e}^c\}}F(X_h^c(T)).
+\end{equation}
+We show the pseudo-code for the implementation of CEM in Algorithm \ref{alg:algoCEM}. It has been shown \cite{Gobet2010} that under appropriate assumptions on the functions $f$ and $g$, as well as the domain $D$ and its boundary, the weak error of this method when approximating the values of interest is 1, \textit{i.e.},
+\begin{align}\label{eq:ConvCEMPhi}
+	|\mathbb{E}(\tau_h^c) - \mathbb{E}(\tau)| = O(h), \\
+	|\mathbb{E}(\phi_h^c) - \mathbb{E}(\phi)| = O(h).
+\end{align}
+This result implies that computing the probability of exit at each timestep it is possible to avoid the phenomenon of the missed exits, restoring the weak order 1 of the standard Euler-Maruyama method. Let us remark that the complexity of CEM for computing a single time step is higher than for DEM, as the probability has to be computed for each part of the boundary of $D$ and compared with $\tilde U_i$. On the other side, it is likely that CEM terminates before DEM, as the exit could be detected at an earlier stage.
+
+\begin{algorithm}[t]
+\caption{Continuous Euler-Maruyama}
+\For{$t_i \in P_h$ }{
+	$X(t_{i+1}) = f(X(t_i))h + g(X(t_i))(W(t_{i+1})-W(t_i))$ \;
+  	\eIf{$X(t_{i+1}) \notin D$}{
+    		$\tau_h^c = t_{i+1}$ \;
+		$\phi_h^c = 0$ \;
+		\Return
+   	}{
+   	compute $p = p(x_i,x_{i+1},h)$ \;
+	draw $\tilde U_i$ from $U \sim$ Unif$(0,1)$ \;
+	\If{$\tilde U_i < p$}{
+		$\tau_h^c = t_{i+1}$ \;
+		$\phi_h^c = 0$ \;
+		\Return
+		}
+  	}
+	$\tau_h^c = T$ \;
+	$\phi_h^c = F(X_h^c(T))$ \;
+ }
+\label{alg:algoCEM}
+\end{algorithm}
+
+\input{Adaptivity}
+
+\subsubsection{Reflecting boundaries}
+The reflecting boundaries are treated in the same way for both DEM and CEM. Let us denote by $\Gamma_k$ and $\Gamma_r$ the killing and reflecting subsets of $\partial D$, \textit{i.e.},
+\begin{equation}\label{eq:Boundaries}
+	\Gamma_r \cup \Gamma_k = \partial D, \quad \Gamma_r \cap \Gamma_k = \emptyset
+\end{equation} 
+If for a timestep of $t_i \in P_h$, $X_i$ is not in $D$ and the line connecting $X_{i-1}$ and $X_i$ crosses $\Gamma_r$, we update the solution to be the normal reflection inside $D$ of $X_i$. Let us denote by $\tilde X_i$ the new guess for the solution at time $t = t_i$. One has to consider the case in which $\tilde X_i$ is outside $D$ as well. In this case, if the line connecting $X_{i-1}$ and $\tilde X_i$ crosses $\Gamma_k$, the algorithm terminates. On the other hand, if it has crossed another portion of $\Gamma_r$, another reflection has to be performed, and the procedure explained above is repeated. This procedure does not spoil the precision of the numerical solution \cite{Helmuth}.
+
+

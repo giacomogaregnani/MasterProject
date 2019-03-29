@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../Library/Class.hpp
+SubLibrary/FunctionCollections.hpp
+../Library/SubLibrary/FunctionCollections.hpp
+
+../Library/SubLibrary/FunctionCollections.hpp
+
+/u/anmc/garegnan/Desktop/Project/MinimumProject/Tests/Test.cpp
+Class.hpp
+-
+iostream
+-
+

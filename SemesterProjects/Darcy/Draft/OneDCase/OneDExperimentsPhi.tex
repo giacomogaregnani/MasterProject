@@ -1,0 +1,48 @@
+
+\vspace{2mm}
+\noindent \textbf{Estimation of the exit probability.} We consider \eqref{eq:OneDModel} with $D = \left[ -1, 1 \right]$, the final time $T = 1$, initial condition $X_0 = 0$ and we define
+\begin{align}\label{eq:FunctionsOneDSmoothPhi}
+\begin{split}
+	f(x) &= -V'(x), \text{ where } V(x) = 0.1(8x^4 - 8x^2 + x + 2), \\
+	g(x) &= \sigma = 2.
+\end{split}
+\end{align}
+In order to approximate $\Phi$, we perform a Montecarlo simulation using both DEM and CEM, with $M = 10^5$ trajectories. We consider the number of timesteps for the time integration to be $N = 2^i, i = 3, \dots, 9$. The reference solution used to compute errors is obtained with Finite Differences applied to problem \eqref{eq:PDEPhi} (see Appendix \ref{sec:Appendix2}). Numerical results (Figure \ref{fig:KillOneDPhi}) confirm that the weak error for DEM is of order 0.5. For CEM it is not trivial to show a clear order of convergence one. This is due to the fact that the results are accurate already with a big step size, therefore the statistical error is not negligible with respect to the error due to time integration. In order to avoid the noise on the order of convergence, it would be necessary to increase the number of trajectories dramatically, leading to unaffordable computational times. Let us remark that CEM approximates the exit probability better than DEM for any initial value $X_0$, as shown in Figure \ref{fig:PhiProfiles}.
+
+\begin{figure}[t]
+    \centering
+    \begin{subfigure}{0.49\linewidth}
+        \centering
+        \resizebox{1\linewidth}{!}{\input{OneDCase/OrderKillPhi.tikz} }  
+        \caption{Killing boundary in $x = 1$}
+        \label{fig:KillOneDPhi}
+    \end{subfigure}
+    \begin{subfigure}{0.49\linewidth}
+        \centering
+        \resizebox{1\linewidth}{!}{\input{OneDCase/OrderReflPhi.tikz} }  
+        \caption{Reflecting boundary in $x = 1$}
+        \label{fig:ReflectOneDPhi}
+    \end{subfigure}    
+    \caption{Approximation of $\Phi$. Orders of convergence of DEM and CEM in the one-dimensional case.}
+    \label{fig:OrdersOneDPhi}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \begin{subfigure}{0.49\linewidth}
+        \centering
+        \resizebox{1\linewidth}{!}{\input{OneDCase/PhiProfilesKill.tikz} }  
+        \caption{Killing boundary in $x = 1$}
+        \label{fig:KillPhiProfiles}
+    \end{subfigure}
+    \begin{subfigure}{0.49\linewidth}
+        \centering
+        \resizebox{1\linewidth}{!}{\input{OneDCase/PhiProfilesRefl.tikz} }  
+        \caption{Reflecting boundary in $x = 1$}
+        \label{fig:ReflectPhiProfiles}
+    \end{subfigure}    
+    \caption{Approximation of $\Phi$ as a function of the initial value $X_0$.}
+    \label{fig:PhiProfiles}
+\end{figure}
+
+

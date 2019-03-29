@@ -7,6 +7,19 @@ Solver::Solver(double (*kappa) (double, VectorXd&),
                double xMin, double xMax, double h,
                double leftBC, double rightBC):
         kappa(kappa),
+        isVectorKappa(false),
+        f(f),
+        leftBC(leftBC),
+        rightBC(rightBC)
+{
+    mesh = std::make_shared<OneDimMesh>(xMin, xMax, h);
+    N = static_cast<size_t>(mesh->getPoints().size()) - 1;
+}
+
+Solver::Solver(double (*f) (double),
+               double xMin, double xMax, double h,
+               double leftBC, double rightBC):
+        isVectorKappa(true),
         f(f),
         leftBC(leftBC),
         rightBC(rightBC)
@@ -17,12 +30,21 @@ Solver::Solver(double (*kappa) (double, VectorXd&),
 
 void Solver::AssembleKappa(VectorXd& theta)
 {
-    kappaVec.resize(N);
+    if (isVectorKappa) {
+        if (theta.size() == 1) {
+            kappaVec = theta(0) * VectorXd::Ones(N+1);
+        } else {
+            kappaVec = theta;
+        }
+    }
+    else {
+        kappaVec.resize(N+1);
 
-    VectorXd X = mesh->getPoints();
+        VectorXd X = mesh->getPoints();
 
-    for (size_t i = 0; i < N; i++) {
-        kappaVec(i) = kappa((X(i) + X(i+1)) / 2, theta);
+        for (size_t i = 0; i < N+1; i++) {
+            kappaVec(i) = kappa(X(i), theta);
+        }
     }
 }
 
@@ -31,21 +53,29 @@ void Solver::AssembleMatrix(void)
     A.resize(N-1, N-1);
     VectorXd H = mesh->getSpacings();
     std::vector<Triplet<double>> tripletVector;
+    double avg, avgPlusOne;
 
-    tripletVector.push_back(Triplet<double>(0, 0, 1.0 / H(0) * kappaVec(0) +
-                                                  1.0 / H(1) * kappaVec(1)));
-    tripletVector.push_back(Triplet<double>(0, 1, -1.0 / H(1) * kappaVec(1)));
+    avg = (kappaVec(0) + kappaVec(1)) / 2;
+    avgPlusOne = (kappaVec(1) + kappaVec(2)) / 2;
+    tripletVector.push_back(Triplet<double>(0, 0, 1.0 / H(0) * avg +
+                                                  1.0 / H(1) * avgPlusOne));
+    tripletVector.push_back(Triplet<double>(0, 1, -1.0 / H(1) * avgPlusOne));
 
     for (int i = 1; i < static_cast<int>(N)-2; i++) {
         tripletVector.push_back(Triplet<double>(i, i-1, tripletVector.back().value()));
-        tripletVector.push_back(Triplet<double>(i, i, 1.0 / H(i) * kappaVec(i) +
-                                                      1.0 / H(i+1) * kappaVec(i+1)));
-        tripletVector.push_back(Triplet<double>(i, i+1, -1.0 / H(i+1) * kappaVec(i+1)));
+        avg = avgPlusOne;
+        avgPlusOne = (kappaVec(i) + kappaVec(i+1)) / 2;
+        tripletVector.push_back(Triplet<double>(i, i, 1.0 / H(i) * avg +
+                                                      1.0 / H(i+1) * avgPlusOne));
+        tripletVector.push_back(Triplet<double>(i, i+1, -1.0 / H(i+1) * avgPlusOne));
     }
 
+    int i = static_cast<int>(N) - 2;
+    avg = avgPlusOne;
+    avgPlusOne = (kappaVec(i) + kappaVec(i+1)) / 2;
     tripletVector.push_back(Triplet<double>(N-2, N-3, tripletVector.back().value()));
-    tripletVector.push_back(Triplet<double>(N-2, N-2, 1.0 / H(N-2) * kappaVec(N-2) +
-                                                      1.0 / H(N-1) * kappaVec(N-1)));
+    tripletVector.push_back(Triplet<double>(N-2, N-2, 1.0 / H(N-2) * avg +
+                                                      1.0 / H(N-1) * avgPlusOne));
     A.setFromTriplets(tripletVector.begin(), tripletVector.end());
 }
 

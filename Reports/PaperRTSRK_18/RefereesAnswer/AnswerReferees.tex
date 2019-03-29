@@ -1,0 +1,143 @@
+\documentclass{siamart1116}
+
+% basics
+\usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage[title,titletoc]{appendix}
+\usepackage{afterpage}
+\usepackage{enumitem}   
+\setlist[enumerate]{topsep=3pt,itemsep=3pt, leftmargin=15pt, label=(\roman*)}
+
+% maths
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\newsiamremark{assumption}{Assumption}
+\newsiamremark{remark}{Remark}
+\newsiamremark{example}{Example}
+\numberwithin{theorem}{section}
+
+% tables
+\usepackage{booktabs}
+
+% plots
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,positioning,fit,matrix}
+\usepackage[labelfont=bf]{caption}
+\setlength{\belowcaptionskip}{-5pt}
+\usepackage{here}
+\usepackage[font=normal]{subcaption}
+
+% title and authors
+%\newcommand{\TheTitle}{Probabilistic numerical methods with random time steps for chaotic and geometric integration} 
+\newcommand{\TheTitle}{Answer to the referees concerning the review of\\ ``Random time step probabilistic methods for uncertainty quantification in chaotic and geometric numerical integration''} 
+\newcommand{\TheAuthors}{A. Abdulle, G. Garegnani}
+%\headers{Probabilistic Runge-Kutta method based on random time steps}{\TheAuthors}
+\headers{Random time steps for quantifying chaotic numerical integration}{\TheAuthors}
+\title{{\TheTitle}}
+\author{Assyr Abdulle\thanks{Mathematics Section, \'Ecole Polytechnique F\'ed\'erale de Lausanne (\email{assyr.abdulle@epfl.ch})}
+		\and
+		Giacomo Garegnani\thanks{Mathematics Section, \'Ecole Polytechnique F\'ed\'erale de Lausanne (\email{giacomo.garegnani@epfl.ch})}}
+
+% my commands 
+\DeclarePairedDelimiter{\ceil}{\left\lceil}{\right\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\|}{\|}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\Pr}{\mathbb{P}}
+\newcommand{\eqtext}[1]{\ensuremath{\stackrel{#1}{=}}}
+\newcommand{\leqtext}[1]{\ensuremath{\stackrel{#1}{\leq}}}
+\newcommand{\iid}{\ensuremath{\stackrel{\text{i.i.d.}}{\sim}}}
+\newcommand{\totext}[1]{\ensuremath{\stackrel{#1}{\to}}}
+\newcommand{\rightarrowtext}[1]{\ensuremath{\stackrel{#1}{\longrightarrow}}}
+\newcommand{\leftrightarrowtext}[1]{\ensuremath{\stackrel{#1}{\longleftrightarrow}}}
+\newcommand{\pdv}[2]{\ensuremath\partial_{#2}#1}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\epl}{\varepsilon}
+\newcommand{\diffL}{\mathcal{L}}
+\newcommand{\prior}{\mathcal{Q}}
+\newcommand{\defeq}{\coloneqq}
+\newcommand{\eqdef}{\eqqcolon}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\E}{\operatorname{\mathbb{E}}}
+\newcommand{\MSE}{\operatorname{MSE}}
+\newcommand{\trace}{\operatorname{tr}}
+\newcommand{\MH}{\mathrm{MH}}
+\newcommand{\ttt}{\texttt}
+\newcommand{\Hell}{d_{\mathrm{Hell}}}
+\newcommand{\sksum}{{\textstyle\sum}}
+\newcommand{\dd}{\mathrm{d}}
+\definecolor{shade}{RGB}{100, 100, 100}
+\definecolor{bordeaux}{RGB}{128, 0, 50}
+\newcommand{\corr}[1]{{\color{red}#1}}
+
+\ifpdf
+\hypersetup{
+	pdftitle={\TheTitle},
+	pdfauthor={\TheAuthors}
+}
+\fi
+
+\begin{document}
+\maketitle	
+
+Since the referees are concerned by different aspects of our work, we decided to answer their remarks separately. We thank the referees for their comments and we are confident that clarifying certain aspects will help us to consistently ameliorate our work. 
+
+\section*{Referee \#1} 
+The main issue raised by Referee \#1 is the lack of clarity in the presentation of geometric conservation properties. We answer here to the main concerns which were raised, and we believe the remaining points were addressed in our revised version.
+\begin{enumerate}[label=\arabic{*}.]
+	\item \textit{The conservation properties of the new integrators are also examined, albeit unsatisfactorily.} \\ We divide the answer to this concern in three parts for clarity.	
+	\begin{enumerate}
+		\item \textit{I am not satisfied by the discussion of conserved properties, though, since the proposed method will also conserve *bad* properties of the underlying integrators, e.g. energy growth or loss for explicit/implicit Euler.} \\ 
+		We agree that randomising the step size will not transform a method which is not endowed with any geometric property into a probabilistic geometric integrator. Nonetheless, it is known that for certain classes of dynamical systems it is appropriate to employ a geometric integrator. Applying the additive noise method presented in \cite{CGS16} will destroy the geometric properties of the underlying deterministic method even in simple cases, whereas with the RTS-RK they are conserved.
+		\item \textit{I also have reservations about the way the conserved properties are treated: in practice, a geometric integrator with time step $h$ usually does not preserve the same properties as the continuum system (e.g. total energy) but instead a nearby $h$-dependent energy. When $h$ becomes a random $H$, each step of the proposed scheme will preserve a different energy at each time step, resulting in small but random energy drift.} \\ 
+		For Hamiltonian systems, where the energy function is arbitrary, a single trajectory of the method will present a small energy drift, as it is shown in the numerical example presented in Section 8.8. This is indeed due to the small perturbation of the modified Hamiltonian that occurs at each time step. Nonetheless, the mean energy given by a family of trajectories of the RTS-RK method is a good approximation of the exact energy function when a symplectic integrator is employed as the deterministic component. This is shown heuristically in Section 8.8, and we present a complete numerical analysis of this phenomenon in \cite{AbG18b}.
+		\item \textit{The authors' results in Section 6 assume this away by assuming that the original numerical method preserves the continuum energy, but this is not a hypothesis that holds in reality.} \\ 
+		The analysis we present in Section 6 concerns polynomial first integrals. It is known that deterministic Runge-Kutta methods can be tailored to conserve exactly polynomial first integrals of arbitrarily high order (in exact arithmetic). For example, any Runge-Kutta method conserves exactly linear first integrals, and any Gauss collocation method conserves quadratic first integrals. Our RTS-RK method preserves these properties, conserving trajectory-wise polynomial first integrals. While polynomial first integrals belong to a small class of functions, it is of the utmost importance to conserve them for orbit predictions (the angular momentum is a quadratic polynomial), or for chemical reactions (the mass is a linear first integral).
+	\end{enumerate}
+	\item \textit{The 1/2 order of convergence result is rather cute in comparison to the other methods [\ldots]  That said, the half order difference here is very interesting.} \\ 
+	The convergence properties of of our RTS-RK method are not different than the properties presented in \cite{CGS16}, as, in their notation, the hypothesis on the noise is that $\Var(\xi_n) \simeq h^{2p+1}$ for some $p > 1$, thus obtaining a global strong convergence of order $\min\{p, q\}$ from a local order $\min\{p+1/2, q+1\}$. We thought it would have been more natural to impose $\Var(H_n) \simeq h^{2p}$, hence we obtain a strong order of convergence $\min\{p-1/2, q\}$ from a local order $\min\{p, q+1\}$. In these integrators, losing a power of $1/2$ in the probabilistic part is natural from the assumption of independence on the noise. 
+	\item \textit{In Section 4, it would be much more satisfying to have a strong convergence result with the time supremum inside the expectation, as e.g. done by Higham, Stuart, and Mao for the Euler-Maruyama method for SDEs, and Lie, Stuart and Sullivan for Conrad et al.-style PN.} \\
+	A strong convergence result with the time supremum inside the expectation would indeed be a stronger result. Nonetheless, proving it implies a bigger technical effort, and we believe that such an analysis would require a separate work.
+\end{enumerate}
+
+\section*{Referee \#2} We address the questions of Referee \#1 singularly.
+\begin{enumerate}[label=\arabic{*}.]
+\item \textit{Given a deterministic ODE and a deterministic numerical method, it is not clear to me what ``uncertainty'' means, or why the idea needs to be introduced.} \\
+When integrating an ODE with a traditional deterministic method, there are theoretical guarantees of convergence of the numerical approximation towards the exact solution in the limit $h \to 0$. Nonetheless, for a fixed $h$, there exist only a priori estimates of the numerical error. Hence, a traditional integrator for ODEs provides only an arbitrarily biased punctual estimate of the true value of the solution. The aim of a probabilistic method is in general to output a measure over the numerical solution, so that other information can be taken into account (e.g. a confidence interval). In our work, we show that it is possible to produce a measure that is consistent with  the approximation quality of the chosen Runge-Kutta method. This property is particularly helpful when the solution of a differential equation is part of a wider pipeline of computation, as, for example, a Bayesian inverse problem. In particular, we show empirically in Section 8.9 how the posterior distribution obtained with a traditional method does not reflect the uncertainty introduced by the numerical approximation. This negative property can be corrected employing a probabilistic method. We agree that our work lacks a rigorous analysis in the framework of inverse problems. Nonetheless, an analytical treatment is possible only in simple linear cases.
+\item \textit{It is not clear to me why we need a probability measure over the numerical solution. Further, it is not clear what a successful measure would look like.} \\
+See answer to question 1.
+\item \textit{The abstract and certain parts of the main text give the impression that the work applies to general ODE solving. Other parts of the text imply that the approach is designed exclusively for chaotic systems and geometric integration. I will assume the latter.} \\
+On the one hand, if the aim is only integrating an ODE, a probabilistic approach is particularly appealing when the equation presents chaotic features. In the context of chaotic systems, the method we present is beneficial when the ODE has a geometric structure, as for example the Henon-Heiles system. On the other hand, when the solution of the ODE is used in Bayesian inverse problems, introducing a probability measure is fundamental to obtain consistent results with the uncertainty introduced by the numerical error.
+\item \textit{Definition 3.1, Theorem 3.5, etc. have $k = 1, 2, \ldots , N$. I assume $Nh = T$ here, for some fixed $T$; i.e., convergence over finite time. (As in the statement of Theorem 4.5.)} \\
+This has been changed in our revised draft.
+\item \textit{The analysis in Section 4 is based on classical global Lipschitz and Gronwall inequality arguments. Without the benefit of any further explanation in the text, I can only conclude that the new approach can do just as well as a standard method, on average, over a finite time interval with an increasingly stringent choice of (random) timestep sequence. I do not see any benefits.} \\
+See answer to question 1.
+\item \textit{The limitation to global Lipschitz f and finite time interval (and the lack of backward error analysis) make it difficult for me to see the relevance to chaotic systems and to geometric integration. In the setting of section 4, my understanding is that the underlying fixed timestep method will have a global error expansion, and the probability measure over the numerical solution will tell us something about the leading term. But why is this any more useful than a traditional error estimate?} \\
+See answer to question 8.
+\item \textit{I note that Lemma 4.5 imposes a global Lipschitz assumption on f , but this is not mentioned in Theorem 4.5, which uses the lemma.} \\
+This has been changed in our revised draft.
+\item \textit{The numerical tests emphasize “capturing chaotic behavior” but this phrase is not explained, the idea is not quantified, and I do not see how the previous (finite time) analysis is relevant.} \\
+We agree that at the current state of the analysis, a rigorous explanation of how to capture a chaotic behaviour with our method is not provided. Nonetheless, we believe that the dispersion of a well-tuned probabilistic family of numerical solutions could be an \textit{a posteriori} indicator of the error of the numerical method, and could be employed to detect the chaotic behaviour of a dynamical system.
+\end{enumerate}
+
+\def\cprime{$'$}
+\begin{thebibliography}{10}
+	\bibitem{AbG18b}
+	{\sc A.~Abdulle and G.~Garegnani}, {\em Probabilistic geometric integration of Hamiltonian systems based on random time steps}, ADD ARXIV REFERENCE,  (2018).
+	
+	\bibitem{CGS16}
+	{\sc P.~R. Conrad, M.~Girolami, S.~S{\"a}rkk{\"a}, A.~Stuart, and
+		K.~Zygalakis}, {\em Statistical analysis of differential equations:
+		introducing probability measures on numerical solutions}, Stat. Comput.,
+	(2016).
+\end{thebibliography}
+
+\end{document}

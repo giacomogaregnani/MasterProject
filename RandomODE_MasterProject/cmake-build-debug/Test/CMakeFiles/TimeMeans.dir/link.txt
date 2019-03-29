@@ -1,0 +1,1 @@
+/usr/bin/c++    -fopenmp -std=c++11 -Wall -g   CMakeFiles/TimeMeans.dir/TimeMeans.cpp.o  -o TimeMeans -rdynamic ../RKRandomStep/libRandomStep.a ../Utilities/libUtilitiesGG.a ../RKSolver/libRungeKuttaSolver.a 

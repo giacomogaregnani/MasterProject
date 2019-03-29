@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="DebugTest" targetName="DebugTest" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7b11eec4-8405-414f-8fe5-8c618f7b42a1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../PDMProposal/PDMproposal.aux" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PDMProposal/PDMproposal.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PDMProposal/PDMproposal.synctex.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Python/.idea/Python.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Python/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Python/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Python/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Python/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Python/test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../RandomPDE/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/InversePDE/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../RandomPDE/InversePDE/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/InversePDE/PDE_InverseProblem.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/MCMCLib/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../RandomPDE/MCMCLib/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/MCMCLib/MCMC.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../RandomPDE/MCMCLib/MCMC.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/MCMCLib/MCMC.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../RandomPDE/MCMCLib/MCMC.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/MCMCLib/RAM.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../RandomPDE/MCMCLib/RAM.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/OneDimElliptic/OneDimEllipticSolver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../RandomPDE/OneDimElliptic/OneDimEllipticSolver.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/OneDimElliptic/OneDimEllipticSolver.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../RandomPDE/OneDimElliptic/OneDimEllipticSolver.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/TestPDE/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../RandomPDE/TestPDE/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/TestPDE/DebugTest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../RandomPDE/TestPDE/DebugTest.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/matlabPlots/FDSolution.m" beforeDir="false" afterPath="$PROJECT_DIR$/../RandomPDE/matlabPlots/FDSolution.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/matlabPlots/TestPDEMeshless/assembleK.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/matlabPlots/TestPDEMeshless/assembleLK.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/matlabPlots/TestPDEMeshless/assembleLLbK.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/matlabPlots/TestPDEMeshless/assembleLbK.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/matlabPlots/TestPDEMeshless/testMeshless.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/matlabPlots/TwoDimensionalMCMC/FEMplot2D.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/matlabPlots/TwoDimensionalMCMC/InverseData.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/matlabPlots/TwoDimensionalMCMC/KL.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/matlabPlots/TwoDimensionalMCMC/MetropolisHastings.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/matlabPlots/TwoDimensionalMCMC/PDEInverse.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/matlabPlots/TwoDimensionalMCMC/RAMInit.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/matlabPlots/TwoDimensionalMCMC/RAMUpdate.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/matlabPlots/TwoDimensionalMCMC/addDataFileInfo.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/matlabPlots/TwoDimensionalMCMC/eigenFuncts.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/matlabPlots/TwoDimensionalMCMC/evalFEM.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/matlabPlots/TwoDimensionalMCMC/likelihood_FEM.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/matlabPlots/TwoDimensionalMCMC/likelihood_FEMProb.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/matlabPlots/TwoDimensionalMCMC/mesh_square.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/matlabPlots/TwoDimensionalMCMC/plotMCMCResultsPDE.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomPDE/matlabPlots/TwoDimensionalMCMC/test.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/Dobbiaco2017/Dobbiaco.bib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/Dobbiaco2017/Dobbiaco.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/Dobbiaco2017/Dobbiaco.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/Dobbiaco2017/posterior-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/InvariantMeasure/VERSION1/AddLorenzDens-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/InvariantMeasure/VERSION1/BoxesFitznag-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/InvariantMeasure/VERSION1/BoxesFitznagDens-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/InvariantMeasure/VERSION1/BoxesFitznagDensZoom-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/InvariantMeasure/VERSION1/BoxesLorenz-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/InvariantMeasure/VERSION1/BoxesLorenzDens-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/InvariantMeasure/VERSION1/StepLorenzDens-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/InvariantMeasure/VERSION1/anmc.bib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/InvariantMeasure/VERSION1/invMeasure.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/InvariantMeasure/VERSION1/invMeasure.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/InvariantMeasure/VERSION1/invMeasure.thm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/InvariantMeasure/VERSION1/siamart1116.cls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/InvariantMeasure/VERSION1/siamplain.bst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/Leysin2017/HHAdd-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/Leysin2017/HHStep-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/Leysin2017/HHStepChaos-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/Leysin2017/HHStepChaos2-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/Leysin2017/Lorenz-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/Leysin2017/Presentation.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/Leysin2017/Presentation.snm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/Leysin2017/Presentation.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/Leysin2017/Presentation.toc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/Leysin2017/anmc.bib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/PDM/Preamble.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../Reports/PDM/Preamble.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandMesh/VERSION1/anmc.bib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandMesh/VERSION1/randomMesh.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandMesh/VERSION1/randomMesh.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandMesh/VERSION1/randomMesh.thm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandMesh/VERSION1/siamart1116.cls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandMesh/VERSION1/siamplain.bst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandMesh/VERSION2/L2Convergence-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandMesh/VERSION2/anmc.bib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandMesh/VERSION2/randomMesh.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandMesh/VERSION2/randomMesh.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandMesh/VERSION2/randomMesh.thm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandMesh/VERSION2/siamart1116.cls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandMesh/VERSION2/siamplain.bst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandMesh/VERSION2/solution1Def-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandMesh/VERSION2/solution2Def-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandMesh/VERSION2/solution3Def-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandMesh/VERSION2/solution4Def-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/RandTimeStep.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION1/Preamble.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION1/anmc.bib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION1/plots/LorenzDensAdd-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION1/plots/LorenzDensStep-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION1/siamart1116.cls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION1/siamplain.bst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION1/varH.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION1/varH.synctex.gz(busy)" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION1/varH.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION1/varH.thm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION2/Preamble.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION2/anmc.bib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION2/siamart1116.cls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION2/siamplain.bst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION2/varH.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION2/varH.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION2/varH.thm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION3/HHAdd-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION3/HHStep-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION3/HHStepChaos-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION3/HHStepHam-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION3/KeplerMom-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION3/KeplerMomAdd-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION3/KeplerOne-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION3/KeplerOneAdd-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION3/KeplerTwo-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION3/KeplerTwoAdd-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION3/OxPerox-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION3/OxPeroxAdd-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION3/Preamble.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION3/anmc.bib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION3/siamart1116.cls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION3/siamplain.bst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION3/varH.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION3/varH.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION3/varH.thm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/HHAdd-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/HHStep-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/HHStepChaos-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/HHStepHam-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/KeplerMom-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/KeplerMomAdd-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/KeplerOne-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/KeplerOneAdd-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/KeplerTwo-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/KeplerTwoAdd-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/MCMCFitznagAdd001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/MCMCFitznagAdd01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/MCMCFitznagStep001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/MCMCFitznagStep01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/OxPerox-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/OxPeroxAdd-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/Preamble.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/anmc.bib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/siamart1116.cls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/siamplain.bst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/varH.out.ps" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/varH.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/varH.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION4/varH.thm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/HHAdd-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/HHStep-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/HHStepChaos-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/HHStepHam-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/KeplerMom-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/KeplerMomAdd-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/KeplerOne-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/KeplerOneAdd-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/KeplerTwo-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/KeplerTwoAdd-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/MCMCFitznagAdd001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/MCMCFitznagAdd01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/MCMCFitznagStep001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/MCMCFitznagStep01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/OxPerox-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/OxPeroxAdd-eps-converted-to.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/Preamble.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/anmc.bib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/siamart1116.cls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/siamplain.bst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/varH.out.ps" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/varH.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/varH.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION5/varH.thm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION6/MCMCFitznagAdd001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION6/MCMCFitznagAdd01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION6/MCMCFitznagStep001.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION6/MCMCFitznagStep01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION6/RandTimeStep.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION6/RandTimeStep.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION6/anmc.bib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION6/siamart1116.cls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/RandTimeStep/VERSION6/siamplain.bst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/resumePDM/VERSION1/ResumePDM.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/resumePDM/VERSION1/ResumePDM.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/resumePDM/VERSION1/ResumePDM.thm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/resumePDM/VERSION1/anmc.bib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/resumePDM/VERSION1/plots/MonteCarloVariance2.tikz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/resumePDM/VERSION1/plots/MonteCarloVariance3.tikz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/resumePDM/VERSION1/siamart1116.cls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/resumePDM/VERSION1/siamplain.bst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/resumePDM/VERSION2/ResumePDM.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/resumePDM/VERSION2/ResumePDM.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/resumePDM/VERSION2/ResumePDM.thm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/resumePDM/VERSION2/anmc.bib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/resumePDM/VERSION2/plots/MonteCarloVariance2.tikz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/resumePDM/VERSION2/plots/MonteCarloVariance3.tikz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/resumePDM/VERSION2/siamart1116.cls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Reports/resumePDM/VERSION2/siamplain.bst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RungeKutta/RKSolver/Problems.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../RungeKutta/RKSolver/Problems.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RungeKutta/RKSolver/RungeKuttaSolver.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../RungeKutta/RKSolver/RungeKuttaSolver.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RungeKutta/RKSolver/Structures.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../RungeKutta/RKSolver/Structures.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RungeKutta/RKSolver/Tools.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../RungeKutta/RKSolver/Tools.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RungeKutta/Test/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../RungeKutta/Test/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RungeKutta/Test/GenerateObservations.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../RungeKutta/Test/GenerateObservations.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RungeKutta/Test/OdeInverse.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RungeKutta/Utilities/UtilitiesGG.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../RungeKutta/Utilities/UtilitiesGG.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RungeKutta/Utilities/UtilitiesGG.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../RungeKutta/Utilities/UtilitiesGG.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RungeKutta/matlabPlots/MCMC/akde.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RungeKutta/matlabPlots/MCMC/plotResults.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RungeKutta/matlabPlots/MCMC/scatplot.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RungeKutta/matlabPlots/rk4.m" beforeDir="false" afterPath="$PROJECT_DIR$/../RungeKutta/matlabPlots/rk4.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../matlabMisc/ExportFig/copyfig.m" beforeDir="false" afterPath="$PROJECT_DIR$/../matlabMisc/ExportFig/copyfig.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../matlabMisc/ExportFig/eps2pdf.m" beforeDir="false" afterPath="$PROJECT_DIR$/../matlabMisc/ExportFig/eps2pdf.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../matlabMisc/ExportFig/export_fig.m" beforeDir="false" afterPath="$PROJECT_DIR$/../matlabMisc/ExportFig/export_fig.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../matlabMisc/ExportFig/fix_lines.m" beforeDir="false" afterPath="$PROJECT_DIR$/../matlabMisc/ExportFig/fix_lines.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../matlabMisc/ExportFig/ghostscript.m" beforeDir="false" afterPath="$PROJECT_DIR$/../matlabMisc/ExportFig/ghostscript.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../matlabMisc/ExportFig/isolate_axes.m" beforeDir="false" afterPath="$PROJECT_DIR$/../matlabMisc/ExportFig/isolate_axes.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../matlabMisc/ExportFig/license.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../matlabMisc/ExportFig/pdf2eps.m" beforeDir="false" afterPath="$PROJECT_DIR$/../matlabMisc/ExportFig/pdf2eps.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../matlabMisc/ExportFig/pdftops.m" beforeDir="false" afterPath="$PROJECT_DIR$/../matlabMisc/ExportFig/pdftops.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../matlabMisc/ExportFig/print2array.m" beforeDir="false" afterPath="$PROJECT_DIR$/../matlabMisc/ExportFig/print2array.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../matlabMisc/ExportFig/print2eps.m" beforeDir="false" afterPath="$PROJECT_DIR$/../matlabMisc/ExportFig/print2eps.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../matlabMisc/ExportFig/user_string.m" beforeDir="false" afterPath="$PROJECT_DIR$/../matlabMisc/ExportFig/user_string.m" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="16" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/main.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" selection-start-line="4" selection-end-line="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-3" />
+    <option name="y" value="49" />
+    <option name="width" value="1926" />
+    <option name="height" value="993" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="DebugTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DebugTest" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="CPPToolchains" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="DebugTest" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DebugTest" TARGET_NAME="DebugTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="DebugTest" RUN_TARGET_NAME="DebugTest">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7b11eec4-8405-414f-8fe5-8c618f7b42a1" name="Default Changelist" comment="" />
+      <created>1553262035924</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1553262035924</updated>
+      <workItem from="1553262037556" duration="1239000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="1239000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-3" y="49" width="1926" height="993" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Favorites" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24973376" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="CMake" />
+      <window_info anchor="bottom" id="Database Changes" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Messages" weight="0.39677048" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.37831604" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39677048" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Database" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="16" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

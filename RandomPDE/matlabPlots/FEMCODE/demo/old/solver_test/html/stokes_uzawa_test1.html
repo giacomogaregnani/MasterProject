@@ -1,0 +1,134 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>stokes_uzawa_test1</title><meta name="generator" content="MATLAB 7.14"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2013-03-22"><meta name="DC.source" content="stokes_uzawa_test1.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">set porous geometry parameters</a></li><li><a href="#2">set variational problem</a></li><li><a href="#3">Solve</a></li><li><a href="#4">Plot pressure</a></li></ul></div><h2>set porous geometry parameters<a name="1"></a></h2><pre class="codeinput">load(<span class="string">'mesh2d_stokes_per_small.mat'</span>)
+</pre><h2>set variational problem<a name="2"></a></h2><pre class="codeinput">clear <span class="string">vp</span>;
+vp.f = @fstokesmicro;
+vp.elemtype = <span class="string">'p2'</span>;
+vp.pelemtype = <span class="string">'p1'</span>;
+vp.a = 1;
+vp.solver = <span class="string">'uzawa'</span>;
+</pre><h2>Solve<a name="3"></a></h2><pre class="codeinput">[usol, ufemspace, psol, pfemspace, eqn] = stokes(mesh, vp);
+</pre><pre class="codeoutput">#dof:    11131, Uzawa iter:  1, err =            1
+#dof:    11131, Uzawa iter:  2, err =   0.14117391
+#dof:    11131, Uzawa iter:  3, err =   0.01736056
+#dof:    11131, Uzawa iter:  4, err = 0.0049276944
+#dof:    11131, Uzawa iter:  5, err =  0.001778555
+#dof:    11131, Uzawa iter:  6, err = 0.00073266206
+#dof:    11131, Uzawa iter:  7, err = 0.00035201457
+#dof:    11131, Uzawa iter:  8, err = 0.00019668187
+#dof:    11131, Uzawa iter:  9, err = 0.00012139392
+#dof:    11131, Uzawa iter: 10, err = 7.8727194e-05
+#dof:    11131, Uzawa iter: 11, err = 5.2215167e-05
+#dof:    11131, Uzawa iter: 12, err = 3.5003399e-05
+#dof:    11131, Uzawa iter: 13, err = 2.360047e-05
+#dof:    11131, Uzawa iter: 14, err = 1.5968631e-05
+#dof:    11131, Uzawa iter: 15, err = 1.0831055e-05
+#dof:    11131, Uzawa iter: 16, err = 7.3596426e-06
+#dof:    11131, Uzawa iter: 17, err = 5.0078459e-06
+#dof:    11131, Uzawa iter: 18, err = 3.4113879e-06
+#dof:    11131, Uzawa iter: 19, err = 2.3259785e-06
+#dof:    11131, Uzawa iter: 20, err = 1.587097e-06
+#dof:    11131, Uzawa iter: 21, err = 1.0835959e-06
+#dof:    11131, Uzawa iter: 22, err = 7.4020321e-07
+#dof:    11131, Uzawa iter:  1, err =            1
+#dof:    11131, Uzawa iter:  2, err =   0.16420086
+#dof:    11131, Uzawa iter:  3, err =  0.018689607
+#dof:    11131, Uzawa iter:  4, err = 0.0049706764
+#dof:    11131, Uzawa iter:  5, err = 0.0017023582
+#dof:    11131, Uzawa iter:  6, err = 0.00065485942
+#dof:    11131, Uzawa iter:  7, err = 0.00028387034
+#dof:    11131, Uzawa iter:  8, err = 0.00014009708
+#dof:    11131, Uzawa iter:  9, err = 7.6819105e-05
+#dof:    11131, Uzawa iter: 10, err = 4.4907601e-05
+#dof:    11131, Uzawa iter: 11, err = 2.7133207e-05
+#dof:    11131, Uzawa iter: 12, err = 1.6663642e-05
+#dof:    11131, Uzawa iter: 13, err = 1.0320455e-05
+#dof:    11131, Uzawa iter: 14, err = 6.4225254e-06
+#dof:    11131, Uzawa iter: 15, err = 4.0091477e-06
+#dof:    11131, Uzawa iter: 16, err = 2.5083769e-06
+#dof:    11131, Uzawa iter: 17, err = 1.5724583e-06
+#dof:    11131, Uzawa iter: 18, err = 9.8757003e-07
+</pre><h2>Plot pressure<a name="4"></a></h2><pre class="codeinput">report_stokes(mesh, vp, ufemspace, usol, pfemspace, psol);
+</pre><pre class="codeoutput">Velocity elements: p2 
+Pressure elements: p1 
+DOF: 11131 
+NT = Number of Elements: 2352 
+N  = Number of Nodes: 1285 
+Stokes problem solution, ID = 1.
+Stokes problem solution, ID = 2.
+</pre><img vspace="5" hspace="5" src="stokes_uzawa_test1_01.png" alt=""> <img vspace="5" hspace="5" src="stokes_uzawa_test1_02.png" alt=""> <img vspace="5" hspace="5" src="stokes_uzawa_test1_03.png" alt=""> <img vspace="5" hspace="5" src="stokes_uzawa_test1_04.png" alt=""> <img vspace="5" hspace="5" src="stokes_uzawa_test1_05.png" alt=""> <img vspace="5" hspace="5" src="stokes_uzawa_test1_06.png" alt=""> <img vspace="5" hspace="5" src="stokes_uzawa_test1_07.png" alt=""> <img vspace="5" hspace="5" src="stokes_uzawa_test1_08.png" alt=""> <p class="footer"><br>
+      Published with MATLAB&reg; 7.14<br></p></div><!--
+##### SOURCE BEGIN #####
+%% set porous geometry parameters
+load('mesh2d_stokes_per_small.mat')
+
+%% set variational problem
+clear vp;
+vp.f = @fstokesmicro;
+vp.elemtype = 'p2';
+vp.pelemtype = 'p1';
+vp.a = 1;
+vp.solver = 'uzawa';
+
+%% Solve
+[usol, ufemspace, psol, pfemspace, eqn] = stokes(mesh, vp);
+
+%% Plot pressure
+report_stokes(mesh, vp, ufemspace, usol, pfemspace, psol);
+##### SOURCE END #####
+--></body></html>

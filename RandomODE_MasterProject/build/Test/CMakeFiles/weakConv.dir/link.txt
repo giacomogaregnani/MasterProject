@@ -1,0 +1,1 @@
+/usr/bin/c++    -fopenmp -std=c++11 -Wall -O3 -DNDEBUG    CMakeFiles/weakConv.dir/WeakConvergence.cpp.o  -o weakConv -rdynamic ../RKRandomStep/libRandomStep.a ../RKSolver/libRungeKuttaSolver.a 

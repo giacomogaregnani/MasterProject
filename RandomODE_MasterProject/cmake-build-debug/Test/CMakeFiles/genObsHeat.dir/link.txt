@@ -1,0 +1,1 @@
+/usr/bin/c++    -fopenmp -std=c++11 -Wall -g   CMakeFiles/genObsHeat.dir/GenerateObservationsHeat.cpp.o  -o genObsHeat -rdynamic ../RKSolver/libRungeKuttaSolver.a 

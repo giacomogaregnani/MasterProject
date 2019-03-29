@@ -1,0 +1,81 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=4.521in,
+height=3.566in,
+at={(0.758in,0.481in)},
+scale only axis,
+xmode=log,
+xmin=0.001,
+xmax=1,
+xminorticks=true,
+xlabel={$h$},
+xlabel style={font=\Large},
+xmajorgrids,
+xminorgrids,
+ymode=log,
+ymin=0.001,
+ymax=1,
+yminorticks=true,
+ymajorgrids,
+yminorgrids,
+axis background/.style={fill=white},
+legend pos = south east,
+legend style={legend cell align=left,align=left,draw=white!15!black,font=\Large}
+]
+\addplot [color=red,solid,mark=o,mark options={solid}]
+  table[row sep=crcr]{%
+0.375	0.920558951920583\\
+0.1875	0.617333951920583\\
+0.09375	0.421846451920583\\
+0.046875	0.292363639420583\\
+0.0234375	0.199588639420583\\
+0.01171875	0.136614420670583\\
+0.005859375	0.0947198894205827\\
+};
+\addlegendentry{$|\E(\tau_h^d - \tau)|$};
+
+\addplot [color=blue,solid,mark=asterisk,mark options={solid}]
+  table[row sep=crcr]{%
+0.375	0.445546451920583\\
+0.1875	0.223658951920583\\
+0.09375	0.112677701920583\\
+0.046875	0.0523214519205826\\
+0.0234375	0.0295214519205826\\
+0.01171875	0.0166261394205827\\
+0.005859375	0.00370153004558271\\
+};
+\addlegendentry{$|\E(\tau_h^c - \tau)|$};
+
+\addplot [color=black,dashed]
+  table[row sep=crcr]{%
+0.375	0.82692924802669\\
+0.1875	0.584727278841165\\
+0.09375	0.413464624013345\\
+0.046875	0.292363639420583\\
+0.0234375	0.206732312006673\\
+0.01171875	0.146181819710291\\
+0.005859375	0.103366156003336\\
+};
+\addlegendentry{$h^{0.5}$};
+
+\addplot [color=black,solid]
+  table[row sep=crcr]{%
+0.375	0.418571615364661\\
+0.1875	0.20928580768233\\
+0.09375	0.104642903841165\\
+0.046875	0.0523214519205826\\
+0.0234375	0.0261607259602913\\
+0.01171875	0.0130803629801456\\
+0.005859375	0.00654018149007282\\
+};
+\addlegendentry{$h$};
+
+\end{axis}
+\end{tikzpicture}%

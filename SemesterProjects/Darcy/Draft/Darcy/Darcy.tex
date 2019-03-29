@@ -1,0 +1,14 @@
+\input{Darcy/DarcyPlot}
+
+\subsection{Finite Elements solution of the Darcy problem}
+
+Let us consider the domain $D = [-1,1]^2$. The random field $A$ in \eqref{eq:DarcyProblem} is chosen to be lognormal, \textit{i.e.}, 
+\begin{equation}\label{eq:RandomField}
+	A = e^\gamma,
+\end{equation}
+where $\gamma$ is a normal random field defined by its covariance function $\mathrm{cov}_\gamma(x_1,x_2)$ for any couple of points $x_1,x_2$ in the domain $D$. The covariance function is of the Matern family \cite{Nobile2015}, thus having the following form
+\begin{equation}\label{eq:CovFunction}
+	\mathrm{cov}_\gamma(x_1,x_2) = \frac{\sigma_A^2}{\Gamma(\nu)2^{\nu-1}}\Big(\sqrt{2\nu}\frac{|x_1-x_2|}{L_c}\Big)^\nu K_{\nu}\Big(\sqrt{2\nu}\frac{|x_1-x_2|}{L_c}\Big), \quad \nu \geq 0.5,
+\end{equation}
+where $\sigma_A^2$ is the variance, $L_c$ is the correlation length, $\Gamma$ is the gamma function, $K_\nu$ is the modified Bessel function of the second kind and $\nu$ is a parameter. Let us remark that the covariance function does not depend on $x_1, x_2$ but only on their euclidean distance $|x_1 - x_2|$. The regularity of the covariance function and of the realizations of $A$ depend on $\nu$. In particular each realization of the field $A$ is $\alpha$-Hölder continuous for $0 < \alpha < \nu$. Therefore, for $\nu = 1 + \epl, \epl > 0$, the random field is Lipschitz continuous. Results concerning further regularity properties of $A$ can be found in \cite{Nobile2015}. The realizations of $A$ are computed using a discrete Fourier transformation on the vertices of a grid of $D$, equispaced on both the $x$ and $y$ directions with the same spacing $\Delta_A$. Then, the numerical solution $\hat{p}$ of \eqref{eq:DarcyProblem} is obtained with linear Finite Elements on a regular mesh $T_p$ with maximum element size $\Delta_p$. Since the vertices of the grid on which we compute $A$ do not coincide with the vertices of $T_p$, we interpolate $A$ on $T_p$. Then, the velocity field $\hat{u}$ is retrived computing the gradient of $\hat{p}$ as in equation \eqref{eq:DarcyProblem}. We choose to perform this procedure using the scientific software \texttt{FreeFem++}. The results for a realization of $A$ are shown in Figure \ref{fig:DarcyResults}, where the value of the inlet pressure $p_0$ is equal to 1, and the parameters for the random field are $\nu = 0.5, L_c = 0.05$. 
+

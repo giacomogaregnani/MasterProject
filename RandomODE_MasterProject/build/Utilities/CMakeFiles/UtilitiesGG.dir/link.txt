@@ -1,0 +1,2 @@
+/usr/bin/ar cr libUtilitiesGG.a  CMakeFiles/UtilitiesGG.dir/UtilitiesGG.cpp.o
+/usr/bin/ranlib libUtilitiesGG.a

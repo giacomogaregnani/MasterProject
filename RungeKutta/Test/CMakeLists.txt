@@ -29,6 +29,9 @@ target_link_libraries(refSol RungeKuttaSolver)
 add_executable(genObs GenerateObservations.cpp)
 target_link_libraries(genObs RungeKuttaSolver)
 
+add_executable(genObsHeat GenerateObservationsHeat.cpp)
+target_link_libraries(genObsHeat RungeKuttaSolver)
+
 add_executable(strongConvAdd StrongConvergenceAdd.cpp)
 target_link_libraries(strongConvAdd RandomStep UtilitiesGG)
 
@@ -59,5 +62,14 @@ target_link_libraries(HamError RandomStep UtilitiesGG)
 add_executable(traj GenerateTrajectories.cpp)
 target_link_libraries(traj RandomStep UtilitiesGG)
 
-add_executable(OdeInverse OdeInverse.cpp)
-target_link_libraries(OdeInverse RandomStep UtilitiesGG MCMC)
+#add_executable(OdeInverse OdeInverse.cpp)
+#target_link_libraries(OdeInverse RandomStep UtilitiesGG MCMC)
+
+#add_executable(OdeInverseEmb OdeInverseEmbedded.cpp)
+#target_link_libraries(OdeInverseEmb RandomStep UtilitiesGG MCMC)
+
+add_executable(HeatInverse HeatInitCond.cpp)
+target_link_libraries(HeatInverse RandomStep UtilitiesGG MCMC)
+
+add_executable(measure InvariantMeasure.cpp)
+target_link_libraries(measure RandomStep UtilitiesGG)

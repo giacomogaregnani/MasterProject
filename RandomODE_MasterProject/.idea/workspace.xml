@@ -1,0 +1,860 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" buildAllGenerated="true">
+    <generated>
+      <config projectName="rungekutta" targetName="weakConv" />
+      <config projectName="rungekutta" targetName="HamError" />
+      <config projectName="rungekutta" targetName="strongConvAdd" />
+      <config projectName="rungekutta" targetName="refSol" />
+      <config projectName="rungekutta" targetName="weakConvAdd" />
+      <config projectName="rungekutta" targetName="LLTEx" />
+      <config projectName="RungeKutta" targetName="RKSolver" />
+      <config projectName="rungekutta" targetName="TimeMeans" />
+      <config projectName="rungekutta" targetName="strongConv" />
+      <config projectName="rungekutta" targetName="cast" />
+      <config projectName="rungekutta" targetName="SpaceMeans" />
+      <config projectName="rungekutta" targetName="UtilitiesGG" />
+      <config projectName="rungekutta" targetName="SpaceVSTime" />
+      <config projectName="rungekutta" targetName="Basic" />
+      <config projectName="randomODE-MasterProject" targetName="example" />
+      <config projectName="rungekutta" targetName="HeatInverse" />
+      <config projectName="rungekutta" targetName="basicTest" />
+      <config projectName="rungekutta" targetName="genObs" />
+      <config projectName="rungekutta" targetName="RandomStep" />
+      <config projectName="rungekutta" targetName="LorenzIC" />
+      <config projectName="rungekutta" targetName="RungeKuttaSolver" />
+      <config projectName="rungekutta" targetName="MCMCTest" />
+      <config projectName="rungekutta" targetName="OdeInverseEmb" />
+      <config projectName="rungekutta" targetName="randomTest" />
+      <config projectName="rungekutta" targetName="HIRESRandVSAdd" />
+      <config projectName="rungekutta" targetName="measure" />
+      <config projectName="rungekutta" targetName="MCConv" />
+      <config projectName="rungekutta" targetName="RandVSAdd" />
+      <config projectName="rungekutta" targetName="InvariantsExplosion" />
+      <config projectName="rungekutta" targetName="traj" />
+      <config projectName="rungekutta" targetName="strongConvOne" />
+      <config projectName="rungekutta" targetName="OdeInverse" />
+      <config projectName="rungekutta" targetName="Subdivision" />
+      <config projectName="rungekutta" targetName="Inverse" />
+      <config projectName="rungekutta" targetName="randomSol" />
+      <config projectName="rungekutta" targetName="InverseFunc" />
+      <config projectName="rungekutta" targetName="genObsHeat" />
+      <config projectName="RungeKutta" targetName="RungeKutta" />
+      <config projectName="rungekutta" targetName="MCMC" />
+      <config projectName="rungekutta" targetName="Invariants" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="af37c48c-8ce4-482d-9c5b-cc1116c7b664" name="Default" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="RungeKutta" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf />
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>test1d</find>
+      <find>steps_completed</find>
+      <find>total_steps</find>
+      <find>to_string(h)</find>
+      <find>p.y</find>
+      <find>Vector3d</find>
+      <find>p.z</find>
+      <find>vectorizedBoxes</find>
+      <find>3</find>
+      <find>2</find>
+      <find>(odeModel</find>
+      <find>Cond)</find>
+      <find>R</find>
+      <find>cle</find>
+      <find>GetPot::next</find>
+      <find>argv</find>
+      <find>tmp</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>stepsCompleted</replace>
+      <replace>nMC</replace>
+      <replace>to_string(static_cast&lt;int&gt;(h * 10000))</replace>
+      <replace>p(0)</replace>
+      <replace>p(1)</replace>
+      <replace>VectorXd</replace>
+      <replace>p(2)</replace>
+      <replace>Cond</replace>
+    </replaceStrings>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Subdivision/Box.hpp" />
+        <option value="$PROJECT_DIR$/Subdivision/Box.cpp" />
+        <option value="$PROJECT_DIR$/Subdivision/Subdivision.hpp" />
+        <option value="$PROJECT_DIR$/Subdivision/SubAlgo.cpp" />
+        <option value="$PROJECT_DIR$/SubTests/BasicTest.cpp" />
+        <option value="$PROJECT_DIR$/Test/MonteCarloTest.cpp" />
+        <option value="$PROJECT_DIR$/Test/RandStepVsAddNoise.cpp" />
+        <option value="$PROJECT_DIR$/RKSolver/Tools.cpp.cpp" />
+        <option value="$PROJECT_DIR$/RKSolver/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/RKSolver/Tools.cpp" />
+        <option value="$PROJECT_DIR$/Test/StrongConvergenceOneStep.cpp" />
+        <option value="$PROJECT_DIR$/MCMCLib/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/Test/testCast.cpp" />
+        <option value="$PROJECT_DIR$/MCMCTest/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/Test/ODEParamFunc.cpp" />
+        <option value="$PROJECT_DIR$/Test/ODEParam.cpp" />
+        <option value="$PROJECT_DIR$/MCMCTest/testMCMC.cpp" />
+        <option value="$PROJECT_DIR$/Test/InvariantExplTime.cpp" />
+        <option value="$PROJECT_DIR$/Test/InvariantCons.cpp" />
+        <option value="$PROJECT_DIR$/Test/GenerateTrajectories.cpp" />
+        <option value="$PROJECT_DIR$/RKSolver/RungeKuttaSolver.cpp" />
+        <option value="$PROJECT_DIR$/RKSolver/Structures.cpp" />
+        <option value="$PROJECT_DIR$/Test/HamiltonianError.cpp" />
+        <option value="$PROJECT_DIR$/Test/ReferenceSolution.cpp" />
+        <option value="$PROJECT_DIR$/MCMCLib/MCMC.hpp" />
+        <option value="$PROJECT_DIR$/MCMCLib/RAM.cpp" />
+        <option value="$PROJECT_DIR$/MCMCLib/MCMC.cpp" />
+        <option value="$PROJECT_DIR$/getpot-c++/GetPot" />
+        <option value="$PROJECT_DIR$/Test/Posteriors.cpp" />
+        <option value="$PROJECT_DIR$/RKRandomStep/RandomTimeStep.hpp" />
+        <option value="$PROJECT_DIR$/RKRandomStep/RandomTimeStep.cpp" />
+        <option value="$PROJECT_DIR$/RKSolver/Tools.hpp" />
+        <option value="$PROJECT_DIR$/RKSolver/RungeKuttaSolver.hpp" />
+        <option value="$PROJECT_DIR$/RKSolver/Problems.cpp" />
+        <option value="$PROJECT_DIR$/Test/GenerateObservationsHeat.cpp" />
+        <option value="$PROJECT_DIR$/Utilities/UtilitiesGG.hpp" />
+        <option value="$PROJECT_DIR$/Test/temp.txt" />
+        <option value="$PROJECT_DIR$/Test/HeatInitCond.cpp" />
+        <option value="$PROJECT_DIR$/Test/InvariantMeasure.cpp.cpp" />
+        <option value="$PROJECT_DIR$/Test/InvariantMeasure.cpp" />
+        <option value="$PROJECT_DIR$/Test/OdeInverseEmbedded.cpp" />
+        <option value="$PROJECT_DIR$/Test/GenerateObservations.cpp" />
+        <option value="$PROJECT_DIR$/Test/OdeInverse.cpp" />
+        <option value="$PROJECT_DIR$/Test/StrongConvergenceTest.cpp" />
+        <option value="$PROJECT_DIR$/RKSolver/Structures.hpp" />
+        <option value="$PROJECT_DIR$/Utilities/UtilitiesGG.cpp" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/Test/ExampleScript.cpp" />
+        <option value="$PROJECT_DIR$/Test/StrongConvergence.cpp" />
+        <option value="$PROJECT_DIR$/Test/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/Test/WeakConvergence.cpp" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-1" />
+    <option name="y" value="49" />
+    <option name="width" value="1922" />
+    <option name="height" value="994" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RandomODE_MasterProject" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RandomODE_MasterProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RandomODE_MasterProject" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RandomODE_MasterProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RandomODE_MasterProject" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RandomODE_MasterProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RKSolver" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RandomODE_MasterProject" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RandomODE_MasterProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RKRandomStep" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="js.eslint.eslintPackage" value="" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RunManager" selected="Application.Build All">
+    <configuration default="true" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" PASS_PARENT_ENVS_2="true" TEST_MODE="SUITE_TEST">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="RungeKutta" TARGET_NAME="RungeKutta" CONFIG_NAME="Debug">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerProtractor" factoryName="Protractor">
+      <config-file value="" />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="RungeKutta" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="RungeKutta" />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run-script" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Attests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="RungeKutta" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="RungeKutta" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Nosetests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="RungeKutta" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="RungeKutta" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="py.test">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="RungeKutta" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="testToRun" value="" />
+      <option name="keywords" value="" />
+      <option name="params" value="" />
+      <option name="USE_PARAM" value="false" />
+      <option name="USE_KEYWORD" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" EXPLICIT_BUILD_TARGET_NAME="all">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="RungeKuttaSolver" type="CMakeRunConfiguration" factoryName="Application" WORKING_DIR="" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="RungeKuttaSolver" CONFIG_NAME="Debug">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="RandomStep" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="RandomStep" CONFIG_NAME="Debug">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="randomTest" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="randomTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="randomTest">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="randomSol" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="randomSol" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="randomSol">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="weakConv" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="weakConv" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="weakConv">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="refSol" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="refSol" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="refSol">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="strongConv" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="strongConv" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="strongConv">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="MCConv" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="MCConv" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="MCConv">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="strongConvAdd" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="strongConvAdd" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="strongConvAdd">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="UtilitiesGG" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="UtilitiesGG" CONFIG_NAME="Debug">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="weakConvAdd" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="weakConvAdd" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="weakConvAdd">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="RandVSAdd" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="RandVSAdd" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="RandVSAdd">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="LorenzIC" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="LorenzIC" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="LorenzIC">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="SpaceMeans" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="SpaceMeans" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="SpaceMeans">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="TimeMeans" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="TimeMeans" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="TimeMeans">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="Subdivision" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="Subdivision" CONFIG_NAME="Debug">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="Basic" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="15 0.1 test" WORKING_DIR="" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="Basic" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="Basic">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="Invariants" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="Invariants" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="Invariants">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="strongConvOne" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="strongConvOne" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="strongConvOne">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="MCMC" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="MCMC" CONFIG_NAME="Debug">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="genObs" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="genObs" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="genObs">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="InvariantsExplosion" type="CMakeRunConfiguration" factoryName="Application" WORKING_DIR="" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="InvariantsExplosion" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="InvariantsExplosion">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="HamError" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="0.05 2000 1 aeproi 1.5" WORKING_DIR="" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="HamError" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="HamError">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="traj" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="traj" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="traj">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="OdeInverse" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-obsFile observations -nMC 10000 -nMCMC 100000 -outFile samples -h 0.1 -prop 0.005" WORKING_DIR="" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="OdeInverse" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="OdeInverse">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="HeatInverse" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="HeatInverse" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="HeatInverse">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="genObsHeat" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="genObsHeat" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="genObsHeat">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="measure" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="measure" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="measure">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="OdeInverseEmb" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rungekutta" TARGET_NAME="OdeInverseEmb" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="rungekutta" RUN_TARGET_NAME="OdeInverseEmb">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="example" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="randomODE-MasterProject" TARGET_NAME="example" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="randomODE-MasterProject" RUN_TARGET_NAME="example">
+      <envs />
+      <method />
+    </configuration>
+    <list size="31">
+      <item index="0" class="java.lang.String" itemvalue="Application.Build All" />
+      <item index="1" class="java.lang.String" itemvalue="Application.RungeKuttaSolver" />
+      <item index="2" class="java.lang.String" itemvalue="Application.RandomStep" />
+      <item index="3" class="java.lang.String" itemvalue="Application.randomTest" />
+      <item index="4" class="java.lang.String" itemvalue="Application.randomSol" />
+      <item index="5" class="java.lang.String" itemvalue="Application.weakConv" />
+      <item index="6" class="java.lang.String" itemvalue="Application.refSol" />
+      <item index="7" class="java.lang.String" itemvalue="Application.strongConv" />
+      <item index="8" class="java.lang.String" itemvalue="Application.MCConv" />
+      <item index="9" class="java.lang.String" itemvalue="Application.strongConvAdd" />
+      <item index="10" class="java.lang.String" itemvalue="Application.UtilitiesGG" />
+      <item index="11" class="java.lang.String" itemvalue="Application.weakConvAdd" />
+      <item index="12" class="java.lang.String" itemvalue="Application.RandVSAdd" />
+      <item index="13" class="java.lang.String" itemvalue="Application.LorenzIC" />
+      <item index="14" class="java.lang.String" itemvalue="Application.SpaceMeans" />
+      <item index="15" class="java.lang.String" itemvalue="Application.TimeMeans" />
+      <item index="16" class="java.lang.String" itemvalue="Application.Subdivision" />
+      <item index="17" class="java.lang.String" itemvalue="Application.Basic" />
+      <item index="18" class="java.lang.String" itemvalue="Application.Invariants" />
+      <item index="19" class="java.lang.String" itemvalue="Application.strongConvOne" />
+      <item index="20" class="java.lang.String" itemvalue="Application.MCMC" />
+      <item index="21" class="java.lang.String" itemvalue="Application.genObs" />
+      <item index="22" class="java.lang.String" itemvalue="Application.InvariantsExplosion" />
+      <item index="23" class="java.lang.String" itemvalue="Application.HamError" />
+      <item index="24" class="java.lang.String" itemvalue="Application.traj" />
+      <item index="25" class="java.lang.String" itemvalue="Application.OdeInverse" />
+      <item index="26" class="java.lang.String" itemvalue="Application.HeatInverse" />
+      <item index="27" class="java.lang.String" itemvalue="Application.genObsHeat" />
+      <item index="28" class="java.lang.String" itemvalue="Application.measure" />
+      <item index="29" class="java.lang.String" itemvalue="Application.OdeInverseEmb" />
+      <item index="30" class="java.lang.String" itemvalue="Application.example" />
+    </list>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="af37c48c-8ce4-482d-9c5b-cc1116c7b664" name="Default" comment="" />
+      <created>1491204421241</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1491204421241</updated>
+      <workItem from="1491204423531" duration="57366000" />
+      <workItem from="1491986034490" duration="2343000" />
+      <workItem from="1491997417977" duration="26086000" />
+      <workItem from="1492501108110" duration="61233000" />
+      <workItem from="1493210295096" duration="2127000" />
+      <workItem from="1493212794375" duration="15620000" />
+      <workItem from="1493273801666" duration="67112000" />
+      <workItem from="1493877253945" duration="48530000" />
+      <workItem from="1494513498527" duration="3833000" />
+      <workItem from="1494568141454" duration="40259000" />
+      <workItem from="1495019879915" duration="15048000" />
+      <workItem from="1495444238793" duration="31000" />
+      <workItem from="1495445979247" duration="58000" />
+      <workItem from="1495519582831" duration="607000" />
+      <workItem from="1496057327087" duration="39680000" />
+      <workItem from="1498485064493" duration="7983000" />
+      <workItem from="1500277276371" duration="125000" />
+      <workItem from="1502094878998" duration="11000" />
+      <workItem from="1502095985792" duration="653000" />
+      <workItem from="1502108010494" duration="45000" />
+      <workItem from="1502108283722" duration="420000" />
+      <workItem from="1502111472015" duration="604000" />
+      <workItem from="1502172241921" duration="19000" />
+      <workItem from="1503316363831" duration="51211000" />
+      <workItem from="1504599113781" duration="28000" />
+      <workItem from="1505219943381" duration="11147000" />
+      <workItem from="1505290368619" duration="636000" />
+      <workItem from="1505394125048" duration="26366000" />
+      <workItem from="1505730303927" duration="6870000" />
+      <workItem from="1506590913425" duration="7000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="486058000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-1" y="49" width="1922" height="994" extended-state="6" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1578125" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2814238" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7302118" sideWeight="0.503125" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3779264" sideWeight="0.496875" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32218507" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925472" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35340023" sideWeight="0.49791667" order="8" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="processedProjectFiles" value="true" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/.." />
+    </ignored-roots>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="46" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Test/testCast.cpp" />
+    <entry file="file://$PROJECT_DIR$/MCMCTest/CMakeLists.txt" />
+    <entry file="file:///usr/include/c++/4.9/ext/string_conversions.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="64" column="0" lean-forward="false" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/InvariantExplTime.cpp" />
+    <entry file="file://$PROJECT_DIR$/Test/LorenzVariableIC.cpp" />
+    <entry file="file://$PROJECT_DIR$/Test/GenerateTrajectories.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/ReferenceSolution.cpp" />
+    <entry file="file://$PROJECT_DIR$/Subdivision/Subdivision.cpp" />
+    <entry file="file://$PROJECT_DIR$/Test/ODEParam.cpp" />
+    <entry file="file://$PROJECT_DIR$/MCMCLib/RAM.cpp" />
+    <entry file="file://$PROJECT_DIR$/Test/StrongConvergenceOneStep.cpp" />
+    <entry file="file:///usr/include/cmumps_struc.h" />
+    <entry file="file://$PROJECT_DIR$/Test/RandStepVsAddNoise.cpp" />
+    <entry file="file://$PROJECT_DIR$/getpot-c++/GetPot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="356" column="0" lean-forward="true" selection-start-line="356" selection-start-column="0" selection-end-line="356" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/Posteriors.cpp" />
+    <entry file="file:///usr/include/c++/4.9/bits/move.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="175" column="0" lean-forward="false" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/4.9/bits/shared_ptr_base.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="992" column="0" lean-forward="false" selection-start-line="992" selection-start-column="0" selection-end-line="992" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/4.9/bits/shared_ptr.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="290" column="0" lean-forward="false" selection-start-line="290" selection-start-column="0" selection-end-line="290" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RKRandomStep/RandomTimeStep.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/HamiltonianError.cpp" />
+    <entry file="file://$PROJECT_DIR$/Utilities/UtilitiesGG.hpp" />
+    <entry file="file://$PROJECT_DIR$/Test/GenerateObservationsHeat.cpp" />
+    <entry file="file://$PROJECT_DIR$/Test/temp.txt" />
+    <entry file="file://$PROJECT_DIR$/MCMCLib/MCMC.hpp" />
+    <entry file="file://$PROJECT_DIR$/Test/HeatInitCond.cpp" />
+    <entry file="file://$PROJECT_DIR$/Test/InvariantCons.cpp" />
+    <entry file="file://$PROJECT_DIR$/Test/InvariantMeasure.cpp" />
+    <entry file="file://$PROJECT_DIR$/Test/WeakConvergenceAdd.cpp" />
+    <entry file="file://$PROJECT_DIR$/RKRandomStep/AdditiveNoise.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="20" lean-forward="false" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RKRandomStep/AdditiveNoise.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/OdeInverseEmbedded.cpp" />
+    <entry file="file://$PROJECT_DIR$/Test/GenerateObservations.cpp" />
+    <entry file="file://$PROJECT_DIR$/Test/OdeInverse.cpp" />
+    <entry file="file://$PROJECT_DIR$/RKSolver/RungeKuttaSolver.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-263">
+          <caret line="6" column="17" lean-forward="false" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RKSolver/Problems.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1663">
+          <caret line="190" column="10" lean-forward="false" selection-start-line="190" selection-start-column="10" selection-end-line="190" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RKSolver/RungeKuttaSolver.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="14" column="9" lean-forward="false" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RKRandomStep/RandomTimeStep.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="648">
+          <caret line="36" column="1" lean-forward="false" selection-start-line="36" selection-start-column="1" selection-end-line="36" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MCMCLib/MCMC.cpp" />
+    <entry file="file://$PROJECT_DIR$/RKSolver/Tools.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RKSolver/Tools.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="20" column="44" lean-forward="true" selection-start-line="20" selection-start-column="44" selection-end-line="20" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RKSolver/Structures.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="602">
+          <caret line="73" column="66" lean-forward="false" selection-start-line="73" selection-start-column="66" selection-end-line="73" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utilities/CMakeLists.txt" />
+    <entry file="file://$PROJECT_DIR$/Utilities/UtilitiesGG.cpp" />
+    <entry file="file://$PROJECT_DIR$/RKSolver/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="28" lean-forward="false" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RKRandomStep/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="25" lean-forward="false" selection-start-line="6" selection-start-column="25" selection-end-line="6" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/GenerateTrajectories.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="5" column="1" lean-forward="false" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RKSolver/Structures.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="9" lean-forward="false" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/StrongConvergence.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1008">
+          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="41" lean-forward="false" selection-start-line="6" selection-start-column="41" selection-end-line="6" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/WeakConvergence.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="96" column="9" lean-forward="true" selection-start-line="96" selection-start-column="9" selection-end-line="96" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

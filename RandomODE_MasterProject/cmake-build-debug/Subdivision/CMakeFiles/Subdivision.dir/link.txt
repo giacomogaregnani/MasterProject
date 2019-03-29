@@ -1,0 +1,2 @@
+/usr/bin/ar qc libSubdivision.a  CMakeFiles/Subdivision.dir/Subdivision.cpp.o CMakeFiles/Subdivision.dir/Box.cpp.o
+/usr/bin/ranlib libSubdivision.a

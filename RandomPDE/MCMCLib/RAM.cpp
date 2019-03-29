@@ -1,5 +1,4 @@
-#include "MCMC.hpp"
-#include <Eigen/Cholesky>
+#include "RAM.hpp"
 
 void RAMParam::init(double gamma, double alpha, unsigned int paramSize)
 {

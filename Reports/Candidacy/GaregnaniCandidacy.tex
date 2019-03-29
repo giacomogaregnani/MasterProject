@@ -1,0 +1,111 @@
+\documentclass{scrartcl}
+
+% basics
+%\usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage[title,titletoc]{appendix}
+\usepackage{afterpage}
+\usepackage{enumitem}   
+\setlist[enumerate]{topsep=3pt,itemsep=3pt,label=(\roman*)}
+
+% maths
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\theoremstyle{theorem}
+\newtheorem{theorem}{Theorem}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+
+% tables
+\usepackage{booktabs}
+
+% plots
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,positioning,fit,matrix}
+\usepackage[labelfont=bf]{caption}
+\setlength{\belowcaptionskip}{-5pt}
+\usepackage{here}
+\usepackage[font=normal]{subcaption}
+
+% title and authors
+\title{\vspace{-2cm}Candidacy exam -- research plan}
+\author{Giacomo Garegnani}
+\date{}
+
+% my commands 
+\DeclarePairedDelimiter{\ceil}{\left\lceil}{\right\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\|}{\|}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\Pr}{\mathbb{P}}
+\newcommand{\eqtext}[1]{\ensuremath{\stackrel{#1}{=}}}
+\newcommand{\leqtext}[1]{\ensuremath{\stackrel{#1}{\leq}}}
+\newcommand{\iid}{\ensuremath{\stackrel{\text{i.i.d.}}{\sim}}}
+\newcommand{\totext}[1]{\ensuremath{\stackrel{#1}{\to}}}
+\newcommand{\rightarrowtext}[1]{\ensuremath{\stackrel{#1}{\longrightarrow}}}
+\newcommand{\leftrightarrowtext}[1]{\ensuremath{\stackrel{#1}{\longleftrightarrow}}}
+\newcommand{\pdv}[2]{\ensuremath\partial_{#2}#1}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\epl}{\varepsilon}
+\newcommand{\diffL}{\mathcal{L}}
+\newcommand{\prior}{\mathcal{Q}}
+\newcommand{\defeq}{\coloneqq}
+\newcommand{\eqdef}{\eqqcolon}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\E}{\operatorname{\mathbb{E}}}
+\newcommand{\MSE}{\operatorname{MSE}}
+\newcommand{\trace}{\operatorname{tr}}
+\newcommand{\MH}{\mathrm{MH}}
+\newcommand{\ttt}{\texttt}
+\newcommand{\Hell}{d_{\mathrm{Hell}}}
+\newcommand{\sksum}{{\textstyle\sum}}
+\newcommand{\dd}{\mathrm{d}}
+\definecolor{shade}{RGB}{100, 100, 100}
+\definecolor{bordeaux}{RGB}{128, 0, 50}
+\newcommand{\corr}[1]{{\color{bordeaux}#1}}
+
+\begin{document}
+	\maketitle
+	
+	\subsection*{General framework, objectives and first results}
+	In recent years, methods for interpreting deterministic numerical solutions of differential equations in a probabilistic fashion have been proposed. In particular, the common goal of this novel schemes is establishing a probability measure on the numerical solutions which are consistent with classical error estimates. Introducing a probability measure brings advantages in various applications, such as integrating chaotic dynamical systems or obtaining reliable solutions to Bayesian inverse problems. In this research framework, we have proposed a new Runge-Kutta probabilistic method for ODEs based on random time steps. Our integrator shares some features with a recently proposed alternative method based on additive noise, nonetheless improving the quality of the solution in problems endowed with geometric properties. The integral submitted version of our work is to be found attached to this report.
+		
+	\subsection*{Research plan}
+	Future and current research covers the following topics
+	\begin{itemize}[label=-]
+		\item Analysis of error growth for probabilistic methods on the energy in Hamiltonian systems. Theoretical analysis and numerical experiments have already been developed and a short paper on this topic is in redaction. 
+		\item Development and analysis of probabilistic methods for partial differential equations. First experiments with random meshes show encouraging behaviour.
+		\item Analysis of the impact of numerical errors on the solution of Bayesian inverse problems involving differential equations. 
+	\end{itemize}
+	
+	\subsection*{Miscellaneous}
+	The first year was partly dedicated to the conception and writing of the paper \textit{Random time step probabilistic methods for uncertainty quantification in chaotic and geometric numerical integration} (A. Abdulle and G. Garegnani), which has been submitted to the SIAM Journal on Numerical Analysis. A second short paper on probabilistic geometric integration of Hamiltonian system is currently being redacted. The past and planned participation at meetings is listed below.
+	\begin{itemize}[label=-]
+		\item Short presentation at MATHICSE retreat (Leysin, June 2017)
+		\item Joined the summer school on Probabilistic Numerics (Dobbiaco, June 2017)
+		\item Invited for a presentation to the Probabilistic Numerics group of the Max Planck Institute for Intelligent Systems (Tübingen, March 2018)
+		\item Accepted to the SAMSI-Lloyds-Turing Workshop on Probabilistic Numerical Methods (London, April 2018, planned)
+		\item Invited to the special session ``Structure Preserving Numerical Methods'' at the AIMS Conference on Dynamical Systems, Differential Equations and Applications (Taipei, July 2018, planned)
+	\end{itemize}
+	In parallel with the research activities, I was involved in the following teaching duties
+	\begin{itemize}[label=-]
+		\item Main assistant for the courses ``Elliptic equations and Sobolev spaces'' and ``Numerical integration of Stochastic Differential Equations''.
+		\item Supervision of the Master project ``Probabilistic methods for differential equations: adaptivity and Bayesian inverse problems'' by A. Stankovic (Master in Computational Science and Engineering).
+	\end{itemize}
+	
+	
+\end{document}

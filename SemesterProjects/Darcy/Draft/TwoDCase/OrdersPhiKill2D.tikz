@@ -1,0 +1,77 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=4.521in,
+height=3.566in,
+at={(0.758in,0.481in)},
+scale only axis,
+xmode=log,
+xmin=0.01,
+xmax=1,
+xminorticks=true,
+xlabel={$h$},
+xlabel style={font=\Large},
+xmajorgrids,
+xminorgrids,
+ymode=log,
+ymin=0.001,
+ymax=1,
+yminorticks=true,
+ymajorgrids,
+yminorgrids,
+axis background/.style={fill=white},
+legend pos = south east,
+legend style={legend cell align=left,align=left,draw=white!15!black,font=\Large}
+]
+\addplot [color=red,solid,mark=o,mark options={solid}]
+  table[row sep=crcr]{%
+1	0.329250554513686\\
+0.5	0.257940554513686\\
+0.25	0.197050554513686\\
+0.125	0.145390554513686\\
+0.0625	0.104000554513686\\
+0.03125	0.073860554513686\\
+};
+\addlegendentry{$|\E(\Phi_h^d - \Phi)|$};
+
+\addplot [color=blue,solid,mark=asterisk,mark options={solid}]
+  table[row sep=crcr]{%
+1	0.085450554513686\\
+0.5	0.031640554513686\\
+0.25	0.010980554513686\\
+0.125	0.00470055451368601\\
+0.0625	0.00240055451368593\\
+0.03125	0.00134055451368598\\
+};
+\addlegendentry{$|\E(\Phi_h^c - \Phi)|$};
+
+\addplot [color=black,dashed]
+  table[row sep=crcr]{%
+1	0.394101109027372\\
+0.5	0.278671566666394\\
+0.25	0.197050554513686\\
+0.125	0.139335783333197\\
+0.0625	0.098525277256843\\
+0.03125	0.0696678916665984\\
+};
+\addlegendentry{$h^{0.5}$};
+
+\addplot [color=black,solid]
+  table[row sep=crcr]{%
+1	0.0439222180547438\\
+0.5	0.0219611090273719\\
+0.25	0.010980554513686\\
+0.125	0.00549027725684298\\
+0.0625	0.00274513862842149\\
+0.03125	0.00137256931421074\\
+};
+\addlegendentry{$h$};
+
+\end{axis}
+\end{tikzpicture}%

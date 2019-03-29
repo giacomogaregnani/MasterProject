@@ -1,0 +1,1440 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\begin{tikzpicture}
+
+
+
+\begin{axis}[%
+width=4.542in,
+height=3.583in,
+at={(0.801in,0.484in)},
+scale only axis,
+xmin=-1.39468302658487,
+xmax=1.39468302658487,
+xlabel={$x$},
+xlabel style={font=\Large},
+ymin=-1.1,
+ymax=1.1,
+ylabel={$y$},
+ylabel style={font=\Large},
+axis background/.style={fill=white}
+]
+\addplot [color=black,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+-1	-1\\
+-1	1\\
+};
+\addplot [color=black,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+1	-1\\
+1	1\\
+};
+\addplot [color=black,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+-1	-1\\
+1	-1\\
+};
+\addplot [color=black,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+-1	1\\
+1	1\\
+};
+\addplot [color=black,dashed,forget plot]
+  table[row sep=crcr]{%
+-1	-0.8\\
+1	-0.8\\
+};
+\addplot [color=black,dashed,forget plot]
+  table[row sep=crcr]{%
+-0.8	-1\\
+-0.8	1\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.9	-0.9\\
+-0.9	-0.7\\
+-0.9	-0.5\\
+-0.9	-0.3\\
+-0.9	-0.1\\
+-0.9	0.1\\
+-0.9	0.3\\
+-0.9	0.5\\
+-0.9	0.7\\
+-0.9	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.9	-0.9\\
+-0.9	-0.7\\
+-0.9	-0.5\\
+-0.9	-0.3\\
+-0.9	-0.1\\
+-0.9	0.1\\
+-0.9	0.3\\
+-0.9	0.5\\
+-0.9	0.7\\
+-0.9	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.9	-0.9\\
+-0.9	-0.7\\
+-0.9	-0.5\\
+-0.9	-0.3\\
+-0.9	-0.1\\
+-0.9	0.1\\
+-0.9	0.3\\
+-0.9	0.5\\
+-0.9	0.7\\
+-0.9	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.9	-0.9\\
+-0.9	-0.7\\
+-0.9	-0.5\\
+-0.9	-0.3\\
+-0.9	-0.1\\
+-0.9	0.1\\
+-0.9	0.3\\
+-0.9	0.5\\
+-0.9	0.7\\
+-0.9	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.9	-0.9\\
+-0.9	-0.7\\
+-0.9	-0.5\\
+-0.9	-0.3\\
+-0.9	-0.1\\
+-0.9	0.1\\
+-0.9	0.3\\
+-0.9	0.5\\
+-0.9	0.7\\
+-0.9	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.9	-0.9\\
+-0.9	-0.7\\
+-0.9	-0.5\\
+-0.9	-0.3\\
+-0.9	-0.1\\
+-0.9	0.1\\
+-0.9	0.3\\
+-0.9	0.5\\
+-0.9	0.7\\
+-0.9	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.9	-0.9\\
+-0.9	-0.7\\
+-0.9	-0.5\\
+-0.9	-0.3\\
+-0.9	-0.1\\
+-0.9	0.1\\
+-0.9	0.3\\
+-0.9	0.5\\
+-0.9	0.7\\
+-0.9	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.9	-0.9\\
+-0.9	-0.7\\
+-0.9	-0.5\\
+-0.9	-0.3\\
+-0.9	-0.1\\
+-0.9	0.1\\
+-0.9	0.3\\
+-0.9	0.5\\
+-0.9	0.7\\
+-0.9	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.9	-0.9\\
+-0.9	-0.7\\
+-0.9	-0.5\\
+-0.9	-0.3\\
+-0.9	-0.1\\
+-0.9	0.1\\
+-0.9	0.3\\
+-0.9	0.5\\
+-0.9	0.7\\
+-0.9	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.9	-0.9\\
+-0.9	-0.7\\
+-0.9	-0.5\\
+-0.9	-0.3\\
+-0.9	-0.1\\
+-0.9	0.1\\
+-0.9	0.3\\
+-0.9	0.5\\
+-0.9	0.7\\
+-0.9	0.9\\
+};
+\addplot [color=black,dashed,forget plot]
+  table[row sep=crcr]{%
+-1	-0.6\\
+1	-0.6\\
+};
+\addplot [color=black,dashed,forget plot]
+  table[row sep=crcr]{%
+-0.6	-1\\
+-0.6	1\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.7	-0.9\\
+-0.7	-0.7\\
+-0.7	-0.5\\
+-0.7	-0.3\\
+-0.7	-0.1\\
+-0.7	0.1\\
+-0.7	0.3\\
+-0.7	0.5\\
+-0.7	0.7\\
+-0.7	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.7	-0.9\\
+-0.7	-0.7\\
+-0.7	-0.5\\
+-0.7	-0.3\\
+-0.7	-0.1\\
+-0.7	0.1\\
+-0.7	0.3\\
+-0.7	0.5\\
+-0.7	0.7\\
+-0.7	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.7	-0.9\\
+-0.7	-0.7\\
+-0.7	-0.5\\
+-0.7	-0.3\\
+-0.7	-0.1\\
+-0.7	0.1\\
+-0.7	0.3\\
+-0.7	0.5\\
+-0.7	0.7\\
+-0.7	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.7	-0.9\\
+-0.7	-0.7\\
+-0.7	-0.5\\
+-0.7	-0.3\\
+-0.7	-0.1\\
+-0.7	0.1\\
+-0.7	0.3\\
+-0.7	0.5\\
+-0.7	0.7\\
+-0.7	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.7	-0.9\\
+-0.7	-0.7\\
+-0.7	-0.5\\
+-0.7	-0.3\\
+-0.7	-0.1\\
+-0.7	0.1\\
+-0.7	0.3\\
+-0.7	0.5\\
+-0.7	0.7\\
+-0.7	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.7	-0.9\\
+-0.7	-0.7\\
+-0.7	-0.5\\
+-0.7	-0.3\\
+-0.7	-0.1\\
+-0.7	0.1\\
+-0.7	0.3\\
+-0.7	0.5\\
+-0.7	0.7\\
+-0.7	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.7	-0.9\\
+-0.7	-0.7\\
+-0.7	-0.5\\
+-0.7	-0.3\\
+-0.7	-0.1\\
+-0.7	0.1\\
+-0.7	0.3\\
+-0.7	0.5\\
+-0.7	0.7\\
+-0.7	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.7	-0.9\\
+-0.7	-0.7\\
+-0.7	-0.5\\
+-0.7	-0.3\\
+-0.7	-0.1\\
+-0.7	0.1\\
+-0.7	0.3\\
+-0.7	0.5\\
+-0.7	0.7\\
+-0.7	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.7	-0.9\\
+-0.7	-0.7\\
+-0.7	-0.5\\
+-0.7	-0.3\\
+-0.7	-0.1\\
+-0.7	0.1\\
+-0.7	0.3\\
+-0.7	0.5\\
+-0.7	0.7\\
+-0.7	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.7	-0.9\\
+-0.7	-0.7\\
+-0.7	-0.5\\
+-0.7	-0.3\\
+-0.7	-0.1\\
+-0.7	0.1\\
+-0.7	0.3\\
+-0.7	0.5\\
+-0.7	0.7\\
+-0.7	0.9\\
+};
+\addplot [color=black,dashed,forget plot]
+  table[row sep=crcr]{%
+-1	-0.4\\
+1	-0.4\\
+};
+\addplot [color=black,dashed,forget plot]
+  table[row sep=crcr]{%
+-0.4	-1\\
+-0.4	1\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.5	-0.9\\
+-0.5	-0.7\\
+-0.5	-0.5\\
+-0.5	-0.3\\
+-0.5	-0.1\\
+-0.5	0.1\\
+-0.5	0.3\\
+-0.5	0.5\\
+-0.5	0.7\\
+-0.5	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.5	-0.9\\
+-0.5	-0.7\\
+-0.5	-0.5\\
+-0.5	-0.3\\
+-0.5	-0.1\\
+-0.5	0.1\\
+-0.5	0.3\\
+-0.5	0.5\\
+-0.5	0.7\\
+-0.5	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.5	-0.9\\
+-0.5	-0.7\\
+-0.5	-0.5\\
+-0.5	-0.3\\
+-0.5	-0.1\\
+-0.5	0.1\\
+-0.5	0.3\\
+-0.5	0.5\\
+-0.5	0.7\\
+-0.5	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.5	-0.9\\
+-0.5	-0.7\\
+-0.5	-0.5\\
+-0.5	-0.3\\
+-0.5	-0.1\\
+-0.5	0.1\\
+-0.5	0.3\\
+-0.5	0.5\\
+-0.5	0.7\\
+-0.5	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.5	-0.9\\
+-0.5	-0.7\\
+-0.5	-0.5\\
+-0.5	-0.3\\
+-0.5	-0.1\\
+-0.5	0.1\\
+-0.5	0.3\\
+-0.5	0.5\\
+-0.5	0.7\\
+-0.5	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.5	-0.9\\
+-0.5	-0.7\\
+-0.5	-0.5\\
+-0.5	-0.3\\
+-0.5	-0.1\\
+-0.5	0.1\\
+-0.5	0.3\\
+-0.5	0.5\\
+-0.5	0.7\\
+-0.5	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.5	-0.9\\
+-0.5	-0.7\\
+-0.5	-0.5\\
+-0.5	-0.3\\
+-0.5	-0.1\\
+-0.5	0.1\\
+-0.5	0.3\\
+-0.5	0.5\\
+-0.5	0.7\\
+-0.5	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.5	-0.9\\
+-0.5	-0.7\\
+-0.5	-0.5\\
+-0.5	-0.3\\
+-0.5	-0.1\\
+-0.5	0.1\\
+-0.5	0.3\\
+-0.5	0.5\\
+-0.5	0.7\\
+-0.5	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.5	-0.9\\
+-0.5	-0.7\\
+-0.5	-0.5\\
+-0.5	-0.3\\
+-0.5	-0.1\\
+-0.5	0.1\\
+-0.5	0.3\\
+-0.5	0.5\\
+-0.5	0.7\\
+-0.5	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.5	-0.9\\
+-0.5	-0.7\\
+-0.5	-0.5\\
+-0.5	-0.3\\
+-0.5	-0.1\\
+-0.5	0.1\\
+-0.5	0.3\\
+-0.5	0.5\\
+-0.5	0.7\\
+-0.5	0.9\\
+};
+\addplot [color=black,dashed,forget plot]
+  table[row sep=crcr]{%
+-1	-0.2\\
+1	-0.2\\
+};
+\addplot [color=black,dashed,forget plot]
+  table[row sep=crcr]{%
+-0.2	-1\\
+-0.2	1\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.3	-0.9\\
+-0.3	-0.7\\
+-0.3	-0.5\\
+-0.3	-0.3\\
+-0.3	-0.1\\
+-0.3	0.1\\
+-0.3	0.3\\
+-0.3	0.5\\
+-0.3	0.7\\
+-0.3	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.3	-0.9\\
+-0.3	-0.7\\
+-0.3	-0.5\\
+-0.3	-0.3\\
+-0.3	-0.1\\
+-0.3	0.1\\
+-0.3	0.3\\
+-0.3	0.5\\
+-0.3	0.7\\
+-0.3	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.3	-0.9\\
+-0.3	-0.7\\
+-0.3	-0.5\\
+-0.3	-0.3\\
+-0.3	-0.1\\
+-0.3	0.1\\
+-0.3	0.3\\
+-0.3	0.5\\
+-0.3	0.7\\
+-0.3	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.3	-0.9\\
+-0.3	-0.7\\
+-0.3	-0.5\\
+-0.3	-0.3\\
+-0.3	-0.1\\
+-0.3	0.1\\
+-0.3	0.3\\
+-0.3	0.5\\
+-0.3	0.7\\
+-0.3	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.3	-0.9\\
+-0.3	-0.7\\
+-0.3	-0.5\\
+-0.3	-0.3\\
+-0.3	-0.1\\
+-0.3	0.1\\
+-0.3	0.3\\
+-0.3	0.5\\
+-0.3	0.7\\
+-0.3	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.3	-0.9\\
+-0.3	-0.7\\
+-0.3	-0.5\\
+-0.3	-0.3\\
+-0.3	-0.1\\
+-0.3	0.1\\
+-0.3	0.3\\
+-0.3	0.5\\
+-0.3	0.7\\
+-0.3	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.3	-0.9\\
+-0.3	-0.7\\
+-0.3	-0.5\\
+-0.3	-0.3\\
+-0.3	-0.1\\
+-0.3	0.1\\
+-0.3	0.3\\
+-0.3	0.5\\
+-0.3	0.7\\
+-0.3	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.3	-0.9\\
+-0.3	-0.7\\
+-0.3	-0.5\\
+-0.3	-0.3\\
+-0.3	-0.1\\
+-0.3	0.1\\
+-0.3	0.3\\
+-0.3	0.5\\
+-0.3	0.7\\
+-0.3	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.3	-0.9\\
+-0.3	-0.7\\
+-0.3	-0.5\\
+-0.3	-0.3\\
+-0.3	-0.1\\
+-0.3	0.1\\
+-0.3	0.3\\
+-0.3	0.5\\
+-0.3	0.7\\
+-0.3	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.3	-0.9\\
+-0.3	-0.7\\
+-0.3	-0.5\\
+-0.3	-0.3\\
+-0.3	-0.1\\
+-0.3	0.1\\
+-0.3	0.3\\
+-0.3	0.5\\
+-0.3	0.7\\
+-0.3	0.9\\
+};
+\addplot [color=black,dashed,forget plot]
+  table[row sep=crcr]{%
+-1	0\\
+1	0\\
+};
+\addplot [color=black,dashed,forget plot]
+  table[row sep=crcr]{%
+0	-1\\
+0	1\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.1	-0.9\\
+-0.1	-0.7\\
+-0.1	-0.5\\
+-0.1	-0.3\\
+-0.1	-0.1\\
+-0.1	0.1\\
+-0.1	0.3\\
+-0.1	0.5\\
+-0.1	0.7\\
+-0.1	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.1	-0.9\\
+-0.1	-0.7\\
+-0.1	-0.5\\
+-0.1	-0.3\\
+-0.1	-0.1\\
+-0.1	0.1\\
+-0.1	0.3\\
+-0.1	0.5\\
+-0.1	0.7\\
+-0.1	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.1	-0.9\\
+-0.1	-0.7\\
+-0.1	-0.5\\
+-0.1	-0.3\\
+-0.1	-0.1\\
+-0.1	0.1\\
+-0.1	0.3\\
+-0.1	0.5\\
+-0.1	0.7\\
+-0.1	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.1	-0.9\\
+-0.1	-0.7\\
+-0.1	-0.5\\
+-0.1	-0.3\\
+-0.1	-0.1\\
+-0.1	0.1\\
+-0.1	0.3\\
+-0.1	0.5\\
+-0.1	0.7\\
+-0.1	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.1	-0.9\\
+-0.1	-0.7\\
+-0.1	-0.5\\
+-0.1	-0.3\\
+-0.1	-0.1\\
+-0.1	0.1\\
+-0.1	0.3\\
+-0.1	0.5\\
+-0.1	0.7\\
+-0.1	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.1	-0.9\\
+-0.1	-0.7\\
+-0.1	-0.5\\
+-0.1	-0.3\\
+-0.1	-0.1\\
+-0.1	0.1\\
+-0.1	0.3\\
+-0.1	0.5\\
+-0.1	0.7\\
+-0.1	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.1	-0.9\\
+-0.1	-0.7\\
+-0.1	-0.5\\
+-0.1	-0.3\\
+-0.1	-0.1\\
+-0.1	0.1\\
+-0.1	0.3\\
+-0.1	0.5\\
+-0.1	0.7\\
+-0.1	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.1	-0.9\\
+-0.1	-0.7\\
+-0.1	-0.5\\
+-0.1	-0.3\\
+-0.1	-0.1\\
+-0.1	0.1\\
+-0.1	0.3\\
+-0.1	0.5\\
+-0.1	0.7\\
+-0.1	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.1	-0.9\\
+-0.1	-0.7\\
+-0.1	-0.5\\
+-0.1	-0.3\\
+-0.1	-0.1\\
+-0.1	0.1\\
+-0.1	0.3\\
+-0.1	0.5\\
+-0.1	0.7\\
+-0.1	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+-0.1	-0.9\\
+-0.1	-0.7\\
+-0.1	-0.5\\
+-0.1	-0.3\\
+-0.1	-0.1\\
+-0.1	0.1\\
+-0.1	0.3\\
+-0.1	0.5\\
+-0.1	0.7\\
+-0.1	0.9\\
+};
+\addplot [color=black,dashed,forget plot]
+  table[row sep=crcr]{%
+-1	0.2\\
+1	0.2\\
+};
+\addplot [color=black,dashed,forget plot]
+  table[row sep=crcr]{%
+0.2	-1\\
+0.2	1\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.1	-0.9\\
+0.1	-0.7\\
+0.1	-0.5\\
+0.1	-0.3\\
+0.1	-0.1\\
+0.1	0.1\\
+0.1	0.3\\
+0.1	0.5\\
+0.1	0.7\\
+0.1	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.1	-0.9\\
+0.1	-0.7\\
+0.1	-0.5\\
+0.1	-0.3\\
+0.1	-0.1\\
+0.1	0.1\\
+0.1	0.3\\
+0.1	0.5\\
+0.1	0.7\\
+0.1	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.1	-0.9\\
+0.1	-0.7\\
+0.1	-0.5\\
+0.1	-0.3\\
+0.1	-0.1\\
+0.1	0.1\\
+0.1	0.3\\
+0.1	0.5\\
+0.1	0.7\\
+0.1	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.1	-0.9\\
+0.1	-0.7\\
+0.1	-0.5\\
+0.1	-0.3\\
+0.1	-0.1\\
+0.1	0.1\\
+0.1	0.3\\
+0.1	0.5\\
+0.1	0.7\\
+0.1	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.1	-0.9\\
+0.1	-0.7\\
+0.1	-0.5\\
+0.1	-0.3\\
+0.1	-0.1\\
+0.1	0.1\\
+0.1	0.3\\
+0.1	0.5\\
+0.1	0.7\\
+0.1	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.1	-0.9\\
+0.1	-0.7\\
+0.1	-0.5\\
+0.1	-0.3\\
+0.1	-0.1\\
+0.1	0.1\\
+0.1	0.3\\
+0.1	0.5\\
+0.1	0.7\\
+0.1	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.1	-0.9\\
+0.1	-0.7\\
+0.1	-0.5\\
+0.1	-0.3\\
+0.1	-0.1\\
+0.1	0.1\\
+0.1	0.3\\
+0.1	0.5\\
+0.1	0.7\\
+0.1	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.1	-0.9\\
+0.1	-0.7\\
+0.1	-0.5\\
+0.1	-0.3\\
+0.1	-0.1\\
+0.1	0.1\\
+0.1	0.3\\
+0.1	0.5\\
+0.1	0.7\\
+0.1	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.1	-0.9\\
+0.1	-0.7\\
+0.1	-0.5\\
+0.1	-0.3\\
+0.1	-0.1\\
+0.1	0.1\\
+0.1	0.3\\
+0.1	0.5\\
+0.1	0.7\\
+0.1	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.1	-0.9\\
+0.1	-0.7\\
+0.1	-0.5\\
+0.1	-0.3\\
+0.1	-0.1\\
+0.1	0.1\\
+0.1	0.3\\
+0.1	0.5\\
+0.1	0.7\\
+0.1	0.9\\
+};
+\addplot [color=black,dashed,forget plot]
+  table[row sep=crcr]{%
+-1	0.4\\
+1	0.4\\
+};
+\addplot [color=black,dashed,forget plot]
+  table[row sep=crcr]{%
+0.4	-1\\
+0.4	1\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.3	-0.9\\
+0.3	-0.7\\
+0.3	-0.5\\
+0.3	-0.3\\
+0.3	-0.1\\
+0.3	0.1\\
+0.3	0.3\\
+0.3	0.5\\
+0.3	0.7\\
+0.3	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.3	-0.9\\
+0.3	-0.7\\
+0.3	-0.5\\
+0.3	-0.3\\
+0.3	-0.1\\
+0.3	0.1\\
+0.3	0.3\\
+0.3	0.5\\
+0.3	0.7\\
+0.3	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.3	-0.9\\
+0.3	-0.7\\
+0.3	-0.5\\
+0.3	-0.3\\
+0.3	-0.1\\
+0.3	0.1\\
+0.3	0.3\\
+0.3	0.5\\
+0.3	0.7\\
+0.3	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.3	-0.9\\
+0.3	-0.7\\
+0.3	-0.5\\
+0.3	-0.3\\
+0.3	-0.1\\
+0.3	0.1\\
+0.3	0.3\\
+0.3	0.5\\
+0.3	0.7\\
+0.3	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.3	-0.9\\
+0.3	-0.7\\
+0.3	-0.5\\
+0.3	-0.3\\
+0.3	-0.1\\
+0.3	0.1\\
+0.3	0.3\\
+0.3	0.5\\
+0.3	0.7\\
+0.3	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.3	-0.9\\
+0.3	-0.7\\
+0.3	-0.5\\
+0.3	-0.3\\
+0.3	-0.1\\
+0.3	0.1\\
+0.3	0.3\\
+0.3	0.5\\
+0.3	0.7\\
+0.3	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.3	-0.9\\
+0.3	-0.7\\
+0.3	-0.5\\
+0.3	-0.3\\
+0.3	-0.1\\
+0.3	0.1\\
+0.3	0.3\\
+0.3	0.5\\
+0.3	0.7\\
+0.3	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.3	-0.9\\
+0.3	-0.7\\
+0.3	-0.5\\
+0.3	-0.3\\
+0.3	-0.1\\
+0.3	0.1\\
+0.3	0.3\\
+0.3	0.5\\
+0.3	0.7\\
+0.3	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.3	-0.9\\
+0.3	-0.7\\
+0.3	-0.5\\
+0.3	-0.3\\
+0.3	-0.1\\
+0.3	0.1\\
+0.3	0.3\\
+0.3	0.5\\
+0.3	0.7\\
+0.3	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.3	-0.9\\
+0.3	-0.7\\
+0.3	-0.5\\
+0.3	-0.3\\
+0.3	-0.1\\
+0.3	0.1\\
+0.3	0.3\\
+0.3	0.5\\
+0.3	0.7\\
+0.3	0.9\\
+};
+\addplot [color=black,dashed,forget plot]
+  table[row sep=crcr]{%
+-1	0.6\\
+1	0.6\\
+};
+\addplot [color=black,dashed,forget plot]
+  table[row sep=crcr]{%
+0.6	-1\\
+0.6	1\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.5	-0.9\\
+0.5	-0.7\\
+0.5	-0.5\\
+0.5	-0.3\\
+0.5	-0.1\\
+0.5	0.1\\
+0.5	0.3\\
+0.5	0.5\\
+0.5	0.7\\
+0.5	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.5	-0.9\\
+0.5	-0.7\\
+0.5	-0.5\\
+0.5	-0.3\\
+0.5	-0.1\\
+0.5	0.1\\
+0.5	0.3\\
+0.5	0.5\\
+0.5	0.7\\
+0.5	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.5	-0.9\\
+0.5	-0.7\\
+0.5	-0.5\\
+0.5	-0.3\\
+0.5	-0.1\\
+0.5	0.1\\
+0.5	0.3\\
+0.5	0.5\\
+0.5	0.7\\
+0.5	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.5	-0.9\\
+0.5	-0.7\\
+0.5	-0.5\\
+0.5	-0.3\\
+0.5	-0.1\\
+0.5	0.1\\
+0.5	0.3\\
+0.5	0.5\\
+0.5	0.7\\
+0.5	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.5	-0.9\\
+0.5	-0.7\\
+0.5	-0.5\\
+0.5	-0.3\\
+0.5	-0.1\\
+0.5	0.1\\
+0.5	0.3\\
+0.5	0.5\\
+0.5	0.7\\
+0.5	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.5	-0.9\\
+0.5	-0.7\\
+0.5	-0.5\\
+0.5	-0.3\\
+0.5	-0.1\\
+0.5	0.1\\
+0.5	0.3\\
+0.5	0.5\\
+0.5	0.7\\
+0.5	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.5	-0.9\\
+0.5	-0.7\\
+0.5	-0.5\\
+0.5	-0.3\\
+0.5	-0.1\\
+0.5	0.1\\
+0.5	0.3\\
+0.5	0.5\\
+0.5	0.7\\
+0.5	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.5	-0.9\\
+0.5	-0.7\\
+0.5	-0.5\\
+0.5	-0.3\\
+0.5	-0.1\\
+0.5	0.1\\
+0.5	0.3\\
+0.5	0.5\\
+0.5	0.7\\
+0.5	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.5	-0.9\\
+0.5	-0.7\\
+0.5	-0.5\\
+0.5	-0.3\\
+0.5	-0.1\\
+0.5	0.1\\
+0.5	0.3\\
+0.5	0.5\\
+0.5	0.7\\
+0.5	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.5	-0.9\\
+0.5	-0.7\\
+0.5	-0.5\\
+0.5	-0.3\\
+0.5	-0.1\\
+0.5	0.1\\
+0.5	0.3\\
+0.5	0.5\\
+0.5	0.7\\
+0.5	0.9\\
+};
+\addplot [color=black,dashed,forget plot]
+  table[row sep=crcr]{%
+-1	0.8\\
+1	0.8\\
+};
+\addplot [color=black,dashed,forget plot]
+  table[row sep=crcr]{%
+0.8	-1\\
+0.8	1\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.7	-0.9\\
+0.7	-0.7\\
+0.7	-0.5\\
+0.7	-0.3\\
+0.7	-0.1\\
+0.7	0.1\\
+0.7	0.3\\
+0.7	0.5\\
+0.7	0.7\\
+0.7	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.7	-0.9\\
+0.7	-0.7\\
+0.7	-0.5\\
+0.7	-0.3\\
+0.7	-0.1\\
+0.7	0.1\\
+0.7	0.3\\
+0.7	0.5\\
+0.7	0.7\\
+0.7	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.7	-0.9\\
+0.7	-0.7\\
+0.7	-0.5\\
+0.7	-0.3\\
+0.7	-0.1\\
+0.7	0.1\\
+0.7	0.3\\
+0.7	0.5\\
+0.7	0.7\\
+0.7	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.7	-0.9\\
+0.7	-0.7\\
+0.7	-0.5\\
+0.7	-0.3\\
+0.7	-0.1\\
+0.7	0.1\\
+0.7	0.3\\
+0.7	0.5\\
+0.7	0.7\\
+0.7	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.7	-0.9\\
+0.7	-0.7\\
+0.7	-0.5\\
+0.7	-0.3\\
+0.7	-0.1\\
+0.7	0.1\\
+0.7	0.3\\
+0.7	0.5\\
+0.7	0.7\\
+0.7	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.7	-0.9\\
+0.7	-0.7\\
+0.7	-0.5\\
+0.7	-0.3\\
+0.7	-0.1\\
+0.7	0.1\\
+0.7	0.3\\
+0.7	0.5\\
+0.7	0.7\\
+0.7	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.7	-0.9\\
+0.7	-0.7\\
+0.7	-0.5\\
+0.7	-0.3\\
+0.7	-0.1\\
+0.7	0.1\\
+0.7	0.3\\
+0.7	0.5\\
+0.7	0.7\\
+0.7	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.7	-0.9\\
+0.7	-0.7\\
+0.7	-0.5\\
+0.7	-0.3\\
+0.7	-0.1\\
+0.7	0.1\\
+0.7	0.3\\
+0.7	0.5\\
+0.7	0.7\\
+0.7	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.7	-0.9\\
+0.7	-0.7\\
+0.7	-0.5\\
+0.7	-0.3\\
+0.7	-0.1\\
+0.7	0.1\\
+0.7	0.3\\
+0.7	0.5\\
+0.7	0.7\\
+0.7	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.7	-0.9\\
+0.7	-0.7\\
+0.7	-0.5\\
+0.7	-0.3\\
+0.7	-0.1\\
+0.7	0.1\\
+0.7	0.3\\
+0.7	0.5\\
+0.7	0.7\\
+0.7	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.9	-0.9\\
+0.9	-0.7\\
+0.9	-0.5\\
+0.9	-0.3\\
+0.9	-0.1\\
+0.9	0.1\\
+0.9	0.3\\
+0.9	0.5\\
+0.9	0.7\\
+0.9	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.9	-0.9\\
+0.9	-0.7\\
+0.9	-0.5\\
+0.9	-0.3\\
+0.9	-0.1\\
+0.9	0.1\\
+0.9	0.3\\
+0.9	0.5\\
+0.9	0.7\\
+0.9	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.9	-0.9\\
+0.9	-0.7\\
+0.9	-0.5\\
+0.9	-0.3\\
+0.9	-0.1\\
+0.9	0.1\\
+0.9	0.3\\
+0.9	0.5\\
+0.9	0.7\\
+0.9	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.9	-0.9\\
+0.9	-0.7\\
+0.9	-0.5\\
+0.9	-0.3\\
+0.9	-0.1\\
+0.9	0.1\\
+0.9	0.3\\
+0.9	0.5\\
+0.9	0.7\\
+0.9	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.9	-0.9\\
+0.9	-0.7\\
+0.9	-0.5\\
+0.9	-0.3\\
+0.9	-0.1\\
+0.9	0.1\\
+0.9	0.3\\
+0.9	0.5\\
+0.9	0.7\\
+0.9	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.9	-0.9\\
+0.9	-0.7\\
+0.9	-0.5\\
+0.9	-0.3\\
+0.9	-0.1\\
+0.9	0.1\\
+0.9	0.3\\
+0.9	0.5\\
+0.9	0.7\\
+0.9	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.9	-0.9\\
+0.9	-0.7\\
+0.9	-0.5\\
+0.9	-0.3\\
+0.9	-0.1\\
+0.9	0.1\\
+0.9	0.3\\
+0.9	0.5\\
+0.9	0.7\\
+0.9	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.9	-0.9\\
+0.9	-0.7\\
+0.9	-0.5\\
+0.9	-0.3\\
+0.9	-0.1\\
+0.9	0.1\\
+0.9	0.3\\
+0.9	0.5\\
+0.9	0.7\\
+0.9	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.9	-0.9\\
+0.9	-0.7\\
+0.9	-0.5\\
+0.9	-0.3\\
+0.9	-0.1\\
+0.9	0.1\\
+0.9	0.3\\
+0.9	0.5\\
+0.9	0.7\\
+0.9	0.9\\
+};
+\addplot [color=red,only marks,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.9	-0.9\\
+0.9	-0.7\\
+0.9	-0.5\\
+0.9	-0.3\\
+0.9	-0.1\\
+0.9	0.1\\
+0.9	0.3\\
+0.9	0.5\\
+0.9	0.7\\
+0.9	0.9\\
+};
+\end{axis}
+
+\draw[<->,color=blue,line width=0.5mm] (3,2.5) -- (3,3.35);
+\node[anchor=east,color=blue] at (3,2.925) {$\Delta_u$};
+\end{tikzpicture}%

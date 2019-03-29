@@ -1,0 +1,578 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>GUIDE 1 - every FE computation starts with a mesh</title><meta name="generator" content="MATLAB 8.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-08-18"><meta name="DC.source" content="guide1.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>GUIDE 1 - every FE computation starts with a mesh</h1><!--introduction--><p>Ondrej Budac, 2014</p><p>We describe how to start the ANMC-FE package and create, manipulate and display some basic (structured) meshes.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Running the code</a></li><li><a href="#2">First mesh</a></li><li><a href="#11">Mesh statistics</a></li><li><a href="#15">1D mesh</a></li><li><a href="#16">3D mesh</a></li><li><a href="#17">Different grid subdivision</a></li><li><a href="#19">Periodic Mesh</a></li><li><a href="#24">Other mesh generators</a></li><li><a href="#25">Examples</a></li></ul></div><h2>Running the code<a name="1"></a></h2><p>To succesfully start running this FE package, you need to add all the files within the main directory and subdirectories to your path. You can do it easily by running the script <tt>setpath.m</tt>. This script sets a global variable <tt>global_options</tt> which is a structure that can contain some information about other, non-Matlab software as Gmsh (meshing) and AGMG (algebraic multirid preconditionner), which can be used within Matlab.</p><h2>First mesh<a name="2"></a></h2><p>Let us start by creating a simple mesh. ANMC FE supports only simplicial meshes but they can be of any dimension. Let us start with a structured mesh. We can type</p><pre class="codeinput">mesh = structured_mesh([0,1,0,2], [2,3])
+</pre><pre class="codeoutput">
+mesh = 
+
+    periodic: 0
+        node: [12x2 double]
+        elem: [12x3 double]
+
+</pre><p>This command created a two dimensional mesh on a rectangle <tt>[0,1] x [0,2]</tt> with <tt>2+1</tt> nodes in the x-direction and <tt>3+1</tt> nodes in the y-direction. In fact, it first created a regular rectangular grid of dimensions <tt>2 x 3</tt> and then dissected each small rectangle into two triangles. Before we describe how the mesh is saved, let us display it.</p><pre class="codeinput">simpplot(mesh);
+
+<span class="comment">% format output</span>
+axis <span class="string">on</span>; xlim([-0.2,1.2]); ylim([-0.2,2.2]); snapnow;
+</pre><img vspace="5" hspace="5" src="guide1_01.png" alt=""> <p>A mesh is always a structure with two obligatory fields.</p><div><ul><li><tt>mesh.node</tt> is an array of size <tt>N x d</tt> that stores <tt>N</tt> nodes in a <tt>d</tt>-dimensional space.</li><li><tt>mesh.elem</tt> is an array of size <tt>NT x (dim+1)</tt> that stores <tt>NT</tt> sets of node numbers of size <tt>dim+1</tt> that describe <tt>dim+1</tt> vertices of a <tt>dim</tt>-dimensional simplex.</li></ul></div><p>Let us display these two fields. Since we are in two dimensions and the mesh is triangular, we have <tt>dim = d = 2</tt>. As for the number of nodes and elements, you can count <tt>N = 12</tt> and <tt>NT = 12</tt>. The equal number of nodes and elements is a coincidence.</p><pre class="codeinput">mesh.node
+</pre><pre class="codeoutput">
+ans =
+
+                   0                   0
+   0.500000000000000                   0
+   1.000000000000000                   0
+                   0   0.666666666666667
+   0.500000000000000   0.666666666666667
+   1.000000000000000   0.666666666666667
+                   0   1.333333333333333
+   0.500000000000000   1.333333333333333
+   1.000000000000000   1.333333333333333
+                   0   2.000000000000000
+   0.500000000000000   2.000000000000000
+   1.000000000000000   2.000000000000000
+
+</pre><pre class="codeinput">mesh.elem
+</pre><pre class="codeoutput">
+ans =
+
+     5     1     2
+     1     5     4
+     6     2     3
+     2     6     5
+     8     4     5
+     4     8     7
+     9     5     6
+     5     9     8
+    11     7     8
+     7    11    10
+    12     8     9
+     8    12    11
+
+</pre><p>For a better picture of the situation, we give a more detailed plot that displays the node numbers and element numbers.</p><pre class="codeinput">simpplot(mesh,struct(<span class="string">'nodenum'</span>,true,<span class="string">'elemnum'</span>,true));
+axis <span class="string">on</span>; xlim([-0.2,1.2]); ylim([-0.2,2.2]); snapnow;
+</pre><img vspace="5" hspace="5" src="guide1_02.png" alt=""> <p><b>Mesh modification.</b> There are many ways to modify mesh:</p><div><ul><li>Directly changing the poistion of nodes or remove/add elements.</li><li>Mesh refinement: Subdividing elements into subelements</li></ul></div><p>Let us remove the elements number <tt>7</tt> and <tt>8</tt> from <tt>mesh</tt>. Since removing them won't cause "unused nodes", we can simply use</p><pre class="codeinput">mesh.elem([7 8], :) = [];
+</pre><p>Further, let us move the nodes 6 and 9 a little</p><pre class="codeinput">mesh.node([6, 9],2) = [0.8, 1.2];
+
+<span class="comment">% display the mesh</span>
+clf; simpplot(mesh,struct(<span class="string">'nodenum'</span>,true,<span class="string">'elemnum'</span>,true));
+
+<span class="comment">% set axes</span>
+axis <span class="string">on</span>; xlim([-0.2,1.2]); ylim([-0.2,2.2]); snapnow;
+</pre><img vspace="5" hspace="5" src="guide1_03.png" alt=""> <p>There are several techniques for mesh refinement. One can ask for refinement of a subset of elements. There are algorithms to subdivide them and make sure (by some additional subdivisions) that the resulting mesh is conforming. Suppose that we want to subdivide elements 2 and 5. We simply type</p><pre class="codeinput"><span class="comment">% bisect mesh</span>
+mesh_bis = bisect(mesh,[2,5]);
+
+<span class="comment">% display it</span>
+clf; simpplot(mesh_bis, struct(<span class="string">'nodenum'</span>,true,<span class="string">'elemnum'</span>,true));
+
+<span class="comment">% set axes</span>
+axis <span class="string">on</span>; xlim([-0.2,1.2]); ylim([-0.2,2.2]); snapnow;
+</pre><img vspace="5" hspace="5" src="guide1_04.png" alt=""> <p>To achieve good quality of the resulting mesh and conformity, two more triangles were refined. If one would like to refine all elements to get a finer mesh, preferable solution is to use</p><pre class="codeinput"><span class="comment">% uniformly refine mesh</span>
+mesh_uni = uniformrefine(mesh);
+
+<span class="comment">% display it</span>
+clf; simpplot(mesh_uni, struct(<span class="string">'nodenum'</span>,true,<span class="string">'elemnum'</span>,true));
+
+<span class="comment">% set axes</span>
+axis <span class="string">on</span>; xlim([-0.2,1.2]); ylim([-0.2,2.2]); snapnow;
+</pre><img vspace="5" hspace="5" src="guide1_05.png" alt=""> <h2>Mesh statistics<a name="11"></a></h2><p>There are many low-level mesh operations that you can follow in the later guides. For simplicity, let us start with some higher level operations. We will work with the non-refined mesh.</p><p><b>Simplex volume</b>. To compute volume (in 2D just area) of every element, we simply type</p><pre class="codeinput">volume = simplex_volume(mesh)
+</pre><pre class="codeoutput">
+volume =
+
+   0.166666666666667
+   0.166666666666667
+   0.200000000000000
+   0.166666666666667
+   0.166666666666667
+   0.166666666666667
+   0.166666666666667
+   0.166666666666667
+   0.200000000000000
+   0.166666666666667
+
+</pre><p><b>Simplex volume</b>. To compute diameter of every element, we simply type</p><pre class="codeinput">diam = simplex_diameter(mesh)
+</pre><pre class="codeoutput">
+diam =
+
+   0.833333333333333
+   0.833333333333333
+   0.943398113205660
+   0.943398113205660
+   0.833333333333333
+   0.833333333333333
+   0.833333333333333
+   0.833333333333333
+   0.833333333333333
+   0.833333333333333
+
+</pre><p><b>Simplex quality</b>. Another interesting property of a simplex is quality of its elements. To obtain a normalized ratio of the inscribed and circumscribed sphere (circle) of every simplex, we can simply type</p><pre class="codeinput">qual = simplex_quality(mesh)
+</pre><pre class="codeoutput">
+qual =
+
+   0.800000000000000
+   0.800000000000000
+   0.755994488016536
+   0.641873275816140
+   0.800000000000000
+   0.800000000000000
+   0.800000000000000
+   0.800000000000000
+   0.862546987745628
+   0.800000000000000
+
+</pre><h2>1D mesh<a name="15"></a></h2><p>The linear structure of 1D mesh (just line segments) allows for a simpler storage than the standard node-element approach in higher dimensions. Nevertheless, for greater compatibility, we didn't optimize this part and 1D meshes look exactly like 2D meshes:</p><pre class="codeinput">mesh_1D = structured_mesh([0,1], 3)
+mesh_1D.node
+mesh_1D.elem
+clf; simpplot(mesh_1D, struct(<span class="string">'nodenum'</span>,true,<span class="string">'elemnum'</span>,true)); snapnow;
+</pre><pre class="codeoutput">
+mesh_1D = 
+
+        node: [4x1 double]
+        elem: [3x2 double]
+    periodic: 0
+
+
+ans =
+
+                   0
+   0.333333333333333
+   0.666666666666667
+   1.000000000000000
+
+
+ans =
+
+     1     2
+     2     3
+     3     4
+
+</pre><img vspace="5" hspace="5" src="guide1_06.png" alt=""> <h2>3D mesh<a name="16"></a></h2><p>Analogously, we can create a 3D structured mesh. Here, a parallelpiped is divided into a cuboid grid and each cuboid is then divided into six tetrahedra.</p><pre class="codeinput">mesh_3D = structured_mesh([0,1,0,1,0,1], [3,4,5])
+clf; simpplot(mesh_3D); snapnow;
+</pre><pre class="codeoutput">
+mesh_3D = 
+
+    periodic: 0
+        node: [120x3 double]
+        elem: [360x4 double]
+
+</pre><img vspace="5" hspace="5" src="guide1_07.png" alt=""> <h2>Different grid subdivision<a name="17"></a></h2><p>In some FE cases, triangles are not allowed to touch the boundary with two sides at once. To avoid this problem, we created a different subdivision algorithm for structured meshes:</p><pre class="codeinput">mesh_2Dc = structured_mesh([0,1,0,1], [5,6], struct(<span class="string">'centre'</span>,true));
+clf; simpplot(mesh_2Dc);
+axis <span class="string">on</span>; xlim([-0.2,1.2]); ylim([-0.2,1.2]); snapnow;
+</pre><img vspace="5" hspace="5" src="guide1_08.png" alt=""> <p>The same can be applied to 3D meshes, where each cuboid is then divided into 12 tetrahedra, each sharing just one side with the original cuboid.</p><h2>Periodic Mesh<a name="19"></a></h2><p>To avoid common problems with periodic boundary conditions, periodic meshes are deep in the implementation of ANMC FE.</p><pre class="codeinput"><span class="comment">% create periodic mesh</span>
+mesh_per = structured_mesh([0,1,0,1],[3,3], struct(<span class="string">'periodic'</span>,true))
+
+<span class="comment">% display it</span>
+clf; simpplot(mesh_per, struct(<span class="string">'nodenum'</span>,true,<span class="string">'elemnum'</span>,true));
+
+<span class="comment">% add axes</span>
+axis <span class="string">on</span>; xlim([-0.2,1.2]); ylim([-0.2,1.2]); snapnow;
+</pre><pre class="codeoutput">
+mesh_per = 
+
+    periodic: 1
+         box: [0 1 0 1]
+        node: [9x2 double]
+        elem: [18x3 double]
+
+</pre><img vspace="5" hspace="5" src="guide1_09.png" alt=""> <p>You can see that the mesh has some nodes displayed at several places. How is this mesh then saved? Simply, we save each node exactly at one place</p><pre class="codeinput">mesh_per.node
+</pre><pre class="codeoutput">
+ans =
+
+                   0                   0
+   0.333333333333333                   0
+   0.666666666666667                   0
+                   0   0.333333333333333
+   0.333333333333333   0.333333333333333
+   0.666666666666667   0.333333333333333
+                   0   0.666666666666667
+   0.333333333333333   0.666666666666667
+   0.666666666666667   0.666666666666667
+
+</pre><p>Now let us take the element number 5 with nodes</p><pre class="codeinput">node5 = mesh_per.elem(5,:)
+</pre><pre class="codeoutput">
+node5 =
+
+     4     3     1
+
+</pre><p>and their coordinates, as saved</p><pre class="codeinput">coor = mesh_per.node(node5,:)
+</pre><pre class="codeoutput">
+coor =
+
+                   0   0.333333333333333
+   0.666666666666667                   0
+                   0                   0
+
+</pre><p>These coordinates, compared to the picture above, are obviously wrong. If a mesh is periodic, this code tries to move the nodes within their periodic orbits such that the resulting triangle is the smallest possible and that it lies within the periodic box. This brings us to the very important rule:</p><p><b>FOR ANY PERIODIC MESH, ANY VECTOR REPRESENTING AN EDGE IN A SIMPLEX NEEDS TO HAVE ALL COORDINATES SMALLER THAN THE SIZE OF THE PERIODIC BOX IN THAT DIRECTION</b></p><p>Hence, you'll get an error when trying to call too coarse periodic mesh creation via <tt>structured_mesh([0,1,0,1],[3,2], struct('bc','periodic'))</tt></p><h2>Other mesh generators<a name="24"></a></h2><p>There are several more ways to construct meshes. If you have Gmsh installed and it is set in the global_options variable, you can run the following example. More details about Gmsh and its interface to matlab are described in another tutorial.</p><pre class="codeinput"><span class="keyword">global</span> global_options;
+<span class="keyword">if</span> isfield(global_options,<span class="string">'gmsh'</span>) &amp;&amp; ~isempty(global_options.gmsh)
+
+    <span class="comment">% define mesh geometry</span>
+    shift1 = 0.25*[-sqrt(3)/2,1/2];
+    shift2 = 0.25*[sqrt(3)/2,1/2];
+    shift3 = 0.25*[0,-1];
+
+    hole_shape =  [1,0; 1/2, -sqrt(3)/2; -1/2, -sqrt(3)/2; -1,0; <span class="keyword">...</span>
+        -1/2, sqrt(3)/2; 1/2, sqrt(3)/2]; <span class="comment">%regular hexagon</span>
+
+    holes{1} = bsxfun(@plus, hole_shape*0.1,   shift1);
+    holes{2} = bsxfun(@plus, hole_shape*0.12,  shift2);
+    holes{3} = bsxfun(@plus, hole_shape*0.14,  shift3);
+
+    <span class="comment">% generate BD GEOMETRY</span>
+    [bdmesh, bdgmsh]= geom2D_gen_polyg_holes(holes);
+
+    options.lc = 0.1;
+
+    mesh_gmsh = gmsh(bdgmsh, options);
+
+    clf; simpplot(mesh_gmsh);
+    xlim([-0.6,0.6]); ylim([-0.6,0.6]); snapnow;
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="guide1_10.png" alt=""> <h2>Examples<a name="25"></a></h2><p>Here we give some more examples of meshes</p><p><b>L-shape.</b> An L-shape mesh can be easily generated as follows:</p><pre class="codeinput">mesh_L = structured_mesh([-1,1,-1,1],[2,2]);
+mesh_L.node(9,:) = [];
+mesh_L.elem([7 8],:) = [];
+clf; simpplot(mesh_L);
+xlim([-1.2,1.2]); ylim([-1.2,1.2]); snapnow;
+</pre><img vspace="5" hspace="5" src="guide1_11.png" alt=""> <p><b>Half-periodic pipe.</b></p><pre class="codeinput">mesh_pipe = structured_mesh([0,1,0,1],[3,3], struct(<span class="string">'periodic'</span>,true));
+mesh_pipe.elem([5,6,11,12,17,18],:) = [];
+clf; simpplot(mesh_pipe);
+xlim([-0.2,2/3+0.2]); ylim([-0.2,1.2]); snapnow;
+</pre><img vspace="5" hspace="5" src="guide1_12.png" alt=""> <p><b>Skewed mesh</b></p><pre class="codeinput">mesh_rot = structured_mesh([0,1,0,1],[10,10]);
+mesh_rot.node=mesh_rot.node*[cos(pi/6), sin(pi/6); -sin(pi/6), cos(pi/6)];
+clf; simpplot(mesh_rot); snapnow;
+</pre><img vspace="5" hspace="5" src="guide1_13.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% GUIDE 1 - every FE computation starts with a mesh
+% Ondrej Budac, 2014
+%
+% We describe how to start the ANMC-FE
+% package and create, manipulate and display some basic (structured)
+% meshes.
+
+%% Running the code
+% To succesfully start running this FE package, you need to add all the
+% files within the main directory and subdirectories to your path. You can
+% do it easily by running the script |setpath.m|. This script 
+% sets a global variable |global_options| which is a
+% structure that can contain some information about other, non-Matlab
+% software as Gmsh (meshing) and AGMG (algebraic multirid preconditionner),
+% which can be used within Matlab.
+
+%% First mesh
+% Let us start by creating a simple mesh. ANMC FE supports only simplicial
+% meshes but they can be of any dimension. Let us start with a structured
+% mesh. We can type
+
+mesh = structured_mesh([0,1,0,2], [2,3])
+
+%%
+% This command created a two dimensional mesh on a rectangle |[0,1] x
+% [0,2]| with |2+1| nodes in the x-direction and |3+1| nodes in the 
+% y-direction. In fact, it first created a regular rectangular grid of 
+% dimensions |2 x 3| and then dissected each small rectangle into two
+% triangles. Before we describe how the mesh is saved, let us display it.
+
+simpplot(mesh); 
+
+% format output
+axis on; xlim([-0.2,1.2]); ylim([-0.2,2.2]); snapnow; 
+
+%%
+% A mesh is always a structure with two obligatory fields.
+% 
+% * |mesh.node| is an array of size |N x d| that stores |N| nodes in a 
+% |d|-dimensional space.
+% * |mesh.elem| is an array of size |NT x (dim+1)| that stores |NT| sets of
+% node numbers of size |dim+1| that describe |dim+1| vertices of a
+% |dim|-dimensional simplex.
+%
+% Let us display these two fields. Since we are in two dimensions and the
+% mesh is triangular, we have |dim = d = 2|. As for the number of nodes and
+% elements, you can count |N = 12| and |NT = 12|. The equal number of nodes
+% and elements is a coincidence.
+
+mesh.node
+
+%%
+%
+
+mesh.elem
+
+%%
+% For a better picture of the situation, we give a more detailed plot that
+% displays the node numbers and element numbers.
+
+simpplot(mesh,struct('nodenum',true,'elemnum',true)); 
+axis on; xlim([-0.2,1.2]); ylim([-0.2,2.2]); snapnow; 
+
+%%
+% *Mesh modification.* There are many ways to modify mesh: 
+%
+% * Directly changing the poistion of nodes or remove/add elements.
+% * Mesh refinement: Subdividing elements into subelements
+%
+% Let us remove the elements number |7| and |8| from |mesh|. Since removing
+% them won't cause "unused nodes", we can simply use
+
+mesh.elem([7 8], :) = [];  
+
+%%
+% Further, let us move the nodes 6 and 9 a little
+
+mesh.node([6, 9],2) = [0.8, 1.2]; 
+
+% display the mesh
+clf; simpplot(mesh,struct('nodenum',true,'elemnum',true)); 
+
+% set axes
+axis on; xlim([-0.2,1.2]); ylim([-0.2,2.2]); snapnow; 
+
+%%
+% There are several techniques for mesh refinement. One can ask for
+% refinement of a subset of elements. There are algorithms to subdivide
+% them and make sure (by some additional subdivisions) that the resulting
+% mesh is conforming. Suppose that we want to subdivide elements 2 and 5.
+% We simply type
+
+% bisect mesh
+mesh_bis = bisect(mesh,[2,5]);
+
+% display it
+clf; simpplot(mesh_bis, struct('nodenum',true,'elemnum',true)); 
+
+% set axes
+axis on; xlim([-0.2,1.2]); ylim([-0.2,2.2]); snapnow; 
+
+%%
+% To achieve good quality of the resulting mesh and conformity, two more
+% triangles were refined. If one would like to refine all elements to get a
+% finer mesh, preferable solution is to use
+
+% uniformly refine mesh
+mesh_uni = uniformrefine(mesh);
+
+% display it
+clf; simpplot(mesh_uni, struct('nodenum',true,'elemnum',true)); 
+
+% set axes
+axis on; xlim([-0.2,1.2]); ylim([-0.2,2.2]); snapnow; 
+
+%% Mesh statistics
+% There are many low-level mesh operations that you can follow in the later
+% guides. For simplicity, let us start with some higher level operations.
+% We will work with the non-refined mesh.
+
+%%
+% *Simplex volume*.
+% To compute volume (in 2D just area) of every element, we simply type
+
+volume = simplex_volume(mesh)
+
+%%
+% *Simplex volume*.
+% To compute diameter of every element, we simply type
+
+diam = simplex_diameter(mesh)
+
+%%
+% *Simplex quality*.
+% Another interesting property of a simplex is quality of its elements. To
+% obtain a normalized ratio of the inscribed and circumscribed sphere
+% (circle) of every simplex, we can simply type 
+
+qual = simplex_quality(mesh)
+
+%% 1D mesh
+% The linear structure of 1D mesh (just line segments) allows for a simpler
+% storage than the standard node-element approach in higher dimensions.
+% Nevertheless, for greater compatibility, we didn't optimize this part and
+% 1D meshes look exactly like 2D meshes:
+
+mesh_1D = structured_mesh([0,1], 3)
+mesh_1D.node
+mesh_1D.elem
+clf; simpplot(mesh_1D, struct('nodenum',true,'elemnum',true)); snapnow; 
+
+%% 3D mesh
+% Analogously, we can create a 3D structured mesh. Here, a parallelpiped is
+% divided into a cuboid grid and each cuboid is then divided into six
+% tetrahedra. 
+
+mesh_3D = structured_mesh([0,1,0,1,0,1], [3,4,5])
+clf; simpplot(mesh_3D); snapnow; 
+
+%% Different grid subdivision
+% In some FE cases, triangles are not allowed to touch the boundary with
+% two sides at once. To avoid this problem, we created a different
+% subdivision algorithm for structured meshes:
+
+mesh_2Dc = structured_mesh([0,1,0,1], [5,6], struct('centre',true));
+clf; simpplot(mesh_2Dc); 
+axis on; xlim([-0.2,1.2]); ylim([-0.2,1.2]); snapnow; 
+
+%%
+% The same can be applied to 3D meshes, where each cuboid is then divided
+% into 12 tetrahedra, each sharing just one side with the original cuboid.
+
+%% Periodic Mesh
+% To avoid common problems with periodic boundary conditions, periodic
+% meshes are deep in the implementation of ANMC FE. 
+
+% create periodic mesh
+mesh_per = structured_mesh([0,1,0,1],[3,3], struct('periodic',true))
+
+% display it
+clf; simpplot(mesh_per, struct('nodenum',true,'elemnum',true)); 
+
+% add axes
+axis on; xlim([-0.2,1.2]); ylim([-0.2,1.2]); snapnow; 
+
+%%
+% You can see that the mesh has some nodes displayed at several places. How
+% is this mesh then saved? Simply, we save each node exactly at one place
+
+mesh_per.node
+
+%%
+% Now let us take the element number 5 with nodes
+
+node5 = mesh_per.elem(5,:)
+
+%%
+% and their coordinates, as saved
+
+coor = mesh_per.node(node5,:)
+
+%%
+% These coordinates, compared to the picture above, are obviously wrong.
+% If a mesh is periodic, this code tries to move the nodes within their
+% periodic orbits such that the resulting triangle is the smallest possible
+% and that it lies within the periodic box. This brings us to the very
+% important rule:
+%
+% *FOR ANY PERIODIC MESH, ANY VECTOR REPRESENTING AN EDGE IN A SIMPLEX
+% NEEDS TO HAVE ALL COORDINATES SMALLER THAN THE SIZE OF THE PERIODIC BOX
+% IN THAT DIRECTION*
+%
+% Hence, you'll get an error when trying to call too coarse periodic mesh
+% creation via |structured_mesh([0,1,0,1],[3,2], struct('bc','periodic'))|
+
+%% Other mesh generators
+% There are several more ways to construct meshes. If you have Gmsh
+% installed and it is set in the global_options variable, you can run the
+% following example. More details about Gmsh and its interface to matlab
+% are described in another tutorial.
+
+global global_options;
+if isfield(global_options,'gmsh') && ~isempty(global_options.gmsh)
+    
+    % define mesh geometry    
+    shift1 = 0.25*[-sqrt(3)/2,1/2];
+    shift2 = 0.25*[sqrt(3)/2,1/2];
+    shift3 = 0.25*[0,-1];
+    
+    hole_shape =  [1,0; 1/2, -sqrt(3)/2; -1/2, -sqrt(3)/2; -1,0; ...
+        -1/2, sqrt(3)/2; 1/2, sqrt(3)/2]; %regular hexagon
+    
+    holes{1} = bsxfun(@plus, hole_shape*0.1,   shift1);
+    holes{2} = bsxfun(@plus, hole_shape*0.12,  shift2);
+    holes{3} = bsxfun(@plus, hole_shape*0.14,  shift3);
+    
+    % generate BD GEOMETRY
+    [bdmesh, bdgmsh]= geom2D_gen_polyg_holes(holes);
+    
+    options.lc = 0.1;
+    
+    mesh_gmsh = gmsh(bdgmsh, options);
+    
+    clf; simpplot(mesh_gmsh);
+    xlim([-0.6,0.6]); ylim([-0.6,0.6]); snapnow;
+end
+
+%% Examples
+% Here we give some more examples of meshes
+%
+% *L-shape.* An L-shape mesh can be easily generated as follows:
+
+mesh_L = structured_mesh([-1,1,-1,1],[2,2]);
+mesh_L.node(9,:) = [];
+mesh_L.elem([7 8],:) = [];
+clf; simpplot(mesh_L);
+xlim([-1.2,1.2]); ylim([-1.2,1.2]); snapnow; 
+
+%%
+% *Half-periodic pipe.*
+mesh_pipe = structured_mesh([0,1,0,1],[3,3], struct('periodic',true));
+mesh_pipe.elem([5,6,11,12,17,18],:) = [];
+clf; simpplot(mesh_pipe);
+xlim([-0.2,2/3+0.2]); ylim([-0.2,1.2]); snapnow; 
+
+%%
+% *Skewed mesh*
+mesh_rot = structured_mesh([0,1,0,1],[10,10]);
+mesh_rot.node=mesh_rot.node*[cos(pi/6), sin(pi/6); -sin(pi/6), cos(pi/6)];
+clf; simpplot(mesh_rot); snapnow; 
+##### SOURCE END #####
+--></body></html>

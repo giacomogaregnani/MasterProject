@@ -2,6 +2,7 @@
 #define STRUCTURES_H
 
 #include <Eigen/Dense>
+#include <Eigen/Sparse>
 #include <vector>
 
 using namespace Eigen;
@@ -15,7 +16,7 @@ enum problems {
     VDPOL,
     ROBERTSON,
     BRUSS,
-    POISSON,
+    HEAT,
     HIRES,
     GAUSSMAP,
     LOGMAP,
@@ -77,5 +78,6 @@ public:
     ExplicitImplicit getType(void);
 };
 
+void setProblem(odeDef* ODE, int nHeat = 0);
 
 #endif //STRUCTURES_H

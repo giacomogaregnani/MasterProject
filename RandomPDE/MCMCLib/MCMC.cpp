@@ -1,81 +1,73 @@
 #include "MCMC.hpp"
 
 MCMC::MCMC(VectorXd& initGuess,
-           std::normal_distribution<double>::param_type& proposalParam,
-           double (*post) (VectorXd& theta),
-           unsigned long nMCMC,
-           bool RAM, double desiredAlpha):
-        posterior(post),
+           Proposals* proposal,
+           Posterior* posterior,
+           unsigned long nMCMC):
+        proposal(proposal),
+        posterior(posterior),
         nMCMC(nMCMC),
-        RAM(RAM)
+        initGuess(initGuess)
 {
-    probGen.param(std::uniform_real_distribution<double>::param_type(0.0, 1.0));
     samples = {initGuess};
-    sizeParam = static_cast<unsigned int> (initGuess.size());
-    if (RAM) {
-        RAMUpdate.init(proposalParam.stddev(), desiredAlpha, sizeParam);
-        proposal.param(std::normal_distribution<double>::param_type(0.0, 1.0));
-    } else {
-        proposal.param(proposalParam);
-    }
+    probGen = std::uniform_real_distribution<double>(0.0, 1.0);
 }
 
-std::vector<VectorXd>& MCMC::compute(std::default_random_engine* generator, bool noisy)
+void MCMC::eraseSample(void)
+{
+    samples.clear();
+    samples.push_back(initGuess);
+}
+
+std::vector<VectorXd>& MCMC::compute(std::default_random_engine* proposalSeed,
+                                     std::default_random_engine* acceptanceSeed,
+                                     bool noisy, bool verbose)
 {
     double newPosterior, oldPosterior, alpha;
     VectorXd currEstimate;
     currEstimate = samples.back();
     unsigned long accRatio = 0;
 
-    VectorXd increment(sizeParam), proposedValue(sizeParam);
+    VectorXd proposedValue(sizeParam), currValue(sizeParam);
 
     // Compute posterior on first guess
-    oldPosterior = posterior(samples.back());
+    oldPosterior = posterior->computePosterior(samples.back());
 
     for (unsigned long i = 0; i < nMCMC; i++) {
 
-        // generate new guess
-        for (unsigned int j = 0; j < sizeParam; j++) {
-            increment(j) = proposal(*generator);
-        }
-        if (RAM) {
-            proposedValue = samples.back() + RAMUpdate.getS() * increment;
-        } else {
-            proposedValue = samples.back() + increment;
-        }
+        currValue = samples.back();
 
-        // evaluate posterior on new guess
-        newPosterior = posterior(proposedValue);
+        // Generate new guess
+        proposedValue = proposal->genSample(currValue, proposalSeed);
+
+        // Evaluate posterior on new guess
+        newPosterior = posterior->computePosterior(proposedValue);
 
         // For the noisy algorithm, re-evaluate on old guess
-        if (noisy) {
-            oldPosterior = posterior(samples.back());
-        }
+        if (noisy)
+            oldPosterior = posterior->computePosterior(currValue);
 
         // compute probability
         alpha = newPosterior - oldPosterior;
         alpha = std::min(0.0, alpha);
 
         // Update chain
-        if (std::log(probGen(*generator)) < alpha) {
+        if (std::log(probGen(*acceptanceSeed)) < alpha) {
             samples.push_back(proposedValue);
             oldPosterior = newPosterior;
             ++accRatio;
         } else {
-            samples.push_back(samples.back());
+            samples.push_back(currValue);
         }
 
         // Update current estimate
         currEstimate = currEstimate * static_cast<double>(i + 1) / (i + 2)
                        + samples.back() * 1.0 / (i + 2);
 
-        if (RAM) {
-            RAMUpdate.update(increment, exp(alpha));
-        }
-
-        if (i % 1000 == 0) {
+        if (i % 1000 == 0 && verbose) {
             std::cout << "Completed " << i << " iterations out of " << nMCMC << std::endl
-                      << "Current estimate = " << currEstimate.transpose() << std::endl
+                      // << "Current estimate = " << currEstimate.transpose() << std::endl
+                      << "Accepted (log)posterior = " << oldPosterior << std::endl
                       << "Current acc. ratio = " << 1.0 / (i + 1) * accRatio << std::endl;
         }
     }
@@ -89,23 +81,15 @@ std::vector<VectorXd>& MCMC::compute(std::default_random_engine* generator, bool
     for (auto it : samples) {
         finalEstimate += it;
     }
+
     finalEstimate /= (nMCMC - burnIn);
 
     std::cout << std::fixed << std::setprecision(3)
               << "=====================" << std::endl
               << "MCMC ESTIMATE:" << std::endl
               << finalEstimate.transpose() << std::endl
-              << " ACCEPTANCE RATIO: " << static_cast<double>(accRatio) / nMCMC << std::endl;
-
-    if (RAM) {
-        std::cout << "FINAL COVARIANCE MATRIX (proposal)" << std::endl
-                  << RAMUpdate.getS() * RAMUpdate.getS().transpose() << std::endl
-                  << "=====================" << std::endl;
-    } else {
-        std::cout << "=====================" << std::endl;
-    }
-
+              << " ACCEPTANCE RATIO: " << static_cast<double>(accRatio) / nMCMC << std::endl
+              << "=====================" << std::endl;
 
     return samples;
 }
-

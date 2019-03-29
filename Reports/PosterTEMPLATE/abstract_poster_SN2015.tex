@@ -1,0 +1,89 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage[english]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[normalem]{ulem}
+\usepackage{verbatim}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{graphics}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{fancyhdr}
+\usepackage{dsfont}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{cases}
+\usepackage{stmaryrd}
+\usepackage{subfigure}
+\usepackage{mathrsfs}
+\usepackage{standalone}
+\usepackage{multirow}
+\usepackage{color}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{bm}
+%\usepackage{bbold}
+\usepackage{dsfont}
+\usepackage{arydshln,leftidx,mathtools}
+\usepackage{fullpage}
+\usepackage{titlesec}
+\usepackage{todonotes}
+\usepackage{tikz}
+\usepackage{framed}
+\newcommand{\speaker}[1]{\underline{#1}}
+
+\newcommand{\email}[1]{\hspace*{\stretch{1}}\emph{\texttt{#1}}}
+
+\newenvironment{Title}%
+{\begin{framed}\begin{center}\begin{Large}\bfseries}%
+			{\end{Large}\end{center}\end{framed}}
+
+\makeatletter
+\def\blfootnote{\xdef\@thefnmark{$\star$}\@footnotetext}
+\makeatother
+\newcommand{\nameOfMS}[1]{%
+	\blfootnote{Mini-Symposium: {#1}}}%
+\newenvironment{Authors}%
+{\begin{center}\begin{bfseries}}%
+		{\end{bfseries}\end{center}}
+\newenvironment{Addresses}%
+{\begin{flushleft}\begin{itshape}}%
+		{\end{itshape}\end{flushleft}}
+\newenvironment{Abstract}% one-paged long abstract
+{\par\noindent\ignorespaces}
+{\par\noindent\ignorespacesafterend}
+
+\pagestyle{empty}
+
+\begin{document}
+	\begin{Title}
+		An optimization based coupling method for multiscale problems
+	\end{Title}
+\begin{Authors}
+	\speaker{Orane Jecker}$^{1}$, {Assyr Abdulle}$^{2}$
+\end{Authors}
+
+\begin{Addresses}
+	$^1$  EPFL ANMC, Switzerland
+	\email{\speaker{orane.jecker@epfl.ch}} \\ % note the use of \speaker
+	$^{2}$EPFL ANMC,  Switzerland
+	\email{assyr.abdulle@epfl.ch} \\
+\end{Addresses}
+
+\noindent
+An optimization based method is proposed for solving multiscale problems, with non scale separation in some region of the computational domain. The method couples a fine scale solver, in the subregions without scale separation, with a micro-macro method, in regions where an effective solution can be computed. Introducing an overlap region,  the method is written as a minimization problem constrained by boundary value problems in each subregion, with virtual controls (unknown Dirichlet data) as boundary data in the overlap. The virtual control are obtained by minimizing the L2 norm of the difference between the solutions in the overlap. A priori error estimates are discussed and a numerical experiment, illustrating the theoretical convergence rate, is presented.
+
+\vspace{0.1in}
+\noindent Joint work with Assyr Abdulle 
+
+
+\bibliographystyle{plain}
+\bibliography{../../../TexFiles/anmc}
+\nocite{AbJ15}
+\end{document}

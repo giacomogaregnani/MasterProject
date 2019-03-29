@@ -1,0 +1,84 @@
+// Domain
+border a(t = -1,1){x = -1; y = - t; label = 1;}
+border b(t = -1,1){x = t; y = -1; label = 2;}
+border c(t = -1,1){x = 1; y = t; label = 3;}
+border d(t = -1,1){x = - t; y = 1; label = 4;}
+
+// mesh
+mesh Th = buildmesh(a(400) + b(400) + c(400) + d(400));
+// plot(Th);
+
+fespace Xh(Th,P1);
+Xh uh,vh;
+
+// Read matrix size and grid stepsize (store in file)
+
+ifstream AField("SolFiles/Data.txt");
+int s;
+real dA, dU;
+AField >> s;
+AField >> dA;
+AField >> dU;
+real[int,int] A(s,s);
+for (int i = 0; i < s; i++){
+	for (int j = 0; j < s; j++){
+		AField >> A(i,j);
+	}
+}
+real pIn;
+AField >> pIn;
+
+
+// interpolate the matrix on mesh points 
+
+func xLeft = -1 + int((x+1)/dA)*dA;
+func xRight = -1 + int(1 + (x+1)/dA)*dA;
+func yLeft = -1 + int((y+1)/dA)*dA;
+func yRight = -1 + int(1+(y+1)/dA)*dA;
+
+func f = (1/dA^2) * (A(int((x+1)/dA),int((y+1)/dA))*(xRight-x)*(yRight-y) 
+    + A(int(1+(x+1)/dA),int((y+1)/dA))*(x-xLeft)*(yRight-y)
+    + A(int((x+1)/dA),int(1+(y+1)/dA))*(xRight-x)*(y-yLeft)
+    + A(int(1+(x+1)/dA),int(1+(y+1)/dA))*(x-xLeft)*(y-yLeft));
+
+// declare and solve the problem
+
+problem darcy(uh,vh) = 
+	int2d(Th)(f * (dx(uh)*dx(vh) + dy(uh)*dy(vh)))
+	+ on(1,uh=pIn)
+	+ on(3,uh=0);
+
+darcy;
+
+// plot
+
+// plot(Th,uh,nbiso=100,value=1,wait=1);
+
+// post processing
+
+int sU;
+AField >> sU;
+real[int,int] Ux(sU,sU), Uy(sU,sU);
+
+fespace Xh0(Th,P0);
+Xh0 uxNoCoeff, uyNoCoeff;
+
+uxNoCoeff = -dx(uh);
+uyNoCoeff = -dy(uh);
+
+// plot(Th,uxNoCoeff,nbiso=100,value=1,wait=1);
+// plot(Th,uyNoCoeff,nbiso=100,value=1,wait=1);
+
+ofstream horSpeed("SolFiles/Ux.txt");
+ofstream verSpeed("SolFiles/Uy.txt");
+
+for (int i = 0; i < sU; i++){
+	for (int j = 0; j < sU; j++){
+		Ux(i,j) = f(-1 + (i+0.5)*dU,-1 + (j+0.5)*dU) * uxNoCoeff(-1 + (i+0.5)*dU,-1 + (j+0.5)*dU);
+		horSpeed << Ux(i,j) << "\t"; 
+		Uy(i,j) = f(-1 + (i+0.5)*dU,-1 + (j+0.5)*dU) * uyNoCoeff(-1 + (i+0.5)*dU,-1 + (j+0.5)*dU) ;
+		verSpeed << Uy(i,j) << "\t";
+	}
+	horSpeed << "\n";
+	verSpeed << "\n";
+}

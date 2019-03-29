@@ -1,0 +1,15 @@
+\documentclass{report}
+
+\begin{document}
+	
+	\noindent \textbf{Uncertainty quantification of numerical errors in geometric integration via random time steps}
+	
+	We present a novel probabilistic integrator for ordinary differential equations (ODEs) which allows for uncertainty quantification of the numerical error [1]. In particular, we randomise the time steps and build a probability measure on the deterministic solution, which collapses to the true solution of the ODE with the same rate of convergence as the underlying deterministic scheme.
+	
+	The intrinsic nature of the random perturbation implies that our probabilistic integrator conserves some geometric properties of the deterministic method it is built on, such as the conservation of first integrals or the symplecticity of the flow. 
+	
+	Finally, we present a procedure to incorporate our probabilistic solver into the frame of Bayesian inference inverse problems, showing how inaccurate posterior concentrations given by deterministic methods can be corrected by a probabilistic interpretation of the numerical solution.	\\ 
+	\vspace{0.3cm}\\
+	\noindent \textbf{References}\\
+	\noindent [1] A. Abdulle and G. Garegnani, \textit{Random time step probabilistic methods for uncertainty quantification in chaotic and geometric numerical integration}, submitted for publication (2018), \texttt{https://arxiv.org/pdf/1801.01340.pdf}
+\end{document}

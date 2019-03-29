@@ -1,0 +1,287 @@
+\documentclass[a0paper,fontscale=0.292]{baposter}
+
+%\usepackage[vlined]{algorithm2e}
+\usepackage{times}
+\usepackage{calc}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage{relsize}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{caption}
+\usetikzlibrary{plotmarks}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usetikzlibrary{shapes,snakes}
+\usepackage{multicol}
+\usepackage[T1]{fontenc}
+\usepackage{ae}
+\usepackage{overpic}
+\usetikzlibrary{patterns}
+%\usepackage{epstopdf}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% My Style %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{color}
+
+\definecolor{dunkelgrau}{gray}{0.1}
+\definecolor{hellgrau}{gray}{0.95}
+\definecolor{mittelgrau}{gray}{0.8}
+\definecolor{dunkelblau}{rgb}{0,0,0.85}
+\definecolor{rr}{RGB}{197,231,251}
+\definecolor{darkblue}{RGB}{140,212,244}
+\definecolor{dunkelgelb}{RGB}{255,255,0}
+% \definecolor{hellgelb}{RGB}{0,0,0}
+
+% \newcommand{hellgelb}{dunkelgelb!30!white}
+\definecolor{gr}{RGB}{224,255,224}
+\definecolor{dunkelgrun}{rgb}{0,0.6,0}
+
+
+\definecolor{beige}{RGB}{255,200,0}
+
+\usepackage{amsfonts,amsmath}
+\usepackage{stmaryrd}
+\usepackage{enumerate}
+\usepackage{mathabx}
+\usepackage{graphicx}
+\usepackage{multirow}
+
+\newtheorem{notation}{Notation}
+\newtheorem{remark}{Remark}
+\newtheorem{assumption}{Assumption}
+\newtheorem{convention}{Convention}
+\newtheorem{assumption*}{Assumption}
+
+\newenvironment{enumi}{\begin{enumerate}[\upshape (i)]}{\end{enumerate}}
+
+
+\newcommand{\asp}[1]{(\textbf{#1})}
+\input{newcommands}
+
+
+\newcommand{\rsl}{($L^2$)}
+\newcommand{\rsh}{($H^1$)}
+\newcommand{\rsd}{(DD)}
+\newcommand{\rsa}{(AD)}
+
+
+\DeclareMathOperator{\dive}{div}
+\DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\Pe}{Pe}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Begin of Document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Here starts the poster
+%%---------------------------------------------------------------------------
+%% Format it to your taste with the options
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{poster}{
+ % Show grid to help with alignment
+ grid=false,
+ % Column spacing
+ colspacing=.7em,
+ columns=2,
+ % Color style
+ headerColorOne=rr,
+ borderColor=cyan!60!white!90!black,
+%  headerColorOne=beige!60!white,
+%  borderColor=beige!180!white,
+ % Format of textbox
+ textborder=faded,
+ % Format of text header
+ headerborder=open,
+ headershape=roundedright,
+ headershade=plain,
+ background=none,
+ bgColorOne=cyan!10!white,
+ headerheight=0.1\textheight}
+ % Eye Catcher can be put here if you like
+ {
+ }
+ % Title
+ {\sc\Huge Probabilistic solvers for ODE's and \\ \vspace{0.1in} Bayesian inference of parametrized models}
+% 	Discontinuous Galerkin Finite Element Heterogeneous Multiscale Method for Advection-Diffusion Problems with Multiple Scales}
+ % Authors
+ {\vspace*{0.2em} \underline{Giacomo Garegnani}, Assyr Abdulle\\[0.5em]
+ {\texttt{giacomo.garegnani@epfl.ch, assyr.abdulle@epfl.ch}}}
+ % University logo can be put here if you like
+ {
+ \includegraphics[width=4cm]{EPFL_LOG_QUADRI_Red}
+ }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Now define the boxes that make up the poster
+%%%---------------------------------------------------------------------------
+%%% Each box has a name and can be placed absolutely or relatively.
+%%% The only inconvenience is that you can only specify a relative position 
+%%% towards an already declared box. So if you have a box attached to the 
+%%% bottom, one to the top and a third one which should be inbetween, you 
+%%% have to specify the top and bottom boxes before you specify the middle 
+%%% box.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\headerbox{Introduction}{name=introduction,column=0,row=0,span=1}{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{minipage}{4.5in} In this project we focus on the probabilistic interpretation of numerical solutions of ODE's and Bayesian inference inverse problems involving differential equations. In particular, we consider three main research topics.
+\end{minipage}
+\begin{minipage}{4.5in}
+ 	\begin{align*}
+ 	&\text{\textbf{Bayesian inference.} Which are the most efficient inferential techniques?}\\
+ 	&\text{\textbf{Probabilistic integrators of ODE's \cite{CGS16}.} What are their properties?}\\
+ 	&\text{\textbf{Bayesian inverse problems.} Can we apply the probabilistic integrator }\\
+ 	&\quad\quad \text{in the context of Bayesian inference inverse problems?}\\
+	&\fcolorbox{dunkelgelb!90!black}{dunkelgelb!20!white}{\parbox{1.3in}{\textbf{Main contribution.}}} \text{ We derive bounds for Monte Carlo estimators} \\
+	&\quad\quad \text{in a probabilistic extension of Runge-Kutta methods.}
+ 	\end{align*}	
+\end{minipage}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\headerbox{Bayesian inference and MCMC}{name=MCMC,column=0,row=0,span=1, below=introduction}{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\begin{minipage}{4.5in}
+	Let $\theta \in \R^{N_p}$ be a parameter and $\mathcal{Y}$ a set of observations. Then Bayes' rule reads
+	\begin{equation*}
+		\pi(\theta\mid\mathcal{Y}) \propto \mathcal{Q}(\theta)\mathcal{L}(\mathcal{Y}\mid\theta).
+	\end{equation*} \fcolorbox{dunkelgelb!90!black}{dunkelgelb!20!white}{\parbox{.32in}{ \textbf{Goal.}}} Generate samples $\{\theta^{(i)}\}_{i=1}^{N}$ such that for $g\colon\R^{N_p}\to\R$
+	\begin{equation*}
+		\E^\pi[g(\theta)] \approx \frac{1}{N}\sum_{i=1}^{N}g(\theta^{(i)}).
+	\end{equation*}
+	\fcolorbox{dunkelgelb!90!black}{dunkelgelb!20!white}{\parbox{.3in}{\textbf{Idea.}}} Use Metropolis-Hastings (MH) Markov chain Monte Carlo method (MCMC) \cite{KaS2005} to generate samples from $\pi$.\\ 
+	Given $\theta^{(i)}$, the next element $\vartheta$ is chosen from a proposal distribution $q(x, y)$ and accepted to be $\theta^{(i+1)} = \vartheta$ with probability
+	\begin{equation*}
+		\alpha(\theta^{(i)}, \vartheta) = \min\left\{\frac{\pi(\vartheta)q(\vartheta, \theta^{(i)})}{\pi(\theta^{(i)})q(\theta^{(i)}, \vartheta)}, 1\right\}.
+	\end{equation*}
+	\fcolorbox{dunkelgelb!90!black}{dunkelgelb!20!white}{\parbox{.6in}{\textbf{Problem.}}} Bad choices of the proposal distribution $q(x,y)$ lead to inefficient algorithms $\rightsquigarrow$ apply adaptive techniques as the robust adaptive Metropolis (RAM)  \cite{Vih2012}. Adapt a Gaussian proposal distribution $q(x,y)$ to obtain a desired acceptance rate $\alpha^*$, defined as the ratio of accepted new parameter guesses $\vartheta$.
+	\end{minipage}\vspace{0.3cm}
+
+	\begin{minipage}{4.5in}
+	\fcolorbox{dunkelgelb!90!black}{dunkelgelb!20!white}{\parbox{0.82in}{\textbf{Experiment.}}} Consider the two-dimensional distribution $\pi$ with density
+	\begin{equation*}
+		\pi(X) \propto \exp(-10(X_1^2 - X_2)^2 - (X_1 - 0.25)^4),
+	\end{equation*}
+	and generate 5000 samples with standard MH or RAM. Choose Gaussian $q(x, y)$ with covariance structure $\Sigma = 0.01 I$ for MH and for starting proposal for RAM ($\alpha^*=0.4$). The posterior is not well described by MH, while for RAM we obtain a good approximation.
+	\end{minipage}
+	
+	\begin{minipage}{2.25in}
+		\begin{overpic}[width=2.25in]{../../Report/plots/MHvsRAM/MH_small}
+		\put(45,60){\color{black}\textbf{MH}}
+		\end{overpic}
+	\end{minipage}
+	\begin{minipage}{2.25in}
+		\begin{overpic}[width=2.25in]{../../Report/plots/MHvsRAM/RAM_small}
+			\put(44,60){\color{black}\textbf{RAM}}
+		\end{overpic}
+	\end{minipage}	
+	
+	
+	}
+
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \headerbox{Probabilistic solvers for ODE's}{name=probSolver,column=0,span=1,below=MCMC}{\textbf{Optimization-based method}. Find $(u_1, u_2)\in H^1(\omega_1)\times H^1_{\Gamma}(\omega_2)$:
+  	\[
+  	\min \frac{1}{2}\normL{u_1-u_2}{2}{\omega_0}^2 \text{ such that} \begin{cases}
+  	\fcolorbox{blue}{cyan!50!white!90!black}{$-\div(a\grad u_1) =f \phantom{0} $ in $\omega_1, \un  u_1=\theta_1$  on $\Gamma_1$},\\
+  	\vspace{-0.3cm}\\
+  	\fcolorbox{green}{gr!60}{$-\div(\azero\grad u_2)=f^0 $  in $\omega_2, \un u_2=\theta_2 $ on $\Gamma_2$}.
+  	\end{cases}
+  	\]
+Introducing Lagrange multipliers for each constraint, $(u_1, u_2)$ is given as a critical point of a saddle point problem.\\
+}
+ 
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   \headerbox{FE Optimization Based Coupling}{name=FEobc,column=1,span=1,row=0}{Let $V^p(\omega_1, \Thtilde)$, $V^p_{\Gamma}(\omega_2, \TH)$ and $S^q(\Kdj, \Th)$ be FE spaces with\[
+    \displaystyle h, \htilde <\eps, \text{ and } H\gg h.\]
+
+\begin{center}
+  		 \includegraphics[width=3.5in]{mesh_poster}
+  
+\end{center}
+ 	\begin{tikzpicture}
+ 	\filldraw [cyan!60!white!90!black](1.5, 0.5)--(0,0.5)--(0,0)--(1.5,0);
+ 	\draw [blue] (1.5, 0.5)--(0,0.5)--(0,0)--(1.5,0);
+ 	\filldraw [rr](1.5, 0)--(3,0)--(3,.5)--(1.5,0.5);
+ 	\draw [blue] (1.5, 0)--(3,0)--(3,0.5)--(1.5,0.5); 
+ 	\draw(0.05,0.2) node[right] {\textbf{Fine scale solver}};
+ 	\draw(3.4, 0.2)node[right] {Find $\uhone=\uhonezero + \vhone$, with $\uhonezero\in V^p_0(\omega_1, \Thtilde)$};
+ 	\end{tikzpicture}
+
+ such that 
+\[ B_{1}(\uhonezero, \whtilde):=\int_{\omega_1}a \nabla \uhonezero \cdot\nabla \whtilde \d x=\int_{\omega_1}f \whtilde\d x, \cinq \forall \whtilde \in V^p_0(\omega_1, \Thtilde).\]
+
+\begin{tikzpicture}
+\filldraw [rr](1.5, 0.5)--(0,0.5)--(0,0)--(1.5,0);
+\draw [green] (1.5, 0.5)--(0,0.5)--(0,0)--(1.5,0);
+\filldraw [gr!60](1.5, 0)--(3,0)--(3,.5)--(1.5,0.5);
+\draw [green] (1.5, 0)--(3,0)--(3,0.5)--(1.5,0.5); 
+\draw(0.05,0.2) node[right] {\textbf{FE-HMM solver}};
+\draw(3.4, 0.2)node[right] {Find $\uhtwo=\uhtwozero + \vhtwo$, with $\uhtwozero\in V^p_{0}(\omega_2, \TH)$};
+\end{tikzpicture}
+
+such that, $\forall w_H\in V^p_0(\omega_2, \TH)$ \[
+ B_{2}(\uhtwozero, w_{H}):=\hspace{-0.2cm} \sum_{K\in \TH} \sum_{j=1}^J \frac{w_{j,K}}{|\Kdj|}\int_{\Kdj}\hspace{-0.2cm}a\nabla u^h_j \cdot\nabla w^h_j\d x=\int_{\omega_2}\hspace{-0.2cm}f^0w_H \d x,
+ \]where $u^h_j,w^h_j$ are solutions of a micro problem involving the tensor $a$ on $\Kdj$. The solution ($\vhone$, $\vhtwo$) is the critical point of
+ \begin{align*}
+ \mathcal{L}(\vhone, \lhone, \vhtwo, \lhtwo)&=\frac{1}{2}\normL{(\uhonezero+ \vhone)-(\uhtwozero+ \vhtwo)}{2}{\omega_0}^2 \\
+ &- B_1(\vhone, \lhone)- B_{2}(\vhtwo, \lhtwo).
+ \end{align*}
+ }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\headerbox{Algorithm}{name=algo,column=1,row=0,below=FEobc}{
+$\bullet$ \text{ Find } $\uonezero^{\htilde} \in  V^p_0(\omega_1, \Thtilde)$: $B_{1}^ {\htilde}(\uonezero^{\htilde}, w^{\htilde})= \int_{\omega_1}f w^{\htilde}\d x$, $\forall w^{\htilde} \in V^p_0(\omega_1, \Thtilde)$.
+$\bullet$ \text{ Find } $\utwozero^{H} \in  V^p_0(\omega_2, \TH)$: $B_{2}^ {H}(\utwozero^{H}, w^{\htilde})= \int_{\omega_1}f w^{\htilde}\d x$, $\forall w^{\htilde} \in V^p_0(\omega_1, \Thtilde)$.
+$\bullet$ \text{ Find } $\uonezero^{\htilde} \in  V^p_0(\omega_1, \Thtilde)$: $B_{1}^ {\htilde}(\uonezero^{\htilde}, w^{\htilde})= \int_{\omega_1}f w^{\htilde}\d x$, $\forall w^{\htilde} \in V^p_0(\omega_1, \Thtilde)$.
+}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   \headerbox{A Priori Error Estimates}{name=apriori,column=1,row=0,below=algo}{
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \textbf{Fill here}
+}
+ 
+
+   \headerbox{References}{name=references,column=1,span=1,below=apriori}{
+
+    \bibliographystyle{plain}
+ \renewcommand{\section}[2]{\vskip 0.05em}
+%  \begin{thebibliography}{3}
+%
+% \end{thebibliography}
+\begin{thebibliography}{1}
+	
+	\bibitem{CGS16}
+	Conrad, P. R. et al.
+	\newblock Statistical analysis of differential equations: introducing probability measures on numerical solutions.
+	\newblock {\em Stat. Comput.}, 2016.
+	
+	\bibitem{KaS2005}
+	J. Kaipio and E. Somersalo.
+	\newblock Statistical and Computational Inverse Problems.
+	\newblock {\em Applied Mathematical Sciences}, 2005.
+	
+	\bibitem{Vih2012}
+	M. Vihola.
+	\newblock Robust adaptive Metropolis algorithm with coerced acceptance rate.
+	\newblock {\em Stat. Comput.}, 2012.
+		
+\end{thebibliography}
+
+
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   }
+
+
+\end{poster}%
+%
+\end{document}

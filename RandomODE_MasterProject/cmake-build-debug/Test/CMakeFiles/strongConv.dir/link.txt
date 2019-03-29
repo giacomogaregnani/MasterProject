@@ -1,0 +1,1 @@
+/usr/bin/c++    -fopenmp -std=c++11 -Wall -g   CMakeFiles/strongConv.dir/StrongConvergence.cpp.o  -o strongConv -rdynamic ../RKRandomStep/libRandomStep.a ../RKSolver/libRungeKuttaSolver.a 

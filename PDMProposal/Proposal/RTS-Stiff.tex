@@ -1,0 +1,81 @@
+\documentclass{siamart1116}
+
+% basics
+\usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage{afterpage}
+\usepackage{enumitem}   
+\setlist[enumerate]{topsep=3pt,itemsep=3pt,label=(\roman*)}
+
+% maths
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\dd}{\mathrm{d}}
+
+\title{Projet de Master proposal (fall semester 2017/2018)}
+\author{Assyr Abdulle, Giacomo Garegnani}
+
+\begin{document}
+\maketitle
+	
+\section*{Probabilistic methods for ODEs - Background}
+A topic of interest in recent years is the design and analysis of probabilistic solvers for ordinary differential equations (ODEs). In particular, the two main approaches are based either on the integration of random perturbations to classic deterministic schemes \cite{CGS16, AbG17}, or on a Bayesian analysis relying on Gaussian processes and techniques inherited from the machine learning community \cite{KeH16}. 
+
+In \cite{AbG17}, we develop a method based on traditional Runge-Kutta integrators, where the time steps are chosen randomly so that the numerical approximation is not a punctual value but it is a probability measure that can be interrogated through repeated sampling (Monte Carlo). This scheme is inspired by the work presented in \cite{CGS16}, where the random contribution is added artificially to the solution at each time instant. The main advantage of the random time-stepping procedure is that all samples from the probability distribution inherit the geometrical properties (i.e., conservation of invariants, positiveness of the solution, symplecticity) from the deterministic integrator.
+
+A probabilistic approach is particularly attractive for two distinct reasons. Firstly, the class of chaotic problems, i.e., differential equations which present strong reactions to perturbations of the initial condition or of the state, can be given a probabilistic interpretation forcing random perturbations in the numerical solution. These equations often present at long time non-trivial invariant measures defined on subsets of the state space (the attractors). It is indeed possible to approximate these invariant measures through samples of probabilistic methods, performing space averages rather than time averages on a single deterministic realization over a long time. Secondly, it has been shown empirically \cite{COS17, CGS16, AbG17} in both an ODE and a PDE context that probabilistic solver correct incorrect behaviors given by deterministic solvers in Bayesian inverse problems.
+
+\section*{First research topic} In the first stage of the project, it would be interesting to analyze the behavior of the random time stepping Runge-Kutta methods in the context of stiff problems. Given a function $f\colon\R^d\to\R^d$ we consider autonomous ODEs of the form
+\begin{equation*}
+	y'(t) = f\big(y(t)\big), \quad y(0) = y_0 \in \R^d, 
+\end{equation*}
+where the Jacobian $\dd f / \dd y$ has negative eigenvalues with a large magnitude. It is well known that in this case $A$-stable (and $L$-stable) methods are well-suited to furnish stable numerical solutions. On the other hand, these methods present two main disadvantages in the context of probabilistic numerical methods, i.e.
+\begin{enumerate}
+	\item if the state space is large ($d \gg 1$) then repeated sampling of the numerical solution can be prohibitively expensive,
+	\item the approximation of invariant measures can be totally wrong. This can be remarked, for example, applying a semi-implicit Euler-Maruyama method to the Langevin SDE.
+\end{enumerate}
+A good trade off between cost and stability is given by methods based on Chebyshev polynomials, as the traditional Runge-Kutta-Chebyshev or first and second order ROCK methods. It would be interesting to consider the effect of random perturbations on these schemes and how it affects their stability and performances. An interesting test case can be given by the peroxide-oxide chemical reaction \cite{AbG17}, which reads
+\begin{equation*}
+\begin{aligned}
+\mathrm{A}' &= k_7  (\mathrm{A}_0 - \mathrm{A}) - k_3  \mathrm{A}\mathrm{B}\mathrm{Y}, &&\mathrm{A}(0) = 6, \\
+\mathrm{B}' &= k_8\mathrm{B}_0 - k_1  \mathrm{B}\mathrm{X} - k_3  \mathrm{A}\mathrm{B}\mathrm{Y}, &&\mathrm{B}(0) = 58, \\
+\mathrm{X}' &= k_1  \mathrm{B}\mathrm{X} - 2  k_2  \mathrm{X}^2 + 3  k_3 \mathrm{A}\mathrm{B}\mathrm{Y} - k_4  \mathrm{X} + k_6\mathrm{X}_0,&& \mathrm{X}(0) = 0, \\
+\mathrm{Y}' &= 2  k_2  \mathrm{X}^2 - k_5  \mathrm{Y} - k_3  \mathrm{A}\mathrm{B}\mathrm{Y}, && Y(0) = 0.
+\end{aligned}
+\end{equation*}
+This problem presents both a stiff and a chaotic behavior, with fast transients and instabilities whenever one of the components turns negative. Moreover, the behavior at long time is cyclic and therefore the invariant measure is not trivially a Dirac. The fast transient nature of this problem naturally translates to the need of adaptive procedures, for example in the number of stages of the RKC routine, in order to minimize the computational cost while providing with acceptable numerical solutions.
+
+\section*{Second research topic} A typical case of stiff problems is given by parabolic PDEs discretized in space. In particular, it would be interesting to focus on linear equations of the form
+\begin{equation}\label{eq:PDE}
+\begin{aligned}
+	\partial_t u - \nabla \cdot \big(\kappa(x) \nabla u\big) &= 0, && \text{in } \Omega, \\
+	u &= g, && \text{on } \partial \Omega, \\
+	u(t = 0) &= u_0, && \text{in } \Omega,
+\end{aligned}
+\end{equation}
+where $\Omega$ is a domain of $\R^d$. The solution of \eqref{eq:PDE} can be approximated numerically on a grid of $N$ points in $\Omega$ and on its boundary, thus reducing the problem to a linear ordinary differential equation in dimension $N$, which reads
+\begin{equation*}
+\begin{aligned}
+	\mathbf{u}' &= A\mathbf{u}, && A \in \R^{N\times N},\\
+	\mathbf{u}(0) &= \mathbf{u}_0, && \mathbf{u}_0 \in \R^N. 
+\end{aligned}	
+\end{equation*}
+Here, the vector $\mathbf{u}$ stores the nodal values on the grid and the matrix $A$ comes from the approximation of the diffusive term in \eqref{eq:PDE} and its stiffness increases with $N$. It is therefore fundamental to account for the stiffness when solving this system of differential equations.
+
+In this framework, it is interesting to consider the \textit{inverse problem} of recovering the initial condition $u_0$ given the solution $u$ at some fixed time $T > 0$ corrupted by a source of Gaussian noise \cite{DaS13, Stu10}. This problem is particularly interesting as 
+\begin{enumerate}
+	\item both the data $u(T)$ and the parameter to infer $u_0$ are members of an infinite-dimensional functional space,
+	\item stiffness in the discretized forward problem (i.e., given $\mathbf{u}_0$ find $\mathbf{u}(T)$) requires the application of stable methods,
+	\item probabilistic integrators could be of help in the uncertainty quantification over the initial data for coarse discretization and in the small-noise limit.
+\end{enumerate}
+In the same spirit, a further problem of interest could be to recover the conductivity field $\kappa(x)$ in the domain from observations of both the initial data $u_0$ and of the solution at some final time $T$.
+
+It would be finally interesting to consider nonlinear time-dependent PDEs, applying probabilistic methods to propagate the numerical solution in time and check whether the solution of Bayesian inverse problems benefits from probabilistic approximations.
+
+\bibliographystyle{siamplain}
+\bibliography{biblio}
+	
+		
+\end{document}

@@ -1,0 +1,10 @@
+\beamer@sectionintoc {1}{Geometric numerical integration}{3}{0}{1}
+\beamer@sectionintoc {2}{Stochastic methods for ODEs}{11}{0}{2}
+\beamer@subsectionintoc {2}{1}{Additive noise method}{14}{0}{2}
+\beamer@subsectionintoc {2}{2}{Random time steps}{21}{0}{2}
+\beamer@sectionintoc {3}{Geometric stochastic numerical integration}{30}{0}{3}
+\beamer@sectionintoc {4}{Bayesian inverse problems}{35}{0}{4}
+\beamer@sectionintoc {5}{Numerical experiments}{46}{0}{5}
+\beamer@subsectionintoc {5}{1}{Convergence}{47}{0}{5}
+\beamer@subsectionintoc {5}{2}{Geometric properties}{52}{0}{5}
+\beamer@subsectionintoc {5}{3}{Bayesian inverse problems}{57}{0}{5}

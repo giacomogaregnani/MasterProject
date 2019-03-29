@@ -1,0 +1,391 @@
+%%%% SAME BOTTOM MARGINS IN INF, SUP, MAX, MIN
+%\let\inf\relax
+%\let\min\relax 
+%\let\max\relax  
+%\DeclareMathOperator*\inf{\vphantom{p}inf}
+%\DeclareMathOperator*\min{\vphantom{p}min}
+%\DeclareMathOperator*\max{\vphantom{p}max}
+%\DeclareMathOperator*\supp{\vphantom{p}supp}
+%%%% SMALL SUM
+%\def\smallsum{\textstyle{\sum}\displaystyle}
+\def\smallsum{{\begin{textstyle}\sum\end{textstyle}}}
+\def\XSmallint{\textstyle{\smallint}}
+\newcommand{\ds}{\displaystyle}
+%%%% SETS OF NUMBERS
+\def\R{\mathbb R}
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\C{\mathbb C}
+\def\sC{\mathscr{C}}
+\def\O{\mathcal{O}}
+
+
+\def\H{\mathcal{H}}
+\def\T{\mathcal{T}}
+\def\U{\mathcal{U}}
+\def\E{\mathbb{E}}
+\def\L{\mathcal{L}}
+%%%% SETS OF FUNCTIONS
+\def\fcnP{\mathcal{P}}
+\def\fcnC{\mathscr{C}}
+%\def\fcnL{\mathrm{L}}
+\def\fcnL{\mathrm{L}}
+\def\fcnH{\mathrm{H}}
+\def\fcnW{\mathrm{W}}
+
+\newcommand{\dual}[1]{{#1}^*}
+\newcommand{\dualB}[1]{{[#1]}^*}	% brackets
+\newcommand{\dualEval}[2]{\langle#1\rangle_{#2}}
+\def\ei{\textbf{e}_{\textbf{i}}}
+
+%%%% NICE EPSILON
+\newcommand{\eps}{\varepsilon}
+
+\renewcommand{\epsilon}{\varepsilon}
+%%%% PARENTHESIS
+
+\def\lpar{\left(}
+\def\rpar{\right)}
+
+% % % % Couple theta1, theta_2
+\def\thcouple{(\theta_1, \theta_2)}
+\def\thhcouple{(\theta_{1,\htilde}, \theta_{2,H})}
+\def\mcouple{(\mu_1, \mu_2)}
+\def\mhcouple{(\mu_{1,\htilde}, \mu_{2,H})}
+\def\vcouple{(v_1, v_2)}
+\def\lcouple{(\lambda_1, \lambda_2)}
+\def\vhcouple{(\vhone, \vhtwo)}
+\def\lhcouple{(\lhone, \lhtwo)}
+\def\whcouple{(\whone, \whtwo)}
+\def\xihcouple{(\xihone, \xihtwo)}
+
+%%%% NORMS
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\normGradL}[3]{\norm{\nabla #1}_{\fcnL^{#2}(#3)}}
+\newcommand{\normL}[3]{\norm{#1}_{\fcnL^{#2}(#3)}}
+\newcommand{\normLpi}[1]{\norm{#1}_{\fcnL^{\star}(\U)}}
+\newcommand{\normlong}[1]{\left\| #1\right\|}
+\newcommand{\normLlong}[3]{\normlong{#1}_{\fcnL^{#2}(#3)}}
+	\newcommand{\normLOm}[2]{\normL{#1}{#2}{\Omega}}
+	\newcommand{\normLom}[2]{\normL{#1}{#2}{\omega}}
+	\newcommand{\normLoms}[2]{\normL{#1}{#2}{\omega^*}}
+	\newcommand{\normLd}[2]{\normL{#1}{2}{#2}}
+		\newcommand{\normLdK}[1] {\normLd{#1}{\ele}}
+		\newcommand{\normLdOm}[1]{\normLd{#1}{\Omega}}
+\newcommand{\normH}[3]{\norm{#1}_{\fcnH^{#2}(#3)}}
+	\newcommand{\normHu}[2]{\normH{#1}{1}{#2}}
+		\newcommand{\normHuK}[1] {\normHu{#1}{\ele}}
+		\newcommand{\normHuOm}[1]{\normHu{#1}{\Omega}}
+	\newcommand{\normHK}[2] {\normH{#1}{#2}{\ele}}
+	\newcommand{\normHOm}[2]{\normH{#1}{#2}{\Omega}}
+\newcommand{\normW}[3]{\norm{#1}_{\fcnW^{#2}(#3)}}
+	\newcommand{\normWK}[2] {\normW{#1}{#2}{\ele}}
+	\newcommand{\normWOm}[2]{\normW{#1}{#2}{\Omega}}
+
+\newcommand{\brokennormH}[3]{\norm{#1}_{{\bar{\fcnH}}^{#2}(#3)}}
+\newcommand{\normHzero}[3]{\norm{#1}_{\fcnH^{#2}_0(#3)}}	
+\newcommand{\seminorm}[1]{|#1|}
+\newcommand{\seminormH}[3]{\seminorm{#1}_{\fcnH^{#2}(#3)}}
+	\newcommand{\seminormHu}[2]{\seminormH{#1}{1}{#2}}
+		\newcommand{\seminormHuK}[1] {\seminormHu{#1}{\ele}}
+		\newcommand{\seminormHuOm}[1]{\seminormHu{#1}{\Omega}}
+	\newcommand{\seminormHOm}[2]{\seminorm{#1}_{\fcnH^{#2}(\Omega)}}
+\newcommand{\seminormW}[3]{\seminorm{#1}_{\fcnW^{#2}(#3)}}
+	\newcommand{\seminormWK}[2] {\seminormW{#1}{#2}{\ele}}
+	\newcommand{\seminormWOm}[2]{\seminormW{#1}{#2}{\Omega}}
+	
+\newcommand{\normLdLti}[2]{\norm{#1}_{\fcnL^2(0,\Teps;#2)}}
+\newcommand{\normLdLd}[1]{\norm{#1}_{\fcnL^2(\fcnL^2(\Omega))}}
+	\newcommand{\normLdLtiLd}[1]{\norm{#1}_{\fcnL^2(0,\Teps;\fcnL^2(\Omega))}}
+\newcommand{\normLdHu}[1]{\norm{#1}_{\fcnL^2(\fcnH^1(\Omega))}}
+	\newcommand{\normLdLtiHu}[1]{\norm{#1}_{\fcnL^2(0,\Teps;\fcnH^1(\Omega))}}
+	\newcommand{\normLdLtiH}[2]{\norm{#1}_{\fcnL^2(0,\Teps;\fcnH^{#2}(\Omega))}}
+\newcommand{\normLdW}[2]{\norm{#1}_{\fcnL^2(\fcnW^{#2}(\Omega))}}
+\newcommand{\normLiLd}[1]{\norm{#1}_{\fcnL^\infty(\fcnL^2(\Omega))}}
+	\newcommand{\normLiLtiLd}[1]{\norm{#1}_{\fcnL^\infty(0,\Teps;\fcnL^2(\Omega))}}
+\newcommand{\normLiHu}[1]{\norm{#1}_{\fcnL^\infty(\fcnH^1(\Omega))}}
+	\newcommand{\normLiLtiHu}[1]{\norm{#1}_{\fcnL^\infty(0,\Teps;\fcnH^1(\Omega))}}
+	\newcommand{\normLiLtiH}[2]{\norm{#1}_{\fcnL^\infty(0,\Teps;\fcnH^{#2}(\Omega))}}
+\newcommand{\normLiW}[2]{\norm{#1}_{\fcnL^\infty(\fcnW^{#2}(\Omega))}}
+
+
+%%%% DIFFERENTIAL OPERATORS
+\def\divergence{{\rm{div\,}}}
+\def\div{{\rm{div\,}}}
+\def\grad{\nabla}
+
+
+
+
+%%%% SHORTCUTS
+\def\per{{\rm{per}}}
+\def\lin{\mathrm{lin}}
+\def\Gconv{\overset{G}\rightharpoonup}
+\newcommand{\wconv}[1]{\overset{#1}\rightharpoonup}
+\newcommand{\bigo}{{\mathcal O}}
+
+
+%%% differentials
+\def\dif{\partial}
+\newcommand{\Diff}[2]{\frac{\partial #1}{\partial #2}}
+\def\difx{\dif_x}
+\def\dify{\dif_y}
+\def\divx{\nabla_x\cdot}
+\def\divy{\nabla_y\cdot}
+\newcommand{\jump}[1]{ \llbracket #1 \rrbracket}
+
+
+\def\dt{{\partial_t}}
+\newcommand{\dtp}[1]{\partial_t^{#1}}
+\def\dtt{{\partial^2_t}}
+\def\d{\mathrm{d}}
+
+
+%\part{title}
+\def\ueps{u^\eps}
+\def\feps{f^\eps}
+\def\aeps{a^\eps}
+%\def\veps{v^\eps}
+\def\htilde{\tilde{h}}
+\def\ucFE{{u^{c}}_{{\htilde H}}}
+\def\uobcFE{\bar{u}_{{\htilde H}}}
+\def\uobc{\bar{u}}
+%\def\t{\scriptscriptstyle{ \mathcal{T}}}
+\def\uzero{u^0}
+\def\uonezero{u_{1,0}}
+\def\utwozero{u_{2,0}}
+\def\utwocorr{u_{2}^{rec}}
+\def\uhtwocorrtilde{\tilde{u}_{2,H}^{rec}}
+\def\uhtwocorr{u_{2,H}^{rec}}
+\def\uH{u^H}
+\def\azero{a^0}
+\def\uc{u_c}
+\def\vhtilde{v_{\htilde}}
+\def\vh{v^h}
+\def\uh{u^h}
+\def\wh{w^h}
+\def\uhtilde{u_{\htilde}}
+\def\whtilde{w_{\htilde}}
+\def\atilde{\tilde{a}}
+\def\ftilde{\tilde{f}}
+\def\thetahone {\theta_{1,\htilde} }
+\def\thetahtwo {\theta_{2,H} }
+\def\muhone {\mu_{1,\htilde} }
+\def\muhtwo {\mu_{2,H} }
+
+\def\uhone {u_{1,\htilde} }
+\def\uhtwo{u_{2,H}}
+\def\uhonezero {u_{1,0,\htilde} }
+\def\uhtwozero{u_{2,0,H}}
+\def\vhone {v_{1,\htilde}}
+\def\vhtwo{v_{2, H}}
+\def\whone {w_{1,\htilde}}
+\def\whtwo{w_{ 2,H}}
+\def\xihone {\xi_{1,\htilde}}
+\def\xihtwo{\xi_{ 2,H}}
+\def\lhone{\lambda_{1,\htilde}}
+\def\lhtwo{\lambda_{2,H}}
+
+\def\BDG{B_{2, H}}
+
+%
+%\newcommand{\xeps}[1]{{#1}^{\eps}}
+%
+%\newcommand{\bu}[1]{{\bf #1}}
+%\newcommand{\eu}[1]{e(#1)}
+
+\newcommand{\pt}{\partial_{t}}
+\newcommand{\ptt}{\partial_{tt}}
+\newcommand{\macsp}[3]{V^{#1}(#2,{\cal T}_{#3})}
+\newcommand{\macspl}{S_0^1(\Omega,{\cal T}_H)}
+\newcommand{\micsp}{S^q(K_{\delta_j},{\cal T}_{h})}
+\newcommand{\micspl}{S^1(K_{\delta},{\cal T}_{h})}
+\newcommand{\polsp}{{\cal R}}
+\newcommand{\Kdj}{K_{\delta_j}}
+\newcommand{\Kd}{K_{\delta}}
+\newcommand{\wpersp}{W_{\text{per}}^1(K_{\delta_j})}
+\newcommand{\wperspY}{W_{\text{per}}^1(Y)}
+
+
+%
+%\def\wnorm{\vert\hskip-0.4mm\vert\hskip-0.4mm\vert} 
+
+
+%%%%%%% SPACES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Har}{\mathcal{H}}
+
+
+
+
+%%%%%%%% OPERATORS %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newcommand{\p}{\partial}
+\renewcommand{\d}[1]{\text{d}#1}
+
+
+%\newcommand{\uHjK}{u^H_{K_j}}
+\newcommand{\uHjK}{u^H(x_{K_j})}
+%\newcommand{\modif}[1]{\textcolor{red}{#1}\index {#1}}
+
+
+\newcommand{\broken}{\bar}
+\newcommand{\Proj}{{\cal I}_H}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+%SPACES IN FEM
+\def\TH{\mathcal{T}_H}
+\def\Th{\mathcal{T}_h}
+\def\Thomega{\mathcal{T}_{\htilde}}
+\def\Thtilde{\mathcal{T}_{\htilde}}
+%\def\Vh{V_h}
+%\def\THsimp{\TH^\triangle}
+%\def\THquad{\TH^\square}
+
+\def\ele{K}
+\def\sumK{\sum_{\ele\in\Th}}
+\def\smsumK{\smallsum_{\ele\in\Th}}
+
+
+
+\def\degMac{k}
+
+
+
+\def\hatK{{\hat\ele}}
+
+
+\newcommand{\aY}[1]{a_Y({#1})}
+\newcommand{\BH}[1]{B_H(#1)}
+\newcommand{\Bh}[1]{B_h(#1)}
+\newcommand{\BZ}[1]{B_0(#1)}
+\newcommand{\BZH}[1]{B_{0,H}(#1)}
+\newcommand{\BZh}[1]{B_{0,h}(#1)}
+
+
+%SUMS
+\newcommand{\sumi}[3]{\sum_{#1=#2}^{#3}}
+\def\suml{\sum_{l=1}^L}
+\def\smallsuml{\smallsum_{l=1}^L}
+\def\sumj{\sum_{j=1}^J}
+\def\smallsumj{\smallsum_{j=1}^J}
+
+
+
+\newcommand{\fcnDefShort}[3]
+		{#1\hspace{0.1cm}:\hspace{0.1cm}#2\hspace{0.1cm}\rightarrow\hspace{0.1cm}#3}
+\newcommand{\fcnDefLong}[5]
+		{\fcnDefShort{#1}{#2}{#3},\hspace{0.2cm}#4\hspace{0.1cm}\mapsto\hspace{0.1cm}#5}
+
+%SPACES BETWEEN EQNS
+\def\un{\hspace{0.1cm}}
+\def\deux{\hspace{0.2cm}}
+\def\trois{\hspace{0.3cm}}
+\def\quatre{\hspace{0.4cm}}
+\def\cinq{\hspace{0.5cm}}
+
+\def\plustart{+\un}
+
+\def\setst{\hspace{0.1cm}|\hspace{0.1cm}}
+\def\arrayLeq{\hspace{0.7cm}\leq\hspace{0.3cm}}
+
+
+
+\newcounter{enumLong}
+
+
+
+
+
+%%% EQUATIONS
+
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\newcommand{\bes}{\begin{equation*}}
+\newcommand{\ees}{\end{equation*}}
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\eea}{\end{eqnarray}}
+
+
+%%% TEXT 
+
+\newcounter{i}
+
+\newcounter{j}
+\numberwithin{j}{i}
+\renewcommand{\thej}{\thei .\arabic{j} }
+
+
+
+
+
+%\renewcommand{\Im}[1]{\ensuremath{\, \mbox{Im} #1}}
+%\newcommand{\newsection}[1]{\vskip 0.3in  \noindent \refstepcounter{i} {\huge \bf Chapter \thei} \vskip 0.4in  \noindent {\bf \Huge  #1}
+%\addcontentsline{toc}{section}{\thei. #1}
+%\vskip 0.4in  \nopagebreak}
+%\newcommand{\example}[1]{\normalSkip{ \textsc{Example.}} #1 \nopagebreak}
+%\newcommand{\examples}[1]{\normalSkip{ \textsc{Examples.}} #1 \nopagebreak}
+%\newcommand{\newsections}[1]{\normalSkip { \bf { #1}
+%\addcontentsline{toc}{section}{\thei. #1}
+% \nopagebreak }}
+%\newcommand{\normalSkip}{\vskip 0.3 in}
+%\newcommand{\newsubsections}[1]{\normalSkip \noindent { \bf { #1}
+%\addcontentsline{toc}{section}{\thei. #1}
+%\nopagebreak \medskip \nopagebreak }}
+%\newcommand{\newthm}[1]{\normalSkip\textsl{\textsc{Theorem.} #1} \medskip}
+%\newcommand{\newpro}[1]{\normalSkip \refstepcounter{j} \textsl{\textsc{\thej\ Proposition.} #1} \medskip}
+%\newcommand{\newlem}[1]{\normalSkip \refstepcounter{j} \textsl{\textsc{\thej\ Lemma.} #1} \medskip}
+%\newcommand{\newcor}[1]{\normalSkip \refstepcounter{j} \textsl{\textsc{\thej\ Corollary.} #1} \medskip}
+%\newcommand{\newproposition}[2]{\normalSkip \refstepcounter{j} \textsl{\textsc{\thej\ #1.} #2} \medskip}
+%\newcommand{\newproperty}[1]{\normalSkip\refstepcounter{j}\textsl{\textsc {\thej\ Property.} #1} \medskip}
+%\newcommand{\proof}[1]{\normalSkip{\textit{Proof :}} #1 \nopagebreak \vspace{-6.93mm}\begin{flushright}$\square$\end{flushright}}
+%\newcommand{\definition}[1]{ \normalSkip \refstepcounter{j} \textsc{\thej\ Definition.} #1 \nopagebreak}
+%\newcommand{\remark}[1]{ \normalSkip \refstepcounter{j} \textsc{\thej\ Remark.} #1 \nopagebreak}
+%\newcommand{\remarks}[1]{ \normalSkip \refstepcounter{j} \textsc{\thej\ Remarks.} #1 \nopagebreak}
+%\newcommand{\definitions}[1]{ \normalSkip \refstepcounter{j} \textsc{\thej\ Definitions.} #1 \nopagebreak}
+%\newcommand{\notations}[1]{ \normalSkip \refstepcounter{j} \textsc{\thej\ Notations.} #1 \nopagebreak}
+%\newcommand{\notation}[1]{ \normalSkip \refstepcounter{j} \textsc{\thej\ Notation.} #1 \nopagebreak}
+%\newcommand{\exercise}[1]{\normalSkip\vspace{-2.50mm}\refstepcounter{j}\textsc{\thej\ Exercise.} #1 \nopagebreak}
+%\newcommand{\resolution}[1]{\normalSkip{ \vspace{-2.50mm} \textit{Resolution.}} #1 \nopagebreak}
+%\makeindex
+%
+
+
+
+
+%\def\hatp{{\hat p}}
+%\def\hatPi{{\hat\Pi}}
+%\newcommand{\ps}[1]{(#1)}
+%\newcommand{\psbig}[1]{\big(#1\big)}
+%\newcommand{\psdn}[2]{\ps{#1}_{#2}}
+%\newcommand{\psdnbig}[2]{\psbig{#1}_{#2}}
+%
+%\newcommand{\psOm}[1]{\ps{#1}_\Omega}
+%\newcommand{\psY}[1]{\ps{#1}_Y}
+%\newcommand{\psYbig}[1]{\psbig{#1}_Y}
+%\newcommand{\psH}[1]{\ps{#1}_H}
+%\newcommand{\psh}[1]{\ps{#1}_h}
+%\def\rh{r_h}
+%\def\dtu{\dt u_0}
+%\def\dttu{\dtt u_0}
+%\def\IH{I_H}
+%\def\Ih{I_h}
+%\def\omegaKj{\omega_{\ele_j}}
+%\def\xKj{x_{\ele_j}}
+%\def\corChi{\chi}
+%\def\corThe{\theta}
+%\def\corKap{K}
+%\def\corL{L}
+%\def\wnorm{\vert\hskip-0.4mm\vert\hskip-0.4mm\vert} 
+%\renewcommand{\bar}{\overline}
+%\newcommand{\uHjK}{u^H_{K_j}}
+%\newcommand{\uHjK}{u^H(x_{K_j})}
+%\newcommand{\modif}[1]{\textcolor{red}{#1}\index {#1}}
+%\newcommand{\intMean}[1]{\langle{#1}\rangle}
+%\newcommand{\Ymean}[1]{\intMean{#1}_Y}
+\newcommand{\vertiii}[1]{{\left\vert\kern-0.25ex\left\vert\kern-0.25ex\left\vert #1 
+    \right\vert\kern-0.25ex\right\vert\kern-0.25ex\right\vert}}

@@ -1,0 +1,1 @@
+/usr/bin/c++    -fopenmp -std=c++11 -Wall -g   CMakeFiles/example.dir/GenerateTrajectories.cpp.o  -o example -rdynamic ../RKRandomStep/libRandomStep.a ../RKSolver/libRungeKuttaSolver.a 

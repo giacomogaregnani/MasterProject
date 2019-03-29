@@ -1,0 +1,81 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=4.521in,
+height=3.566in,
+at={(0.758in,0.481in)},
+scale only axis,
+xmode=log,
+xmin=0.001,
+xmax=1,
+xminorticks=true,
+xlabel={$h$},
+xlabel style = {font=\Large},
+xmajorgrids,
+xminorgrids,
+ymode=log,
+ymin=1e-05,
+ymax=1,
+yminorticks=true,
+ymajorgrids,
+yminorgrids,
+axis background/.style={fill=white},
+legend pos = south east,
+legend style={legend cell align=left,align=left,draw=white!15!black,font=\Large}
+]
+\addplot [color=red,solid,mark=o,mark options={solid}]
+  table[row sep=crcr]{%
+0.125	0.169237691826179\\
+0.0625	0.123577691826179\\
+0.03125	0.0894376918261789\\
+0.015625	0.0645576918261789\\
+0.0078125	0.0461076918261789\\
+0.00390625	0.032607691826179\\
+0.001953125	0.024237691826179\\
+};
+\addlegendentry{$|\E(\Phi_h^d - \tau)|$};
+
+\addplot [color=blue,solid,mark=asterisk,mark options={solid}]
+  table[row sep=crcr]{%
+0.125	0.00179769182617895\\
+0.0625	0.000932308173821061\\
+0.03125	0.000992308173821121\\
+0.015625	0.000822308173821118\\
+0.0078125	0.000342308173821082\\
+0.00390625	0.000762308173821058\\
+0.001953125	1.23081738211406e-05\\
+};
+\addlegendentry{$|\E(\Phi_h^c - \tau)|$};
+
+\addplot [color=black,dashed]
+  table[row sep=crcr]{%
+0.125	0.184430767304716\\
+0.0625	0.130412246220603\\
+0.03125	0.0922153836523578\\
+0.015625	0.0652061231103013\\
+0.0078125	0.0461076918261789\\
+0.00390625	0.0326030615551507\\
+0.001953125	0.0230538459130895\\
+};
+\addlegendentry{$h^{0.5}$};
+
+\addplot [color=black,solid]
+  table[row sep=crcr]{%
+0.125	0.00547693078113731\\
+0.0625	0.00273846539056866\\
+0.03125	0.00136923269528433\\
+0.015625	0.000684616347642164\\
+0.0078125	0.000342308173821082\\
+0.00390625	0.000171154086910541\\
+0.001953125	8.55770434552705e-05\\
+};
+\addlegendentry{$h$};
+
+\end{axis}
+\end{tikzpicture}%

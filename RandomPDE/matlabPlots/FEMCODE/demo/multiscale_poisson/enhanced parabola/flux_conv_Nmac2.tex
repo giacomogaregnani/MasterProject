@@ -1,0 +1,73 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44706,0.74118}%
+\definecolor{mycolor2}{rgb}{0.85098,0.32549,0.09804}%
+\definecolor{mycolor3}{rgb}{0.92941,0.69412,0.12549}%
+\definecolor{mycolor4}{rgb}{0.49412,0.18431,0.55686}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=0.951\fwidth,
+height=\fheight,
+at={(0\fwidth,0\fheight)},
+scale only axis,
+separate axis lines,
+every outer x axis line/.append style={black},
+every x tick label/.append style={font=\color{black}},
+xmode=log,
+xmin=1,
+xmax=100,
+xminorticks=true,
+xlabel={Nmac},
+every outer y axis line/.append style={black},
+every y tick label/.append style={font=\color{black}},
+ymode=log,
+ymin=0.001,
+ymax=1,
+yminorticks=true,
+axis background/.style={fill=white},
+legend style={legend cell align=left,align=left,fill=white}
+]
+\addplot [color=mycolor1,solid,line width=3.0pt,mark size=5.0pt,mark=o,mark options={solid}]
+  table[row sep=crcr]{%
+4	0.4317\\
+8	0.1508\\
+16	0.091\\
+32	0.0845\\
+};
+\addlegendentry{Nmic = 4};
+
+\addplot [color=mycolor2,solid,line width=3.0pt,mark size=5.0pt,mark=o,mark options={solid}]
+  table[row sep=crcr]{%
+4	0.3975\\
+8	0.1175\\
+16	0.04\\
+32	0.0243\\
+};
+\addlegendentry{Nmic = 8};
+
+\addplot [color=mycolor3,solid,line width=3.0pt,mark size=5.0pt,mark=o,mark options={solid}]
+  table[row sep=crcr]{%
+4	0.3879\\
+8	0.1107\\
+16	0.0316\\
+32	0.0117\\
+};
+\addlegendentry{Nmic = 16};
+
+\addplot [color=mycolor4,solid,line width=3.0pt,mark size=5.0pt,mark=o,mark options={solid}]
+  table[row sep=crcr]{%
+4	0.3843\\
+8	0.1085\\
+16	0.0294\\
+32	0.0079\\
+};
+\addlegendentry{Nmic = 32};
+
+\end{axis}
+\end{tikzpicture}%

@@ -1,0 +1,95 @@
+\documentclass{scrartcl}
+
+% basics
+\usepackage{fullpage}
+\usepackage[utf8x]{inputenc}
+\usepackage{afterpage}
+\usepackage{enumitem}   
+\setlist[enumerate]{topsep=3pt,itemsep=3pt,label=(\roman*)}
+
+% maths
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+
+\newcommand{\erf}{\operatorname{erf}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\defeq}{\coloneqq}
+
+\begin{document}
+	
+	Let us consider a random variable $X \sim \log\mathcal{N}(\mu, \sigma^2)$. We want to find an expression for $\E|X - \E X|^3$. By definition
+	\begin{equation*}
+		\E|X - \E X|^3 = \int_{0}^{+\infty}\left|x-\exp\left(\mu+\frac{\sigma^2}{2}\right)\right|^3 \frac{1}{x\sqrt{2\pi}\sigma}\exp\left(-\frac{(\log x-\mu)^2}{2\sigma^2}\right) \, \dd x.
+	\end{equation*}
+	Operating the change of variable $y = (\log x - \mu) / (\sqrt 2 \sigma)$ we obtain
+	\begin{equation*}
+		\E|X - \E X|^3 = e^{3\mu}\int_{-\infty}^{+\infty}\left|e^{\sqrt 2 \sigma y}-e^{\sigma^2/2}\right|^3 \frac{1}{\sqrt \pi}e^{-y^2} \, \dd y.
+	\end{equation*}
+	We now split the integral and expand the cube, thus obtaining
+	\begin{align*}
+		\E|X - \E X|^3 &= e^{3\mu}\int_{-\infty}^{\sigma/(2\sqrt 2)}\left(e^{3\sigma^2/2} - e^{3\sqrt 2 \sigma y} -3 e^{\sigma^2 + \sqrt 2 \sigma y} + 3e^{2\sqrt 2 y \sigma^2/2}\right) \frac{1}{\sqrt \pi}e^{-y^2} \, \dd y\\
+		&- e^{3\mu} \int_{\sigma/(2\sqrt 2)}^{\infty}\left(e^{3\sigma^2/2} - e^{3\sqrt 2 \sigma y} -3 e^{\sigma^2 + \sqrt 2 \sigma y} + 3e^{2\sqrt 2 y \sigma^2/2}\right) \frac{1}{\sqrt \pi}e^{-y^2} \, \dd y.
+	\end{align*}
+	Considering each term singularly, we obtain the final expression
+	\begin{equation}\label{eq:ThirdMoment}
+		\E|X - \E X|^3 =  \exp\left(3\mu + 3\frac{\sigma^2}{2}\right)\left(4\erf\left(\frac{\sigma}{2\sqrt{2}}\right)
+		-3e^{\sigma^2}\erf\left(\frac{3\sigma}{2\sqrt{2}}\right)
+		+e^{3\sigma^2}\erf\left(\frac{5\sigma}{2\sqrt{2}}\right)\right),
+	\end{equation}
+	where 
+	\begin{equation*}
+		\erf(x) = \frac{2}{\sqrt\pi}\int_{0}^{x} e^{-t^2} \, \dd t.
+	\end{equation*}
+	Let us consider the random variable $Z = H - h$, $0 < h < 1$, where $H \sim \log\mathcal{N}(\mu, \sigma^2)$ and
+	\begin{equation*}
+		\mu = \log h - \log\sqrt{1 + h^{2p - 2}}, \quad \sigma^2 = \log(1 + h^{2p-2}),
+	\end{equation*}
+	with $p > 1$.
+	Then, $\E Z = 0$ and the third absolute moment of $Z$ can be expressed as in \eqref{eq:ThirdMoment}. Let us consider the two factors in \eqref{eq:ThirdMoment} separately. For the first, we have
+	\begin{equation}\label{eq:ThirdMoment_FirstTerm}
+		\exp\left(\mu + 3\frac{\sigma^2}{2}\right) = h^3 - \left(1 + 3h^{2p-2}\right)^{3/2} + \left(1 + 3h^{2p-2}\right)^{3/2} = h^3.
+	\end{equation}
+	Now, let us consider the second term. We can replace the exponentials of $\sigma^2$ and obtain
+	\begin{align*}
+		4\erf\left(\frac{\sigma}{2\sqrt{2}}\right)
+		&-3e^{\sigma^2}\erf\left(\frac{3\sigma}{2\sqrt{2}}\right)+e^{3\sigma^2}\erf\left(\frac{5\sigma}{2\sqrt{2}}\right)\\ 
+		&= 4\erf\left(\frac{\sigma}{2\sqrt{2}}\right) -3\left(1+h^{2p-2}\right)\erf\left(\frac{3\sigma}{2\sqrt{2}}\right)+\left(1+h^{2p-2}\right)^3\erf\left(\frac{5\sigma}{2\sqrt{2}}\right)\\
+		&\leq 4\erf\left(\frac{\sigma}{2\sqrt{2}}\right) -3\erf\left(\frac{3\sigma}{2\sqrt{2}}\right) + \erf\left(\frac{5\sigma}{2\sqrt{2}}\right) \\
+			&\quad +Ch^{2p-2}\left(\erf\left(\frac{3\sigma}{2\sqrt{2}}\right) + \erf\left(\frac{5\sigma}{2\sqrt{2}}\right)\right).
+	\end{align*}
+	where $C $ is a positive constant. Then, since $\erf(x) \leq 2x/\sqrt\pi$, we have for the second term
+	\begin{equation}\label{eq:ThirdMoment_SecondTerm}
+	\begin{aligned}
+		Ch^{2p-2}\left(\erf\left(\frac{3\sigma}{2\sqrt{2}}\right) + \erf\left(\frac{5\sigma}{2\sqrt{2}}\right)\right) &\leq C h^{2p-2}\sqrt{\log(1+h^{2p-2})} \\
+		&\leq Ch^{2p-2}h^{p-1} = Ch^{3p-3},
+	\end{aligned}
+	\end{equation}
+	where the second inequality holds for $0 < h < 1$ and $p > 1$. \\
+	Let us now consider the first term, i.e.,
+	\begin{align*}
+		F(\sigma) &\defeq 4\erf\left(\frac{\sigma}{2\sqrt{2}}\right) -3\erf\left(\frac{3\sigma}{2\sqrt{2}}\right) + \erf\left(\frac{5\sigma}{2\sqrt{2}}\right) \\
+		&= \frac{2}{\sqrt{\pi}}\left( \int_{0}^{\sigma/(2\sqrt 2)} e^{-t^2} \dd t - 3 \int_{0}^{3\sigma/(2\sqrt 2)} e^{-t^2} \dd t + \int_{0}^{5\sigma/(2\sqrt 2)} e^{-t^2} \dd t \right).
+	\end{align*}
+	With a change of variable in the second and third integral, and considering the Taylor expansion of the exponential, we have
+	\begin{align*}
+		F(\sigma) &= \frac{2}{\sqrt{\pi}} \int_{0}^{\sigma/(2\sqrt 2)} \left(4 - 9 + 5 + \sum_{i=1}^{\infty}\frac{(-t^2)^i -9(-9t^2)^i+5(-25t^2)^i}{i!}\right) \dd t \\
+		&= \frac{2}{\sqrt{\pi}}\int_{0}^{\sigma/(2\sqrt 2)} \sum_{i=1}^{\infty}\frac{(-t^2)^i -9(-9t^2)^i+5(-25t^2)^i}{i!} \dd t.
+	\end{align*}
+	Since $h < 1 \implies \sigma < 1$, we have for $C > 0$ independent of $h$
+	\begin{equation}\label{eq:ThirdMoment_ThirdTerm}
+		F(\sigma) \leq C \int_{0}^{\sigma/(2\sqrt 2)} t^2 \, \dd t = C \left(\log(1+h^{2p-2})\right)^{3/2} \leq Ch^{3p-3}.
+	\end{equation}
+	Combining \eqref{eq:ThirdMoment}, \eqref{eq:ThirdMoment_FirstTerm}, \eqref{eq:ThirdMoment_SecondTerm} and \eqref{eq:ThirdMoment_ThirdTerm}, we get
+	\begin{equation*}
+		\E|Z|^3 \leq Ch^{3p}.
+	\end{equation*}
+\end{document}

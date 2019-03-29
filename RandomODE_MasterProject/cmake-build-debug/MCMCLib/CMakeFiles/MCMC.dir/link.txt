@@ -1,0 +1,2 @@
+/usr/bin/ar qc libMCMC.a  CMakeFiles/MCMC.dir/MCMC.cpp.o CMakeFiles/MCMC.dir/RAM.cpp.o
+/usr/bin/ranlib libMCMC.a

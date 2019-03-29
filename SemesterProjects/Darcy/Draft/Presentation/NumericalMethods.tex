@@ -1,0 +1,163 @@
+\begin{frame} %%% DEM
+\frametitle{Discrete Euler-Maruyama (DEM)}
+Method:
+\begin{equation*}
+	\left \{
+	\begin{aligned}
+		X_{h,i+1}^d &= f(X_{h,i}^d)h + g(X_{h,i}^d)(W(t_{i+1}) - W(t_{i})),  \\
+		X_{h,0}^d &= X_0.
+	\end{aligned} \right .
+\end{equation*}
+Parameters of interest computed naively
+\begin{equation*}
+\begin{aligned}
+	\tau_h^d &= \min\{\tau_{h,e}^d,T\}, \text{ where } \tau_{h,e}^d = h\min \{i \colon X_{h,i}^d \notin D\}. \\
+	 \phi_h^d &= \mathbbm{1}_{\{T < \tau_{h,e}^d\}}F(X_{h,N}^d).
+\end{aligned}
+\end{equation*}
+Missed exits $\to$ 1/2 loss in weak order:
+\begin{align*}
+	|\mathbb{E}(\tau_h^d) - \mathbb{E}(\tau)| &= O(\sqrt{h}), \\
+	|\mathbb{E}(\phi_h^d) - \mathbb{E}(\phi)| &= O(\sqrt{h}).
+\end{align*}	
+\end{frame}
+
+\begin{frame}
+\frametitle{DEM - Missed exits}
+\begin{figure}
+	\centering
+        \resizebox{0.7\linewidth}{!}{\input{Pictures/MissedExit.tikz} }  
+	\caption{A missed exit. Running DEM with a big step size $h$ the exit of a trajectory is not detected.}
+\end{figure}
+
+\end{frame}
+
+\begin{frame} %%% CEM 
+\frametitle{Continuous Euler-Maruyama (CEM)}
+\underline{Goal}. Restore the weak order of convergence 1 of Euler-Maruyama \\ 
+$\to$ Brownian bridge approach.
+
+Method:
+\begin{equation*}
+	\left \{
+	\begin{aligned}
+		X_h^c(t) &= f(X_h^c(t_i))(t-t_i) + g(X_h^c(t_i))(W(t) - W(t_{i})), \: t_i < t \leq t_{i+1},\\
+		X_h^c(0) &= X_0.
+	\end{aligned} \right .
+\end{equation*} 
+Estimate at each time step the probability of exit. If $D$ is an half-space
+\begin{equation*}
+\begin{aligned}
+	&\Pr (\exists t \in [ t_i,t_{i+1} ] \quad X_h^c(t) \notin D | X_h^c(t_i) = x_i, X_h^c(t_{i+1}) = x_{i+1})) \\
+	&\quad = p(x_i,x_{i+1},h) \\
+	&\quad = \exp\Big(-2\frac{[n\cdot(x_i - z_i)][n\cdot(x_{i+1} - z_i)]}{hn\cdot (gg^T(x_i)n)}\Big).
+\end{aligned}
+\end{equation*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Continuous Euler-Maruyama (CEM)}
+Parameters of interest. Given $\tilde U$ a realization of $U$ uniform random variable in $(0,1)$
+\begin{equation*}
+\begin{aligned}
+	\tau_h^c &= \min \{T,\tau_{h,e}^c\}, \\
+	\text{ where } \tau_{h,e}^c &= \min\{\tau_{h,e1}^c, \tau_{h,e2}^c\}, \\
+	\tau_{h,e1}^c &= \min\{h\min\{i \colon X_h^c(t_i) \notin D\}, \\
+	\tau_{h,e2}^c &= h\min\{i \colon \tilde U < p(X_h^c(t_{i-1}),X_h^c(t_i),h) \}, \\
+	\phi_h^c &= \mathbbm{1}_{\{T < \tau_{h,e}^c\}}F(X_h^c(T)).
+\end{aligned}
+\end{equation*}
+Weak order 1 is restored:
+\begin{align*}
+	|\mathbb{E}(\tau_h^c) - \mathbb{E}(\tau)| &= O(h), \\
+	|\mathbb{E}(\phi_h^c) - \mathbb{E}(\phi)| &= O(h).
+\end{align*}
+\end{frame}
+
+\begin{frame} %%% Adaptivity
+\frametitle{Adaptivity}
+\underline{Goal}. Restore the weak order of convergence 1 of Euler-Maruyama \\
+$\to$ Adaptivity in space. \\
+\underline{Setting}. Consider $\sigma \in \R$ and
+\begin{equation*}
+\left \{
+\begin{aligned}
+	dX(t) &= f(X(t)) dt + \sigma dW(t), && 0 < t \leq T, \\
+	X(0)  &= X_0, && X_0 \in D.
+\end{aligned} \right .
+\end{equation*}
+\underline{Idea}. Given $l \in \N, h_0 > 0$, adapt step size $h$ in DEM as follows
+\begin{equation*}
+	h = \max\Big\{ h_{bound}, \min\Big\{ h_{int}, \Big(\frac{d}{(l + 3)\sigma}\Big)^2\Big\}\Big\}.
+\end{equation*}
+where
+\begin{equation*}
+\begin{aligned}
+	h_{bound} &= 2^{-2l}h_0, \\
+	h_{int} &= 2^{-l}h_0.
+\end{aligned}
+\end{equation*}
+\end{frame}	
+
+\begin{frame}
+\frametitle{Adaptivity}
+\begin{minipage}[0]{0.49\linewidth}
+\begin{tikzpicture}
+	\draw [line width = 0.5mm] (0,0) rectangle (5,5);
+	\draw (1,1) rectangle (4,4);
+	\draw (2,2) rectangle (3,3);
+	\node[align=center] at (2.5, 2.5) {$h_{int}$};
+	\node[align=center] at (2.5, 3.5) {Transition};
+	\node[align=center] at (2.5, 4.5) {$h_{bound}$};
+\end{tikzpicture}
+\end{minipage}
+\begin{minipage}[0.55]{0.49\linewidth}
+Domain divided in three parts
+\begin{itemize}
+	\item Interior zone \\ $\to$ $h = h_{int} = 2^{-l}h_0$,
+	\item Boundary zone \\ $\to$ $h = h_{bound} = 2^{-2l}h_0$,
+	\item Intermediate zone \\ $\to$ $h = \Big(\frac{d}{(l + 3)\sigma}\Big)^2$.
+\end{itemize}
+\end{minipage}
+
+\vspace{1cm}
+\underline{Aim}. Order of convergence $O(\sqrt{h_{bound}}) = O(h_{int})$ saving computational time.
+\end{frame}
+
+\begin{frame} %%% Reflecting boundaries
+\frametitle{Reflecting boundaries}
+For all methods, equal treatment of reflecting boundaries. Consider $\partial D = \Gamma_r \cup \Gamma_k$ reflecting and killing boundaries.
+
+\vspace{1cm}
+\begin{minipage}[0]{0.4\linewidth}
+\begin{tikzpicture}
+	\draw [line width = 0.5mm] (5,4) -- (5,0);
+	\draw (4,1) -- (5,2);
+	\draw [dashed] (5,2) -- (6,3);
+	\draw (5,2) -- (4,3);
+	\draw [dashed] (6,3) -- (4,3);
+	\draw [->,color=red] (4,1) -- (4,3);
+	\node [anchor=west] at (5,1) {$\partial D$};
+	\node [anchor=east] at (4,1) {$X_i$};
+	\node [anchor=west] at (6,3) {$X_{i+1}$};
+	\node [anchor=east,color=red] at (4,3) {$\tilde X_{i+1}$};
+	\node [anchor=east] at (4,0) {$D$};
+	\node [anchor=west] at (6,0) {$D^C$};
+\end{tikzpicture}
+\end{minipage}
+\begin{minipage}[0.4]{0.55\linewidth}
+\begin{enumerate}
+	\item Compute $X_{i+1}$;
+	\item If the segment connecting $X_i$ and $X_{i+1}$ crosses $\Gamma_r$: \\
+		$X_{i+1} \leftarrow \color{red}\tilde X_{i+1}$ reflection of $X_{i+1}$;
+	\item If $\tilde X_{i+1} \notin D$: \\
+		Check the segment connecting $X_i$ and $\tilde X_{i+1}$;
+\end{enumerate}
+\end{minipage}
+
+\vspace{1cm}
+This method does not spoil the order of convergence.
+\end{frame}
+
+
+

@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
     }
 
     odeDef ODE;
-    ODE.ode = LORENZ;
+    ODE.ode = FITZNAG;
     setProblem(&ODE);
 
     std::vector<double> param = ODE.refParam;

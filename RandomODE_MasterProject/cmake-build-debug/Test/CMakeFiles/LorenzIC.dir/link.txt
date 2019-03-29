@@ -1,0 +1,1 @@
+/usr/bin/c++    -fopenmp -std=c++11 -Wall -g   CMakeFiles/LorenzIC.dir/LorenzVariableIC.cpp.o  -o LorenzIC -rdynamic ../RKRandomStep/libRandomStep.a ../Utilities/libUtilitiesGG.a ../RKSolver/libRungeKuttaSolver.a 

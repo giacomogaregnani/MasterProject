@@ -1,0 +1,1 @@
+/usr/bin/c++    -fopenmp -std=c++11 -Wall -g   CMakeFiles/basicTest.dir/BasicFunctionsTest.cpp.o  -o basicTest -rdynamic ../RKSolver/libRungeKuttaSolver.a 

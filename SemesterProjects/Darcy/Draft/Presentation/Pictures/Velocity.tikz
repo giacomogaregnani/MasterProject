@@ -1,0 +1,153 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+%
+\begin{tikzpicture}[%
+arrow1/.style={->,color=mycolor1,solid}
+]
+
+\begin{axis}[%
+width=4.521in,
+height=3.566in,
+at={(0.758in,0.481in)},
+scale only axis,
+xmin=-1,
+xmax=1,
+ymin=-1,
+ymax=1,
+axis background/.style={fill=white}
+]
+\addplot [arrow1] coordinates{(-0.9921875,-0.9921875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.9765625,-0.9765625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.9609375,-0.9609375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.9453125,-0.9453125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.9296875,-0.9296875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.9140625,-0.9140625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.8984375,-0.8984375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.8828125,-0.8828125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.8671875,-0.8671875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.8515625,-0.8515625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.8359375,-0.8359375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.8203125,-0.8203125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.8046875,-0.8046875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.7890625,-0.7890625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.7734375,-0.7734375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.7578125,-0.7578125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.7421875,-0.7421875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.7265625,-0.7265625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.7109375,-0.7109375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.6953125,-0.6953125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.6796875,-0.6796875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.6640625,-0.6640625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.6484375,-0.6484375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.6328125,-0.6328125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.6171875,-0.6171875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.6015625,-0.6015625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.5859375,-0.5859375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.5703125,-0.5703125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.5546875,-0.5546875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.5390625,-0.5390625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.5234375,-0.5234375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.5078125,-0.5078125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.4921875,-0.4921875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.4765625,-0.4765625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.4609375,-0.4609375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.4453125,-0.4453125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.4296875,-0.4296875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.4140625,-0.4140625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.3984375,-0.3984375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.3828125,-0.3828125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.3671875,-0.3671875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.3515625,-0.3515625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.3359375,-0.3359375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.3203125,-0.3203125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.3046875,-0.3046875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.2890625,-0.2890625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.2734375,-0.2734375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.2578125,-0.2578125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.2421875,-0.2421875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.2265625,-0.2265625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.2109375,-0.2109375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.1953125,-0.1953125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.1796875,-0.1796875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.1640625,-0.1640625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.1484375,-0.1484375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.1328125,-0.1328125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.1171875,-0.1171875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.1015625,-0.1015625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.0859375,-0.0859375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.0703125,-0.0703125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.0546875,-0.0546875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.0390625,-0.0390625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.0234375,-0.0234375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(-0.0078125,-0.0078125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.0078125,0.0078125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.0234375,0.0234375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.0390625,0.0390625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.0546875,0.0546875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.0703125,0.0703125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.0859375,0.0859375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.1015625,0.1015625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.1171875,0.1171875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.1328125,0.1328125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.1484375,0.1484375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.1640625,0.1640625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.1796875,0.1796875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.1953125,0.1953125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.2109375,0.2109375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.2265625,0.2265625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.2421875,0.2421875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.2578125,0.2578125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.2734375,0.2734375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.2890625,0.2890625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.3046875,0.3046875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.3203125,0.3203125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.3359375,0.3359375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.3515625,0.3515625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.3671875,0.3671875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.3828125,0.3828125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.3984375,0.3984375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.4140625,0.4140625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.4296875,0.4296875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.4453125,0.4453125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.4609375,0.4609375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.4765625,0.4765625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.4921875,0.4921875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.5078125,0.5078125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.5234375,0.5234375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.5390625,0.5390625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.5546875,0.5546875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.5703125,0.5703125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.5859375,0.5859375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.6015625,0.6015625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.6171875,0.6171875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.6328125,0.6328125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.6484375,0.6484375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.6640625,0.6640625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.6796875,0.6796875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.6953125,0.6953125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.7109375,0.7109375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.7265625,0.7265625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.7421875,0.7421875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.7578125,0.7578125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.7734375,0.7734375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.7890625,0.7890625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.8046875,0.8046875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.8203125,0.8203125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.8359375,0.8359375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.8515625,0.8515625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.8671875,0.8671875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.8828125,0.8828125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.8984375,0.8984375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.9140625,0.9140625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.9296875,0.9296875) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.9453125,0.9453125) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.9609375,0.9609375) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.9765625,0.9765625) (NaN,NaN)};
+\addplot [arrow1] coordinates{(0.9921875,0.9921875) (NaN,NaN)};
+\end{axis}
+\end{tikzpicture}%

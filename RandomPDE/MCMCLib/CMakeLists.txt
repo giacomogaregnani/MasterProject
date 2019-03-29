@@ -1,5 +1,39 @@
+include_directories("${PROJECT_SOURCE_DIR}/OneDimElliptic")
+include_directories("${PROJECT_SOURCE_DIR}/RKRandomStep")
+include_directories("${PROJECT_SOURCE_DIR}/RKSolver")
+
 add_library(MCMC
         MCMC.hpp
         MCMC.cpp
+        RAM.hpp
         RAM.cpp
+        KarhunenLoeve.hpp
+        KarhunenLoeve.cpp
+        Proposals.hpp
+        Proposals.cpp
+        Posterior.hpp
+        FEMPosterior.hpp
+        FEMPosterior.cpp
+        FEMPosteriorFin.hpp
+        FEMPosteriorFin.cpp
+        FEMProbPosterior.hpp
+        FEMProbPosterior.cpp
+        FEMProbPosteriorMulti.hpp
+        FEMProbPosteriorMulti.cpp
+        FEMProbPosteriorFin.hpp
+        FEMProbPosteriorFin.cpp
+        RKPosterior.hpp
+        RKPosterior.cpp
+        RKProbPosterior.hpp
+        RKProbPosterior.cpp
+        RKProbPosteriorFixed.hpp
+        RKProbPosteriorFixed.cpp
+        RKPosteriorIC.hpp
+        RKPosteriorIC.cpp
+        RKProbPosteriorIC.hpp
+        RKProbPosteriorIC.cpp
+        RKEEPosteriorIC.hpp
+        RKEEPosteriorIC.cpp
         )
+
+target_link_libraries(MCMC OneDimEllipticSolver RandomStep)

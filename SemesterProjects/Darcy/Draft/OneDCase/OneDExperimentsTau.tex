@@ -1,0 +1,32 @@
+
+\vspace{2mm}
+\noindent \textbf{Estimation of the exit time.} We consider as a domain for \eqref{eq:OneDModel} the interval $D = \left[-1,1\right]$, final time $T = 5$ and the following functions
+\begin{align}\label{eq:FunctionsOneDSmooth}
+\begin{split}
+	f(x) &= -V'(x), \text{ where } V(x) = 0.1(8x^4 - 8x^2 + x + 2), \\
+	g(x) &= \sigma = 3.
+\end{split}
+\end{align}
+We approximate the value of $\tau$ with a Montecarlo simulation of $\tau_h^d$ and $\tau_h^c$ computed as in \eqref{eq:TauDEM} and \eqref{eq:TauCEM} from the solutions provided by DEM and CEM respectively. In order to verify the order of convergence of the methods, we let $N$ vary in the set $2^i,i=3,\dots,12$ and we fix the number of trajectories $M$ to $10^4$. In this way, the error caused by the Montecarlo estimation should not spoil the order of convergence. We compute the error with respect to the analytic value of the mean exit time in this simple case (see Appendix \ref{sec:Appendix1}). In Figure \ref{fig:OrdersOneD} we show the errors obtained fixing $X_0 = 0$ in both the cases of killing and reflecting boundary conditions in $x = 1$. Moreover, in Figure \ref{fig:ApproxOneD} we show an approximation of $\tau$ obtained with the two methods with $h = T/128$ and $M = 10^3$ for a set of 10 initial values equispaced along $D$. It is possible to remark that computing the probability of exit between two consecutive timesteps as in \eqref{eq:CEMProbHalfSpace} allows correcting the overestimation of $\tau$ obtained simply using DEM. As far as the performances are concerned, we remark that the computational time required by CEM is higher than for DEM if the same value of $h$ is employed. On the other hand, fixing the error, CEM is faster than DEM in this case.
+
+\input{OneDCase/Figures1DSmooth.tex}
+
+% Rough case is not useful anymore
+\iffalse
+\vspace{2mm}
+\noindent\textbf{Rough case.} We consider the same domain $D$ as above, $T = 5$ and $g = \sigma = 3$. We consider $V$ to be piecewise linear, so that $f = -dV$ is piecewise constant. In particular, we choose the following form for $V$
+\begin{equation}\label{eq:FunctionsOneDRough}
+V = 0.1 
+\left \{
+\begin{aligned}
+	 -2x -1&, && x < -0.5, \\
+	 4x + 2&, && -0.5 \leq x < 0, \\
+	 -2x + 2&, &&  0 \leq x < 0.5, \\
+	 4x - 1&, && x \geq 0.5.
+\end{aligned} \right .
+\end{equation}
+This is a linear interpolation of the function $V$ we used in the smooth case above in the points $\{-1,-0.5,0,0.5,1\}$. This case is of particular interest, since if the function $f$ is the result of a numerical method on a $PDE$, it could not be smooth as in the previous case. We perform DEM and CEM with the same parameters as before, \textit{i.e.}, $M = 10^4, N = 2^i,i=3,\dots,12$. In Figure \ref{fig:OrdersOneDRough} it is possible to remark that the rate of convergence of DEM is unvaried with respect to the previous case. The CEM method experiences a slight decrease in the order of convergence with respect to the smooth case.
+
+
+\input{OneDCase/Figures1DRough.tex}
+\fi

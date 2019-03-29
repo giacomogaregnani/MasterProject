@@ -1,0 +1,13 @@
+mesh = structured_mesh([0,2,0,3],[4,6],struct('centre',true));
+ernode = [46,47,19,20,50,51];
+erelem = [41:48, 57:64];
+mesh.elem(erelem,:)=[];
+mesh.node(ernode,:)=[];
+nodesub = [1:18, 0, 0, 19:43, 0, 0, 44:45, 0,0,46:60];
+mesh.elem = nodesub(mesh.elem);
+nodesub2 = [1:28, 1:5, 29:60];
+mesh.elem = nodesub2(mesh.elem);
+mesh.node(29:33,:) = [];
+mesh.periodic = true;
+mesh.box = [0,3,0,3];
+simpplot(mesh,struct('nodenum',true,'elemnum',true));

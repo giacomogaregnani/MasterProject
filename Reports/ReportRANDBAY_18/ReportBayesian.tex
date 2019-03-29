@@ -1,0 +1,164 @@
+\documentclass{article}
+
+% basics
+\usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage[title,titletoc]{appendix}
+\usepackage{afterpage}
+\usepackage{enumitem}   
+\setlist[enumerate]{topsep=3pt,itemsep=3pt,label=(\roman*)}
+
+% maths
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+%\newsiamremark{assumption}{Assumption}
+%\newsiamremark{remark}{Remark}
+\theoremstyle{remark}
+\newtheorem{example}{Example}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+%\numberwithin{theorem}{section}
+
+% tables
+\usepackage{booktabs}
+
+% plots
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,positioning,fit,matrix}
+\usepackage[labelfont=bf]{caption}
+\setlength{\belowcaptionskip}{-5pt}
+\usepackage{here}
+\usepackage[font=normal]{subcaption}
+
+% title and authors
+\newcommand{\TheTitle}{Literature review -- Bayesian inverse problems} 
+\title{{\TheTitle}}
+\author{Giacomo Garegnani}
+\date{}
+
+% my commands 
+\DeclarePairedDelimiter{\ceil}{\left\lceil}{\right\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\|}{\|}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\Pr}{\mathbb{P}}
+\newcommand{\eqtext}[1]{\ensuremath{\stackrel{#1}{=}}}
+\newcommand{\leqtext}[1]{\ensuremath{\stackrel{#1}{\leq}}}
+\newcommand{\iid}{\ensuremath{\stackrel{\text{i.i.d.}}{\sim}}}
+\newcommand{\totext}[1]{\ensuremath{\stackrel{#1}{\to}}}
+\newcommand{\rightarrowtext}[1]{\ensuremath{\stackrel{#1}{\longrightarrow}}}
+\newcommand{\leftrightarrowtext}[1]{\ensuremath{\stackrel{#1}{\longleftrightarrow}}}
+\newcommand{\pdv}[2]{\ensuremath\partial_{#2}#1}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\epl}{\varepsilon}
+\newcommand{\diffL}{\mathcal{L}}
+\newcommand{\prior}{\mathcal{Q}}
+\newcommand{\defeq}{\coloneqq}
+\newcommand{\eqdef}{\eqqcolon}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\E}{\operatorname{\mathbb{E}}}
+\newcommand{\MSE}{\operatorname{MSE}}
+\newcommand{\trace}{\operatorname{tr}}
+\newcommand{\MH}{\mathrm{MH}}
+\newcommand{\ttt}{\texttt}
+\newcommand{\Hell}{d_{\mathrm{Hell}}}
+\newcommand{\sksum}{{\textstyle\sum}}
+\newcommand{\dd}{\mathrm{d}}
+\definecolor{shade}{RGB}{100, 100, 100}
+\definecolor{bordeaux}{RGB}{128, 0, 50}
+\newcommand{\corr}[1]{{\color{red}#1}}
+\newcommand{\ml}{\mathcal}
+
+\begin{document}
+
+\maketitle
+
+\section*{Setting} Let us first introduce the notation employed in the following. We denote by $\ml U$ the parameter space, $\ml V$ the solution space and by $\ml Y$ the observation space. Moreover, we denote by $\ml S \colon \ml U \to \ml V$ the solution operator and by $\ml O \colon \ml V \to \ml Y$ the observation operator. The forward operator $\ml G \colon \ml U \to \ml Y$ is hence defined as $\ml G = \ml O \circ \ml S$. The space of probability distributions over a generic topological space $\ml X$ is denoted by $\ml M(\ml X)$.
+\begin{example} Let us clarify the notations above by considering $f\colon \R^d \to \R^d$ and the ODE
+	\begin{align*}
+		z(t; u)'& = f(t; u), \quad 0 < t \leq T \\
+		\quad z(0; u) &= z_0(u),
+	\end{align*}
+	where $u \in \ml U$ is a parameter. In this case, we have $\ml V = \ml C([0, T])$ and the solution operator $\ml S$ is defined as $\ml S \colon u \mapsto z(t; u)_{t\in[0, T]}$. Moreover, we could for example observe the solution on a series of time points $\{t_1, t_2, \ldots, t_D\} \subset [0, T]$, so that $\ml Y = \R^{Dd}$ and the observation operator is defined as $\ml O \colon z(t; u)_{t\in[0, T]} \mapsto (z(t_1, u), z(t_2, u), \ldots, z(t_D, u))$.
+\end{example}
+A Bayesian inverse problem consists in determining the posterior distribution $\mu^y$ of the parameter $u$ from corrupted observations $y$ defined as
+\begin{equation*}
+	y = \ml G(u) + \eta,
+\end{equation*}
+where $\eta$ is an additive source of noise. Assuming that $\eta$ is distributed according to $\mathbb Q_0 \in \ml M(\ml Y)$, then $y|u$ is distributed according to $\mathbb Q_u \in \ml M(\ml Y)$, translate of $\mathbb Q_0$ by $\ml G(u)$. Moreover, we assume that $\mathbb Q_u$ and $\mathbb Q_0$ satisfy
+\begin{equation*}
+	\frac{\dd \mathbb Q_u }{\dd \mathbb Q_0} (y) = \exp (-\Phi(u; y)),
+\end{equation*}
+for some function $\Phi\colon \ml U\times \ml Y \to \R$, called the negative log-likelihood (potential). Given a prior $\mu_0 \in \ml M(\ml U)$, the posterior density is given by Bayes' formula, which in this context reads
+\begin{equation}\label{eq:InverseProblem}
+	\frac{\dd \mu^y }{\dd \mu_0} (u) = \frac{1}{Z(y)} \exp (-\Phi(u; y)),
+\end{equation}
+where $Z(y) = \E_{\mu_0} \exp(-\Phi(u; y))$ is the normalising constant, assumed to satisfy $0 < Z(y) < \infty$. Let us now consider an approximation $\Phi_N(u; y)$ of $\Phi(u; y)$ which depends on $N$ degrees of freedom. This will be associated with an approximated posterior $\mu_N^y$ defined as
+\begin{equation}\label{eq:ApproxInverseProblem}
+	\frac{\dd \mu_N^y }{\dd \mu_0} (u) = \frac{1}{Z(y)} \exp (-\Phi_N(u; y)).
+\end{equation}
+In the following, we employ the Hellinger distance, defined for two measures $\mu_1, \mu_2 \in \ml M(\ml X)$ which are both absolutely continuous with respect to a measure $\Lambda \in \ml M(\ml X)$ as
+\begin{equation*}
+	d_H(\mu_1, \mu_2)^2 \coloneqq \frac{1}{2} \int_{\ml X} \Big(\sqrt{\frac{\dd \mu_1}{\dd \Lambda}(u)} - \sqrt{\frac{\dd \mu_2}{\dd \Lambda}(u)} \Big)^2 \dd \Lambda(u).
+\end{equation*}
+The Hellinger distance is independent on the choice of $\Lambda$ and is equivalent to the total variation distance.
+
+\section*{Well-posed inverse problems and approximations}
+
+In the infinite-dimensional setting, it is relevant to verify whether the generalised Bayes' formula \eqref{eq:InverseProblem} defines a unique and stable posterior measure $\mu^y$. The following definition establishes the property of well-posedness with respect to the Hellinger metrics.
+\begin{definition}[Definition 1.1. \cite{HoN17}] Suppose $\ml U$ is a Banach space. Then the inverse problem \eqref{eq:InverseProblem} is said to be \textit{Hellinger well-posed} if:
+	\begin{enumerate}
+		\item There exists a unique $\mu^y$ absolutely continuous with respect to $\mu_0$ satisfying \eqref{eq:InverseProblem}.
+		\item Given $\epl > 0$, there is a constant $C > 0$ such that if $\norm{y - y'}_{\ml Y} < C$, then $d_H(\mu^y, \mu^{y'}) < \epl$.
+	\end{enumerate}
+\end{definition}
+The well-posedness of \eqref{eq:InverseProblem} depends on the function $\Phi$ and on the choice of the prior measure $\mu_0$. In particular, the assumptions that $\Phi$ has to satisfy are standard and can be found, for example, in Assumption 2.6 of \cite{Stu10}. Another property which is desired for Bayesian inverse problem is the notion of \textit{consistent approximation}. 
+\begin{definition}[Definition 1.2. in \cite{HoN17}] The approximate Bayesian inverse problem \eqref{eq:ApproxInverseProblem} is a consistent approximation to \eqref{eq:InverseProblem} if $d_H(\mu^y, \mu^y_N) \to 0$ as $\abs{\Phi(u;y) - \Phi_N(u;y)} \to 0$.
+\end{definition}
+In particular, it is desirable that if the approximation of $\Phi$ by $\Phi_N$ decays as a function $\psi(N)$ for $N \to \infty$, then the Hellinger distance has the same rate of convergence.
+
+As far as the choice of the prior measure is concerned, the analysis presented in \cite{Stu10} proves well-posedness of \eqref{eq:InverseProblem} when $\ml U$ is a Banach space and $\mu_0$ is a Gaussian measure. In this case, proving well-posedness relies on the application of Fernique theorem (Theorem 6.9 in \cite{Stu10}). Relaxations of the rather limiting Gaussian hypothesis for the prior in literature are summarised below.
+\begin{itemize}
+	\item Besov priors in \cite{DHS12}.
+	\item Priors with exponential tails in \cite{HoN17}.
+	\item Infinitely divisible and heavy-tailed prior measures in \cite{Hos17}.
+	\item Heavy-tailed priors defined on quasi-Banach space (relaxation of the hypothesis that $\ml U$ is a Banach space) in \cite{Sul17}. Examples of quasi-Banach spaces are $L^p$ spaces for $0 < p < 1$.
+\end{itemize}
+In all the papers cited above, the authors prove the well-posedness of the posterior measure together with the transfer of convergence rates from the likelihood approximation to the posterior approximation. 
+
+In order to sample from the posterior distribution defined in \eqref{eq:ApproxInverseProblem}, the standard Metropolis-Hastings is not suitable due to a degeneration in the quality of the Markov chain for $N$ large. Nonetheless, there exist MCMC algorithms for which the acceptance ratio does not degenerate for refined discretisations. Two examples of these algorithms are presented in \cite{CRS13, RuS16}, where the case of Gaussian priors is studied.
+
+\section*{Random forward models}
+In \cite{LST17}, the authors analyse the case where the approximation $\Phi_N$ of the (deterministic) negative log-likelihood $\Phi$ is given by a random variable. In particular, given a measurable space $(\Omega, \ml F, P)$ and fixed the observation $y \in \ml Y$ the approximation of the potential is given by the random variable $\Phi_N \colon \Omega \times \ml U \to \R$. This situation is typical of the approximation given by a probabilistic numerical method. Assume there exists a probability measure $\nu_N$ on $\Omega$ such that $\Phi_N$ is distributed following the distribution $\nu_N \otimes \mu_0$. If the formula \eqref{eq:ApproxInverseProblem} is applied directly, the posterior $\mu_N^y$ will be therefore a random variable itself. We will denote this random measure by $\mu_{N, \mathrm{sample}}^y \colon \Omega \to \ml M(\ml U)$. This notation means that for each $\omega \in \Omega$, the application of \eqref{eq:ApproxInverseProblem} will give a different posterior measure. Conversely, it is possible to obtain a deterministic posterior by marginalising the first argument in $\Phi_N$, thus obtaining the posterior $\mu_{N, \mathrm{marginal}}^y$ defined as
+\begin{equation*}
+	\frac{\dd \mu_{N, \mathrm{marginal}}^y}{\dd \mu_0} (u) = \frac{\E_{\nu_N}\big(\exp (-\Phi_N(\cdot, u; y))\big)}{\E_{\nu_N} (Z(y))} ,
+\end{equation*}
+where $Z(y) = \E_{\mu_0}\big(\exp (-\Phi_N(\cdot, u; y)\big)$. In \cite{LST17}, the convergence of both the posteriors $\mu_{N, \mathrm{sample}}^y$ and $\mu_{N, \mathrm{marginal}}^y$ are studied (Theorem 3.1 and 3.2 respectively). In particular, it is shown that 
+\[
+d_H(\mu^y, \mu_{N, \mathrm{marginal}}^y) \to 0,
+\] 
+and 
+\[
+\E_{\nu_N}\big(d_H(\mu^y, \mu_{N, \mathrm{sample}}^y)^2\big)^{1/2} \to 0
+\]
+with the same rate of convergence of $\Phi_N \to \Phi$ in some space $L^p(\Omega)$. Let us remark that this analysis expands the work \cite{StT18}, where only Gaussian process approximations of $\Phi$ are taken into account.
+
+Sampling from random posteriors requires additional care. In particular
+\begin{itemize}
+\item When sampling from $\mu_{N, \mathrm{sample}}$, it is sufficient to sample from a series of posteriors $\mu_N^{(i)} \sim \mu_{N, \mathrm{sample}}$ with a deterministic algorithm. An approximation of $\mu^y$ is then obtained with a Monte Carlo average. 
+\item In order to sample from $\mu_{N, \mathrm{marginal}}^y$, it is convenient to employ a pseudo-marginal MCMC algorithm. The algorithm is based on an \textit{inner} Monte Carlo average, sampling from $\Phi_N$ at each iteration of the MCMC algorithm. It has first been introduced in \cite{AnR09}, and its properties have been analysed in \cite{DPD15, STR15, DDP17}. In these articles, the optimal choice for the number of inner and outer Monte Carlo samples for minimising the computational cost is studied. Another choice could be the inexact noisy pseudo-marginal algorithm, whose properties are studied in \cite{MLR16, AFE16}.
+\end{itemize}
+
+\bibliographystyle{apalike}
+\bibliography{anmc}
+
+\end{document}o

@@ -1,0 +1,334 @@
+\documentclass{siamart1116}
+
+% basics
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage[title,titletoc]{appendix}
+\usepackage{afterpage}
+\usepackage{enumitem}   
+\setlist[enumerate]{topsep=3pt,itemsep=3pt,label=(\roman*)}
+
+% maths
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bbm}
+\newsiamremark{assumption}{Assumption}
+\newsiamremark{remark}{Remark}
+\newsiamremark{example}{Example}
+\numberwithin{theorem}{section}
+
+% plots
+\usepackage{pgfplots} 
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage[font=normal]{subcaption}
+\usepackage{here}
+\usepackage[labelfont=bf]{caption}
+\setlength{\belowcaptionskip}{-5pt}
+
+% tables
+\usepackage{booktabs}
+
+% title and authors
+\newcommand{\TheTitle}{A stochastic finite elements method for elliptic partial differential equations based on random grids} 
+\newcommand{\TheAuthors}{A. Abdulle, G. Garegnani}
+\headers{Random mesh FEM}{\TheAuthors}
+\title{{\TheTitle}}
+\author{Assyr Abdulle\thanks{Mathematics Section, \'Ecole Polytechnique F\'ed\'erale de Lausanne (\email{assyr.abdulle@epfl.ch})}
+	\and
+	Giacomo Garegnani\thanks{Mathematics Section, \'Ecole Polytechnique F\'ed\'erale de Lausanne (\email{giacomo.garegnani@epfl.ch})}}
+
+% my commands 
+\DeclarePairedDelimiter{\ceil}{\left\lceil}{\right\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\Pr}{\mathbb{P}}
+\newcommand{\eqtext}[1]{\ensuremath{\stackrel{#1}{=}}}
+\newcommand{\leqtext}[1]{\ensuremath{\stackrel{#1}{\leq}}}
+\newcommand{\iid}{\ensuremath{\stackrel{\text{i.i.d.}}{\sim}}}
+\newcommand{\totext}[1]{\ensuremath{\stackrel{#1}{\to}}}
+\newcommand{\rightarrowtext}[1]{\ensuremath{\stackrel{#1}{\longrightarrow}}}
+\newcommand{\leftrightarrowtext}[1]{\ensuremath{\stackrel{#1}{\longleftrightarrow}}}
+\newcommand{\pdv}[2]{\ensuremath\partial_{#2}#1}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\epl}{\varepsilon}
+\newcommand{\Tau}{\mathcal{T}}
+\newcommand{\diffL}{\mathcal{L}}
+\newcommand{\prior}{\mathcal{Q}}
+\newcommand{\defeq}{\coloneqq}
+\newcommand{\eqdef}{\eqqcolon}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\E}{\operatorname{\mathbb{E}}}
+\newcommand{\MSE}{\operatorname{MSE}}
+\newcommand{\trace}{\operatorname{tr}}
+\newcommand{\MH}{\mathrm{MH}}
+\newcommand{\ttt}{\texttt}
+\newcommand{\Hell}{d_{\mathrm{Hell}}}
+\newcommand{\sksum}{\textstyle\sum}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ind}[1]{\mathbbm{1}_{#1}}
+\newcommand{\sign}{\operatorname{\mathrm{sgn}}}
+\definecolor{bordeaux}{RGB}{128, 0, 50} 
+\newcommand{\corr}[1]{{\color{bordeaux}#1}}
+
+\ifpdf
+\hypersetup{
+	pdftitle={\TheTitle},
+	pdfauthor={\TheAuthors}
+}
+\fi
+
+\begin{document}
+	
+\maketitle	
+
+\section{Formulation} Consider $\Omega$ a convex polygon in $\R^d$, with $d = 1, 2, 3$, and the following elliptic partial differential equation (PDE)
+\begin{equation}\label{eq:PDEStrongForm}
+\begin{aligned}
+	-\nabla \cdot\big(\kappa(x) \nabla u\big) &= f, && \text{in } \Omega,\\
+	 u &= 0, && \text{on } \partial\Omega,
+\end{aligned}
+\end{equation}
+where the field $\kappa$ and the forcing term $f$ satisfy the usual assumptions. Let us now consider the space $V = H_0^1(\Omega)$, and the weak formulation of \eqref{eq:PDEStrongForm}, i.e.
+\begin{equation}
+	\text{Find } u \in V \text{ such that } a(u,v) = F(v) \text{ for all } v \in V,
+\end{equation}
+where the bilinear form $a\colon V\times V \to \R$ and the linear functional $F\colon V \to \R$ are defined as
+\begin{equation}
+\begin{split}
+	a(u, v) &= \int_{\Omega} \kappa(x) \nabla u(x) \cdot \nabla v(x) \dd x ,\\
+	F(v) &= \int_{\Omega} f(x) v(x) \dd x.
+\end{split}
+\end{equation}
+Consider now a discretization parameter $h > 0$ and a mesh $T_h$ of elements $K$ with diameter $h$, and the linear finite element space $X^1_h$ defined as
+\begin{equation}
+	X^1_h = \{v \in \mathcal{C}^0(\Omega) \colon v|_{K} \in \mathcal{P}_1, \; \forall K \in T_h\} \cap V,
+\end{equation}
+where $\mathcal{P}_1$ is the space of polynomials of degree at most one. The Galerkin formulation then reads
+\begin{equation}
+	\text{Find } u_h \in X^1_h \text{ such that } a(u_h,v_h) = F(v_h) \text{ for all } v \in X^1_h.
+\end{equation}
+In this work, we present a probabilistic method to obtain a solution $U_h \approx u_h$ accounting for the numerical error in a statistic manner.
+
+\section{One-dimensional case} We present here our method in the one dimensional case, where $\Omega = (a, b) \subset \R$ and \eqref{eq:PDEStrongForm} reads
+\begin{equation}\label{eq:PDEStrongForm1d}
+\begin{aligned}
+	-\big(\kappa(x)u'\big)' &= f, && \text{in } (a, b),\\
+	u &= 0, && \text{in } \{a, b\}.
+\end{aligned}
+\end{equation}	
+In order to introduce our probabilistic finite element method, we first present a result on function interpolation which is needed to prove convergence of the probabilistic method.
+
+\subsection{Perturbed interpolation} Let us consider a Lipschitz continuous function $f\colon\Omega\to\R$, where $\Omega$ is an interval $(a, b)$ of $\R$. Let us consider moreover an uniform grid of $N+1$ points $\Tau_h = \{x_i\}_{i=1}^{N+1}$ with spacing $h$ and such that $x_1 = a$ and $x_{N+1} = b$. Let us moreover denote by $\{y_i\}_{i=1}^{N+1}$ the values taken by $f$ on the grid points, i.e., $y_i = f(x_i)$. We denote the piecewise linear interpolant of $f$ on $\Tau_h$  as $\Pi^1_h f$. It is clear that $\Pi^1_h f$ is an element of $X_h^1(\Omega)$. Let us now consider a perturbed grid $\{\tilde x_i\}_{i=1}^{N+1}$ satisfying the two following properties
+\begin{enumerate}
+	\item The extrema of $\Omega$ coincide with the grid extrema, i.e. $\tilde x_1 = a$ and $\tilde x_{N+1} = b$,
+	\item There exist constants $\{C_i\}_{i=2}^{N-1}$ such that $-1/2 \leq C_i \leq 1/2$ and $p > 1$ such that $\tilde x_i - x_i = C_ih^p$.
+\end{enumerate}
+We now build a perturbed interpolation by considering the nodal values $\{\tilde y_i\}$ computed as $\tilde y_i = f(\tilde x_i)$, for $i = 1,\ldots, N+1$. These nodal values are then used to define an approximation of $f$ on the original grid $\Tau_h$. We denote this new piecewise linear approximation of $f$ as $\widetilde \Pi_h^1 f$. In practice, this means that on the nodes we have $\widetilde \Pi_h^1 f(x_i) = \tilde y_i$ for $i = 1, \ldots, N+1$. The following result quantifies the quality of the approximation provided by $\Pi_h^1 f$ with respect to the grid spacing $h$ and the exponent $p$.
+\begin{lemma}\label{lem:Interp1D} With the notation above, there exists a constant $C > 0$ independent of $h$ such that
+\begin{equation}
+	\norm{f - \widetilde \Pi_h^1f}_{L^2(\Omega)} \leq C h^{\min\{p,2\}},
+\end{equation}
+\end{lemma}
+\begin{proof} We decompose the error as
+	\begin{equation*}
+		\norm{f - \widetilde \Pi_h^1f}_{L^2(\Omega)} \leq \norm{f - \Pi_h^1f}_{L^2(\Omega)} + \norm{\Pi_h^1f - \widetilde \Pi_h^1f}_{L^2(\Omega)}
+	\end{equation*}
+	For the first term, we have the standard interpolation result
+	\begin{equation}
+		\norm{f - \Pi_h^1f}_{L^2(\Omega)} \leq C_1h^2,
+	\end{equation}
+	for a constant $C_1 > 0$ independent of $h$. For the second term, let us denote by $e_h = \Pi_h^1f - \widetilde \Pi_h^1$ and remark that on the nodes
+	\begin{equation*}
+		\abs{e_h(x_i)} \leq \abs{C_i} L h^p, \quad i = 1, \ldots, N+1,
+	\end{equation*}
+	where the $C_i$ are given in assumption (ii) above and $L$ is the Lipschitz constant of $f$. Since all the constant $C_i$ are bounded, we just replace them by a positive constant $C_2 = \max_{i} \abs{C_i}$ independent of $h$. Since both $\Pi_h^1 f$ and $\widetilde \Pi_h^1$ are piecewise linear and their difference on the nodes of $\Tau_h$ is bounded, we can conclude that
+	\begin{equation*}
+		\abs{e_h(x)} \leq C_2 L h^p, \quad \text{a.e. in } \Omega.
+	\end{equation*}
+	This proves the desired results with $C = \min\{C_1, C_2 L\abs{\Omega}^{1/2}\}$.
+\end{proof}
+
+\subsection{Finite Elements} In the spirit of the previous result, we introduce an evenly spaced grid $\{x_i\}_{i=1}^{N+1}$ with spacing $h$ and a randomly perturbed grid $\{X_i\}_{i=1}^{N+1}$ such that
+\begin{enumerate}
+	\item the boundaries are respected, i.e., $X_1 = a$ and $X_2 = b$,
+	\item the perturbation is random but its density has bounded support. In particular, we choose $X_i = x_i + P_i$, where $P_i \sim \mathcal{U} (-1/2 h^{p}, 1/2 h^p)$.
+\end{enumerate}
+Our linear finite elements probabilistic add random perturbations by solving the problem on this perturbed mesh, hence reporting the obtained nodal values on the original mesh. In an algorithmic manner, the method proceeds as follows
+\begin{enumerate}
+	\item solve \eqref{eq:PDEStrongForm1d} with deterministic linear finite elements on the perturbed grid $\{X_i\}_{i=1}^{N+1}$, thus obtaining a solution $\tilde u_h$,
+	\item extract the nodal values $\tilde u_i = \tilde u_h(X_i)$ for all nodes of the grid,
+	\item the probabilistic solution $U_h$ is then given by a linear interpolation of the values $\tilde u_i$ on the original evenly spaced grid $\{x_i\}_{i=1}^{N+1}$, i.e., $U_h(x_i) = \tilde u_i$ for all $i = 1, \ldots, N+1$.
+\end{enumerate} 
+Given this procedure, the following result holds.
+\begin{theorem}\label{thm:Convergence} With the notation above, there exists a positive constant $C$ such that 
+	\begin{equation}
+		\norm{u - \hat U_h}_{L^2(\Omega)} \leq C(h^2 + h^p),
+	\end{equation}
+	for all realizations $\hat U_h$ of the random solution $U_h$.
+\end{theorem}
+\begin{proof} By the triangular inequality 
+	\begin{equation}
+		\norm{u - \hat U_h}_{L^2(\Omega)} \leq \norm{u - \tilde u_h}_{L^2(\Omega)} + \norm{\tilde u_h - \hat U_h}_{L^2(\Omega)},
+	\end{equation}
+	where $\tilde u_h$ is the deterministic solution computed on the perturbed grid. Then, thanks to classic a priori analysis of finite elements, we have
+	\begin{equation}
+		\norm{u - \tilde u_h}_{L^2(\Omega)} \leq \tilde C \max_{i=1,\ldots, N} h_i^2,
+	\end{equation}
+	where $\{h_i\}_{i=1}^{N}$ are the element sizes. By construction of the random grid, we have
+	\begin{equation}
+		\max_{i=1,\ldots, N} h_i \leq h + h^p, \text{ a.s.}.
+	\end{equation}
+	The second term is bounded thanks to Lemma \ref{lem:Interp1D} by $\hat C h^p$, hence the desired result trivially follows.
+\end{proof}
+\begin{remark} In light of the result presented above, the probabilistic numerical method we present should be implemented in practice setting $p = 2$, so that the order of convergence of the corresponding deterministic method is not spoiled.	
+\end{remark}
+
+\section{Inverse problems}
+\subsection{Proof of concept} Let us consider the following simple PDE
+\begin{equation}\label{eq:TestPDEInverse}
+\begin{aligned}
+-u_\theta'' &= \theta, && \text{in } (0, 1),\\
+u_\theta &= 0, && \text{in } \{0, 1\},
+\end{aligned}
+\end{equation}
+whose exact solution is given by
+\begin{equation}
+	u_\theta(x) = \frac{\theta}{2}(x - x^2).
+\end{equation}
+Let us consider as prior distribution $\pi_{\mathrm{Pr}}(\theta)$ on the parameter $\theta$ a Gaussian $\mathcal{N}(\theta_0, \sigma_0^2)$. Moreover, let us consider a scalar $0 < h < 1$ and a single observation $\bar u$ given by
+\begin{equation}
+	\bar u = u_{\bar \theta}(\bar x) + \epl, \quad \epl \sim \mathcal{N}(0, \gamma^2),
+\end{equation}
+where $\bar \theta$ is the true value of the parameter and $0 < \bar x < 1$ is a point in the domain. For any value of $\theta$, the likelihood of the observation is therefore given up to a constant by
+\begin{equation}
+	\pi(\bar u \mid \theta) \propto \exp\Big(-\frac{1}{2\gamma^2}(u_\theta(\bar x) - \bar u )^2 \Big)
+\end{equation}
+Since the exact solution of the PDE is known, it is possible to compute analytically the posterior distribution of the parameter $\theta$. In particular, we have thanks to Bayes' rule
+\begin{equation}
+	\pi(\theta \mid \bar u) \propto \pi_{\mathrm{Pr}}(\theta) \pi(\bar u \mid \theta).
+\end{equation}
+Replacing the expressions of prior and likelihood, we get
+\begin{equation}
+	\pi(\theta \mid \bar u) \propto \exp\Big(-\frac{(\theta - \theta_0)^2}{2\sigma_0^2} - \frac{1}{2\gamma^2}(u_\theta(\bar x) - \bar u )^2 \Big).
+\end{equation}
+Developing the squares in the exponential and disregarding all the terms independent of $\theta$, which enter the proportionality constant, we get
+\begin{equation}
+	\pi(\theta \mid \bar u) \propto \exp\Big(-\frac{(\theta^2 - 2\theta_0\theta)\gamma^2 + \big(u_\theta(\bar x)^2 - 2u_\theta(\bar x)\bar u\big)\sigma_0^2 }{2\sigma_0^2\gamma^2}\Big).
+\end{equation}
+We now replace the expression of $u_\theta(\bar x)$ with its analytic value and obtain
+\begin{equation}
+	\pi(\theta \mid \bar u) \propto \exp\Bigg(-\frac{(\theta^2 - 2\theta_0\theta)\gamma^2 + \big(\frac{\theta^2}{4}(\bar x - \bar x^2)^2 - \theta(\bar x - \bar x^2)\bar u\big)\sigma_0^2 }{2\sigma_0^2\gamma^2}\Bigg).
+\end{equation}
+Grouping the terms with respect to the powers of $\theta$, we get
+\begin{equation}
+	\pi(\theta \mid \bar u) \propto \exp\Bigg(-\frac{\big(\gamma^2 + \frac{\sigma_0^2}{4}(\bar x - \bar x^2)^2\big)\theta^2 - 2\big(\theta_0 \gamma^2 + \frac{\sigma_0^2}{2}(\bar x - \bar x^2)\bar u\big)\theta}{2\sigma_0^2\gamma^2}\Bigg).
+\end{equation}
+Rearranging the terms and completing the square at the numerator we get
+\begin{equation}
+	\pi(\theta \mid \bar u) \propto \exp\left(-\frac{\left(\theta - \frac{\theta_0 \gamma^2 + \frac{\sigma_0^2}{2}(\bar x - \bar x^2)\bar u}{\gamma^2 + \frac{\sigma_0^2}{4}(\bar x - \bar x^2)^2}\right)^2}{2\frac{\sigma_0^2\gamma^2}{\gamma^2 + \frac{\sigma_0^2}{4}(\bar x - \bar x^2)^2}}\right).
+\end{equation}
+This shows that the posterior distribution is a Gaussian $\pi(\theta \mid \bar u) \eqtext{D} \mathcal{N}(\mu_{\theta|\bar u}, \sigma^2_{\theta|\bar u})$, where the parameters are given by
+\begin{equation}
+\begin{aligned}
+	\mu_{\theta|\bar u} &= \frac{\theta_0 \gamma^2 + \frac{\sigma_0^2}{2}(\bar x - \bar x^2)\bar u}{\gamma^2 + \frac{\sigma_0^2}{4}(\bar x - \bar x^2)^2}, \\
+	\sigma^2_{\theta|\bar u} &= \frac{\sigma_0^2\gamma^2}{\gamma^2 + \frac{\sigma_0^2}{4}(\bar x - \bar x^2)^2}.
+\end{aligned}
+\end{equation}
+Let us remark that in the limit for $\gamma \to 0$, i.e., when the observation is noiseless, we have $\sigma^2_\theta \to 0$ and 
+\begin{equation}
+	\mu_{\theta|\bar u} \to \frac{\frac{\sigma_0^2}{2}(\bar x - \bar x^2)\frac{\bar \theta}{2}(\bar x - \bar x^2)}{\frac{\sigma_0^2}{4}(\bar x - \bar x^2)^2} = \bar \theta, \\
+\end{equation}
+which means that, as expected, the exact posterior distribution tends for noiseless observations to the Dirac delta $\delta_{\bar \theta}(\theta)$.
+
+Let us now consider an approximated posterior distribution, where the forward model, and thus the likelihood, are evaluated with a linear FEM solution, that we denote as usual by $u_h$. In particular, let us consider the space discretization parameter $h$ and $\bar x = h / 2$. For \eqref{eq:TestPDEInverse}, linear FEM are exact on the nodes of the mesh, hence $u_h(h / 2) = u(h) / 2$ due to homogeneous Dirichlet boundary conditions. Therefore, for any value of $\theta$, the forward model predicts
+\begin{equation}
+	u_h(h / 2) = \frac{\theta}{4}(h - h^2).
+\end{equation}
+With the same choice of prior and error model as before, it is easy to verify that in this case the posterior distribution $\pi_h(\theta\mid\bar u)$ is Gaussian with parameters
+\begin{equation}
+\begin{aligned}
+	\mu_{\theta|\bar u, h} &= \frac{\theta_0 \gamma^2 + \frac{\sigma_0^2}{4}(h - h^2)\bar u}{\gamma^2 + \frac{\sigma_0^2}{16}(h - h^2)^2}, \\
+	\sigma^2_{\theta|\bar u, h} &= \frac{\sigma_0^2\gamma^2}{\gamma^2 + \frac{\sigma_0^2}{16}(h - h^2)^2}.
+\end{aligned}
+\end{equation}
+In the noiseless limit, i.e., for $\gamma \to 0$, we find trivially that $\sigma_{\theta, h}^2 \to 0$ and the mean 
+\begin{equation}
+	\mu_{\theta|\bar u, h} \to \frac{\frac{\sigma_0^2}{4}(h - h^2)\frac{\bar \theta}{8}(2h - h^2)}{\frac{\sigma_0^2}{16}(h - h^2)^2} = \frac{2 - h}{2(1 - h)}\bar \theta.
+\end{equation}
+In the limit for $h \to 0$, the mean of the posterior distribution is unbiased, meaning that for $\gamma, h \to 0$ we have $\pi_h(\theta\mid \bar u) \to \delta_{\bar \theta}(\theta)$. Nonetheless, for any positive value $h > 0$, the posterior distribution converges to a biased value. For example, if $\bar \theta = 1$ and $h = 1 / 10$, we have that $\mu_{\theta, h} \to 19 / 18 \approx 1.06$ for $\gamma \to 0$.
+
+We now consider the probabilistic FEM solution. Let us suppose that the observation is still in $\bar x = h / 2$. In this case, the probabilistic method predicts
+\begin{equation}
+	U_h(h/2) = u(H_1) / 2 = \frac{\theta}{4}(H_1 - H_1^2),
+\end{equation}
+where $H_1 = \tilde x_1 = h + P_1$. For simplicity of notation, since the only random space discretization involved is $H_1$, we denote $H \defeq H_1$. Moreover, we denote by $\pi(H)$ the density of $H$. In this case, it is not possible to evaluate $\pi(\theta \mid \bar u)$ as the likelihood term $\pi(\bar u \mid \theta)$ depends on the auxiliary variable $H$. Nonetheless, we have
+\begin{equation}
+	\pi(\bar u \mid \theta) = \int_\R \pi(\bar u \mid \theta, H) \pi(H \mid \theta) \dd H.
+\end{equation}
+Hence, we have the following Bayes' rule
+\begin{equation}
+	\pi(\theta \mid \bar u) \propto \pi(\theta) \int_\R \pi(\bar u \mid \theta, H) \pi(H \mid \theta) \dd H.
+\end{equation}
+Replacing the definition of all the objects involved, and considering that $H \sim \mathcal{U}(-h^p/2, h^p/2)$ and that $H$ is independent of $\theta$, so that $\pi(H \mid \theta) = \pi(H)$, we get
+\begin{equation}
+	\pi_{h,\mathrm{prob}}(\theta \mid \bar u) \propto \exp\Big(-\frac{(\theta-\theta_0)^2}{2\sigma_0^2}\Big)\int_{-h^p/2}^{h^p/2} h^{-p}\exp\Big(-\frac{\big(\bar u - U_h(h/2)\big)^2}{2\gamma^2}\Big) \dd H.
+\end{equation}
+Unfortunately, \corr{the posterior distribution is not computable analytically in this case, as the integrand does not admit a closed form primitive.} It is nonetheless possible to draw values from the distribution with density $\pi_{h, \mathrm{prob}}$ using an unbiased estimator of the integral, for example obtained through a Monte Carlo simulation. It is indeed possible to prove (ref..) that an MCMC algorithm which employs an unbiased likelihood estimator targets the exact posterior distribution. 
+
+\section{Numerical experiments} 
+
+\begin{figure}[t!]
+	\begin{center}
+		\begin{tabular}{cc}%{c@{\hspace{0.3cm}}c}
+			\includegraphics[]{solution1Def} & \includegraphics[]{solution2Def} \\
+			\includegraphics[]{solution3Def} & \includegraphics[]{solution4Def} \\
+		\end{tabular}
+	\end{center}
+	\caption{Realizations of the probabilistic numerical solution (grey) compared to the deterministic finite element solution (black). The probabilistic method collapses to the classic solver.}
+	\label{fig:ResultsCollapse}
+\end{figure}
+
+\subsection{Convergence} We consider the following test elliptic PDE
+
+\begin{equation}\label{eq:TestPDE}
+\begin{aligned}
+	-u'' &= \sin(2\pi x), && \text{in } (0, 1),\\
+	u &= 0, && \text{in } \{0, 1\},
+\end{aligned}
+\end{equation}	
+and solve it using the probabilistic numerical integrator. In order to evaluate the error, we consider the closed-form exact solution of \eqref{eq:TestPDE}, which is given by
+\begin{equation}
+	u_{\mathrm{ex}} = \frac{1}{4\pi^2} \sin(2 \pi x).
+\end{equation}
+In Figure \ref{fig:ResultsCollapse} we show $M = 100$ realizations of the probabilistic solution obtained setting $h = 3 \cdot 2^{-1}$ for $i = 1, 2, 3, 4$ and with $p = 1$. It is possible to remark how the uncertainty due to the space discretization is accounted by the probabilistic method, as the realizations collapse towards the deterministic finite element solution when $h$ becomes smaller.
+
+We then consider $h = 3 \cdot 2^{-i}$ for $i = 1, 2, \ldots, 8$ and compute one realization of the numerical solution for the three values $p = \{1, 1.5, 2\}$, thus computing the $L^2$ error with respect to the exact solution $u_{\mathrm{ex}}$. In Figure \ref{fig:ResultsConvergence} we show the results we obtain, which confirm the theoretical result presented in Theorem \ref{thm:Convergence} and the validity of our analysis.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[]{L2Convergence}
+	\caption{Convergence in $L^2$ of the probabilistic numerical solution towards the exact solution of the PDE for different values of $p$.}
+	\label{fig:ResultsConvergence}
+\end{figure}
+
+\subsection{Bayesian inverse problems} Let us consider the following PDE (same test problem as in \cite{CGS16})
+\begin{equation}\label{eq:PDEStrongBayes}
+\begin{aligned}
+-\big(\kappa(x)u'\big)' &= 4x, && \text{in } (0, 1),\\
+	u(0) &= 0,\\
+	u(1) &= 2,
+\end{aligned}
+\end{equation}	
+where $\kappa(x)$ is piecewise constant on ten intervals in $(0, 1)$. In particular we choose $\kappa(x) = \kappa_i$ for $x \in (i/10, (i+1)/10)$ and $i = 0, \ldots, 9$, where the values $\kappa_i$ are given a prior $\kappa_i \sim \log \mathcal{N}(0, 1)$, i.e., $\kappa_i = \exp(\theta_i)$ for $\theta_i \sim \mathcal{N}(0, 1)$. We generate punctual observations $\bar u_i$ in $\bar x_i = 0.1, 0.2, \ldots, 0.9$, which are given by a realization $\bar \kappa$ of $\kappa$ taken from the prior and then an accurate solution of \eqref{eq:PDEStrongBayes} corrupted by zero-mean Gaussian additive noise with standard deviation $10^{-5}$. We wish then to retrieve the value of $\bar \kappa$, i.e., the true value of $\kappa$, using a Metropolis-Hastings algorithm. In order to approximate the likelihood and hence compute the posterior distribution for each guess of $\kappa$, we use either deterministic FEM or the probabilistic method presented above. We choose the robust adaptive MCMC (RAM) \cite{Vih12} for both the choices of the forward solver and apply a random pseudo-marginal algorithm for the probabilistic method \cite{MLR16}. In particular, we tune the RAM algorithm to attain the optimal acceptance ratio of 23.4\%.
+
+\bibliographystyle{siamplain}
+\bibliography{anmc}
+\end{document}

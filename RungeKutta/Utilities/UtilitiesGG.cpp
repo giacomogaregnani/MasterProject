@@ -33,6 +33,18 @@ void loadObservations(std::vector<double>& obsTimes, std::vector<VectorXd>& obs,
     input >> *noise;
 }
 
+void loadObservationsHeat(VectorXd& obs, std::string& fileName, int* solSize, double* noise)
+{
+    std::fstream input(fileName, std::ofstream::in);
+    input >> *noise;
+    input >> *solSize;
+    obs.resize(*solSize - 1);
+
+    for (int i = 0; i < *solSize - 1; i++) {
+        input >> obs(i);
+    }
+}
+
 void computeOrderOfConvergence(std::vector<double>& errors,
                                std::vector<double>& orders,
                                double ratio)

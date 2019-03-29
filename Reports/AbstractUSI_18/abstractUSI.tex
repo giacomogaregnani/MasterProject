@@ -1,0 +1,64 @@
+%%%%  This is a source file for an abstract of a contributed talk
+%%%%  at CH numerics day 2018
+
+\documentclass{article}
+\usepackage{amsmath,amsfonts,amssymb}
+%%%%  
+%
+% About citations:
+%    your abstract might not need them.  But if it does then
+%    feel free to make it work in your favorite package and
+%    bibliographystyle.  But don't send the bibtex file. Instead
+%    just copy-paste the bbl file into your LaTeX source.
+%
+
+%\usepackage{natbib}  % Change this if you like but make sure what you do comes out ok
+                                   %  or it might end up wrong in the abstract
+
+
+% You might be tempted to put in \newcommand and \def and a few
+% \usepackage.  If possible put in none of those.  Otherwise the minimum.
+% We will almost surely encounter conflicts among them and resort to
+% labor intensive and error prone hand edits. Arggh.
+
+
+%%%%
+\begin{document}
+
+%Titel:
+\begin{center}
+{\bf Probabilistic Runge-Kutta methods for uncertainty quantification of numerical errors in geometric integration}
+\end{center}
+
+
+\begin{center}
+{\it Author and Presenter:} \\[0.5ex]
+Giacomo Garegnani (EPFL, Switzerland)
+\end{center}
+
+%Co-authors:
+\begin{center}
+{\it Co-authors:}\\[0.5ex]
+\begin{tabular}{ll}
+& Assyr Abdulle (EPFL, Switzerland)\\
+\end{tabular}
+\end{center}
+
+\bigskip\noindent
+%Abstract:  max. 1 page
+
+{\bf Abstract:} 
+
+A novel geometric probabilistic Runge-Kutta method for the integration of dynamical systems is introduced \cite{AbG18}. A careful randomisation of the time steps allows to construct a probability measure over the numerical solution, which provides uncertainty quantification of the error while collapsing to the true solution consistently with respect to traditional error estimates. Being this randomisation of the method intrinsic in the scheme, some geometric properties of Runge-Kutta methods are proved to be conserved in the mean sense by their probabilistic counterpart.
+
+Finally, we show how the new probabilistic integrator qualitatively enhances the solution of an inferential Bayesian inverse problem involving dynamical systems thanks to the uncertainty introduced in the forward solver.
+
+\bigskip\noindent
+\bibliographystyle{plain}
+\begin{thebibliography}{1}
+\bibitem{AbG18}
+{\sc A.~Abdulle and G.~Garegnani}, {\em Random time step probabilistic methods
+	for uncertainty quantification in chaotic and geometric numerical
+	integration}, arXiv preprint arXiv:1801.01340.
+\end{thebibliography}
+\end{document}

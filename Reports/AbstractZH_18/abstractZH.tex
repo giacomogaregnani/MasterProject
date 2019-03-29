@@ -1,0 +1,66 @@
+%%%%  This is a source file for an abstract of a contributed talk
+%%%%  at CH numerics day 2018
+
+\documentclass{article}
+\usepackage{amsmath,amsfonts,amssymb}
+%%%%  
+%
+% About citations:
+%    your abstract might not need them.  But if it does then
+%    feel free to make it work in your favorite package and
+%    bibliographystyle.  But don't send the bibtex file. Instead
+%    just copy-paste the bbl file into your LaTeX source.
+%
+
+%\usepackage{natbib}  % Change this if you like but make sure what you do comes out ok
+                                   %  or it might end up wrong in the abstract
+
+
+% You might be tempted to put in \newcommand and \def and a few
+% \usepackage.  If possible put in none of those.  Otherwise the minimum.
+% We will almost surely encounter conflicts among them and resort to
+% labor intensive and error prone hand edits. Arggh.
+
+
+%%%%
+\begin{document}
+
+%Titel:
+\begin{center}
+{\bf Random time steps geometric integrators of ordinary differential equations for uncertainty quantification of numerical errors}
+\end{center}
+
+
+\begin{center}
+{\it Author and Presenter:} \\[0.5ex]
+Giacomo Garegnani (EPFL, Switzerland)
+\end{center}
+
+%Co-authors:
+\begin{center}
+{\it Co-authors:}\\[0.5ex]
+\begin{tabular}{ll}
+& Assyr Abdulle (EPFL, Switzerland)\\
+\end{tabular}
+\end{center}
+
+\bigskip\noindent
+%Abstract:  max. 1 page
+
+{\bf Abstract:} 
+
+We introduce a probabilistic integrator for ordinary differential equations (ODEs) based on randomised time steps \cite{AbG18}. The random perturbation that is introduced allows to build a probability measure on the numerical solution and thus to provide an uncertainty quantification of the error. Convergence of this probability measure towards the true solution is studied both in strong and weak sense.
+
+Unlike an additive random perturbation, randomising the time steps guarantees the conservation of some geometric properties of deterministic Runge-Kutta methods, hence improving the robustness of the probabilistic solution.
+
+Probabilistic methods for differential equations allow for a substantial qualitative improvement of the solution of Bayesian inverse problems. Hence, we show how to incorporate our probabilistic integrator in this framework, providing examples of inverse problems based on Hamiltonian systems.
+
+\bigskip\noindent
+\bibliographystyle{plain}
+\begin{thebibliography}{1}
+\bibitem{AbG18}
+{\sc A.~Abdulle and G.~Garegnani}, {\em Random time step probabilistic methods
+	for uncertainty quantification in chaotic and geometric numerical
+	integration}, Submitted for publication (2018).
+\end{thebibliography}
+\end{document}
