@@ -11,7 +11,7 @@ figure
 plot(t, sol');
 legend('true path', 'noisy path')
 
-nChains = 4;
+nChains = 1;
 hom = x(1, :);
 trueVals = [1, 0.5];
 

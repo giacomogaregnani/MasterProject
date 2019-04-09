@@ -40,8 +40,8 @@ int main(int argc, char* argv[])
     param(1) = 1.0; // True multiscale alpha
     param(2) = 0.5; // True multiscale sigma
 
-    double T = 100;
-    auto N = static_cast<unsigned int>(std::round(pow(2, 10)));
+    double T = 1000;
+    auto N = static_cast<unsigned int>(std::round(pow(2, 14)));
 
     std::vector<double> epsTestSet = {0.04};
     for (unsigned int i = 0; i < 8; i++) {
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
     std::ofstream outputSol(DATA_PATH + std::string("testParamSol.txt"), std::ofstream::out | std::ofstream::trunc);
 
     // Compute coefficients of the homogenised equation
-    std::vector<double> homCoeffs = computeHomCoeffs(param, (2.0*M_PI_2f64), &V1);
+    std::vector<double> homCoeffs = computeHomCoeffs(param, (2.0*M_PIf64), &V1);
     output << 0.0 << "\t" << homCoeffs[0] << "\t" << homCoeffs[1] << std::endl;
 
     // Compute the estimators for different value of epsilon
@@ -73,14 +73,14 @@ int main(int argc, char* argv[])
         auto NSampling = N;
 
         for (unsigned int j = 0; j < 4; j++) {
-            std::cout << "\u03B4 = " << T/NSampling << std::endl;
+            std::cout << "\u03B4 = " << T / NSampling << std::endl;
             std::vector<double> samples = {};
             for (unsigned int k = 0; k < N; k += static_cast<unsigned int>(std::round(pow(4, j))))
                 samples.push_back(solution[k]);
 
             sigmaHat = estimateSigma(samples, T / NSampling);
             AHat = estimateA(samples, T / NSampling, &gradV0, param);
-            ABayes = estimateABayes(samples, T / NSampling, &gradV0, param, homCoeffs[0], 0.01, 1.0 / homCoeffs[1]);
+            ABayes = estimateABayes(samples, T / NSampling, &gradV0, param, param(1), 0.01, 1.0 / param(2));
 
             output << AHat << "\t" << sigmaHat << "\t" << ABayes << "\t";
             NSampling = NSampling / 4;

@@ -1,9 +1,0 @@
-\subsection{Summary}
-
-Let us summarize the procedure we use for approximating the solution of \eqref{eq:GeneralDarcySDE}. 
-\begin{enumerate}
-	\item Generate $A$ on a grid with spacing $\Delta_A$ with a Fourier transform method.
-	\item Approximate the solution of \eqref{eq:DarcyProblem} with the Finite Element methods on a fine triangulation $T_p$ with maximum element size $\Delta_p$.
-	\item Compute the velocity field from the FEM solution and interpolate it on a grid with spacing $\Delta_u$ to obtain a piece-wise constant field $\tilde{u}$.
-	\item Solve \eqref{eq:GeneralDarcySDE} with DEM or CEM to evaluate the mean exit time $\bar\tau$ using $\tilde{u}$ as the transport field.
-\end{enumerate}

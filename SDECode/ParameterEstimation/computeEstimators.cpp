@@ -41,8 +41,8 @@ double estimateABayes(std::vector<double>& x, double del, double (*gradV) (doubl
         denom += temp * temp;
     }
 
-    num = -beta * priorVar * num - priorMean;
-    denom = -1.0 + beta * del * priorVar * denom;
+    num = - (beta * priorVar * num + priorMean);
+    denom = beta * priorVar * del * denom - 1.0;
 
     return num / denom;
 }

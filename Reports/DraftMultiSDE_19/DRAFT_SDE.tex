@@ -73,7 +73,7 @@ P(a \mid \mathcal X) \propto P(\mathcal X \mid a) \, P(a).
 \end{equation}
 Let us consider $\mu_0 = \mathcal U(A)$, where $A = \{\text{admissible values for } a \}$. Then, maximising $P(a \mid \mathcal X)$ is equivalent to maximising $P(\mathcal X \mid a)$ and therefore the MAP estimator $\tilde a_{N, h}$ is equal to the MLE estimator $\hat a_{N, h}$. For a Gaussian prior $\mu_0 = \mathcal N(\mu_a, \sigma^2_a)$, we get
 \begin{equation}
-\tilde a_{N, h} = - \beta\sigma_a^2 \frac{\sum_{n=0}^{N-1} \langle \nabla V(X_n), X_{n+1} - X_n\rangle}{-1 + \sigma_a^2 \beta \sum_{n=0}^{N-1} \abs{\nabla V(X_n)}^2 h} - \frac{\mu_a}{-1 + \sigma_a^2 \beta \sum_{n=0}^{N-1} \abs{\nabla V(X_n)}^2 h}.
+\tilde a_{N, h} = - \frac{ \sigma_a^2 \beta\sum_{n=0}^{N-1} \langle \nabla V(X_n), X_{n+1} - X_n\rangle + \mu_a}{\sigma_a^2 \beta \sum_{n=0}^{N-1} \abs{\nabla V(X_n)}^2 h - 1}.
 \end{equation}
 Hence, in the limit $N \to \infty$, we have, independently of $\mu_a$ and $\sigma_a$,
 \begin{equation}
@@ -223,6 +223,7 @@ A recursive argument gives now the following result.
 Explain strategy (Particle Filter).
 
 \textbf{First experiment.} Parameters: $T = 10$, $\sigma_\eta = 0.1$, $M = 400$, $h = $
-%\bibliographystyle{siamplain}
-%\bibliography{anmc}
+
+\bibliographystyle{siamplain}
+\bibliography{anmc}
 \end{document}

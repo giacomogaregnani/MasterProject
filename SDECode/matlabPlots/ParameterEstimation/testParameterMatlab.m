@@ -5,25 +5,24 @@ solutions = dlmread('testParamSol.txt');
 x = dlmread('testParam.txt');
 hom = x(1, 2:3);
 
-T = 100;
+T = 1000;
 N = size(solutions, 2)-1;
 h = T / N;
 t = linspace(0, T, N+1);
 
 nEps = size(solutions, 1);
 
-Sigma = hom(2);
-
-mu = hom(1);
-sigmaPrior = 0.1;
+Sigma = 0.5;
+mu = 1.0;
+sigmaPrior = 0.01;
 
 pX = @(x1, x2, a) -1/(2*Sigma*h) * (x2 - (1-a*h)*x1)^2;
 prior = @(a) -1/(2*sigmaPrior^2) * (a-mu).^2;
 
-aVec = linspace(-1, 3, 1000);
+aVec = linspace(-1, 4, 1000);
 nA = length(aVec);
 
-for i = 3
+for i = 1
     
     plot(t, solutions(i, :))
     
