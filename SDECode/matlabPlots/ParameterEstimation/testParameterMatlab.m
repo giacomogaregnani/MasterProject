@@ -12,7 +12,7 @@ t = linspace(0, T, N+1);
 
 nEps = size(solutions, 1);
 
-Sigma = 0.5;
+Sigma = hom(2);
 mu = 1.0;
 sigmaPrior = 0.01;
 

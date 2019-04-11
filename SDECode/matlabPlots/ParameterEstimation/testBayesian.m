@@ -5,7 +5,7 @@ x = dlmread('testHomo.txt');
 sol = dlmread('testHomoSol.txt');
 
 %%
-T = 10;
+T = 1;
 t = linspace(0, T, size(sol, 2));
 figure
 plot(t, sol');
@@ -22,19 +22,19 @@ figure
 f(1) = axes;
 hold on
 
-% figure
-% f(2) = axes;
-% hold on
+figure
+f(2) = axes;
+hold on
 
 figure
 f(3) = axes;
 hold on
 
-% figure
-% f(4) = axes;
-% hold on
+figure
+f(4) = axes;
+hold on
 
-for j = 1 : 1
+for j = 1 : 2
     idx = 1;
     maxF = 0;
     

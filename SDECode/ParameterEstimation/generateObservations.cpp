@@ -3,7 +3,7 @@
 std::vector<double> generateObservations1D(oneDimSde sde, double IC, VectorXd& param,
                                             double T, unsigned int N)
 {
-    std::default_random_engine seed{(unsigned int) time(nullptr)};
+    std::default_random_engine seed{2019};
 
     EM1D solver(sde, param, seed);
 

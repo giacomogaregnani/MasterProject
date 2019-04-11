@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
 
             sigmaHat = estimateSigma(samples, T / NSampling);
             AHat = estimateA(samples, T / NSampling, &gradV0, param);
-            ABayes = estimateABayes(samples, T / NSampling, &gradV0, param, param(1), 0.01, 1.0 / param(2));
+            ABayes = estimateABayes(samples, T / NSampling, &gradV0, param, param(1), 0.01, 1.0 / homCoeffs[1]);
 
             output << AHat << "\t" << sigmaHat << "\t" << ABayes << "\t";
             NSampling = NSampling / 4;

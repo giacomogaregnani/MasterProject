@@ -15,13 +15,14 @@ using namespace Eigen;
 class PFPosterior : public Posterior {
 private:
     std::shared_ptr<ParFil> ParticleFilter;
+    bool IS;
 
 public:
     PFPosterior() = default;
     virtual ~PFPosterior() = default;
     PFPosterior(std::vector<double>& x, double T, double IC,
                 unsigned int sR, double noise, oneDimSde sde,
-                double eps, unsigned long M);
+                double eps, unsigned long M, bool IS = false);
     double computePosterior(VectorXd theta) override;
 };
 
