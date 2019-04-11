@@ -48,7 +48,7 @@ double homoDiffusion(double x, VectorXd& p)
 int main(int argc, char* argv[])
 {
     oneDimSde sde;
-    sde.drift = &homoDrift;
+    sde.drift = &multiDrift;
     sde.diffusion = &diffusion;
     oneDimSde sdeHomo;
     sdeHomo.drift = &homoDrift;
@@ -59,8 +59,8 @@ int main(int argc, char* argv[])
     tmpParam(1) = 1.0;  // True multiscale alpha
     tmpParam(2) = 0.5;  // True multiscale betainv
 
-    double T = 1;
-    unsigned int N = 100;
+    double T = 40;
+    unsigned int N = 4000;
 
     std::ofstream output(DATA_PATH + std::string("testHomo.txt"), std::ofstream::out | std::ofstream::trunc);
     std::ofstream outputSol(DATA_PATH + std::string("testHomoSol.txt"), std::ofstream::out | std::ofstream::trunc);
@@ -70,14 +70,14 @@ int main(int argc, char* argv[])
     output << homCoeffs[0] << "\t" << homCoeffs[1] << std::endl;
     homoDiff = homCoeffs[1];
 
-    // ============= TRANSFORM ============= //
+    // ============= Transform for positiveness ============= //
     VectorXd param = tmpParam;
     param(1) = std::log(param(1));
     param(2) = std::log(param(2));
-    // ===================================== //
+    // ====================================================== //
 
     // Initialize structures for the inverse problem
-    unsigned long M = 100, nMCMC = 10000;
+    unsigned long M = 200, nMCMC = 5000;
     double noise = 1e-2;
     double IC = 0.0;
     VectorXd initGuess = VectorXd::Zero(param.size());
@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
     std::normal_distribution<double> noiseDistribution(0.0, noise);
 
     // Signal ratio
-    std::vector<unsigned int> ratioVec = {1};
+    std::vector<unsigned int> ratioVec = {200};
 
     // Generate and perturb observations
     auto x = generateObservations1D(sde, IC, param, T, N);
@@ -108,7 +108,7 @@ int main(int argc, char* argv[])
         std::shared_ptr<Posterior> posterior;
         posterior = std::make_shared<PFPosterior>(x, T, IC, ratio, noise, sdeHomo, param(0), M, true);
         std::shared_ptr<Proposals> proposal;
-        proposal = std::make_shared<Proposals>(3e-1);
+        proposal = std::make_shared<Proposals>(1e-1);
         MCMC mcmc(initGuess, proposal, posterior, nMCMC);
         auto sample = mcmc.compute(&proposalSeed, &acceptanceSeed);
         for (auto const &itSample : sample)

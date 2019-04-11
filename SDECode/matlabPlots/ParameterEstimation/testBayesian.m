@@ -5,7 +5,7 @@ x = dlmread('testHomo.txt');
 sol = dlmread('testHomoSol.txt');
 
 %%
-T = 1;
+T = 40;
 t = linspace(0, T, size(sol, 2));
 figure
 plot(t, sol');

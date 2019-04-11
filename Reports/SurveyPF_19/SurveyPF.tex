@@ -1,0 +1,45 @@
+\documentclass{article}
+
+\input{ex_shared}
+
+
+\begin{document}
+\maketitle
+
+\subsection*{Hidden Markov Models}
+
+Let us consider a parameter $\theta \in \R^p$ and the discrete dynamical system over $\R^d$ given by the transition density
+\begin{equation}\label{eq:MarkovChain}
+	X_{n+1} \sim f(\cdot \mid X_n, \theta),
+\end{equation} 
+which we assume defines a Markov Chain over $\R^d$, i.e., 
+\begin{equation}
+	p(X_{n+1} \mid X_n, X_{n-1}, \ldots, X_0, \theta) = p(X_{n+1} \mid X_n, \theta) = f(X_{n+1} \mid X_n, \theta).
+\end{equation}
+For example, given a stochastic differential equations (SDE), the recursion given by a numerical integrator can be cast in the form \eqref{eq:MarkovChain}. For example, if we have the SDE 
+\begin{equation}
+	\dd X_t = F(X_t) \dd t + G(X) \dd W_t,
+\end{equation}
+where $F\colon \R^d \to \R^d$ and $G\colon \R^d \to \R^{d\times m}$ are the drift and diffusion and $W_t$ is a $m$-dimensional standard Brownian motion, the Euler--Maruyama method (EM) can be written as
+\begin{equation}
+	X_{n+1} = X_n + F(X_n) h + G(X_n) \Delta_n W,
+\end{equation}
+where $h > 0$ is the discretization step size and $\Delta_n W = W(t_{n+1}) - W(t_n)$. In this case, we have \eqref{eq:MarkovChain} with 
+\begin{equation} 
+	f(\cdot \mid X_n, \theta) = \mathcal N\left(X_n + F(X_n)h, GG^\top(X_n) h \right).
+\end{equation}
+Finally, we assume that we are not able to observe the dynamics \eqref{eq:MarkovChain} directly, but only a noisy observation model of the form 
+\begin{equation}
+	Y_n \sim g(X_n \mid \theta)
+\end{equation}
+where $\{\xi_n\}_{n\geq 1}$ is a sequence of i.i.d. random variables, that we assume to be Gaussian distributed $\xi_n \sim \mathcal N(0, \Sigma)$. The method can be extended to the case $Y_n = \gamma(X_n) + \xi_n$ for a function $\gamma \colon \R^d \to \R^{d'}$, with $d' \leq d$, in case only a functional of the state $X_n$ is observable. For simplicity, we consider here the case $\gamma = \mathrm{Id}$.
+
+\subsection*{Bootstrap particle filters}
+
+\subsection*{Advantages with respect to Monte Carlo}
+
+\subsection*{Importance sampling}
+
+\subsection*{Particle filters}
+
+\end{document}

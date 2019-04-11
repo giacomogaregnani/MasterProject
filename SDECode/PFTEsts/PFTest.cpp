@@ -69,11 +69,11 @@ int main(int argc, char* argv[])
     outputSol << std::endl;
 
     std::shared_ptr<ParFil> PF;
-    PF = std::make_shared<ParFil>(x, T, IC, 50, noise, sdeHomo, param(0), M);
+    PF = std::make_shared<ParFil>(x, T, IC, 2, noise, sdeHomo, param(0), M);
     std::vector<std::vector<double>> X;
 
     for (unsigned int i = 0; i < 1; i++) {
-        PF->compute(param);
+        PF->computeDiffBridge(param);
         outputLik << PF->getLikelihood() << std::endl;
         if ((i+1) % 100 == 0) {
             std::cout << "iteration " << i+1 << std::endl;

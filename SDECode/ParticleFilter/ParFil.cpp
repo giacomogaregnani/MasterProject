@@ -41,7 +41,7 @@ void ParFil::compute(VectorXd& theta)
     auto N = obs.size();
     double dist, wSum, h = T/N;
     likelihood = 0;
-    auto nObs = static_cast<unsigned int>(std::round(N / samplingRatio));
+    auto nObs = static_cast<unsigned int>(std::round((N - 1) / samplingRatio));
 
     Solver->modifyParam(theta);
 
@@ -103,7 +103,7 @@ void ParFil::computeDiffBridge(VectorXd &theta)
     }
 
     auto N = obs.size();
-    auto nObs = static_cast<unsigned int>(std::round(N / samplingRatio));
+    auto nObs = static_cast<unsigned int>(std::round((N - 1) / samplingRatio));
     unsigned long obsIdx;
     double wSum, h = T/N, hObs = T/nObs, transDensMean, transDensStddev,
            obsDens, transDens, ISDens, temp;
