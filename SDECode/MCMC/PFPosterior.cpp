@@ -9,7 +9,7 @@ PFPosterior::PFPosterior(std::vector<double>& x, double T, double IC,
     ParticleFilter = std::make_shared<ParFil>(x, T, IC, sR, noise, sde, eps, M);
 }
 
-double PFPosterior::computePosterior(VectorXd theta)
+double PFPosterior::computePosterior(VectorXd& theta)
 {
     VectorXd thetaWithoutEps(theta.size()-1);
     thetaWithoutEps = theta.tail(theta.size()-1);

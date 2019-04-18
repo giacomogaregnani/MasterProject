@@ -33,9 +33,7 @@ std::vector<VectorXd>& MCMC::compute(std::default_random_engine* proposalSeed,
     // Compute posterior on first guess
     oldPosterior = posterior->computePosterior(samples[0]);
 
-
     for (unsigned long i = 0; i < nMCMC; i++) {
-
         currValue = samples[i];
 
         // Generate new guess
@@ -52,8 +50,6 @@ std::vector<VectorXd>& MCMC::compute(std::default_random_engine* proposalSeed,
         alpha = newPosterior - oldPosterior;
         alpha = std::min(0.0, alpha);
 
-        int a = proposedValue.size();
-
         // Update chain
         if (std::log(probGen(*acceptanceSeed)) < alpha) {
             samples[i+1] = proposedValue;
@@ -66,13 +62,14 @@ std::vector<VectorXd>& MCMC::compute(std::default_random_engine* proposalSeed,
         if (i % 100 == 0 && verbose) {
             std::cout << "Completed " << i << " iterations out of " << nMCMC << std::endl
                       << "Accepted (log)posterior = " << oldPosterior << std::endl
-                      << "Current acc. ratio = " << 1.0 / (i + 1) * accRatio << std::endl;
+                      << "Current acc. ratio = " << 1.0 / (i + 1) * accRatio << std::endl
+                      << "Last accepted value = " << samples[i+1].transpose() << std::endl;
         }
     }
 
     // Take 10% burn-in out
-    unsigned long burnIn = nMCMC / 10;
-    // samples.erase(samples.begin(), samples.begin() + burnIn);
+    unsigned long burnIn = 0;
+    samples.erase(samples.begin(), samples.begin() + burnIn);
 
     // Compute MCMC estimate
     VectorXd finalEstimate = VectorXd::Zero(sizeParam);

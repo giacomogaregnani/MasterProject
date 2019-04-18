@@ -23,7 +23,7 @@ public:
     PFPosterior(std::vector<double>& x, double T, double IC,
                 unsigned int sR, double noise, oneDimSde sde,
                 double eps, unsigned long M, bool IS = false);
-    double computePosterior(VectorXd theta) override;
+    double computePosterior(VectorXd& theta) override;
 };
 
 #endif

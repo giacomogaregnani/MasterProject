@@ -8,7 +8,7 @@ using namespace Eigen;
 class Posterior {
 public:
     virtual ~Posterior() = default;
-    virtual double computePosterior(VectorXd theta) = 0;
+    virtual double computePosterior(VectorXd& theta) = 0;
 };
 
 #endif

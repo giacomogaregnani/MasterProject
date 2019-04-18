@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include "ParFil.hpp"
 
 ParFil::ParFil(std::vector<double>& y, double T, double IC, unsigned int sR,
@@ -12,9 +13,10 @@ ParFil::ParFil(std::vector<double>& y, double T, double IC, unsigned int sR,
         nParticles(nParticles),
         eps(eps)
 {
-    std::default_random_engine seed{(unsigned int) time(nullptr)};
+    std::random_device randomDevice;
+    std::default_random_engine seed{randomDevice()};
     Solver = std::make_shared<EM1D>(sde, seed);
-    particleSeed = std::default_random_engine{(unsigned int) time(nullptr)};
+    particleSeed = std::default_random_engine{randomDevice()};
     X.resize(nParticles);
     for (unsigned int i = 0; i < nParticles; i++)
         X[i].resize(obs.size());
@@ -23,52 +25,47 @@ ParFil::ParFil(std::vector<double>& y, double T, double IC, unsigned int sR,
 }
 
 
-double gaussianDensity(double x, double m, double s)
+double gaussianDensity(double x, double mu, double sigma)
 {
-    return 1.0 / (std::sqrt(2.0 * M_PI) * s) * std::exp(-0.5 * (x  - m) * (x - m) / (s * s));
+    return 1.0 / (std::sqrt(2.0 * M_PI) * sigma) * std::exp(-0.5 * (x  - mu) * (x - mu) / (sigma * sigma));
 }
 
 void ParFil::compute(VectorXd& theta)
 {
+    // The first parameter is the multiscale epsilon
     theta(0) = eps;
 
-    // Initialise
+    // Initialize
     for (unsigned int k = 0; k < nParticles; k++) {
         X[k][0] = IC;
         W[k] = 1.0 / nParticles;
     }
-
     auto N = obs.size();
-    double dist, wSum, h = T/N;
+    double wSum, h = T/N;
     likelihood = 0;
-    auto nObs = static_cast<unsigned int>(std::round((N - 1) / samplingRatio));
-
+    auto nObs = (N - 1) / samplingRatio;
+    unsigned long index = 0, obsIdx;
     Solver->modifyParam(theta);
 
-    unsigned long index = 0;
-
     for (unsigned long j = 0; j < nObs; j++) {
-
+        // Sample the particles
         shuffler = std::discrete_distribution<unsigned int>(W.begin(), W.end());
-
+        obsIdx = (j + 1) * samplingRatio;
         for (unsigned long k = 0; k < nParticles; k++)
             X[k][index] = X[shuffler(particleSeed)][index];
 
+        // Innovate and compute the weights
         wSum = 0.0;
         for (unsigned long k = 0; k < nParticles; k++) {
-            for (unsigned long i = 0; i < samplingRatio; i++) {
-                X[k][index + 1 + i] = Solver->oneStep(h, X[k][index + i]);
-            }
-            dist = X[k][index + samplingRatio] - obs[(j + 1) * samplingRatio];
-            W[k] = std::exp(-0.5 / (noise * noise) * dist * dist);
+            for (unsigned long i = 0; i < samplingRatio; i++)
+                X[k][index+1+i] = Solver->oneStep(h, X[k][index+i]);
+            W[k] = gaussianDensity(X[k][index+samplingRatio], obs[obsIdx], noise);
             wSum += W[k];
         }
         index = index + samplingRatio;
 
-        for (unsigned long k = 0; k < nParticles; k++) {
-            W[k] /= wSum;
-        }
-
+        // Normalize and update likelihood
+        std::transform(W.begin(), W.end(), W.begin(), [wSum](double& c){return c/wSum;});
         likelihood += std::log(wSum / nParticles);
     }
 }
@@ -81,9 +78,12 @@ double ParFil::importanceSampler(double h, double hObs, double x, VectorXd &thet
            betaj = sde.diffusion(x, theta),
            deltaj = hObs - j*h;
 
+    // In Golightly, Wilkinson (2011) the diffusion is under square root
+    betaj *= betaj;
+
     double denom = betaj * deltaj + noise * noise;
-    double aj = alphaj + betaj * (obs[obsIdx] - (x + alphaj * deltaj)) / denom,
-           bj = betaj - betaj / denom * betaj * h;
+    double aj = alphaj + betaj * (obs[obsIdx] - (x + alphaj * deltaj)) / denom;
+    double bj = betaj - h * betaj * betaj / denom;
 
     ISmean = x + aj * h;
     ISstddev = std::sqrt(bj * h);
@@ -92,8 +92,9 @@ double ParFil::importanceSampler(double h, double hObs, double x, VectorXd &thet
     return ISgaussian(particleSeed);
 }
 
-void ParFil::computeDiffBridge(VectorXd &theta)
+void ParFil::computeDiffBridge(VectorXd& theta)
 {
+    // The first parameter is the multiscale epsilon
     theta(0) = eps;
 
     // Initialise
@@ -101,20 +102,31 @@ void ParFil::computeDiffBridge(VectorXd &theta)
         X[k][0] = IC;
         W[k] = 1.0 / nParticles;
     }
-
     auto N = obs.size();
-    auto nObs = static_cast<unsigned int>(std::round((N - 1) / samplingRatio));
+    double h = T / N;
+    // ========== THIS IS JUST A TEST ============ //
+    // The last parameter is the sampling dt
+    if (theta.size() > 3) {
+        double delta = std::exp(theta(theta.size()-1));
+        auto ratio = static_cast<unsigned int>(delta / h);
+        if (ratio < 1) {
+            samplingRatio = 1;
+        } else if (ratio > N) {
+            samplingRatio = N-1;
+        } else {
+            samplingRatio = ratio;
+        }
+        theta(3) = std::log(samplingRatio * h);
+    }
+    // =========================================== //
+    auto nObs = (N - 1) / samplingRatio;
     unsigned long obsIdx;
-    double wSum, h = T/N, hObs = T/nObs, transDensMean, transDensStddev,
+    double wSum, hObs = T/nObs, transDensMean, transDensStddev,
            obsDens, transDens, ISDens, temp;
     likelihood = 0;
-
-    Solver->modifyParam(theta);
-
     unsigned long index = 0;
 
     for (unsigned long j = 0; j < nObs; j++) {
-
         shuffler = std::discrete_distribution<unsigned int>(W.begin(), W.end());
         obsIdx = (j + 1) * samplingRatio;
 
@@ -123,10 +135,11 @@ void ParFil::computeDiffBridge(VectorXd &theta)
 
         wSum = 0.0;
         for (unsigned long k = 0; k < nParticles; k++) {
-            transDens = 1.0, ISDens = 1.0;
+            transDens = 1.0;
+            ISDens = 1.0;
             for (unsigned long i = 0; i < samplingRatio; i++) {
                 // Sample from the IS density
-                temp = importanceSampler(h, hObs, X[k][index + i], theta, obsIdx, i);
+                temp = importanceSampler(h, hObs, X[k][index+i], theta, obsIdx, i);
                 // Evaluate the transition density of the true process
                 transDensMean = X[k][index+i] + sde.drift(X[k][index+i], theta) * h;
                 transDensStddev = sde.diffusion(X[k][index+i], theta) * std::sqrt(h);
@@ -143,10 +156,8 @@ void ParFil::computeDiffBridge(VectorXd &theta)
         }
         index = index + samplingRatio;
 
-        for (unsigned long k = 0; k < nParticles; k++) {
-            W[k] /= wSum;
-        }
-
+        // Normalize and update likelihood
+        std::transform(W.begin(), W.end(), W.begin(), [wSum](double& c){return c/wSum;});
         likelihood += std::log(wSum / nParticles);
     }
 }

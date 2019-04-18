@@ -16,7 +16,7 @@ SDEPosterior::SDEPosterior(std::vector<double>& x, double T, double IC,
     Solver = EM1D(sde, seed);
 }
 
-double SDEPosterior::computePosterior(VectorXd theta)
+double SDEPosterior::computePosterior(VectorXd& theta)
 {
     double prior = -0.5 * theta.dot(theta);
     double solution, likelihood, dist;

@@ -25,7 +25,7 @@ public:
     SDEPosterior(std::vector<double>& x, double T, double IC,
                  unsigned int sR, double noise, oneDimSde sde,
                  double eps, unsigned long M);
-    double computePosterior(VectorXd theta) override;
+    double computePosterior(VectorXd& theta) override;
 };
 
 #endif

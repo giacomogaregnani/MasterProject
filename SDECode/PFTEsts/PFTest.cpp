@@ -46,15 +46,15 @@ int main(int argc, char* argv[])
     param(1) = std::log(1.0); // True multiscale alpha
     param(2) = std::log(0.5); // True multiscale betainv
 
-    double T = 10;
+    double T = 1;
     unsigned int N = 1000;
 
-    std::ofstream output(DATA_PATH + std::string("test.txt"), std::ofstream::out | std::ofstream::trunc);
-    std::ofstream outputSol(DATA_PATH + std::string("testSol.txt"), std::ofstream::out | std::ofstream::trunc);
-    std::ofstream outputLik(DATA_PATH + std::string("testLik.txt"), std::ofstream::out | std::ofstream::trunc);
+    std::ofstream output(DATA_PATH + std::string("test2.txt"), std::ofstream::out | std::ofstream::trunc);
+    std::ofstream outputSol(DATA_PATH + std::string("testSol2.txt"), std::ofstream::out | std::ofstream::trunc);
+    std::ofstream outputLik(DATA_PATH + std::string("testLik2.txt"), std::ofstream::out | std::ofstream::trunc);
 
     unsigned long M = 100;
-    double noise = 1e-3;
+    double noise = 1e-4;
     double IC = 1.0;
     std::default_random_engine noiseSeed{2018};
     std::normal_distribution<double> noiseDistribution(0.0, noise);
@@ -69,11 +69,11 @@ int main(int argc, char* argv[])
     outputSol << std::endl;
 
     std::shared_ptr<ParFil> PF;
-    PF = std::make_shared<ParFil>(x, T, IC, 2, noise, sdeHomo, param(0), M);
+    PF = std::make_shared<ParFil>(x, T, IC, 1, noise, sdeHomo, param(0), M);
     std::vector<std::vector<double>> X;
 
     for (unsigned int i = 0; i < 1; i++) {
-        PF->computeDiffBridge(param);
+        PF->compute(param);
         outputLik << PF->getLikelihood() << std::endl;
         if ((i+1) % 100 == 0) {
             std::cout << "iteration " << i+1 << std::endl;
