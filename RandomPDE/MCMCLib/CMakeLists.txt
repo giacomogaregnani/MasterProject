@@ -34,6 +34,8 @@ add_library(MCMC
         RKProbPosteriorIC.cpp
         RKEEPosteriorIC.hpp
         RKEEPosteriorIC.cpp
+        RKAddNoisePosteriorIC.hpp
+        RKAddNoisePosteriorIC.cpp
         )
 
 target_link_libraries(MCMC OneDimEllipticSolver RandomStep)

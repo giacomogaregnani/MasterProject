@@ -5,7 +5,7 @@
 #include <random>
 #include <memory>
 
-// Boostrap particle filter
+// Particle filter
 
 class ParFil {
 private:
@@ -21,17 +21,21 @@ private:
     double eps;
     std::vector<double> W;
     double likelihood;
-    std::default_random_engine particleSeed;
+    std::default_random_engine seed;
     std::discrete_distribution<unsigned int> shuffler;
-    std::normal_distribution<double> ISgaussian;
+    std::normal_distribution<double> gaussian;
     double ISmean;
     double ISstddev;
+    std::vector<double> timeNoise;
+    std::vector<std::vector<double>> BM;
+    std::vector<std::vector<unsigned int>> tree;
 
 public:
     ParFil() = default;
     ~ParFil() = default;
     ParFil(std::vector<double> &y, double T, double IC, unsigned int sR,
-           double noise, oneDimSde &sde, double eps, unsigned long nParticles);
+           double noise, oneDimSde &sde, double eps, unsigned long nParticles,
+           std::vector<double> timeNoise = {});
     void compute(VectorXd& theta);
     double importanceSampler(double h, double hObs, double x, VectorXd &theta,
                              unsigned long obsIdx, unsigned long j);
@@ -39,6 +43,9 @@ public:
     double getLikelihood() const;
     std::vector<double> getBestX();
     std::vector<std::vector<double>> getX() const;
+    std::vector<std::vector<double>> getBM() const;
+    std::vector<double> getW() const;
+    std::vector<std::vector<unsigned int>> getTree() const;
 };
 
 #endif

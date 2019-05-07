@@ -30,6 +30,7 @@ SDECode/cmake-build-debug/**
 SDECode/matlabPlots/**/*.mat
 SDECode/matlabPlots/**/*.txt
 SDECode/matlabPlots/FEM_library/**
+SDECode/matplotlib-cpp-master
 
 Reports/**/*.aux
 Reports/**/*.eps

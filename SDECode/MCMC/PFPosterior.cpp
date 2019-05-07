@@ -3,10 +3,11 @@
 
 PFPosterior::PFPosterior(std::vector<double>& x, double T, double IC,
                          unsigned int sR, double noise, oneDimSde sde,
-                         double eps, unsigned long M, bool IS):
+                         double eps, unsigned long M, bool IS,
+                         std::vector<double> timeNoise):
                          IS(IS)
 {
-    ParticleFilter = std::make_shared<ParFil>(x, T, IC, sR, noise, sde, eps, M);
+    ParticleFilter = std::make_shared<ParFil>(x, T, IC, sR, noise, sde, eps, M, timeNoise);
 }
 
 double PFPosterior::computePosterior(VectorXd& theta)

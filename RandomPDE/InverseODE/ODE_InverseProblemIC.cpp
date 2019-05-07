@@ -10,12 +10,12 @@ int main(int argc, char* argv[])
     Proposals proposal;
 
     double noise = 0.1,
-            h = 0.1,
-            p = 1.5,
-            proposalStdDev = 0.1;
-    int     nObs = 1,
-            nMC = 10,
-            nMCMC = 10000;
+           h = 0.1,
+           p = 1.5,
+           proposalStdDev = 0.1;
+    int    nObs = 1,
+           nMC = 10,
+           nMCMC = 10000;
     std::string outputFileName, obsFileName;
     bool prob = false, noisy = false, isGauss = false;
 
@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
 
     // Model ODE
     odeDef ODE;
-    ODE.ode = TEST1D;
+    ODE.ode = HENHEIL;
     setProblem(&ODE);
 
     // Import observations
@@ -93,8 +93,6 @@ int main(int argc, char* argv[])
         output << std::fixed << std::setprecision(20) << it.transpose() << std::endl;
     }
     output.close();
-
-    // delete posterior;
 
     return 0;
 }

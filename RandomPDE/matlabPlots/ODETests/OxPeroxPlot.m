@@ -25,5 +25,6 @@ xlim([0, 200])
 ylim([1e-5, 1])
 set(gca, 'yTick', [1e-5, 1])
 ylabel('[X]', 'interpreter', 'latex')
+title('RTS-RK', 'interpreter', 'latex')
 
-print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION11/OxPerox.eps
+print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION15/OxPerox.eps

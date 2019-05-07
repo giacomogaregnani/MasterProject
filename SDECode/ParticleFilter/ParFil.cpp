@@ -3,7 +3,8 @@
 #include "ParFil.hpp"
 
 ParFil::ParFil(std::vector<double>& y, double T, double IC, unsigned int sR,
-               double noise, oneDimSde &sde, double eps, unsigned long nParticles):
+               double noise, oneDimSde &sde, double eps, unsigned long nParticles,
+               std::vector<double> timeNoise):
         sde(sde),
         T(T),
         IC(IC),
@@ -11,12 +12,13 @@ ParFil::ParFil(std::vector<double>& y, double T, double IC, unsigned int sR,
         obs(y),
         noise(noise),
         nParticles(nParticles),
-        eps(eps)
+        eps(eps),
+        timeNoise(timeNoise)
 {
     std::random_device randomDevice;
-    std::default_random_engine seed{randomDevice()};
-    Solver = std::make_shared<EM1D>(sde, seed);
-    particleSeed = std::default_random_engine{randomDevice()};
+    std::default_random_engine EMSeed{randomDevice()};
+    Solver = std::make_shared<EM1D>(sde, EMSeed);
+    seed = std::default_random_engine{randomDevice()};
     X.resize(nParticles);
     for (unsigned int i = 0; i < nParticles; i++)
         X[i].resize(obs.size());
@@ -32,6 +34,18 @@ double gaussianDensity(double x, double mu, double sigma)
 
 void ParFil::compute(VectorXd& theta)
 {
+    bool staticNoise = timeNoise.empty();
+
+    // Keep in memory the Brownian increments
+    BM.resize(nParticles);
+    for (unsigned int i = 0; i < nParticles; i++)
+        BM[i].resize(obs.size()-1);
+
+    // Keep in memory the tree
+    tree.resize(nParticles);
+    for (unsigned int i = 0; i < nParticles; i++)
+        tree[i].resize(obs.size()-1);
+
     // The first parameter is the multiscale epsilon
     theta(0) = eps;
 
@@ -41,7 +55,7 @@ void ParFil::compute(VectorXd& theta)
         W[k] = 1.0 / nParticles;
     }
     auto N = obs.size();
-    double wSum, h = T/N;
+    double wSum, h = T/(N-1);
     likelihood = 0;
     auto nObs = (N - 1) / samplingRatio;
     unsigned long index = 0, obsIdx;
@@ -51,14 +65,27 @@ void ParFil::compute(VectorXd& theta)
         // Sample the particles
         shuffler = std::discrete_distribution<unsigned int>(W.begin(), W.end());
         obsIdx = (j + 1) * samplingRatio;
-        for (unsigned long k = 0; k < nParticles; k++)
-            X[k][index] = X[shuffler(particleSeed)][index];
+
+        for (unsigned long k = 0; k < nParticles; k++) {
+            auto shuffleIdx = shuffler(seed);
+            tree[k][index] = shuffleIdx;
+            X[k][index] = X[shuffleIdx][index];
+        }
 
         // Innovate and compute the weights
         wSum = 0.0;
         for (unsigned long k = 0; k < nParticles; k++) {
-            for (unsigned long i = 0; i < samplingRatio; i++)
-                X[k][index+1+i] = Solver->oneStep(h, X[k][index+i]);
+            for (unsigned long i = 0; i < samplingRatio; i++) {
+                BM[k][index+i] = std::sqrt(h) * gaussian(seed);
+                X[k][index+1+i] = Solver->oneStepGivenNoise(h, X[k][index+i], BM[k][index+i]);
+            }
+            if (staticNoise) {
+                W[k] = gaussianDensity(X[k][index + samplingRatio], obs[obsIdx], noise);
+            } else {
+                double trueStdDev = std::sqrt(noise * noise + timeNoise[obsIdx] * timeNoise[obsIdx]);
+                W[k] = gaussianDensity(X[k][index + samplingRatio], obs[obsIdx], trueStdDev);
+            }
+
             W[k] = gaussianDensity(X[k][index+samplingRatio], obs[obsIdx], noise);
             wSum += W[k];
         }
@@ -87,13 +114,15 @@ double ParFil::importanceSampler(double h, double hObs, double x, VectorXd &thet
 
     ISmean = x + aj * h;
     ISstddev = std::sqrt(bj * h);
-    ISgaussian.param(std::normal_distribution<double>::param_type(ISmean, ISstddev));
+    gaussian.param(std::normal_distribution<double>::param_type(ISmean, ISstddev));
 
-    return ISgaussian(particleSeed);
+    return gaussian(seed);
 }
 
 void ParFil::computeDiffBridge(VectorXd& theta)
 {
+    bool staticNoise = timeNoise.empty();
+
     // The first parameter is the multiscale epsilon
     theta(0) = eps;
 
@@ -103,9 +132,9 @@ void ParFil::computeDiffBridge(VectorXd& theta)
         W[k] = 1.0 / nParticles;
     }
     auto N = obs.size();
-    double h = T / N;
-    // ========== THIS IS JUST A TEST ============ //
-    // The last parameter is the sampling dt
+    double h = T / (N-1);
+
+    // If there is a fourth parameter, it is the sampling dt
     if (theta.size() > 3) {
         double delta = std::exp(theta(theta.size()-1));
         auto ratio = static_cast<unsigned int>(delta / h);
@@ -118,7 +147,7 @@ void ParFil::computeDiffBridge(VectorXd& theta)
         }
         theta(3) = std::log(samplingRatio * h);
     }
-    // =========================================== //
+
     auto nObs = (N - 1) / samplingRatio;
     unsigned long obsIdx;
     double wSum, hObs = T/nObs, transDensMean, transDensStddev,
@@ -131,7 +160,7 @@ void ParFil::computeDiffBridge(VectorXd& theta)
         obsIdx = (j + 1) * samplingRatio;
 
         for (unsigned long k = 0; k < nParticles; k++)
-            X[k][index] = X[shuffler(particleSeed)][index];
+            X[k][index] = X[shuffler(seed)][index];
 
         wSum = 0.0;
         for (unsigned long k = 0; k < nParticles; k++) {
@@ -149,7 +178,12 @@ void ParFil::computeDiffBridge(VectorXd& theta)
                 X[k][index+1+i] = temp;
             }
             // Evaluate the observation density
-            obsDens = gaussianDensity(X[k][index + samplingRatio], obs[obsIdx], noise);
+            if (staticNoise) {
+                obsDens = gaussianDensity(X[k][index + samplingRatio], obs[obsIdx], noise);
+            } else {
+                double trueStdDev = std::sqrt(noise * noise + timeNoise[obsIdx] * timeNoise[obsIdx]);
+                obsDens = gaussianDensity(X[k][index + samplingRatio], obs[obsIdx], trueStdDev);
+            }
             // Compute the weights
             W[k] = obsDens * transDens / ISDens;
             wSum += W[k];
@@ -175,6 +209,21 @@ std::vector<std::vector<double>> ParFil::getX() const
 std::vector<double> ParFil::getBestX()
 {
     shuffler = std::discrete_distribution<unsigned int>(W.begin(), W.end());
-    unsigned int index = shuffler(particleSeed);
+    unsigned int index = shuffler(seed);
     return X[index];
+}
+
+std::vector<std::vector<double>> ParFil::getBM() const
+{
+    return BM;
+}
+
+std::vector<double> ParFil::getW() const
+{
+    return W;
+}
+
+std::vector<std::vector<unsigned int>> ParFil::getTree() const
+{
+    return tree;
 }

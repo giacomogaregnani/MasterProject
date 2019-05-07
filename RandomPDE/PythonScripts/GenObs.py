@@ -7,7 +7,7 @@ nObs = 1
 
 make = True
 program = "GenObs"
-obsFile = "observations00001"
+obsFile = "observationsreview"
 
 if make:
     os.system("cd ../build && make -j32 " + program)

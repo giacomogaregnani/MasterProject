@@ -22,7 +22,8 @@ public:
     virtual ~PFPosterior() = default;
     PFPosterior(std::vector<double>& x, double T, double IC,
                 unsigned int sR, double noise, oneDimSde sde,
-                double eps, unsigned long M, bool IS = false);
+                double eps, unsigned long M, bool IS = false,
+                std::vector<double> timeNoise = {});
     double computePosterior(VectorXd& theta) override;
 };
 

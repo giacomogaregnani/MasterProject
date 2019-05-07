@@ -44,7 +44,6 @@ double homoDiffusion(double x, VectorXd& p)
     return std::sqrt(2.0 * homoDiff);
 }
 
-
 int main(int argc, char* argv[])
 {
     oneDimSde sde;
@@ -54,8 +53,8 @@ int main(int argc, char* argv[])
     sdeHomo.drift = &homoDrift;
     sdeHomo.diffusion = &diffusion;
 
-    double T = 20;
-    unsigned int N = 4000;
+    double T = 1;
+    unsigned int N = 2000;
 
     VectorXd tmpParam(3);
     tmpParam(0) = 0.1;  // Epsilon
@@ -109,14 +108,15 @@ int main(int argc, char* argv[])
     homoParam(2) = std::log(homCoeffs[1]);
     auto xHom = generateObservations1D(sdeHomo, IC, homoParam, T, N);
     for (auto const &itSol : xHom) {
-        outputSol << std::fixed << std::setprecision(5) << itSol << "\t";
+        outputSol << std::fixed << std::setprecision(10) << itSol << "\t";
     }
     outputSol << std::endl;
 
     // Initial parameter guess
     VectorXd initGuess = VectorXd::Zero(param.size());
-    // initGuess(3) = param(3);
-
+    if (param.size() > 3) {
+        initGuess(3) = param(3);
+    }
     // Signal ratio
     std::vector<unsigned int> ratioVec = {1};
 
@@ -136,17 +136,6 @@ int main(int argc, char* argv[])
         for (auto const &it : sample)
             meanPosterior += it;
         meanPosterior /= sample.size();
-
-        /*
-        ParFil particleFilter(x, T, IC, ratio, noise, sdeHomo, param(0), M);
-        particleFilter.computeDiffBridge(meanPosterior);
-        auto XPost = particleFilter.getX();
-        for (auto const &itSol : XPost) {
-            for (auto const &itit : itSol)
-                outputFilter << itit << "\t";
-            outputFilter << std::endl;
-        }
-        */
 
         M = static_cast<unsigned long>(M * 1.2);
     }

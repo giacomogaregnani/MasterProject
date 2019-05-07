@@ -1,0 +1,143 @@
+% Packages and macros go here
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[utf8x]{inputenx}
+\usepackage{microtype}
+\usepackage{framed}
+\usepackage{listings}
+\usepackage{vmargin}
+\usepackage{setspace}
+\usepackage{mathrsfs, mathenv}
+\usepackage{amsmath, amsthm, amssymb, amsfonts, amscd}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage[svgnames]{xcolor}
+\usepackage{hyperref}
+\usepackage[capitalise]{cleveref}
+\usepackage{xparse}
+\hypersetup{citecolor=blue, colorlinks=true, linkcolor=black}
+\setlength{\parskip}{6pt}
+\setlength\parindent{0pt}
+\usepackage{subcaption}
+\usepackage{bbm}
+\usepackage{cite}
+\usepackage{verbatim}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{color}
+\usepackage{stmaryrd}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newtheorem{assumption}{Assumption}
+\newtheorem{example}{Example}
+
+
+\ifpdf
+  \DeclareGraphicsExtensions{.eps,.pdf,.png,.jpg}
+\else
+  \DeclareGraphicsExtensions{.eps}
+\fi
+
+\usepackage{mathtools}
+% basics
+
+% tables
+\usepackage{booktabs}
+
+% plots
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,positioning,fit,matrix}
+\usepackage[labelfont=bf]{caption}
+\setlength{\belowcaptionskip}{-5pt}
+\usepackage{here}
+\usepackage[font=normal]{subcaption}
+
+% Prevent itemized lists from running into the left margin inside theorems and proofs
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=.5in}
+\setlist[enumerate]{leftmargin=.2in,topsep=3pt,itemsep=3pt}
+
+% Add a serial/Oxford comma by default.
+\newcommand{\creflastconjunction}{, and~}
+
+% Sets running headers as well as PDF title and authors
+% title and authors
+
+\newcommand{\email}[1]{\href{#1}{#1}}
+\newcommand{\TheTitle}{Answer to the referees concerning the review of \\ ``Random time step probabilistic methods for uncertainty quantification in chaotic and geometric numerical integration''} 
+\newcommand{\TheAuthors}{A. Abdulle, G. Garegnani}
+%\headers{Random time steps for quantifying chaotic numerical integration}{\TheAuthors}
+\title{{\TheTitle}}
+\author{Assyr Abdulle \and Giacomo Garegnani}
+\date{}
+
+\usepackage{amsopn}
+\DeclareMathOperator{\diag}{diag}
+\DeclarePairedDelimiter{\ceil}{\left\lceil}{\right\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\|}{\|}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\Pr}{\mathbb{P}}
+\renewcommand{\tilde}{\widetilde}
+\renewcommand{\hat}{\widehat}
+\newcommand{\eqtext}[1]{\ensuremath{\stackrel{#1}{=}}}
+\newcommand{\leqtext}[1]{\ensuremath{\stackrel{#1}{\leq}}}
+\newcommand{\iid}{\ensuremath{\stackrel{\text{i.i.d.}}{\sim}}}
+\newcommand{\totext}[1]{\ensuremath{\stackrel{#1}{\to}}}
+\newcommand{\rightarrowtext}[1]{\ensuremath{\stackrel{#1}{\longrightarrow}}}
+\newcommand{\leftrightarrowtext}[1]{\ensuremath{\stackrel{#1}{\longleftrightarrow}}}
+\newcommand{\pdv}[2]{\ensuremath\partial_{#2}#1}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\epl}{\varepsilon}
+\newcommand{\diffL}{\mathcal{L}}
+\newcommand{\prior}{\mathcal{Q}}
+\newcommand{\defeq}{\coloneqq}
+\newcommand{\eqdef}{\eqqcolon}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\E}{\operatorname{\mathbb{E}}}
+\newcommand{\MSE}{\operatorname{MSE}}
+\newcommand{\trace}{\operatorname{tr}}
+\newcommand{\MH}{\mathrm{MH}}
+\newcommand{\ttt}{\texttt}
+\newcommand{\Hell}{d_{\mathrm{Hell}}}
+\newcommand{\sksum}{{\textstyle\sum}}
+\newcommand{\dd}{\mathrm{d}}
+\definecolor{shade}{RGB}{100, 100, 100}
+\definecolor{bordeaux}{RGB}{128, 0, 50}
+\newcommand{\corr}[1]{{\color{red}#1}}
+\newenvironment{itquote}{\begin{quote}\begin{em}}{\end{em}\end{quote}}
+
+\definecolor{leg1}{RGB}{0,114,189}
+\definecolor{leg2}{RGB}{217,83,25}
+\definecolor{leg3}{RGB}{237,177,32}
+\definecolor{leg4}{RGB}{126,47,142}
+\definecolor{leg5}{RGB}{119,172,48}
+
+\definecolor{leg21}{RGB}{62,38,169}
+\definecolor{leg22}{RGB}{46,135,247}
+\definecolor{leg23}{RGB}{55,200,151}
+\definecolor{leg24}{RGB}{254,195,56}
+
+
+\ifpdf
+\hypersetup{
+	pdftitle={\TheTitle},
+	pdfauthor={\TheAuthors}
+}
+\fi

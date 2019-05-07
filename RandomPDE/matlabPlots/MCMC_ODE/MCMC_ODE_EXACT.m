@@ -12,7 +12,7 @@ filenameobs = {'observations1.txt', 'observations05.txt', ...
 enhanced = 1;
 fontsizeLAB = getLatexTextSize('normalsize', 'enhanced', enhanced);
 fontsizeTICK = getLatexTextSize('small', 'enhanced', enhanced);
-W = 4; H = 4;
+W = 5; H = 5;
 
 sigmaErr = [0.1, 0.05, 0.025, 0.0125];
 
@@ -57,15 +57,15 @@ p(j+1) = plot([1, 1], [0, max(dens)], 'k--');
 % leg = legend([p(1), p(2), p(3), p(4)], {'$\sigma = 0.1$', '$\sigma = 0.05$', '$\sigma = 0.025$','$\sigma = 0.0125$'}, 'interpreter', 'laTeX', 'location', 'NW');
 % columnlegend(2, {'$\sigma = 0.1$', '$\sigma = 0.05$', '$\sigma = 0.025$','$\sigma = 0.0125$'})
 
-xlim([-1, 4])
+xlim([-1, 3])
 xLim = get(gca, 'xLim');
-xlabel('$y_0$', 'interpreter', 'latex')
+xlabel('$\vartheta$', 'interpreter', 'latex')
 set(gca, 'ytick', [])
 
 title('Additive noise', 'interpreter', 'latex')
 
 axpos = get(gca, 'innerposition');
-print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION11/ExPostAN.eps
+print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION15/ExPostAN.eps
 
 %% ==========
 
@@ -101,13 +101,13 @@ set(gca, 'xLim', xLim)
 
 % leg = legend([p(1), p(2), p(3), p(4)], {'$\sigma = 0.1$', '$\sigma = 0.05$', '$\sigma = 0.025$','$\sigma = 0.0125$'}, 'interpreter', 'laTeX', 'location', 'NW');
 
-xlabel('$y_0$', 'interpreter', 'latex')
+xlabel('$\vartheta$', 'interpreter', 'latex')
 set(gca, 'ytick', [])
 
 title('Random time step', 'interpreter', 'latex')
 
 set(gca, 'innerposition', axpos)
-print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION11/ExPostRTS.eps
+print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION15/ExPostRTS.eps
 
 %% ==========
 
@@ -136,13 +136,13 @@ set(gca, 'xLim', xLim)
 
 % leg = legend([p(1), p(2), p(3), p(4)], {'$\sigma = 0.1$', '$\sigma = 0.05$', '$\sigma = 0.025$','$\sigma = 0.0125$'}, 'interpreter', 'laTeX', 'location', 'NW');
 
-xlabel('$y_0$', 'interpreter', 'latex')
+xlabel('$\vartheta$', 'interpreter', 'latex')
 set(gca, 'ytick', [])
 
 title('Deterministic', 'interpreter', 'latex')
 
 set(gca, 'innerposition', axpos)
-print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION11/ExPostRK.eps
+print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION15/ExPostRK.eps
 
 %% ==========
 
@@ -168,11 +168,11 @@ set(gca, 'xLim', xLim)
 
 % leg = legend([p(1), p(2), p(3), p(4)], {'$\sigma = 0.1$', '$\sigma = 0.05$', '$\sigma = 0.025$','$\sigma = 0.0125$'}, 'interpreter', 'laTeX', 'location', 'NW');
 
-xlabel('$y_0$', 'interpreter', 'latex')
+xlabel('$\vartheta$', 'interpreter', 'latex')
 set(gca, 'ytick', [])
 
 title('True', 'interpreter', 'latex')
 
 set(gca, 'innerposition', axpos)
-print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION11/ExPostTrue.eps
+print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION15/ExPostTrue.eps
 

@@ -45,7 +45,7 @@ xLim = get(gca, 'xlim');
 yLim = get(gca, 'ylim');
 
 
-print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION12/KeplerOne.eps
+%print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION15/KeplerOne.eps
 
 fig = createFigure(W, H, 'enhanced',enhanced);
 fontsizeLAB = getLatexTextSize('normalsize', 'enhanced', enhanced);
@@ -75,7 +75,7 @@ ax = axis;
 % text(1, ax(3) + offset, 1, ['1'],...
 %     'HorizontalAlignment','Center', 'fontname', 'CMUSerif', 'fontsize', fontsizeTICK);
 
-print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION12/KeplerTwo.eps
+%print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION15/KeplerTwo.eps
 
 %% Additive noise
 
@@ -109,7 +109,7 @@ ax = axis;
 xlabel('$w_1$', 'interpreter', 'latex')
 ylabel('$w_2$', 'interpreter', 'latex')
 
-print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION12/KeplerOneAdd.eps
+%print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION15/KeplerOneAdd.eps
 
 fig = createFigure(W, H, 'enhanced',enhanced);
 fontsizeLAB = getLatexTextSize('normalsize', 'enhanced', enhanced);
@@ -141,7 +141,7 @@ ax = axis;
 xlabel('$w_1$', 'interpreter', 'latex')
 ylabel('$w_2$', 'interpreter', 'latex')
 
-print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION12/KeplerTwoAdd.eps
+%print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION15/KeplerTwoAdd.eps
 
 %% Momentum
 
@@ -167,7 +167,7 @@ set(gca, 'xtick', 0:500:4000);
 
 legend({'Additive noise', 'Random time step'}, 'interpreter', 'latex', 'Location', 'E')
 
-print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION12/KeplerMom.eps
+%print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION15/KeplerMom.eps
 
 
 
