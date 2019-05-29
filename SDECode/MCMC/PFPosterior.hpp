@@ -8,7 +8,7 @@
 #include <vector>
 #include <memory>
 
-// This class computes the posterior for the parameters of an SDE with the Boostrap Particle Filter
+// This class computes the posterior for the parameters of an SDE with the Particle Filter
 
 using namespace Eigen;
 

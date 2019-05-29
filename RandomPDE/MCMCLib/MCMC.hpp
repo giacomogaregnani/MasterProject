@@ -16,6 +16,7 @@
 #include "RKEEPosteriorIC.hpp"
 #include "RAM.hpp"
 #include "Posterior.hpp"
+#include "RKAddNoisePosteriorIC.hpp"
 
 using namespace Eigen;
 

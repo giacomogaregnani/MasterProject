@@ -8,25 +8,18 @@ using namespace Eigen;
 
 class Proposals {
 private:
-
     std::normal_distribution<double> proposalNormal;
-
     double proposalStdDev;
-
-    std::vector<double> proposalParam;
-
-    bool isCN;
+    bool isRAM;
+    double alphaStar;
+    double stdDev;
+    MatrixXd stdDevRAM;
 
 public:
-
-    Proposals() {};
-
-    Proposals(double stdDev, std::vector<double> param = {});
-
+    Proposals() = default;
+    Proposals(double stdDev, double alphaStar = 0);
     VectorXd RWProposal(VectorXd& theta, std::default_random_engine* generator);
-
-    VectorXd CNProposal(VectorXd& theta, std::default_random_engine* generator);
-
+    VectorXd RAMProposal(VectorXd& theta, std::default_random_engine* generator);
     VectorXd genSample(VectorXd& theta, std::default_random_engine* generator);
 };
 

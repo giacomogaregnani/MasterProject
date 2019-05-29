@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
 
     // Model ODE
     odeDef ODE;
-    ODE.ode = TEST1D;
+    ODE.ode = HENHEIL;
     setProblem(&ODE);
 
     // Generate observations

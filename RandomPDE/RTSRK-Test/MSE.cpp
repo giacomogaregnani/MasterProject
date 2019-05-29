@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
     Butcher refTableau(RK4, EXPLICIT, 0);
     RungeKutta refSolver(ODE, refTableau);
     double hRef = 1e-6;
-    unsigned int NRef = static_cast<unsigned int>(std::round(T / hRef));
+    auto NRef = static_cast<unsigned int>(std::round(T / hRef));
     VectorXd refSolution = ODE.initialCond;
 
     for (unsigned int j = 0; j < NRef; j++) {
@@ -53,9 +53,10 @@ int main(int argc, char* argv[])
     double refPhi = phi(refSolution);
 
     // Error computation
-    Butcher tableau(EXPTRAPEZ, EXPLICIT, 0);
-    std::default_random_engine generator{(unsigned int) time(NULL)};
-    unsigned int N = static_cast<unsigned int>(std::round(T / h));
+    Butcher tableau(EXPTRAPEZ, EXPLICIT);
+    std::random_device device;
+    std::default_random_engine generator{device()};
+    auto N = static_cast<unsigned int>(std::round(T / h));
 
     std::ofstream output(DATA_PATH + outputFileName + ".txt", std::ofstream::out | std::ofstream::trunc);
     for (int k = 0; k < nExp; k++) {
@@ -68,7 +69,7 @@ int main(int argc, char* argv[])
             double est = 0.0;
 
             int j = 0;
-            #pragma omp parallel for num_threads(25) reduction(+:est) private(j)
+            #pragma omp parallel for num_threads(6) reduction(+:est) private(j)
             for (j = 0; j < nMC; j++) {
                 RungeKuttaRandomH probSolver(&generator, ODE, tableau, h, p);
                 VectorXd solution = ODE.initialCond;
@@ -84,7 +85,7 @@ int main(int argc, char* argv[])
 
         output << h << "\t" << sqrt(error) << std::endl;
         h /= 2.0;
-        N *= 2.0;
+        N *= 2;
     }
     output.close();
 

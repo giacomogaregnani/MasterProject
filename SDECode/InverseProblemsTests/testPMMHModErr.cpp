@@ -53,8 +53,8 @@ int main(int argc, char* argv[])
     sdeHomo.drift = &homoDrift;
     sdeHomo.diffusion = &diffusion;
 
-    double T = 50;
-    unsigned int N = 5000;
+    double T = 5;
+    unsigned int N = 500;
 
     VectorXd tmpParam(3);
     tmpParam(0) = 0.1;  // Epsilon
@@ -78,12 +78,11 @@ int main(int argc, char* argv[])
     // ====================================================== //
 
     // Initialize structures for the inverse problem
-    unsigned long M = 200, nMCMC = 10001;
+    unsigned long M = 100, nMCMC = 100001;
     double noise = 1e-2;
     double IC = 0.0;
     std::random_device dev;
-    std::default_random_engine noiseSeed{1};
-    //std::default_random_engine noiseSeed{dev()};
+    std::default_random_engine noiseSeed{dev()};
     std::default_random_engine proposalSeed{(unsigned int) time(nullptr)+1};
     std::default_random_engine acceptanceSeed{(unsigned int) time(nullptr)+2};
     std::normal_distribution<double> noiseDistribution(0.0, noise);
@@ -91,7 +90,8 @@ int main(int argc, char* argv[])
 
     // Generate and perturb observations
     std::cout << "Generating observations..." << std::endl;
-    auto x = generateObservations1D(sde, IC, param, T, N);
+    unsigned int nSeed = dev();
+    auto x = generateObservations1D(sde, IC, param, T, N, nSeed);
     std::cout << "Generated observations" << std::endl;
     for (auto const &itSol : x) {
         outputSol << std::fixed << std::setprecision(5) << itSol << "\t";
@@ -103,12 +103,13 @@ int main(int argc, char* argv[])
         outputSol << x[i] << "\t";
     }
     outputSol << std::endl;
+
     // Compute a homogeneous path with the same Brownian for comparison
-    VectorXd homoParam = param;
-    /* homoParam(0) = param(0);
+    VectorXd homoParam(3);
+    homoParam(0) = param(0);
     homoParam(1) = std::log(homCoeffs[0]);
-    homoParam(2) = std::log(homCoeffs[1]); */
-    auto xHom = generateObservations1D(sdeHomo, IC, homoParam, T, N);
+    homoParam(2) = std::log(homCoeffs[1]);
+    auto xHom = generateObservations1D(sdeHomo, IC, homoParam, T, N, nSeed);
     for (auto const &itSol : xHom) {
         outputSol << std::fixed << std::setprecision(10) << itSol << "\t";
     }
@@ -117,12 +118,12 @@ int main(int argc, char* argv[])
     // Modeling error estimation
     std::cout << "Computing modeling error..." << std::endl;
     VectorXd priorMean(param.size());
-    priorMean << param(0), 0.0, 0.0;
+    priorMean << param(0), param(1), param(2);
     VectorXd priorStdDev(param.size());
-    priorStdDev << 0.0, 0.0, 0.0;
-    ModErr modErr(sdeHomo, sde, IC, priorMean, priorStdDev, T, N, x, noise);
-    unsigned int nMC = 100;
-    unsigned int nParam = 50;
+    priorStdDev << 0.0, 1.0, 1.0;
+    ModErr modErr(sdeHomo, sde, &V1, IC, priorMean, priorStdDev, T, N, x, noise);
+    unsigned int nMC = 50;
+    unsigned int nParam = 300;
     modErr.computePF(nParam, nMC);
     std::vector<double> means, stddevs;
     modErr.getStats(means, stddevs);
@@ -158,7 +159,7 @@ int main(int argc, char* argv[])
         std::shared_ptr<Posterior> posterior;
         posterior = std::make_shared<PFPosterior>(x, T, IC, ratio, noise, sdeHomo, param(0), M, IS); //, stddevs);
         std::shared_ptr<Proposals> proposal;
-        proposal = std::make_shared<Proposals>(6e-2);
+        proposal = std::make_shared<Proposals>(8e-2);
         MCMC mcmc(initGuess, proposal, posterior, nMCMC);
         auto sample = mcmc.compute(&proposalSeed, &acceptanceSeed);
         for (auto const &itSample : sample)

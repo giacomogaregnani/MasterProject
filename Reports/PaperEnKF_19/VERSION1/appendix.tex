@@ -1,0 +1,281 @@
+\section*{Appendix}
+
+\subsection*{Proof of Lemma \ref{lemma_difference_inverse}}
+
+Note that
+\[ A^{-1} - B^{-1} = A^{-1} (I - A B^{-1}) = A^{-1} (B - A) B^{-1}, \]
+therefore we have
+\[ \norm{A^{-1} - B^{-1}}_2 \le \norm{A^{-1}}_2 \norm{B - A}_2 \norm{B^{-1}}_2, \]
+which is the desired result.
+
+\qed
+
+\subsection*{Proof of Lemma \ref{lemma_inverse_sum}}
+
+Let $n$ be the dimension of the matrices, since $A$ is symmetric positive semidefinite and $B$ is symmetric positive definite, then $A + B$ is symmetric positive definite, and the eigenvalues of $A + B$ and $B$ are real and positive, thus they can be written
+\[ 0 < \lambda_1(\cdot) \le \lambda_2(\cdot) \le \dots \le \lambda_n(\cdot), \]
+counted with their multiplicity.
+First, notice that, using the Rayleigh quotient and the fact that $x^T A x \ge 0$ for all $x$, we have
+\[ \lambda_1(A + B) = \min_{x \neq 0} \frac{x^T(A + B)x}{x^T x} = \min_{x \neq 0} \frac{x^T A x + x^T B x}{x^T x} \ge \min_{x \neq 0} \frac{x^T B x}{x^T x} = \lambda_1(B), \]
+which implies
+\[ \norm{(A + B)^{-1}}_2 = \frac{1}{\lambda_1(A + B)} \le \frac{1}{\lambda_1(B)} = \norm{B^{-1}}_2, \]
+which is the desired result.
+
+\qed
+
+%\subsection*{Proof of Lemma \ref{G_lipschitz}}
+%
+%Let $u_1, u_2 \in \mathbb{R}^M$, then the weak formulations of problem (\ref{problem_lemma}) for these two values are
+%\begin{equation*}
+%\int_{\Omega} A(u_1) \nabla p_1 \cdot \nabla v = \int_{\Omega} f v \qquad \text{ and } \qquad \int_{\Omega} A(u_2) \nabla p_2 \cdot \nabla v = \int_{\Omega} f v, 
+%\end{equation*}
+%for all $v \in H^1_0(\Omega)$. Hence we have
+%\begin{equation*}
+%\int_{\Omega} A(u_1) \nabla p_1 \cdot \nabla v - \int_{\Omega} A(u_1) \nabla p_2 \cdot \nabla v + \int_{\Omega} A(u_1) \nabla p_2 \cdot \nabla v - \int_{\Omega} A(u_2) \nabla p_2 \cdot \nabla v = 0,
+%\end{equation*}
+%which is equivalent to
+%\begin{equation*}
+%\int_{\Omega} A(u_1) (\nabla p_1 - \nabla p_2) \cdot \nabla v = - \int_{\Omega} (A(u_1) - A(u_2)) \nabla p_2 \cdot \nabla v.
+%\end{equation*}
+%Take $v = p_1 - p_2 \in H^1_0(\Omega)$. Then, using the hypotheses on $A$ and the H\"older inequality, we obtain
+%\begin{align*}
+%\alpha \norm{\nabla p_1 - \nabla p_2}_{L^2(\Omega; \R^N)}^2 \le & \; \int_{\Omega} A(u_1) (\nabla p_1 - \nabla p_2) \cdot (\nabla p_1 - \nabla p_2) \\
+%= & \; - \int_{\Omega} (A(u_1) - A(u_2)) \nabla p_2 \cdot (\nabla p_1 - \nabla p_2) \\
+%\le & \; \left | \int_{\Omega} (A(u_1) - A(u_2)) \nabla p_2 \cdot (\nabla p_1 - \nabla p_2) \right | \\
+%\le & \; \norm{A(u_1) - A(u_2)}_{L^{\infty}(\Omega; \R^{N \times N})} \norm{\nabla p_2}_{L^2(\Omega; \R^N)} \norm{\nabla p_1 - \nabla p_2}_{L^2(\Omega; \R^N)} \\
+%\le & \; M \norm{u_1 - u_2}_2 \norm{\nabla p_2}_{L^2(\Omega; \R^N)} \norm{\nabla p_1 - \nabla p_2}_{L^2(\Omega; \R^N)},
+%\end{align*}
+%which implies 
+%\begin{equation}
+%\label{intermidiate}
+%\norm{\nabla p_1 - \nabla p_2}_{L^2(\Omega; \R^N)} \le \frac{M}{\alpha} \norm{\nabla p_2}_{L^2(\Omega; \R^N)} \norm{u_1 - u_2}_2.
+%\end{equation}
+%Now we still have to bound $\norm{\nabla p_2}_{L^2(\Omega; \R^N)}$, so we consider the weak formulation of problem (\ref{problem_lemma}) for the value $u_2$ and we take $v = p_2$, then we have
+%\begin{align*}
+%\alpha \norm{\nabla p_2}_{L^2(\Omega; \R^N)}^2 \le & \; \int_{\Omega} A(u_2) \nabla p_2 \cdot \nabla p_2 \\
+%= & \; \int_{\Omega} f p_2 \\
+%\le & \; \norm{f}_{L^2(\Omega)} \norm{p_2}_{L^2(\Omega)},
+%\end{align*}
+%and using Poincar\'e inequality with constant $C_p$ we obtain
+%\begin{equation*}
+%\alpha \norm{\nabla p_2}_{L^2(\Omega; \R^N)}^2 \le C_p \norm{f}_{L^2(\Omega)} \norm{\nabla p_2}_{L^2(\Omega; \R^N)}.
+%\end{equation*}
+%Thus we derive
+%\[ \norm{\nabla p_2}_{L^2(\Omega; \R^N)} \le \frac{C_p}{\alpha} \norm{f}_{L^2(\Omega)}, \]
+%and from (\ref{intermidiate}) we obtain
+%\begin{equation*}
+%\norm{\nabla p_1 - \nabla p_2}_{L^2(\Omega; \R^N)} \le \frac{M C_p}{\alpha^2} \norm{f}_{L^2(\Omega)} \norm{u_1 - u_2}_2 = L_{\mathcal{S}} \norm{u_1 - u_2}_2,
+%\end{equation*}
+%which shows that $\mathcal{S}$ is Lipschitz with constant
+%\[ L_{\mathcal{S}} = \frac{M C_p}{\alpha^2} \norm{f}_{L^2(\Omega)}. \]
+%Finally, $\mathcal{G}$ is the composition of two Lipschitz operators, so it is Lipschitz. Indeed, letting $L_{\mathcal{O}}$ be the Lipschitz constant of the observation operator $\mathcal{O}$, we have
+%\begin{align*}
+%\norm{\mathcal{G}(u_1) - \mathcal{G}(u_2)}_2 = & \; \norm{\mathcal{O}(\mathcal{S}(u_1)) - \mathcal{O}(\mathcal{S}(u_2))}_2 \\
+%= & \; \norm{\mathcal{O}(p_1) - \mathcal{O}(p_2)}_2 \\
+%\le & \; L_{\mathcal{O}} \norm{\nabla p_1 - \nabla p_2}_{L^2(\Omega; \R^N)} \\
+%\le & \; L_{\mathcal{O}} L_{\mathcal{S}} \norm{u_1 - u_2}_2,
+%\end{align*}
+%which concludes the proof.
+%
+%\qed
+
+%\subsection*{Proof of Lemma \ref{wH1_sL2}}
+%
+%The sequence $\{ p^{\varepsilon} \}$ is weakly convergent in $H^1_0(\Omega)$, hence it is bounded in $H^1_0(\Omega)$. By Rellich theorem, $H^1_0(\Omega)$ is compactly embedded in $L^2(\Omega)$, so there exists a subsequence $\{ p^{\varepsilon'} \}$ such that
+%\[ p^{\varepsilon'} \to \bar{p} \qquad \text{in } L^2(\Omega) \]
+%for some $\bar{p}$ in $L^2(\Omega)$. Strong convergence implies weak convergence, therefore we obtain 
+%\begin{equation}
+%\label{convergence_pbar}
+%p^{\varepsilon'} \toweak \bar{p} \qquad \text{in } L^2(\Omega).
+%\end{equation}
+%Moreover, since $p^{\varepsilon} \toweak p^0$ in $H^1_0(\Omega)$, we also have that this is true for the subsequence $p^{\varepsilon'}$
+%\[ p^{\varepsilon'} \toweak p^0 \qquad \text{in } H^1_0(\Omega), \]
+%which implies
+%\begin{equation}
+%\label{convergence_p0}
+%p^{\varepsilon'} \toweak p^0 \qquad \text{in } L^2(\Omega).
+%\end{equation}
+%Thanks to (\ref{convergence_pbar}) and (\ref{convergence_p0}) and by uniqueness of the weak limit we deduce that $\bar{p} = p^0$, thus
+%\[ p^{\varepsilon'} \to p^0 \qquad \text{in } L^2(\Omega). \]
+%Finally, repeating this argument for subsequences, we deduce that every subsequence admits a sub-subsequence strongly converging to the same limit in $L^2(\Omega)$, hence the whole sequence strongly
+%converges to $p^0$, that is
+%\[ p^{\varepsilon} \to p^0 \qquad \text{in } L^2(\Omega), \]
+%which is the desired result.
+%
+%\qed
+
+\subsection*{Proof of Lemma \ref{f_goes_to_0}}
+
+By definition of $e$ and using the assumption on $\mathcal{O}$, for all $u \in \mathbb{R}^M$ we have
+\begin{align*}
+e(\varepsilon, u) = & \; \norm{\mathcal{G}^{\varepsilon}(u) - \mathcal{G}^0(u)}_2 \\
+= & \; \norm{\mathcal{O}(\mathcal{S}^{\varepsilon}(u)) - \mathcal{O}(\mathcal{S}^0(u))}_2 \\
+= & \; \norm{\mathcal{O}(p^{\varepsilon}) - \mathcal{O}(p^0)}_2 \\
+\le & \; m \norm{p^{\varepsilon} - p^0}_{L^2(\Omega)}.
+\end{align*}
+By homogenization theory, we know that $p^{\varepsilon} \toweak p^0$ in $H^1_0(\Omega)$, and, by Lemma \ref{wH1_sL2}, we obtain $p^{\varepsilon} \to p^0$ in $L^2(\Omega)$, which implies
+\[ e(\varepsilon, u) \to 0. \]
+Moreover, if the solution of the homogenized problem $p^0$ is sufficiently regular, namely $p^0 \in H^2(\Omega)$, letting $C > 0$ be a constant, we have the following estimate, which can be found in \cite{Gri05}
+\[ \norm{p^{\varepsilon} - p^0}_{L^2(\Omega)} \le C \varepsilon, \]
+hence we obtain
+\[ e(\varepsilon, u) \le m C \varepsilon, \]
+and we finally define $K = m C$.
+
+\qed
+
+\subsection*{Proof of Lemma \ref{covariance_bound}}
+
+Let $L$ be the Lipschitz constant of $\mathcal{G}$. For all $x \in B_R(u^*)$ we have
+\begin{align*}
+& \norm{\mathcal{G}(x)}_2 \le \norm{\mathcal{G}(x) - \mathcal{G}(u^*)}_2 + \norm{\mathcal{G}(u^*)}_2 \le L \norm{x - u^*}_2 + \norm{\mathcal{G}(u^*)}_2 \le LR + G, \\
+& \norm{x}_2 \le \norm{x - u^*}_2 + \norm{u^*}_2 \le R + g,
+\end{align*}
+and we define the bounds $M = LR + G$ and $m = R + g$. The same bounds can be deduced for the mean values
+\begin{align}
+\label{bound_mean_u}
+& \norm{\bar{u}}_2 \le \frac{1}{J} \sum_{j=1}^J \norm{u^{(j)}}_2 \le \frac{1}{J} J m = m, \\
+\label{bound_mean_G}
+& \norm{\bar{\mathcal{G}}}_2 \le \frac{1}{J} \sum_{j=1}^J \norm{\mathcal{G}(u^{(j)})}_2 \le \frac{1}{J} J M = M.
+\end{align}
+By definition of $2$-norm of a matrix we have
+\begin{align*}
+\norm{C^{up}(u)}_2 = & \; \sup_{x \in \mathbb{R}^L \colon \norm{x}_2 = 1} \left \lVert \frac{1}{J} \sum_{j=1}^J (u^{(j)} - \bar{u}) (\mathcal{G}(u^{(j)}) - \bar{\mathcal{G}})^T x \right \rVert_2 \\
+\le & \; \sup_{x \in \mathbb{R}^L \colon \norm{x}_2 = 1} \frac{1}{J} \sum_{j=1}^J \left | (\mathcal{G}(u^{(j)}) - \bar{\mathcal{G}})^T x \right | \norm{u^{(j)} - \bar{u}}_2 \\
+\le & \; \sup_{x \in \mathbb{R}^L \colon \norm{x}_2 = 1} \frac{1}{J} \sum_{j=1}^J \left \lVert \mathcal{G}(u^{(j)}) - \bar{\mathcal{G}} \right \rVert_2 \norm{x}_2 \norm{u^{(j)} - \bar{u}}_2,
+\end{align*}
+and using (\ref{bound_mean_u}) and (\ref{bound_mean_G}) and the fact that $\norm{x}_2 = 1$ we obtain
+\begin{align*}
+\norm{C^{up}(u)}_2 \le & \; \frac{1}{J} \sum_{j=1}^J \left ( \norm{\mathcal{G}(u^{(j)})}_2 + \norm{\bar{\mathcal{G}}}_2 \right ) \left ( \norm{u^{(j)}}_2 + \norm{\bar{u}}_2 \right ) \\
+\le & \; \frac{1}{J} J (M + M) (m + m) = 4Mm,
+\end{align*}
+and we define $C_1 = 4Mm$.
+The procedure is similar for the matrix $C^{pp}(u)$, where we have
+\begin{align*}
+\norm{C^{pp}(u)}_2 = & \; \sup_{x \in \mathbb{R}^L \colon \norm{x}_2 = 1} \left \lVert \frac{1}{J} \sum_{j=1}^J (\mathcal{G}(u^{(j)}) - \bar{\mathcal{G}}) (\mathcal{G}(u^{(j)}) - \bar{\mathcal{G}})^T x \right \rVert_2 \\
+\le & \; \sup_{x \in \mathbb{R}^L \colon \norm{x}_2 = 1} \frac{1}{J} \sum_{j=1}^J \left | (\mathcal{G}(u^{(j)}) - \bar{\mathcal{G}})^T x \right | \left \lVert \mathcal{G}(u^{(j)}) - \bar{\mathcal{G}} \right \rVert_2 \\
+\le & \; \sup_{x \in \mathbb{R}^L \colon \norm{x}_2 = 1} \frac{1}{J} \sum_{j=1}^J \left \lVert \mathcal{G}(u^{(j)}) - \bar{\mathcal{G}} \right \rVert^2_2 \norm{x}_2,
+\end{align*}
+and using bound (\ref{bound_mean_G}) and the fact that $\norm{x}_2 = 1$ we obtain
+\begin{align*}
+\norm{C^{up}(u)}_2 \le & \; \frac{1}{J} \sum_{j=1}^J \left ( \norm{\mathcal{G}(u^{(j)})}_2 + \norm{\bar{\mathcal{G}}}_2 \right )^2 \\
+\le & \; \frac{1}{J} J (M + M)^2 = 4M^2,
+\end{align*}
+and we define $C_2 = 4M^2$. \\
+Before proving the last two results of the lemma we need the following estimates for the ensemble of particles $u_1$ and $u_2$
+\begin{align*}
+\norm{\bar{u}_1 - \bar{u}_2}_2 = & \; \left \lVert \frac{1}{J} \sum_{j=1}^J (u_1^{(j)} - u_2^{(j)}) \right \rVert_2 \le \frac{1}{J} \sum_{j=1}^J \norm{u_1^{(j)} - u_2^{(j)}}_2 = \norm{u_1 - u_2}, \\
+\norm{\bar{\mathcal{G}}_1 - \bar{\mathcal{G}}_2}_2 = & \; \left \lVert \frac{1}{J} \sum_{j=1}^J (\mathcal{G}(u_1^{(j)}) - \mathcal{G}(u_2^{(j)})) \right \rVert_2 \le \frac{1}{J} \sum_{j=1}^J \norm{\mathcal{G}(u_1^{(j)}) - \mathcal{G}(u_2^{(j)})}_2 \\
+& \hspace{137pt} \le L \frac{1}{J} \sum_{j=1}^J \norm{u_1^{(j)} - u_2^{(j)}}_2 \\
+& \hspace{137pt} = L \norm{u_1 - u_2}.
+\end{align*}
+By definition of $2$ norm of a matrix and using the triangle inequality we have
+\begin{align*}
+& \norm{C^{up}(u_1) - C^{up}(u_2)}_2 \\
+& \qquad = \sup_{x \in \mathbb{R}^L \colon \norm{x}_2 = 1} \left \lVert \frac{1}{J} \sum_{j=1}^J \left [ (u_1^{(j)} - \bar{u}_1) (\mathcal{G}(u_1^{(j)}) - \bar{\mathcal{G}}_1)^T x - (u_2^{(j)} - \bar{u}_2) (\mathcal{G}(u_2^{(j)}) - \bar{\mathcal{G}}_2)^T x \right ] \right \rVert_2 \\
+& \qquad \le \quad \sup_{x \in \mathbb{R}^L \colon \norm{x}_2 = 1} \frac{1}{J} \sum_{j=1}^J \left \lVert (u_1^{(j)} - \bar{u}_1) (\mathcal{G}(u_1^{(j)}) - \bar{\mathcal{G}}_1)^T x - (u_1^{(j)} - \bar{u}_1) (\mathcal{G}(u_2^{(j)}) - \bar{\mathcal{G}}_2)^T x \right \rVert_2 \\
+& \qquad \quad + \sup_{x \in \mathbb{R}^L \colon \norm{x}_2 = 1} \frac{1}{J} \sum_{j=1}^J \left \lVert (u_1^{(j)} - \bar{u}_1) (\mathcal{G}(u_2^{(j)}) - \bar{\mathcal{G}}_2)^T x - (u_2^{(j)} - \bar{u}_2) (\mathcal{G}(u_2^{(j)}) - \bar{\mathcal{G}}_2)^T x \right \rVert_2,
+\end{align*}
+which implies
+\begin{align*}
+& \norm{C^{up}(u_1) - C^{up}(u_2)}_2 \\
+& \qquad \le \quad \sup_{x \in \mathbb{R}^L \colon \norm{x}_2 = 1} \frac{1}{J} \sum_{j=1}^J \left \lVert (u_1^{(j)} - \bar{u}_1) [ (\mathcal{G}(u_1^{(j)}) - \mathcal{G}(u_2^{(j)})) + (\bar{\mathcal{G}}_2 - \bar{\mathcal{G}}_1)]^T x ] \right \rVert_2 \\
+& \qquad \quad + \sup_{x \in \mathbb{R}^L \colon \norm{x}_2 = 1} \frac{1}{J} \sum_{j=1}^J \left \lVert [ (u_1^{(j)} - u_2^{(j)}) + (\bar{u}_2 - \bar{u}_1) ] (\mathcal{G}(u_2^{(j)}) - \bar{\mathcal{G}}_2)^T x \right \rVert_2 \\ 
+& \qquad \le \quad \sup_{x \in \mathbb{R}^L \colon \norm{x}_2 = 1} \frac{1}{J} \sum_{j=1}^J \norm{u_1^{(j)} - \bar{u}_1}_2 [ \norm{\mathcal{G}(u_1^{(j)}) - \mathcal{G}(u_2^{(j)})}_2 + \norm{\bar{\mathcal{G}}_2 - \bar{\mathcal{G}}_1}_2 ] \norm{x}_2 \\
+& \qquad \quad + \sup_{x \in \mathbb{R}^L \colon \norm{x}_2 = 1} \frac{1}{J} \sum_{j=1}^J [ \norm{u_1^{(j)} - u_2^{(j)}}_2 + \norm{\bar{u}_2 - \bar{u}_1}_2 ] \norm{\mathcal{G}(u_2^{(j)}) - \bar{\mathcal{G}}_2} \norm{x}_2.
+\end{align*}
+Using bounds (\ref{bound_mean_u}) and (\ref{bound_mean_G}) and the fact that $\mathcal{G}$ is Lipschitz with constant $L$, we obtain
+\begin{align*}
+& \norm{C^{up}(u_1) - C^{up}(u_2)}_2 \\
+& \qquad \le \frac{1}{J} \sum_{j=1}^J \left \{ (\norm{u_1^{(j)}}_2 + \norm{\bar{u}_1}_2) (L \norm{u_1^{(j)} - u_2^{(j)}}_2 + L \norm{u_1 - u_2}) \right \} \\
+& \qquad \qquad + \frac{1}{J} \sum_{j=1}^J \left \{ (\norm{u_1^{(j)} - u_2^{(j)}}_2 + \norm{\bar{u}_2 - \bar{u}_1}_2) (\norm{\mathcal{G}(u_2^{(j)})}_2 + \norm{\bar{\mathcal{G}}_2}_2) \right \} \\
+& \qquad \le \frac{1}{J} \sum_{j=1}^J \left \{ 2m ( LJ \norm{u_1 - u_2} + L \norm{u_1 - u_2} ) + ( J \norm{u_1 - u_2} + \norm{u_1 - u_2} ) 2M \right \} \\
+& \qquad \le 2 (J+1) \max \{ mL, M \} \norm{u_1 - u_2},
+\end{align*}
+and we define $C_3 = 2 (J+1) \max \{ mL, M \}$. The computation is similar for the last point of the statement, for which we have
+\begin{align*}
+& \norm{C^{pp}(u_1) - C^{pp}(u_2)}_2 \\
+& \qquad = \sup_{x \in \mathbb{R}^L \colon \norm{x}_2 = 1} \left \lVert \frac{1}{J} \sum_{j=1}^J \left [ (\mathcal{G}(u_1^{(j)}) - \bar{\mathcal{G}}_1) (\mathcal{G}(u_1^{(j)}) - \bar{\mathcal{G}}_1)^T x - (\mathcal{G}(u_2^{(j)}) - \bar{\mathcal{G}}_2) (\mathcal{G}(u_2^{(j)}) - \bar{\mathcal{G}}_2)^T x \right ] \right \rVert_2 \\
+& \qquad \le \quad \sup_{x \in \mathbb{R}^L \colon \norm{x}_2 = 1} \frac{1}{J} \sum_{j=1}^J \left \lVert (\mathcal{G}(u_1^{(j)}) - \bar{\mathcal{G}}_1) (\mathcal{G}(u_1^{(j)}) - \bar{\mathcal{G}}_1)^T x - (\mathcal{G}(u_1^{(j)}) - \bar{\mathcal{G}}_1) (\mathcal{G}(u_2^{(j)}) - \bar{\mathcal{G}}_2)^T x \right \rVert_2 \\
+& \qquad \quad + \sup_{x \in \mathbb{R}^L \colon \norm{x}_2 = 1} \frac{1}{J} \sum_{j=1}^J \left \lVert (\mathcal{G}(u_1^{(j)}) - \bar{\mathcal{G}}_1) (\mathcal{G}(u_2^{(j)}) - \bar{\mathcal{G}}_2)^T x - (\mathcal{G}(u_2^{(j)}) - \bar{\mathcal{G}}_2) (\mathcal{G}(u_2^{(j)}) - \bar{\mathcal{G}}_2)^T x \right \rVert_2, 
+\end{align*}
+which implies
+\begin{align*}
+& \norm{C^{pp}(u_1) - C^{pp}(u_2)}_2 \\
+& \qquad \le \quad \sup_{x \in \mathbb{R}^L \colon \norm{x}_2 = 1} \frac{1}{J} \sum_{j=1}^J \left \lVert (\mathcal{G}(u_1^{(j)}) - \bar{\mathcal{G}}_1) [ (\mathcal{G}(u_1^{(j)}) - \mathcal{G}(u_2^{(j)})) + (\bar{\mathcal{G}}_2 - \bar{\mathcal{G}}_1)]^T x ] \right \rVert_2 \\
+& \qquad \quad + \sup_{x \in \mathbb{R}^L \colon \norm{x}_2 = 1} \frac{1}{J} \sum_{j=1}^J \left \lVert [ (\mathcal{G}(u_1^{(j)}) - \mathcal{G}(u_2^{(j)})) + (\bar{\mathcal{G}}_2 - \bar{\mathcal{G}}_1) ] (\mathcal{G}(u_2^{(j)}) - \bar{\mathcal{G}}_2)^T x \right \rVert_2 , \\
+& \qquad \le \quad \sup_{x \in \mathbb{R}^L \colon \norm{x}_2 = 1} \frac{1}{J} \sum_{j=1}^J \norm{\mathcal{G}(u_1^{(j)}) - \bar{\mathcal{G}}_1}_2 [ \norm{\mathcal{G}(u_1^{(j)}) - \mathcal{G}(u_2^{(j)})}_2 + \norm{\bar{\mathcal{G}}_2 - \bar{\mathcal{G}}_1}_2 ] \norm{x}_2 \\
+& \qquad \quad + \sup_{x \in \mathbb{R}^L \colon \norm{x}_2 = 1} \frac{1}{J} \sum_{j=1}^J [ \norm{\mathcal{G}(u_1^{(j)}) - \mathcal{G}(u_2^{(j)})}_2 + \norm{\bar{\mathcal{G}}_2 - \bar{\mathcal{G}}_1}_2 ] \norm{\mathcal{G}(u_2^{(j)}) - \bar{\mathcal{G}}_2} \norm{x}_2.
+\end{align*}
+Using bounds (\ref{bound_mean_u}) and (\ref{bound_mean_G}) and the fact that $\mathcal{G}$ is Lipschitz with constant $L$, we obtain
+\begin{align*}
+& \norm{C^{pp}(u_1) - C^{pp}(u_2)}_2 \\
+& \qquad \le \frac{1}{J} \sum_{j=1}^J \left \{ 2M ( LJ \norm{u_1 - u_2} + L \norm{u_1 - u_2} ) + ( LJ \norm{u_1 - u_2} + L \norm{u_1 - u_2} ) 2M \right \} \\
+& \qquad = 4 M L (J+1) \norm{u_1 - u_2},
+\end{align*}
+and we define $C_4 = 4 M L (J+1)$.
+
+\qed
+
+\subsection*{Proof of Theorem \ref{equivalence_convergence_DW1}}
+
+We recall the duality formula (\ref{Wasserstein_dual}) for the Wasserstein distance $W_{1,s}$
+\[ W_{1,s}(\mu_n, \mu) = \sup_{\varphi \in \Phi} \left \{ \int_{B_R(u^*)} \varphi d(\mu_n - \mu) \right \}, \]
+where $\Phi$ is the set of all globally Lipschitz continuous functions $\varphi \colon B_R(u^*) \to \R$ with Lipschitz constant $L \le 1$. Note that if $\varphi \in \Phi$, then also $- \varphi \in \Phi$.
+Therefore we deduce that
+\begin{equation}
+\label{equality_absolute_value}
+W_{1,s}(\mu_n, \mu) = \sup_{\varphi \in \Phi} \left \{ \int_{B_R(u^*)} \varphi d(\mu_n - \mu) \right \} = \sup_{\varphi \in \Phi} \left \{ \left | \int_{B_R(u^*)} \varphi d(\mu_n - \mu) \right | \right \}.
+\end{equation}
+Indeed we have
+\[ \int_{B_R(u^*)} \varphi d(\mu_n - \mu) \le \left | \int_{B_R(u^*)} \varphi d(\mu_n - \mu) \right |, \]
+which implies the first inequality
+\[ \sup_{\varphi \in \Phi} \left \{ \int_{B_R(u^*)} \varphi d(\mu_n - \mu) \right \} \le \sup_{\varphi \in \Phi} \left \{ \left | \int_{B_R(u^*)} \varphi d(\mu_n - \mu) \right | \right \}. \]
+On the other hand, we also have
+\begin{equation}
+\label{inequality_sets}
+A = \left \{ \int_{B_R(u^*)} \varphi d(\mu_n - \mu) \colon \varphi \in \Phi \right \} \supseteq \left \{ \left | \int_{B_R(u^*)} \varphi d(\mu_n - \mu) \right | \colon \varphi \in \Phi \right \} = A',
+\end{equation}
+because if $c \in A'$, which means that there exists $\varphi \in \Phi$ such that
+\[ c = \left | \int_{B_R(u^*)} \varphi d(\mu_n - \mu) \right |, \]
+then we can take $\tilde{\varphi} \in \Phi$ defined as
+\begin{equation*}
+\tilde{\varphi} = 
+\begin{cases}
+\varphi & \text{ if } \int_{B_R(u^*)} \varphi d(\mu_n - \mu) > 0 \\
+- \varphi & \text{ if } \int_{B_R(u^*)} \varphi d(\mu_n - \mu) < 0, \\
+\end{cases}
+\end{equation*}
+and note that that 
+\[ c = \int_{B_R(u^*)} \tilde{\varphi} d(\mu_n - \mu), \]
+which implies that $c \in A$. Therefore, by (\ref{inequality_sets}), we deduce the opposite inequality
+\[ \sup_{\varphi \in \Phi} \left \{ \int_{B_R(u^*)} \varphi d(\mu_n - \mu) \right \} \ge \sup_{\varphi \in \Phi} \left \{ \left | \int_{B_R(u^*)} \varphi d(\mu_n - \mu) \right | \right \}. \]
+Then, thanks to (\ref{equality_absolute_value}), we have
+\begin{align*}
+\sup_{\varphi \in \Phi} \mathbb{E}_{\xi} \left [ \left | \int_{B_R(u^*)} \varphi d(\mu_n - \mu) \right | \right ] \le & \; \mathbb{E}_{\xi} \left [ \sup_{\varphi \in \Phi} \left \{ \left | \int_{B_R(u^*)} \varphi d(\mu_n - \mu) \right | \right \} \right ] \\
+= & \; \mathbb{E}_{\xi} [ W_{1,s}(\mu_n, \mu) ],
+\end{align*}
+and the right hand side vanishes by hypothesis, so we obtain
+\[ \sup_{\varphi \in \Phi} \mathbb{E}_{\xi} \left [ \left | \int_{B_R(u^*)} \varphi d(\mu_n - \mu) \right | \right ] \to 0. \]
+Hence
+\begin{equation}
+\label{for_all_phi}
+\mathbb{E}_{\xi} \left [ \left | \int_{B_R(u^*)} \varphi d \mu_n - \int_{B_R(u^*)} \varphi d \mu \right | \right ] \to 0 \qquad \text{for all } \varphi \in \Phi.
+\end{equation}
+It remains to show that (\ref{for_all_phi}) holds true for all functions $f \in C^0(B_R(u^*))$. First, we consider any Lipschitz function $\psi$ with Lipschitz constant $L$. We define $\phi = \psi/L$, then $\phi \in \Phi$, indeed
+\begin{equation*}
+\abs{\phi(x) - \phi(y)} = \left | \frac{1}{L} \psi(x) - \frac{1}{L} \psi(y) \right | = \frac{1}{L} \abs{\psi(x) - \psi(y)} \le \frac{1}{L} L \norm{x - y}_s = \norm{x - y}_s.
+\end{equation*}
+Therefore we have
+\begin{equation}
+\label{for_all_psi}
+\mathbb{E}_{\xi} \left [ \left | \int_{B_R(u^*)} \psi d \mu_n - \int_{B_R(u^*)} \psi d \mu \right | \right ] = L \mathbb{E}_{\xi} \left [ \left | \int_{B_R(u^*)} \phi d \mu_n - \int_{B_R(u^*)} \phi d \mu \right | \right ] \to 0.
+\end{equation}
+By density, any continuous bounded function $f \in C^0(B_R(u^*))$ can be approximated by a sequence of Lipschitz functions $\{ \psi_k \}_{k \in \mathbb{N}}$ such that $\norm{\psi_k}_{L^{\infty}(B_R(u^*))} \le C$ for all $k \in \mathbb{N}$ where $C$ is a constant dependent on $f$ and $\norm{\psi_k - f}_{L^{\infty}(B_R(u^*))} \to 0$ as $k \to \infty$. Thanks to (\ref{for_all_psi}) we have
+\[ \mathbb{E}_{\xi} \left [ \left | \int_{B_R(u^*)} \psi_k d \mu_n - \int_{B_R(u^*)} \psi_k d \mu \right | \right ] \to 0, \]
+and, applying Lebesgue dominated convergence theorem, we can pass to the limit as $k \to \infty$. We can exchange the limit with the expectation and the integral because the integrand functions are bounded by $C$ and the measures $\mu_n$ and $\mu$ are finite, since they are probability measures. Thus we obtain
+\[ \mathbb{E}_{\xi} \left [ \left | \int_{B_R(u^*)} f d \mu_n - \int_{B_R(u^*)} f d \mu \right | \right ] \to 0, \]
+for all bounded continuous functions $f \in C^0(B_R(u^*))$ which means
+\[ \mu_n \xrightharpoonup{L^1} \mu, \]
+which is the desired result.
+
+\qed

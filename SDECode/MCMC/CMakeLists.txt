@@ -11,6 +11,8 @@ add_library(MCMC
         SDEPosterior.cpp
         PFPosterior.hpp
         PFPosterior.cpp
+        PFPosteriorHom.hpp
+        PFPosteriorHom.cpp
         ModelingError.hpp
         ModelingError.cpp
         )

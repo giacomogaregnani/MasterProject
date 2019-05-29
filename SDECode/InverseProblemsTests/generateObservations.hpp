@@ -3,7 +3,7 @@
 
 #include <EulerMaruyama.hpp>
 
-std::vector<double> generateObservations1D(oneDimSde sde, double IC, VectorXd& param,
-                                           double T, unsigned int N);
+std::vector<double>
+generateObservations1D(oneDimSde sde, double IC, VectorXd &param, double T, unsigned int N, unsigned int seed);
 
 #endif

@@ -1,8 +1,8 @@
 clc; clear; close all;
-addpath('resultsOxPerox');
+addpath('resultsOxPeroxReview');
 %%
 nMC = 50;
-x = dlmread('OxPeroxStep.txt');
+x = dlmread('OxPeroxAdd.txt');
 N = size(x, 1) / nMC;
 
 %%
@@ -27,4 +27,4 @@ set(gca, 'yTick', [1e-5, 1])
 ylabel('[X]', 'interpreter', 'latex')
 title('RTS-RK', 'interpreter', 'latex')
 
-print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION15/OxPerox.eps
+% print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION15/OxPerox.eps

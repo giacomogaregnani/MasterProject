@@ -12,6 +12,9 @@ target_link_libraries(Hamiltonian2 RandomStep)
 add_executable(MeanSquareConv MeanSquareConv.cpp)
 target_link_libraries(MeanSquareConv RandomStep)
 
+add_executable(WeakConv WeakConv.cpp)
+target_link_libraries(WeakConv RandomStep)
+
 add_executable(MSE MSE.cpp)
 target_link_libraries(MSE RandomStep)
 
@@ -41,3 +44,6 @@ target_link_libraries(OneStepVar RandomStep)
 
 add_executable(Calibration MethodCalibration.cpp)
 target_link_libraries(Calibration RandomStep)
+
+add_executable(OxPerox OxPeroxReaction.cpp)
+target_link_libraries(OxPerox RandomStep)

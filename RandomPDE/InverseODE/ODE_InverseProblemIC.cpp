@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
            nMC = 10,
            nMCMC = 10000;
     std::string outputFileName, obsFileName;
-    bool prob = false, noisy = false, isGauss = false;
+    bool prob = false, noisy = false, isGauss = false, add = false;
 
     if (parser.search("-noise"))
         noise = parser.next(noise);
@@ -43,6 +43,8 @@ int main(int argc, char* argv[])
         p = parser.next(p);
     if (parser.search("-Gauss"))
         isGauss = true;
+    if (parser.search("-add"))
+        add = true;
 
     // Initialize random seeds
     std::default_random_engine generatorOne{(unsigned int) time(NULL)};
@@ -68,8 +70,6 @@ int main(int argc, char* argv[])
         tableau = Butcher(EULERFORWARD, EXPLICIT);
     }
 
-    std::normal_distribution<double> noiseDist(0.0, noise);
-
     // Initialize the MCMC machinery
     Posterior* posterior;
     proposal = Proposals(proposalStdDev);
@@ -77,7 +77,11 @@ int main(int argc, char* argv[])
     if (!prob) {
         posterior = new RKPosteriorIC(h, observations, tObs, noise, ODE, tableau);
     } else {
-        posterior = new RKProbPosteriorIC(h, observations, tObs, noise, ODE, tableau, nMC, p);
+        if (!add) {
+            posterior = new RKProbPosteriorIC(h, observations, tObs, noise, ODE, tableau, nMC, p);
+        } else {
+            posterior = new RKAddPosteriorIC(h, observations, tObs, noise, ODE, tableau, nMC, p);
+        }
     }
 
     // Compute the posterior with MCMC

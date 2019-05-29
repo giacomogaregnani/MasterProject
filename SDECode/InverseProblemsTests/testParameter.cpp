@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
         std::cout << "\u03B5 = " << it << std::endl;
         output << param(0) << "\t";
 
-        auto solution = generateObservations1D(sde, 0.0, param, T, N);
+        auto solution = generateObservations1D(sde, 0.0, param, T, N, 0);
         for (const auto &itSol : solution)
             outputSol << std::fixed << std::setprecision(10) << itSol << "\t";
         outputSol << std::endl;

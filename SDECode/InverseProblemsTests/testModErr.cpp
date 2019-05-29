@@ -45,11 +45,11 @@ int main(int argc, char* argv[])
     sdeHomo.drift = &homoDrift;
     sdeHomo.diffusion = &diffusion;
 
-    double T = 10;
-    unsigned int N = 200;
+    double T = 1;
+    unsigned int N = 10000;
 
     VectorXd param(3);
-    param(0) = 0.1;  // Epsilon
+    param(0) = 0.01;  // Epsilon
     param(1) = std::log(1.0);  // True multiscale alpha
     param(2) = std::log(0.5);  // True multiscale betainv
 
@@ -67,13 +67,13 @@ int main(int argc, char* argv[])
     std::default_random_engine noiseSeed{1};
     std::normal_distribution<double> noiseDistribution(0.0, noise);
     std::cout << "Generating observations..." << std::endl;
-    auto x = generateObservations1D(sde, IC, param, T, N);
+    auto x = generateObservations1D(sde, IC, param, T, N, 0);
     std::cout << "Generated observations" << std::endl;
     for (unsigned long i = 1; i < x.size(); i++) {
         x[i] += noiseDistribution(noiseSeed);
     }
 
-    ModErr modErr(sdeHomo, sde, IC, priorMean, priorStdDev, T, N, x, 0);
+    ModErr modErr(sdeHomo, sde, &V1, IC, priorMean, priorStdDev, T, N, x, 0);
     unsigned int nMC = 400;
     unsigned int nParam = 10;
 

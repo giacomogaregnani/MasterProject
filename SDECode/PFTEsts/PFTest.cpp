@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
     std::normal_distribution<double> noiseDistribution(0.0, noise);
 
     // Generate and perturb observations
-    auto x = generateObservations1D(sdeHomo, IC, param, T, N);
+    auto x = generateObservations1D(sdeHomo, IC, param, T, N, 0);
     outputSol << x[0] << "\t";
     for (unsigned long i = 1; i < x.size(); i++) {
         x[i] += noiseDistribution(noiseSeed);

@@ -1,0 +1,165 @@
+\documentclass[usenames,dvipsnames]{beamer}
+
+\usetheme{Madrid}
+\usecolortheme{dolphin}
+\setbeamercolor{title}{fg=NavyBlue}
+\setbeamercolor{frametitle}{fg=NavyBlue}
+\setbeamercolor{section in toc}{fg=NavyBlue}
+
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage{mathtools}
+\mathtoolsset{showonlyrefs}
+\usepackage{appendixnumberbeamer}
+\usepackage{enumitem}
+\usepackage{centernot}
+\usepackage{tikz}
+\usepackage[lined]{algorithm2e}
+\usepackage{caption}
+\usetikzlibrary{positioning}
+\setitemize{label=-, leftmargin=*}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\|}{\|}
+\renewcommand{\Pr}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\E}{\operatorname{\mathbb{E}}}
+\newcommand{\iid}{\ensuremath{\stackrel{\text{iid}}{\sim}}}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\newcommand{\epl}{\varepsilon}
+
+% Theorem blocks
+\setbeamercolor{block title}{fg=white,bg=NavyBlue}
+\newenvironment<>{greenblock}[1][]{%
+\setbeamercolor{block title}{fg=white,bg=ForestGreen}%
+\begin{block}#2{#1}}{\end{block}}
+\newenvironment<>{redblock}[1][]{%
+\setbeamercolor{block title}{fg=white,bg=red!75!black}%
+\begin{block}#2{#1}}{\end{block}}
+\newenvironment<>{orangeblock}[1][]{%
+\setbeamercolor{block title}{fg=white,bg=orange!75!black}%
+\begin{block}#2{#1}}{\end{block}}
+
+% Add numbers and take out navigation symbols
+\beamertemplatenavigationsymbolsempty
+\setbeamercolor{date in head/foot}{fg=gray, bg=white}
+\setbeamercolor{author in head/foot}{fg=white,bg=white}
+\setbeamercolor{title in head/foot}{fg=white,bg=white}
+\setbeamertemplate{footline}{
+	\leavevmode%
+	\hbox{%
+		\begin{beamercolorbox}[wd=.4\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+			\insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+	\end{beamercolorbox}}%
+	\vskip0pt%
+}
+
+\definecolor{leg1}{RGB}{0,114,189}
+\definecolor{leg2}{RGB}{217,83,25}
+\definecolor{leg3}{RGB}{237,177,32}
+\definecolor{leg4}{RGB}{126,47,142}
+\definecolor{leg5}{RGB}{119,172,48}
+
+
+% Text starts always from the top of the frame
+\newenvironment{frameT}{\begin{frame}[t]}{\end{frame}}
+
+\title{Title }
+\author{Assyr Abdulle, Giacomo Garegnani, Sandro Salsa, \underline{Andrea Zanoni}}
+\date{11--13 June 2019}
+\institute[EPFL]{MATHICSE Retreat \\ \vspace{0.5cm} \includegraphics[width=3cm]{Logo}}
+
+\begin{document}
+
+\thispagestyle{empty}
+\frame{\titlepage}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\thispagestyle{empty}
+\frametitle{Outline}
+\tableofcontents
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\section{First section}
+
+\AtBeginSection[]
+{
+	\begin{frame}<beamer>
+	\frametitle{Outline}
+	\tableofcontents[currentsection]
+	\end{frame}
+}
+
+\begin{frame}
+	\frametitle{First slide}
+	
+	\begin{greenblock}[Title]
+		A green block
+	\end{greenblock}
+	
+	\begin{redblock}[Title]
+		A red block
+	\end{redblock}
+	
+	\begin{theorem}[see e.g. \cite{AbG18}]
+		A Theorem
+	\end{theorem}
+\end{frame}
+
+\section{Second section}
+
+\begin{frame}
+	\frametitle{A slide with stuff centred}
+	Centred stuff
+\end{frame}
+
+\begin{frameT}
+	\frametitle{A slide with stuff starting from the top}
+	\only<1-4>{Stuff at the top}
+	
+	\only<2-4>{It is useful when stuff has to appear later and you don't want to lose the position of the first stuff}
+	
+	\only<3-4>{
+	\begin{greenblock}[Title]
+		\ldots and you add a block after that 
+	\end{greenblock}
+
+	\only<4>{
+	\begin{figure}[h]
+		\includegraphics[width=5cm]{Logo}
+		\caption{\ldots and maybe a picture too}
+	\end{figure}	
+	}	
+	}
+\end{frameT}
+
+\begin{frame}
+	\frametitle{Colours}
+	
+	Some colour in \LaTeX are a bit too ``aggressive'': for example {\color{red} red} can be replaced by {\color{BrickRed} BrickRed}, {\color{green} green} can be replaced by {\color{ForestGreen} ForestGreen} and {\color{blue} blue} can be replaced by {\color{NavyBlue} NavyBlue}.
+	
+	\vspace{1cm}
+	Finally, this (\cite{AbG18}) is how citations are done in a presentation.
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{References}
+	\bibliographystyle{apalike}
+	\bibliography{biblio}
+\end{frame}
+
+\end{document}

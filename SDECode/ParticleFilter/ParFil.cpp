@@ -134,20 +134,6 @@ void ParFil::computeDiffBridge(VectorXd& theta)
     auto N = obs.size();
     double h = T / (N-1);
 
-    // If there is a fourth parameter, it is the sampling dt
-    if (theta.size() > 3) {
-        double delta = std::exp(theta(theta.size()-1));
-        auto ratio = static_cast<unsigned int>(delta / h);
-        if (ratio < 1) {
-            samplingRatio = 1;
-        } else if (ratio > N) {
-            samplingRatio = N-1;
-        } else {
-            samplingRatio = ratio;
-        }
-        theta(3) = std::log(samplingRatio * h);
-    }
-
     auto nObs = (N - 1) / samplingRatio;
     unsigned long obsIdx;
     double wSum, hObs = T/nObs, transDensMean, transDensStddev,
@@ -194,6 +180,11 @@ void ParFil::computeDiffBridge(VectorXd& theta)
         std::transform(W.begin(), W.end(), W.begin(), [wSum](double& c){return c/wSum;});
         likelihood += std::log(wSum / nParticles);
     }
+    // Compute the ESS
+    /* double ESS = 0;
+    for (auto const &it : W)
+        ESS += it * it;
+    ESS = std::floor(1.0 / ESS); */
 }
 
 double ParFil::getLikelihood() const

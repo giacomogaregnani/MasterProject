@@ -1,0 +1,271 @@
+\documentclass[10pt]{article}
+
+\input{ex_shared}
+
+\begin{document}
+\maketitle	
+
+\begin{abstract} Add abstract
+\end{abstract}
+
+\textbf{AMS subject classifications.} 
+
+\textbf{Keywords.} 
+
+\normalsize
+\section{Introduction}
+
+Add introduction.
+
+\section{Problem statement}
+
+Let $(\Omega, \mathcal A, P)$ be a probability space, $\epl$, $\alpha$ and $\sigma$ be positive real numbers and $V_0 \colon \R^d \to \R^d$, $V_1 \colon \R^d \to \R^d$ be \corr{smooth} functions. Let us consider the autonomous SDE on $(\Omega, \mathcal A, P)$
+\begin{equation}\label{eq:SDE_MS}
+\begin{aligned}
+	\dd x^\epl(t) &= -\alpha \nabla V_0(x^\epl(t)) \dd t - \frac{1}{\epl}\nabla V_1\Big(\frac{x^\epl(t)}{\epl}\Big) \dd t + \sqrt{2\sigma} \dd W(t), \quad 0 < t \leq T, \\
+	x^\epl(0) &= x_0,
+\end{aligned}
+\end{equation}
+where $W(t)$ is a standard Brownian motion and $x_0$ is a random variable \corr{with bounded moments of all orders}. Theory of homogenization guarantees that there exists a SDE of the form
+\begin{equation}\label{eq:SDE_HOM}
+\begin{aligned}
+	\dd x^0(t) &= -A \nabla V_0(x^0(t)) \dd t + \sqrt{2\Sigma} \dd W(t), \quad 0 < t \leq T, \\
+	x^0(0) &= x_0,
+\end{aligned}
+\end{equation}
+where $W(t)$ is the same Brownian motion, such that $x^\epl(t)$ converges to $x(t)$ in law. In particular, we have $A = K\alpha$ and $\Sigma = K\sigma$, where the value of $K$ is given by (\corr{introduce theory of homogenization}).
+
+Let us denote by $\theta^\epl = (\alpha, \sigma)^\top$ the parameters appearing in \eqref{eq:SDE_MS} and by $\theta^0 = (A, \Sigma)$ the parameters of \eqref{eq:SDE_HOM}. We denote by $\Theta$ the domain of definition of both $\theta^\epl$ and $\theta^0$. Moreover, let us introduce the multiscale forward operator $\mathcal G^\epl \colon \Omega \times \Theta \to \R^{Nd}$, which is defined by
+\begin{equation}
+	\mathcal G^\epl \colon \omega \times \theta^\epl \mapsto \mathbf x^\epl \defeq \begin{pmatrix}(x^\epl_1)^\top, (x^\epl_2)^\top, \ldots, (x^\epl_N)^\top \end{pmatrix}^\top,
+\end{equation}
+where $x_k^\epl = x^\epl(t_k)$ and $t_1, t_2, \ldots, t_N$, $T = t_N$ is an increasing sequence of time instants. We can write $\mathcal G^\epl = \mathcal O \circ \mathcal S^\epl$, where $\mathcal O\colon \mathcal C((0, T), \R^d) \to \R^{Nd}$ is the observation operator, mapping a continuous function with values in $\R^d$ into pointwise evaluations, and where $\mathcal S^\epl \colon \Omega \times \Theta \to C((0, T), \R^d)$ is the random multiscale solution operator, mapping a pair $(\omega, \theta^\epl)$ into the solution of \eqref{eq:SDE_MS}. Analogously, we denote by $\mathcal G^0 \colon \Omega \times \Theta \to \R^{Nd}$ the homogenized forward operator, which is defined by
+\begin{equation}
+	\mathcal G^0 \colon \omega \times \theta^\epl \mapsto \mathbf x^0 \defeq \begin{pmatrix}(x^0_1)^\top, (x^0_2)^\top, \ldots, (x^0_N)^\top \end{pmatrix}^\top,
+\end{equation}
+where $x_k^0 = x^0(t_k)$. Evaluating $\mathcal G^0$ involves the computation of the homogenized coefficient, as well as solving of \eqref{eq:SDE_HOM}. Therefore, we can write $\mathcal G^0 = \mathcal O \circ \mathcal S^0 \circ \mathcal H$, where $\mathcal H \colon \Omega \times \Theta \to \Omega \times \Theta$ is the homogenization operator and summarizes the operations necessary for computing the homogenized SDE \eqref{eq:SDE_HOM} from the multiscale SDE \eqref{eq:SDE_MS} and $\mathcal S^0\colon \Omega \times \Theta \to \mathcal C((0, T), \R^d)$ is the solution operator associated to \eqref{eq:SDE_HOM}. Let us remark that since the same Brownian motion is employed in \eqref{eq:SDE_MS} and \eqref{eq:SDE_HOM}, the map $(\omega, \cdot) \mapsto \mathcal H(\omega, \cdot)$ is the identity. In the following, for ease of notation and clarity, we will omit the dependence on $\omega \in \Omega$ of the operators introduced above.
+
+We are interested in two distinct inference problems. The first can be summarized as
+\begin{equation}\label{eq:IP_MS}
+	\text{Find } \theta^\epl \text{ given observations } \mathbf y = \mathcal G^\epl(\theta^\epl) + \eta,
+\end{equation}
+where $\eta$ is a random variable with density $p_\eta(\cdot)$ representing a source of additive noise. Here, both the parameter we wish to retrieve and the observations belong to the multiscale model. We assume noise at one time instant to be independent of all the other time instants and in general $\eta$ to be independent of $\theta$, i.e., we have that
+\begin{equation}\label{eq:NoiseIndependence}
+	p(y_k \mid \mathbf x^\epl, \theta) = p(y_k \mid x_k). 
+\end{equation}
+In the Gaussian case $\eta \sim \mathcal N(0, \Gamma)$, this is equivalent to assuming a block-diagonal structure on the covariance matrix $\Gamma$. It is interesting to study the effect of employing $\mathcal G^0$ instead of $\mathcal G^\epl$ on the solution of \eqref{eq:IP_MS}. This problem has been analysed in the framework of elliptic partial differential equations in \cite{AbD17, AbD18, NPS12} (\corr{is there other literature?}). The second inference problem can be summarized as
+\begin{equation}\label{eq:IP_HOM}
+\text{Find } \theta^0 \text{ given observations } \mathbf y = \mathcal G^\epl(\theta^\epl) + \eta.
+\end{equation}
+In this case, we want to fit a homogenized model to observations coming from a multiscale equation. Let us remark that solving this inverse problem does not require, a priori, the knowledge of the functional form of the multiscale equation \eqref{eq:SDE_MS}. This problem has been considered in \cite{PaS07} (\corr{introduce ideas -- limitations of the analysis (asymptotic results, need of subsampling -- other references/ideas in the literature?}).
+
+In this work, we consider the Bayesian interpretation of problems \eqref{eq:IP_MS} and \eqref{eq:IP_HOM}. In the Bayesian framework, the goal is computing a probability distribution over the parameter, the posterior, given observations of the state and a prior distribution $\mu_{\mathrm{pr}}$ with density $\prior(\cdot)$. Since the parameter we consider is finite-dimensional, in the following we assume that all the distributions admit a probability density with respect to the Lebesgue measure. Employing the multiscale forward map $\mathcal G^\epl$ or the homogenized map $\mathcal G^0$ gives rise to two different posterior distributions. In particular, we denote as $\mu^\epl(\theta \mid \mathbf y)$ the posterior whose probability density function $p^\epl(\theta^\epl \mid \mathbf y)$ satisfies due to Bayes' rule
+\begin{equation}
+	p^\epl(\theta^\epl \mid \mathbf y) = \frac{1}{Z^\epl} \prior(\theta^\epl) \, p^\epl(\mathbf y \mid \theta),
+\end{equation} 
+where $p^\epl(y \mid \theta)$ is the likelihood associated to the data and $Z^\epl$ is the normalization constant given by
+\begin{equation}
+	Z^\epl = \int_{\Theta} \prior(\theta^\epl) \, p^\epl(\mathbf y \mid \theta^\epl) \dd \theta^\epl.
+\end{equation}
+The likelihood function can be expressed as the marginal distribution of the random vector $(\mathbf y, \mathbf x^\epl \mid \theta)$, which is given by
+\begin{equation}\label{eq:LikelihoodMarginalization}
+\begin{aligned}
+	p^\epl(\mathbf y \mid \theta^\epl) &= \int_{\R^{Nd}} p^\epl(\mathbf y, \mathbf x \mid \theta^\epl) \dd \mathbf x\\
+	&= \int_{\R^{Nd}} p^\epl(\mathbf x \mid \theta^\epl) \, p^\epl(\mathbf y \mid \mathbf x, \theta^\epl) \dd \mathbf x.
+\end{aligned}
+\end{equation}
+Let us now consider the two factors appearing in \eqref{eq:LikelihoodMarginalization}. The first can be factored due to the Markov property as
+\begin{equation}
+	p^\epl(\mathbf x \mid \theta^\epl) = p(x_0) \, \prod_{k=0}^{N-1} p^\epl(x_{k+1} \mid x_k, \theta^\epl),
+\end{equation}
+where $p^\epl(x_{k+1} \mid x_k, \theta^\epl)$ is the density function of the transition probability of the solution of \eqref{eq:SDE_MS} and $p(x_0)$ is the density of the distribution of the initial condition. The second, due to the independence assumption \eqref{eq:NoiseIndependence} can be factored as
+\begin{equation}
+	p^\epl(\mathbf y \mid \mathbf x, \theta^\epl) = \prod_{k=1}^N p(y_k \mid x_k).
+\end{equation}
+In particular, we remark that $p^\epl(\mathbf y \mid \mathbf x, \theta^\epl)$ is independent of $\epl$ and therefore we will write it as $p(\mathbf y \mid \mathbf x, \theta^\epl)$ in the following. Summarizing, the posterior distribution is given by
+\begin{equation}
+	p^\epl(\theta^\epl \mid \mathbf y) = \frac{1}{Z^\epl} \prior(\theta^\epl) \int_{\R^{Nd}} p(x_0) \, \prod_{k=0}^{N-1} p^\epl(x_{k+1} \mid x_k, \theta^\epl)\prod_{k=1}^N p(y_k \mid x_k) \dd \mathbf x.
+\end{equation}
+Replacing $\mathcal G^\epl$ by $\mathcal G^0$ does not modify the structure of the posterior. The two modifications that occur are given by the different transition probabilities of the solution of \eqref{eq:SDE_HOM} with respect to the solution of \eqref{eq:SDE_MS}, and by the normalization constant. Therefore, we denote by $\mu^0(\theta^\epl \mid \mathbf y)$ the posterior distribution whose density $p^0(\theta^\epl \mid \mathbf y)$ satisfies
+\begin{equation}
+	p^0(\theta^\epl \mid \mathbf y) = \frac{1}{Z^0} \prior(\theta^\epl) \int_{\R^{Nd}} p(x_0) \, \prod_{k=0}^{N-1} p^0(x_{k+1} \mid x_k, \mathcal H(\theta^\epl))\prod_{k=1}^N p(y_k \mid x_k) \dd \mathbf x.
+\end{equation}
+In Section \ref{sec:ConvergenceMStoHOM} we study the convergence of $\mu^\epl$ to $\mu^0$ in the limit for $\epl \to 0$.  
+
+\section{Convergence analysis}
+
+\subsection{Inference of the multiscale equation}\label{sec:ConvergenceMStoHOM}
+
+In this section, we consider the inverse problem \eqref{eq:IP_MS}. 
+
+\begin{definition} Let $\mu$ and $\nu$ be probability measures which admit densities $f$ and $g$ with respect to Lebesgue measure respectively. The Hellinger distance $\Hell(\mu, \nu)$ between $\mu$ and $\nu$ is defined as
+\begin{equation}
+	2\Hell(\mu, \nu)^2 \defeq \int \Big(\sqrt{f(x)} - \sqrt{g(x)}\Big)^2 \dd x
+\end{equation}
+\end{definition}
+
+\begin{assumption}\label{as:TransitionRegularity} The density $p^\epl(\cdot \mid x, \theta^\epl)$ of the transition probability of the solution of \eqref{eq:SDE_MS} as well as the density $p^0(\cdot \mid x, \theta^0)$ of the transition probability of the solution of \eqref{eq:SDE_HOM} are asymptotically equicontinuous (\corr{specify what this means -- prove that it holds? Is it possible?}).
+\end{assumption}
+
+\begin{lemma}\label{lem:TransitionConvergence} Under Assumption \ref{as:TransitionRegularity}, $p^\epl(\cdot \mid x, \theta) \to p^0(\cdot \mid x, \theta)$ pointwise.
+\end{lemma}
+\begin{proof} Theory of homogenization guarantees that $x^\epl \to x^0$ in law in $\mathcal C((0, T), \R^d)$. A converse of Scheffé's theorem holds under Assumption \ref{as:TransitionRegularity} (see e.g. \cite{Swe86, Boo85}), so that the desired result holds.
+\end{proof}
+
+The following theorem proves the convergence of the multiscale posterior towards the homogenized posterior in in the limit $\epl \to 0$. The proof is inspired by \cite[Proposition 4.6]{Stu10} and \cite[Theorem 3.1]{LST18}.
+
+\begin{theorem} Under Assumption \ref{as:TransitionRegularity},
+	\begin{equation}
+		\Hell(\mu^\epl(\cdot \mid \mathbf y), \mu^0(\cdot \mid \mathbf y)) \to 0
+	\end{equation}
+	for $\epl \to 0$ independently of $\mathbf y$.	
+\end{theorem}
+\begin{proof}
+	In the following, we denote by $C$ a positive constant which can change value from line to line. By definition of $\Hell(\cdot, \cdot)$, replacing and since for real numbers $a,b$ it holds $(a+b)^2 \leq 2a^2 + 2b^2$ we have
+	\begin{equation}
+	\begin{aligned}
+		2\Hell(\mu^\epl(\cdot \mid \mathbf y), \mu^0(\cdot \mid \mathbf y)) &= \int_{\Theta} p(\theta^\epl) \Big(\sqrt{\frac{p^0(\mathbf y \mid \theta^\epl)}{Z^0}} - \sqrt{\frac{p^\epl(\mathbf y \mid \theta^\epl)}{Z^\epl}}\Big)^2 \dd \theta^\epl\\
+		&\leq 2\int_{\Theta} p(\theta^\epl) \Big(\sqrt{\frac{1}{Z^0}} - \sqrt{\frac{1}{Z^\epl}}\Big)^2p^\epl(\mathbf y \mid \theta^\epl) \dd \theta^\epl\\
+		&\quad + \frac{2}{Z_0} \int_{\Theta} p(\theta^\epl)\Big(\sqrt{p^0(\mathbf y \mid \theta^\epl)} - \sqrt{p^\epl(\mathbf y \mid \theta^\epl)}\Big)^2 \dd \theta^\epl \\
+		&\eqdef I_1^\epl + I_2^\epl.
+	\end{aligned}
+	\end{equation}
+	Let us first consider $I_2^\epl$. For positive real numbers $a$ and $b$ it holds
+	\begin{equation}
+		(a -b)^2 \leq \frac{(a^2 - b^2)^2}{a^2 + b^2},
+	\end{equation}
+	and thus
+	\begin{equation}
+		\Big(\sqrt{p^0(\mathbf y \mid \theta^\epl)} - \sqrt{p^\epl(\mathbf y \mid \theta^\epl)}\Big)^2 \leq \frac{1}{p^0(\mathbf y \mid \theta^\epl) + p^\epl(\mathbf y \mid \theta^\epl)}\Big(p^0(\mathbf y \mid \theta^\epl) - p^\epl(\mathbf y \mid \theta^\epl)\Big)^2.
+	\end{equation}
+	Let us consider the difference $\mathcal E_1^\epl \defeq p^0(y \mid \theta^\epl) - p^\epl(y \mid \theta^\epl)$. We have
+	\begin{equation}\label{eq:HellProofE1}
+	\begin{aligned}
+		\mathcal E_1^\epl &= \int_{\R^{Nd}} p(x_0) \, \Big(\prod_{k=0}^{N-1} p^0(x_{k+1}\mid x_k, \mathcal H(\theta^\epl)) - \prod_{k=0}^{N-1} p^\epl(x_{k+1}\mid x_k, \theta^\epl)\Big) \prod_{k=1}^{N} p(y_k \mid x_k) \dd \mathbf x \\
+		&= \int_{\R^{Nd}} p(x_0) \, \mathcal E_2^\epl \prod_{k=1}^{N} p(y_k \mid x_k) \dd \mathbf x,
+	\end{aligned}
+	\end{equation}
+	where $\mathcal E_2^\epl$ is defined as
+	\begin{equation}
+		\mathcal E_2^\epl \defeq \prod_{k=0}^{N-1} p^0(x_{k+1}\mid x_k, \mathcal H(\theta^\epl)) - \prod_{k=0}^{N-1} p^\epl(x_{k+1}\mid x_k, \theta^\epl)
+	\end{equation}
+	For sequences of real numbers $a_k$, $b_k$, $k = 0, \ldots, N-1$, a telescopic sum argument yields 
+	\begin{equation} 
+		\prod_{k=0}^{N-1} a_k - \prod_{k=0}^{N-1} b_k = \sum_{l=0}^{N-1} \Big(\prod_{j=0}^{l-1} a_j\Big)(a_l - b_l) \Big(\prod_{j=l+1}^{N-1} b_j\Big),
+	\end{equation}
+	where we adopted the convention
+	\begin{equation}
+		j < i \implies \prod_{l=i}^j a_l = 1.
+	\end{equation}
+	Therefore, we can write
+	\begin{equation}
+	\begin{aligned}
+		\mathcal E_2^\epl = \sum_{l=0}^{N-1} &\Big(\prod_{j=0}^{l-1} p^0(x_{j+1}\mid x_j, \mathcal H(\theta^\epl)) \Big) \big(p^0(x_{l+1}\mid x_l, \mathcal H(\theta^\epl)) - p^\epl(x_{l+1}\mid x_l, \theta^\epl)\big)\\
+		\times &\Big(\prod_{j=l+1}^{N-1} p^\epl(x_{j+1}\mid x_j, \theta^\epl)\Big).
+	\end{aligned}
+	\end{equation}
+	Due to Lemma \ref{lem:TransitionConvergence}, we have $p^0(x_{l+1}\mid x_l, \theta^\epl) - p^\epl(x_{l+1}\mid x_l, \theta^\epl) \to 0$ for $ \epl \to 0$, which implies $\mathcal E_2^\epl \to 0$ for $\epl \to 0$. Replacing $\mathcal E^\epl_2$ in \eqref{eq:HellProofE1} and applying Lebesgue dominated convergence theorem (\corr{find bound}), we have $\mathcal E^\epl_1 \to 0$ for $\epl \to 0$. Therefore, another application of Lebesgue dominated convergence theorem (\corr{find bound}) gives $I_2^\epl \to 0$ for $\epl \to 0$. Let us now consider $I_1^\epl$. We can rewrite 
+	\begin{equation}
+		I_1^\epl = \Big(\sqrt{\frac{1}{Z^0}} - \sqrt{\frac{1}{Z^\epl}}\Big)^2 Z^\epl,
+	\end{equation}
+	which implies (see, e.g., the proof of \cite[Theorem 4.6]{Stu10})
+	\begin{equation}
+	\begin{aligned}
+		\frac{1}{Z^\epl}I_1^\epl &\leq C \max\{(Z^0)^{-3}, (Z^\epl)^{-3}\}(Z^0 - Z^\epl)^2\\
+		&\leq C(Z^0 - Z^\epl)^2.
+	\end{aligned}
+	\end{equation}
+	Finally, since
+	\begin{equation}
+		Z^0 - Z^\epl = \int_{\Theta} p(\theta^\epl) \Bigg(\int_{\R^{Nd}} \prod_{k=1}^N p(y_k \mid x_k) \, \mathcal E_2^\epl \dd \mathbf x \Bigg) \dd \theta^\epl,
+	\end{equation}
+	by dominated convergence theorem (\corr{twice, find bound}) and since $\mathcal E_2^\epl \to 0$, we have $Z^0 - Z^\epl \to 0$ for $\epl \to 0$ and therefore $I_1^\epl \to 0$, which concludes the proof.
+\end{proof}
+
+\subsection{Inference of the homogenized equation}
+
+In this section we consider problem \eqref{eq:IP_HOM}.
+
+\section{Modelling error}
+
+Explain approach for both \eqref{eq:IP_MS} and \eqref{eq:IP_HOM}.
+
+\section{Numerical discretization}
+
+\begin{itemize}[label=-]
+	\item Discretization of \eqref{eq:SDE_MS} is cheaper than \eqref{eq:SDE_HOM} $\implies$ $\mathcal G^0$ cheap to evaluate.
+	\item Sparse data -- resulting from subsampling or access to a subset or observation period long, i.e., time between observations $\delta t > h$ where $h$ integration time step.
+\end{itemize}
+
+\section{Sampling from the posterior}
+
+In order to obtain samples from the posterior distributions $p^\epl(\theta \mid \mathbf y)$ and $p^0(\theta \mid \mathbf y)$, it is necessary to recur to Monte Carlo simulations. In particular, let us neglect in this section the difference between multiscale and homogenized posteriors and refer to a general posterior $p(\theta \mid \mathbf y)$, where $\mathbf y$ is a set of observations coming from a generic Markov chain parametrized by $\theta$ and characterized by a transition probability with density $p(\cdot \mid x, \theta)$. In the context of Bayesian inference problems, it is frequent to employ algorithms of the family of the Markov chain Monte Carlo methods (MCMC). These algorithms proceed by generating a Markov chain over the space $\Theta$ from a proposal distribution, whose density we denote by $q(\cdot \mid \theta)$, and by tuning the probability of accepting a new sample so that samples are indeed generated from the posterior. These sampling schemes require the evaluation of the posterior distribution for each new sample. In our setting, in which it is unfeasible to evaluate the posterior due to the complex structure of the likelihood function \eqref{eq:LikelihoodMarginalization}, it is possible to employ the pseudo-marginal Metropolis--Hastings method (PMMH) \cite{AnR09}. Given an initial value $\theta^{(0)}$, the algorithm can be summarized as
+\begin{enumerate}[label=\textit{\alph*})]
+	\item compute $p(\theta^{(0)} \mid \mathbf y)$ 
+	\item\label{it:extForMH} for $k = 1, \ldots, L$
+	\begin{enumerate}[label=\ref{it:extForMH}.\arabic*)]
+		\item sample $\theta^*$ from $p(\cdot \mid \theta^{(k-1)})$,
+		\item compute the acceptance probability
+		\begin{equation}
+			\alpha\big(\theta^*, \theta^{(k-1)}\big) = \min\Big\{1, \frac{\hat p(\theta^* \mid \mathbf y)}{\hat p(\theta^{(k-1)} \mid \mathbf y)} \, \frac{q(\theta^{(k-1)} \mid \theta^*)}{q(\theta^* \mid \theta^{(k-1)})}\Big\},
+		\end{equation}
+		\item set $\theta^{(k)} = \theta^*$ with probability $\alpha\big(\theta^*, \theta^{(k-1)}\big)$, $\theta^{(k)} = \theta^{(k-1)}$ otherwise.
+	\end{enumerate}
+\end{enumerate}
+It is possible to prove \cite{AnR09} that the Markov chain generated by the PMMH algorithm has the posterior $p(\theta \mid \mathbf y)$ as unique invariant distribution. Therefore, choosing $L$ big enough it is possible to generate samples distributed as the targeted posterior. The performances of the PMMH algorithm strongly depend on the quality of the unbiased estimator $\hat p(\theta \mid \mathbf y)$. In particular, high values for the variance result in Markov chains with a degenerate behaviour, i.e., an extremely low acceptance ratio, regardless of the choice of the proposal distribution (see e.g. \cite{DPD15}). A short overview of methods to produce unbiased estimators of the posterior ought to be found in the next section.
+
+\subsection{Unbiased estimators of the posterior density}
+
+An unbiased estimator of the posterior density $p(\theta \mid \mathbf y)$ can be computed with a Monte Carlo approximation. We assume we can evaluate the prior density $\prior(\theta)$ up to a constant, and therefore focus only on the estimation of the likelihood term $p(\mathbf y \mid \theta)$. In particular, a Monte Carlo scheme to obtain such an estimator is summarized as
+\begin{enumerate}[label=\arabic*)]
+	\item sample $M$ particles $\{X^{(i)}_0\}_{i=1}^M$ from $p(x_0)$,
+	\item initialize the likelihood estimator $\hat p(\mathbf y \mid \theta) = 1$,
+	\item\label{it:extForMC} for $k = 0, \ldots, N-1$,
+		\begin{enumerate}[label=\ref{it:extForMC}.\arabic*)]
+			\item for $i = 1, \ldots, M$, propagate the particles sampling $X^{(i)}_{k+1}$ from $p(\cdot \mid X_k^{(i)}, \theta)$,
+			\item update the likelihood estimation 
+			\begin{equation}
+				\hat p(\mathbf y \mid \theta) \leftarrow \hat p(\mathbf y \mid \theta) \, \frac{1}{M} \sum_{i=1}^M p(y_{k+1} \mid X_{k+1}^{(i)}).
+			\end{equation} 
+		\end{enumerate}
+\end{enumerate} 
+The procedure above produces indeed an unbiased estimator of the likelihood. Nonetheless, if the noise driving the process $x(t)$ is not negligible, the variance of the estimator will render the estimation not employable in practice. In order to overcome this issue, particle filters ought to be employed for obtaining an unbiased estimation of the likelihood. The main idea of particle filters is introducing weights on the particles, updating the weights at each step according to the observations and replicate the particles with higher weights, thus discarding the particles with meaningless values.. Given an importance density function $p_{\mathrm{IS}}(\cdot \mid x, \theta)$, the particle filter proceeds as
+\begin{enumerate}[label=\textit{\roman*})]
+	\item sample $M$ particles $\{X^{(i)}_0\}_{i=1}^M$ from $p(x_0)$, initialize weights $\{W^{(i)}\} = M^{-1}$,
+	\item initialize the likelihood estimator $\hat p(\mathbf y \mid \theta) = 1$,
+	\item\label{it:extFor} for $k = 0, \ldots, N-1$,
+	\begin{enumerate}[label=\ref{it:extFor}.\arabic*)]
+		\item\label{it:beginOmit} sample an index $i^* \in \{1, \ldots, M\}$ from $p(i^*) = W^{(i^*)}$,
+		\item propagate the particles sampling $X^{(i)}_{k+1}$ from $p_{\mathrm{IS}}(\cdot \mid X_k^{(i^*)}, \theta)$,
+		\item compute the unnormalized weight
+		\begin{equation}\label{eq:PMCMC_UNWEIGHTS}
+			\widehat W^{(i)} = \frac{p(X^{(i)}_{k+1} \mid X^{(i^*)}_k, \theta)\,p(y_{k+1} \mid X^{(i)}_{k+1})}{p_{\mathrm{IS}}(X^{(i)}_{k+1} \mid X^{(i^*)}_k, \theta)},
+		\end{equation}
+		\item\label{it:endOmit} compute the normalized weights
+		\begin{equation}
+			W^{(i)} = \frac{\widehat W^{(i)}}{\sum_{i=1}^M \widehat W^{(i)}},
+		\end{equation}
+		\item update the likelihood estimation 
+		\begin{equation}
+			\hat p(\mathbf y \mid \theta) \leftarrow \hat p(\mathbf y \mid \theta) \, \frac{1}{M} \sum_{i=1}^{M} \widehat W^{(i)}.
+		\end{equation}
+	\end{enumerate}
+\end{enumerate}
+In the algorithm above, we omit for ease of notation at each line from \ref{it:beginOmit} to \ref{it:endOmit} that the computations have to be carried for all $i = 1, \ldots, M$. The estimator $\hat p(\mathbf y \mid \theta)$ is an unbiased estimator of $p(\mathbf y \mid \theta)$ independently of the choice of the importance density $p_{\mathrm{IS}}$, provided that $p_{\mathrm{IS}}(x^* \mid x, \theta) = 0$ only if $p(x^* \mid x, \theta)p(y \mid x^*) = 0$, so that \eqref{eq:PMCMC_UNWEIGHTS} is well-defined. Let us remark that the overall MCMC algorithm employing a particle filter for the likelihood estimation ought to be found in literature under the name of particle MCMC methods (PMCMC) \cite{ADH10}. The variance of the estimator $\hat p(\mathbf y \mid \theta)$ depends strongly on the choice of the importance density $p_{\mathrm{IS}}$ \cite{ADH10, GoW11}. In fact, the choice which appears more natural is to propagate the particle following the transition probability $p(\cdot \mid x, \theta)$. This choice gives rise to the boostrap particle filter \cite{GSS93}, which has the advantage that the transition density does not have to be evaluated. In fact, at the $k$-th step the unnormalized weights simplify to 
+\begin{equation}
+	\widehat W^{(i)} = p(y_{k+1} \mid X^{(i)}_{k+1}),
+\end{equation}
+so that a particle is assigned a higher weight if it is closer to the observations. While the bootstrap particle filter provides with a direct and intuitive implementation, it has been verified in practice that a drastic variance reduction is obtained by choosing at the $k$-th step the importance density as
+\begin{equation}\label{eq:DiffBridge}
+	p_{\mathrm{IS}}(\cdot \mid x_k, \theta) \approx p(\cdot \mid y_{k+1}, x_k, \theta).
+\end{equation}
+Heuristically, this conditioning allows the particles to be generated close to the next observation, so that in turn the phenomenon of particle degeneracy is avoided, the effective sample size is higher and the final likelihood estimation has a lower variance. Nevertheless, an expression for $p(\cdot \mid y_{k+1}, x_k, \theta)$ is in general unavailable. There exist though methods which provide approximations as in \eqref{eq:DiffBridge} \cite{GoW10, GoW11}. Running numerical experiments, we noticed in practice a good improvement of the quality of the estimators using an approach based on Gaussian distributions, which goes under the name of diffusion bridges approximation and is described extensively in \cite{GoW11}.
+
+
+\section{Numerical experiments}
+
+
+
+\bibliographystyle{siam}
+\bibliography{anmc}
+\end{document}

@@ -1,13 +1,13 @@
 import os
 
 # Observations
-noise = 0.00001
-T = 0.5
+noise = 0.0005
+T = 10
 nObs = 1
 
 make = True
 program = "GenObs"
-obsFile = "observationsreview"
+obsFile = "obsreview"
 
 if make:
     os.system("cd ../build && make -j32 " + program)

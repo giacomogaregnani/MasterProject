@@ -2,33 +2,33 @@ import os
 import numpy as np
 
 # Integration parameters
-hVec = np.zeros(1)
+hVec = np.zeros(4)
 
-hVec[0] = 0.1
+hVec[0] = 0.2
 for i in range(1, hVec.size):
     hVec[i] = hVec[0] * pow(2, -i)
 print(hVec)
 
-#hText = ['02', '01', '005', '0025']
-hText = ['small']
+hText = ['02', '01', '005', '0025']
 
 # Observations
-noise = .001
+noise = .0005
 
 # MCMC
 nMCMC = 200000
-propVar = .01
+propVar = .0002
 nObs = 1
 prob = " -prob "
 noisy = " "
-nMC = 10
-p = 1.5
-isGauss = " "
+nMC = 200
+p = 2
+isGauss = " -Gauss "
+add = " "
 
 # Compile?
 make = True
 program = "InverseODEIC"
-obsFile = "observationsShort"
+obsFile = "obsreview"
 
 if make:
     os.system("cd ../build && make -j32 " + program)
@@ -45,7 +45,7 @@ for h in hVec:
           " -nObs " + str(nObs) + " -p " + str(p) + \
           prob + " -nMC " + str(nMC) + \
           " -outputFile " + outputFileName + " -obsFile " + obsFile + \
-          noisy + isGauss
+          noisy + isGauss + add
 
     command = "../build/InverseODE/" + program + " " + options
 

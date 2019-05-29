@@ -1,9 +1,8 @@
 #include "generateObservations.hpp"
 
-std::vector<double> generateObservations1D(oneDimSde sde, double IC, VectorXd& param,
-                                            double T, unsigned int N)
+std::vector<double> generateObservations1D(oneDimSde sde, double IC, VectorXd &param, double T, unsigned int N, unsigned int seedN)
 {
-    std::default_random_engine seed{2019};
+    std::default_random_engine seed{seedN};
 
     EM1D solver(sde, param, seed);
 
