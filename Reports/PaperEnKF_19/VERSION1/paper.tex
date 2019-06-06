@@ -934,12 +934,11 @@ D_1 = & \left \{ x = (x_1,x_2) \colon \left ( x_1 - \frac{5}{16} \right )^2 + \l
 D_2 = & \left \{ x = (x_1,x_2) \colon \left ( x_1 - \frac{11}{16} \right )^2 + \left ( x_2 - \frac{5}{16} \right )^2 \le 0.025 \right \}.
 \end{align*}
 Figure \ref{fig:exact_unknown} shows the exact unknown $\sigma^*$. Note that $\sigma^*$ is a non-continuous function, but, in order to approximate it, we are using a truncated Karhunen-Lo\`eve expansion, where the eigenfunctions are smooth.
-
 \begin{figure}[t]
-	\centering
-	\includegraphics[width = 0.4\textwidth]{figures/sigma_exact}
-	\caption{Plot of the exact unknown $\sigma^*$}.
-	\label{fig:exact_unknown}
+\centering
+\includegraphics[width = 0.4\textwidth]{figures/sigma_exact}
+\caption{Plot of the exact unknown $\sigma^*$}.
+\label{fig:exact_unknown}
 \end{figure}
 
 \subsection{Results}
@@ -948,11 +947,11 @@ In Figure \ref{fig:best_solution} we plot the estimation $\sigma_{\mathrm{EnKF}}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width = 0.39\textwidth]{figures/ensemble_10}
-\includegraphics[width = 0.39\textwidth]{figures/ensemble_50}
+\includegraphics[width = 0.49\textwidth]{figures/ensemble_10}
+\includegraphics[width = 0.49\textwidth]{figures/ensemble_50}
 \\
-\includegraphics[width = 0.39\textwidth]{figures/ensemble_250}
-\includegraphics[width = 0.39\textwidth]{figures/ensemble_500}
+\includegraphics[width = 0.49\textwidth]{figures/ensemble_250}
+\includegraphics[width = 0.49\textwidth]{figures/ensemble_500}
 \caption{Plot of the unknown $\sigma_{\mathrm{EnKF}}$ estimated by the iterative ensemble Kalman method after $10, 50, 250$ and $500$ iterations.}
 \label{fig:best_solution}
 \end{figure}
@@ -961,11 +960,11 @@ We perform a sensitivity analysis with respect to the dimension of the ensemble 
 
 \begin{figure}[t]
 \centering
-\includegraphics[width = 0.39\textwidth]{figures/ensemble_500_J10}
-\includegraphics[width = 0.39\textwidth]{figures/ensemble_500_J100}
+\includegraphics[width = 0.49\textwidth]{figures/ensemble_500_J10}
+\includegraphics[width = 0.49\textwidth]{figures/ensemble_500_J100}
 \\
-\includegraphics[width = 0.39\textwidth]{figures/ensemble_500_J500}
-\includegraphics[width = 0.39\textwidth]{figures/ensemble_500_J1000}
+\includegraphics[width = 0.49\textwidth]{figures/ensemble_500_J500}
+\includegraphics[width = 0.49\textwidth]{figures/ensemble_500_J1000}
 \caption{Plot of the unknown $\sigma_{\mathrm{EnKF}}$ estimated by the iterative ensemble Kalman method after $500$ iterations for different numbers of particles per ensemble $J = 10, 100, 500, 1000$.}
 \label{fig:comparison_J}
 \end{figure}
@@ -974,11 +973,11 @@ In Figure \ref{fig:comparison_e} we compare the results obtained for different v
 
 \begin{figure}[t]
 \centering
-\includegraphics[width = 0.39\textwidth]{figures/ensemble_500_e4}
-\includegraphics[width = 0.39\textwidth]{figures/ensemble_500_e8}
+\includegraphics[width = 0.49\textwidth]{figures/ensemble_500_e4}
+\includegraphics[width = 0.49\textwidth]{figures/ensemble_500_e8}
 \\
-\includegraphics[width = 0.39\textwidth]{figures/ensemble_500_e32}
-\includegraphics[width = 0.39\textwidth]{figures/ensemble_500_e64}
+\includegraphics[width = 0.49\textwidth]{figures/ensemble_500_e32}
+\includegraphics[width = 0.49\textwidth]{figures/ensemble_500_e64}
 \caption{Plot of the unknown $\sigma_{\mathrm{EnKF}}$ estimated by the iterative ensemble Kalman method after $500$ iterations for different values of the multiscale parameter $\varepsilon = 1/4, 1/8, 1/32, 1/64$.}
 \label{fig:comparison_e}
 \end{figure}
@@ -987,11 +986,11 @@ Moreover, in order to obtain good results even in case $\varepsilon$ is not clos
 
 \begin{figure}[t]
 \centering
-\includegraphics[width = 0.39\textwidth]{figures/ensemble_500_e4_model_error}
-\includegraphics[width = 0.39\textwidth]{figures/ensemble_500_e8_model_error}
+\includegraphics[width = 0.49\textwidth]{figures/ensemble_500_e4_model_error}
+\includegraphics[width = 0.49\textwidth]{figures/ensemble_500_e8_model_error}
 \\
-\includegraphics[width = 0.39\textwidth]{figures/ensemble_500_e32_model_error}
-\includegraphics[width = 0.39\textwidth]{figures/ensemble_500_e64_model_error}
+\includegraphics[width = 0.49\textwidth]{figures/ensemble_500_e32_model_error}
+\includegraphics[width = 0.49\textwidth]{figures/ensemble_500_e64_model_error}
 \caption{Plot of the unknown $\sigma_{\mathrm{EnKF}}$ estimated by the iterative ensemble Kalman method with model error estimation after $500$ iterations for different values of the multiscale parameter $\varepsilon = 1/4, 1/8, 1/32, 1/64$.}
 \label{fig:comparison_e_model_error}
 \end{figure}
@@ -1000,16 +999,17 @@ Finally, in Figure \ref{fig:comparison_e_model_error_levels} we show the results
 
 \begin{figure}[t]
 \centering
-\includegraphics[width = 0.39\textwidth]{figures/ensemble_500_e4_model_error_Levels}
-\includegraphics[width = 0.39\textwidth]{figures/ensemble_500_e8_model_error_Levels}
+\includegraphics[width = 0.49\textwidth]{figures/ensemble_500_e4_model_error_Levels}
+\includegraphics[width = 0.49\textwidth]{figures/ensemble_500_e8_model_error_Levels}
 \\
-\includegraphics[width = 0.39\textwidth]{figures/ensemble_500_e32_model_error_Levels}
-\includegraphics[width = 0.39\textwidth]{figures/ensemble_500_e64_model_error_Levels}
+\includegraphics[width = 0.49\textwidth]{figures/ensemble_500_e32_model_error_Levels}
+\includegraphics[width = 0.49\textwidth]{figures/ensemble_500_e64_model_error_Levels}
 \caption{Plot of the unknown $\sigma_{\mathrm{EnKF}}$ estimated by the iterative ensemble Kalman method with dynamic updating of the model error estimation after $500$ iterations for different values of the multiscale parameter $\varepsilon = 1/4, 1/8, 1/32, 1/64$.}
 \label{fig:comparison_e_model_error_levels}
 \end{figure}
 
 \section*{Conclusion}
+
 
 
 \clearpage

@@ -49,13 +49,13 @@ int main(int argc, char* argv[])
     sdeHomo.drift = &homoDrift;
     sdeHomo.diffusion = &diffusion;
 
-    double T = 10;
-    unsigned int N = 1000;
+    double T = 30;
+    unsigned int N = 12000;
 
     VectorXd tmpParam(3);
-    tmpParam(0) = 0.1;  // Epsilon
+    tmpParam(0) = 0.05;  // Epsilon
     tmpParam(1) = 1.0;  // True multiscale alpha
-    tmpParam(2) = 1.0;  // True multiscale betainv
+    tmpParam(2) = 0.5;  // True multiscale betainv
 
     std::ofstream output(DATA_PATH + std::string("MultiHomo.txt"), std::ofstream::out | std::ofstream::trunc);
     std::ofstream outputSol(DATA_PATH + std::string("MultiHomoSol.txt"), std::ofstream::out | std::ofstream::trunc);
@@ -71,19 +71,19 @@ int main(int argc, char* argv[])
     // ====================================================== //
 
     // Initialize structures for the inverse problem
-    unsigned long M = 40, nMCMC = 20001;
-    double noise = 1e-3;
+    unsigned long M = 150, nMCMC = 50001;
+    double noise = 1e-2;
     double IC = 0.0;
     std::random_device dev;
     std::default_random_engine noiseSeed{1};
     std::default_random_engine proposalSeed{dev()};
     std::default_random_engine acceptanceSeed{dev()};
     std::normal_distribution<double> noiseDistribution(0.0, noise);
-    bool IS = false;
+    bool IS = true;
 
     // Generate and perturb observations
     auto obsSeed = dev();
-    auto x = generateObservations1D(sde, IC, param, T, N, obsSeed);
+    auto x = generateObservations1D(sde, IC, param, T, N, 0);
     for (auto const &itSol : x) {
         outputSol << std::fixed << std::setprecision(5) << itSol << "\t";
     }
@@ -100,7 +100,7 @@ int main(int argc, char* argv[])
     homoParam(0) = 0.1;
     homoParam(1) = std::log(homCoeffs[0]);
     homoParam(2) = std::log(homCoeffs[1]);
-    auto xHom = generateObservations1D(sdeHomo, IC, homoParam, T, N, obsSeed);
+    auto xHom = generateObservations1D(sdeHomo, IC, homoParam, T, N, 0);
     for (auto const &itSol : xHom) {
         outputSol << std::fixed << std::setprecision(10) << itSol << "\t";
     }
@@ -122,7 +122,7 @@ int main(int argc, char* argv[])
     std::shared_ptr<Posterior> posterior;
     posterior = std::make_shared<PFPosteriorHom>(x, T, IC, 1, noise, sdeHomo, &V1, param(0), M, IS);
     std::shared_ptr<Proposals> proposal;
-    proposal = std::make_shared<Proposals>(7e-2);
+    proposal = std::make_shared<Proposals>(8e-2);
     MCMC mcmc(initGuess, proposal, posterior, nMCMC);
     auto sample = mcmc.compute(&proposalSeed, &acceptanceSeed);
     for (auto const &itSample : sample)

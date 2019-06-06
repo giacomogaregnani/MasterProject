@@ -1,8 +1,8 @@
-clc; clear; close all
+% clc; clear; close all
 %%
 
-x = dlmread('MultiMulti.txt');
-sol = dlmread('MultiMultiSol.txt');
+% x = dlmread('MultiMulti.txt');
+% sol = dlmread('MultiMultiSol.txt');
 % x = dlmread('MultiHomo.txt');
 % sol = dlmread('MultiHomoSol.txt');
 % fil = dlmread('testHomoFil.txt');

@@ -54,8 +54,8 @@ int main(int argc, char* argv[])
     tmpParam(1) = 1.0;  // True multiscale alpha
     tmpParam(2) = 0.5;  // True multiscale betainv
 
-    std::ofstream output(DATA_PATH + std::string("MultiMulti.txt"), std::ofstream::out | std::ofstream::trunc);
-    std::ofstream outputSol(DATA_PATH + std::string("MultiMultiSol.txt"), std::ofstream::out | std::ofstream::trunc);
+    std::ofstream output(DATA_PATH + std::string("HomoMulti.txt"), std::ofstream::out | std::ofstream::trunc);
+    std::ofstream outputSol(DATA_PATH + std::string("HomoMultiSol.txt"), std::ofstream::out | std::ofstream::trunc);
 
     // Compute coefficients of the homogenised equation
     std::vector<double> homCoeffs = computeHomCoeffs(tmpParam, (2.0*M_PI), &V1);
@@ -108,7 +108,7 @@ int main(int argc, char* argv[])
 
     // Inverse problem
     std::shared_ptr<Posterior> posterior;
-    posterior = std::make_shared<PFPosterior>(x, T, IC, 1, noise, sde, param(0), M, IS);
+    posterior = std::make_shared<PFPosterior>(x, T, IC, 1, noise, sdeHomo, param(0), M, IS);
     std::shared_ptr<Proposals> proposal;
     proposal = std::make_shared<Proposals>(8e-2);
     MCMC mcmc(initGuess, proposal, posterior, nMCMC);
