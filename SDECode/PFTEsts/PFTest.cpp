@@ -86,7 +86,7 @@ int main(int argc, char* argv[])
             output << itit << "\t";
         output << std::endl;
     }
-    for (auto const &it : PF->getBestX()) {
+    for (auto const &it : PF->sampleX()) {
         output << it << "\t";
     }
     output << std::endl;

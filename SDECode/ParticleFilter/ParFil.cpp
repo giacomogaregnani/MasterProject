@@ -158,6 +158,9 @@ void ParFil::computeDiffBridge(VectorXd& theta)
                 // Evaluate the transition density of the true process
                 transDensMean = X[k][index+i] + sde.drift(X[k][index+i], theta) * h;
                 transDensStddev = sde.diffusion(X[k][index+i], theta) * std::sqrt(h);
+                /* transDensMean = std::exp(-std::exp(theta(1)) * h) * X[k][index+i];
+                transDensStddev = std::sqrt(std::exp(-theta(1)) * std::exp(theta(2)) *
+                                            (1.0 - std::exp(-2.0 * std::exp(theta(1)) * h))); */
                 transDens *= gaussianDensity(temp, transDensMean, transDensStddev);
                 // Evaluate the IS density
                 ISDens *= gaussianDensity(temp, ISmean, ISstddev);
@@ -180,11 +183,6 @@ void ParFil::computeDiffBridge(VectorXd& theta)
         std::transform(W.begin(), W.end(), W.begin(), [wSum](double& c){return c/wSum;});
         likelihood += std::log(wSum / nParticles);
     }
-    // Compute the ESS
-    /* double ESS = 0;
-    for (auto const &it : W)
-        ESS += it * it;
-    ESS = std::floor(1.0 / ESS); */
 }
 
 double ParFil::getLikelihood() const
@@ -197,7 +195,7 @@ std::vector<std::vector<double>> ParFil::getX() const
     return X;
 }
 
-std::vector<double> ParFil::getBestX()
+std::vector<double> ParFil::sampleX()
 {
     shuffler = std::discrete_distribution<unsigned int>(W.begin(), W.end());
     unsigned int index = shuffler(seed);

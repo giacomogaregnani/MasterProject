@@ -41,7 +41,7 @@ public:
                              unsigned long obsIdx, unsigned long j);
     void computeDiffBridge(VectorXd& theta);
     double getLikelihood() const;
-    std::vector<double> getBestX();
+    std::vector<double> sampleX();
     std::vector<std::vector<double>> getX() const;
     std::vector<std::vector<double>> getBM() const;
     std::vector<double> getW() const;

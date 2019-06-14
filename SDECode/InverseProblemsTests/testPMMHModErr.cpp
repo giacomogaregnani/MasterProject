@@ -53,8 +53,8 @@ int main(int argc, char* argv[])
     sdeHomo.drift = &homoDrift;
     sdeHomo.diffusion = &diffusion;
 
-    double T = 5;
-    unsigned int N = 500;
+    double T = 10;
+    unsigned int N = 1000;
 
     VectorXd tmpParam(3);
     tmpParam(0) = 0.1;  // Epsilon
@@ -62,9 +62,8 @@ int main(int argc, char* argv[])
     tmpParam(2) = 0.5;  // True multiscale betainv
     // tmpParam(3) = std::log(3*T / N); // log of the sampling period
 
-    std::ofstream output(DATA_PATH + std::string("testHomo2.txt"), std::ofstream::out | std::ofstream::trunc);
-    std::ofstream outputSol(DATA_PATH + std::string("testHomoSol2.txt"), std::ofstream::out | std::ofstream::trunc);
-    std::ofstream outputFilter(DATA_PATH + std::string("testHomoFil2.txt"), std::ofstream::out | std::ofstream::trunc);
+    std::ofstream output(DATA_PATH + std::string("MultiHomo.txt"), std::ofstream::out | std::ofstream::trunc);
+    std::ofstream outputSol(DATA_PATH + std::string("MultiHomoSol.txt"), std::ofstream::out | std::ofstream::trunc);
 
     // Compute coefficients of the homogenised equation
     std::vector<double> homCoeffs = computeHomCoeffs(tmpParam, (2.0*M_PI), &V1);
@@ -78,7 +77,7 @@ int main(int argc, char* argv[])
     // ====================================================== //
 
     // Initialize structures for the inverse problem
-    unsigned long M = 100, nMCMC = 100001;
+    unsigned long M = 100, nMCMC = 10001;
     double noise = 1e-2;
     double IC = 0.0;
     std::random_device dev;
@@ -91,7 +90,7 @@ int main(int argc, char* argv[])
     // Generate and perturb observations
     std::cout << "Generating observations..." << std::endl;
     unsigned int nSeed = dev();
-    auto x = generateObservations1D(sde, IC, param, T, N, nSeed);
+    auto x = generateObservations1D(sde, IC, param, T, N, 0);
     std::cout << "Generated observations" << std::endl;
     for (auto const &itSol : x) {
         outputSol << std::fixed << std::setprecision(5) << itSol << "\t";
@@ -105,7 +104,7 @@ int main(int argc, char* argv[])
     outputSol << std::endl;
 
     // Compute a homogeneous path with the same Brownian for comparison
-    VectorXd homoParam(3);
+    /* VectorXd homoParam(3);
     homoParam(0) = param(0);
     homoParam(1) = std::log(homCoeffs[0]);
     homoParam(2) = std::log(homCoeffs[1]);
@@ -113,7 +112,7 @@ int main(int argc, char* argv[])
     for (auto const &itSol : xHom) {
         outputSol << std::fixed << std::setprecision(10) << itSol << "\t";
     }
-    outputSol << std::endl;
+    outputSol << std::endl; */
 
     // Modeling error estimation
     std::cout << "Computing modeling error..." << std::endl;
@@ -123,7 +122,7 @@ int main(int argc, char* argv[])
     priorStdDev << 0.0, 1.0, 1.0;
     ModErr modErr(sdeHomo, sde, &V1, IC, priorMean, priorStdDev, T, N, x, noise);
     unsigned int nMC = 50;
-    unsigned int nParam = 300;
+    unsigned int nParam = 50;
     modErr.computePF(nParam, nMC);
     std::vector<double> means, stddevs;
     modErr.getStats(means, stddevs);
@@ -133,18 +132,6 @@ int main(int argc, char* argv[])
     for (unsigned int i = 1; i < N+1; i++) {
         x[i] -= means[i];
     }
-    for (auto const &itSol : x) {
-        outputSol << std::fixed << std::setprecision(5) << itSol << "\t";
-    }
-    outputSol << std::endl;
-    for (auto const &itSol : means) {
-        outputSol << std::fixed << std::setprecision(5) << itSol << "\t";
-    }
-    outputSol << std::endl;
-    for (auto const &itSol : stddevs) {
-        outputSol << std::fixed << std::setprecision(5) << itSol << "\t";
-    }
-    outputSol << std::endl;
 
     // Initial parameter guess
     VectorXd initGuess = param; //VectorXd::Zero(param.size());
@@ -155,28 +142,27 @@ int main(int argc, char* argv[])
     std::vector<unsigned int> ratioVec = {1};
 
     // Inverse problem
-    for (auto const &ratio : ratioVec) {
-        std::shared_ptr<Posterior> posterior;
-        posterior = std::make_shared<PFPosterior>(x, T, IC, ratio, noise, sdeHomo, param(0), M, IS); //, stddevs);
-        std::shared_ptr<Proposals> proposal;
-        proposal = std::make_shared<Proposals>(8e-2);
-        MCMC mcmc(initGuess, proposal, posterior, nMCMC);
-        auto sample = mcmc.compute(&proposalSeed, &acceptanceSeed);
-        for (auto const &itSample : sample)
-            output << itSample.transpose() << std::endl;
+    std::shared_ptr<Posterior> posterior;
+    // posterior = std::make_shared<PFPosterior>(x, T, IC, 1, noise, sdeHomo, param(0), M, IS); //, stddevs);
+    posterior = std::make_shared<PFPosteriorHom>(x, T, IC, 1, noise, sdeHomo, &V1, param(0), M, IS); //, stddevs);
+    std::shared_ptr<Proposals> proposal;
+    std::vector<double> factors = {1.0, 5.0, 1.0};
+    proposal = std::make_shared<Proposals>(3e-2, factors);
+    MCMC mcmc(initGuess, proposal, posterior, nMCMC);
+    auto sample = mcmc.compute(&proposalSeed, &acceptanceSeed);
+    for (auto const &itSample : sample)
+        output << itSample.transpose() << std::endl;
 
-        // Compute the mean and write on file the pushed mean
-        VectorXd meanPosterior = VectorXd::Zero(3);
-        for (auto const &it : sample)
-            meanPosterior += it;
-        meanPosterior /= sample.size();
+    // Compute the mean and write on file the pushed mean
+    VectorXd meanPosterior = VectorXd::Zero(3);
+    for (auto const &it : sample)
+        meanPosterior += it;
+    meanPosterior /= sample.size();
 
-        M = static_cast<unsigned long>(M * 1.2);
-    }
+    M = static_cast<unsigned long>(M * 1.2);
 
     output.close();
     outputSol.close();
-    outputFilter.close();
 
     return 0;
 }

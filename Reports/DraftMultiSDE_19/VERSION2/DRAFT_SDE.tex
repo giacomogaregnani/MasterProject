@@ -15,7 +15,6 @@
 \normalsize
 \section{Introduction}
 
-Add introduction.
 
 \section{Problem statement}
 
@@ -35,7 +34,7 @@ where $W(t)$ is a standard Brownian motion and $x_0$ is a random variable \corr{
 \end{equation}
 where $W(t)$ is the same Brownian motion, such that $x^\epl(t)$ converges to $x(t)$ in law. In particular, we have $A = K\alpha$ and $\Sigma = K\sigma$, where the value of $K$ is given by (\corr{introduce theory of homogenization}).
 
-Let us denote by $\theta^\epl = (\alpha, \sigma)^\top$ the parameters appearing in \eqref{eq:SDE_MS} and by $\theta^0 = (A, \Sigma)$ the parameters of \eqref{eq:SDE_HOM}. We denote by $\Theta$ the domain of definition of both $\theta^\epl$ and $\theta^0$. Moreover, let us introduce the multiscale forward operator $\mathcal G^\epl \colon \Omega \times \Theta \to \R^{Nd}$, which is defined by
+Let us denote by $\theta^\epl = (\alpha, \sigma)$ the parameters appearing in \eqref{eq:SDE_MS} and by $\theta^0 = (A, \Sigma)$ the parameters of \eqref{eq:SDE_HOM}. We denote by $\Theta$ the domain of definition of both $\theta^\epl$ and $\theta^0$. Moreover, let us introduce the multiscale forward operator $\mathcal G^\epl \colon \Omega \times \Theta \to \R^{Nd}$, which is defined by
 \begin{equation}
 	\mathcal G^\epl \colon \omega \times \theta^\epl \mapsto \mathbf x^\epl \defeq \begin{pmatrix}(x^\epl_1)^\top, (x^\epl_2)^\top, \ldots, (x^\epl_N)^\top \end{pmatrix}^\top,
 \end{equation}
@@ -57,7 +56,7 @@ In the Gaussian case $\eta \sim \mathcal N(0, \Gamma)$, this is equivalent to as
 \begin{equation}\label{eq:IP_HOM}
 \text{Find } \theta^0 \text{ given observations } \mathbf y = \mathcal G^\epl(\theta^\epl) + \eta.
 \end{equation}
-In this case, we want to fit a homogenized model to observations coming from a multiscale equation. Let us remark that solving this inverse problem does not require, a priori, the knowledge of the functional form of the multiscale equation \eqref{eq:SDE_MS}. This problem has been considered in \cite{PaS07} (\corr{introduce ideas -- limitations of the analysis (asymptotic results, need of subsampling -- other references/ideas in the literature?}).
+In this case, we want to fit a homogenized model to observations coming from a multiscale equation. Let us remark that solving this inverse problem does not require, a priori, the knowledge of the functional form of the multiscale equation \eqref{eq:SDE_MS}. This problem has been considered in \cite{PaS07} (\corr{introduce ideas -- limitations of the analysis: asymptotic results, need of subsampling, non-Bayesian -- other references/ideas in the literature?}).
 
 In this work, we consider the Bayesian interpretation of problems \eqref{eq:IP_MS} and \eqref{eq:IP_HOM}. In the Bayesian framework, the goal is computing a probability distribution over the parameter, the posterior, given observations of the state and a prior distribution $\mu_{\mathrm{pr}}$ with density $\prior(\cdot)$. Since the parameter we consider is finite-dimensional, in the following we assume that all the distributions admit a probability density with respect to the Lebesgue measure. Employing the multiscale forward map $\mathcal G^\epl$ or the homogenized map $\mathcal G^0$ gives rise to two different posterior distributions. In particular, we denote as $\mu^\epl(\theta \mid \mathbf y)$ the posterior whose probability density function $p^\epl(\theta^\epl \mid \mathbf y)$ satisfies due to Bayes' rule
 \begin{equation}
@@ -107,12 +106,12 @@ In this section, we consider the inverse problem \eqref{eq:IP_MS}.
 \begin{assumption}\label{as:TransitionRegularity} The density $p^\epl(\cdot \mid x, \theta^\epl)$ of the transition probability of the solution of \eqref{eq:SDE_MS} as well as the density $p^0(\cdot \mid x, \theta^0)$ of the transition probability of the solution of \eqref{eq:SDE_HOM} are asymptotically equicontinuous (\corr{specify what this means -- prove that it holds? Is it possible?}).
 \end{assumption}
 
-\begin{lemma}\label{lem:TransitionConvergence} Under Assumption \ref{as:TransitionRegularity}, $p^\epl(\cdot \mid x, \theta) \to p^0(\cdot \mid x, \theta)$ pointwise.
+\begin{lemma}\label{lem:TransitionConvergence} Under Assumption \ref{as:TransitionRegularity}, $p^\epl(\cdot \mid x, \theta) \to p^0(\cdot \mid x, \mathcal H(\theta))$ pointwise for $\epl \to 0$.
 \end{lemma}
 \begin{proof} Theory of homogenization guarantees that $x^\epl \to x^0$ in law in $\mathcal C((0, T), \R^d)$. A converse of Scheffé's theorem holds under Assumption \ref{as:TransitionRegularity} (see e.g. \cite{Swe86, Boo85}), so that the desired result holds.
 \end{proof}
 
-The following theorem proves the convergence of the multiscale posterior towards the homogenized posterior in in the limit $\epl \to 0$. The proof is inspired by \cite[Proposition 4.6]{Stu10} and \cite[Theorem 3.1]{LST18}.
+The following theorem proves the convergence of the multiscale posterior towards the homogenized posterior in in the limit $\epl \to 0$. The proof is inspired by \cite[Proposition 4.6]{Stu10}, \cite[Theorem 3.1]{LST18} and \cite[Theorem 5]{AbD18}
 
 \begin{theorem} Under Assumption \ref{as:TransitionRegularity},
 	\begin{equation}
@@ -136,9 +135,9 @@ The following theorem proves the convergence of the multiscale posterior towards
 	\end{equation}
 	and thus
 	\begin{equation}
-		\Big(\sqrt{p^0(\mathbf y \mid \theta^\epl)} - \sqrt{p^\epl(\mathbf y \mid \theta^\epl)}\Big)^2 \leq \frac{1}{p^0(\mathbf y \mid \theta^\epl) + p^\epl(\mathbf y \mid \theta^\epl)}\Big(p^0(\mathbf y \mid \theta^\epl) - p^\epl(\mathbf y \mid \theta^\epl)\Big)^2.
+		\Big(\sqrt{p^0(\mathbf y \mid \theta^\epl)} - \sqrt{p^\epl(\mathbf y \mid \theta^\epl)}\Big)^2 \leq \frac{\big(p^0(\mathbf y \mid \theta^\epl) - p^\epl(\mathbf y \mid \theta^\epl)\big)^2}{p^0(\mathbf y \mid \theta^\epl) + p^\epl(\mathbf y \mid \theta^\epl)}.
 	\end{equation}
-	Let us consider the difference $\mathcal E_1^\epl \defeq p^0(y \mid \theta^\epl) - p^\epl(y \mid \theta^\epl)$. We have
+	Let us consider the difference $\mathcal E_1^\epl \defeq p^0(\mathbf y \mid \theta^\epl) - p^\epl(\mathbf y \mid \theta^\epl)$. We have
 	\begin{equation}\label{eq:HellProofE1}
 	\begin{aligned}
 		\mathcal E_1^\epl &= \int_{\R^{Nd}} p(x_0) \, \Big(\prod_{k=0}^{N-1} p^0(x_{k+1}\mid x_k, \mathcal H(\theta^\epl)) - \prod_{k=0}^{N-1} p^\epl(x_{k+1}\mid x_k, \theta^\epl)\Big) \prod_{k=1}^{N} p(y_k \mid x_k) \dd \mathbf x \\
@@ -168,7 +167,7 @@ The following theorem proves the convergence of the multiscale posterior towards
 	\begin{equation}
 		I_1^\epl = \Big(\sqrt{\frac{1}{Z^0}} - \sqrt{\frac{1}{Z^\epl}}\Big)^2 Z^\epl,
 	\end{equation}
-	which implies (see, e.g., the proof of \cite[Theorem 4.6]{Stu10})
+	which implies
 	\begin{equation}
 	\begin{aligned}
 		\frac{1}{Z^\epl}I_1^\epl &\leq C \max\{(Z^0)^{-3}, (Z^\epl)^{-3}\}(Z^0 - Z^\epl)^2\\

@@ -4,11 +4,11 @@
 x = dlmread('MultiMulti.txt');
 sol = dlmread('MultiMultiSol.txt');
 % x = dlmread('MultiHomo.txt');
-% sol = dlmread('MultiHomoSol.txt');
+sol = dlmread('MultiHomoSol.txt');
 % fil = dlmread('testHomoFil.txt');
-
+% 
 %%
-T = 0.1;
+T = 30;
 
 nChains = 1;
 hom = x(1, :);
@@ -48,14 +48,10 @@ for j = 1 : nParam
         
         sample = sampleTot(idx:idx+sampleSize-1, j);
         sample = exp(sample);
-        
-        
         plot(f(nParam+j), sample);
         
         means = mean(sample);
         stddevs = std(sample);
-        disp(['parameter ', num2str(j), ', mean = ' num2str(means), ', stddev = ', num2str(stddevs)])
-        
         kspoints = linspace(means-3*stddevs, means+3*stddevs, 1000);
         
         if j == 3

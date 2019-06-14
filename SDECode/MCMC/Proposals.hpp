@@ -10,16 +10,13 @@ class Proposals {
 private:
     std::normal_distribution<double> proposalNormal;
     double proposalStdDev;
-    bool isRAM;
-    double alphaStar;
     double stdDev;
-    MatrixXd stdDevRAM;
+    std::vector<double> factors;
 
 public:
     Proposals() = default;
-    Proposals(double stdDev, double alphaStar = 0);
+    Proposals(double stdDev, std::vector<double> factors = {});
     VectorXd RWProposal(VectorXd& theta, std::default_random_engine* generator);
-    VectorXd RAMProposal(VectorXd& theta, std::default_random_engine* generator);
     VectorXd genSample(VectorXd& theta, std::default_random_engine* generator);
 };
 

@@ -197,25 +197,6 @@ void ModErr::computePF(unsigned int nParam, unsigned int nMC)
                 errors[i][k+1] += (solFine[j][k+1] - solCoarse[j][k+1]) / nMC;
             }
         }
-        /* for (unsigned int j = 0; j < nMC; j++) {
-            std::vector<double> BMTest(N + 1);
-            BMTest[0] = 0.0;
-            for (unsigned int ii = 0; ii < N; ii++) {
-                BMTest[ii + 1] = BMTest[ii] + BMVec[j][ii];
-            }
-            plt::subplot(3, 1, 1);
-            plt::plot(timeVec, BMTest);
-            plt::subplot(3, 1, 2);
-            plt::plot(timeVec, solCoarse[j]);
-            plt::subplot(3, 1, 3);
-            plt::plot(timeVec, solFine[j], "grey");
-        }
-        plt::subplot(3, 1, 3);
-        plt::plot(timeVec, obs, "k");
-        plt::show();
-
-        plt::plot(W);
-        plt::show(); */
     }
 
     // Compute modeling error statistics

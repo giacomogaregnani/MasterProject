@@ -5,7 +5,6 @@ std::vector<double> generateObservations1D(oneDimSde sde, double IC, VectorXd &p
 {
     // std::random_device dev;
     std::default_random_engine seed{seedN};
-
     EM1D solver(sde, param, seed);
 
     auto h = T / N;
