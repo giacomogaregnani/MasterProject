@@ -38,7 +38,7 @@ public:
            std::vector<double> timeNoise = {});
     void compute(VectorXd& theta);
     double importanceSampler(double h, double hObs, double x, VectorXd &theta,
-                             unsigned long obsIdx, unsigned long j);
+                             unsigned long obsIdx, unsigned long j, double trueNoise = 0);
     void computeDiffBridge(VectorXd& theta);
     double getLikelihood() const;
     std::vector<double> sampleX();

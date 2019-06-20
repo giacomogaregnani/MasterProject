@@ -5,7 +5,7 @@
 
 double drift(double x, VectorXd& p)
 {
-    return -1.0 * p(0) * (x * x * x - x);
+    return -1.0 * p(0) * x;
 }
 
 double diffusion(double x, VectorXd &p)
@@ -19,12 +19,12 @@ int main(int argc, char* argv[])
     sde.drift = &drift;
     sde.diffusion = &diffusion;
 
-    std::default_random_engine seed{2019};
+    std::default_random_engine seed{0};
     std::normal_distribution<double> BMGen(0.0, 1.0);
 
-    double T = 20;
+    double T = 10;
 
-    unsigned int nBM = 10000;
+    unsigned int nBM = 1000;
     std::vector<double> BM(nBM+1);
     double hBM = T / nBM;
     BM[0] = 0.0;
@@ -37,10 +37,9 @@ int main(int argc, char* argv[])
 
     EM1D solver(sde, param, seed);
 
-
     std::ofstream output(DATA_PATH + std::string("testGN.txt"), std::ofstream::out | std::ofstream::trunc);
 
-    for (unsigned int N = 100; N < nBM+1; N*=10) {
+    for (unsigned int N = nBM; N < nBM+1; N*=10) {
         auto h = T / N;
         auto ratio = static_cast<unsigned int>(std::round(nBM / N));
         double x = 0;

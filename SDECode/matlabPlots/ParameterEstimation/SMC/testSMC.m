@@ -35,4 +35,6 @@ parfor i = 1 : length(aTest)
 %     hold on
 %     plot(t, noisyObs)
     
-end
+end 
+
+histogram(l)

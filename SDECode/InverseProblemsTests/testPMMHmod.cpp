@@ -4,6 +4,9 @@
 #include "generateObservations.hpp"
 #include "computeHomogeneous.hpp"
 #include <MCMC.hpp>
+#include "../matplotlib-cpp-master/matplotlibcpp.h"
+
+namespace plt = matplotlibcpp;
 
 // Remark: epsilon = p(0)
 
@@ -46,7 +49,7 @@ int main(int argc, char* argv[])
     sdeHomo.drift = &homoDrift;
     sdeHomo.diffusion = &diffusion;
 
-    double T = 2;
+    double T = 1;
     unsigned int N = 1000;
 
     VectorXd tmpParam(3);
@@ -68,7 +71,7 @@ int main(int argc, char* argv[])
     // ====================================================== //
 
     // Initialize structures for the inverse problem
-    unsigned long M = 100, nMCMC = 5001;
+    unsigned long M = 1000, nMCMC = 50001;
     double noise = 1e-3;
     double IC = 1.0;
     std::random_device dev;
@@ -101,49 +104,77 @@ int main(int argc, char* argv[])
     }
     outputSol << std::endl;
 
-    // Compute the modeling error statistics and rescale the observations
-    bool modErr = true;
-    std::vector<double> means, stdDevs;
-    if (modErr) {
-        std::cout << "Computing modeling error..." << std::endl;
-        VectorXd priorMean(param.size());
-        priorMean << param(0), param(1), param(2);
-        VectorXd priorStdDev(param.size());
-        priorStdDev << 0.0, 1.0, 1.0;
-        ModErr modErr(sdeHomo, sde, &V1, IC, priorMean, priorStdDev, T, N, x, noise);
-        unsigned int nMC = 500;
-        unsigned int nParam = 20;
-        modErr.computePF(nParam, nMC);
-        modErr.getStats(means, stdDevs);
-        std::cout << "Computed modeling error" << std::endl;
-        for (unsigned int i = 1; i < N + 1; i++) {
-            x[i] -= means[i];
-        }
-        for (auto const &itSol : x) {
-            outputSol << std::fixed << std::setprecision(10) << itSol << "\t";
-        }
-        outputSol << std::endl;
-        for (auto const &it : stdDevs) {
-            outputSol << std::fixed << std::setprecision(10) << it << "\t";
-        }
-        outputSol << std::endl;
-    }
-
     // Initial parameter guess
     VectorXd initGuess = VectorXd::Zero(param.size());
     initGuess(0) = param(0);
+    std::vector<VectorXd> sampleTot = {}, sample = {};
+    sampleTot.push_back(initGuess);
+    std::vector<double> rescaledObs(N+1);
+    VectorXd priorMean(param.size());
+    priorMean << param(0), 0.0, 0.0;
+    VectorXd priorStdDev(param.size());
+    priorStdDev << 0.0, 1.0, 1.0;
+    unsigned int nMC = 500;
+    unsigned int nParam = 50;
 
-    // Inverse problem
-    std::shared_ptr<Posterior> posterior;
-    // posterior = std::make_shared<PFPosterior>(x, T, IC, 1, noise, sde, param(0), M, IS);
-    posterior = std::make_shared<PFPosteriorHom>(x, T, IC, 1, noise, sdeHomo, &V1, param(0), M, IS, stdDevs);
-    std::shared_ptr<Proposals> proposal;
-    std::vector<double> factors = {1.0, 5.0, 1.0};
-    proposal = std::make_shared<Proposals>(5e-2, factors);
-    MCMC mcmc(initGuess, proposal, posterior, nMCMC);
-    auto sample = mcmc.compute(&proposalSeed, &acceptanceSeed);
-    for (auto const &itSample : sample)
-        output << itSample.transpose() << std::endl;
+    std::vector<double> timeVec(N+1);
+    for (unsigned int i = 0; i < N+1; i++) {
+        timeVec[i] = T/N * i;
+    }
+
+    unsigned int L = 10;
+    for (unsigned int l = 0; l < L; l++) {
+        // Compute the modeling error statistics and rescale the observations
+        std::vector<double> means, stdDevs;
+        std::cout << "Computing modeling error..." << std::endl;
+
+        if (l > 0) {
+            priorMean = VectorXd::Zero(3);
+            for (auto const &it : sample) {
+                priorMean += it / sample.size();
+            }
+            priorStdDev = VectorXd::Zero(3);
+            for (auto const &it : sample) {
+                priorStdDev += ((it - priorMean).cwiseProduct(it - priorMean)) / (sample.size() - 1);
+            }
+            priorStdDev = priorStdDev.array().sqrt();
+        }
+
+        ModErr modErr(sdeHomo, sde, &V1, IC, priorMean, priorStdDev, T, N, x, noise);
+        modErr.computePF(nParam, nMC);
+        modErr.getStats(means, stdDevs);
+        std::cout << "Computed modeling error" << std::endl;
+        for (unsigned int i = 0; i < N+1; i++) {
+            rescaledObs[i] = x[i] - means[i];
+        }
+        std::vector<double> confIntp(N+1), confIntm(N+1);
+        for (unsigned int i = 0; i < N+1; i++) {
+            confIntp[i] = rescaledObs[i] + 2.0 * stdDevs[i];
+            confIntm[i] = rescaledObs[i] - 2.0 * stdDevs[i];
+        }
+        /* plt::named_plot("xe", timeVec, x, "b");
+        plt::named_plot("x0", timeVec, xHom, "r");
+        plt::named_plot("xt", timeVec, rescaledObs, "k");
+        plt::named_plot("CI", timeVec, confIntp, "k--");
+        plt::plot(timeVec, confIntm, "k--");
+        plt::legend();
+        plt::show(); */
+        std::cout << priorMean.transpose() << std::endl << priorStdDev.transpose() << std::endl;
+
+        // Inverse problem
+        std::shared_ptr<Posterior> posterior;
+        posterior = std::make_shared<PFPosteriorHom>(rescaledObs, T, IC, 1, noise, sdeHomo, &V1, param(0), M, IS, stdDevs);
+        std::shared_ptr<Proposals> proposal;
+        std::vector<double> factors = {1.0, 5.0, 1.0};
+        proposal = std::make_shared<Proposals>(5e-2, factors);
+        MCMC mcmc(sampleTot[sampleTot.size()-1], proposal, posterior, nMCMC/L);
+        sample = mcmc.compute(&proposalSeed, &acceptanceSeed);
+        sampleTot.insert(sampleTot.end(), sample.begin(), sample.end());
+    }
+
+    for (auto const &it : sampleTot) {
+        output << it.transpose() << std::endl;
+    }
 
     output.close();
     outputSol.close();

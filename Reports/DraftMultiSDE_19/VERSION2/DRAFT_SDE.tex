@@ -15,7 +15,6 @@
 \normalsize
 \section{Introduction}
 
-
 \section{Problem statement}
 
 Let $(\Omega, \mathcal A, P)$ be a probability space, $\epl$, $\alpha$ and $\sigma$ be positive real numbers and $V_0 \colon \R^d \to \R^d$, $V_1 \colon \R^d \to \R^d$ be \corr{smooth} functions. Let us consider the autonomous SDE on $(\Omega, \mathcal A, P)$
@@ -262,6 +261,27 @@ Heuristically, this conditioning allows the particles to be generated close to t
 
 
 \section{Numerical experiments}
+
+\subsection{Modelling error}
+
+\begin{figure}[t]
+	\centering
+	\begin{tabular}{cc}
+		\includegraphics[]{Figures/MultiMulti} & \includegraphics[]{Figures/MultiHomo} \\
+		\includegraphics[]{Figures/MultiHomoMod} & 
+	\end{tabular}
+\end{figure}
+
+We first consider the one-dimensional case $d = 1$ and equation \eqref{eq:SDE_MS} defined by the slow potential $V_0(x) = x$ and by the fluctuating potential $V_1(x) = \cos(x)$. In this case, the solution of the homogenized equation is an Ornstein--Uhlenbeck process and the coefficients $(A, \Sigma)$ are given by (see e.g. \cite{PaS07})
+\begin{equation}
+	A = \frac{L^2 \alpha}{Z \widehat Z}, \qquad \Sigma = \frac{L^2 \sigma}{Z \widehat Z},
+\end{equation}
+where $L = 2\pi$ is the period of $V_1$ and 
+\begin{equation}
+	Z = \int_0^L e^{-V(x)/\sigma} \dd x, \qquad \widehat Z = \int_0^L e^{V(x)/\sigma} \dd x.
+\end{equation}
+We consider the initial condition $x^\epl(0) = 1$ and generate $N = 1000$ equispaced observations from time $t_1 = 10^{-3}$ to final time $T = t_N = 1$. The noise $\eta$ is distributed as $\eta \sim \mathcal N(0, \gamma^2 I_N)$, where $\gamma = 10^{-3}$. The prior distribution is a standard Gaussian, i.e., $\mu_{\mathrm pr} = \mathcal N(0, I_2)$. We sample from the multiscale posterior $\mu^\epl$, the homogenized posterior $\mu^0$ and the corrected multiscale posterior $\tilde \mu^0$ employing the PMCMC algorithm. In particular, for all posteriors we sample $L = 5000$ values of the parameters, and for each parameter we run a particle filter with $M = 50$ particles.
+
 
 
 

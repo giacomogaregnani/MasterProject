@@ -19,12 +19,12 @@ add_executable(testModErr testModErr.cpp
         generateObservations.hpp generateObservations.cpp)
 target_link_libraries(testModErr SDESolver MCMC)
 
-add_executable(testPMMHMod testPMMHModErr.cpp
+add_executable(testPMMHMod testPMMHmod.cpp
         generateObservations.hpp generateObservations.cpp
         computeHomogeneous.hpp computeHomogeneous.cpp)
 target_link_libraries(testPMMHMod SDESolver MCMC)
 
-add_executable(testHomog TestHomog.cpp
+add_executable(testHomog testHomog.cpp
         generateObservations.hpp generateObservations.cpp
         computeHomogeneous.hpp computeHomogeneous.cpp)
 target_link_libraries(testHomog SDESolver)

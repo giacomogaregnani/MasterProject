@@ -71,7 +71,7 @@ std::vector<VectorXd>& MCMC::compute(std::default_random_engine* proposalSeed,
     }
 
     // Take 10% burn-in out
-    unsigned long burnIn = 0;
+    unsigned long burnIn = samples.size() / 10;
     samples.erase(samples.begin(), samples.begin() + burnIn);
 
     // Compute MCMC estimate

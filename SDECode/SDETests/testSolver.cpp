@@ -5,7 +5,7 @@
 
 double drift(double x, VectorXd& p)
 {
-    return -1.0 * p(0) * (x * x * x - x);
+    return -1.0 * p(0) * x;
 }
 
 double diffusion(double x, VectorXd &p)
@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
 
     std::default_random_engine seed{2019};
     VectorXd param(2);
-    param << 1.0, 0.0;
+    param << 1.0, 0.5;
 
     EM1D solver(sde, param, seed);
 
@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
     unsigned int N = 10000;
     auto h = T / N;
     unsigned int M = 1;
-    double x, IC = 2;
+    double x, IC = 0;
 
     std::ofstream output(DATA_PATH + std::string("test.txt"), std::ofstream::out | std::ofstream::trunc);
     for (unsigned int i = 0; i < M; i++) {

@@ -98,17 +98,20 @@ void ParFil::compute(VectorXd& theta)
 }
 
 double ParFil::importanceSampler(double h, double hObs, double x, VectorXd &theta,
-                                 unsigned long obsIdx, unsigned long j)
+                                 unsigned long obsIdx, unsigned long j, double trueNoise)
 {
     // Notation refers to Golightly, Wilkinson (2011) appendix A.3
     double alphaj = sde.drift(x, theta),
            betaj = sde.diffusion(x, theta),
            deltaj = hObs - j*h;
 
+    if (trueNoise == 0)
+        trueNoise = noise;
+
     // In Golightly, Wilkinson (2011) the diffusion is under square root
     betaj *= betaj;
 
-    double denom = betaj * deltaj + noise * noise;
+    double denom = betaj * deltaj + trueNoise * trueNoise;
     double aj = alphaj + betaj * (obs[obsIdx] - (x + alphaj * deltaj)) / denom;
     double bj = betaj - h * betaj * betaj / denom;
 
@@ -154,13 +157,15 @@ void ParFil::computeDiffBridge(VectorXd& theta)
             ISDens = 1.0;
             for (unsigned long i = 0; i < samplingRatio; i++) {
                 // Sample from the IS density
-                temp = importanceSampler(h, hObs, X[k][index+i], theta, obsIdx, i);
+                if (staticNoise) {
+                    temp = importanceSampler(h, hObs, X[k][index + i], theta, obsIdx, i);
+                } else {
+                    double trueStdDev = std::sqrt(noise * noise + timeNoise[obsIdx] * timeNoise[obsIdx]);
+                    temp = importanceSampler(h, hObs, X[k][index + i], theta, obsIdx, i, trueStdDev);
+                }
                 // Evaluate the transition density of the true process
                 transDensMean = X[k][index+i] + sde.drift(X[k][index+i], theta) * h;
                 transDensStddev = sde.diffusion(X[k][index+i], theta) * std::sqrt(h);
-                /* transDensMean = std::exp(-std::exp(theta(1)) * h) * X[k][index+i];
-                transDensStddev = std::sqrt(std::exp(-theta(1)) * std::exp(theta(2)) *
-                                            (1.0 - std::exp(-2.0 * std::exp(theta(1)) * h))); */
                 transDens *= gaussianDensity(temp, transDensMean, transDensStddev);
                 // Evaluate the IS density
                 ISDens *= gaussianDensity(temp, ISmean, ISstddev);

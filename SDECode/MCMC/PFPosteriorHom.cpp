@@ -15,11 +15,9 @@ PFPosteriorHom::PFPosteriorHom(std::vector<double>& x, double T, double IC,
 
 VectorXd PFPosteriorHom::computeHomogeneous(VectorXd param, double L, double (*V1) (double))
 {
-    param(1) = std::exp(param(1));
-    param(2) = std::exp(param(2));
+    param = param.array().exp();
 
     // Compute the coefficients Z and \hat{Z}
-
     unsigned int N = 10000;
     VectorXd discr;
     discr.setLinSpaced(N+1, 0.0, L);
@@ -36,8 +34,8 @@ VectorXd PFPosteriorHom::computeHomogeneous(VectorXd param, double L, double (*V
 
     homParam(0) = param(1) * L * L / (Zs[0] * Zs[1]);
     homParam(1) = param(2) * L * L / (Zs[0] * Zs[1]);
-    homParam(0) = std::log(homParam(0));
-    homParam(1) = std::log(homParam(1));
+
+    homParam = homParam.array().log();
 
     return homParam;
 }
