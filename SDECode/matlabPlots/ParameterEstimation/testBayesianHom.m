@@ -13,8 +13,8 @@ T = 100;
 
 nChains = 1;
 hom = x(1, :);
-trueVals = [1, 0.5];
-% trueVals = [0.19, 0.09];
+% trueVals = [1, 0.5];
+trueVals = [0.19, 0.09];
 
 sampleTot = x(2:end, 2:end);
 sampleSize = size(sampleTot, 1) / nChains;
@@ -39,7 +39,7 @@ aVals = linspace(min(sampleTot(:, 1))-0.5, max(sampleTot(:, 1))+0.5, 100);
 sVals = linspace(min(sampleTot(:, 2))-0.2, max(sampleTot(:, 2))+0.2, 100);
 [aa, ss] = meshgrid(aVals, sVals);
 
-idx = size(sampleTot, 1)-6000:size(sampleTot, 1);
+idx = 1:size(sampleTot, 1);
 bwa = 2 * (4 * std(sampleTot(idx, 1))^5 / (3 * size(sampleTot, 1)))^(1/5);
 bws = 2 * (4 * std(sampleTot(idx, 2))^5 / (3 * size(sampleTot, 1)))^(1/5);
 
@@ -77,39 +77,39 @@ plot(sampleTot(:, 2))
 hold on
 plot(log(trueVals(2)) .* ones(size(sampleTot(:, 2))), 'k')
 
-for j = 1 : nParam
-    figure
-    f(2*j-1) = axes;
-    hold on
-    
-    figure
-    f(2*j) = axes;
-    hold on
-end
-
-for j = 1 : nParam
-    maxF = 0;
-    
-    sample = sampleTot(idx, j);
-    sample = exp(sample);
-    
-    plot(f(nParam+j), sample);
-    
-    means = mean(sample);
-    stddevs = std(sample);
-    disp(['parameter ', num2str(j), ', mean = ' num2str(means), ', stddev = ', num2str(stddevs)])
-    
-    kspoints = linspace(means-3*stddevs, means+3*stddevs, 1000);
-    
-    if j == 3
-        histogram(f(j), sample)
-    else
-        [dens, points] = ksdensity(sample, kspoints);
-        plot(f(j), points, dens)
-    end
-    
-    maxF = max(maxF, max(dens));
-    
-    plot(f(j), [hom(j), hom(j)], [0, maxF], 'k--');
-    plot(f(j), [trueVals(j), trueVals(j)], [0, maxF], 'k');
-end
+% for j = 1 : nParam
+%     figure
+%     f(2*j-1) = axes;
+%     hold on
+%     
+%     figure
+%     f(2*j) = axes;
+%     hold on
+% end
+% 
+% for j = 1 : nParam
+%     maxF = 0;
+%     
+%     sample = sampleTot(idx, j);
+%     sample = exp(sample);
+%     
+%     plot(f(nParam+j), sample);
+%     
+%     means = mean(sample);
+%     stddevs = std(sample);
+%     disp(['parameter ', num2str(j), ', mean = ' num2str(means), ', stddev = ', num2str(stddevs)])
+%     
+%     kspoints = linspace(means-3*stddevs, means+3*stddevs, 1000);
+%     
+%     if j == 3
+%         histogram(f(j), sample)
+%     else
+%         [dens, points] = ksdensity(sample, kspoints);
+%         plot(f(j), points, dens)
+%     end
+%     
+%     maxF = max(maxF, max(dens));
+%     
+%     plot(f(j), [hom(j), hom(j)], [0, maxF], 'k--');
+%     plot(f(j), [trueVals(j), trueVals(j)], [0, maxF], 'k');
+% end

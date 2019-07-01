@@ -251,7 +251,7 @@ Particle filter approximation
 \widehat p(y_k \mid y_{1:k-1}, \theta) = \frac{1}{N_x N_m} \sum_{i=1}^{N_m} \sum_{j=1}^{N_x} p(y_k \mid x_k^{(j)}, m_k^{(i)}, \theta),
 \end{aligned}
 \end{equation}
-where $x_k^{(j)} \iid p(x_k \mid y_{1:k-1})$ and $m_k^{(i)} \iid p(m_k \mid y_{1:k-1})$.
+where $x_k^{(j)} \sim p(x_k \mid y_{1:k-1})$ and $m_k^{(i)} \sim p(m_k \mid y_{1:k-1})$.
 
 \section{Numerical discretization}
 

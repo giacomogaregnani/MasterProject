@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -std=c++11 -Wall -I/usr/include/python2.7 -lpython2.7")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -std=c++17 -Wall -I/usr/include/python2.7 -lpython2.7")
 set(CMAKE_BUILD_TYPE Release)
 project(InvSDE)
 

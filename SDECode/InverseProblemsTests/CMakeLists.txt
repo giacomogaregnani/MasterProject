@@ -24,6 +24,11 @@ add_executable(testPMMHMod testPMMHmod.cpp
         computeHomogeneous.hpp computeHomogeneous.cpp)
 target_link_libraries(testPMMHMod SDESolver MCMC)
 
+add_executable(testPMMHAll testPMMHAll.cpp
+        generateObservations.hpp generateObservations.cpp
+        computeHomogeneous.hpp computeHomogeneous.cpp)
+target_link_libraries(testPMMHAll SDESolver MCMC)
+
 add_executable(testHomog testHomog.cpp
         generateObservations.hpp generateObservations.cpp
         computeHomogeneous.hpp computeHomogeneous.cpp)

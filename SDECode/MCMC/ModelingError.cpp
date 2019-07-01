@@ -226,8 +226,6 @@ void ModErr::computePF(unsigned int nParam, unsigned int nMC)
 
     }
 
-    plt::show();
-
     // Compute modeling error statistics
     for (unsigned int i = 0; i < nParam; i++) {
         for (unsigned int j = 0; j < N+1; j++) {

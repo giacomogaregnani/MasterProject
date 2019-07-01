@@ -122,8 +122,9 @@ double ParFil::importanceSampler(double h, double hObs, double x, VectorXd &thet
     return gaussian(seed);
 }
 
-void ParFil::computeDiffBridge(VectorXd& theta)
+void ParFil::computeDiffBridge(VectorXd& theta, std::vector<std::vector<double>>* mod)
 {
+    bool allModErrFalse = mod->empty();
     bool staticNoise = timeNoise.empty();
 
     // The first parameter is the multiscale epsilon
@@ -158,7 +159,11 @@ void ParFil::computeDiffBridge(VectorXd& theta)
             for (unsigned long i = 0; i < samplingRatio; i++) {
                 // Sample from the IS density
                 if (staticNoise) {
-                    temp = importanceSampler(h, hObs, X[k][index + i], theta, obsIdx, i);
+                    if (allModErrFalse) {
+                        temp = importanceSampler(h, hObs, X[k][index + i], theta, obsIdx, i);
+                    } else {
+                        temp = importanceSampler(h, hObs, X[k][index + i], theta, obsIdx, i);
+                    }
                 } else {
                     double trueStdDev = std::sqrt(noise * noise + timeNoise[obsIdx] * timeNoise[obsIdx]);
                     temp = importanceSampler(h, hObs, X[k][index + i], theta, obsIdx, i, trueStdDev);
@@ -172,12 +177,26 @@ void ParFil::computeDiffBridge(VectorXd& theta)
                 X[k][index+1+i] = temp;
             }
             // Evaluate the observation density
-            if (staticNoise) {
+            if (staticNoise & allModErrFalse) {
                 obsDens = gaussianDensity(X[k][index + samplingRatio], obs[obsIdx], noise);
-            } else {
+            } else if (!staticNoise & allModErrFalse) {
                 double trueStdDev = std::sqrt(noise * noise + timeNoise[obsIdx] * timeNoise[obsIdx]);
                 obsDens = gaussianDensity(X[k][index + samplingRatio], obs[obsIdx], trueStdDev);
+            } else if (staticNoise & !allModErrFalse) {
+                obsDens = 0.0;
+                for (unsigned long idxmod = 0; idxmod < mod->size(); idxmod++) {
+                    obsDens += gaussianDensity(X[k][index + samplingRatio], obs[obsIdx] - (*mod)[idxmod][obsIdx], noise);
+                }
+                obsDens /= mod->size();
+            } else { // This case does not make any sense
+                double trueStdDev = std::sqrt(noise * noise + timeNoise[obsIdx] * timeNoise[obsIdx]);
+                obsDens = 0.0;
+                for (unsigned long idxmod = 0; idxmod < mod->size(); idxmod++) {
+                    obsDens += gaussianDensity(X[k][index + samplingRatio], obs[obsIdx] - (*mod)[idxmod][obsIdx], trueStdDev);
+                }
+                obsDens /= mod->size();
             }
+
             // Compute the weights
             W[k] = obsDens * transDens / ISDens;
             wSum += W[k];

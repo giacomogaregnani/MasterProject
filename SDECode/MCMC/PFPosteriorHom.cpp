@@ -5,10 +5,12 @@ PFPosteriorHom::PFPosteriorHom(std::vector<double>& x, double T, double IC,
                                unsigned int sR, double noise, oneDimSde sde,
                                double (*V1) (double),
                                double eps, unsigned long M, bool IS,
-                               std::vector<double> timeNoise):
+                               std::vector<double> timeNoise,
+                               std::vector<std::vector<double>> errors):
         IS(IS),
         V1(V1),
-        eps(eps)
+        eps(eps),
+        errors(errors)
 {
     ParticleFilter = std::make_shared<ParFil>(x, T, IC, sR, noise, sde, eps, M, timeNoise);
 }
@@ -55,7 +57,7 @@ double PFPosteriorHom::computePosterior(VectorXd& theta)
     thetaHom(2) = tmp(1);
 
     if (IS) {
-        ParticleFilter->computeDiffBridge(thetaHom);
+        ParticleFilter->computeDiffBridge(thetaHom, &errors);
     } else {
         ParticleFilter->compute(thetaHom);
     }
