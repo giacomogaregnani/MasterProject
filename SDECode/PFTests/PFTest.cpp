@@ -44,15 +44,15 @@ int main(int argc, char* argv[])
     param(1) = std::log(1.0); // True multiscale alpha
     param(2) = std::log(0.5); // True multiscale betainv
 
-    double T = 1;
-    unsigned int N = 1000;
+    double T = 0.1;
+    unsigned int N = 100;
 
     std::ofstream output(DATA_PATH + std::string("test.txt"), std::ofstream::out | std::ofstream::trunc);
     std::ofstream outputSol(DATA_PATH + std::string("testSol.txt"), std::ofstream::out | std::ofstream::trunc);
     std::ofstream outputLik(DATA_PATH + std::string("testLik.txt"), std::ofstream::out | std::ofstream::trunc);
 
     unsigned long M = 50;
-    double noise = 1e-4;
+    double noise = 1e-1;
     double IC = 1.0;
     std::default_random_engine noiseSeed{2018};
     std::normal_distribution<double> noiseDistribution(0.0, noise);

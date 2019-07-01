@@ -20,7 +20,7 @@
 Let $(\Omega, \mathcal A, P)$ be a probability space, $\epl$, $\alpha$ and $\sigma$ be positive real numbers and $V_0 \colon \R^d \to \R^d$, $V_1 \colon \R^d \to \R^d$ be \corr{smooth} functions. Let us consider the autonomous SDE on $(\Omega, \mathcal A, P)$
 \begin{equation}\label{eq:SDE_MS}
 \begin{aligned}
-	\dd x^\epl(t) &= -\alpha \nabla V_0(x^\epl(t)) \dd t - \frac{1}{\epl}\nabla V_1\Big(\frac{x^\epl(t)}{\epl}\Big) \dd t + \sqrt{2\sigma} \dd W(t), \quad 0 < t \leq T, \\
+	\d x^\epl(t) &= -\alpha \nabla V_0(x^\epl(t)) \dd t - \frac{1}{\epl}\nabla V_1\Big(\frac{x^\epl(t)}{\epl}\Big) \dd t + \sqrt{2\sigma} \dd W(t), \quad 0 < t \leq T, \\
 	x^\epl(0) &= x_0,
 \end{aligned}
 \end{equation}
@@ -186,8 +186,42 @@ In this section we consider problem \eqref{eq:IP_HOM}.
 
 \section{Modelling error}
 
-Explain approach for both \eqref{eq:IP_MS} and \eqref{eq:IP_HOM}.
+\begin{algorithm}[t]
+	\caption{Modelling Error estimation}
+	\label{alg:ModErr}
+	\KwData{Measure $\nu \in \mathcal M(\Theta)$, $\mathbf y \in \R^{Nd}$, integers $N_p, N_x$}
+	\KwOut{Approximation $\widehat {\mathbf m}$ of the mean modelling error (\corr{write it better})}
+	\For{$i = 0, \ldots, N_p$} {
+		Sample $\theta^{(i)} \sim \nu$\;
+		Sample $\mathbf x^{\epl}(\theta^{(i)})^{(j)} \sim p^\epl(\mathbf x \mid \mathbf y, \theta^{(i)})$ for $j = 1, \ldots, N_x$ with a particle filter\;
+		Compute $\mathbf x^{0}(\theta^{i})^{(j)} = \mathcal H\big(\mathbf x^{\epl}(\theta^{(i)})^{(j)}\big)$ for $j = 1, \ldots, N_x$\;
+		Set $\widehat {\mathbf m}^{(i,j)} = \mathbf x^{\epl}(\theta^{(i)})^{(j)} - \mathbf x^{0}(\theta^{(i)})^{(j)} $ for $j = 1, \ldots, N_x$\;
+	}
+	Set $\widehat{\mathbf m} = \frac{1}{N_p} \sum_{i=1}^{N_p} \frac{1}{N_x} \sum_{j=1}^{N_x} \widehat{\mathbf m}^{(i,j)}$ \;
+\end{algorithm}
 
+Explain approach for both \eqref{eq:IP_MS} and \eqref{eq:IP_HOM}.
+Assume $\mathbf m$ independent of $\theta$
+\begin{equation}
+\begin{aligned}
+	p(\mathbf y \mid \theta, \mathbf m) &= \int p(\mathbf x , \mathbf y \mid \theta, \mathbf m) \dd \mathbf x\\
+	&= \int p(\mathbf y \mid \mathbf x, \theta, \mathbf m) \, p(\mathbf x \mid \mathbf m, \theta) \dd \mathbf x \\
+	&= \int p(\mathbf y \mid \mathbf x, \theta, \mathbf m) \, \frac{p(\mathbf m\mid \mathbf x, \theta) \, p(\mathbf x \mid \theta)}{p(\mathbf m \mid \theta)} \dd \mathbf x\\
+	&= \int p(\mathbf y \mid \mathbf x, \theta, \mathbf m) \, \frac{p(\mathbf m\mid \mathbf x) \, p(\mathbf x \mid \theta)}{p(\mathbf m)} \dd \mathbf x
+\end{aligned}
+\end{equation}
+Then marginalize
+\begin{equation}
+\begin{aligned}
+	p(\mathbf y \mid \theta) &= \iint p(\mathbf y \mid \mathbf x, \theta, \mathbf m) \, p(\mathbf m\mid \mathbf x) \, p(\mathbf x \mid \theta) \dd \mathbf x \dd \mathbf m\\
+	&= \int p(\mathbf x \mid \theta) \left(\int p(\mathbf y \mid \mathbf x, \theta, \mathbf m) \, p(\mathbf m\mid \mathbf x) \dd \mathbf m \right) \dd \mathbf x.
+\end{aligned}
+\end{equation}
+Monte Carlo approach
+\begin{equation}
+	\int p(\mathbf y \mid \mathbf x, \theta, \mathbf m) \, p(\mathbf m\mid \mathbf x) \dd \mathbf m \approx \frac{1}{N_m} \sum_{i=1}^{N_m} p(\mathbf y \mid \mathbf x, \theta, \mathbf m^{(i)})
+\end{equation}
+for $\mathbf m^{(i)} \sim p(\,\cdot \mid \mathbf x)$.
 \section{Numerical discretization}
 
 \begin{itemize}[label=-]
@@ -198,6 +232,7 @@ Explain approach for both \eqref{eq:IP_MS} and \eqref{eq:IP_HOM}.
 \section{Sampling from the posterior}
 
 In order to obtain samples from the posterior distributions $p^\epl(\theta \mid \mathbf y)$ and $p^0(\theta \mid \mathbf y)$, it is necessary to recur to Monte Carlo simulations. In particular, let us neglect in this section the difference between multiscale and homogenized posteriors and refer to a general posterior $p(\theta \mid \mathbf y)$, where $\mathbf y$ is a set of observations coming from a generic Markov chain parametrized by $\theta$ and characterized by a transition probability with density $p(\cdot \mid x, \theta)$. In the context of Bayesian inference problems, it is frequent to employ algorithms of the family of the Markov chain Monte Carlo methods (MCMC). These algorithms proceed by generating a Markov chain over the space $\Theta$ from a proposal distribution, whose density we denote by $q(\cdot \mid \theta)$, and by tuning the probability of accepting a new sample so that samples are indeed generated from the posterior. These sampling schemes require the evaluation of the posterior distribution for each new sample. In our setting, in which it is unfeasible to evaluate the posterior due to the complex structure of the likelihood function \eqref{eq:LikelihoodMarginalization}, it is possible to employ the pseudo-marginal Metropolis--Hastings method (PMMH) \cite{AnR09}. Given an initial value $\theta^{(0)}$, the algorithm can be summarized as
+
 \begin{enumerate}[label=\textit{\alph*})]
 	\item compute $p(\theta^{(0)} \mid \mathbf y)$ 
 	\item\label{it:extForMH} for $k = 1, \ldots, L$

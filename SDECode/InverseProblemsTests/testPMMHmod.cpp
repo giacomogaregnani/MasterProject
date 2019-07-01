@@ -42,18 +42,14 @@ double diffusion(double x, VectorXd &p)
 
 int main(int argc, char* argv[])
 {
-    oneDimSde sde;
-    sde.drift = &multiDrift;
-    sde.diffusion = &diffusion;
-    oneDimSde sdeHomo;
-    sdeHomo.drift = &homoDrift;
-    sdeHomo.diffusion = &diffusion;
+    oneDimSde sde{&multiDrift, &diffusion};
+    oneDimSde sdeHomo{&homoDrift, &diffusion};
 
-    double T = 1;
-    unsigned int N = 1000;
+    double T = 100;
+    unsigned int N = 20000;
 
     VectorXd tmpParam(3);
-    tmpParam(0) = 0.05;  // Epsilon
+    tmpParam(0) = 0.1;  // Epsilon
     tmpParam(1) = 1.0;   // True multiscale alpha
     tmpParam(2) = 0.5;   // True multiscale betainv
 
@@ -71,15 +67,15 @@ int main(int argc, char* argv[])
     // ====================================================== //
 
     // Initialize structures for the inverse problem
-    unsigned long M = 1000, nMCMC = 50001;
+    unsigned long M = 50, nMCMC = 10001;
     double noise = 1e-3;
-    double IC = 1.0;
+    double IC = 0.0;
     std::random_device dev;
     std::default_random_engine noiseSeed{dev()};
     std::default_random_engine proposalSeed{dev()};
     std::default_random_engine acceptanceSeed{dev()};
     std::normal_distribution<double> noiseDistribution(0.0, noise);
-    bool IS = false;
+    bool IS = true;
 
     // Generate and perturb observations
     auto x = generateObservations1D(sde, IC, param, T, N, 0);
@@ -107,15 +103,16 @@ int main(int argc, char* argv[])
     // Initial parameter guess
     VectorXd initGuess = VectorXd::Zero(param.size());
     initGuess(0) = param(0);
-    std::vector<VectorXd> sampleTot = {}, sample = {};
-    sampleTot.push_back(initGuess);
+    std::vector<VectorXd> sample = {};
+    sample.push_back(initGuess);
     std::vector<double> rescaledObs(N+1);
     VectorXd priorMean(param.size());
     priorMean << param(0), 0.0, 0.0;
     VectorXd priorStdDev(param.size());
     priorStdDev << 0.0, 1.0, 1.0;
-    unsigned int nMC = 500;
-    unsigned int nParam = 50;
+    unsigned int nMC = 100;
+    unsigned int nParam = 40;
+    double propStdDev = 2e-2;
 
     std::vector<double> timeVec(N+1);
     for (unsigned int i = 0; i < N+1; i++) {
@@ -163,17 +160,22 @@ int main(int argc, char* argv[])
 
         // Inverse problem
         std::shared_ptr<Posterior> posterior;
-        posterior = std::make_shared<PFPosteriorHom>(rescaledObs, T, IC, 1, noise, sdeHomo, &V1, param(0), M, IS, stdDevs);
+        // posterior = std::make_shared<PFPosterior>(rescaledObs, T, IC, 1, noise, sdeHomo, param(0), M, IS); //, stdDevs);
+        posterior = std::make_shared<PFPosteriorHom>(rescaledObs, T, IC, 1, noise, sdeHomo, &V1, param(0), M, IS); //, stdDevs);
         std::shared_ptr<Proposals> proposal;
-        std::vector<double> factors = {1.0, 5.0, 1.0};
-        proposal = std::make_shared<Proposals>(5e-2, factors);
-        MCMC mcmc(sampleTot[sampleTot.size()-1], proposal, posterior, nMCMC/L);
+        std::vector<double> factors = {1.0, 50.0, 1.0};
+        if (l > 0) {
+            factors[1] = priorStdDev(1) / priorStdDev(2);
+            propStdDev = priorStdDev(2);
+            std::cout << "proposal factors: " << factors[1] << " " << propStdDev << std::endl;
+        }
+        proposal = std::make_shared<Proposals>(propStdDev, factors);
+        MCMC mcmc(sample.back(), proposal, posterior, nMCMC/L);
         sample = mcmc.compute(&proposalSeed, &acceptanceSeed);
-        sampleTot.insert(sampleTot.end(), sample.begin(), sample.end());
-    }
 
-    for (auto const &it : sampleTot) {
-        output << it.transpose() << std::endl;
+       for (auto const &it : sample) {
+            output << it.transpose() << std::endl;
+       }
     }
 
     output.close();

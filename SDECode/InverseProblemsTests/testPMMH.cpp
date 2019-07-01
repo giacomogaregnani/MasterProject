@@ -4,6 +4,9 @@
 #include "generateObservations.hpp"
 #include "computeHomogeneous.hpp"
 #include <MCMC.hpp>
+#include "../matplotlib-cpp-master/matplotlibcpp.h"
+
+namespace plt = matplotlibcpp;
 
 // Remark: epsilon = p(0)
 
@@ -46,13 +49,16 @@ int main(int argc, char* argv[])
     sdeHomo.drift = &homoDrift;
     sdeHomo.diffusion = &diffusion;
 
-    double T = 2;
-    unsigned int N = 1000;
+    double T = 30;
+    unsigned int N = 6000;
 
     VectorXd tmpParam(3);
-    tmpParam(0) = 0.05;  // Epsilon
+    tmpParam(0) = 0.1;  // Epsilon
     tmpParam(1) = 1.0;   // True multiscale alpha
     tmpParam(2) = 0.5;   // True multiscale betainv
+
+    // std::ofstream output(DATA_PATH + std::string("MultiMulti.txt"), std::ofstream::out | std::ofstream::trunc);
+    // std::ofstream outputSol(DATA_PATH + std::string("MultiMultiSol.txt"), std::ofstream::out | std::ofstream::trunc);
 
     std::ofstream output(DATA_PATH + std::string("MultiHomo.txt"), std::ofstream::out | std::ofstream::trunc);
     std::ofstream outputSol(DATA_PATH + std::string("MultiHomoSol.txt"), std::ofstream::out | std::ofstream::trunc);
@@ -68,15 +74,15 @@ int main(int argc, char* argv[])
     // ====================================================== //
 
     // Initialize structures for the inverse problem
-    unsigned long M = 100, nMCMC = 5001;
+    unsigned long M = 40, nMCMC = 5001;
     double noise = 1e-3;
-    double IC = 1.0;
+    double IC = 0.0;
     std::random_device dev;
     std::default_random_engine noiseSeed{dev()};
     std::default_random_engine proposalSeed{dev()};
     std::default_random_engine acceptanceSeed{dev()};
     std::normal_distribution<double> noiseDistribution(0.0, noise);
-    bool IS = false;
+    bool IS = true;
 
     // Generate and perturb observations
     auto x = generateObservations1D(sde, IC, param, T, N, 0);
@@ -102,24 +108,35 @@ int main(int argc, char* argv[])
     outputSol << std::endl;
 
     // Compute the modeling error statistics and rescale the observations
-    bool modErr = true;
+    bool doModErr = true;
     std::vector<double> means, stdDevs;
-    if (modErr) {
+    std::vector<double> rescaledObs = x;
+    std::vector<double> timeVec(N+1);
+    for (unsigned int i = 0; i < N+1; i++) {
+        timeVec[i] = T/N * i;
+    }
+    if (doModErr) {
         std::cout << "Computing modeling error..." << std::endl;
         VectorXd priorMean(param.size());
         priorMean << param(0), param(1), param(2);
         VectorXd priorStdDev(param.size());
         priorStdDev << 0.0, 1.0, 1.0;
         ModErr modErr(sdeHomo, sde, &V1, IC, priorMean, priorStdDev, T, N, x, noise);
-        unsigned int nMC = 500;
-        unsigned int nParam = 20;
+        unsigned int nMC = 150;
+        unsigned int nParam = 40;
         modErr.computePF(nParam, nMC);
         modErr.getStats(means, stdDevs);
         std::cout << "Computed modeling error" << std::endl;
-        for (unsigned int i = 1; i < N + 1; i++) {
-            x[i] -= means[i];
+        for (unsigned int i = 0; i < N+1; i++) {
+            rescaledObs[i] = x[i] - means[i];
         }
-        for (auto const &itSol : x) {
+        plt::named_plot("xe", timeVec, x, "b");
+        plt::named_plot("x0", timeVec, xHom, "r");
+        plt::named_plot("xt", timeVec, rescaledObs, "k");
+        plt::legend();
+        plt::show();
+
+        for (auto const &itSol : rescaledObs) {
             outputSol << std::fixed << std::setprecision(10) << itSol << "\t";
         }
         outputSol << std::endl;
@@ -135,8 +152,8 @@ int main(int argc, char* argv[])
 
     // Inverse problem
     std::shared_ptr<Posterior> posterior;
-    // posterior = std::make_shared<PFPosterior>(x, T, IC, 1, noise, sde, param(0), M, IS);
-    posterior = std::make_shared<PFPosteriorHom>(x, T, IC, 1, noise, sdeHomo, &V1, param(0), M, IS, stdDevs);
+    // posterior = std::make_shared<PFPosterior>(rescaledObs, T, IC, 1, noise, sdeHomo, param(0), M, IS); //, stdDevs);
+    posterior = std::make_shared<PFPosteriorHom>(rescaledObs, T, IC, 1, noise, sdeHomo, &V1, param(0), M, IS); //, stdDevs);
     std::shared_ptr<Proposals> proposal;
     std::vector<double> factors = {1.0, 5.0, 1.0};
     proposal = std::make_shared<Proposals>(5e-2, factors);

@@ -12,8 +12,8 @@ hold on
 plot(t, PF(end,:), 'r')
 plot(t, obs, 'k')
 
-l = dlmread('testLik.txt');
 figure
+l = dlmread('testLik.txt');
 hold on
 H = histogram(l, 'normalization', 'pdf');
 hold on
