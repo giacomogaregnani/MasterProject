@@ -222,6 +222,37 @@ Monte Carlo approach
 	\int p(\mathbf y \mid \mathbf x, \theta, \mathbf m) \, p(\mathbf m\mid \mathbf x) \dd \mathbf m \approx \frac{1}{N_m} \sum_{i=1}^{N_m} p(\mathbf y \mid \mathbf x, \theta, \mathbf m^{(i)})
 \end{equation}
 for $\mathbf m^{(i)} \sim p(\,\cdot \mid \mathbf x)$.
+
+\textbf{Approach 2}
+
+Idea of particle filtering: likelihood estimated sequentially from the formula
+\begin{equation}
+p(\mathbf y \mid \theta) = p(y_1 \mid \theta) \, \prod_{k=2}^{N} p(y_k \mid y_{k-1}, \theta). 
+\end{equation}
+Single factors computed as
+\begin{equation}
+\begin{aligned}
+p(y_k \mid y_{1:k-1}, \theta, m_k) &= \int p(y_k, x_k \mid y_{1:k-1}, \theta, m_k) \dd x_k\\
+&= \int p(y_k \mid x_k, m_k, \theta) \, p(x_k \mid y_{1:k-1},m_k) \dd x_k \\
+&= \int p(y_k \mid x_k, m_k, \theta) \, p(x_k \mid y_{1:k-1}) \dd x_k
+\end{aligned}
+\end{equation}
+Marginalize
+\begin{equation}
+\begin{aligned}
+p(y_k \mid y_{1:k-1}, \theta) &= \int p(y_k, m_k \mid y_{1:k-1}, \theta) \dd m_k \\
+&= \int p(y_k \mid m_k, y_{1:k-1}, \theta) \, p(m_k \mid y_{1:k-1}) \dd m_k \\
+&= \int \left(\int p(y_k \mid x_k, m_k, \theta) \, p(x_k \mid y_{1:k-1}) \dd x_k \right) p(m_k \mid y_{1:k-1}) \dd m_k.
+\end{aligned}
+\end{equation}
+Particle filter approximation
+\begin{equation}
+\begin{aligned}
+\widehat p(y_k \mid y_{1:k-1}, \theta) = \frac{1}{N_x N_m} \sum_{i=1}^{N_m} \sum_{j=1}^{N_x} p(y_k \mid x_k^{(j)}, m_k^{(i)}, \theta),
+\end{aligned}
+\end{equation}
+where $x_k^{(j)} \iid p(x_k \mid y_{1:k-1})$ and $m_k^{(i)} \iid p(m_k \mid y_{1:k-1})$.
+
 \section{Numerical discretization}
 
 \begin{itemize}[label=-]
