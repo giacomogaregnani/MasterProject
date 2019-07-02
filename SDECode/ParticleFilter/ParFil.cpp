@@ -98,7 +98,7 @@ void ParFil::compute(VectorXd& theta)
 }
 
 double ParFil::importanceSampler(double h, double hObs, double x, VectorXd &theta,
-                                 unsigned long obsIdx, unsigned long j, double trueNoise)
+                                 unsigned long obsIdx, unsigned long j, double trueNoise, double correction)
 {
     // Notation refers to Golightly, Wilkinson (2011) appendix A.3
     double alphaj = sde.drift(x, theta),
@@ -112,7 +112,7 @@ double ParFil::importanceSampler(double h, double hObs, double x, VectorXd &thet
     betaj *= betaj;
 
     double denom = betaj * deltaj + trueNoise * trueNoise;
-    double aj = alphaj + betaj * (obs[obsIdx] - (x + alphaj * deltaj)) / denom;
+    double aj = alphaj + betaj * (obs[obsIdx] - correction - (x + alphaj * deltaj)) / denom;
     double bj = betaj - h * betaj * betaj / denom;
 
     ISmean = x + aj * h;
@@ -124,7 +124,7 @@ double ParFil::importanceSampler(double h, double hObs, double x, VectorXd &thet
 
 void ParFil::computeDiffBridge(VectorXd& theta, std::vector<std::vector<double>>* mod)
 {
-    bool allModErrFalse = mod->empty();
+    bool allModErrFalse = (mod == nullptr);
     bool staticNoise = timeNoise.empty();
 
     // The first parameter is the multiscale epsilon
@@ -162,7 +162,8 @@ void ParFil::computeDiffBridge(VectorXd& theta, std::vector<std::vector<double>>
                     if (allModErrFalse) {
                         temp = importanceSampler(h, hObs, X[k][index + i], theta, obsIdx, i);
                     } else {
-                        temp = importanceSampler(h, hObs, X[k][index + i], theta, obsIdx, i);
+                        // The IS density is centered in the mean of the errors in case there is a moderr estimation
+                        temp = importanceSampler(h, hObs, X[k][index + i], theta, obsIdx, i, 0, (*mod)[mod->size()-1][index+1]);
                     }
                 } else {
                     double trueStdDev = std::sqrt(noise * noise + timeNoise[obsIdx] * timeNoise[obsIdx]);
@@ -184,15 +185,8 @@ void ParFil::computeDiffBridge(VectorXd& theta, std::vector<std::vector<double>>
                 obsDens = gaussianDensity(X[k][index + samplingRatio], obs[obsIdx], trueStdDev);
             } else if (staticNoise & !allModErrFalse) {
                 obsDens = 0.0;
-                for (unsigned long idxmod = 0; idxmod < mod->size(); idxmod++) {
+                for (unsigned long idxmod = 0; idxmod < mod->size()-1; idxmod++) {
                     obsDens += gaussianDensity(X[k][index + samplingRatio], obs[obsIdx] - (*mod)[idxmod][obsIdx], noise);
-                }
-                obsDens /= mod->size();
-            } else { // This case does not make any sense
-                double trueStdDev = std::sqrt(noise * noise + timeNoise[obsIdx] * timeNoise[obsIdx]);
-                obsDens = 0.0;
-                for (unsigned long idxmod = 0; idxmod < mod->size(); idxmod++) {
-                    obsDens += gaussianDensity(X[k][index + samplingRatio], obs[obsIdx] - (*mod)[idxmod][obsIdx], trueStdDev);
                 }
                 obsDens /= mod->size();
             }

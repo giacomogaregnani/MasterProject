@@ -45,8 +45,8 @@ int main(int argc, char* argv[])
     oneDimSde sde{&multiDrift, &diffusion};
     oneDimSde sdeHomo{&homoDrift, &diffusion};
 
-    double T = 10;
-    unsigned int N = 1000;
+    double T = 1;
+    unsigned int N = 200;
 
     VectorXd tmpParam(3);
     tmpParam(0) = 0.1;  // Epsilon
@@ -111,7 +111,7 @@ int main(int argc, char* argv[])
     VectorXd priorStdDev(param.size());
     priorStdDev << 0.0, 1.0, 1.0;
     unsigned int nMC = 100;
-    unsigned int nParam = 40;
+    unsigned int nParam = 5;
     double propStdDev = 2e-2;
 
     std::vector<double> timeVec(N+1);
@@ -163,7 +163,7 @@ int main(int argc, char* argv[])
         std::vector<double> dummy = {};
         std::shared_ptr<Posterior> posterior;
         // posterior = std::make_shared<PFPosterior>(x, T, IC, 1, noise, sdeHomo, param(0), M, IS); //, stdDevs);
-        posterior = std::make_shared<PFPosteriorHom>(x, T, IC, 1, noise, sdeHomo, &V1, param(0), M, IS); //, dummy, errors); //, stdDevs);
+        posterior = std::make_shared<PFPosteriorHom>(x, T, IC, 1, noise, sdeHomo, &V1, param(0), M, IS, dummy, &errors); //, stdDevs);
         std::shared_ptr<Proposals> proposal;
         std::vector<double> factors = {1.0, 50.0, 1.0};
         if (l > 0) {

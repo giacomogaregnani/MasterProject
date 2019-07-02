@@ -40,7 +40,7 @@ public:
            std::vector<double> timeNoise = {});
     void compute(VectorXd& theta);
     double importanceSampler(double h, double hObs, double x, VectorXd &theta,
-                             unsigned long obsIdx, unsigned long j, double trueNoise = 0);
+                             unsigned long obsIdx, unsigned long j, double trueNoise = 0, double correction = 0);
     void computeDiffBridge(VectorXd& theta, std::vector<std::vector<double>>* mod = nullptr); // TODO: find a way to pass by reference
     double getLikelihood() const;
     std::vector<double> sampleX();

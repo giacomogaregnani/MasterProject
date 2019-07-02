@@ -6,7 +6,7 @@ PFPosteriorHom::PFPosteriorHom(std::vector<double>& x, double T, double IC,
                                double (*V1) (double),
                                double eps, unsigned long M, bool IS,
                                std::vector<double> timeNoise,
-                               std::vector<std::vector<double>> errors):
+                               std::vector<std::vector<double>>* errors):
         IS(IS),
         V1(V1),
         eps(eps),
@@ -57,7 +57,7 @@ double PFPosteriorHom::computePosterior(VectorXd& theta)
     thetaHom(2) = tmp(1);
 
     if (IS) {
-        ParticleFilter->computeDiffBridge(thetaHom, &errors);
+        ParticleFilter->computeDiffBridge(thetaHom, errors);
     } else {
         ParticleFilter->compute(thetaHom);
     }
