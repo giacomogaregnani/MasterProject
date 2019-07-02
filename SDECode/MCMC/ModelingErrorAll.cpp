@@ -55,7 +55,7 @@ VectorXd ModErrAll::computeHomogeneous(VectorXd param, double L, double (*V1) (d
 void ModErrAll::computePF(unsigned int nParam, unsigned int nMC)
 {
     errors.resize(nParam*nMC);
-    for (unsigned int i = 0; i < nParam*nMC; i++) {
+    for (unsigned int i = 0; i < errors.size(); i++) {
         errors[i].resize(N + 1);
         for (unsigned int j = 0; j < N + 1; j++) {
             errors[i][j] = 0.0;
@@ -119,6 +119,12 @@ void ModErrAll::computePF(unsigned int nParam, unsigned int nMC)
             }
         }
     }
+
+    /* for (unsigned int i = 0; i < nMC*nParam; i++) {
+        for (unsigned int j = 0; j < N+1; j++) {
+            errors[nMC*nParam][j] += errors[i][j] / (nMC * nParam);
+        }
+    } */
 }
 
 void ModErrAll::getStats(std::vector<std::vector<double>>& getMean)
