@@ -9,12 +9,12 @@ sol = dlmread('MultiHomoSol.txt');
 % sol = dlmread('MultiHomoModSol.txt');
 
 %%
-T = 100;
+T = 50;
 
 nChains = 1;
 hom = x(1, :);
-% trueVals = [1, 0.5];
-trueVals = [0.19, 0.09];
+trueVals = [1, 0.5];
+% trueVals = [0.19, 0.09];
 
 sampleTot = x(2:end, 2:end);
 sampleSize = size(sampleTot, 1) / nChains;

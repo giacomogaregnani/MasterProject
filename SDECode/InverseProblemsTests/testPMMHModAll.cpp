@@ -45,8 +45,8 @@ int main(int argc, char* argv[])
     oneDimSde sde{&multiDrift, &diffusion};
     oneDimSde sdeHomo{&homoDrift, &diffusion};
 
-    double T = 1;
-    unsigned int N = 200;
+    double T = 10;
+    unsigned int N = 1000;
 
     VectorXd tmpParam(3);
     tmpParam(0) = 0.1;  // Epsilon
@@ -67,8 +67,8 @@ int main(int argc, char* argv[])
     // ====================================================== //
 
     // Initialize structures for the inverse problem
-    unsigned long M = 50, nMCMC = 10001;
-    double noise = 1e-3;
+    unsigned long M = 100, nMCMC = 10001;
+    double noise = 1e-2;
     double IC = 0.0;
     std::random_device dev;
     std::default_random_engine noiseSeed{dev()};
@@ -101,17 +101,15 @@ int main(int argc, char* argv[])
     outputSol << std::endl;
 
     // Initial parameter guess
-    VectorXd initGuess = VectorXd::Zero(param.size());
-    initGuess(0) = param(0);
+    VectorXd priorMean(param.size());
+    priorMean << param(0), param(1), param(2);
+    VectorXd initGuess = priorMean;
     std::vector<VectorXd> sample = {};
     sample.push_back(initGuess);
-    std::vector<double> rescaledObs(N+1);
-    VectorXd priorMean(param.size());
-    priorMean << param(0), 0.0, 0.0;
     VectorXd priorStdDev(param.size());
-    priorStdDev << 0.0, 1.0, 1.0;
-    unsigned int nMC = 100;
-    unsigned int nParam = 5;
+    priorStdDev << 0.0, .01, .01;
+    unsigned int nMC = 2000;
+    unsigned int nParam = 10;
     double propStdDev = 2e-2;
 
     std::vector<double> timeVec(N+1);
@@ -136,7 +134,6 @@ int main(int argc, char* argv[])
             }
             priorStdDev = priorStdDev.array().sqrt();
         }
-
         ModErrAll modErr(sdeHomo, sde, &V1, IC, priorMean, priorStdDev, T, N, x, noise);
         modErr.computePF(nParam, nMC);
         modErr.getStats(errors);
@@ -144,8 +141,8 @@ int main(int argc, char* argv[])
 
         plt::named_plot("xe", timeVec, x, "b");
         plt::named_plot("x0", timeVec, xHom, "r");
-        for (unsigned int i = 0; i < errors.size(); i+=nMC) {
-            std::vector<double> rescaledObs(N+1);
+        std::vector<double> rescaledObs(N+1);
+        for (unsigned int i = 0; i < errors.size()-1; i++) {
             for (unsigned int j = 0; j < N+1; j++) {
                 rescaledObs[j] = x[j] - errors[i][j];
             }
@@ -155,6 +152,10 @@ int main(int argc, char* argv[])
                 plt::plot(timeVec, rescaledObs, "k");
             }
         }
+        for (unsigned int j = 0; j < N+1; j++) {
+            rescaledObs[j] = x[j] - errors.back()[j];
+        }
+        plt::named_plot("xtm", timeVec, rescaledObs, "g");
         plt::legend();
         plt::show();
         std::cout << priorMean.transpose() << std::endl << priorStdDev.transpose() << std::endl;

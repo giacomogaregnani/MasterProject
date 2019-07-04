@@ -45,8 +45,8 @@ int main(int argc, char* argv[])
     oneDimSde sde{&multiDrift, &diffusion};
     oneDimSde sdeHomo{&homoDrift, &diffusion};
 
-    double T = 100;
-    unsigned int N = 20000;
+    double T = 50;
+    unsigned int N = 5000;
 
     VectorXd tmpParam(3);
     tmpParam(0) = 0.1;  // Epsilon
@@ -67,8 +67,8 @@ int main(int argc, char* argv[])
     // ====================================================== //
 
     // Initialize structures for the inverse problem
-    unsigned long M = 50, nMCMC = 10001;
-    double noise = 1e-3;
+    unsigned long M = 20, nMCMC = 10001;
+    double noise = 1e-4;
     double IC = 0.0;
     std::random_device dev;
     std::default_random_engine noiseSeed{dev()};
@@ -110,7 +110,7 @@ int main(int argc, char* argv[])
     priorMean << param(0), 0.0, 0.0;
     VectorXd priorStdDev(param.size());
     priorStdDev << 0.0, 1.0, 1.0;
-    unsigned int nMC = 100;
+    unsigned int nMC = 300;
     unsigned int nParam = 40;
     double propStdDev = 2e-2;
 
@@ -149,13 +149,13 @@ int main(int argc, char* argv[])
             confIntp[i] = rescaledObs[i] + 2.0 * stdDevs[i];
             confIntm[i] = rescaledObs[i] - 2.0 * stdDevs[i];
         }
-        /* plt::named_plot("xe", timeVec, x, "b");
+        plt::named_plot("xe", timeVec, x, "b");
         plt::named_plot("x0", timeVec, xHom, "r");
         plt::named_plot("xt", timeVec, rescaledObs, "k");
         plt::named_plot("CI", timeVec, confIntp, "k--");
         plt::plot(timeVec, confIntm, "k--");
         plt::legend();
-        plt::show(); */
+        plt::show();
         std::cout << priorMean.transpose() << std::endl << priorStdDev.transpose() << std::endl;
 
         // Inverse problem

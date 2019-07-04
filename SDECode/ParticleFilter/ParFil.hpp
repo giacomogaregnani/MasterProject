@@ -38,7 +38,7 @@ public:
     ParFil(std::vector<double> &y, double T, double IC, unsigned int sR,
            double noise, oneDimSde &sde, double eps, unsigned long nParticles,
            std::vector<double> timeNoise = {});
-    void compute(VectorXd& theta);
+    void compute(VectorXd& theta, std::vector<std::vector<double>>* mod = nullptr);
     double importanceSampler(double h, double hObs, double x, VectorXd &theta,
                              unsigned long obsIdx, unsigned long j, double trueNoise = 0, double correction = 0);
     void computeDiffBridge(VectorXd& theta, std::vector<std::vector<double>>* mod = nullptr); // TODO: find a way to pass by reference
