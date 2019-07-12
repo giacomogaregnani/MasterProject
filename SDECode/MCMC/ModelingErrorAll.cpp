@@ -54,7 +54,7 @@ VectorXd ModErrAll::computeHomogeneous(VectorXd param, double L, double (*V1) (d
 
 void ModErrAll::computePF(unsigned int nParam, unsigned int nMC)
 {
-    errors.resize(nParam+1);
+    errors.resize(nMC*nParam+1);
     for (unsigned int i = 0; i < errors.size(); i++) {
         errors[i].resize(N + 1);
         for (unsigned int j = 0; j < N + 1; j++) {
@@ -115,19 +115,20 @@ void ModErrAll::computePF(unsigned int nParam, unsigned int nMC)
                 ancestor = treePF[j][k];
                 solCoarse[j][k] = solCoarseOld[ancestor];
                 solCoarse[j][k + 1] = solverCoarse.oneStepGivenNoise(h, solCoarse[j][k], BM);
-                errors[i][k + 1] += (solFine[j][k+1] - solCoarse[j][k+1]) / nMC;
+                // errors[i][k + 1] += (solFine[j][k+1] - solCoarse[j][k+1]) / nMC;
+                errors[i*nMC+j][k + 1] += (solFine[j][k+1] - solCoarse[j][k+1]);
             }
         }
     }
 
     for (unsigned int i = 0; i < errors.size()-1; i++) {
         for (unsigned int j = 0; j < N+1; j++) {
-            errors[errors.size()-1][j] += errors[i][j] / (errors.size()-1);
+            errors.back()[j] += errors[i][j] / (errors.size()-1);
         }
     }
 }
 
-void ModErrAll::getStats(std::vector<std::vector<double>>& getMean)
+void ModErrAll::getStats(std::vector<std::vector<double>>& getData)
 {
-    getMean = errors;
+    getData = errors;
 }

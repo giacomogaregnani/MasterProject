@@ -200,7 +200,18 @@ In this section we consider problem \eqref{eq:IP_HOM}.
 	Set $\widehat{\mathbf m} = \frac{1}{N_p} \sum_{i=1}^{N_p} \frac{1}{N_x} \sum_{j=1}^{N_x} \widehat{\mathbf m}^{(i,j)}$ \;
 \end{algorithm}
 
-Explain approach for both \eqref{eq:IP_MS} and \eqref{eq:IP_HOM}.
+Model 
+\begin{equation}
+\begin{aligned}
+	\mathbf y &= \mathbf x^\epl + \eta \\
+	&= \mathbf x^0 + \mathbf m^\epl + \eta,
+\end{aligned}
+\end{equation}
+where $\mathbf m^\epl = \mathbf x^\epl - \mathbf x^0$. Preliminary result.
+\begin{lemma} The modelling error $\mathbf m^\epl$ satisfies $\mathbf m^\epl \to 0$ in probability for $\epl \to 0$.
+\end{lemma}
+\begin{proof} Since $x^\epl \to x^0$ in law in $\mathcal C^0((0, T), \R^d)$ for $\epl \to 0$, then $m^\epl \to 0$ in law and therefore in probability. Hence, $\mathbf m^\epl \to 0$ in probability.
+\end{proof}
 Assume $\mathbf m$ independent of $\theta$
 \begin{equation}
 \begin{aligned}
@@ -217,24 +228,17 @@ Then marginalize
 	&= \int p(\mathbf x \mid \theta) \left(\int p(\mathbf y \mid \mathbf x, \theta, \mathbf m) \, p(\mathbf m\mid \mathbf x) \dd \mathbf m \right) \dd \mathbf x.
 \end{aligned}
 \end{equation}
-Monte Carlo approach
-\begin{equation}
-	\int p(\mathbf y \mid \mathbf x, \theta, \mathbf m) \, p(\mathbf m\mid \mathbf x) \dd \mathbf m \approx \frac{1}{N_m} \sum_{i=1}^{N_m} p(\mathbf y \mid \mathbf x, \theta, \mathbf m^{(i)})
-\end{equation}
-for $\mathbf m^{(i)} \sim p(\,\cdot \mid \mathbf x)$.
 
-\textbf{Approach 2}
-
-Idea of particle filtering: likelihood estimated sequentially from the formula
+Sequential estimation. Idea of particle filtering: likelihood estimated sequentially from the formula
 \begin{equation}
-p(\mathbf y \mid \theta) = p(y_1 \mid \theta) \, \prod_{k=2}^{N} p(y_k \mid y_{k-1}, \theta). 
+p(\mathbf y \mid \theta) = p(y_1 \mid \theta) \, \prod_{k=2}^{N} p(y_k \mid y_{1:k-1}, \theta). 
 \end{equation}
 Single factors computed as
 \begin{equation}
 \begin{aligned}
 p(y_k \mid y_{1:k-1}, \theta, m_k) &= \int p(y_k, x_k \mid y_{1:k-1}, \theta, m_k) \dd x_k\\
-&= \int p(y_k \mid x_k, m_k, \theta) \, p(x_k \mid y_{1:k-1},m_k) \dd x_k \\
-&= \int p(y_k \mid x_k, m_k, \theta) \, p(x_k \mid y_{1:k-1}) \dd x_k
+&= \int p(y_k \mid x_k, m_k, \theta) \, p(x_k \mid y_{1:k-1}, m_k, \theta) \dd x_k \\
+&= \int p(y_k \mid x_k, m_k, \theta) \, p(x_k \mid y_{1:k-1}, m_k, \theta) \dd x_k
 \end{aligned}
 \end{equation}
 Marginalize

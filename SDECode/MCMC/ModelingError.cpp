@@ -175,7 +175,6 @@ void ModErr::computePF(unsigned int nParam, unsigned int nMC)
         paramHom(2) = tmp(1);
         solverCoarse.modifyParam(paramHom);
         parFil.compute(param);
-        auto W = parFil.getW();
         auto BMVec = parFil.getBM();
         auto solFine = parFil.getX();
         auto treePF = parFil.getTree();
@@ -223,7 +222,6 @@ void ModErr::computePF(unsigned int nParam, unsigned int nMC)
             plt::plot(timeVec, solCoarse[j]);
         }
         plt::show(); */
-
     }
 
     // Compute modeling error statistics

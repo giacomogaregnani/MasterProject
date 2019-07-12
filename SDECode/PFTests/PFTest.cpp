@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
     std::ofstream outputLik(DATA_PATH + std::string("testLik.txt"), std::ofstream::out | std::ofstream::trunc);
 
     unsigned long M = 50;
-    double noise = 1e-1;
+    double noise = 1e-2;
     double IC = 1.0;
     std::default_random_engine noiseSeed{2018};
     std::normal_distribution<double> noiseDistribution(0.0, noise);
@@ -70,8 +70,8 @@ int main(int argc, char* argv[])
     PF = std::make_shared<ParFil>(x, T, IC, 1, noise, sdeHomo, param(0), M);
     std::vector<std::vector<double>> X;
 
-    for (unsigned int i = 0; i < 100; i++) {
-        PF->computeDiffBridge(param);
+    for (unsigned int i = 0; i < 1000; i++) {
+        PF->compute(param);
         outputLik << PF->getLikelihood() << std::endl;
         if ((i+1) % 100 == 0) {
             std::cout << "iteration " << i+1 << std::endl;

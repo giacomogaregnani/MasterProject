@@ -22,12 +22,13 @@ ParFil::ParFil(std::vector<double>& y, double T, double IC, unsigned int sR,
     X.resize(nParticles);
     for (unsigned int i = 0; i < nParticles; i++)
         X[i].resize(obs.size());
+    XOld.resize(nParticles);
     W.resize(nParticles);
     likelihood = 0.0;
 }
 
 
-double gaussianDensity(double x, double mu, double sigma)
+double gaussianDensity(double& x, double& mu, double& sigma)
 {
     return 1.0 / (std::sqrt(2.0 * M_PI) * sigma) * std::exp(-0.5 * (x  - mu) * (x - mu) / (sigma * sigma));
 }
@@ -50,7 +51,6 @@ void ParFil::compute(VectorXd& theta, std::vector<std::vector<double>>* mod)
     // The first parameter is the multiscale epsilon
     theta(0) = eps;
 
-    // Initialize
     for (unsigned int k = 0; k < nParticles; k++) {
         X[k][0] = IC;
         W[k] = 1.0 / nParticles;
@@ -63,30 +63,35 @@ void ParFil::compute(VectorXd& theta, std::vector<std::vector<double>>* mod)
     Solver->modifyParam(theta);
 
     for (unsigned long j = 0; j < nObs; j++) {
-        // Sample the particles
         shuffler = std::discrete_distribution<unsigned int>(W.begin(), W.end());
         obsIdx = (j + 1) * samplingRatio;
+
+        // TODO: The BM could be shuffled so that the tree is unneeded and less problems are caused in the ModErr class
+        for (unsigned long k = 0; k < nParticles; k++) {
+            XOld[k] = X[k][index];
+        }
 
         for (unsigned long k = 0; k < nParticles; k++) {
             auto shuffleIdx = shuffler(seed);
             tree[k][index] = shuffleIdx;
-            X[k][index] = X[shuffleIdx][index];
+            X[k][index] = XOld[shuffleIdx];
         }
 
-        // Innovate and compute the weights
         wSum = 0.0;
         for (unsigned long k = 0; k < nParticles; k++) {
             for (unsigned long i = 0; i < samplingRatio; i++) {
                 BM[k][index+i] = std::sqrt(h) * gaussian(seed);
-                X[k][index+1+i] = Solver->oneStepGivenNoise(h, X[k][index+i], BM[k][index+i]);
+                X[k][index+i+1] = Solver->oneStepGivenNoise(h, X[k][index+i], BM[k][index+i]);
             }
             if (staticNoise) {
                 if (allModErrFalse) {
                     W[k] = gaussianDensity(X[k][index + samplingRatio], obs[obsIdx], noise);
                 } else {
                     W[k] = 0.0;
+                    double temp;
                     for (unsigned long idxmod = 0; idxmod < mod->size()-1; idxmod++) {
-                        W[k] += gaussianDensity(X[k][index + samplingRatio], obs[obsIdx] - (*mod)[idxmod][obsIdx], noise);
+                        temp = obs[obsIdx] - (*mod)[idxmod][obsIdx];
+                        W[k] += gaussianDensity(X[k][index + samplingRatio], temp, noise);
                     }
                     W[k] /= mod->size();
                 }
@@ -98,7 +103,6 @@ void ParFil::compute(VectorXd& theta, std::vector<std::vector<double>>* mod)
         }
         index = index + samplingRatio;
 
-        // Normalize and update likelihood
         std::transform(W.begin(), W.end(), W.begin(), [wSum](double& c){return c/wSum;});
         likelihood += std::log(wSum / nParticles);
     }
@@ -157,7 +161,10 @@ void ParFil::computeDiffBridge(VectorXd& theta, std::vector<std::vector<double>>
         obsIdx = (j + 1) * samplingRatio;
 
         for (unsigned long k = 0; k < nParticles; k++)
-            X[k][index] = X[shuffler(seed)][index];
+            XOld[k] = X[k][index];
+
+        for (unsigned long k = 0; k < nParticles; k++)
+            X[k][index] = XOld[shuffler(seed)];
 
         wSum = 0.0;
         for (unsigned long k = 0; k < nParticles; k++) {
@@ -170,7 +177,7 @@ void ParFil::computeDiffBridge(VectorXd& theta, std::vector<std::vector<double>>
                         temp = importanceSampler(h, hObs, X[k][index + i], theta, obsIdx, i);
                     } else {
                         // The IS density is centered in the mean of the errors in case there is a moderr estimation
-                        temp = importanceSampler(h, hObs, X[k][index + i], theta, obsIdx, i, noise, mod->back()[obsIdx]);
+                        temp = importanceSampler(h, hObs, X[k][index + i], theta, obsIdx, i, 0, mod->back()[obsIdx]);
                     }
                 } else {
                     double trueStdDev = std::sqrt(noise * noise + timeNoise[obsIdx] * timeNoise[obsIdx]);
@@ -191,8 +198,10 @@ void ParFil::computeDiffBridge(VectorXd& theta, std::vector<std::vector<double>>
                     obsDens = gaussianDensity(X[k][index + samplingRatio], obs[obsIdx], noise);
                 } else {
                     obsDens = 0.0;
+                    double diff;
                     for (unsigned long idxmod = 0; idxmod < mod->size()-1; idxmod++) {
-                        obsDens += gaussianDensity(X[k][index + samplingRatio], obs[obsIdx] - (*mod)[idxmod][obsIdx], noise);
+                        diff = obs[obsIdx] - (*mod)[idxmod][obsIdx];
+                        obsDens += gaussianDensity(X[k][index + samplingRatio], diff, noise);
                     }
                     obsDens /= mod->size();
                 }

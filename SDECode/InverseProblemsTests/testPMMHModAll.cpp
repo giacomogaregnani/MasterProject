@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
     unsigned int N = 1000;
 
     VectorXd tmpParam(3);
-    tmpParam(0) = 0.1;  // Epsilon
+    tmpParam(0) = 0.2;  // Epsilon
     tmpParam(1) = 1.0;   // True multiscale alpha
     tmpParam(2) = 0.5;   // True multiscale betainv
 
@@ -67,9 +67,9 @@ int main(int argc, char* argv[])
     // ====================================================== //
 
     // Initialize structures for the inverse problem
-    unsigned long M = 100, nMCMC = 10001;
-    double noise = 1e-2;
-    double IC = 0.0;
+    unsigned long M = 20, nMCMC = 10001;
+    double noise = 1e-3;
+    double IC = 5.0;
     std::random_device dev;
     std::default_random_engine noiseSeed{dev()};
     std::default_random_engine proposalSeed{dev()};
@@ -102,13 +102,13 @@ int main(int argc, char* argv[])
 
     // Initial parameter guess
     VectorXd priorMean(param.size());
-    priorMean << param(0), param(1), param(2);
+    priorMean << param(0), 0.0, 0.0;
     VectorXd initGuess = priorMean;
     std::vector<VectorXd> sample = {};
     sample.push_back(initGuess);
     VectorXd priorStdDev(param.size());
-    priorStdDev << 0.0, .01, .01;
-    unsigned int nMC = 2000;
+    priorStdDev << 0.0, 1.0, 1.0;
+    unsigned int nMC = 40;
     unsigned int nParam = 10;
     double propStdDev = 2e-2;
 
@@ -142,7 +142,7 @@ int main(int argc, char* argv[])
         plt::named_plot("xe", timeVec, x, "b");
         plt::named_plot("x0", timeVec, xHom, "r");
         std::vector<double> rescaledObs(N+1);
-        for (unsigned int i = 0; i < errors.size()-1; i++) {
+        for (unsigned int i = 0; i < errors.size()-1; i += 10) {
             for (unsigned int j = 0; j < N+1; j++) {
                 rescaledObs[j] = x[j] - errors[i][j];
             }
@@ -164,7 +164,12 @@ int main(int argc, char* argv[])
         std::vector<double> dummy = {};
         std::shared_ptr<Posterior> posterior;
         // posterior = std::make_shared<PFPosterior>(x, T, IC, 1, noise, sdeHomo, param(0), M, IS); //, stdDevs);
-        posterior = std::make_shared<PFPosteriorHom>(x, T, IC, 1, noise, sdeHomo, &V1, param(0), M, IS, dummy, &errors); //, stdDevs);
+        if (l < 6) {
+            posterior = std::make_shared<PFPosteriorHom>(rescaledObs, T, IC, 1, noise, sdeHomo, &V1, param(0), M, IS);
+        } else {
+            posterior = std::make_shared<PFPosteriorHom>(x, T, IC, 1, noise, sdeHomo, &V1, param(0), M, IS, dummy,
+                                                         &errors);
+        }
         std::shared_ptr<Proposals> proposal;
         std::vector<double> factors = {1.0, 50.0, 1.0};
         if (l > 0) {

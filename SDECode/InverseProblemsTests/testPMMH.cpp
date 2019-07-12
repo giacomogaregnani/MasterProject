@@ -49,8 +49,8 @@ int main(int argc, char* argv[])
     sdeHomo.drift = &homoDrift;
     sdeHomo.diffusion = &diffusion;
 
-    double T = 30;
-    unsigned int N = 6000;
+    double T = 10;
+    unsigned int N = 1000;
 
     VectorXd tmpParam(3);
     tmpParam(0) = 0.1;  // Epsilon
@@ -74,9 +74,9 @@ int main(int argc, char* argv[])
     // ====================================================== //
 
     // Initialize structures for the inverse problem
-    unsigned long M = 40, nMCMC = 5001;
-    double noise = 1e-3;
-    double IC = 0.0;
+    unsigned long M = 40, nMCMC = 1001;
+    double noise = 1e-4;
+    double IC = 5.0;
     std::random_device dev;
     std::default_random_engine noiseSeed{dev()};
     std::default_random_engine proposalSeed{dev()};
@@ -108,7 +108,7 @@ int main(int argc, char* argv[])
     outputSol << std::endl;
 
     // Compute the modeling error statistics and rescale the observations
-    bool doModErr = true;
+    bool doModErr = false;
     std::vector<double> means, stdDevs;
     std::vector<double> rescaledObs = x;
     std::vector<double> timeVec(N+1);
@@ -152,10 +152,10 @@ int main(int argc, char* argv[])
 
     // Inverse problem
     std::shared_ptr<Posterior> posterior;
-    // posterior = std::make_shared<PFPosterior>(rescaledObs, T, IC, 1, noise, sdeHomo, param(0), M, IS); //, stdDevs);
-    posterior = std::make_shared<PFPosteriorHom>(rescaledObs, T, IC, 1, noise, sdeHomo, &V1, param(0), M, IS); //, stdDevs);
+    posterior = std::make_shared<PFPosterior>(rescaledObs, T, IC, 1, noise, sde, param(0), M, IS); //, stdDevs);
+    // posterior = std::make_shared<PFPosteriorHom>(rescaledObs, T, IC, 1, noise, sdeHomo, &V1, param(0), M, IS); //, stdDevs);
     std::shared_ptr<Proposals> proposal;
-    std::vector<double> factors = {1.0, 5.0, 1.0};
+    std::vector<double> factors = {1.0, 2.0, 1.0};
     proposal = std::make_shared<Proposals>(5e-2, factors);
     MCMC mcmc(initGuess, proposal, posterior, nMCMC);
     auto sample = mcmc.compute(&proposalSeed, &acceptanceSeed);

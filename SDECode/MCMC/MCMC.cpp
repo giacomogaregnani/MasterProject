@@ -62,7 +62,7 @@ std::vector<VectorXd>& MCMC::compute(std::default_random_engine* proposalSeed,
         }
         currEst += samples[i+1];
 
-        if (i % 100 == 0 && verbose) {
+        if (i % 10 == 0 && verbose) {
             std::cout << "Completed " << i << " iterations out of " << nMCMC << std::endl
                       << "Accepted (log)posterior = " << oldPosterior << std::endl
                       << "Current acc. ratio = " << 1.0 / (i + 1) * accRatio << std::endl

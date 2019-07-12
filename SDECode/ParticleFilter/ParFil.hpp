@@ -19,6 +19,7 @@ private:
     std::vector<double> obs;
     double noise;
     std::vector<std::vector<double>> X;
+    std::vector<double> XOld;
     unsigned long nParticles;
     double eps;
     std::vector<double> W;

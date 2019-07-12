@@ -45,8 +45,8 @@ int main(int argc, char* argv[])
     oneDimSde sde{&multiDrift, &diffusion};
     oneDimSde sdeHomo{&homoDrift, &diffusion};
 
-    double T = 50;
-    unsigned int N = 5000;
+    double T = 10;
+    unsigned int N = 1000;
 
     VectorXd tmpParam(3);
     tmpParam(0) = 0.1;  // Epsilon
@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
     // Initialize structures for the inverse problem
     unsigned long M = 20, nMCMC = 10001;
     double noise = 1e-4;
-    double IC = 0.0;
+    double IC = 5.0;
     std::random_device dev;
     std::default_random_engine noiseSeed{dev()};
     std::default_random_engine proposalSeed{dev()};
@@ -110,8 +110,8 @@ int main(int argc, char* argv[])
     priorMean << param(0), 0.0, 0.0;
     VectorXd priorStdDev(param.size());
     priorStdDev << 0.0, 1.0, 1.0;
-    unsigned int nMC = 300;
-    unsigned int nParam = 40;
+    unsigned int nMC = 400;
+    unsigned int nParam = 20;
     double propStdDev = 2e-2;
 
     std::vector<double> timeVec(N+1);

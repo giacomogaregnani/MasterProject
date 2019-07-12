@@ -35,13 +35,13 @@ plot(t, sol(:, 1:end-1));
 % sampleTot = exp(sampleTot);
 % trueVals = exp(trueVals);
 
-aVals = linspace(min(sampleTot(:, 1))-0.5, max(sampleTot(:, 1))+0.5, 100);
-sVals = linspace(min(sampleTot(:, 2))-0.2, max(sampleTot(:, 2))+0.2, 100);
-[aa, ss] = meshgrid(aVals, sVals);
-
-idx = 1:size(sampleTot, 1);
+idx = floor(0.5 * size(sampleTot, 1)):size(sampleTot, 1);
 bwa = 2 * (4 * std(sampleTot(idx, 1))^5 / (3 * size(sampleTot, 1)))^(1/5);
 bws = 2 * (4 * std(sampleTot(idx, 2))^5 / (3 * size(sampleTot, 1)))^(1/5);
+
+aVals = linspace(min(sampleTot(idx, 1))-0.5, max(sampleTot(idx, 1))+0.5, 200);
+sVals = linspace(min(sampleTot(idx, 2))-0.2, max(sampleTot(idx, 2))+0.2, 200);
+[aa, ss] = meshgrid(aVals, sVals);
 
 F = mvksdensity(sampleTot(idx, :), [aa(:), ss(:)], 'bandwidth', [bwa, bws]);
 

@@ -26,7 +26,7 @@ public:
            VectorXd &priorStdDev, double T,
            unsigned int N, std::vector<double> &observations, double noise);
     void computePF(unsigned int nParam, unsigned int nMC);
-    void getStats(std::vector<std::vector<double>>& getMean);
+    void getStats(std::vector<std::vector<double>>& getData);
     VectorXd computeHomogeneous(VectorXd p, double L, double (*V1) (double));
 };
 
