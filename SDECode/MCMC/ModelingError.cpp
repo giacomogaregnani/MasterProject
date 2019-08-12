@@ -157,16 +157,18 @@ void ModErr::computePF(unsigned int nParam, unsigned int nMC)
 
     std::normal_distribution<double> gaussian(0.0, 1.0);
 
-    EM1D solverCoarse(sdeCoarse, param, seedMC);
-    ParFil parFil(obs, T, IC, 1, noise, sdeFine, param(0), nMC);
-
     std::vector<double> timeVec(N+1);
     for (unsigned int i = 0; i < N+1; i++) {
         timeVec[i] = h*i;
     }
 
     // Compute the modeling error
+    #pragma omp parallel for num_threads(4)
     for (unsigned int i = 0; i < nParam; i++) {
+
+        EM1D solverCoarse(sdeCoarse, param, seedMC);
+        ParFil parFil(obs, T, IC, 1, noise, sdeFine, param(0), nMC);
+
         for (unsigned int j = 0; j < param.size(); j++) {
             param(j) = priorMean(j) + priorStdDev(j) * gaussian(seedParam);
         }

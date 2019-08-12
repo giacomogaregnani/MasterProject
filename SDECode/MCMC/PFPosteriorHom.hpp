@@ -19,6 +19,7 @@ private:
     double (*V1) (double);
     double eps;
     std::vector<std::vector<double>>* errors;
+    std::vector<double>* weights;
 
 public:
     PFPosteriorHom() = default;
@@ -29,7 +30,8 @@ public:
                    double (*V1) (double),
                    double eps, unsigned long M, bool IS = false,
                    std::vector<double> timeNoise = {},
-                   std::vector<std::vector<double>>* errors = nullptr);
+                   std::vector<std::vector<double>>* errors = nullptr,
+                   std::vector<double>* weights = nullptr);
     double computePosterior(VectorXd& theta) override;
 };
 

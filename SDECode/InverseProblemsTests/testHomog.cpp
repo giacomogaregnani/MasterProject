@@ -1,8 +1,8 @@
-#include <fstream>
-#include <iostream>
-#include <iomanip>
 #include "generateObservations.hpp"
 #include "computeHomogeneous.hpp"
+#include "../matplotlib-cpp-master/matplotlibcpp.h"
+
+namespace plt = matplotlibcpp;
 
 // Remark: epsilon = p(0)
 
@@ -38,51 +38,59 @@ double diffusion(double x, VectorXd &p)
 
 int main(int argc, char* argv[])
 {
-    oneDimSde sde;
-    sde.drift = &multiDrift;
-    sde.diffusion = &diffusion;
-    oneDimSde sdeHomo;
-    sdeHomo.drift = &homoDrift;
-    sdeHomo.diffusion = &diffusion;
+    oneDimSde sde{&multiDrift, &diffusion};
+    oneDimSde sdeHomo{&homoDrift, &diffusion};
 
-    double T = 10;
-    unsigned int N = 8000;
+    double T = 1;
+    unsigned int N = 40000;
 
     VectorXd tmpParam(3);
-    tmpParam(0) = 0.04;  // Epsilon
+    tmpParam(0) = 0.025;  // Epsilon
     tmpParam(1) = 1.0;  // True multiscale alpha
-    tmpParam(2) = 2.0;  // True multiscale betainv
-
-    std::ofstream outputSol(DATA_PATH + std::string("TestHomog.txt"), std::ofstream::out | std::ofstream::trunc);
+    tmpParam(2) = 0.5;  // True multiscale betainv
 
     // Compute coefficients of the homogenised equation
     std::vector<double> homCoeffs = computeHomCoeffs(tmpParam, (2.0*M_PI), &V1);
-
-    // ============= Transform for positiveness ============= //
+    VectorXd homoParam(3);
+    homoParam(0) = 0.1;
+    homoParam(1) = std::log(homCoeffs[0]);
+    homoParam(2) = std::log(homCoeffs[1]);
     VectorXd param = tmpParam;
     param(1) = std::log(param(1));
     param(2) = std::log(param(2));
-    // ====================================================== //
 
     double IC = 0.0;
     std::random_device dev;
     unsigned int obsSeed;
 
-    for (unsigned int M = 0; M < 10000; M++) {
-        obsSeed = dev();
-        auto x = generateObservations1D(sde, IC, param, T, N, obsSeed);
-        outputSol << x[N] << "\t";
+    unsigned long M = 5000;
+    std::vector<double> xFinal(M), xHomFinal(M);
 
-        // Compute a homogeneous path with the same Brownian for comparison
-        VectorXd homoParam(3);
-        homoParam(0) = 0.1;
-        homoParam(1) = std::log(homCoeffs[0]);
-        homoParam(2) = std::log(homCoeffs[1]);
-        auto xHom = generateObservations1D(sdeHomo, IC, homoParam, T, N, obsSeed);
-        outputSol << xHom[N] << "\t";
-        outputSol << std::endl;
+    std::vector<double> timeVec(N+1);
+    for (unsigned int k = 0; k < N+1; k++) {
+        timeVec[k] = k*T/N;
     }
 
-    outputSol.close();
+    #pragma omp parallel for num_threads(5)
+    for (unsigned int k = 0; k < M; k++) {
+        obsSeed = dev();
+        auto x = generateObservations1D(sde, IC, param, T, N, obsSeed);
+        xFinal[k] = x.back();
+
+        // Compute a homogeneous path with the same Brownian for comparison
+        auto xHom = generateObservations1D(sdeHomo, IC, homoParam, T, N, obsSeed);
+        xHomFinal[k] = xHom.back();
+
+        if (k < 1) {
+            plt::plot(timeVec, xHom, "b");
+            plt::plot(timeVec, x, "r");
+        }
+    }
+    plt::show();
+
+    plt::hist(xHomFinal, 20, "b", 0.3);
+    plt::hist(xFinal, 20, "r", 0.3);
+    plt::show();
+
     return 0;
 }

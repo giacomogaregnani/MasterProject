@@ -1,12 +1,13 @@
-clc; clear; close all
+% clc; clear; close all
 %%
 
 % x = dlmread('MultiMulti.txt');
 % sol = dlmread('MultiMultiSol.txt');
 x = dlmread('MultiHomo.txt');
 sol = dlmread('MultiHomoSol.txt');
-% x = dlmread('MultiHomoMod.txt');
-% sol = dlmread('MultiHomoModSol.txt');
+% x = dlmread('HomoHomo.txt');
+% sol = dlmread('HomoHomoSol.txt');
+
 
 %%
 T = 50;
@@ -15,6 +16,7 @@ nChains = 1;
 hom = x(1, :);
 trueVals = [1, 0.5];
 % trueVals = [0.19, 0.09];
+% trueVals = hom;
 
 sampleTot = x(2:end, 2:end);
 sampleSize = size(sampleTot, 1) / nChains;
@@ -27,7 +29,7 @@ if (size(sol, 1) < size(sol, 2))
 end
 t = linspace(0, T, size(sol, 1));
 figure
-plot(t, sol(:, 1:end-1));
+plot(t, sol);
 % hold on
 % plot(t, sol(:, end-1)+2*sol(:,end), 'k--');
 % plot(t, sol(:, end-1)-2*sol(:,end), 'k--');
@@ -35,16 +37,17 @@ plot(t, sol(:, 1:end-1));
 % sampleTot = exp(sampleTot);
 % trueVals = exp(trueVals);
 
-idx = floor(0.5 * size(sampleTot, 1)):size(sampleTot, 1);
+idx = floor(0.8 * size(sampleTot, 1)):size(sampleTot, 1);
 bwa = 2 * (4 * std(sampleTot(idx, 1))^5 / (3 * size(sampleTot, 1)))^(1/5);
 bws = 2 * (4 * std(sampleTot(idx, 2))^5 / (3 * size(sampleTot, 1)))^(1/5);
 
-aVals = linspace(min(sampleTot(idx, 1))-0.5, max(sampleTot(idx, 1))+0.5, 200);
-sVals = linspace(min(sampleTot(idx, 2))-0.2, max(sampleTot(idx, 2))+0.2, 200);
+aVals = linspace(min(sampleTot(idx, 1))-0.5, max(sampleTot(idx, 1))+0.5, 100);
+sVals = linspace(min(sampleTot(idx, 2))-0.2, max(sampleTot(idx, 2))+0.2, 100);
 [aa, ss] = meshgrid(aVals, sVals);
 
 F = mvksdensity(sampleTot(idx, :), [aa(:), ss(:)], 'bandwidth', [bwa, bws]);
 
+%%
 % W = 6; H = 6;
 % fig = createFigure(W, H, 'enhanced', 2);
 figure
@@ -68,15 +71,17 @@ box on
 % export_fig(fig, '../../../Reports/DraftMultiSDE_19/VERSION2/Figures/MultiHomoMod.eps', '-nocrop', '-painters')
 
 figure
-plot(sampleTot(:, 1))
+plot(sampleTot(:, 1), 'color', 0.7 * ones(1, 3))
 hold on
 plot(log(trueVals(1)) .* ones(size(sampleTot(:, 1))), 'k')
+xlim([0, size(sampleTot, 1)])
 
 figure
-plot(sampleTot(:, 2))
+plot(sampleTot(:, 2), 'color', 0.7 * ones(1, 3))
 hold on
 plot(log(trueVals(2)) .* ones(size(sampleTot(:, 2))), 'k')
-
+xlim([0, size(sampleTot, 1)])
+% 
 % for j = 1 : nParam
 %     figure
 %     f(2*j-1) = axes;
@@ -110,6 +115,6 @@ plot(log(trueVals(2)) .* ones(size(sampleTot(:, 2))), 'k')
 %     
 %     maxF = max(maxF, max(dens));
 %     
-%     plot(f(j), [hom(j), hom(j)], [0, maxF], 'k--');
+% %     plot(f(j), [hom(j), hom(j)], [0, maxF], 'k--');
 %     plot(f(j), [trueVals(j), trueVals(j)], [0, maxF], 'k');
 % end

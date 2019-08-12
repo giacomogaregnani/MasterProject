@@ -1,7 +1,6 @@
 #include "EulerMaruyama.hpp"
 #include <iostream>
 
-
 EM::EM(multiDimSde& sde, VectorXd& param, std::default_random_engine& seed):
         sde(sde),
         param(param),
@@ -24,7 +23,6 @@ void EM::modifyParam(VectorXd& newParam)
 }
 
 // ONE DIMENSIONAL SOLVER
-
 EM1D::EM1D(oneDimSde& sde, VectorXd& param, std::default_random_engine& seed):
         sde(sde),
         param(param),
@@ -33,7 +31,7 @@ EM1D::EM1D(oneDimSde& sde, VectorXd& param, std::default_random_engine& seed):
     dBM = std::normal_distribution<double>(0, 1);
 }
 
-EM1D::EM1D(oneDimSde& sde, std::default_random_engine& seedIn):
+EM1D::EM1D(oneDimSde& sde, std::default_random_engine& seed):
         sde(sde),
         seed(seed)
 {

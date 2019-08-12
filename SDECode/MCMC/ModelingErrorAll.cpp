@@ -18,40 +18,7 @@ ModErrAll::ModErrAll(oneDimSde sdeCoarse, oneDimSde sdeFine, double (*V1) (doubl
         noise(noise)
 {}
 
-std::vector<double> computeCoeffs(double (*V1) (double), double sigma, double L)
-{
-    unsigned int N = 10000;
-    VectorXd discr;
-    discr.setLinSpaced(N+1, 0.0, L);
-    double h = L / N;
-
-    std::vector<double> Zs = {0.0, 0.0};
-
-    for (int i = 0; i < N; i++) {
-        Zs[0] += h * (std::exp(V1(discr[i]) / sigma)  + std::exp(V1(discr[i+1])  / sigma)) / 2;
-        Zs[1] += h * (std::exp(-V1(discr[i]) / sigma) + std::exp(-V1(discr[i+1]) / sigma)) / 2;
-    }
-
-    return Zs;
-}
-
-VectorXd ModErrAll::computeHomogeneous(VectorXd param, double L, double (*V1) (double))
-{
-    param(1) = std::exp(param(1));
-    param(2) = std::exp(param(2));
-
-    VectorXd homParam(2);
-    auto Zs = computeCoeffs(V1, param(2), L);
-
-    homParam(0) = param(1) * L * L / (Zs[0] * Zs[1]);
-    homParam(1) = param(2) * L * L / (Zs[0] * Zs[1]);
-
-    homParam(0) = std::log(homParam(0));
-    homParam(1) = std::log(homParam(1));
-
-    return homParam;
-}
-
+/*
 void ModErrAll::computePF(unsigned int nParam, unsigned int nMC)
 {
     errors.resize(nMC*nParam+1);
@@ -126,9 +93,94 @@ void ModErrAll::computePF(unsigned int nParam, unsigned int nMC)
             errors.back()[j] += errors[i][j] / (errors.size()-1);
         }
     }
+} */
+
+void ModErrAll::computePF(unsigned int nParam, unsigned int nMC)
+{
+    errors.resize(nParam);
+    for (unsigned int i = 0; i < errors.size(); i++) {
+        errors[i].resize(N + 1);
+        for (unsigned int j = 0; j < N + 1; j++) {
+            errors[i][j] = 0.0;
+        }
+    }
+
+    auto h = T / N;
+
+    std::random_device dev;
+    std::default_random_engine seedMC{dev()};
+    std::default_random_engine seedParam{dev()};
+    VectorXd param(priorMean.size());
+    VectorXd paramHom(priorMean.size());
+    VectorXd tmp;
+    param(0) = priorMean(0);
+    paramHom(0) = priorMean(0);
+
+    std::normal_distribution<double> gaussian(0.0, 1.0);
+
+    // Compute the modeling error
+    #pragma omp parallel for num_threads(5)
+    for (unsigned int i = 0; i < nParam; i++) {
+        std::shared_ptr<ForwardPFModErr> FwdModErr;
+        FwdModErr = std::make_shared<ForwardPFModErr>(sdeFine, sdeCoarse, h, seedMC, V1);
+        ParFilMod PFMod(obs, T, IC, noise, param(0), nMC, FwdModErr);
+
+        for (unsigned int j = 0; j < param.size(); j++) {
+            param(j) = priorMean(j) + priorStdDev(j) * gaussian(seedParam);
+        }
+        PFMod.compute(param, true);
+        auto solAndModeling = PFMod.sampleX();
+
+        for (unsigned int k = 0; k < N + 1; k++) {
+            errors[i][k] = solAndModeling[k](1);
+        }
+    }
 }
 
-void ModErrAll::getStats(std::vector<std::vector<double>>& getData)
+void ModErrAll::computePFAlt(unsigned int nMC)
+{
+    errors.resize(nMC);
+    for (unsigned int i = 0; i < errors.size(); i++) {
+        errors[i].resize(N + 1);
+        for (unsigned int j = 0; j < N + 1; j++) {
+            errors[i][j] = 0.0;
+        }
+    }
+
+    auto h = T / N;
+
+    std::random_device dev;
+    std::default_random_engine seedMC{dev()};
+    std::default_random_engine seedParam{dev()};
+    VectorXd param(priorMean.size());
+    VectorXd paramHom(priorMean.size());
+    VectorXd tmp;
+    param = priorMean;
+
+    std::normal_distribution<double> gaussian(0.0, 1.0);
+
+    // Compute the modeling error
+    std::shared_ptr<ForwardPFModErr> FwdModErr;
+    FwdModErr = std::make_shared<ForwardPFModErr>(sdeFine, sdeCoarse, h, seedMC, V1);
+    ParFilMod PFMod(obs, T, IC, noise, param(0), nMC, FwdModErr);
+
+    PFMod.compute(param, true);
+    auto solAndModeling = PFMod.getX();
+
+    for (unsigned int i = 0; i < nMC; i++) {
+        for (unsigned int k = 0; k < N + 1; k++) {
+            errors[i][k] = solAndModeling[i][k](1);
+        }
+    }
+    weights = PFMod.getW();
+}
+
+void ModErrAll::getModErr(std::vector<std::vector<double>>& getData)
 {
     getData = errors;
+}
+
+void ModErrAll::getWeights(std::vector<double>& getData)
+{
+    getData = weights;
 }

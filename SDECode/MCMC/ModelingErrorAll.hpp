@@ -2,7 +2,7 @@
 #define MODELINGERRORALL_HPP
 
 #include <EulerMaruyama.hpp>
-#include <ParFil.hpp>
+#include <ParFilLib.hpp>
 
 class ModErrAll {
 private:
@@ -15,6 +15,7 @@ private:
     double T;
     unsigned int N;
     std::vector<std::vector<double>> errors;
+    std::vector<double> weights;
     std::vector<double> obs;
     double noise;
 
@@ -26,8 +27,9 @@ public:
            VectorXd &priorStdDev, double T,
            unsigned int N, std::vector<double> &observations, double noise);
     void computePF(unsigned int nParam, unsigned int nMC);
-    void getStats(std::vector<std::vector<double>>& getData);
-    VectorXd computeHomogeneous(VectorXd p, double L, double (*V1) (double));
+    void computePFAlt(unsigned int nMC);
+    void getModErr(std::vector<std::vector<double>>& getData);
+    void getWeights(std::vector<double>& getData);
 };
 
 

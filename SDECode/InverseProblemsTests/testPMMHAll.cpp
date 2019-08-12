@@ -138,7 +138,7 @@ int main(int argc, char* argv[])
 
         ModErrAll modErr(sdeHomo, sde, &V1, IC, priorMean, priorStdDev, T, N, x, noise);
         modErr.computePF(nParam, nMC);
-        modErr.getStats(errors);
+        modErr.getModErr(errors);
         std::cout << "Computed modeling error" << std::endl;
         std::cout << priorMean.transpose() << std::endl << priorStdDev.transpose() << std::endl;
 
@@ -160,9 +160,9 @@ int main(int argc, char* argv[])
 
         // Inverse problem
         std::shared_ptr<Posterior> posterior;
-        // posterior = std::make_shared<PFPosterior>(x, T, IC, 1, noise, sdeHomo, param(0), M, IS); //, stdDevs);
+        posterior = std::make_shared<PFPosterior>(x, T, IC, 1, noise, sdeHomo, param(0), M, IS); //, stdDevs);
         std::vector<double> dummy = {};
-        posterior = std::make_shared<PFPosteriorHom>(x, T, IC, 1, noise, sdeHomo, &V1, param(0), M, IS, dummy, errors); //, stdDevs);
+        // posterior = std::make_shared<PFPosteriorHom>(x, T, IC, 1, noise, sdeHomo, &V1, param(0), M, IS, dummy, errors); //, stdDevs);
         std::shared_ptr<Proposals> proposal;
         std::vector<double> factors = {1.0, 50.0, 1.0};
         if (l > 0) {

@@ -4,10 +4,7 @@
 #include <EulerMaruyama.hpp>
 #include <random>
 #include <memory>
-#include <functional>
-#include <optional>
-
-// Particle filter
+#include "ParFilTools.hpp"
 
 class ParFil {
 private:
@@ -31,6 +28,7 @@ private:
     double ISstddev;
     std::vector<double> timeNoise;
     std::vector<std::vector<double>> BM;
+    std::vector<double> BMOld;
     std::vector<std::vector<unsigned int>> tree;
 
 public:
@@ -42,7 +40,8 @@ public:
     void compute(VectorXd& theta, std::vector<std::vector<double>>* mod = nullptr);
     double importanceSampler(double h, double hObs, double x, VectorXd &theta,
                              unsigned long obsIdx, unsigned long j, double trueNoise = 0, double correction = 0);
-    void computeDiffBridge(VectorXd& theta, std::vector<std::vector<double>>* mod = nullptr); // TODO: find a way to pass by reference
+    void computeDiffBridge(VectorXd& theta, std::vector<std::vector<double>>* mod = nullptr,
+                           std::vector<double>* weights = nullptr, bool verbose = false);
     double getLikelihood() const;
     std::vector<double> sampleX();
     std::vector<std::vector<double>> getX() const;

@@ -43,3 +43,5 @@ Reports/**/*.bbl
 Reports/Poster_Orane/**
 
 matlabCode/**
+
+SDECode/plots/**

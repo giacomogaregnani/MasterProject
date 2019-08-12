@@ -6,11 +6,13 @@ PFPosteriorHom::PFPosteriorHom(std::vector<double>& x, double T, double IC,
                                double (*V1) (double),
                                double eps, unsigned long M, bool IS,
                                std::vector<double> timeNoise,
-                               std::vector<std::vector<double>>* errors):
+                               std::vector<std::vector<double>>* errors,
+                               std::vector<double>* weights):
         IS(IS),
         V1(V1),
         eps(eps),
-        errors(errors)
+        errors(errors),
+        weights(weights)
 {
     ParticleFilter = std::make_shared<ParFil>(x, T, IC, sR, noise, sde, eps, M, timeNoise);
 }
@@ -50,16 +52,16 @@ double PFPosteriorHom::computePosterior(VectorXd& theta)
     theta(0) = eps;
 
     VectorXd thetaHom(3);
-    VectorXd tmp = computeHomogeneous(theta, (2.0*M_PI), V1);
+    VectorXd tmp = computeHomogeneous(theta, 2.0*M_PI, V1);
 
     thetaHom(0) = theta(0);
     thetaHom(1) = tmp(0);
     thetaHom(2) = tmp(1);
 
     if (IS) {
-        ParticleFilter->computeDiffBridge(thetaHom, errors);
+        ParticleFilter->computeDiffBridge(thetaHom, errors, weights);
     } else {
-        ParticleFilter->compute(thetaHom);
+        ParticleFilter->compute(thetaHom, errors);
     }
     double likelihood = ParticleFilter->getLikelihood();
 

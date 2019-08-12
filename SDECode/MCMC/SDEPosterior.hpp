@@ -18,6 +18,7 @@ private:
     double noise;
     unsigned long nMC;
     double eps;
+    double QOIobs;
 
 public:
     SDEPosterior() = default;

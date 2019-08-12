@@ -5,7 +5,7 @@
 \begin{document}
 \maketitle	
 
-\begin{abstract} Add abstract
+\begin{abstract}
 \end{abstract}
 
 \textbf{AMS subject classifications.} 
@@ -17,7 +17,7 @@
 
 \section{Problem statement}
 
-Let $(\Omega, \mathcal A, P)$ be a probability space, $\epl$, $\alpha$ and $\sigma$ be positive real numbers and $V_0 \colon \R^d \to \R^d$, $V_1 \colon \R^d \to \R^d$ be \corr{smooth} functions. Let us consider the autonomous SDE on $(\Omega, \mathcal A, P)$
+Let $(\Omega, \mathcal A, P)$ be a probability space, $\epl$, $\alpha$ and $\sigma$ be positive real numbers and $V_0 \colon \R^d \to \R^d$, $V_1 \colon \R^d \to \R^d$. Let us consider the autonomous SDE on $(\Omega, \mathcal A, P)$
 \begin{equation}\label{eq:SDE_MS}
 \begin{aligned}
 	\d x^\epl(t) &= -\alpha \nabla V_0(x^\epl(t)) \dd t - \frac{1}{\epl}\nabla V_1\Big(\frac{x^\epl(t)}{\epl}\Big) \dd t + \sqrt{2\sigma} \dd W(t), \quad 0 < t \leq T, \\
@@ -88,11 +88,9 @@ Replacing $\mathcal G^\epl$ by $\mathcal G^0$ does not modify the structure of t
 \begin{equation}
 	p^0(\theta^\epl \mid \mathbf y) = \frac{1}{Z^0} \prior(\theta^\epl) \int_{\R^{Nd}} p(x_0) \, \prod_{k=0}^{N-1} p^0(x_{k+1} \mid x_k, \mathcal H(\theta^\epl))\prod_{k=1}^N p(y_k \mid x_k) \dd \mathbf x.
 \end{equation}
-In Section \ref{sec:ConvergenceMStoHOM} we study the convergence of $\mu^\epl$ to $\mu^0$ in the limit for $\epl \to 0$.  
+In Section \ref{sec:Convergence} we study the convergence of $\mu^\epl$ to $\mu^0$ in the limit for $\epl \to 0$.  
 
-\section{Convergence analysis}
-
-\subsection{Inference of the multiscale equation}\label{sec:ConvergenceMStoHOM}
+\section{Convergence analysis}\label{sec:Convergence}
 
 In this section, we consider the inverse problem \eqref{eq:IP_MS}. 
 
@@ -145,7 +143,7 @@ The following theorem proves the convergence of the multiscale posterior towards
 	\end{equation}
 	where $\mathcal E_2^\epl$ is defined as
 	\begin{equation}
-		\mathcal E_2^\epl \defeq \prod_{k=0}^{N-1} p^0(x_{k+1}\mid x_k, \mathcal H(\theta^\epl)) - \prod_{k=0}^{N-1} p^\epl(x_{k+1}\mid x_k, \theta^\epl)
+		\mathcal E_2^\epl \defeq \prod_{k=0}^{N-1} p^0(x_{k+1}\mid x_k, \mathcal H(\theta^\epl)) - \prod_{k=0}^{N-1} p^\epl(x_{k+1}\mid x_k, \theta^\epl).
 	\end{equation}
 	For sequences of real numbers $a_k$, $b_k$, $k = 0, \ldots, N-1$, a telescopic sum argument yields 
 	\begin{equation} 
@@ -180,177 +178,203 @@ The following theorem proves the convergence of the multiscale posterior towards
 	by dominated convergence theorem (\corr{twice, find bound}) and since $\mathcal E_2^\epl \to 0$, we have $Z^0 - Z^\epl \to 0$ for $\epl \to 0$ and therefore $I_1^\epl \to 0$, which concludes the proof.
 \end{proof}
 
-\subsection{Inference of the homogenized equation}
+\section{Sampling from the posterior}
 
-In this section we consider problem \eqref{eq:IP_HOM}.
+\begin{algorithm}[t]
+	\caption{Pseudo-marginal Metropolis--Hastings}
+	\label{alg:PMMH}
+	\KwData{initial guess $\theta^0 \in \Theta$, $M \in \mathbb N$, proposal distribution $q \colon \Theta \times \Theta \to \R$ \;}
+	compute $\hat p^{(0)} = \hat p(\theta^{(0)} \mid \mathbf y)$ \;
+	\For{$k = 0, \ldots, M$} {
+		sample $\theta^\star \sim q(\cdot \mid \theta^{(k)})$, compute $\hat p^\star = \hat p(\theta^\star \mid \mathbf y)$ \;
+		compute $$\alpha\big(\theta^*, \theta^{(k)}\big) = \min\Big\{1, \frac{\hat p^\star}{\hat p^{(k)}} \, \frac{q(\theta^{(k)} \mid \theta^\star)}{q(\theta^\star \mid \theta^{(k)})}\Big\};$$ 
+		
+		with probability $\alpha\big(\theta^\star, \theta^{(k)}\big)$ set $\theta^{(k+1)} = \theta^\star$, $\hat p^{(k+1)} = \hat p^\star$ \;
+		otherwise set $\theta^{(k+1)} = \theta^{(k)}$, $\hat p^{(k+1)} = \hat p^{(k)}$ \;
+	}
+\end{algorithm}
+
+In order to obtain samples from the posterior distributions $p^\epl(\theta \mid \mathbf y)$ and $p^0(\theta \mid \mathbf y)$, it is necessary to recur to Monte Carlo simulations. In particular, let us neglect in this section the difference between multiscale and homogenized posteriors and refer to a general posterior $p(\theta \mid \mathbf y)$, where $\mathbf y$ is a set of observations coming from a generic Markov chain parametrized by $\theta$ and characterized by a transition probability with density $p(\cdot \mid x, \theta)$. In the context of Bayesian inference problems, it is frequent to employ algorithms of the family of the Markov chain Monte Carlo methods (MCMC). These algorithms proceed by generating a Markov chain over the space $\Theta$ from a proposal distribution, whose density we denote by $q(\cdot \mid \theta)$, and by tuning the probability of accepting a new sample so that samples are indeed generated from the posterior. These sampling schemes require the evaluation of the posterior distribution for each new sample. In our setting, in which it is unfeasible to evaluate the posterior due to the complex structure of the likelihood function \eqref{eq:LikelihoodMarginalization}, it is possible to employ the pseudo-marginal Metropolis--Hastings method (PMMH) \cite{AnR09}, which is given in Algorithm \ref{alg:PMMH} and which requires only an estimator of the posterior. In particular, if for each $\theta$ the estimator $\hat p(\theta \mid \mathbf y)$ is unbiased, it is possible to prove \cite{AnR09} that the Markov chain generated by the PMMH algorithm has the posterior $p(\theta \mid \mathbf y)$ as unique invariant distribution. The performances of the PMMH algorithm strongly depend on the quality of the unbiased estimator $\hat p(\theta \mid \mathbf y)$. In particular, high values for the variance result in Markov chains with a degenerate behaviour, i.e., an extremely low acceptance ratio, regardless of the choice of the proposal distribution (see e.g. \cite{DPD15}). It is therefore fundamental to compute estimators of the posterior, i.e., of the likelihood function, which are unbiased and whose variance is relatively small. A popular choice in this framework is provided by particle filters, which we briefly describe below. Let us finally remark that the version of PMMH with a particle filter estimator for the posterior density is referred to in literature as Particle Markov chain Monte Carlo (PMCMC) \cite{ADH10}.
+
+\subsection{Particle filters}\label{sec:ParFil}
+
+\begin{algorithm}[t]
+	\caption{Particle filter}
+	\label{alg:ParFil}
+	\KwData{$M \in \N$, initial ensemble $\{x_0^{(j)}\}_{j=1}^M \sim p_x(\cdot \mid \theta)$ \;}
+	For $j = 1, \ldots, M$ initialize $w^{(j)} = 1/M$, set $\mathbf w = \{w^{(j)}\}_{j=1}^M$, set $\hat p(y_{1:K} \mid \theta) = 1$\;
+	\For{$k = 1, \ldots, K$} {
+		For $j = 1, \ldots, M$ sample $I_j \sim \mathcal F_M(\cdot \mid \mathbf w)$ \;
+		For $j = 1, \ldots, M$ sample $x_k^{(j)} \sim q_x(\cdot \mid x_{k-1}^{(I_j)}, y_{k+1})$, set $x^{(j)}_{1:k} = \big(x^{(I_j)}_{1:k-1}, x^{(j)}_k\big)$ \;
+		For $j = 1, \ldots, M$ compute the weight 
+		\begin{equation}\label{eq:WeightUpdate}
+			\btilde w^{(j)} = \frac{p_x(x_k^{(j)} \mid x_{k-1}^{(I_j)}; \theta) \, p_y(y_k \mid x_k^{(j)})}{q_x(x_k^{(j)} \mid x_{k-1}^{(I_j)}, y_{k+1}; \theta)};
+		\end{equation}
+	
+		For $j = 1, \ldots, M$ compute the normalized weight $$w^{(j)} = \frac{\btilde w^{(j)}}{\sum_{i=1}^{M}\btilde w^{(i)}};$$
+		
+		Update $\mathbf w = \{w^{(j)}\}_{j=1}^M$ and $$\hat p(y_{1:K} \mid \theta) \leftarrow \hat p(y_{1:K} \mid \theta) \frac{1}{M} \sum_{i=1}^{M}\btilde w^{(i)};$$
+	}
+	\KwOut{Estimators $\hat p(y_{1:K} \mid \theta)$ and $\hat p_M(x_{1:K} \mid y_{1:K}) = \sum_{j=1}^M w^{(j)} \delta(x^{\vphantom{(j)}}_{1:K} - x^{(j)}_{1:K})$ \;}
+\end{algorithm}
+
+Particle filters are a popular method for Bayesian inference in the context of hidden Markov models. Let us consider the general setting of a homogeneous Markov chain $\{x_k\}_{k=0}^K$ over $\R^d$ whose transition probability has a known density, denoted by $p_x$, such that $x_{k+1} \sim p_x(\cdot \mid x_k; \theta)$, where $\theta \in \Theta$ is a given parameter. Moreover, let us consider an observed process $\{y_k\}_{k=1}^K$ given by the observation model $y_k \sim p_y(\cdot \mid x_k)$, and such that observations are conditionally independent. We adopt the notation $x_{0:j} = \{x_k\}_{k=0}^j$ and equivalently for the observations. A particle filter can in turn be employed for the estimation of the probability $p(x_{0:K} \mid y_{1:K}; \theta)$ and for the likelihood function $p(y_{1:K} \mid \theta)$. The basis of the algorithm lays on the filtering recursion
+\begin{subequations}\label{eq:FiltRec}
+\begin{align}
+	p(x_k \mid y_{1:k}; \theta) &= \frac{p_y(y_k \mid x_k) \, p(x_k \mid y_{1:k-1}; \theta)}{p(y_k \mid y_{1:k-1}; \theta)}, \label{eq:FiltRec1}\\
+	p(y_k \mid y_{1:k-1}; \theta) &= \int p_y(y_k \mid x_k) \, p(x_k \mid y_{1:k-1}; \theta) \dd x_k, \label{eq:FiltRec2} \\
+	p(x_{k+1} \mid y_{1:k}; \theta) &= \int p_x(x_{k+1} \mid x_k; \theta) \, p(x_k \mid y_{1:k}) \dd x_k. \label{eq:FiltRec3}
+\end{align}
+\end{subequations}
+The densities above are approximated via an ensemble of trajectories, or particles, which is rejuvenated at each iteration via resampling procedures. Moreover, importance sampling techniques can be employed by noticing that \eqref{eq:FiltRec3} can be rewritten as
+\begin{equation}
+	p(x_{k+1} \mid y_{1:k}; \theta) = \int q_x(x_{k+1} \mid x_k; \theta, y_{k+1}) \, \frac{p_x(x_{k+1} \mid x_k; \theta)}{q_x(x_{k+1} \mid x_k, y_{k+1}; \theta)} \, p(x_k \mid y_{1:k}) \dd x_k,
+\end{equation}
+where $q_x(x \mid x_k, y_{k+1})$ is an appropriately chosen valid importance density. In particular, let us remark that $q_x$ depends on $y_{k+1}$, i.e., the following observation. A technique for forming a robust importance density is given by the so-called diffusion bridge approach, which is presented in \cite{GoW10, GoW11}. The final numerical procedure is summarized in Algorithm \ref{alg:ParFil}, where we introduce the notation $\mathcal F_M(\cdot \mid \mathbf w)$ for the discrete distribution over the set $\{1, \ldots, M\}$ with weights $\mathbf w = \{w^{(j)}\}_{j=1}^M$. Let us finally remark that the estimator $\hat p(y_{1:K} \mid \theta)$ is unbiased independently of the choice of the importance density \cite{PSG12}. The second output of the particle filter is an approximation $\hat p_M(x_{1:K} \mid y_{1:K})$ of the density $p(x_{1:K} \mid y_{1:K})$, which is consistent in the sense that it tends to the truth for $M \to \infty$ (\corr{add ref}).
+
+Let us consider the case $d = 1$ and $x_k = x(t_k)$ for an equispaced grid $0 = t_0 < t_1 < \ldots < t_K = T$, where $x$ is the solution of the SDE
+\begin{equation}\label{eq:GenSDE}
+	\d x(t) = f_\theta(t, x(t)) \dd t + g_\theta(t, x(t)) \dd W(t),
+\end{equation}
+and $y_k = x_k + \eta_k$, where $\eta_k \sim p_\eta(\cdot)$ are i.i.d. random variables, so that $p_y(y_k \mid x_k) = p_\eta(y_k - x_k)$. For generic drift and diffusion functions $f_\theta$ and $g_\theta$ the transition density $p_x(x_{k+1} \mid x_k; \theta)$ does not admit a closed form, and cannot therefore be evaluated in Algorithm \ref{alg:ParFil}. Nonetheless, if the spacing $h = t_k - t_{k-1}$ between the time points where observations are obtained is small enough, a good approximation of the transition density is given by numerical integrators such as the Euler--Maruyama method, which reads
+\begin{equation}
+	x_{k+1} = x_k + f_{\theta}(t_k, x_k) h + g_\theta(t_k, x_k) \sqrt{h} Z_k,
+\end{equation}
+where $Z_k \sim \mathcal N(0, 1)$. The transition probability is therefore given by $\mathcal N(x_k + f_{\theta}(t_k, x_k) h, g_\theta(t_k, x_k)^2 \sqrt{h})$, whose density can be evaluated. 
 
 \section{Modelling error}
 
+%\begin{algorithm}[t]
+%	\caption{Modelling Error estimation}
+%	\label{alg:ModErr}
+%	\KwData{Measure $\nu \in \mathcal M(\Theta)$, $\mathbf y \in \R^{Nd}$, integers $N_p, N_x$}
+%	\KwOut{Approximation $\widehat {\mathbf m}$ of the mean modelling error (\corr{write it better})}
+%	\For{$i = 0, \ldots, N_p$} {
+%		Sample $\theta^{(i)} \sim \nu$\;
+%		Sample $\mathbf x^{\epl}(\theta^{(i)})^{(j)} \sim p^\epl(\mathbf x \mid \mathbf y, \theta^{(i)})$ for $j = 1, \ldots, N_x$ with a particle filter\;
+%		Compute $\mathbf x^{0}(\theta^{i})^{(j)} = \mathcal H\big(\mathbf x^{\epl}(\theta^{(i)})^{(j)}\big)$ for $j = 1, \ldots, N_x$\;
+%		Set $\widehat {\mathbf m}^{(i,j)} = \mathbf x^{\epl}(\theta^{(i)})^{(j)} - \mathbf x^{0}(\theta^{(i)})^{(j)} $ for $j = 1, \ldots, N_x$\;
+%	}
+%	Set $\widehat{\mathbf m} = \frac{1}{N_p} \sum_{i=1}^{N_p} \frac{1}{N_x} \sum_{j=1}^{N_x} \widehat{\mathbf m}^{(i,j)}$ \;
+%\end{algorithm}
+
+In section \ref{sec:Convergence}, we considered the asymptotic limit $\epl \to 0$, in which the forward model $\mathcal G^0$ is a good weak approximation to $\mathcal G^\epl$. In case $\epl > 0$ is a fixed value in the non-asymptotic regime, it is necessary to estimate the modelling error given by the replacement of $\mathcal G^\epl$ by $\mathcal G^0$ as a forward model in order to solve the inverse problem correctly. The approach of \cite{CDS18} (\corr{add references}) is well-suited for this purpose, as it has been demonstrated by means of experiments in \cite{AbD18}. 
+
+Let us consider the multiscale model $x^\epl_{k+1} \sim p^\epl_x(\cdot \mid x^\epl_k; \theta)$, where $p_x^\epl$ is the transition density of \eqref{eq:SDE_MS} and $x_k = x(t_k)$, and the homogenized model $x^0_k \sim p^0_x(\cdot \mid x^0_k; \theta)$, where $p^0_x$ is the transition density of \eqref{eq:SDE_HOM}. Moreover, we consider the observation model to be given by $y_k = x^\epl_k + \eta_k$, with $\eta_k \sim p_\eta$ are i.i.d. random variables, and we denote the modelling error $m_k \defeq x^\epl_k - x^0_k$. We can therefore write the observation equation as
+\begin{equation}
+	y_k = x^0_k + m_k + \eta_k.
+\end{equation}
+In the following, we assume that $m_k$ is independent of the hidden state $x_k$, of the parameter $\theta$ and of the noise $\eta_k$, so that $p_y(y_k \mid m_k, x_k) = p_\eta(y_k - m_k - x_k)$ and by marginalization
+\begin{equation}
+	p_y(y_k \mid x_k) = \int p_\eta(y_k - m_k - x_k) \, p(m_k) \dd m_k,
+\end{equation}
+which allows to rewrite the filtering recursion \eqref{eq:FiltRec}, and in particular Bayes' rule \eqref{eq:FiltRec1} as
+\begin{equation}\label{eq:ModelingErrorPF}
+	p(x_k \mid y_{1:k}; \theta) = \frac{p(x_k \mid y_{1:k-1}; \theta)}{p(y_k \mid y_{1:k-1}; \theta)}\int p_\eta(y_k - m_k - x_k) \, p(m_k) \dd m_k.
+\end{equation}
+The evident task is now determining or approximating the distributions of the modelling error $\mu^m_k(\d m_k) = p(m_k) \dd m_k$. Let $X^\epl_{1:K}$ be the stochastic process defined by $X^\epl_k = (x^\epl_k , m_k)^\top$. It is indeed possible to sample from the numerical approximation of the transition density $p_{X^\epl}(X^\epl_{k+1} \mid X^\epl_k; \theta)$, which involve the discretization of the SDEs \eqref{eq:SDE_MS} and \eqref{eq:SDE_HOM}. Moreover, we have the observation model $y_k = HX^\epl_k + \eta$, where $H = (0, I)^\top$. Therefore, we can indeed run a particle filter with importance density $q_{X^\epl} = p_{X^\epl}$, i.e., a bootstrap particle filter \cite{GSS93}, and obtain an approximation
+\begin{equation}
+	p(m_{1:K} \mid y_{1:K}) \approx \hat{p}_{M}(m_{1:K} \mid y_{1:K}) = \sum_{i=1}^M w_m^{(i)} \, \delta(m^{\vphantom{(i)}}_{1:K} - m^{(i)}_{1:K})
+\end{equation}
+where $M$ indicates the number of particles and $\{w_m^{(i)}\}$, for $i = 1, \ldots, M$ are the weights of each particle. The formula above can be replaced in \eqref{eq:ModelingErrorPF} to obtain the approximation 
+\begin{equation}
+	p(x_k \mid y_{1:k}; \theta) \approx \frac{p(x_k \mid y_{1:k-1}; \theta)}{p(y_k \mid y_{1:k-1}; \theta)} \sum_{i=1}^M p_\eta(y_k - m^{(i)}_k - x_k) w_m^{(i)}.
+\end{equation}
+This approximation can therefore be employed in a particle filter of the form of Algorithm \ref{alg:ParFil}, replacing the weight update \eqref{eq:WeightUpdate} with
+\begin{equation}\label{eq:WeightUpdateModeling}
+	\btilde w^{(j)} = \frac{p_x(x_k^{(j)} \mid x_{k-1}^{(I_j)}; \theta)}{q_x(x_k^{(j)} \mid x_{k-1}^{(I_j)}, y_{k+1}; \theta)}\sum_{i=1}^M p_\eta(y_k - m^{(i)}_k - x_k) w_m^{(i)}.
+\end{equation}
+Conditioning the modelling to the observations partially solves the issue of the assumption of $m_k$ being independent of $x^\epl_k$. The second assumption can be solved partially with an approach similar to the one presented in \cite{CDS18}. In particular, a PMCMC algorithm with update formula for the inner particle filter given by \eqref{eq:WeightUpdateModeling} can be run, and the resulting point estimate of the parameter can be employed to compute a better approximation of the modelling error. Iterating this idea allows to progressively approximate the modelling error with values taken closer to the true posterior. The complete procedure is summarized in Algorithm \ref{alg:ModErr}.
+
 \begin{algorithm}[t]
-	\caption{Modelling Error estimation}
+	\caption{Sampling from the posterior}
 	\label{alg:ModErr}
-	\KwData{Measure $\nu \in \mathcal M(\Theta)$, $\mathbf y \in \R^{Nd}$, integers $N_p, N_x$}
-	\KwOut{Approximation $\widehat {\mathbf m}$ of the mean modelling error (\corr{write it better})}
-	\For{$i = 0, \ldots, N_p$} {
-		Sample $\theta^{(i)} \sim \nu$\;
-		Sample $\mathbf x^{\epl}(\theta^{(i)})^{(j)} \sim p^\epl(\mathbf x \mid \mathbf y, \theta^{(i)})$ for $j = 1, \ldots, N_x$ with a particle filter\;
-		Compute $\mathbf x^{0}(\theta^{i})^{(j)} = \mathcal H\big(\mathbf x^{\epl}(\theta^{(i)})^{(j)}\big)$ for $j = 1, \ldots, N_x$\;
-		Set $\widehat {\mathbf m}^{(i,j)} = \mathbf x^{\epl}(\theta^{(i)})^{(j)} - \mathbf x^{0}(\theta^{(i)})^{(j)} $ for $j = 1, \ldots, N_x$\;
+	\KwData{$L \in \N$, prior $\mu_{\mathrm pr}$ on $\theta$ \;}
+	Set $\mu^0 = \mu_{\mathrm pr}$ \;
+	\For{$l = 1, \ldots, L$} {
+		Approximate $p^l(m_{1:K})$ running a bootstrap particle filter with parameter $\bar \theta = \E_{\mu^{l-1}}(\theta)$ \;
+		Sample with PMCMC from posterior $\mu^l$, employing $p^l(m_{1:K})$ in \eqref{eq:ModelingErrorPF} \;
 	}
-	Set $\widehat{\mathbf m} = \frac{1}{N_p} \sum_{i=1}^{N_p} \frac{1}{N_x} \sum_{j=1}^{N_x} \widehat{\mathbf m}^{(i,j)}$ \;
 \end{algorithm}
 
-Model 
-\begin{equation}
-\begin{aligned}
-	\mathbf y &= \mathbf x^\epl + \eta \\
-	&= \mathbf x^0 + \mathbf m^\epl + \eta,
-\end{aligned}
-\end{equation}
-where $\mathbf m^\epl = \mathbf x^\epl - \mathbf x^0$. Preliminary result.
-\begin{lemma} The modelling error $\mathbf m^\epl$ satisfies $\mathbf m^\epl \to 0$ in probability for $\epl \to 0$.
-\end{lemma}
-\begin{proof} Since $x^\epl \to x^0$ in law in $\mathcal C^0((0, T), \R^d)$ for $\epl \to 0$, then $m^\epl \to 0$ in law and therefore in probability. Hence, $\mathbf m^\epl \to 0$ in probability.
-\end{proof}
-Assume $\mathbf m$ independent of $\theta$
-\begin{equation}
-\begin{aligned}
-	p(\mathbf y \mid \theta, \mathbf m) &= \int p(\mathbf x , \mathbf y \mid \theta, \mathbf m) \dd \mathbf x\\
-	&= \int p(\mathbf y \mid \mathbf x, \theta, \mathbf m) \, p(\mathbf x \mid \mathbf m, \theta) \dd \mathbf x \\
-	&= \int p(\mathbf y \mid \mathbf x, \theta, \mathbf m) \, \frac{p(\mathbf m\mid \mathbf x, \theta) \, p(\mathbf x \mid \theta)}{p(\mathbf m \mid \theta)} \dd \mathbf x\\
-	&= \int p(\mathbf y \mid \mathbf x, \theta, \mathbf m) \, \frac{p(\mathbf m\mid \mathbf x) \, p(\mathbf x \mid \theta)}{p(\mathbf m)} \dd \mathbf x
-\end{aligned}
-\end{equation}
-Then marginalize
-\begin{equation}
-\begin{aligned}
-	p(\mathbf y \mid \theta) &= \iint p(\mathbf y \mid \mathbf x, \theta, \mathbf m) \, p(\mathbf m\mid \mathbf x) \, p(\mathbf x \mid \theta) \dd \mathbf x \dd \mathbf m\\
-	&= \int p(\mathbf x \mid \theta) \left(\int p(\mathbf y \mid \mathbf x, \theta, \mathbf m) \, p(\mathbf m\mid \mathbf x) \dd \mathbf m \right) \dd \mathbf x.
-\end{aligned}
-\end{equation}
-
-Sequential estimation. Idea of particle filtering: likelihood estimated sequentially from the formula
-\begin{equation}
-p(\mathbf y \mid \theta) = p(y_1 \mid \theta) \, \prod_{k=2}^{N} p(y_k \mid y_{1:k-1}, \theta). 
-\end{equation}
-Single factors computed as
-\begin{equation}
-\begin{aligned}
-p(y_k \mid y_{1:k-1}, \theta, m_k) &= \int p(y_k, x_k \mid y_{1:k-1}, \theta, m_k) \dd x_k\\
-&= \int p(y_k \mid x_k, m_k, \theta) \, p(x_k \mid y_{1:k-1}, m_k, \theta) \dd x_k \\
-&= \int p(y_k \mid x_k, m_k, \theta) \, p(x_k \mid y_{1:k-1}, m_k, \theta) \dd x_k
-\end{aligned}
-\end{equation}
-Marginalize
-\begin{equation}
-\begin{aligned}
-p(y_k \mid y_{1:k-1}, \theta) &= \int p(y_k, m_k \mid y_{1:k-1}, \theta) \dd m_k \\
-&= \int p(y_k \mid m_k, y_{1:k-1}, \theta) \, p(m_k \mid y_{1:k-1}) \dd m_k \\
-&= \int \left(\int p(y_k \mid x_k, m_k, \theta) \, p(x_k \mid y_{1:k-1}) \dd x_k \right) p(m_k \mid y_{1:k-1}) \dd m_k.
-\end{aligned}
-\end{equation}
-Particle filter approximation
-\begin{equation}
-\begin{aligned}
-\widehat p(y_k \mid y_{1:k-1}, \theta) = \frac{1}{N_x N_m} \sum_{i=1}^{N_m} \sum_{j=1}^{N_x} p(y_k \mid x_k^{(j)}, m_k^{(i)}, \theta),
-\end{aligned}
-\end{equation}
-where $x_k^{(j)} \sim p(x_k \mid y_{1:k-1})$ and $m_k^{(i)} \sim p(m_k \mid y_{1:k-1})$.
+%\begin{lemma} The modelling error $\mathbf m^\epl$ satisfies $\mathbf m^\epl \to 0$ in probability for $\epl \to 0$.
+%\end{lemma}
+%\begin{proof} Since $x^\epl \to x^0$ in law in $\mathcal C^0((0, T), \R^d)$ for $\epl \to 0$, then $m^\epl \to 0$ in law and therefore in probability. Hence, $\mathbf m^\epl \to 0$ in probability.
+%\end{proof}
+%Assume $\mathbf m$ independent of $\theta$
+%\begin{equation}
+%\begin{aligned}
+%	p(\mathbf y \mid \theta, \mathbf m) &= \int p(\mathbf x , \mathbf y \mid \theta, \mathbf m) \dd \mathbf x\\
+%	&= \int p(\mathbf y \mid \mathbf x, \theta, \mathbf m) \, p(\mathbf x \mid \mathbf m, \theta) \dd \mathbf x \\
+%	&= \int p(\mathbf y \mid \mathbf x, \theta, \mathbf m) \, \frac{p(\mathbf m\mid \mathbf x, \theta) \, p(\mathbf x \mid \theta)}{p(\mathbf m \mid \theta)} \dd \mathbf x\\
+%	&= \int p(\mathbf y \mid \mathbf x, \theta, \mathbf m) \, \frac{p(\mathbf m\mid \mathbf x) \, p(\mathbf x \mid \theta)}{p(\mathbf m)} \dd \mathbf x
+%\end{aligned}
+%\end{equation}
+%Then marginalize
+%\begin{equation}
+%\begin{aligned}
+%	p(\mathbf y \mid \theta) &= \iint p(\mathbf y \mid \mathbf x, \theta, \mathbf m) \, p(\mathbf m\mid \mathbf x) \, p(\mathbf x \mid \theta) \dd \mathbf x \dd \mathbf m\\
+%	&= \int p(\mathbf x \mid \theta) \left(\int p(\mathbf y \mid \mathbf x, \theta, \mathbf m) \, p(\mathbf m\mid \mathbf x) \dd \mathbf m \right) \dd \mathbf x.
+%\end{aligned}
+%\end{equation}
+%
+%Sequential estimation. Idea of particle filtering: likelihood estimated sequentially from the formula
+%\begin{equation}
+%p(\mathbf y \mid \theta) = p(y_1 \mid \theta) \, \prod_{k=2}^{N} p(y_k \mid y_{1:k-1}, \theta). 
+%\end{equation}
+%Single factors computed as
+%\begin{equation}
+%\begin{aligned}
+%p(y_k \mid y_{1:k-1}, \theta, m_k) &= \int p(y_k, x_k \mid y_{1:k-1}, \theta, m_k) \dd x_k\\
+%&= \int p(y_k \mid x_k, m_k, \theta) \, p(x_k \mid y_{1:k-1}, m_k, \theta) \dd x_k \\
+%&= \int p(y_k \mid x_k, m_k, \theta) \, p(x_k \mid y_{1:k-1}, m_k, \theta) \dd x_k
+%\end{aligned}
+%\end{equation}
+%Marginalize
+%\begin{equation}
+%\begin{aligned}
+%p(y_k \mid y_{1:k-1}, \theta) &= \int p(y_k, m_k \mid y_{1:k-1}, \theta) \dd m_k \\
+%&= \int p(y_k \mid m_k, y_{1:k-1}, \theta) \, p(m_k \mid y_{1:k-1}) \dd m_k \\
+%&= \int \left(\int p(y_k \mid x_k, m_k, \theta) \, p(x_k \mid y_{1:k-1}) \dd x_k \right) p(m_k \mid y_{1:k-1}) \dd m_k.
+%\end{aligned}
+%\end{equation}
+%Particle filter approximation
+%\begin{equation}
+%\begin{aligned}
+%\widehat p(y_k \mid y_{1:k-1}, \theta) = \frac{1}{N_x N_m} \sum_{i=1}^{N_m} \sum_{j=1}^{N_x} p(y_k \mid x_k^{(j)}, m_k^{(i)}, \theta),
+%\end{aligned}
+%\end{equation}
+%%where $x_k^{(j)} \sim p(x_k \mid y_{1:k-1})$ and $m_k^{(i)} \sim p(m_k \mid y_{1:k-1})$.
 
 \section{Numerical discretization}
 
 \begin{itemize}[label=-]
-	\item Discretization of \eqref{eq:SDE_MS} is cheaper than \eqref{eq:SDE_HOM} $\implies$ $\mathcal G^0$ cheap to evaluate.
+	\item Discretization of \eqref{eq:SDE_MS}: $h \propto \epl^2$ $\implies$ $\mathcal G^0$ cheap to evaluate.
 	\item Sparse data -- resulting from subsampling or access to a subset or observation period long, i.e., time between observations $\delta t > h$ where $h$ integration time step.
 \end{itemize}
 
-\section{Sampling from the posterior}
 
-In order to obtain samples from the posterior distributions $p^\epl(\theta \mid \mathbf y)$ and $p^0(\theta \mid \mathbf y)$, it is necessary to recur to Monte Carlo simulations. In particular, let us neglect in this section the difference between multiscale and homogenized posteriors and refer to a general posterior $p(\theta \mid \mathbf y)$, where $\mathbf y$ is a set of observations coming from a generic Markov chain parametrized by $\theta$ and characterized by a transition probability with density $p(\cdot \mid x, \theta)$. In the context of Bayesian inference problems, it is frequent to employ algorithms of the family of the Markov chain Monte Carlo methods (MCMC). These algorithms proceed by generating a Markov chain over the space $\Theta$ from a proposal distribution, whose density we denote by $q(\cdot \mid \theta)$, and by tuning the probability of accepting a new sample so that samples are indeed generated from the posterior. These sampling schemes require the evaluation of the posterior distribution for each new sample. In our setting, in which it is unfeasible to evaluate the posterior due to the complex structure of the likelihood function \eqref{eq:LikelihoodMarginalization}, it is possible to employ the pseudo-marginal Metropolis--Hastings method (PMMH) \cite{AnR09}. Given an initial value $\theta^{(0)}$, the algorithm can be summarized as
-
-\begin{enumerate}[label=\textit{\alph*})]
-	\item compute $p(\theta^{(0)} \mid \mathbf y)$ 
-	\item\label{it:extForMH} for $k = 1, \ldots, L$
-	\begin{enumerate}[label=\ref{it:extForMH}.\arabic*)]
-		\item sample $\theta^*$ from $p(\cdot \mid \theta^{(k-1)})$,
-		\item compute the acceptance probability
-		\begin{equation}
-			\alpha\big(\theta^*, \theta^{(k-1)}\big) = \min\Big\{1, \frac{\hat p(\theta^* \mid \mathbf y)}{\hat p(\theta^{(k-1)} \mid \mathbf y)} \, \frac{q(\theta^{(k-1)} \mid \theta^*)}{q(\theta^* \mid \theta^{(k-1)})}\Big\},
-		\end{equation}
-		\item set $\theta^{(k)} = \theta^*$ with probability $\alpha\big(\theta^*, \theta^{(k-1)}\big)$, $\theta^{(k)} = \theta^{(k-1)}$ otherwise.
-	\end{enumerate}
-\end{enumerate}
-It is possible to prove \cite{AnR09} that the Markov chain generated by the PMMH algorithm has the posterior $p(\theta \mid \mathbf y)$ as unique invariant distribution. Therefore, choosing $L$ big enough it is possible to generate samples distributed as the targeted posterior. The performances of the PMMH algorithm strongly depend on the quality of the unbiased estimator $\hat p(\theta \mid \mathbf y)$. In particular, high values for the variance result in Markov chains with a degenerate behaviour, i.e., an extremely low acceptance ratio, regardless of the choice of the proposal distribution (see e.g. \cite{DPD15}). A short overview of methods to produce unbiased estimators of the posterior ought to be found in the next section.
-
-\subsection{Unbiased estimators of the posterior density}
-
-An unbiased estimator of the posterior density $p(\theta \mid \mathbf y)$ can be computed with a Monte Carlo approximation. We assume we can evaluate the prior density $\prior(\theta)$ up to a constant, and therefore focus only on the estimation of the likelihood term $p(\mathbf y \mid \theta)$. In particular, a Monte Carlo scheme to obtain such an estimator is summarized as
-\begin{enumerate}[label=\arabic*)]
-	\item sample $M$ particles $\{X^{(i)}_0\}_{i=1}^M$ from $p(x_0)$,
-	\item initialize the likelihood estimator $\hat p(\mathbf y \mid \theta) = 1$,
-	\item\label{it:extForMC} for $k = 0, \ldots, N-1$,
-		\begin{enumerate}[label=\ref{it:extForMC}.\arabic*)]
-			\item for $i = 1, \ldots, M$, propagate the particles sampling $X^{(i)}_{k+1}$ from $p(\cdot \mid X_k^{(i)}, \theta)$,
-			\item update the likelihood estimation 
-			\begin{equation}
-				\hat p(\mathbf y \mid \theta) \leftarrow \hat p(\mathbf y \mid \theta) \, \frac{1}{M} \sum_{i=1}^M p(y_{k+1} \mid X_{k+1}^{(i)}).
-			\end{equation} 
-		\end{enumerate}
-\end{enumerate} 
-The procedure above produces indeed an unbiased estimator of the likelihood. Nonetheless, if the noise driving the process $x(t)$ is not negligible, the variance of the estimator will render the estimation not employable in practice. In order to overcome this issue, particle filters ought to be employed for obtaining an unbiased estimation of the likelihood. The main idea of particle filters is introducing weights on the particles, updating the weights at each step according to the observations and replicate the particles with higher weights, thus discarding the particles with meaningless values.. Given an importance density function $p_{\mathrm{IS}}(\cdot \mid x, \theta)$, the particle filter proceeds as
-\begin{enumerate}[label=\textit{\roman*})]
-	\item sample $M$ particles $\{X^{(i)}_0\}_{i=1}^M$ from $p(x_0)$, initialize weights $\{W^{(i)}\} = M^{-1}$,
-	\item initialize the likelihood estimator $\hat p(\mathbf y \mid \theta) = 1$,
-	\item\label{it:extFor} for $k = 0, \ldots, N-1$,
-	\begin{enumerate}[label=\ref{it:extFor}.\arabic*)]
-		\item\label{it:beginOmit} sample an index $i^* \in \{1, \ldots, M\}$ from $p(i^*) = W^{(i^*)}$,
-		\item propagate the particles sampling $X^{(i)}_{k+1}$ from $p_{\mathrm{IS}}(\cdot \mid X_k^{(i^*)}, \theta)$,
-		\item compute the unnormalized weight
-		\begin{equation}\label{eq:PMCMC_UNWEIGHTS}
-			\widehat W^{(i)} = \frac{p(X^{(i)}_{k+1} \mid X^{(i^*)}_k, \theta)\,p(y_{k+1} \mid X^{(i)}_{k+1})}{p_{\mathrm{IS}}(X^{(i)}_{k+1} \mid X^{(i^*)}_k, \theta)},
-		\end{equation}
-		\item\label{it:endOmit} compute the normalized weights
-		\begin{equation}
-			W^{(i)} = \frac{\widehat W^{(i)}}{\sum_{i=1}^M \widehat W^{(i)}},
-		\end{equation}
-		\item update the likelihood estimation 
-		\begin{equation}
-			\hat p(\mathbf y \mid \theta) \leftarrow \hat p(\mathbf y \mid \theta) \, \frac{1}{M} \sum_{i=1}^{M} \widehat W^{(i)}.
-		\end{equation}
-	\end{enumerate}
-\end{enumerate}
-In the algorithm above, we omit for ease of notation at each line from \ref{it:beginOmit} to \ref{it:endOmit} that the computations have to be carried for all $i = 1, \ldots, M$. The estimator $\hat p(\mathbf y \mid \theta)$ is an unbiased estimator of $p(\mathbf y \mid \theta)$ independently of the choice of the importance density $p_{\mathrm{IS}}$, provided that $p_{\mathrm{IS}}(x^* \mid x, \theta) = 0$ only if $p(x^* \mid x, \theta)p(y \mid x^*) = 0$, so that \eqref{eq:PMCMC_UNWEIGHTS} is well-defined. Let us remark that the overall MCMC algorithm employing a particle filter for the likelihood estimation ought to be found in literature under the name of particle MCMC methods (PMCMC) \cite{ADH10}. The variance of the estimator $\hat p(\mathbf y \mid \theta)$ depends strongly on the choice of the importance density $p_{\mathrm{IS}}$ \cite{ADH10, GoW11}. In fact, the choice which appears more natural is to propagate the particle following the transition probability $p(\cdot \mid x, \theta)$. This choice gives rise to the boostrap particle filter \cite{GSS93}, which has the advantage that the transition density does not have to be evaluated. In fact, at the $k$-th step the unnormalized weights simplify to 
-\begin{equation}
-	\widehat W^{(i)} = p(y_{k+1} \mid X^{(i)}_{k+1}),
-\end{equation}
-so that a particle is assigned a higher weight if it is closer to the observations. While the bootstrap particle filter provides with a direct and intuitive implementation, it has been verified in practice that a drastic variance reduction is obtained by choosing at the $k$-th step the importance density as
-\begin{equation}\label{eq:DiffBridge}
-	p_{\mathrm{IS}}(\cdot \mid x_k, \theta) \approx p(\cdot \mid y_{k+1}, x_k, \theta).
-\end{equation}
-Heuristically, this conditioning allows the particles to be generated close to the next observation, so that in turn the phenomenon of particle degeneracy is avoided, the effective sample size is higher and the final likelihood estimation has a lower variance. Nevertheless, an expression for $p(\cdot \mid y_{k+1}, x_k, \theta)$ is in general unavailable. There exist though methods which provide approximations as in \eqref{eq:DiffBridge} \cite{GoW10, GoW11}. Running numerical experiments, we noticed in practice a good improvement of the quality of the estimators using an approach based on Gaussian distributions, which goes under the name of diffusion bridges approximation and is described extensively in \cite{GoW11}.
-
-
-\section{Numerical experiments}
-
-\subsection{Modelling error}
-
-\begin{figure}[t]
-	\centering
-	\begin{tabular}{cc}
-		\includegraphics[]{Figures/MultiMulti} & \includegraphics[]{Figures/MultiHomo} \\
-		\includegraphics[]{Figures/MultiHomoMod} & 
-	\end{tabular}
-\end{figure}
-
-We first consider the one-dimensional case $d = 1$ and equation \eqref{eq:SDE_MS} defined by the slow potential $V_0(x) = x$ and by the fluctuating potential $V_1(x) = \cos(x)$. In this case, the solution of the homogenized equation is an Ornstein--Uhlenbeck process and the coefficients $(A, \Sigma)$ are given by (see e.g. \cite{PaS07})
-\begin{equation}
-	A = \frac{L^2 \alpha}{Z \widehat Z}, \qquad \Sigma = \frac{L^2 \sigma}{Z \widehat Z},
-\end{equation}
-where $L = 2\pi$ is the period of $V_1$ and 
-\begin{equation}
-	Z = \int_0^L e^{-V(x)/\sigma} \dd x, \qquad \widehat Z = \int_0^L e^{V(x)/\sigma} \dd x.
-\end{equation}
-We consider the initial condition $x^\epl(0) = 1$ and generate $N = 1000$ equispaced observations from time $t_1 = 10^{-3}$ to final time $T = t_N = 1$. The noise $\eta$ is distributed as $\eta \sim \mathcal N(0, \gamma^2 I_N)$, where $\gamma = 10^{-3}$. The prior distribution is a standard Gaussian, i.e., $\mu_{\mathrm pr} = \mathcal N(0, I_2)$. We sample from the multiscale posterior $\mu^\epl$, the homogenized posterior $\mu^0$ and the corrected multiscale posterior $\tilde \mu^0$ employing the PMCMC algorithm. In particular, for all posteriors we sample $L = 5000$ values of the parameters, and for each parameter we run a particle filter with $M = 50$ particles.
+%\section{Numerical experiments}
+%
+%\subsection{Modelling error}
+%
+%\begin{figure}[t]
+%	\centering
+%	\begin{tabular}{cc}
+%		\includegraphics[]{Figures/MultiMulti} & \includegraphics[]{Figures/MultiHomo} \\
+%		\includegraphics[]{Figures/MultiHomoMod} & 
+%	\end{tabular}
+%\end{figure}
+%
+%We first consider the one-dimensional case $d = 1$ and equation \eqref{eq:SDE_MS} defined by the slow potential $V_0(x) = x$ and by the fluctuating potential $V_1(x) = \cos(x)$. In this case, the solution of the homogenized equation is an Ornstein--Uhlenbeck process and the coefficients $(A, \Sigma)$ are given by (see e.g. \cite{PaS07})
+%\begin{equation}
+%	A = \frac{L^2 \alpha}{Z \widehat Z}, \qquad \Sigma = \frac{L^2 \sigma}{Z \widehat Z},
+%\end{equation}
+%where $L = 2\pi$ is the period of $V_1$ and 
+%\begin{equation}
+%	Z = \int_0^L e^{-V(x)/\sigma} \dd x, \qquad \widehat Z = \int_0^L e^{V(x)/\sigma} \dd x.
+%\end{equation}
+%We consider the initial condition $x^\epl(0) = 1$ and generate $N = 1000$ equispaced observations from time $t_1 = 10^{-3}$ to final time $T = t_N = 1$. The noise $\eta$ is distributed as $\eta \sim \mathcal N(0, \gamma^2 I_N)$, where $\gamma = 10^{-3}$. The prior distribution is a standard Gaussian, i.e., $\mu_{\mathrm pr} = \mathcal N(0, I_2)$. We sample from the multiscale posterior $\mu^\epl$, the homogenized posterior $\mu^0$ and the corrected multiscale posterior $\tilde \mu^0$ employing the PMCMC algorithm. In particular, for all posteriors we sample $L = 5000$ values of the parameters, and for each parameter we run a particle filter with $M = 50$ particles.
 
 
 

@@ -4,6 +4,7 @@
 #include "generateObservations.hpp"
 #include "computeHomogeneous.hpp"
 #include <MCMC.hpp>
+#include <ParFilLib.hpp>
 #include "../matplotlib-cpp-master/matplotlibcpp.h"
 
 namespace plt = matplotlibcpp;
@@ -46,10 +47,10 @@ int main(int argc, char* argv[])
     oneDimSde sdeHomo{&homoDrift, &diffusion};
 
     double T = 10;
-    unsigned int N = 1000;
+    unsigned int N = 5000;
 
     VectorXd tmpParam(3);
-    tmpParam(0) = 0.2;  // Epsilon
+    tmpParam(0) = 0.05;  // Epsilon
     tmpParam(1) = 1.0;   // True multiscale alpha
     tmpParam(2) = 0.5;   // True multiscale betainv
 
@@ -67,11 +68,11 @@ int main(int argc, char* argv[])
     // ====================================================== //
 
     // Initialize structures for the inverse problem
-    unsigned long M = 20, nMCMC = 10001;
+    unsigned long M = 40 , nMCMC = 10000;
     double noise = 1e-3;
-    double IC = 5.0;
+    double IC = 0.0;
     std::random_device dev;
-    std::default_random_engine noiseSeed{dev()};
+    std::default_random_engine noiseSeed{1};
     std::default_random_engine proposalSeed{dev()};
     std::default_random_engine acceptanceSeed{dev()};
     std::normal_distribution<double> noiseDistribution(0.0, noise);
@@ -101,15 +102,16 @@ int main(int argc, char* argv[])
     outputSol << std::endl;
 
     // Initial parameter guess
-    VectorXd priorMean(param.size());
-    priorMean << param(0), 0.0, 0.0;
+    VectorXd priorMean = VectorXd::Zero(param.size());
+    priorMean(0) = param(0);
     VectorXd initGuess = priorMean;
     std::vector<VectorXd> sample = {};
+
     sample.push_back(initGuess);
     VectorXd priorStdDev(param.size());
     priorStdDev << 0.0, 1.0, 1.0;
-    unsigned int nMC = 40;
-    unsigned int nParam = 10;
+    unsigned int nMC = 4000;
+    unsigned int nParam = 20;
     double propStdDev = 2e-2;
 
     std::vector<double> timeVec(N+1);
@@ -117,12 +119,17 @@ int main(int argc, char* argv[])
         timeVec[i] = T/N * i;
     }
 
-    unsigned int L = 10;
+    std::vector<std::vector<VectorXd>> sampleThreads(nParam);
+    for (unsigned int init = 0; init < nParam; init++) {
+        sampleThreads[init].push_back(initGuess);
+    }
+
+    unsigned int L = 20;
     for (unsigned int l = 0; l < L; l++) {
+        std::cout << "iteration " << l+1 << " / " << L << std::endl;
         // Compute the modeling error statistics and rescale the observations
         std::vector<std::vector<double>> errors;
 
-        std::cout << "Computing modeling error..." << std::endl;
         if (l > 0) {
             priorMean = VectorXd::Zero(3);
             for (auto const &it : sample) {
@@ -134,53 +141,63 @@ int main(int argc, char* argv[])
             }
             priorStdDev = priorStdDev.array().sqrt();
         }
-        ModErrAll modErr(sdeHomo, sde, &V1, IC, priorMean, priorStdDev, T, N, x, noise);
-        modErr.computePF(nParam, nMC);
-        modErr.getStats(errors);
-        std::cout << "Computed modeling error" << std::endl;
-
-        plt::named_plot("xe", timeVec, x, "b");
-        plt::named_plot("x0", timeVec, xHom, "r");
-        std::vector<double> rescaledObs(N+1);
-        for (unsigned int i = 0; i < errors.size()-1; i += 10) {
-            for (unsigned int j = 0; j < N+1; j++) {
-                rescaledObs[j] = x[j] - errors[i][j];
-            }
-            if (!i) {
-                plt::named_plot("xt", timeVec, rescaledObs, "k");
-            } else {
-                plt::plot(timeVec, rescaledObs, "k");
-            }
-        }
-        for (unsigned int j = 0; j < N+1; j++) {
-            rescaledObs[j] = x[j] - errors.back()[j];
-        }
-        plt::named_plot("xtm", timeVec, rescaledObs, "g");
-        plt::legend();
-        plt::show();
         std::cout << priorMean.transpose() << std::endl << priorStdDev.transpose() << std::endl;
 
-        // Inverse problem
-        std::vector<double> dummy = {};
-        std::shared_ptr<Posterior> posterior;
-        // posterior = std::make_shared<PFPosterior>(x, T, IC, 1, noise, sdeHomo, param(0), M, IS); //, stdDevs);
-        if (l < 6) {
-            posterior = std::make_shared<PFPosteriorHom>(rescaledObs, T, IC, 1, noise, sdeHomo, &V1, param(0), M, IS);
-        } else {
-            posterior = std::make_shared<PFPosteriorHom>(x, T, IC, 1, noise, sdeHomo, &V1, param(0), M, IS, dummy,
-                                                         &errors);
-        }
-        std::shared_ptr<Proposals> proposal;
-        std::vector<double> factors = {1.0, 50.0, 1.0};
-        if (l > 0) {
-            factors[1] = priorStdDev(1) / priorStdDev(2);
-            propStdDev = priorStdDev(2);
-            std::cout << "proposal factors: " << factors[1] << " " << propStdDev << std::endl;
-        }
-        proposal = std::make_shared<Proposals>(propStdDev, factors);
-        MCMC mcmc(sample.back(), proposal, posterior, nMCMC/L);
-        sample = mcmc.compute(&proposalSeed, &acceptanceSeed);
+        std::cout << "Computing modeling error..." << std::endl;
+        ModErrAll modErr(sdeHomo, sde, &V1, IC, priorMean, priorStdDev, T, N, x, noise);
+        modErr.computePF(nParam, nMC);
+        modErr.getModErr(errors);
+        std::cout << "Computed modeling error" << std::endl;
 
+        bool plot = true;
+        if (plot) {
+            plt::named_plot("xe", timeVec, x, "b");
+            plt::named_plot("x0", timeVec, xHom, "r");
+        }
+        std::vector<double> rescaledObs(N + 1);
+        for (unsigned int i = 0; i < errors.size(); i++) {
+            for (unsigned int j = 0; j < N + 1; j++) {
+                rescaledObs[j] = x[j] - errors[i][j];
+            }
+            if (plot) {
+                if (!i) {
+                    plt::named_plot("xt", timeVec, rescaledObs, "k");
+                } else {
+                    plt::plot(timeVec, rescaledObs, "k");
+                }
+            }
+        }
+        if (plot) {
+            plt::legend();
+            plt::show();
+        }
+
+        #pragma omp parallel for num_threads(5)
+        for (unsigned int modIt = 0; modIt < errors.size(); modIt++) {
+            // Inverse problem
+            std::vector<double> dummy = {};
+            std::shared_ptr<Posterior> posterior;
+            std::vector<std::vector<double>> errorsThreads(1, std::vector<double>(N+1));
+            for (unsigned int itit = 0; itit < N+1; itit++) {
+                errorsThreads[0][itit] = errors[modIt][itit];
+            }
+            posterior = std::make_shared<PFPosteriorHom>(x, T, IC, 1, noise, sdeHomo, &V1, param(0), M, IS, dummy, &errorsThreads);
+            std::shared_ptr<Proposals> proposal;
+            std::vector<double> factors = {1.0, 20.0, 1.0};
+            /* if (l > 0) {
+                factors[1] = priorStdDev(1) / priorStdDev(2);
+                propStdDev = priorStdDev(2);
+                std::cout << "proposal factors: " << factors[1] << " " << propStdDev << std::endl;
+            } */
+            proposal = std::make_shared<Proposals>(propStdDev, factors);
+            MCMC mcmc(sampleThreads[modIt].back(), proposal, posterior, nMCMC / L);
+            sampleThreads[modIt] = mcmc.compute(&proposalSeed, &acceptanceSeed);
+        }
+
+        sample.clear();
+        for (unsigned int modIt = 0; modIt < errors.size(); modIt++) {
+            sample.insert(sample.end(), sampleThreads[modIt].begin(), sampleThreads[modIt].end());
+        }
         for (auto const &it : sample) {
             output << it.transpose() << std::endl;
         }

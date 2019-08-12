@@ -22,7 +22,7 @@ std::vector<double> computeZs(double (*gradV1)(double), double sigma, double L)
     std::vector<double> Zs = {0.0, 0.0};
 
     for (int i = 0; i < N; i++) {
-        Zs[0] += h * (std::exp(gradV1(discr[i]) / sigma)  + std::exp(gradV1(discr[i+1])  / sigma)) / 2;
+        Zs[0] += h * (std::exp( gradV1(discr[i]) / sigma) + std::exp( gradV1(discr[i+1]) / sigma)) / 2;
         Zs[1] += h * (std::exp(-gradV1(discr[i]) / sigma) + std::exp(-gradV1(discr[i+1]) / sigma)) / 2;
     }
 
