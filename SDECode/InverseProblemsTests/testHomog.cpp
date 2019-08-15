@@ -42,17 +42,17 @@ int main(int argc, char* argv[])
     oneDimSde sdeHomo{&homoDrift, &diffusion};
 
     double T = 1;
-    unsigned int N = 40000;
+    unsigned int N = 80000;
 
     VectorXd tmpParam(3);
-    tmpParam(0) = 0.025;  // Epsilon
+    tmpParam(0) = 0.005;  // Epsilon
     tmpParam(1) = 1.0;  // True multiscale alpha
     tmpParam(2) = 0.5;  // True multiscale betainv
 
     // Compute coefficients of the homogenised equation
     std::vector<double> homCoeffs = computeHomCoeffs(tmpParam, (2.0*M_PI), &V1);
     VectorXd homoParam(3);
-    homoParam(0) = 0.1;
+    homoParam(0) = tmpParam(0);
     homoParam(1) = std::log(homCoeffs[0]);
     homoParam(2) = std::log(homCoeffs[1]);
     VectorXd param = tmpParam;
@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
     std::random_device dev;
     unsigned int obsSeed;
 
-    unsigned long M = 5000;
+    unsigned long M = 50000;
     std::vector<double> xFinal(M), xHomFinal(M);
 
     std::vector<double> timeVec(N+1);
@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
         timeVec[k] = k*T/N;
     }
 
-    #pragma omp parallel for num_threads(5)
+    #pragma omp parallel for num_threads(8)
     for (unsigned int k = 0; k < M; k++) {
         obsSeed = dev();
         auto x = generateObservations1D(sde, IC, param, T, N, obsSeed);
@@ -88,8 +88,8 @@ int main(int argc, char* argv[])
     }
     plt::show();
 
-    plt::hist(xHomFinal, 20, "b", 0.3);
-    plt::hist(xFinal, 20, "r", 0.3);
+    plt::hist(xHomFinal, 100, "b", 0.3);
+    plt::hist(xFinal, 100, "r", 0.3);
     plt::show();
 
     return 0;

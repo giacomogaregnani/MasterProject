@@ -8,11 +8,9 @@
 
 class ParFil {
 private:
-    std::shared_ptr<EM1D> Solver;
     oneDimSde sde;
     double T;
     double IC;
-    unsigned int samplingRatio;
     std::vector<double> obs;
     double noise;
     std::vector<std::vector<double>> X;
@@ -23,31 +21,21 @@ private:
     double likelihood;
     std::default_random_engine seed;
     std::discrete_distribution<unsigned int> shuffler;
-    std::normal_distribution<double> gaussian;
-    double ISmean;
-    double ISstddev;
     std::vector<double> timeNoise;
-    std::vector<std::vector<double>> BM;
-    std::vector<double> BMOld;
-    std::vector<std::vector<unsigned int>> tree;
+    std::shared_ptr<ForwardPF> forwardSampler;
 
 public:
     ParFil() = default;
     ~ParFil() = default;
-    ParFil(std::vector<double> &y, double T, double IC, unsigned int sR,
-           double noise, oneDimSde &sde, double eps, unsigned long nParticles,
-           std::vector<double> timeNoise = {});
+    ParFil(std::vector<double>& y, double T, double IC,
+           double noise, double eps, unsigned long nParticles,
+           std::shared_ptr<ForwardPF>& forwardSampler);
     void compute(VectorXd& theta, std::vector<std::vector<double>>* mod = nullptr);
-    double importanceSampler(double h, double hObs, double x, VectorXd &theta,
-                             unsigned long obsIdx, unsigned long j, double trueNoise = 0, double correction = 0);
     void computeDiffBridge(VectorXd& theta, std::vector<std::vector<double>>* mod = nullptr,
                            std::vector<double>* weights = nullptr, bool verbose = false);
     double getLikelihood() const;
     std::vector<double> sampleX();
     std::vector<std::vector<double>> getX() const;
-    std::vector<std::vector<double>> getBM() const;
-    std::vector<double> getW() const;
-    std::vector<std::vector<unsigned int>> getTree() const;
 };
 
 #endif

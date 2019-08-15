@@ -3,7 +3,7 @@
 
 #include "Posterior.hpp"
 #include <EulerMaruyama.hpp>
-#include <ParFil.hpp>
+#include <ParFilLib.hpp>
 #include <Eigen/Dense>
 #include <vector>
 #include <memory>
@@ -21,9 +21,8 @@ public:
     PFPosterior() = default;
     virtual ~PFPosterior() = default;
     PFPosterior(std::vector<double>& x, double T, double IC,
-                unsigned int sR, double noise, oneDimSde sde,
-                double eps, unsigned long M, bool IS = false,
-                std::vector<double> timeNoise = {});
+                double noise, oneDimSde sde,
+                double eps, unsigned long M, bool IS = false);
     double computePosterior(VectorXd& theta) override;
 };
 

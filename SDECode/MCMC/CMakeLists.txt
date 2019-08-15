@@ -15,8 +15,6 @@ add_library(MCMC
         PFPosteriorHom.cpp
         ModelingError.hpp
         ModelingError.cpp
-        ModelingErrorAll.hpp
-        ModelingErrorAll.cpp
         )
 
 target_link_libraries(MCMC

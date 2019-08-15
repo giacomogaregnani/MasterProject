@@ -2,12 +2,16 @@
 #include "PFPosterior.hpp"
 
 PFPosterior::PFPosterior(std::vector<double>& x, double T, double IC,
-                         unsigned int sR, double noise, oneDimSde sde,
-                         double eps, unsigned long M, bool IS,
-                         std::vector<double> timeNoise):
+                         double noise, oneDimSde sde,
+                         double eps, unsigned long M, bool IS):
                          IS(IS)
 {
-    ParticleFilter = std::make_shared<ParFil>(x, T, IC, sR, noise, sde, eps, M, timeNoise);
+    std::shared_ptr<ForwardPF> forwardSampler;
+    auto N = x.size() - 1;
+    std::random_device dev;
+    std::default_random_engine seed(dev());
+    forwardSampler = std::make_shared<ForwardPF>(sde, T/N, seed);
+    ParticleFilter = std::make_shared<ParFil>(x, T, IC, noise, eps, M, forwardSampler);
 }
 
 double PFPosterior::computePosterior(VectorXd& theta)

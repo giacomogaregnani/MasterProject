@@ -44,8 +44,8 @@ int main(int argc, char* argv[])
     param(1) = std::log(1.0); // True multiscale alpha
     param(2) = std::log(0.5); // True multiscale betainv
 
-    double T = 0.1;
-    unsigned int N = 100;
+    double T = 1;
+    unsigned int N = 1000;
 
     std::ofstream output(DATA_PATH + std::string("test.txt"), std::ofstream::out | std::ofstream::trunc);
     std::ofstream outputSol(DATA_PATH + std::string("testSol.txt"), std::ofstream::out | std::ofstream::trunc);
@@ -66,25 +66,26 @@ int main(int argc, char* argv[])
     }
     outputSol << std::endl;
 
-    std::shared_ptr<ParFil> PF;
-    PF = std::make_shared<ParFil>(x, T, IC, 1, noise, sdeHomo, param(0), M);
+    std::shared_ptr<ForwardPF> forwardPF;
+    forwardPF = std::make_shared<ForwardPF>(sdeHomo, T/N, noiseSeed);
+    ParFil PF(x, T, IC, noise, param(0), M, forwardPF);
     std::vector<std::vector<double>> X;
 
     for (unsigned int i = 0; i < 1000; i++) {
-        PF->compute(param);
-        outputLik << PF->getLikelihood() << std::endl;
+        PF.compute(param);
+        outputLik << PF.getLikelihood() << std::endl;
         if ((i+1) % 100 == 0) {
             std::cout << "iteration " << i+1 << std::endl;
         }
     }
 
-    X = PF->getX();
+    X = PF.getX();
     for (auto const &it : X) {
         for (auto const &itit : it)
             output << itit << "\t";
         output << std::endl;
     }
-    for (auto const &it : PF->sampleX()) {
+    for (auto const &it : PF.sampleX()) {
         output << it << "\t";
     }
     output << std::endl;

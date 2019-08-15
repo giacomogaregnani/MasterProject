@@ -15,29 +15,10 @@ add_executable(testPMMH testPMMH.cpp
         computeHomogeneous.hpp computeHomogeneous.cpp)
 target_link_libraries(testPMMH SDESolver MCMC)
 
-add_executable(testModErr testModErr.cpp
-        generateObservations.hpp generateObservations.cpp)
-target_link_libraries(testModErr SDESolver MCMC)
-
-add_executable(testPMMHMod testPMMHmod.cpp
+add_executable(testPMMHMod testPMMHMod.cpp
         generateObservations.hpp generateObservations.cpp
         computeHomogeneous.hpp computeHomogeneous.cpp)
 target_link_libraries(testPMMHMod SDESolver MCMC)
-
-add_executable(testPMMHAll testPMMHAll.cpp
-        generateObservations.hpp generateObservations.cpp
-        computeHomogeneous.hpp computeHomogeneous.cpp)
-target_link_libraries(testPMMHAll SDESolver MCMC)
-
-add_executable(testPMMHModAll testPMMHModAll.cpp
-        generateObservations.hpp generateObservations.cpp
-        computeHomogeneous.hpp computeHomogeneous.cpp)
-target_link_libraries(testPMMHModAll SDESolver MCMC)
-
-add_executable(testPMMHModAll2 testPMMHModAllWeights.cpp
-        generateObservations.hpp generateObservations.cpp
-        computeHomogeneous.hpp computeHomogeneous.cpp)
-target_link_libraries(testPMMHModAll2 SDESolver MCMC)
 
 add_executable(testHomog testHomog.cpp
         generateObservations.hpp generateObservations.cpp

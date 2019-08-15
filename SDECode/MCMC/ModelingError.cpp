@@ -3,7 +3,7 @@
 
 namespace plt = matplotlibcpp;
 
-ModErrAll::ModErrAll(oneDimSde sdeCoarse, oneDimSde sdeFine, double (*V1) (double), double IC,
+ModErr::ModErr(oneDimSde sdeCoarse, oneDimSde sdeFine, double (*V1) (double), double IC,
                VectorXd& priorMean, VectorXd& priorStdDev, double T,
                unsigned int N, std::vector<double>& observations, double noise):
         sdeCoarse(sdeCoarse),
@@ -18,7 +18,7 @@ ModErrAll::ModErrAll(oneDimSde sdeCoarse, oneDimSde sdeFine, double (*V1) (doubl
         noise(noise)
 {}
 
-void ModErrAll::computePF(unsigned int nParam, unsigned int nMC)
+void ModErr::computePF(unsigned int nParam, unsigned int nMC)
 {
     errors.resize(nParam);
     for (unsigned int i = 0; i < errors.size(); i++) {
@@ -60,7 +60,7 @@ void ModErrAll::computePF(unsigned int nParam, unsigned int nMC)
     }
 }
 
-void ModErrAll::computePFAlt(unsigned int nMC)
+void ModErr::computePFAlt(unsigned int nMC)
 {
     errors.resize(nMC);
     for (unsigned int i = 0; i < errors.size(); i++) {
@@ -98,12 +98,12 @@ void ModErrAll::computePFAlt(unsigned int nMC)
     weights = PFMod.getW();
 }
 
-void ModErrAll::getModErr(std::vector<std::vector<double>>& getData)
+void ModErr::getModErr(std::vector<std::vector<double>>& getData)
 {
     getData = errors;
 }
 
-void ModErrAll::getWeights(std::vector<double>& getData)
+void ModErr::getWeights(std::vector<double>& getData)
 {
     getData = weights;
 }

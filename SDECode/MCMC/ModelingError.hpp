@@ -4,7 +4,7 @@
 #include <EulerMaruyama.hpp>
 #include <ParFilLib.hpp>
 
-class ModErrAll {
+class ModErr {
 private:
     oneDimSde sdeCoarse;
     oneDimSde sdeFine;
@@ -20,9 +20,9 @@ private:
     double noise;
 
 public:
-    ModErrAll() = default;
-    ~ModErrAll() = default;
-    ModErrAll(oneDimSde sdeCoarse, oneDimSde sdeFine, double (*V1) (double),
+    ModErr() = default;
+    ~ModErr() = default;
+    ModErr(oneDimSde sdeCoarse, oneDimSde sdeFine, double (*V1) (double),
            double IC, VectorXd &priorMean,
            VectorXd &priorStdDev, double T,
            unsigned int N, std::vector<double> &observations, double noise);

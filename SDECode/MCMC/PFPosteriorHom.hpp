@@ -26,10 +26,9 @@ public:
     virtual ~PFPosteriorHom() = default;
     VectorXd computeHomogeneous(VectorXd param, double L, double (*V1) (double));
     PFPosteriorHom(std::vector<double>& x, double T, double IC,
-                   unsigned int sR, double noise, oneDimSde sde,
+                   double noise, oneDimSde sde,
                    double (*V1) (double),
                    double eps, unsigned long M, bool IS = false,
-                   std::vector<double> timeNoise = {},
                    std::vector<std::vector<double>>* errors = nullptr,
                    std::vector<double>* weights = nullptr);
     double computePosterior(VectorXd& theta) override;

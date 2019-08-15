@@ -18,7 +18,7 @@ private:
     double (*V1) (double);
     std::normal_distribution<double> gaussian;
     std::normal_distribution<double> gaussianIS;
-    Vector2d ISmean;
+    Vector2d ISMean;
     Matrix2d ISVariance;
     Vector2d transMean;
     Matrix2d transVariance;
@@ -37,6 +37,28 @@ public:
     Vector2d generateSampleIS(Vector2d& oldValue, double newObs, double noise);
     double evalTransDensity(Vector2d& oldValue, Vector2d& newValue);
     double evalISDensity(Vector2d& newValue);
+};
+
+class ForwardPF {
+private:
+    oneDimSde sde;
+    std::shared_ptr<EM1D> solver;
+    std::default_random_engine seed;
+    double h;
+    VectorXd param;
+    std::normal_distribution<double> gaussianIS;
+    double ISMean;
+    double ISVariance;
+
+public:
+    ForwardPF() = default;
+    ~ForwardPF() = default;
+    ForwardPF(oneDimSde& sde, double h, std::default_random_engine& seed);
+    void modifyParam(VectorXd& theta);
+    double generateSample(double oldValue);
+    double generateSampleIS(double oldValue, double newObs, double noise);
+    double evalTransDensity(double oldValue, double newValue);
+    double evalISDensity(double newValue);
 };
 
 #endif

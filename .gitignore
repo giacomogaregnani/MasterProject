@@ -31,6 +31,7 @@ SDECode/matlabPlots/**/*.mat
 SDECode/matlabPlots/**/*.txt
 SDECode/matlabPlots/FEM_library/**
 SDECode/matplotlib-cpp-master
+SDECode/plots/**
 
 Reports/**/*.aux
 Reports/**/*.eps
@@ -43,5 +44,3 @@ Reports/**/*.bbl
 Reports/Poster_Orane/**
 
 matlabCode/**
-
-SDECode/plots/**

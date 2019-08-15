@@ -83,9 +83,6 @@ Vector2d ForwardPFModErr::generateSample(Vector2d& oldValue)
     return newValue;
 }
 
-/* TODO: the IS approach tracks better the multiscale process and has a bigger ESS, but the moderr estimation looks
-worse than the boostrap PF approach */
-
 Vector2d ForwardPFModErr::generateSampleIS(Vector2d& oldValue, double newObs, double noise)
 {
     Vector2d newValue;
@@ -152,3 +149,58 @@ double ForwardPFModErr::evalISDensity(Vector2d &newValue)
     return gaussianDensity(newValue(0), ISMean(0), stddev);
 }
 
+// ===================================================================== //
+
+ForwardPF::ForwardPF(oneDimSde &sde, double h, std::default_random_engine &seed):
+        sde(sde),
+        seed(seed),
+        h(h)
+{
+    solver = std::make_shared<EM1D>(sde, seed);
+}
+
+void ForwardPF::modifyParam(VectorXd& theta)
+{
+    param = theta;
+    solver->modifyParam(theta);
+}
+
+
+double ForwardPF::generateSample(double oldValue)
+{
+    return solver->oneStep(h, oldValue);
+}
+
+double ForwardPF::generateSampleIS(double oldValue, double newObs, double noise)
+{
+    double alpha = sde.drift(oldValue, param),
+           beta = sde.diffusion(oldValue, param);
+
+    // In Golightly, Wilkinson (2011) the diffusion is under square root
+    beta *= beta;
+
+    double denom = noise * noise + beta * h;
+    double aj = alpha + beta * (newObs - (oldValue + alpha * h)) / denom;
+    double bj = beta - h * beta * beta / denom;
+
+    ISMean = oldValue + aj * h;
+    ISVariance = bj * h;
+
+    gaussianIS.param(std::normal_distribution<double>::param_type(ISMean, std::sqrt(ISVariance)));
+
+    return gaussianIS(seed);
+}
+
+double ForwardPF::evalTransDensity(double oldValue, double newValue)
+{
+    double transMean = sde.drift(oldValue, param) * h + oldValue;
+    double transStdDev = sde.diffusion(oldValue, param) * std::sqrt(h);
+
+    return gaussianDensity(newValue, transMean, transStdDev);
+}
+
+double ForwardPF::evalISDensity(double newValue)
+{
+    double ISStdDev = std::sqrt(ISVariance);
+    return gaussianDensity(newValue, ISMean, ISStdDev);
+}

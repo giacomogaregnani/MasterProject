@@ -3,14 +3,14 @@
 
 % x = dlmread('MultiMulti.txt');
 % sol = dlmread('MultiMultiSol.txt');
-x = dlmread('MultiHomo.txt');
-sol = dlmread('MultiHomoSol.txt');
-% x = dlmread('HomoHomo.txt');
-% sol = dlmread('HomoHomoSol.txt');
+% x = dlmread('MultiHomo.txt');
+% sol = dlmread('MultiHomoSol.txt');
+x = dlmread('HomoHomo.txt');
+sol = dlmread('HomoHomoSol.txt');
 
 
 %%
-T = 50;
+T = 1;
 
 nChains = 1;
 hom = x(1, :);

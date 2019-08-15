@@ -45,13 +45,13 @@ int main(int argc, char* argv[])
     oneDimSde sde{&multiDrift, &diffusion};
     oneDimSde sdeHomo{&homoDrift, &diffusion};
 
-    double T = 200;
-    unsigned int N = 40000;
+    double T = 10.0;
+    unsigned int N = 200000;
 
     VectorXd tmpParam(3);
-    tmpParam(0) = 0.025;  // Epsilon
+    tmpParam(0) = 0.01;  // Epsilon
     tmpParam(1) = 1.0;   // True multiscale alpha
-    tmpParam(2) = 2.0;   // True multiscale betainv
+    tmpParam(2) = 0.5;   // True multiscale betainv
 
     std::ofstream output(DATA_PATH + std::string("HomoHomo.txt"), std::ofstream::out | std::ofstream::trunc);
     std::ofstream outputSol(DATA_PATH + std::string("HomoHomoSol.txt"), std::ofstream::out | std::ofstream::trunc);
@@ -67,8 +67,8 @@ int main(int argc, char* argv[])
     // ====================================================== //
 
     // Initialize structures for the inverse problem
-    unsigned long M = 200, nMCMC = 1000;
-    double noise = 1e-3;
+    unsigned long M = 20, nMCMC = 2000;
+    double noise = 1e-4;
     double IC = 0.0;
     std::random_device dev;
     std::default_random_engine noiseSeed{1};
@@ -78,21 +78,18 @@ int main(int argc, char* argv[])
     bool IS = true;
 
     // Generate and perturb observations
-    auto x = generateObservations1D(sdeHomo, IC, param, T, N, dev());
+    auto x = generateObservations1D(sde, IC, param, T, N, 0);
     for (auto const &itSol : x)
         outputSol << itSol << "\t";
     outputSol << std::endl;
     outputSol << x[0] << "\t";
-
     for (unsigned long i = 1; i < x.size(); i++) {
         x[i] += noiseDistribution(noiseSeed);
-        // outputSol << x[i] << "\t";
     }
-    // outputSol << std::endl;
 
     // Compute a homogeneous path with the same Brownian for comparison
     VectorXd homoParam(3);
-    homoParam(0) = 0.1;
+    homoParam(0) = param(0);
     homoParam(1) = std::log(homCoeffs[0]);
     homoParam(2) = std::log(homCoeffs[1]);
     auto xHom = generateObservations1D(sdeHomo, IC, homoParam, T, N, 0);
@@ -102,19 +99,26 @@ int main(int argc, char* argv[])
     outputSol << std::endl;
     outputSol.close();
 
+    std::vector<double> timeVec(N+1);
+    for (unsigned int k = 0; k < N+1; k++) {
+        timeVec[k] = k*T/N;
+    }
+    plt::plot(timeVec, xHom, "b");
+    plt::plot(timeVec, x, "r");
+    plt::show();
+
     // Initial parameter guess
-    VectorXd initGuess = VectorXd::Zero(param.size());
+    VectorXd initGuess = param; // VectorXd::Zero(param.size());
     initGuess(0) = param(0);
 
     system("exec rm -r /net/smana3/vol/vol2/anmc/garegnan/Desktop/Project/SDECode/plots/*");
     // Inverse problem
     std::shared_ptr<Posterior> posterior;
-    posterior = std::make_shared<SDEPosterior>(x, T, IC, 1, noise, sdeHomo, param(0), M);
-    posterior->computePosterior(param);
-    // posterior = std::make_shared<PFPosteriorHom>(x, T, IC, 1, noise, sdeHomo, &V1, param(0), M, IS);
+    // posterior = std::make_shared<PFPosterior>(x, T, IC, noise, sdeHomo, param(0), M, IS);
+    posterior = std::make_shared<PFPosteriorHom>(x, T, IC, noise, sdeHomo, &V1, param(0), M, IS);
     std::shared_ptr<Proposals> proposal;
-    std::vector<double> factors = {1.0, 1.0, 1.0};
-    proposal = std::make_shared<Proposals>(1e-1, factors);
+    std::vector<double> factors = {1.0, 100.0, 1.0};
+    proposal = std::make_shared<Proposals>(5e-3, factors);
     MCMC mcmc(initGuess, proposal, posterior, nMCMC);
     auto sample = mcmc.compute(&proposalSeed, &acceptanceSeed);
     for (auto const &itSample : sample)
