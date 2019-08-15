@@ -100,23 +100,23 @@ Vector2d ForwardPFModErr::generateSampleIS(Vector2d& oldValue, double newObs, do
     double aj = alpha + beta * (newObs - (oldValue(0) + alpha * h)) / denom;
     double bj = beta - h * beta * beta / denom;
 
-    ISmean(0) = oldValue(0) + aj * h;
+    ISMean(0) = oldValue(0) + aj * h;
     ISVariance(0, 0) = bj * h;
 
     double xHomOld = oldValue(0) - oldValue(1);
-    ISmean(1) = xHomOld + h * sdeHomo.drift(xHomOld, paramHomo);
+    ISMean(1) = xHomOld + h * sdeHomo.drift(xHomOld, paramHomo);
     double diffHom = sdeHomo.diffusion(xHomOld, paramHomo);
     ISVariance(1, 1) = diffHom * diffHom * h;
     ISVariance(1, 0) = 0.0;
     ISVariance(0, 1) = 0.0;
 
-    gaussianIS.param(std::normal_distribution<double>::param_type(ISmean(0), std::sqrt(ISVariance(0, 0))));
+    gaussianIS.param(std::normal_distribution<double>::param_type(ISMean(0), std::sqrt(ISVariance(0, 0))));
     newValue(0) = gaussianIS(seed);
-    gaussianIS.param(std::normal_distribution<double>::param_type(ISmean(1), std::sqrt(ISVariance(1, 1))));
+    gaussianIS.param(std::normal_distribution<double>::param_type(ISMean(1), std::sqrt(ISVariance(1, 1))));
     newValue(1) = newValue(0) - gaussianIS(seed);
 
     // We worked with x^\varepsilon and x^0 so we need to transform with A = (1 0; -1 1)
-    ISmean = A * ISmean;
+    ISMean = A * ISMean;
     ISVariance = A * ISVariance * A.transpose();
 
     return newValue;
@@ -149,6 +149,6 @@ double ForwardPFModErr::evalTransDensity(Vector2d &oldValue, Vector2d &newValue)
 double ForwardPFModErr::evalISDensity(Vector2d &newValue)
 {
     double stddev = std::sqrt(ISVariance(0, 0));
-    return gaussianDensity(newValue(0), ISmean(0), stddev);
+    return gaussianDensity(newValue(0), ISMean(0), stddev);
 }
 
