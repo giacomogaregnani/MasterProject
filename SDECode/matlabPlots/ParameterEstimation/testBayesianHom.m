@@ -3,20 +3,20 @@
 
 % x = dlmread('MultiMulti.txt');
 % sol = dlmread('MultiMultiSol.txt');
-% x = dlmread('MultiHomo.txt');
-% sol = dlmread('MultiHomoSol.txt');
-x = dlmread('HomoHomo.txt');
-sol = dlmread('HomoHomoSol.txt');
+x = dlmread('MultiHomo.txt');
+sol = dlmread('MultiHomoSol.txt');
+% x = dlmread('HomoHomo.txt');
+% sol = dlmread('HomoHomoSol.txt');
 
 
 %%
-T = 1;
+T = 12;
 
 nChains = 1;
 hom = x(1, :);
-trueVals = [1, 0.5];
+trueVals = [2, 0.5];
 % trueVals = [0.19, 0.09];
-% trueVals = hom;
+% trueVals = hom(1:2);
 
 sampleTot = x(2:end, 2:end);
 sampleSize = size(sampleTot, 1) / nChains;
@@ -37,7 +37,7 @@ plot(t, sol);
 % sampleTot = exp(sampleTot);
 % trueVals = exp(trueVals);
 
-idx = floor(0.8 * size(sampleTot, 1)):size(sampleTot, 1);
+idx = floor(0.4 * size(sampleTot, 1)):size(sampleTot, 1);
 bwa = 2 * (4 * std(sampleTot(idx, 1))^5 / (3 * size(sampleTot, 1)))^(1/5);
 bws = 2 * (4 * std(sampleTot(idx, 2))^5 / (3 * size(sampleTot, 1)))^(1/5);
 

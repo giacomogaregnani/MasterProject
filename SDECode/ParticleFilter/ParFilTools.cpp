@@ -15,12 +15,14 @@ double gaussianDensity2d(Vector2d& x, Vector2d& mu, Matrix2d& sigma)
 }
 
 ForwardPFModErr::ForwardPFModErr(oneDimSde &sde, oneDimSde &sdeHomo, double h,
-                                               std::default_random_engine &seed, double (*V1) (double)):
+                                 std::default_random_engine &seed, double (*V1) (double),
+                                 bool homogen):
     sde(sde),
     sdeHomo(sdeHomo),
     seed(seed),
     h(h),
-    V1(V1)
+    V1(V1),
+    homogen(homogen)
 {
     solver = std::make_shared<EM1D>(sde, seed);
     solverHomo = std::make_shared<EM1D>(sdeHomo, seed);
@@ -66,10 +68,14 @@ VectorXd ForwardPFModErr::computeHomogeneous(VectorXd param, double L, double (*
 void ForwardPFModErr::modifyParam(VectorXd& theta)
 {
     param = theta;
-    VectorXd thetaHomo = computeHomogeneous(theta, 2*M_PI, V1);
-    paramHomo = thetaHomo;
     solver->modifyParam(theta);
-    solverHomo->modifyParam(thetaHomo);
+    if (homogen) {
+        VectorXd thetaHomo = computeHomogeneous(theta, 2*M_PI, V1);
+        paramHomo = thetaHomo;
+        solverHomo->modifyParam(thetaHomo);
+    } else {
+        solverHomo->modifyParam(theta);
+    }
 }
 
 

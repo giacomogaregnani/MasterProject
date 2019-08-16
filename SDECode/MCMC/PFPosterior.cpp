@@ -3,8 +3,12 @@
 
 PFPosterior::PFPosterior(std::vector<double>& x, double T, double IC,
                          double noise, oneDimSde sde,
-                         double eps, unsigned long M, bool IS):
-                         IS(IS)
+                         double eps, unsigned long M, bool IS,
+                         std::vector<std::vector<double>>* errors,
+                         std::vector<double>* weights):
+                         IS(IS),
+                         errors(errors),
+                         weights(weights)
 {
     std::shared_ptr<ForwardPF> forwardSampler;
     auto N = x.size() - 1;
@@ -21,7 +25,7 @@ double PFPosterior::computePosterior(VectorXd& theta)
     double prior = -0.5 * thetaWithoutEps.dot(thetaWithoutEps);
 
     if (IS) {
-        ParticleFilter->computeDiffBridge(theta);
+        ParticleFilter->computeDiffBridge(theta, errors, weights);
     } else {
         ParticleFilter->compute(theta);
     }

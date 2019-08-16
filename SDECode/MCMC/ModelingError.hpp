@@ -18,6 +18,7 @@ private:
     std::vector<double> weights;
     std::vector<double> obs;
     double noise;
+    bool homogen;
 
 public:
     ModErr() = default;
@@ -25,7 +26,7 @@ public:
     ModErr(oneDimSde sdeCoarse, oneDimSde sdeFine, double (*V1) (double),
            double IC, VectorXd &priorMean,
            VectorXd &priorStdDev, double T,
-           unsigned int N, std::vector<double> &observations, double noise);
+           unsigned int N, std::vector<double> &observations, double noise, bool homogen = true);
     void computePF(unsigned int nParam, unsigned int nMC);
     void computePFAlt(unsigned int nMC);
     void getModErr(std::vector<std::vector<double>>& getData);

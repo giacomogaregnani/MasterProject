@@ -46,13 +46,13 @@ int main(int argc, char* argv[])
     oneDimSde sde{&multiDrift, &diffusion};
     oneDimSde sdeHomo{&homoDrift, &diffusion};
 
-    double T = 1;
-    unsigned int N = 100;
+    double T = 5;
+    unsigned int N = 1000;
 
     VectorXd tmpParam(3);
     tmpParam(0) = 0.1;  // Epsilon
-    tmpParam(1) = 1.0;   // True multiscale alpha
-    tmpParam(2) = 0.5;   // True multiscale betainv
+    tmpParam(1) = 1.0;  // True multiscale alpha
+    tmpParam(2) = 0.5;  // True multiscale betainv
 
     std::ofstream output(DATA_PATH + std::string("MultiHomo.txt"), std::ofstream::out | std::ofstream::trunc);
     std::ofstream outputSol(DATA_PATH + std::string("MultiHomoSol.txt"), std::ofstream::out | std::ofstream::trunc);
@@ -68,9 +68,9 @@ int main(int argc, char* argv[])
     // ====================================================== //
 
     // Initialize structures for the inverse problem
-    unsigned long M = 20 , nMCMC = 50000;
+    unsigned long M = 20 , nMCMC = 5000;
     double noise = 1e-3;
-    double IC = 5.0;
+    double IC = 2.0;
     std::random_device dev;
     std::default_random_engine noiseSeed{1};
     std::default_random_engine proposalSeed{dev()};
@@ -110,7 +110,7 @@ int main(int argc, char* argv[])
     sample.push_back(initGuess);
     VectorXd priorStdDev(param.size());
     priorStdDev << 0.0, 1.0, 1.0;
-    unsigned int nMC = 5000;
+    unsigned int nMC = 10000;
     double propStdDev = 2e-2;
 
     std::vector<double> timeVec(N+1);
@@ -118,7 +118,7 @@ int main(int argc, char* argv[])
         timeVec[i] = T/N * i;
     }
 
-    unsigned int L = 50;
+    unsigned int L = 25;
     for (unsigned int l = 0; l < L; l++) {
         std::cout << "iteration " << l+1 << " / " << L << std::endl;
         // Compute the modeling error statistics and rescale the observations
@@ -138,14 +138,14 @@ int main(int argc, char* argv[])
         std::cout << priorMean.transpose() << std::endl << priorStdDev.transpose() << std::endl;
 
         std::cout << "Computing modeling error..." << std::endl;
-        ModErr modErr(sdeHomo, sde, &V1, IC, priorMean, priorStdDev, T, N, x, noise);
-        modErr.computePFAlt(nMC);
+        ModErr modErr(sdeHomo, sde, &V1, IC, priorMean, priorStdDev, T, N, x, noise, false);
+        modErr.computePF(1, nMC);
         modErr.getModErr(errors);
         std::vector<double> errWeights;
         modErr.getWeights(errWeights);
         std::cout << "Computed modeling error" << std::endl;
 
-        bool plot = true;
+        bool plot = false;
         if (plot) {
             plt::named_plot("xe", timeVec, x, "b");
             plt::named_plot("x0", timeVec, xHom, "r");
@@ -172,14 +172,15 @@ int main(int argc, char* argv[])
 
         // Inverse problem
         std::shared_ptr<Posterior> posterior;
-        posterior = std::make_shared<PFPosteriorHom>(x, T, IC, 1, noise, sdeHomo, &V1, param(0), M, IS, &errors, &errWeights);
+        // posterior = std::make_shared<PFPosteriorHom>(x, T, IC, noise, sdeHomo, &V1, param(0), M, IS, &errors, &errWeights);
+        posterior = std::make_shared<PFPosterior>(x, T, IC, noise, sdeHomo, param(0), M, IS, &errors, &errWeights);
         std::shared_ptr<Proposals> proposal;
         std::vector<double> factors = {1.0, 20.0, 1.0};
-        /* if (l > 0) {
+        if (l > 0) {
             factors[1] = priorStdDev(1) / priorStdDev(2);
             propStdDev = priorStdDev(2);
             std::cout << "proposal factors: " << factors[1] << " " << propStdDev << std::endl;
-        } */
+        }
         proposal = std::make_shared<Proposals>(propStdDev, factors);
         MCMC mcmc(sample.back(), proposal, posterior, nMCMC / L);
         sample = mcmc.compute(&proposalSeed, &acceptanceSeed);

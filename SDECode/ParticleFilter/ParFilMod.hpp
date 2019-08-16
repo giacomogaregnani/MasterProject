@@ -13,7 +13,6 @@ private:
     std::vector<double> obs;
     double noise;
     std::vector<std::vector<Vector2d>> X;
-    std::vector<std::vector<Vector2d>> XNotUpdate;
     std::vector<Vector2d> XOld;
     unsigned long nParticles;
     double eps;

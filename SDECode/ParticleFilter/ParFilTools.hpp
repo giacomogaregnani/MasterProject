@@ -25,12 +25,14 @@ private:
     VectorXd param;
     VectorXd paramHomo;
     Matrix2d A;
+    bool homogen;
 
 public:
     ForwardPFModErr() = default;
     ~ForwardPFModErr() = default;
     ForwardPFModErr(oneDimSde& sde, oneDimSde& sdeHomo, double h,
-                           std::default_random_engine& seed, double (*V1) (double));
+                    std::default_random_engine& seed, double (*V1) (double),
+                    bool homogen = true);
     void modifyParam(VectorXd& theta);
     VectorXd computeHomogeneous(VectorXd param, double L, double (*V1) (double));
     Vector2d generateSample(Vector2d& oldValue);

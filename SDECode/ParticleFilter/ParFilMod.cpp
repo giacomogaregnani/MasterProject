@@ -16,10 +16,8 @@ ParFilMod::ParFilMod(std::vector<double>& y, double T, double IC,
     std::random_device randomDevice;
     seed = std::default_random_engine{randomDevice()};
     X.resize(nParticles);
-    XNotUpdate.resize(nParticles);
     for (unsigned int i = 0; i < nParticles; i++) {
         X[i].resize(obs.size());
-        XNotUpdate[i].resize(obs.size());
     }
     XOld.resize(nParticles);
     W.resize(nParticles);
@@ -34,8 +32,6 @@ void ParFilMod::compute(VectorXd& theta, bool verbose)
     for (unsigned int k = 0; k < nParticles; k++) {
         X[k][0](0) = IC;
         X[k][0](1) = 0;
-        XNotUpdate[k][0](0) = IC;
-        XNotUpdate[k][0](1) = 0.0;
         W[k] = 1.0 / nParticles;
     }
     auto N = obs.size() - 1;
@@ -57,7 +53,6 @@ void ParFilMod::compute(VectorXd& theta, bool verbose)
         wSum = 0.0;
         for (unsigned long k = 0; k < nParticles; k++) {
             X[k][j+1] = forwardSampler->generateSample(X[k][j]);
-            XNotUpdate[k][j+1] = X[k][j+1];
             W[k] = gaussianDensity(X[k][j+1](0), obs[j+1], noise);
             wSum += W[k];
         }
@@ -83,8 +78,6 @@ void ParFilMod::computeIS(VectorXd& theta, bool verbose)
     for (unsigned int k = 0; k < nParticles; k++) {
         X[k][0](0) = IC;
         X[k][0](1) = 0.0;
-        XNotUpdate[k][0](0) = IC;
-        XNotUpdate[k][0](1) = 0.0;
         W[k] = 1.0 / nParticles;
     }
     auto N = obs.size() - 1;
@@ -106,7 +99,6 @@ void ParFilMod::computeIS(VectorXd& theta, bool verbose)
         wSum = 0.0;
         for (unsigned long k = 0; k < nParticles; k++) {
             X[k][j+1] = forwardSampler->generateSampleIS(X[k][j], obs[j+1], noise);
-            XNotUpdate[k][j+1] = X[k][j+1];
             obsDens = gaussianDensity(X[k][j+1](0), obs[j+1], noise);
             transDens = forwardSampler->evalTransDensity(X[k][j], X[k][j+1]);
             ISDens = forwardSampler->evalISDensity(X[k][j+1]);
