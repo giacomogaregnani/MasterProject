@@ -46,8 +46,8 @@ int main(int argc, char* argv[])
     oneDimSde sde{&multiDrift, &diffusion};
     oneDimSde sdeHomo{&homoDrift, &diffusion};
 
-    double T = 5;
-    unsigned int N = 1000;
+    double T = 1;
+    unsigned int N = 100;
 
     VectorXd tmpParam(3);
     tmpParam(0) = 0.1;  // Epsilon
@@ -68,7 +68,7 @@ int main(int argc, char* argv[])
     // ====================================================== //
 
     // Initialize structures for the inverse problem
-    unsigned long M = 20 , nMCMC = 5000;
+    unsigned long M = 400 , nMCMC = 5000;
     double noise = 1e-3;
     double IC = 2.0;
     std::random_device dev;
@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
     std::default_random_engine proposalSeed{dev()};
     std::default_random_engine acceptanceSeed{dev()};
     std::normal_distribution<double> noiseDistribution(0.0, noise);
-    bool IS = true;
+    bool IS = false;
 
     // Generate and perturb observations
     auto x = generateObservations1D(sde, IC, param, T, N, 0);
@@ -138,8 +138,9 @@ int main(int argc, char* argv[])
         std::cout << priorMean.transpose() << std::endl << priorStdDev.transpose() << std::endl;
 
         std::cout << "Computing modeling error..." << std::endl;
-        ModErr modErr(sdeHomo, sde, &V1, IC, priorMean, priorStdDev, T, N, x, noise, false);
-        modErr.computePF(1, nMC);
+        ModErr modErr(sdeHomo, sde, &V1, IC, priorMean, priorStdDev, T, N, x, noise, true);
+        modErr.computePF(3, nMC);
+        // modErr.computePFAlt(nMC);
         modErr.getModErr(errors);
         std::vector<double> errWeights;
         modErr.getWeights(errWeights);
@@ -172,8 +173,8 @@ int main(int argc, char* argv[])
 
         // Inverse problem
         std::shared_ptr<Posterior> posterior;
-        // posterior = std::make_shared<PFPosteriorHom>(x, T, IC, noise, sdeHomo, &V1, param(0), M, IS, &errors, &errWeights);
-        posterior = std::make_shared<PFPosterior>(x, T, IC, noise, sdeHomo, param(0), M, IS, &errors, &errWeights);
+        posterior = std::make_shared<PFPosteriorHom>(x, T, IC, noise, sdeHomo, &V1, param(0), M, IS, &errors, &errWeights);
+        // posterior = std::make_shared<PFPosterior>(x, T, IC, noise, sdeHomo, param(0), M, IS, &errors, &errWeights);
         std::shared_ptr<Proposals> proposal;
         std::vector<double> factors = {1.0, 20.0, 1.0};
         if (l > 0) {

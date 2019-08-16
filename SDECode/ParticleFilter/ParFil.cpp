@@ -26,9 +26,14 @@ ParFil::ParFil(std::vector<double>& y, double T, double IC,
     likelihood = 0.0;
 }
 
-void ParFil::compute(VectorXd& theta, std::vector<std::vector<double>>* mod)
+void ParFil::compute(VectorXd& theta, std::vector<std::vector<double>>* mod,
+                     std::vector<double>* weights)
 {
     bool allModErrFalse = (mod == nullptr);
+
+    if (!allModErrFalse && weights == nullptr) {
+        throw std::invalid_argument("Weights have to be provided");
+    }
 
     // The first parameter is the multiscale epsilon
     theta(0) = eps;
@@ -60,10 +65,12 @@ void ParFil::compute(VectorXd& theta, std::vector<std::vector<double>>* mod)
                 W[k] = gaussianDensity(X[k][j+1], obs[j+1], noise);
             } else {
                 W[k] = 0.0;
-                double temp;
+                double diff;
                 for (unsigned long idxmod = 0; idxmod < mod->size(); idxmod++) {
-                    temp = obs[j+1] - (*mod)[idxmod][j+1];
-                    W[k] += gaussianDensity(X[k][j+1], temp, noise);
+                    if ((*weights)[idxmod] > 1e-3) {
+                        diff = obs[j+1] - (*mod)[idxmod][j+1];
+                        W[k] += (*weights)[idxmod] * gaussianDensity(X[k][j+1], diff, noise);
+                    }
                 }
                 W[k] /= mod->size();
             }

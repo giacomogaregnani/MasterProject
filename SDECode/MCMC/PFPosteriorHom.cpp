@@ -65,7 +65,7 @@ double PFPosteriorHom::computePosterior(VectorXd& theta)
     if (IS) {
         ParticleFilter->computeDiffBridge(thetaHom, errors, weights);
     } else {
-        ParticleFilter->compute(thetaHom, errors);
+        ParticleFilter->compute(thetaHom, errors, weights);
     }
     double likelihood = ParticleFilter->getLikelihood();
 

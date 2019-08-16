@@ -30,7 +30,8 @@ public:
     ParFil(std::vector<double>& y, double T, double IC,
            double noise, double eps, unsigned long nParticles,
            std::shared_ptr<ForwardPF>& forwardSampler);
-    void compute(VectorXd& theta, std::vector<std::vector<double>>* mod = nullptr);
+    void compute(VectorXd& theta, std::vector<std::vector<double>>* mod = nullptr,
+                 std::vector<double>* weights = nullptr);
     void computeDiffBridge(VectorXd& theta, std::vector<std::vector<double>>* mod = nullptr,
                            std::vector<double>* weights = nullptr, bool verbose = false);
     double getLikelihood() const;
