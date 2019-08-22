@@ -1,0 +1,15 @@
+\frametitle{Ensemble Kalman filter algorithm}
+\begin{algorithmic}[1]
+\State draw $J$ samples $\{ \psi^{(j)} \}_{j=1}^J$ from the prior distribution $\mu_0$
+\State construct the initial ensemble $z_0$ as $z_0^{(j)} = \begin{bmatrix} \psi^{(j)} & \mathcal{G}(\psi^{(j)}) \end{bmatrix}^T$
+\For {$n = 0, \dots, N-1$}
+\State propagate the ensemble of particles $\hat{z}_{n+1}^{(j)} = \Xi(z_n^{(j)})$
+\State compute the sample mean $\bar{z}_{n+1} = \frac{1}{J} \sum_{j=1}^J \hat{z}_{n+1}^{(j)}$
+\State compute the sample covariance $C_{n+1} = \frac{1}{J} \sum_{j=1}^J \hat{z}_{n+1}^{(j)} (\hat{z}_{n+1}^{(j)})^T - \bar{z}_{n+1} \bar{z}_{n+1}^T$
+\State define the Kalman gain $K_{n+1} = C_{n+1} H^* (H C_{n+1} H^* + \Gamma)^{-1}$
+\State sample $\eta_{n+1}^{(j)}$ from the distribution $\mathcal{N}(0,\Gamma)$
+\State perturb the data $y_{n+1}^{(j)} = y + \eta_{n+1}^{(j)}$
+\State update the ensemble of particles $z_{n+1}^{(j)} = \hat{z}_{n+1}^{(j)} + K_{n+1} (y_{n+1}^{(j)} - H \hat{z}_{n+1}^{(j)})$
+\EndFor
+\State compute the solution $u_{\mathrm{EnKF}} = \frac{1}{J} \sum_{j=1}^J H^{\perp} z_{N}^{(j)}$
+\end{algorithmic}

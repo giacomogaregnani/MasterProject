@@ -5,9 +5,9 @@
 #include "computeHomogeneous.hpp"
 #include <MCMC.hpp>
 #include <ParFilLib.hpp>
-#include "../matplotlib-cpp-master/matplotlibcpp.h"
 
-namespace plt = matplotlibcpp;
+/* #include "../matplotlib-cpp-master/matplotlibcpp.h"
+namespace plt = matplotlibcpp; */
 
 // Remark: epsilon = p(0)
 
@@ -68,7 +68,7 @@ int main(int argc, char* argv[])
     // ====================================================== //
 
     // Initialize structures for the inverse problem
-    unsigned long M = 400 , nMCMC = 5000;
+    unsigned long M = 50, nMCMC = 5000;
     double noise = 1e-3;
     double IC = 2.0;
     std::random_device dev;
@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
     std::default_random_engine proposalSeed{dev()};
     std::default_random_engine acceptanceSeed{dev()};
     std::normal_distribution<double> noiseDistribution(0.0, noise);
-    bool IS = false;
+    bool IS = true;
 
     // Generate and perturb observations
     auto x = generateObservations1D(sde, IC, param, T, N, 0);
@@ -110,7 +110,7 @@ int main(int argc, char* argv[])
     sample.push_back(initGuess);
     VectorXd priorStdDev(param.size());
     priorStdDev << 0.0, 1.0, 1.0;
-    unsigned int nMC = 10000;
+    unsigned int nPFModelling = 500;
     double propStdDev = 2e-2;
 
     std::vector<double> timeVec(N+1);
@@ -118,7 +118,7 @@ int main(int argc, char* argv[])
         timeVec[i] = T/N * i;
     }
 
-    unsigned int L = 25;
+    unsigned int L = 20;
     for (unsigned int l = 0; l < L; l++) {
         std::cout << "iteration " << l+1 << " / " << L << std::endl;
         // Compute the modeling error statistics and rescale the observations
@@ -139,14 +139,14 @@ int main(int argc, char* argv[])
 
         std::cout << "Computing modeling error..." << std::endl;
         ModErr modErr(sdeHomo, sde, &V1, IC, priorMean, priorStdDev, T, N, x, noise, true);
-        modErr.computePF(3, nMC);
+        modErr.computePF(1, nPFModelling);
         // modErr.computePFAlt(nMC);
         modErr.getModErr(errors);
         std::vector<double> errWeights;
         modErr.getWeights(errWeights);
         std::cout << "Computed modeling error" << std::endl;
 
-        bool plot = false;
+        /* bool plot = false;
         if (plot) {
             plt::named_plot("xe", timeVec, x, "b");
             plt::named_plot("x0", timeVec, xHom, "r");
@@ -169,7 +169,7 @@ int main(int argc, char* argv[])
             plt::show();
             plt::plot(errWeights);
             plt::show();
-        }
+        } */
 
         // Inverse problem
         std::shared_ptr<Posterior> posterior;

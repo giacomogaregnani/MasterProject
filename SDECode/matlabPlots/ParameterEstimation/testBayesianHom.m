@@ -1,4 +1,4 @@
-% clc; clear; close all
+clc; clear; close all
 %%
 
 % x = dlmread('MultiMulti.txt');
@@ -10,11 +10,11 @@ sol = dlmread('MultiHomoSol.txt');
 
 
 %%
-T = 12;
+T = 10;
 
 nChains = 1;
 hom = x(1, :);
-trueVals = [2, 0.5];
+trueVals = [1, 0.5];
 % trueVals = [0.19, 0.09];
 % trueVals = hom(1:2);
 
@@ -37,7 +37,7 @@ plot(t, sol);
 % sampleTot = exp(sampleTot);
 % trueVals = exp(trueVals);
 
-idx = floor(0.4 * size(sampleTot, 1)):size(sampleTot, 1);
+idx = floor(0.4 * size(sampleTot, 1)):0.7*size(sampleTot, 1);
 bwa = 2 * (4 * std(sampleTot(idx, 1))^5 / (3 * size(sampleTot, 1)))^(1/5);
 bws = 2 * (4 * std(sampleTot(idx, 2))^5 / (3 * size(sampleTot, 1)))^(1/5);
 
@@ -48,26 +48,26 @@ sVals = linspace(min(sampleTot(idx, 2))-0.2, max(sampleTot(idx, 2))+0.2, 100);
 F = mvksdensity(sampleTot(idx, :), [aa(:), ss(:)], 'bandwidth', [bwa, bws]);
 
 %%
-% W = 6; H = 6;
-% fig = createFigure(W, H, 'enhanced', 2);
-figure
+W = 6; H = 6;
+fig = createFigure(W, H, 'enhanced', 2);
+% figure
 % scatter(sampleTot(idx, 1), sampleTot(idx, 2), 10, '.')
 % hold on
 contour(aa, ss, reshape(F, sqrt(length(F)), sqrt(length(F))));
 hold on
-scatter(log(trueVals(1)), log(trueVals(2)), 'xk', 'linewidth', 3)
+scatter(log(trueVals(1)), log(trueVals(2)), 'xk', 'linewidth', 1)
 % xlim([-3, 2]);
-% ylim([-1.5, 0.5]);
+ylim([-1, 0.4]);
 xlabel('$\log(\alpha)$', 'interpreter', 'latex')
 ylabel('$\log(\sigma)$', 'interpreter', 'latex')
 % title({'Posterior $\mu^0$'}, 'interpreter', 'latex')
-title({'Posterior $\mu^\varepsilon$'}, 'interpreter', 'latex')
+% title({'Posterior $\mu^\varepsilon$'}, 'interpreter', 'latex')
 % title({'Posterior $\tilde \mu^0$'}, 'interpreter', 'latex')
 % axis square
 % axis equal
 box on
-% export_fig(fig, '../../../Reports/DraftMultiSDE_19/VERSION2/Figures/MultiHomo.eps', '-nocrop', '-painters')
-% export_fig(fig, '../../../Reports/DraftMultiSDE_19/VERSION2/Figures/MultiMulti.eps', '-nocrop', '-painters')
+export_fig(fig, '../../../Reports/PresentationCALTECH_19/Figures/MultiHomo.eps', '-nocrop', '-painters')
+% export_fig(fig, '../../../Reports/PresentationCALTECH_19/Figures/MultiMulti.eps', '-nocrop', '-painters')
 % export_fig(fig, '../../../Reports/DraftMultiSDE_19/VERSION2/Figures/MultiHomoMod.eps', '-nocrop', '-painters')
 
 figure

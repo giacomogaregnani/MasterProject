@@ -1,0 +1,44 @@
+\DeclareNameFormat{labelname}{%
+  \ifcase\value{uniquename}%
+    \ifitemannotation{me}
+      {\def\bibnamedelimd{}%
+       \usebibmacro{name:given-family}
+        {\namepartfamily}
+        {\namepartgiven}
+        {\namepartprefix}
+        {\namepartsuffix}}
+      {\usebibmacro{name:family}
+        {\namepartfamily}
+        {\namepartgiven}
+        {\namepartprefix}
+        {\namepartsuffix}}%
+  \or
+    \ifuseprefix
+      {\usebibmacro{name:given-family}
+        {\namepartfamily}
+        {\namepartgiveni}
+        {\namepartprefix}
+        {\namepartsuffixi}}
+      {\usebibmacro{name:given-family}
+        {\namepartfamily}
+        {\namepartgiveni}
+        {\namepartprefixi}
+        {\namepartsuffixi}}%
+  \or
+    \usebibmacro{name:given-family}
+      {\namepartfamily}
+      {\namepartgiven}
+      {\namepartprefix}
+      {\namepartsuffix}%
+  \fi
+  \usebibmacro{name:andothers}}
+
+\renewcommand*{\mkbibnamegiven}[1]{%
+  \ifitemannotation{me}
+    {\StrLeft{#1}{1}}
+    {#1}}
+
+\renewcommand*{\mkbibnamefamily}[1]{%
+  \ifitemannotation{me}
+    {\StrLeft{#1}{1}}
+    {#1}}

@@ -1,8 +1,8 @@
 #include "generateObservations.hpp"
 #include "computeHomogeneous.hpp"
-#include "../matplotlib-cpp-master/matplotlibcpp.h"
 
-namespace plt = matplotlibcpp;
+/* #include "../matplotlib-cpp-master/matplotlibcpp.h"
+namespace plt = matplotlibcpp; */
 
 // Remark: epsilon = p(0)
 
@@ -81,16 +81,16 @@ int main(int argc, char* argv[])
         auto xHom = generateObservations1D(sdeHomo, IC, homoParam, T, N, obsSeed);
         xHomFinal[k] = xHom.back();
 
-        if (k < 1) {
+        /* if (k < 1) {
             plt::plot(timeVec, xHom, "b");
             plt::plot(timeVec, x, "r");
-        }
+        } */
     }
-    plt::show();
+    /* plt::show();
 
     plt::hist(xHomFinal, 100, "b", 0.3);
     plt::hist(xFinal, 100, "r", 0.3);
-    plt::show();
+    plt::show(); */
 
     return 0;
 }

@@ -1,7 +1,4 @@
 #include "ModelingError.hpp"
-#include "../matplotlib-cpp-master/matplotlibcpp.h"
-
-namespace plt = matplotlibcpp;
 
 ModErr::ModErr(oneDimSde sdeCoarse, oneDimSde sdeFine, double (*V1) (double), double IC,
                VectorXd& priorMean, VectorXd& priorStdDev, double T,
@@ -43,7 +40,7 @@ void ModErr::computePF(unsigned int nParam, unsigned int nMC)
     std::normal_distribution<double> gaussian(0.0, 1.0);
 
     // Compute the modeling error
-    #pragma omp parallel for num_threads(5)
+    // #pragma omp parallel for num_threads(5)
     for (unsigned int i = 0; i < nParam; i++) {
         std::shared_ptr<ForwardPFModErr> FwdModErr;
         FwdModErr = std::make_shared<ForwardPFModErr>(sdeFine, sdeCoarse, h, seedMC, V1, homogen);

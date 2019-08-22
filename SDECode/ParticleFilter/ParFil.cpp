@@ -1,9 +1,6 @@
 #include <iostream>
 #include <algorithm>
 #include "ParFil.hpp"
-#include "../matplotlib-cpp-master/matplotlibcpp.h"
-
-namespace plt = matplotlibcpp;
 
 ParFil::ParFil(std::vector<double>& y, double T, double IC,
                double noise, double eps, unsigned long nParticles,

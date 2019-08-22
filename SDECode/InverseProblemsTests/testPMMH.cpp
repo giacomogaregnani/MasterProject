@@ -4,9 +4,9 @@
 #include "generateObservations.hpp"
 #include "computeHomogeneous.hpp"
 #include <MCMC.hpp>
-#include "../matplotlib-cpp-master/matplotlibcpp.h"
 
-namespace plt = matplotlibcpp;
+//#include "../matplotlib-cpp-master/matplotlibcpp.h"
+// namespace plt = matplotlibcpp;
 
 // Remark: epsilon = p(0)
 
@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
     // ====================================================== //
 
     // Initialize structures for the inverse problem
-    unsigned long M = 20, nMCMC = 25000;
+    unsigned long M = 20, nMCMC = 5000;
     double noise = 1e-3;
     double IC = 0.0;
     std::random_device dev;
@@ -103,9 +103,9 @@ int main(int argc, char* argv[])
     for (unsigned int k = 0; k < N+1; k++) {
         timeVec[k] = k*T/N;
     }
-    plt::plot(timeVec, xHom, "b");
+    /* plt::plot(timeVec, xHom, "b");
     plt::plot(timeVec, x, "r");
-    plt::show();
+    plt::show(); */
 
     // Initial parameter guess
     VectorXd initGuess = param; // VectorXd::Zero(param.size());

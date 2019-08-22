@@ -5,9 +5,9 @@
 #include "computeHomogeneous.hpp"
 #include <MCMC.hpp>
 #include <ParFilLib.hpp>
-#include "../matplotlib-cpp-master/matplotlibcpp.h"
 
-namespace plt = matplotlibcpp;
+/* #include "../matplotlib-cpp-master/matplotlibcpp.h"
+namespace plt = matplotlibcpp; */
 
 double gradV0(double x)
 {
@@ -111,25 +111,14 @@ int main(int argc, char* argv[])
             xPF[i] = X[i](0);
             modErrPF[i] = X[i](1);
         }
-        if (!j) {
-            plt::subplot(2, 1, 1);
-            plt::named_plot("xPF", timeVec, xPF, "c");
-            plt::subplot(2, 1, 2);
-            plt::named_plot("modPF", timeVec, modErrPF, "c");
-        } else {
-            plt::subplot(2, 1, 1);
-            plt::plot(timeVec, xPF, "c");
-            plt::subplot(2, 1, 2);
-            plt::plot(timeVec, modErrPF, "c");
-        }
     }
-    plt::subplot(2, 1, 1);
+    /* plt::subplot(2, 1, 1);
     plt::named_plot("x", timeVec, x, "b");
     plt::legend();
     plt::subplot(2, 1, 2);
     plt::named_plot("mod", timeVec, modErr, "b");
     plt::legend();
-    plt::show();
+    plt::show(); */
 
     return 0;
 }

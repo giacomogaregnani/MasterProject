@@ -5,9 +5,9 @@
 #include <sstream>
 #include <chrono>
 #include "SDEPosterior.hpp"
-#include "../matplotlib-cpp-master/matplotlibcpp.h"
 
-namespace plt = matplotlibcpp;
+/* #include "../matplotlib-cpp-master/matplotlibcpp.h"
+namespace plt = matplotlibcpp; */
 
 SDEPosterior::SDEPosterior(std::vector<double>& x, double T, double IC,
                            unsigned int sR, double noise, oneDimSde sde,
@@ -145,11 +145,12 @@ double SDEPosterior::computePosterior(VectorXd& theta)
     std::string str("/net/smana3/vol/vol2/anmc/garegnan/Desktop/Project/SDECode/plots/CDF");
     str = str + GetLocalTime();
     std::string plotTitle = std::to_string(distance) + " " + std::to_string(theta(1)) + " " + std::to_string(theta(2));
-    plt::named_plot(plotTitle, xValues, FX);
+
+    /* plt::named_plot(plotTitle, xValues, FX);
     plt::plot(xValues, FObs);
     plt::legend();
     plt::save(str);
-    plt::close();
+    plt::close(); */
 
     likelihood = -0.5 * distance * distance / (noise * noise);
 

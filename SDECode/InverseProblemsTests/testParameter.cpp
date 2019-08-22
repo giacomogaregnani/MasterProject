@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
     std::ofstream outputSol(DATA_PATH + std::string("testParamSol.txt"), std::ofstream::out | std::ofstream::trunc);
 
     // Compute coefficients of the homogenised equation
-    std::vector<double> homCoeffs = computeHomCoeffs(param, (2.0*M_PIf64), &V1);
+    std::vector<double> homCoeffs = computeHomCoeffs(param, (2.0*M_PI), &V1);
     output << 0.0 << "\t" << homCoeffs[0] << "\t" << homCoeffs[1] << std::endl;
 
     // Compute the estimators for different value of epsilon
