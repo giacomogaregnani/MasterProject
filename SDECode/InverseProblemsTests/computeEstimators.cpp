@@ -46,3 +46,20 @@ double estimateABayes(std::vector<double>& x, double del, double (*gradV) (doubl
 
     return num / denom;
 }
+
+std::vector<double> averageSequence(std::vector<double>& xIn, unsigned int windSize)
+{
+    std::vector<double> xAvg(xIn.size());
+    xAvg[0] = xIn[0];
+
+    double temp = 0.0;
+    for (unsigned int i = 1; i < windSize; i++) {
+        xAvg[i] = (xAvg[i-1] * i + xIn[i]) / (i+1);
+    }
+
+    for (unsigned int i = windSize; i < xIn.size(); i++) {
+        xAvg[i] = xAvg[i-1] + (xIn[i] - xIn[i-windSize]) / windSize;
+    }
+
+    return xAvg;
+}

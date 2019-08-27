@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
     oneDimSde sde{&multiDrift, &diffusion};
     oneDimSde sdeHomo{&homoDrift, &diffusion};
 
-    double T = 1.0;
+    double T = 1;
     unsigned int N = 100;
 
     VectorXd tmpParam(3);
@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
     // ====================================================== //
 
     // Initialize structures for the inverse problem
-    unsigned long M = 20, nMCMC = 5000;
+    unsigned long M = 20, nMCMC = 20000;
     double noise = 1e-3;
     double IC = 0.0;
     std::random_device dev;
@@ -117,7 +117,7 @@ int main(int argc, char* argv[])
     // posterior = std::make_shared<PFPosterior>(x, T, IC, noise, sdeHomo, param(0), M, IS);
     posterior = std::make_shared<PFPosteriorHom>(x, T, IC, noise, sdeHomo, &V1, param(0), M, IS);
     std::shared_ptr<Proposals> proposal;
-    std::vector<double> factors = {1.0, 50.0, 1.0};
+    std::vector<double> factors = {1.0, 20.0, 1.0};
     proposal = std::make_shared<Proposals>(5e-2, factors);
     MCMC mcmc(initGuess, proposal, posterior, nMCMC);
     auto sample = mcmc.compute(&proposalSeed, &acceptanceSeed);

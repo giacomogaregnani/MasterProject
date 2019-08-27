@@ -2,6 +2,6 @@
 \beamer@sectionintoc {1}{Probabilistic solvers for differential equations}{4}{0}{1}
 \beamer@subsectionintoc {1}{1}{Ordinary differential equations (ODEs)}{8}{0}{1}
 \beamer@subsectionintoc {1}{2}{Elliptic partial differential equations (PDEs)}{14}{0}{1}
-\beamer@sectionintoc {2}{Bayesian inference of multiscale differential equations}{19}{0}{2}
-\beamer@subsectionintoc {2}{1}{Elliptic PDEs}{21}{0}{2}
-\beamer@subsectionintoc {2}{2}{Diffusion processes}{40}{0}{2}
+\beamer@sectionintoc {2}{Bayesian inference of multiscale differential equations}{20}{0}{2}
+\beamer@subsectionintoc {2}{1}{Elliptic PDEs}{22}{0}{2}
+\beamer@subsectionintoc {2}{2}{Diffusion processes}{41}{0}{2}

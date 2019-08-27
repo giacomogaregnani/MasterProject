@@ -102,7 +102,7 @@ int main(int argc, char* argv[])
     outputSol << std::endl;
 
     // Initial parameter guess
-    VectorXd initGuess = VectorXd::Zero(param.size());
+    VectorXd initGuess = VectorXd::Zero(param.size()) + VectorXd::Random(param.size());
     std::vector<VectorXd> sample = {};
     VectorXd priorMean = initGuess;
     priorMean(0) = param(0);
@@ -110,7 +110,7 @@ int main(int argc, char* argv[])
     sample.push_back(initGuess);
     VectorXd priorStdDev(param.size());
     priorStdDev << 0.0, 1.0, 1.0;
-    unsigned int nPFModelling = 500;
+    unsigned int nPFModelling = 3000;
     double propStdDev = 2e-2;
 
     std::vector<double> timeVec(N+1);
@@ -183,6 +183,9 @@ int main(int argc, char* argv[])
             std::cout << "proposal factors: " << factors[1] << " " << propStdDev << std::endl;
         }
         proposal = std::make_shared<Proposals>(propStdDev, factors);
+        if (l == L-1) {
+            nMCMC *= L;
+        }
         MCMC mcmc(sample.back(), proposal, posterior, nMCMC / L);
         sample = mcmc.compute(&proposalSeed, &acceptanceSeed);
 

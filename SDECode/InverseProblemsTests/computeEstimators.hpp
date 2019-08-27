@@ -12,5 +12,7 @@ double estimateA(std::vector<double>&, double, double (*) (double), VectorXd&);
 
 double estimateABayes(std::vector<double>&, double, double (*) (double), VectorXd&, double, double, double);
 
+std::vector<double> averageSequence(std::vector<double>& xIn, unsigned int windSize);
+
 
 #endif

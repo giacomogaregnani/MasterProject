@@ -340,7 +340,18 @@ u &= g, &&\text{on } \partial \Omega,
 		\includegraphics[scale=0.55]{Figures/MeshAdapt2D_InitMesh} & \includegraphics[scale=0.55]{Figures/MeshAdapt2D_FinalMesh}\\
 	\end{tabular}
 	\caption{Mesh adaptivity based on probabilistic error estimators for a simple PDE}
-	\label{fig:MeshAdaptivity2D}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Probabilistic solvers for PDEs -- Numerical example}
+\begin{figure}
+	\centering
+	\begin{tabular}{cc}
+		\includegraphics[scale=0.55]{Figures/MeshAdapt2D_2_ReferenceSol} & \includegraphics[scale=0.55]{Figures/MeshAdapt2D_2_ErrConv} \\
+		\includegraphics[scale=0.55]{Figures/MeshAdapt2D_2_InitMesh} & \includegraphics[scale=0.55]{Figures/MeshAdapt2D_2_FinalMesh}\\
+	\end{tabular}
+	\caption{Mesh adaptivity based on probabilistic error estimators for a simple PDE}
 \end{figure}
 \end{frame}
 
@@ -456,7 +467,7 @@ u &= g, &&\text{on } \partial \Omega,
 	{\color{ForestGreen} Main idea:} Approximate $A_u^0$ on some points in $\Omega$ employing elliptic micro problems. Convergence properties well-established (\cite{Abd05b})
 	
 	\vspace{0.2cm}
-	{\color{ForestGreen} Take-home message:} There exist computational tools which allows to compute cheaply $p^0$ given the multiscale tensor $A^\epl_u$
+	{\color{ForestGreen} Take-home message:} There exist computational tools which allow to compute cheaply $p^0$ given the multiscale tensor $A^\epl_u$
 	}	
 \end{frameT}
 
@@ -493,7 +504,7 @@ u &= g, &&\text{on } \partial \Omega,
 		Z^\epl &= \int_X \exp(-\Phi^\epl(u, y)) \mu_{\mathrm{pr}}(\dd u). &&\quad  \text{(normalizing constant)}
 	\end{alignat}
 	}
-	\only<3>{{\color{NavyBlue} Idea (\cite{NPS12}):} Replace $\mathcal G^\epl$ with $\mathcal G^0$, forward operator associated to
+	\only<3>{{\color{NavyBlue} Idea:} Replace $\mathcal G^\epl$ with $\mathcal G^0$, forward operator associated to
 	\begin{equation}
 		\left\{
 		\begin{alignedat}{2}
@@ -508,7 +519,7 @@ u &= g, &&\text{on } \partial \Omega,
 	\end{equation}
 	where 
 	\begin{equation}
-		\Phi^\epl(u, y) = \frac12 \norm{\mathcal G^\epl(u) - y}^2_\Gamma.
+		\Phi^0(u, y) = \frac12 \norm{\mathcal G^0(u) - y}^2_\Gamma.
 	\end{equation}
 	}
 \end{frameT}
@@ -570,7 +581,7 @@ u &= g, &&\text{on } \partial \Omega,
 	\begin{tikzpicture}
 		\node[] at (0, 0) (eps) {$\mathcal G^\epl$ (m.s.)};
 		\node[] at (4, 0) (hom) {{\color{Gray}$\mathcal G^0$ (hom.)}};
-		\node[] at (8, 0) (homh) {$\mathcal G^0_h$ (hom.+FEM)};
+		\node[] at (8, 0) (homh) {$\mathcal G^0_h$ (FE-HMM)};
 		\node[] at (0, -1.2) (epsEn) {$\mathbf u_N^\epl = \{(u^\epl)^{(j)}\}_{j=1}^N$};	
 		\node[] at (4, -1.2) (homEn) {{\color{Gray}$\mathbf u_N^0 = \{(u^0)^{(j)}\}_{j=1}^N$}};
 		\node[] at (8, -1.2) (homEnh) {$\mathbf u_{N,h}^0 = \{(u_h^0)^{(j)}\}_{j=1}^N$};
@@ -776,7 +787,7 @@ u &= g, &&\text{on } \partial \Omega,
 	\begin{equation}
 	{\color{BrickRed}	p^\epl(\mathbf y \mid \theta)} = \int_{\R^{Nd}} {\color{NavyBlue} p(\mathbf y \mid \mathbf x, \theta)} \, p^\epl(\mathbf x \mid \theta) \dd \mathbf x.
 	\end{equation}
-	where (observation independence)
+	where (assume observation independence)
 	\begin{equation}
 	{\color{NavyBlue} p(\mathbf y \mid \mathbf x, \theta) = \prod_{k=1}^N p(y_k \mid x_k, \theta)}.
 	\end{equation}
@@ -828,17 +839,17 @@ u &= g, &&\text{on } \partial \Omega,
 	\quad Z^0 \text{ s.t. } \int p^0(\theta \mid \mathbf y) \dd \theta = 1,
 	\end{equation}	
 		
-	{\color{NavyBlue} Theoretical result (\cite{AbG19} -- unpublished):} For $\epl \to 0$
+	{\color{NavyBlue} Theoretical result:} For $\epl \to 0$
 	\begin{equation}	
-		d_{\mathrm{Hell}}\big(\mu^\epl(\cdot \mid \mathbf y), \mu^0(\cdot \mid \mathbf y)\big) \to 0.
+		d_{\mathrm{Hell}}(\mu^\epl, \mu^0) \to 0.
 	\end{equation}
 	}
 	
 	\only<7>
 	{
-	{\color{NavyBlue} Theoretical result (\cite{AbG19} -- unpublished):} For $\epl \to 0$
+	{\color{NavyBlue} Theoretical result:} For $\epl \to 0$
 	\begin{equation}	
-	d_{\mathrm{Hell}}\big(\mu^\epl(\cdot \mid \mathbf y), \mu^0(\cdot \mid \mathbf y)\big) \to 0.
+	d_{\mathrm{Hell}}(\mu^\epl, \mu^0) \to 0.
 	\end{equation}
 	
 	\vspace{0.5cm}
@@ -851,9 +862,9 @@ u &= g, &&\text{on } \partial \Omega,
 
 	\only<8>
 	{
-		{\color{NavyBlue} Theoretical result (\cite{AbG19} -- unpublished):} For $\epl \to 0$
+		{\color{NavyBlue} Theoretical result:} For $\epl \to 0$
 		\begin{equation}	
-		d_{\mathrm{Hell}}\big(\mu^\epl(\cdot \mid \mathbf y), \mu^0(\cdot \mid \mathbf y)\big) \to 0.
+		d_{\mathrm{Hell}}(\mu^\epl, \mu^0) \to 0.
 		\end{equation}
 		
 		\vspace{0.5cm}
@@ -887,9 +898,12 @@ with
 
 \only<2>{
 \vspace{0.1cm}
-{\color{NavyBlue} Solution:} Employ a particle filter (PF) to obtain an unbiased estimator
+{\color{NavyBlue} Solution:} Employ a particle filter (PF) to obtain an estimator
 \begin{equation}
-	\widehat{p^0}(\theta \mid \mathbf y) \approx p^0(\theta \mid \mathbf y),
+\begin{aligned}
+	\widehat{p^0}(\theta \mid \mathbf y) &= p(\theta) \, \widehat{p^0}(\mathbf y \mid \theta) \approx p^0(\theta \mid \mathbf y), \\
+	\E\widehat{p^0}(\theta \mid \mathbf y) &= p^0(\theta \mid \mathbf y),
+\end{aligned}
 \end{equation}
 then run a particle MCMC (PMCMC) algorithm (\cite{ADH10})
 }
@@ -933,7 +947,7 @@ where $\mathbf m \coloneqq \mathbf x^\epl - \mathbf x^0$. We can assume $\mathbf
 \begin{equation}
 	\mathbf X \coloneqq (\mathbf x^\epl, \, \mathbf m)^\top,
 \end{equation}
-for which we have dynamics
+for which we have dynamics (neglect correlation)
 \begin{equation}
 \left\{
 \begin{alignedat}{2}
@@ -956,7 +970,7 @@ Consider one-dimensional multiscale SDE
 \begin{equation}
 	\d x^\epl(t) = -\alpha x^\epl(t) \dd t +\frac{1}{\epl} \sin\left(\frac{x^\epl}{\epl}\right) + \sqrt{2\sigma} \d W(t),
 \end{equation}
-with $\epl = 0.1$ (not so small) and $\alpha = 1$, $\sigma = 0.5$. In this case
+with $\epl = 0.1$ and $\alpha = 1$, $\sigma = 0.5$. In this case
 \begin{equation}
 	\d x^0(t) = -A x^0(t) \dd t + \sqrt{2\Sigma} \d W(t),
 \end{equation}
@@ -977,8 +991,8 @@ and
 \frametitle{Multiscale diffusion processes -- Inference problem}
 \begin{figure}[t]
 	\centering
-	\includegraphics[width = 0.4\textwidth]{Figures/MultiMulti}
-	\includegraphics[width = 0.4\textwidth]{Figures/MultiHomo}
+	\includegraphics[width = 0.45\textwidth]{Figures/MultiMulti}
+	\includegraphics[width = 0.45\textwidth]{Figures/MultiHomo}
 	\caption{Parameter estimation without and with (iterative) estimation of modelling error.}
 \end{figure}
 
