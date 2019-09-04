@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
     param(2) = 0.5; // True multiscale sigma
 
     double T = 100;
-    auto N = static_cast<unsigned int>(pow(2, 16));
+    // auto N = static_cast<unsigned int>(pow(2, 16));
 
     std::vector<double> epsTestSet = {0.04};
     for (unsigned int i = 0; i < 8; i++)
@@ -59,11 +59,10 @@ int main(int argc, char* argv[])
 
     // Compute the estimators for different value of epsilon
     double sigmaHat, AHat;
-
-    unsigned int deltaRatio = 2;
-    unsigned int nDeltas = 8;
-
+    double deltaRatio = 2;
+    unsigned int nDeltas = 4;
     std::vector<double> avg;
+    auto N = static_cast<unsigned int>(std::round(T * std::pow(epsTestSet.front(), -3.0)));
 
     for (auto it : epsTestSet) {
         param(0) = it;
@@ -74,17 +73,19 @@ int main(int argc, char* argv[])
         outputAvg << param(0) << "\t";
 
         auto solution = generateObservations1D(sde, 0.0, param, T, N, 0);
-        for (const auto &itSol : solution)
+        /* for (const auto &itSol : solution)
             outputSol << std::fixed << std::setprecision(10) << itSol << "\t";
-        outputSol << std::endl;
+        outputSol << std::endl; */
 
         auto NSampling = N;
         for (unsigned int j = 0; j < nDeltas; j++) {
+
+            std::cout << std::round(N / NSampling) << std::endl;
             std::cout << "\u03B4 = " << T / NSampling << std::endl;
 
             // Estimate with sub-sampling
             std::vector<double> samples = {};
-            auto increment = static_cast<unsigned int>(std::round(pow(deltaRatio, j)));
+            auto increment = static_cast<unsigned int>(std::round(N / NSampling));
             for (unsigned int k = 0; k < N; k += increment)
                 samples.push_back(solution[k]);
 
@@ -98,13 +99,13 @@ int main(int argc, char* argv[])
             AHat = estimateA(avg, T / N, &gradV0, param);
             outputAvg << AHat << "\t" << sigmaHat << "\t";
 
-            NSampling = NSampling / deltaRatio;
+            NSampling = static_cast<unsigned int>(std::round(NSampling / deltaRatio));
 
-            if (j == 2) {
+            /* if (j == 5) {
                 for (const auto &itSol : avg)
                     outputTest << std::fixed << std::setprecision(10) << itSol << "\t";
                 outputTest << std::endl;
-            }
+            } */
         }
         output << std::endl;
         outputAvg << std::endl;

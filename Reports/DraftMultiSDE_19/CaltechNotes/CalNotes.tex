@@ -1,0 +1,526 @@
+\documentclass[10pt]{article}
+
+\input{ex_shared}
+
+\begin{document}
+\maketitle	
+
+%\begin{abstract}
+%\end{abstract}
+
+%
+%\textbf{AMS subject classifications.} 
+%
+%\textbf{Keywords.} 
+
+\normalsize
+\section{Introduction}
+
+Let $\epl > 0$ and let us consider the one-dimensional multiscale stochastic differential equation (SDE)
+\begin{equation}\label{eq:SDE_MS}
+	\d X_t^\epl = -\alpha V_0'(X_t^\epl) \dd t - \frac1\epl V_1'\left(\frac{X_t^\epl}{\epl}\right) + \sqrt{2\sigma} \dd W_t,
+\end{equation}
+where the drift coefficient $\alpha$ and the diffusion coefficient $\sigma$ are positive real parameters, possibly unknown, and $W_t$ is a standard one-dimensional Brownian motion. The functions $V_0, V_1\colon \R \to \R$ are slow and fast potentials driving the dynamics of the solution $X_t^\epl$. Theory of homogenization \cite{BLP78} guarantees the existence of an SDE of the form
+\begin{equation}\label{eq:SDE_HOM}
+	\d X_t^0 = -A V_0'(X) \dd t + \sqrt{2\Sigma} \dd W_t,
+\end{equation}
+where the fast dynamics have been eliminated, such that $X_t^\epl \to X_t^0$ in law as random variables with values in $\mathcal C^0((0, T))$. The drift and diffusion coefficients of the homogenized dynamics $A$ and $\Sigma$ are given by $A = K\alpha$ and $\Sigma = K\sigma$, where $K$ can be computed as \corr{introduce theory}.
+
+In order to estimate the drift coefficient, one considers the likelihood function
+\begin{equation}
+	L_T(X_t) = \exp\left\{\int_0^T -A V_0'(X_t) \dd X_t - \frac12 \int_0^T A^2 V_0'(X_t)^2 \dd t \right\},
+\end{equation}
+whose logarithm $\ell_T(X_t) = \log L_T(X_t)$ can be maximised thus giving the estimator
+\begin{equation}
+	\widehat A = - \frac{\int_0^T V_0'(X_t) \dd X_t}{\int_0^T V_0'(X_t)^2 \dd t}.
+\end{equation}
+The diffusion coefficient can be computed as the quadratic variation of the path, i.e., given a sequence of partitions $\mathcal P_h = \{t_{k}\}_{k=0}^{N_h}$, of the interval $[0, T]$, where $h \defeq \sup_k (t_k - t_{k-1})$, we have
+\begin{equation}\label{eq:SigmaEst}
+	\Sigma = \frac1{2T} \lim_{h\to 0} \sum_{k=1}^{N_h} (X^0_{t_k} - X^0_{t_{k-1}})^2,
+\end{equation}
+in probability and for all $T > 0$.
+
+In a Bayesian setting, we can fix a prior $\Lambda$ with density $\lambda$ and the posterior is then given by
+\begin{equation}
+	\mu_T(B) = \frac{\int_B L_T(A) \lambda(A) \dd A}{\int_{\mathcal A} L_T(A) \lambda(A) \dd A}.
+\end{equation}
+
+\section{Point estimates from continuous data}
+
+In this section, we study the convergence with respect to the parameter $\epl$ of point estimates of the drift and the diffusion coefficients when the estimator is computed employing data coming from the multiscale model.
+
+\subsection{Drift coefficient}
+Let $X^\epl \defeq (X^\epl_t, 0\leq t \leq T)$ be the solution of \eqref{eq:SDE_MS} and define $\mathcal H_\Delta(X^\epl)$ as
+\begin{equation}\label{eq:ContMovingAverage}
+	\mathcal H_\Delta(X^\epl)_t \coloneqq 
+	\begin{cases} 
+	X_0, &t = 0, \\
+	\frac1t \int_0^t X_s \dd s, &0 < t < \Delta, \\
+	\frac1\Delta \int_{t-\Delta}^t X_s \dd s, &\Delta \leq t \leq T,\\
+	\end{cases}
+\end{equation}
+with $\Delta > 0$. Let us denote for ease of notation, $Z^\epl_t \coloneqq \mathcal H_\Delta(X^\epl)_t$. The maximum likelihood estimator of the drift coefficient is then
+\begin{equation}
+	\widehat A_{T, \Delta}(Z_t^\epl) = - \frac{\int_0^T V_0'(Z^\epl_t) \dd Z^\epl_t}{\int_0^T V_0'(Z^\epl_t)^2 \dd t}.
+\end{equation}
+Let us remark that for $0 < t < \Delta$, 
+\begin{equation}
+	\dd (t Z^\epl_t) = X_t \dd t,
+\end{equation}
+which implies 
+\begin{equation}
+	\dd Z^\epl_t = \frac1t (X^\epl_t - Z^\epl_t) \dd t.
+\end{equation}
+For $\Delta \leq t \leq T$, instead
+\begin{equation}
+	\dd Z^\epl_t = \frac1\Delta (X^\epl_t - X^\epl_{t-\Delta}) \dd t.
+\end{equation}
+We rewrite the estimator as
+\begin{equation}
+	\widehat A_{T, \Delta}(Z_t^\epl) = -\frac{\int_0^\Delta V_0'(Z^\epl_t) \frac1t (X^\epl_t - Z^\epl_t) \dd t}{\int_0^T V_0'(Z^\epl_t)^2 \dd t} -\frac{\int_\Delta^T V_0'(Z^\epl_t) (X^\epl_t - X^\epl_{t-\Delta}) \dd t}{\Delta\int_0^T V_0'(Z^\epl_t)^2 \dd t}.
+\end{equation}
+The goal of this section is proving the following result.
+\begin{theorem}\label{thm:DriftContinuous} Under assumption \corr{add assumptions}, if there exists $\zeta \in (0, 2)$ such that $\Delta = \epl^{\zeta}$ and $\gamma > \zeta$ such that $T = \epl^{-\gamma}$, it holds 
+\begin{equation}
+	\lim_{\epl\to 0} \widehat A_{T, \Delta}(Z_t^\epl) = A, \quad \text{in law}.
+\end{equation}
+\end{theorem}
+
+It is useful in the following to rewrite \eqref{eq:SDE_MS} as a system of two coupled SDEs. In particular, introducing the variable $Y^\epl_t \defeq X^\epl_t / \epl$, one has
+\begin{equation}\label{eq:SDE_MS2}
+\begin{aligned}
+	\d X_t^\epl &= -\alpha V_0'(X_t^\epl) \dd t - \frac1\epl V_1'\left(Y_t^\epl\right) + \sqrt{2\sigma} \dd W_t, \\
+	\d Y_t^\epl &= -\frac{\alpha}{\epl} V_0'(X_t^\epl) \dd t - \frac1{\epl^2} V_1'\left(Y^\epl_t\right) + \sqrt{\frac{2\sigma}{\epl^2}} \dd W_t.
+\end{aligned}
+\end{equation}
+The analysis necessary to prove Theorem \ref{thm:DriftContinuous} is based on the expansion 
+\begin{equation}\label{eq:ContDiffDecomp}
+\begin{aligned}
+	X^\epl_t - X^\epl_{t-\Delta} = &-\alpha \int_{t-\Delta}^t V_0'(X^\epl_s)\big(1 + \Phi'(Y^\epl_s)\big)\dd s \\
+	&+\sqrt{2\sigma}\int_{t-\Delta}^t \big(1 + \Phi'(Y^\epl_s)\big) \dd W_s \\
+	&-\epl \big(\Phi'(Y^\epl_t)- \Phi'(Y^\epl_{t - \Delta})\big),
+\end{aligned}
+\end{equation}
+for $t \geq \Delta$ (see \cite[Equation (5.8)]{PaS07}). The following lemma ensures that the process $Z^\epl_t$ has bounded moments. 
+
+\begin{lemma}\label{lem:BoundMoments} The process $Z_t^\epl$ has bounded moments of all order, i.e., for all $p \geq 1$ and $t \geq 0$ it holds
+	\begin{equation}
+		\E^{\mu^\epl} \abs{Z_t^\epl}^p \leq C,
+	\end{equation}
+	for $C > 0$ a constant uniform in $\epl \to 0$.
+\end{lemma}
+\begin{proof} The process $X^\epl_t$ has bounded moments (see \cite[Corollary 5.4]{PaS07}), which implies the desired result with an application of the Hölder inequality. In fact, for $0 < t < \Delta$,
+\begin{equation}
+\begin{aligned}
+	\E^{\mu^\epl} \abs{Z_t^\epl}^p &\leq \frac{t^{p-1}}{t^p} \int_0^t \E^{\mu^\epl} \abs{X_s^\epl}^p \dd s \\
+	&\leq t^{-1} \int_0^t C \dd s = C.
+\end{aligned}
+\end{equation}
+For $\Delta \leq t \leq T$ the procedure is analogue. 
+\end{proof}
+
+In the following lemma the difference between the processes $X_t^\epl$ and $Z_t^\epl$ is bounded. 
+\begin{lemma}\label{lem:BoundDiffCont} Under assumptions \corr{add assumptions}
+	\begin{equation}
+		\E^{\mu^\epl} \abs{X_t^\epl - Z_t^\epl}^p \leq C (\Delta^p + \Delta^{p/2} + \epl^p),
+	\end{equation}
+	where $C > 0$ is a constant independent of $\Delta$ and $\epl$.
+\end{lemma}
+\begin{proof} By definition of $Z_t^\epl$ for $\Delta \leq t \leq T$ and applying the Hölder inequality we have
+	\begin{equation}
+	\begin{aligned}
+		\E^{\mu^\epl} \abs{X_t^\epl - Z_t^\epl}^p &= \Delta^{-p} \E^{\mu^\epl} \abs{\int_{t-\Delta}^t (X_t^\epl - X_s^\epl) \dd s}^p \\
+		&\leq \Delta^{-1} \int_{t-\Delta}^t  \E^{\mu^\epl} \abs{X_t^\epl - X_s^\epl}^p \dd s
+	\end{aligned}
+	\end{equation}
+	We can now apply \cite[Lemma 6.1]{PaS07} to the integrand to obtain
+	\begin{equation}
+		\E^{\mu^\epl} \abs{X_t^\epl - Z_t^\epl}^p \leq C\Delta^{-1} \int_{t-\Delta}^t (\Delta^p + \Delta^{p/2} + \epl^p) \dd s,
+	\end{equation}
+	which implies the desired result. The case $0 < t \leq T$ can be proved analogously.
+\end{proof}
+
+\begin{lemma}[See {\cite[Proposition 5.8]{PaS07}}]\label{lem:ContFirstBound} Under assumptions \corr{add assumptions}, it holds in law
+\begin{equation}
+	\alpha \int_{t-\Delta}^t V_0'(X^\epl_s)\big(1 + \Phi'(Y^\epl_s)\big)\dd s = A \Delta V_0'(Z^\epl_t) + R(\epl, \Delta),
+\end{equation}
+where for every $p > 0$ and if $\Delta$ and $\epl$ are sufficiently small, then
+\begin{equation}
+	\left( \E^{\mu^\epl} \abs{R(\epl, \Delta)}^p \right)^{1/p} \leq C(\epl^2 + \Delta^{1/2}\epl + \Delta^{3/2}),
+\end{equation}
+where $C > 0$ is independent of $\epl$ and $\Delta$.
+\end{lemma}
+\begin{proof} Let us denote $\Psi(t) \defeq 1 + \Phi'(Y^\epl_t)$. Then
+	\begin{equation}
+	\begin{aligned}
+		\E^{\mu^\epl} \abs{R(\epl, \Delta)}^p &= \E^{\mu^\epl} \abs{\int_{t-\Delta}^t \alpha V_0'(X_s^\epl)\Psi(s) \dd s - \Delta A V_0'(Z_t^\epl)}^p \\
+		&\leq C \E^{\mu^\epl}\left| V_0'(Z_t^\epl) \int_{t-\Delta}^t \left(\alpha \Psi(s) - A\right) \dd s \right|^p \\
+		&\quad +C \E^{\mu^\epl} \left| \int_{t-\Delta}^t \alpha \left(V_0'(X_t^\epl ) - V_0'(Z_t^\epl)\right) \Psi(s) \dd s \right|^p.
+	\end{aligned}
+	\end{equation}	
+	The result is then obtained following the proof of \cite[Proposition 5.8]{PaS07} and replacing \cite[Lemma 6.1]{PaS07} with Lemma \ref{lem:BoundDiffCont}, and \cite[Corollary 4.1]{PaS07} with Lemma \ref{lem:BoundMoments}.
+\end{proof}
+
+We can now prove Theorem \ref{thm:DriftContinuous}.
+\begin{proof}[Proof of Theorem \ref{thm:DriftContinuous}] Consider the decomposition \eqref{eq:ContDiffDecomp}. Denoting
+	\begin{equation}
+		J_t \defeq \sqrt{2\sigma}\int_{t-\Delta}^t \big(1 + \Phi'(Y^\epl_s)\big) \dd W_s,
+	\end{equation}
+	we have due to Lemma \ref{lem:ContFirstBound} the equality in law
+	\begin{equation}
+		X^\epl_t - X^\epl_{t-\Delta} = -A\Delta V'(Z^\epl_t) + J^\Delta_t + R(\epl, \Delta),
+	\end{equation}
+	where, since $\zeta \in (0, 1)$, we have
+	\begin{equation}
+		\left(\E^{\mu^\epl} \abs{R(\epl, \Delta)}^p\right)^{1/p} \leq C(\epl^2 + \epl^{3\zeta/2})
+	\end{equation}
+	Therefore, we have that the estimator satisfies
+	\begin{equation}\label{eq:EstDecomp}
+	\begin{aligned}
+		\widehat A_{T, \Delta}(Z_t^\epl) &= A - A\frac{\int_0^\Delta V_0'(Z^\epl_t)^2 \dd t}{\int_0^T V_0'(Z^\epl_t)^2 \dd t} -\frac{\int_0^\Delta V_0'(Z^\epl_t) \frac1t (X^\epl_t - Z^\epl_t) \dd t}{\int_0^T V_0'(Z^\epl_t)^2 \dd t} \\
+		&\quad - \frac{\int_\Delta^T V_0'(Z^\epl_t) J_t \dd t}{\Delta \int_0^T V_0'(Z^\epl_t)^2 \dd t} - \frac{R(\epl, \Delta)\int_\Delta^T V_0'(Z^\epl_t) \dd t}{\Delta \int_0^T V_0'(Z^\epl_t)^2 \dd t} \\
+		&\eqqcolon A - I_1 - I_2 - I_3 - I_4,
+	\end{aligned}
+	\end{equation}
+	in law. Let us analyse the terms $I_i$, $i = 1, \ldots, 4$ separately. Let us consider $I_1$ and multiply both the numerator and the denominator by $1/T$. Due to assumption \corr{add assumption} and Lemma \ref{lem:BoundMoments}, we have
+	\begin{equation}
+		\frac{A}{T}\E^{\mu^\epl}\abs{\int_0^\Delta V_0'(Z^\epl_t)^2 \dd t} \leq C \epl^{\gamma + \zeta},
+	\end{equation}
+	for a constant $C > 0$ independent of $\Delta$ and $\epl$. Hence the numerator vanishes in $L^1$ and thus in law for $\epl \to 0$. We split the denominator as
+	\begin{equation}
+		\frac1T \int_0^T V_0'(Z^\epl_t)^2 \dd t = \frac1T\int_0^T V_0'(X^\epl_t)^2 \dd t + \frac1T\int_0^T \left(V_0'(Z^\epl_t)^2 - V_0'(X^\epl_t)^2 \right) \dd t 
+	\end{equation} 
+	For the first term, we have by the ergodic theorem
+	\begin{equation}
+		\lim_{T\to\infty}\frac1T \int_0^T V_0'(X^\epl_t)^2 \dd t = \E^{\mu^\epl} \abs{V_0'}^2, \quad \text{a.s.}
+	\end{equation}
+	For the second term, we have applying Cauchy--Schwarz's inequality and due to assumption \corr{add assumption} and Lemma \ref{lem:BoundDiffCont}
+	\begin{equation}
+	\begin{aligned}
+		\frac1T \E^{\mu^\epl} \abs{\int_0^T \left(V_0'(Z^\epl_t)^2 - V_0'(X^\epl_t)^2 \right) \dd t} &\leq \frac{C}{T} \int_0^T \left(\E^{\mu^\epl} \abs{V_0'(Z^\epl_t) - V_0'(X^\epl_t)}^2\right)^{1/2}\dd t\\
+		&\leq C \left(\Delta + \Delta^{1/2} + \epl\right),
+	\end{aligned}
+	\end{equation}
+	which implies that the denominator tends to a finite value in probability for $\epl \to 0$. Therefore, by Slutsky's theorem,
+	\begin{equation}
+		\lim_{\epl \to 0} I_1 = 0, \quad \text{in law}.
+	\end{equation}
+	Let us now consider $I_2$ and multiply numerator and denominator by $1/T$. The denominator is the same as $I_1$, and therefore does not need to be treated further. The numerator can be bounded in $L^1$ as
+	\begin{equation}
+	\frac1T \E^{\mu^\epl}\abs{\int_0^\Delta V_0'(Z^\epl_t) \frac1t (X^\epl_t - Z^\epl_t) \dd t} \leq \frac{C}{\Delta T} \int_0^\Delta \frac{\Delta}{t}\E^{\mu^\epl}\abs{X^\epl_t - Z^\epl_t} \dd t,
+	\end{equation}
+	which, since $Z_0^\epl = X_0^\epl$, vanishes for $\epl \to 0$. Hence, an application of Slutsky's theorem yields
+	\begin{equation}
+		\lim_{\epl \to 0} I_2 = 0, \quad \text{in law}.
+	\end{equation}
+	We consider now $I_3$, which can be rewritten as
+	\begin{equation}
+	\begin{aligned}
+		I_3 &= \frac{1}{\sqrt{T\Delta}}\frac{\frac{1}{\sqrt{T\Delta}}\int_\Delta^T V_0'(Z^\epl_t) J_t \dd t}{\frac1T\int_0^T V_0'(Z^\epl_t)^2 \dd t} \\
+		&= \epl^{(\gamma - \zeta)/2}\frac{\frac{1}{\sqrt{T\Delta}}\int_\Delta^T V_0'(Z^\epl_t) J_t \dd t}{\frac1T\int_0^T V_0'(Z^\epl_t)^2 \dd t}
+	\end{aligned}
+	\end{equation}
+	Let us remark that $J_t$ is a martingale and that by Itô isometry
+	\begin{equation}
+		\E^{\mu^\epl}|J_\Delta|^2 = 2\Sigma\Delta,
+	\end{equation}
+	Therefore, we can apply the central limit theorem for martingales to the numerator and obtain the equality in law
+	\begin{equation}	
+	\begin{aligned}
+		\lim_{T\to\infty}\frac{1}{\sqrt{T\Delta}}\int_\Delta^T V_0'(Z^\epl_t) J_t \dd t &= \frac{1}{\sqrt{\Delta}} \mathcal N\left(0,\E^{\mu^\epl}\left(\abs{V_0'(X^\epl_0)}^2\abs{J_\Delta}^2\right)\right) \\
+		&= C \mathcal N(0, 1).
+	\end{aligned}
+	\end{equation}
+	The denominator is the same as in $I_2$ and $I_3$ and tends in probability to a finite value. Hence, since by hypothesis $\gamma > \zeta$, we have
+	\begin{equation}
+		\lim_{\epl \to 0} I_3 = 0, \quad \text{in law}.
+	\end{equation}
+	For the last term $I_4$, we have
+	\begin{equation}
+		I_4 = \frac{\epl^{\gamma - \zeta}R(\epl, \Delta)\int_\Delta^T V_0'(Z^\epl_t) \dd t}{\frac1T\int_0^T V_0'(Z^\epl_t)^2 \dd t}.
+	\end{equation}
+	For the numerator, we have by the Cauchy--Schwarz inequality and due to Lemma \ref{lem:ContFirstBound}
+	\begin{equation}
+	\begin{aligned}
+		\epl^{\gamma-\zeta}\E^{\mu^\epl}\abs{R(\epl, \Delta)\int_\Delta^T V_0'(Z^\epl_t) \dd t} &\leq 
+		\epl^{\gamma - \zeta} \left(\E^{\mu^\epl}\abs{R(\epl, \Delta)}^2\right)^{1/2}\left(\E^{\mu^\epl}\abs{\int_\Delta^T V_0'(Z^\epl_t) \dd t}^2\right)^{1/2}\\
+		&\leq C\epl^{\gamma - \zeta}(\epl^2 + \epl^{3\zeta/2}) \epl^{-\gamma}\\
+		&\leq C\left(\epl^{2-\zeta} + \epl^{\zeta/2}\right)
+	\end{aligned}
+	\end{equation}
+	which implies that, since the denominator is the same as before,
+	\begin{equation}
+		\lim_{\epl \to 0} I_4 = 0, \quad \text{in law}.
+	\end{equation}
+	The decomposition \eqref{eq:EstDecomp}, together with the limits of $I_i$ for $i = 1, \ldots, 4$, prove the desired result.
+\end{proof}
+
+\subsection{Diffusion coefficient}
+
+We now consider the same transformation of the data, i.e., we employ $Z^\epl_t = \mathcal H_\Delta (X)_t$ as defined in \eqref{eq:ContMovingAverage}, to estimate the diffusion coefficient $\Sigma$ of the homogenized model. In particular, we consider the estimator
+\begin{equation}
+	\widehat \Sigma_{\Delta, T} = \frac1{2T} \lim_{h\to 0} \sum_{k=1}^{N_h} (Z^\epl_{t_k} - Z^\epl_{t_{k-1}})^2, 
+\end{equation}
+where the limit has to be intended in probability and with respect to a series of refinements of partitions $\mathcal P_h = \{t_k\}$ of the interval $[0, T]$. Let us recall that if instead of $Z^\epl_t$ one employs a path from the homogenized model $X^0_t$, then formula \eqref{eq:SigmaEst} gives the exact value of $\Sigma$ for any $T > 0$.
+
+Let us introduce a theoretical result which will play the role of Lemma \ref{lem:ContFirstBound} in this framework.
+\begin{lemma}[See {\cite[Proposition 5.7]{PaS07}}] Under assumptions \corr{add assumptions}, there exist random variables $\xi_t \sim \mathcal N(0, 1)$ such that for all $0 \leq t' < t \leq T$ it holds in law
+	\begin{equation}
+		\sqrt{2\sigma} \int_{t'}^t \big(1 + \Phi'(Y^\epl_s)\big) \dd W_s = \sqrt{2\Sigma(t-t')} \, \xi_t + S(\epl),
+	\end{equation}
+	where for every $p > 0$ and $\kappa \in (0, \frac12)$ it holds
+	\begin{equation}
+	\left( \E^{\mu^\epl} \abs{S(\epl)}^p \right)^{1/p} \leq C(\epl^{2\kappa} + \epl^\kappa).
+	\end{equation}
+\end{lemma}
+\begin{proof} The proof is identical to the proof of \cite[Proposition 5.7]{PaS07} and is therefore omitted here. \end{proof}
+
+We now need a decomposition similar to \eqref{eq:ContDiffDecomp} for the process $Z^\epl_t$. A first step is given by the following lemma.
+\begin{lemma}\label{lem:ReprMovAv} The process $Z^\epl_t \defeq \mathcal H_\Delta(X^\epl_t)$, where $\mathcal H_\Delta$ is defined in \eqref{eq:ContMovingAverage}, admits for $\Delta \leq t \leq T$ the representation
+	\begin{equation}
+	Z^\epl_t =  X^\epl_{t-\Delta} - \frac1\Delta\int_{t-\Delta}^{t} (t - s) \left( \alpha V_0'(X^\epl_s) + \frac1\epl V_1'\left(Y_s^\epl\right)\right) \dd s + \frac1\Delta \int_{t-\Delta}^{t} \sqrt{2\sigma} (t-s) \dd W_s,
+	\end{equation}
+	where $(X_t^\epl, Y_t^\epl)$ is the solution of \eqref{eq:SDE_MS2}.
+\end{lemma} 
+\begin{proof}
+	Let us for ease of notation denote $Z_t \defeq Z^\epl_t$, $X_t \defeq X^\epl_t$ and 
+	\begin{equation}
+	f(X_t) \defeq -\alpha V_0(X_t) - \frac1\epl V_1\left(Y_t^\epl\right).
+	\end{equation}
+	Due to the definition of $Z_t$, we have
+	\begin{equation}\label{eq:ReprStart}
+	\Delta Z_t = \Delta X_{t-\Delta} + \int_{t-\Delta}^{t}\int_{t-\Delta}^s f(X_r) \dd r\dd s + \int_{t-\Delta}^{t}\int_{t-\Delta}^s \sqrt{2\sigma}\dd W_r \dd s,
+	\end{equation}
+	where, exchanging the order of integration, we obtain for the deterministic integral
+	\begin{equation}\label{eq:ReprDet}
+	\begin{aligned}
+	\int_{t-\Delta}^{t}\int_{t-\Delta}^s f(X_r) \dd r\dd s &= \int_{t-\Delta}^{t}\int_r^t f(X_r) \dd s \dd r\\
+	&= \int_{t-\Delta}^{t} (t - s) f(X_s) \dd s.
+	\end{aligned}
+	\end{equation}
+	For the stochastic integral, we can write
+	\begin{equation}
+	\begin{aligned}
+	\int_{t-\Delta}^{t}\int_{t-\Delta}^s \dd W_r \dd s &= \int_{t-\Delta}^{t} (W_s - W_{t-\Delta}) \dd s \\
+	&= \int_{t-\Delta}^{t} W_s \dd s - \Delta W_{t-\Delta}.
+	\end{aligned}
+	\end{equation}
+	The formula $\d(tW_t) = t\dd W_t + W_t \dd t$ yields
+	\begin{equation}
+	\begin{aligned}
+	\int_{t-\Delta}^{t} W_s \dd s &= \big(tW_t - (t-\Delta) W_{t-\Delta}\big) - \int_{t-\Delta}^{t} s \dd W_s\\
+	&=  t(W_t - W_{t-\Delta}) - \int_{t-\Delta}^{t} s \dd W_s + \Delta W_{t-\Delta}\\
+	&= \int_{t-\Delta}^{t} (t-s) \dd W_s + \Delta  W_{t-\Delta},
+	\end{aligned}
+	\end{equation}
+	which implies
+	\begin{equation}\label{eq:ReprStoch}
+	\int_{t-\Delta}^{t}\int_{t-\Delta}^s \dd W_r \dd s = \int_{t-\Delta}^{t} (t-s) \dd W_s.
+	\end{equation}
+	Replacing \eqref{eq:ReprDet} and \eqref{eq:ReprStoch} into \eqref{eq:ReprStart} then gives the desired result.
+\end{proof}
+
+
+\section{Point estimates from discrete data}
+
+Let us consider high-frequency data to be given by the discrete sequence $\mathbf x^\epl = \{x^\epl_j\}_{j=0}^N$ such that $x^\epl_j = X_{j\epl^q}^\epl$, where $X_t^\epl$ is a realization of the solution of \eqref{eq:SDE_MS} and $q \geq 2$. Hence, we set $T = N\epl^q$. Moreover, let us consider $\Delta \in \mathbb N$, $\Delta \geq 1$ and the discrete operator $H_\Delta\colon \R^{N+1} \to \R^{N+1}$, $H_\Delta \colon \mathbf x^\epl \mapsto \langle \mathbf x^\epl \rangle^\Delta$, defined by
+\begin{equation}
+	\langle \mathbf x^\epl\rangle^\Delta_n = 
+	\begin{cases}
+		x^\epl_0, &n = 0,\\
+		\frac1{n+1} \sum_{j=0}^n x^\epl_{n-j}, &1 \leq n < \Delta-1,\\
+		\frac1\Delta \sum_{j=0}^{\Delta-1} x^\epl_{n-j}, &\Delta - 1 \leq n \leq N.
+	\end{cases} 
+\end{equation}
+In the following, we will always consider $n \geq \Delta - 1$. In this case, the maximum likelihood estimator $\widehat A_{N, \Delta}$ of the coefficient $A$ of \eqref{eq:SDE_HOM} based on the sequence $\langle \mathbf x^\epl \rangle^\Delta$ is given by
+\begin{equation}
+	\widehat A_{N, \Delta} = -\frac{\sum_{i=0}^{N-1}V_0'(\langle \mathbf x^\epl \rangle^\Delta_n)\big(\langle \mathbf x^\epl\rangle^\Delta_{n+1} - \langle \mathbf x^\epl\rangle^\Delta_n\big)}{\sum_{i=0}^{N-1} \epl^q V_0'(\langle \mathbf x^\epl \rangle^\Delta_n)^2}.
+\end{equation}
+We have 
+\begin{equation}
+	\langle \mathbf x\rangle^\Delta_{n+1} - \langle \mathbf x\rangle^\Delta_n = \frac1\Delta(x^\epl_{n+1} - x^\epl_{n-\Delta+1}),
+\end{equation}
+and therefore (equivalent to equation (5.8) in \cite{PaS07}) by Itô formula on $\Phi(Y^\epl_s)$
+\begin{equation}\label{eq:DiffDecomp}
+\begin{aligned}
+	\langle \mathbf x^\epl\rangle^\Delta_{n+1} - \langle \mathbf x^\epl\rangle^\Delta_n = 
+	&-\frac{\alpha}{\Delta} \int_{(n-\Delta+1)\epl^q}^{(n+1)\epl^q} V_0'(X^\epl_s)\big(1 + \Phi'(Y^\epl_s)\big)\dd s \\
+	&+\frac{\sqrt{2\sigma}}{\Delta}\int_{(n-\Delta+1)\epl^q}^{(n+1)\epl^q} \big(1 + \Phi'(Y^\epl_s)\big) \dd W_s \\
+	&-\frac{\epl}{\Delta} \big(\Phi'(Y^\epl_{(n+1)\epl^q})- \Phi'(Y^\epl_{(n-\Delta+1)\epl^q})\big).
+\end{aligned}
+\end{equation}
+The properties of the maximum likelihood estimator obtained replacing $\mathbf x^\epl$ with $\langle \mathbf x^\epl \rangle^\Delta$ can be determined analysing the terms in the decomposition above. 
+\begin{lemma}[Equivalent to {\cite[Lemma 6.1]{PaS07}}]\label{lem:BoundDiff} Lemma text
+	\begin{equation}
+		\E^{\mu^\epl}\abs{X_s^\epl - \langle \mathbf x^\epl \rangle^\Delta_n}^p \leq C(\epl^{pq}\Delta^p + \epl^{pq/2}\Delta^{p/2} + \epl^p\Delta^{-p}),
+	\end{equation}
+	for $s \in [(n-\Delta+1)\epl^q, (n+1)\epl^q]$.
+\end{lemma}
+\begin{proof} We replace the definition of $\langle \cdot \rangle^\Delta$ and apply the Hölder inequality to obtain
+	\begin{equation}
+	\begin{aligned}
+		\E^{\mu^\epl}\abs{X_s^\epl - \langle \mathbf x \rangle^\Delta_{n}}^p &= \Delta^{-p} \E^{\mu^\epl} \abs{\sum_{j=0}^{\Delta-1}\left(X_s^\epl - x^\epl_{n-j}\right)}^p \\
+		&\leq \Delta^{-1}\sum_{j=0}^{\Delta-1} \abs{X_s^\epl - x^\epl_{n-j}}^p.
+	\end{aligned}
+	\end{equation}
+	Applying on each element of the sum \cite[Lemma 6.1]{PaS07}, we obtain
+	\begin{equation}
+		\E^{\mu^\epl}\abs{X_s^\epl - \langle \mathbf x \rangle^\Delta_{n}}^p \leq C \Delta^{-1} \sum_{j=0}^{\Delta-1} \left(\epl^{pq}\Delta^p + \epl^{pq/2}\Delta^{p/2} + \epl^p\Delta^{-p}\right),
+	\end{equation}
+	which implies the desired result.
+\end{proof}
+
+\begin{lemma}[Equivalent to {\cite[Proposition 5.8]{PaS07}}] Lemma text
+	\begin{equation}
+		\frac{\alpha}{\Delta} \int_{(n-\Delta+1)\epl^q}^{(n+1)\epl^q} V_0'(X^\epl_s)\big(1 + \Phi'(Y^\epl_s)\big)\dd s = \epl^q A V_0'(\langle \mathbf x \rangle^\Delta_{n}) + R_2(\epl, \Delta),
+	\end{equation}
+	in law, where for a constant $C > 0$ it holds
+	\begin{equation}
+		\left(\E^{\mu^\epl}\abs{R_2(\epl, \Delta)}^p\right)^{1/p}\leq C\left(\epl^2\Delta^{-1} + \epl^{q+1/2}\Delta^{-1/2} + \epl^{q+1} + \epl^{3q/2}\Delta^{1/2} + \epl^{2q}\Delta  \right).
+	\end{equation}
+\end{lemma}
+\begin{proof} We compute
+	\begin{equation} 
+	\begin{aligned}
+		\E^{\mu^\epl}\abs{R_2(\epl, \Delta)}^p 
+		&= \E^{\mu^\epl}\abs{\frac{\alpha}{\Delta} \int_{(n-\Delta+1)\epl^q}^{(n+1)\epl^q} V_0'(X^\epl_s)\big(1 + \Phi'(Y^\epl_s)\big)\dd s - A\epl^q V_0'(\langle \mathbf x^\epl \rangle^\Delta_n)}^p \\
+		&= \E^{\mu^\epl}\left|\frac{\alpha}{\Delta} \int_{(n-\Delta+1)\epl^q}^{(n+1)\epl^q} V_0'(\langle \mathbf x^\epl \rangle^\Delta_n)\big(1 + \Phi'(Y^\epl_s)\big)\dd s - \frac{A}{\Delta}\int_{(n-\Delta+1)\epl^q}^{(n+1)\epl^q} V_0'(\langle \mathbf x^\epl \rangle^\Delta_n)) \dd s\right.\\
+		&\quad \left. + \frac{\alpha}{\Delta}\int_{(n-\Delta+1)\epl^q}^{(n+1)\epl^q} \left(V_0'(X^\epl_s) - V_0'(\langle \mathbf x^\epl \rangle^\Delta_n)\right)\big(1 + \Phi'(Y^\epl_s)\big) \dd s\right|^p\\
+		&\leq C \Delta^{-p} \E^{\mu^\epl}\abs{V_0'(\langle \mathbf x^\epl \rangle^\Delta_n)\int_{(n-\Delta+1)\epl^q}^{(n+1)\epl^q} \left(\alpha\big(1 + \Phi'(Y^\epl_s)\big) -  A\right)}^p\\
+		&\quad+ C\alpha^p \Delta^{-p} \E^{\mu^\epl}\abs{\int_{(n-\Delta+1)\epl^q}^{(n+1)\epl^q} \left(V_0'(X^\epl_s) - V_0'(\langle \mathbf x^\epl \rangle^\Delta_n)\right)\big(1 + \Phi'(Y^\epl_s)\big) \dd s}^p\\
+		& \eqqcolon I_{\epl, \Delta}^1 + I_{\epl, \Delta}^2,
+	\end{aligned}
+	\end{equation}
+	where $C$ only depends on $p$. Then, Hölder's inequality and Lemma \ref{lem:BoundDiff} give
+	\begin{equation}
+	\begin{aligned}
+		I_{\epl, \Delta}^2 &\leq C \Delta^{-1} \epl^{q(p-1)}  \int_{(n-\Delta+1)\epl^q}^{(n+1)\epl^q} \E^{\mu^\epl} \abs{X^\epl_s - \langle \mathbf x^\epl \rangle^\Delta_n}^p \dd s \\
+		&\leq C \Delta^{-1} \epl^{q(p-1)}  \int_{(n-\Delta+1)\epl^q}^{(n+1)\epl^q} (\epl^{pq}\Delta^p + \epl^{pq/2}\Delta^{p/2} + \epl^p\Delta^{-p}) \dd s \\
+		&\leq C \left(\epl^{2pq}\Delta^p + \epl^{3pq/2}\Delta^{p/2} + \epl^{p(q+1)}\Delta^{-p}\right),
+	\end{aligned}
+	\end{equation}
+	which implies
+	\begin{equation}
+		\left(I_{\epl, \Delta}^2\right)^{1/p} \leq C\left(\epl^{2q}\Delta + \epl^{3q/2}\Delta^{1/2} + \epl^{q+1}\Delta^{-1}\right).
+	\end{equation}
+	Let us now consider $I^1_{\epl, \Delta}$. Due to \cite[Lemma 5.6]{PaS07}, we have
+	\begin{equation}
+		\E^{\mu^\epl}\abs{\int_{(n-\Delta+1)\epl^q}^{(n+1)\epl^q} \left(\alpha\big(1 + \Phi'(Y^\epl_s)\big) -  A\right)}^p \leq C(\epl^{2p} + \epl^{p(q+1)}\Delta^p + \epl^{p(1+q/2)}\Delta^{p/2}),
+	\end{equation}
+	which, in light of equation (3.1) and Corollary 5.4 in \cite{PaS07}, yields
+	\begin{equation}
+		\left(I_{\epl, \Delta}^1\right)^{1/p} \leq C(\Delta^{-1}\epl^2 + \epl^{q+1} + \epl^{q+1/2}\Delta^{-1/2}).
+	\end{equation}
+	Hence, since $q \geq 2$ and $\epl < 1$,
+	\begin{equation}
+	\begin{aligned}
+		\E^{\mu^\epl}\abs{R_2(\epl, \Delta)}^p &\leq C\left((\epl^2 + \epl^{q+1})\Delta^{-1} + \epl^{q+1/2}\Delta^{-1/2} + \epl^{q+1} + \epl^{3q/2}\Delta^{1/2} + \epl^{2q}\Delta  \right) \\
+		&\leq C\left(\epl^2\Delta^{-1} + \epl^{q+1/2}\Delta^{-1/2} + \epl^{q+1} + \epl^{3q/2}\Delta^{1/2} + \epl^{2q}\Delta  \right),
+	\end{aligned}
+	\end{equation}
+	which concludes the proof.
+\end{proof}
+
+\begin{theorem} Equivalent to Theorem \ref{thm:DriftContinuous} in discrete case.
+\end{theorem}
+
+\begin{proof} Since 
+	\begin{equation}
+		\langle \mathbf x^\epl\rangle^\Delta_{n+1} - \langle \mathbf x^\epl\rangle^\Delta_n = -\epl^q A V'(\langle \mathbf x^\epl\rangle^\Delta_n) + R_1 + R_2,
+	\end{equation}
+	\corr{(determine $R_1$ and $R_2$ well)}, we have
+	\begin{equation}
+		\widehat A_{N, \Delta} = A + \ldots
+	\end{equation}
+\end{proof}
+
+\section{Bayesian inference}
+
+Consider 
+\begin{equation}
+L_T^0(A) = \exp\left\{-\int_0^T A V_0'(X_t^0) \dd X_t^0 - \frac12 \int_0^T A^2 V_0'(X_t^0)^2 \dd t \right\},
+\end{equation}
+and, denoting $Z^\epl_t \defeq \mathcal H_\Delta(X^\epl)_t$, where $\mathcal H_\Delta$ is defined in \eqref{eq:ContMovingAverage}
+\begin{equation}
+L_T^\epl(A) = \exp\left\{-\int_0^T A V_0'(Z^\epl_t)\dd Z^\epl_t - \frac12 \int_0^T A^2 V_0'(Z^\epl_t)^2 \dd t \right\}.
+\end{equation}
+Let the prior be denoted by $\Lambda$, with density $\lambda$ and the corresponding posteriors $\mu_T^0$ and $\mu_T^\epl$. Denote $\ell_t^0 = \log L_T^0$, respectively $\ell_t^\epl$ the log-likelihoods.
+
+Define 
+\begin{equation}
+d_{\mathrm{TV}}(\mu, \nu) \defeq \sup_{B \in \mathcal B} \abs{\mu(B) - \nu(B)}.
+\end{equation}
+Compute for $B \in \mathcal B$ 
+\begin{equation}
+\abs{\mu_T^0(B) - \mu_T^\epl(B)} = \abs{\frac{C^\epl \int_B L_T^0(A) \lambda(A) \dd A - Z^0 \int_B L_T^\epl(A) \lambda(A) \dd A}{C^0 C^\epl}},
+\end{equation}
+where
+\begin{equation}
+C^0 = \int_{\mathcal A} L_T^0(A) \lambda(A) \dd A,
+\end{equation}
+and $C^\epl$ defined respectively. Then
+\begin{equation}
+\abs{\mu_T^0(B) - \mu_T^\epl(B)} \leq I_1 + I_2, 
+\end{equation}
+where
+\begin{equation}
+\begin{aligned}
+I_1 &= \frac{1}{C^0} \int_B \abs{L_T^0(A) - L_T^\epl(A)} \lambda(A) \dd A, \\
+I_2 &= \frac{\abs{C^\epl - C^0}}{C^0 C^\epl} \mu_T^\epl(B).
+\end{aligned}
+\end{equation}
+Consider first $I_1$. Since $\abs{\exp(a) - \exp(b)} \leq (\exp(a)+ \exp(b)) \abs{a - b}$, we have
+\begin{equation}
+I_1 \leq \frac{1}{C^0} \int_B \big(L_T^0(A) + L_T^\epl(A)\big)\abs{\ell_T^0(A) - \ell_T^\epl(A)} \lambda(A) \dd A.
+\end{equation}
+Let us consider
+\begin{equation}
+\begin{aligned}
+\ell_T^0(A) - \ell_T^\epl(A) = &- \int_0^T A V_0'(X_t^0) \dd X_t^0 + \int_0^T A V_0'(Z^\epl_t) \dd Z^\epl_t \\
+&- \frac12 \int_0^T A^2 \big(V_0'(X_t^0)^2 - V_0'(Z^\epl_t)^2\big) \dd t.
+\end{aligned}
+\end{equation}
+
+\begin{lemma} Under assumptions \corr{add assumptions}, it holds
+	\begin{equation}
+		\abs{\ell_T^0(A) - \ell_T^\epl(A)} \to 0,
+	\end{equation}
+	for $\epl \to 0$.
+\end{lemma}
+
+\begin{proof} The triangle inequality
+	\begin{equation}
+	\begin{aligned}
+		\abs{\ell_T^0(A) - \ell_T^\epl(A)} \leq &\abs{\int_0^T A V_0'(X_t^0) \dd X_t^0 - \int_0^T A V_0'(Z^\epl_t) \dd Z^\epl_t} \\
+		&+ \abs{\frac12 \int_0^T A^2 \big(V_0'(X_t^0)^2 - V_0'(Z^\epl_t)^2\big) \dd t} \eqdef I_1 + I_2
+	\end{aligned}
+	\end{equation}
+	Let us first consider $I_1$. From the definition of $Z_t^\epl$, we divide
+	\begin{equation}
+	\begin{aligned}
+		 I_1 \leq &\abs{\int_0^\Delta A V_0'(X_t^0) \dd X_t^0 - \int_0^\Delta A V_0'(Z^\epl_t) \frac{X^\epl_t - Z^\epl_t}{t}\dd t}\\
+		 + &\abs{\int_\Delta^T A V_0'(X_t^0) \dd X_t^0 - \int_\Delta^T A V_0'(Z^\epl_t) \frac{X^\epl_t - X^\epl_{t-\Delta}}{\Delta}\dd t} \eqdef I_1^1 + I_1^2.
+	\end{aligned} 
+	\end{equation}
+	Let us first consider $I_1^2$. Replacing \eqref{eq:ContDiffDecomp} we can write in law
+	\begin{equation}
+		I_1^2 = \abs{\int_\Delta^T A V_0'(X_t^0) \dd X_t^0 - \int_\Delta^T A V_0'(Z^\epl_t) \frac{J_t - A\Delta V_0'(Z_t^\epl) + R(\epl, \Delta)}{\Delta}\dd t},
+	\end{equation}
+	where, due to Lemma \ref{lem:ContFirstBound}, we have
+	\begin{equation}
+		\left( \E^{\mu^\epl} \abs{R(\epl, \Delta)}^p \right)^{1/p} \leq C(\epl^2 + \Delta^{1/2} + \Delta^{3/2}).
+	\end{equation}
+	Replacing $\d X^0_t$ with its definition given by \eqref{eq:SDE_HOM}, we can then split $I_1^2$ in three terms and apply the triangle inequality as
+	\begin{equation}
+	\begin{aligned}
+		I_1^2 &\leq A^2 \abs{\int_\Delta^T  \left(V_0'(X_t^0)^2 - V_0'(Z_t^\epl)^2\right) \dd t} + A \abs{\int_\Delta^T  V_0'(X^0_t)\sqrt{2\Sigma}\dd W_t - \frac{1}{\Delta} \int_\Delta^T V_0'(Z_t^\epl) J_t \dd t} \\
+		&\quad+ A \abs{\int_\Delta^T V_0'(Z_t^\epl) \frac{R(\epl, \Delta)}{\Delta}\dd t} \eqdef R_1 + R_2 + R_3.
+	\end{aligned}
+	\end{equation}	
+\end{proof}
+
+\section{Numerical experiments}
+
+\bibliographystyle{siam}
+\bibliography{../../anmc}
+\end{document}  
