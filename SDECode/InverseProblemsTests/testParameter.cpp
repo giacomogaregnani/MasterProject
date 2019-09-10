@@ -90,13 +90,13 @@ int main(int argc, char* argv[])
                 samples.push_back(solution[k]);
 
             sigmaHat = estimateSigma(samples, T / NSampling);
-            AHat = estimateA(samples, T / NSampling, &gradV0, param);
+            AHat = estimateA(samples, T / NSampling, &gradV0);
             output << AHat << "\t" << sigmaHat << "\t";
 
             // Estimate with averaging
             avg = averageSequence(solution, increment);
             sigmaHat = estimateSigma(avg, T / N);
-            AHat = estimateA(avg, T / N, &gradV0, param);
+            AHat = estimateA(avg, T / N, &gradV0);
             outputAvg << AHat << "\t" << sigmaHat << "\t";
 
             NSampling = static_cast<unsigned int>(std::round(NSampling / deltaRatio));

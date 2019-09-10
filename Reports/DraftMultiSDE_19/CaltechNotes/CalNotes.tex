@@ -5,15 +5,13 @@
 \begin{document}
 \maketitle	
 
-%\begin{abstract}
-%\end{abstract}
+\begin{abstract}
+\end{abstract}
 
-%
-%\textbf{AMS subject classifications.} 
-%
-%\textbf{Keywords.} 
+\textbf{AMS subject classifications.} 
 
-\normalsize
+\textbf{Keywords.} 
+
 \section{Introduction}
 
 Let $\epl > 0$ and let us consider the one-dimensional multiscale stochastic differential equation (SDE)
@@ -24,8 +22,8 @@ where the drift coefficient $\alpha$ and the diffusion coefficient $\sigma$ are 
 \begin{equation}\label{eq:SDE_HOM}
 	\d X_t^0 = -A V_0'(X) \dd t + \sqrt{2\Sigma} \dd W_t,
 \end{equation}
-where the fast dynamics have been eliminated, such that $X_t^\epl \to X_t^0$ in law as random variables with values in $\mathcal C^0((0, T))$. The drift and diffusion coefficients of the homogenized dynamics $A$ and $\Sigma$ are given by $A = K\alpha$ and $\Sigma = K\sigma$, where
-\begin{equation}
+where $W_t$ is the same Brownian motion and where the fast dynamics have been eliminated, such that $X_t^\epl \to X_t^0$ for $\epl\to 0$ in law as random variables in $\mathcal C^0((0, T), \R)$. The drift and diffusion coefficients of the homogenized dynamics $A$ and $\Sigma$ are given by $A = K\alpha$ and $\Sigma = K\sigma$, where
+\begin{equation}\label{eq:K_HOM}
 	K = \int_0^L (1 + \Phi'(y))^2 \, \mu(\d y),
 \end{equation}
 with 
@@ -360,7 +358,7 @@ We can now prove the main result.
 \end{proof}
 
 
-\section{Point estimates from discrete data}
+\section{Point estimates from discrete data}\label{sec:Disc}
 
 In practice, it is not possible to observe $X_t^\epl$ continuously, and data will therefore be given by a discrete sequence of time evaluations of the underlying continuous process. Let us consider data to be given by the discrete sequence $\mathbf x^\epl = \{x^\epl_j\}_{j=0}^N$ such that $x^\epl_j = X_{t_j}^\epl$, where $X_t^\epl$ is the solution of \eqref{eq:SDE_MS}. We are interested in the case in which data is observed at high frequency, and therefore in the following we assume that $t_j = j\epl^\beta$ for some exponent $\beta > 1$. 
 
@@ -384,7 +382,7 @@ where, in this framework, $\delta \in \N_{>0}$ represents the size of the averag
 \end{equation}
 for $\delta  \leq n \leq N$ and for $1 \leq n < \delta - 1$
 \begin{equation}
-	z^\epl_n - z^\epl_{n-1} = \frac{1}{n+1}x_n^\epl - \frac1{n(n+1)} \sum_{j=0}^{n-1} x_j^\epl.
+	z^\epl_n - z^\epl_{n-1} = \frac1{n+1} \left(x_n^\epl - z^\epl_{n-1}\right).
 \end{equation}
 Since the weight of the first $\delta-1$ data points will be negligible in the theoretical results, we decide to modify the definition of the operator $H_\delta$ simply as
 \begin{equation}
@@ -392,9 +390,12 @@ Since the weight of the first $\delta-1$ data points will be negligible in the t
 \end{equation}
 for $n = 0, 1, \ldots, N$, through the introduction of $\delta$ fictitious points $x^\epl_j = x^\epl_0$, $j = -1, -2, \ldots, -\delta+1$. The choice of assigning to these ``negative index'' points the initial condition is arbitrary, but not influential. Therefore, with this choice, the difference $z_n^\epl - z_{n-1}^\epl$ is always given by \eqref{eq:zDifference}.
 
+\begin{remark} Let us remark that applying the operator $H_\delta$ on a sequence $\mathbf x \in \R^{N+1}$ has a computational complexity of $\mathcal O(N)$ simple operations. 
+\end{remark}
+
 Replacing $\mathbf x$ with the sequence $\mathbf z^\epl$ in \eqref{eq:AEstDiscrete} and reminding that we consider the time grid to have spacing $h = \epl^\beta$, we get the estimator 
 \begin{equation}\label{eq:AEstDiscreteZ}
-	\widehat A_{N, \delta}(\mathbf z^\epl) = -\frac{\sum_{n=1}^{N}V_0'(z^\epl_{n-1})(z^\epl_n - z^\epl_{n-\delta})}{\sum_{n=1}^{N} \epl^\beta V_0'(z^\epl_{n-1})^2}.
+	\widehat A_{N, \delta}(\mathbf z^\epl) = -\frac{\sum_{n=1}^{N}V_0'(z^\epl_{n-1})(z^\epl_n - z^\epl_{n-1})}{\sum_{n=1}^{N} \epl^\beta V_0'(z^\epl_{n-1})^2}.
 \end{equation}
 Employing the theoretical tools introduced in Section \ref{sec:ACont} it is possible to prove the following result.
 \begin{theorem}\label{thm:DriftDiscrete} Under assumption \corr{add assumptions}, if there exists $\zeta \in (\beta - 1, \beta)$ such that $\delta = [\epl^{-\zeta}]$ and $\gamma > 2\beta - \zeta$ such that $N = [\epl^{-\gamma}]$, where $[\cdot]$ denotes the integer part of a real number, it holds 
@@ -444,7 +445,7 @@ Let us first introduce a Lemma which replaces in the discrete case Lemma \ref{le
 \begin{proof}[Proof of Theorem \ref{thm:DriftDiscrete}]  Let us recall the decomposition \eqref{eq:ContDiffDecomp}, which, combined with \eqref{eq:zDifference}, reads
 	\begin{equation}
 	\begin{aligned}
-		z^\epl_n - z^\epl_{n-\delta} = &- \frac{\alpha}{\delta}\int_{t_{n-\delta}}^{t_n} V_0'(X^\epl_s)\big(1 + \Phi'(Y^\epl_s)\big)\dd s \\
+		z^\epl_n - z^\epl_{n-1} = &- \frac{\alpha}{\delta}\int_{t_{n-\delta}}^{t_n} V_0'(X^\epl_s)\big(1 + \Phi'(Y^\epl_s)\big)\dd s \\
 		&+\frac{\sqrt{2\sigma}}{\delta}\int_{t_{n-\delta}}^{t_n} \big(1 + \Phi'(Y^\epl_s)\big) \dd W_s \\
 		&-\frac{\epl}{\delta} \big(\Phi(Y^\epl_{t_n})- \Phi(Y^\epl_{t_{n-\delta}})\big).
 	\end{aligned}
@@ -455,7 +456,7 @@ Let us first introduce a Lemma which replaces in the discrete case Lemma \ref{le
 	\end{equation}
 	we have the equality in law
 	\begin{equation}
-		z^\epl_n - z^\epl_{n-\delta} = -\epl^\beta A V_0'(z^\epl_{n-1}) + \frac{\widehat R(\epl, \delta)}{\delta} + \frac{J_n}{\delta},
+		z^\epl_n - z^\epl_{n-1} = -\epl^\beta A V_0'(z^\epl_{n-1}) + \frac{\widehat R(\epl, \delta)}{\delta} + \frac{J_n}{\delta},
 	\end{equation}
 	where
 	\begin{equation}
@@ -494,10 +495,113 @@ Let us first introduce a Lemma which replaces in the discrete case Lemma \ref{le
 	\end{equation} 
 	This, together with the hypothesis $\gamma > 2\beta - \zeta$, yields
 	\begin{equation}
-		\lim_{\epl \to 0} I_1 = 0, \quad \text{in law},
+		\lim_{\epl \to 0} I_2 = 0, \quad \text{in law},
 	\end{equation}
 	which proves the desired result.
 \end{proof}
+
+\subsection{Diffusion coefficient}
+
+We now consider the estimator of the diffusion coefficient based on a discrete-time approximation of the quadratic variation. For a generic sequence $\mathbf x\in \R^{N+1}$ based on a time sequence with spacing $h$, so that $T = Nh$, a discrete approximation to \eqref{eq:SigmaEst} is given by
+\begin{equation}
+	\widehat \Sigma_{N}(\mathbf x) = \frac{1}{2Nh} \sum_{n=0}^N (x_{n+1}- x_n)^2.
+\end{equation}
+As in the previous section, let us consider $h = \epl^\beta$ for $\beta \geq 1$ and the sequence $\mathbf z^\epl = H_\delta(\mathbf x^\epl)$. We then consider the estimator 
+\begin{equation}\label{eq:SigmaEstDiscrete}
+	\widehat \Sigma_{N, \delta}(\mathbf z^\epl) = \frac{\delta}{2N\epl^\beta} \sum_{n=0}^N (z^\epl_{n+1} - z^\epl_n)^2.
+\end{equation}
+Let us remark that an additional $\delta$ appears at the numerator of the estimator above. This additional term, which may appear rather unnatural, has to be introduced in order to guarantee asymptotic unbiasedness of the estimator.
+
+\begin{theorem} Under assumptions \corr{add assumptions}, if $\delta = \epl^\zeta$ for $\zeta \in (0, 1+\beta)$ and if $N = [\epl^{-\gamma}]$ for $\gamma > 0$, then 
+	\begin{equation}
+	\lim_{\epl \to 0} \widehat \Sigma_{N, \delta} = \Sigma, \quad \text{in law},
+	\end{equation}
+	for $\widehat \Sigma_{N, \delta}$ defined in \eqref{eq:SigmaEstDiscrete}.
+\end{theorem}
+\begin{proof} Due to \ldots, we have
+	\begin{equation}\label{eq:zDiffProofSigma}
+		z_{n+1} - z_n = \sqrt{\frac{2\Sigma\epl^\beta}{\delta}}\xi_n + \frac{\widehat R(\epl, \delta)}{\delta},
+	\end{equation}
+	where for all $\kappa \in (0, 1/2)$ it holds for $\epl$ and $\delta$ sufficiently small
+	\begin{equation}
+		\left(\E^{\mu^\epl}\abs{\widehat R(\epl, \Delta)}^p\right)^{1/p} \leq C\left(\epl^\kappa + \epl^{(2+\beta)/2}\delta^{1/2}\right).
+	\end{equation}
+	Then, replacing \eqref{eq:zDiffProofSigma} into \eqref{eq:SigmaEstDiscrete} yields
+	\begin{equation}
+	\begin{aligned}
+		\widehat\Sigma_{N, \delta}(\mathbf z^\epl) &= \Sigma \frac1N \sum_{n=0}^N \xi_n^2 + \sqrt{\frac{2\Sigma}{\delta\epl^\beta}} \frac1N \sum_{n=0}^N \hat R(\epl, \delta)\xi_n
+		+ \frac1{2N\epl^\beta\delta}\sum_{n=0}^N\hat R(\epl, \delta)^2\\
+		&\eqdef I_1 + I_2 + I_3.
+	\end{aligned}
+	\end{equation}
+	The law of large numbers implies that, since $N\to\infty$ when $\epl \to 0$
+	\begin{equation}
+		\lim_{\epl\to 0}I_1 = \Sigma, \quad \text{a.s.}
+	\end{equation}
+	Let us now consider $I_2$. We apply the Cauchy--Schwarz inequality and obtain for a constant $C > 0$ independent of $\delta$ and $\epl$
+	\begin{equation}
+	\begin{aligned}
+		\E^{\mu^\epl}\abs{I_2} &\leq C \frac{\epl^{(\beta - \zeta)/2}}{N} \sum_{n=0}^N \left(\E^{\mu^\epl} \abs{\widehat R(\epl, \delta)}^2 \right)^{1/2}\\
+		&\leq C \epl^{(\beta - \zeta)/2}\left(\epl^\kappa + \epl^{(2+\beta+\zeta)/2} \right)\\
+		&\leq C \left(\epl^{(2\kappa+\beta-\zeta)/2} + \epl^{1+\beta}\right).
+	\end{aligned}
+	\end{equation}	
+	Let us remark that the first term tends to zero when
+	\begin{equation}
+		\zeta - \beta < 2\kappa,
+	\end{equation}
+	which is verified since $0 < \zeta < 1 + \beta$ and $\kappa$ can be chosen arbitrarily close to $1/2$. Hence, $I_2$ vanishes in $L^1$ and therefore
+	\begin{equation}
+		\lim_{\epl\to 0} I_2 = 0, \quad \text{in law}.
+	\end{equation}
+	We now consider $I_3$, for which similarly
+	\begin{equation}
+	\begin{aligned}
+		\E^{\mu^\epl}\abs{I_3} \leq C \epl^{\beta - \zeta} \left(\epl^{2\kappa} + \epl^{2+\beta + \zeta}\right)\\
+		\leq C\left(\epl^{2\kappa + \beta - \zeta} + \epl^{2+2\beta}\right),
+	\end{aligned}	
+	\end{equation}
+	which, for the same reason as above, yields
+	\begin{equation}
+		\lim_{\epl\to 0} I_3 = 0, \quad \text{in law},
+	\end{equation}
+	and which concludes the proof.
+\end{proof}
+
+
+\section{Numerical experiments}
+
+In this section, we display a series of numerical experiment confirming in practice the validity of our theoretical results. For feasibility reasons, we will focus on the results for discrete sequences shown in Section \ref{sec:Disc}.
+
+\subsection{Drift coefficient}
+
+\begin{figure}[t]
+	\centering
+	\begin{tabular}{cc}
+		\includegraphics{Figures/A} & \includegraphics{Figures/A_zeta}
+	\end{tabular}
+	\caption{Estimation of the drift coefficient $A$ of \eqref{eq:SDE_HOM}. On both figures, the solid horizontal line is the true value of the homogenized drift coefficient $A$, while the dashed line is the value of the drift coefficient $\alpha$ of the multiscale equation. On the left, the estimation is obtained varying $\epl$ for fixed values of the coefficients $(\beta, \gamma, \zeta)$. On the right, we fix $\epl = 5\cdot 10^{-3}$, the exponent $\beta = 2$ and vary $\zeta$ and $\gamma = 2\beta - \zeta$.}
+	\label{fig:A}
+\end{figure} 
+
+Let us consider the case $V_0(x) = x$ and $V_1(x) = \cos(x)$, so that the homogenized model \eqref{eq:SDE_HOM} is the Ornstein--Uhlenbeck equation. We fix $\alpha = 1$ and $\sigma = 0.5$ and wish to retrieve the drift coefficient $A$ of \eqref{eq:SDE_HOM}. In this case, the value of $K$ in \eqref{eq:K_HOM} is given by
+\begin{equation}
+	K = \frac{L^2}{Z\widehat Z},
+\end{equation}
+with $L = 2\pi$ and 
+\begin{equation}
+	Z = \int_0^L \exp\left(-\frac{V_1(y)}{\sigma}\right) \dd y, \quad \widehat Z = \int_0^L \exp\left(\frac{V_1(y)}{\sigma}\right) \dd y.
+\end{equation}
+It is therefore possible to compute cheaply the coefficients of the homogenized model and obtain a comparison for numerical results. Following Theorem \ref{thm:DriftDiscrete}, we consider a set of values of $\epl$, in particular we choose $\epl_i = 1.3^i \cdot 10^{-3}$ for $i = 0, 1, \ldots, 20$ and fix $h_i = \epl_i^\beta$ with $\beta = 2$, the averaging window $\delta_i = \epl^\zeta$ for $\zeta = \beta - 0.7$, and $N = [\epl^{-\gamma}]$ with $\gamma = 2\beta - \zeta$. Results, displayed in Figure \ref{fig:A}, show how the estimated drift coefficient tends towards the value of the homogenized coefficient. Nonetheless, given values of $\epl$ and $\beta$, the choice of $\zeta \in (\beta - 1, \beta)$ is arbitrary. Theoretically, all choices in this interval should lead asymptotically with respect to $\epl$ to the value $A$ of the homogenized equation, in law. In order to test numerically this property, we fix $\epl = 5\cdot 10^{-3}$, the exponent $\beta = 2$ and vary $\zeta$ linearly in the range $[\beta - 1, \beta]$, thus fixing $\gamma = 2\beta - \zeta$. Results, displayed in Figure \ref{fig:A}, show that the best estimations are obtained for values close to the bounds of the interval $(\beta-1, \beta)$.
+
+\subsection{Diffusion coefficient}
+
+We consider the same setting as above
+
+\begin{figure}
+	\centering
+	\includegraphics[]{Figures/S}
+\end{figure}
 
 \section{Bayesian inference}
 
@@ -628,8 +732,6 @@ Let us consider
 %	\end{equation}
 %	Replacing \eqref{eq:ReprDet} and \eqref{eq:ReprStoch} into \eqref{eq:ReprStart} then gives the desired result.
 %\end{proof}
-
-\section{Numerical experiments}
 
 \bibliographystyle{siam}
 \bibliography{../../anmc}

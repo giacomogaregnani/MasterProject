@@ -10,6 +10,18 @@ add_executable(testParameter testParameter.cpp
                computeHomogeneous.hpp computeHomogeneous.cpp)
 target_link_libraries(testParameter SDESolver)
 
+add_executable(testParameterV2 testParameterV2.cpp
+        generateObservations.hpp generateObservations.cpp
+        computeEstimators.hpp computeEstimators.cpp
+        computeHomogeneous.hpp computeHomogeneous.cpp)
+target_link_libraries(testParameterV2 SDESolver)
+
+add_executable(testParameterV2_A testParameterV2_A.cpp
+        generateObservations.hpp generateObservations.cpp
+        computeEstimators.hpp computeEstimators.cpp
+        computeHomogeneous.hpp computeHomogeneous.cpp)
+target_link_libraries(testParameterV2_A SDESolver)
+
 add_executable(testPMMH testPMMH.cpp
         generateObservations.hpp generateObservations.cpp
         computeHomogeneous.hpp computeHomogeneous.cpp)

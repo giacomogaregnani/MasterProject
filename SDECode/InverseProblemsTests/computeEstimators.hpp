@@ -8,7 +8,7 @@ using namespace Eigen;
 
 double estimateSigma(std::vector<double>&, double);
 
-double estimateA(std::vector<double>&, double, double (*) (double), VectorXd&);
+double estimateA(std::vector<double>&, double, double (*) (double));
 
 double estimateABayes(std::vector<double>&, double, double (*) (double), VectorXd&, double, double, double);
 
