@@ -29,6 +29,7 @@ SDECode/.idea
 SDECode/cmake-build-debug/**
 SDECode/matlabPlots/**/*.mat
 SDECode/matlabPlots/**/*.txt
+SDECode/matlabPlots/**/*.csv
 SDECode/matlabPlots/FEM_library/**
 SDECode/matplotlib-cpp-master
 SDECode/plots/**

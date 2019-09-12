@@ -22,6 +22,12 @@ add_executable(testParameterV2_A testParameterV2_A.cpp
         computeHomogeneous.hpp computeHomogeneous.cpp)
 target_link_libraries(testParameterV2_A SDESolver)
 
+add_executable(testParameterV2_S testParameterV2_S.cpp
+        generateObservations.hpp generateObservations.cpp
+        computeEstimators.hpp computeEstimators.cpp
+        computeHomogeneous.hpp computeHomogeneous.cpp)
+target_link_libraries(testParameterV2_S SDESolver)
+
 add_executable(testPMMH testPMMH.cpp
         generateObservations.hpp generateObservations.cpp
         computeHomogeneous.hpp computeHomogeneous.cpp)
@@ -41,3 +47,9 @@ add_executable(testModPF testModPF.cpp
         generateObservations.hpp generateObservations.cpp
         computeHomogeneous.hpp computeHomogeneous.cpp)
 target_link_libraries(testModPF SDESolver MCMC)
+
+add_executable(driftBayesian driftBayesian.cpp
+        computeEstimators.hpp computeEstimators.cpp
+        generateObservations.hpp generateObservations.cpp
+        computeHomogeneous.hpp computeHomogeneous.cpp)
+target_link_libraries(driftBayesian SDESolver MCMC)

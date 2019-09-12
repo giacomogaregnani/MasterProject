@@ -10,6 +10,7 @@
 double gradV0(double x)
 {
     return x;
+    // return -x + x*x*x;
 }
 
 double V1(double x)
@@ -44,11 +45,11 @@ int main(int argc, char* argv[])
     std::vector<double> epsTestSet = {0.01};
     for (unsigned int i = 0; i < 19; i++) {
         // epsTestSet.push_back(epsTestSet[i] * 1.2);
-        epsTestSet.push_back(epsTestSet[i] + 0.01);
+        epsTestSet.push_back(epsTestSet[i] + 0.001);
     }
 
     std::ofstream output(DATA_PATH + std::string("testParamAvg.txt"), std::ofstream::out | std::ofstream::trunc);
-    std::ofstream outputSol(DATA_PATH + std::string("testParamSol.txt"), std::ofstream::out | std::ofstream::trunc);
+    std::ofstream outputSol(DATA_PATH + std::string("testParamSol.csv"), std::ofstream::out | std::ofstream::trunc);
     bool flag = true;
 
     // Compute coefficients of the homogenised equation
@@ -57,14 +58,13 @@ int main(int argc, char* argv[])
 
     // Compute the estimators for different value of epsilon
     double sigmaHat, AHat;
-    std::vector<double> avg;
 
     // Refer to the Caltech notes
-    double beta = 3.0;
-    double zeta = 2.8;
-    double gamma = 4.0;
+    double beta = 2;
+    double zeta = 1.3;
+    double gamma = 3.5;
 
-    for (auto it : epsTestSet) {
+    for (auto const &it : epsTestSet) {
 
         param(0) = it;
 
@@ -79,19 +79,31 @@ int main(int argc, char* argv[])
         std::cout << "\u03B4 = " << delta << std::endl;
 
         auto solution = generateObservations1D(sde, IC, param, T, N, 0);
-        avg = averageSequence(solution, delta);
+
+        auto avg = averageSequence(solution, delta);
         sigmaHat = delta * estimateSigma(avg, h);
         AHat = estimateA(avg, h, &gradV0);
+        // AHat = estimateA3(avg, solution, h, &gradV0);
 
+        /* sigmaHat = 0.0; AHat = 0.0;
+        for (unsigned int j = 0; j < delta; j++) {
+            std::vector<double> samples = {};
+            for (unsigned int k = j; k < N; k += delta)
+                samples.push_back(solution[k]);
+
+            sigmaHat += estimateSigma(samples, h) / (delta * delta);
+            AHat += estimateA2(samples, solution, h, &gradV0) / delta;
+        } */
+
+        std::cout << "A = " << AHat << ", Sigma = " << sigmaHat << std::endl;
         output << param(0) << "\t" << AHat << "\t" << sigmaHat << std::endl;
 
-        if (N < 100000 && flag) {
-            for (auto const &itSol : solution)
-                outputSol << itSol << "\t";
-            outputSol << std::endl;
-            for (auto const &itSol : avg)
-                outputSol << itSol << "\t";
-            outputSol << std::endl;
+        if (flag) {
+            std::cout << it << " " << h << std::endl;
+            for (auto itSol = solution.begin(); itSol < solution.end(); itSol++)
+                outputSol << *itSol << ",";
+            for (auto itSol = avg.begin(); itSol < avg.end(); itSol++)
+                outputSol << *itSol << ",";
             flag = false;
         }
     }

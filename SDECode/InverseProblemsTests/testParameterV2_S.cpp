@@ -35,12 +35,12 @@ double diffusion(double x, VectorXd &p)
 int main(int argc, char* argv[])
 {
     oneDimSde sde{&multiDrift, &diffusion};
-    double IC = 10.0;
+    double IC = 0.0;
 
     VectorXd param(3);
-    param(0) = 0.005;
+    param(0) = 0.02;
     param(1) = 1.0; // True multiscale alpha
-    param(2) = 1.0; // True multiscale sigma
+    param(2) = 0.5; // True multiscale sigma
     double eps = param(0);
 
     std::ofstream output(DATA_PATH + std::string("testParamZeta.txt"), std::ofstream::out | std::ofstream::trunc);
@@ -50,17 +50,17 @@ int main(int argc, char* argv[])
     output << homCoeffs[0] << "\t" << homCoeffs[1] << std::endl;
 
     // Compute the estimators for different value of epsilon
-    double AHat;
+    double SigmaHat;
     std::vector<double> avg;
 
     // Refer to the Caltech notes
-    double beta = 2.0;
+    double beta = 3.0;
+    double gamma = 4.0;
     VectorXd zetaVec;
-    zetaVec.setLinSpaced(21, beta-1.0, beta);
+    zetaVec.setLinSpaced(21, 0.0, beta);
 
     for (unsigned int i = 0; i < zetaVec.size(); i++) {
         double zeta = zetaVec(i);
-        double gamma = 2.0*beta - zeta;
 
         auto h = std::pow(eps, beta);
         auto N = static_cast<unsigned int>(std::round(std::pow(eps, -gamma)));
@@ -68,14 +68,14 @@ int main(int argc, char* argv[])
         auto delta = static_cast<unsigned int>(std::round(std::pow(eps, -zeta)));
 
         std::cout << "============" << std::endl;
-        std::cout << zeta << std::endl;
+        std::cout << "beta = " << beta << ", zeta = " << zeta << std::endl;
         output << zeta << "\t";
 
         auto solution = generateObservations1D(sde, IC, param, T, N, 0);
         avg = averageSequence(solution, delta);
-        AHat = estimateA(avg, h, &gradV0);
-        output << AHat << std::endl;
-        std::cout << "A = " << AHat << std::endl;
+        SigmaHat = delta * estimateSigma(avg, h);
+        output << SigmaHat << std::endl;
+        std::cout << "S = " << SigmaHat << std::endl;
     }
 
     output.close();

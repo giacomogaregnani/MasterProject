@@ -28,6 +28,7 @@ set(get(gca, 'ylabel'), 'fontsize', fontsizeLAB);
 box on
 axis square
 axpos = get(gca, 'Position');
+pause(0.1)
 export_fig(fig, '../../../Reports/DraftMultiSDE_19/CaltechNotes/Figures/A.eps', '-nocrop', '-painters')
 
 %%
@@ -60,4 +61,5 @@ set(get(gca, 'ylabel'), 'fontsize', fontsizeLAB);
 box on
 axis square
 set(gca, 'Position', axpos)
+pause(0.1)
 export_fig(fig, '../../../Reports/DraftMultiSDE_19/CaltechNotes/Figures/A_zeta.eps', '-nocrop', '-painters')

@@ -13,6 +13,8 @@ add_library(MCMC
         PFPosterior.cpp
         PFPosteriorHom.hpp
         PFPosteriorHom.cpp
+        NoiselessPosterior.hpp
+        NoiselessPosterior.cpp
         ModelingError.hpp
         ModelingError.cpp
         )

@@ -11,6 +11,7 @@
 #include "SDEPosterior.hpp"
 #include "PFPosterior.hpp"
 #include "PFPosteriorHom.hpp"
+#include "NoiselessPosterior.hpp"
 #include "ModelingError.hpp"
 #include <memory>
 
