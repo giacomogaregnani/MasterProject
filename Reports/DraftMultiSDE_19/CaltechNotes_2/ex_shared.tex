@@ -1,7 +1,7 @@
 % Packages and macros go here
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\usepackage[utf8x]{inputenx}
+\usepackage[utf8]{inputenc}
 \usepackage{microtype}
 \usepackage{framed}
 \usepackage{listings}
@@ -56,7 +56,7 @@
 \fi
 
 \usepackage{mathtools}
-%\mathtoolsset{showonlyrefs}
+\mathtoolsset{showonlyrefs}
 
 % basics
 
@@ -75,31 +75,29 @@
 % Prevent itemized lists from running into the left margin inside theorems and proofs
 \usepackage{enumitem}
 \setlist[itemize]{leftmargin=.5in}
-\setlist[enumerate]{leftmargin=.5in,topsep=3pt,itemsep=3pt,label=(\roman*)}
+\setlist[enumerate]{leftmargin=.5in,topsep=3pt,itemsep=3pt,label=\roman*)}
 
 % Add a serial/Oxford comma by default.
 \newcommand{\creflastconjunction}{, and~}
 
 % Sets running headers as well as PDF title and authors
 % title and authors
+\newcommand*\samethanks[1][\value{footnote}]{\footnotemark[#1]}
 
 \newcommand{\email}[1]{\href{#1}{#1}}
-\newcommand{\TheTitle}{Parameter estimation for multiscale diffusions with continuous and discrete moving averages} 
+\newcommand{\TheTitle}{Model Misspecification And Uncertainty Quantification For Drift Estimation In Multiscale Diffusion Processes} 
 \newcommand{\TheAuthors}{A. Abdulle, G. Garegnani, G. Pavliotis, A. M. Stuart}
-%\title{{\TheTitle}}
-%\newcommand*\samethanks[1][\value{footnote}]{\footnotemark[#1]}
-%\author{Assyr Abdulle\thanks{Institute of Mathematics, \'Ecole Polytechnique F\'ed\'erale de Lausanne}
-%	\and
-%	Giacomo Garegnani\samethanks
-%	\and 
-%	Grigoris Pavlitois \thanks{Department of Mathematics, Imperial College London}
-%	\and
-%	Andrew M. Stuart \thanks{Department of Computing and Mathematical Sciences, Caltech, Pasadena}
-%}
-%\date{}
-\title{Caltech notes}
-\author{Giacomo Garegnani}
+\title{\TheTitle}
+\author{Assyr Abdulle \thanks{Institute of Mathematics, École Polytechnique Fédérale de
+		Lausanne, \{assyr.abdulle, giacomo.garegnani\}@epfl.ch}
+		\and Giacomo Garegnani \samethanks
+		\\ Andrew M. Stuart \thanks{Department of Computing and Mathematical Sciences, Caltech, Pasadena, astuart@caltech.edu}
+		\and Grigorios A. Pavliotis \thanks{Department of Mathematics, Imperial College London, g.pavliotis@imperial.ac.uk}
+}
 \date{}
+%\title{Caltech notes}
+%\author{Giacomo Garegnani}
+%\date{}
 
 \usepackage{amsopn}
 \DeclareMathOperator{\diag}{diag}

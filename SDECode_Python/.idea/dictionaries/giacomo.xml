@@ -2,6 +2,8 @@
   <dictionary name="giacomo">
     <words>
       <w>maruyama</w>
+      <w>subsampling</w>
+      <w>vect</w>
     </words>
   </dictionary>
 </component>

@@ -1,0 +1,474 @@
+\documentclass[10pt]{article}
+
+\input{ex_shared}
+
+\begin{document}
+\maketitle	
+
+\textbf{Abstract.} \corr{Copy-paste of SIAM UQ abstract, modify.} We present a novel technique for estimating the drift function of a diffusion process possessing two separated time scales. Our aim is fitting a homogenized diffusion model to a continuous sample path coming from the full multiscale process, thus dealing with an issue of model misspecification. We consider a Bayesian framework and study the asymptotic limit of posterior distributions over the drift function. In this setting, we show on the one hand that if the continuous multiscale data are not pre-processed, then the posterior distribution concentrates asymptotically on the wrong value of the drift function. On the other hand, we show that data can be treated ahead of the inference procedure in order to obtain the desired posterior. In particular, we prove that there exists a family of transformations which are linear on the space of continuous sample paths and which, when applied to multiscale data, allow the posterior distribution to be asymptotically correct. We present a series of numerical examples on test cases which corroborate our theoretical findings.
+
+\textbf{AMS subject classifications.} 
+
+\textbf{Keywords.} 
+
+\section{Introduction}
+
+\corr{Add blabla introduction.}
+In \cite{PaS07} (\corr{is there other literature?}), the authors prove that inference of the parameters of a homogenized model has to be performed carefully. In this work, the analysis contained in \cite{PaS07} is widened with respect to the following aspects:
+\begin{enumerate}[label=\arabic*)]
+	\item a more general form of the drift function is considered, thus allowing a more flexible framework for applications and hinting possible extensions to the infinite-dimensional case,
+	\item the inference procedure is reinterpreted from a Bayesian perspective, which guarantees more complete uncertainty quantification on the inference result. Moreover, given the nature of the problem, posterior distributions follow a Gaussian law which can be analytically determined, thus guaranteeing computationally fast inference,
+	\item we extend the sub-sampling technique introduced in \cite{PaS07}, which can be applied to discrete sequences, by introducing theoretical tools which allow the treatment of continuous streams of data.
+\end{enumerate}
+
+Let $\epl > 0$ and let us consider the one-dimensional multiscale stochastic differential equation (SDE)
+\begin{equation}\label{eq:SDE_MS}
+	\d X_t^\epl = -V'(X_t^\epl) \dd t - \frac1\epl p'\left(\frac{X_t^\epl}{\epl}\right) + \sqrt{2\sigma} \dd W_t,
+\end{equation}
+where $\sigma > 0$ and $W_t$ is a standard one-dimensional Brownian motion. The functions $V, p\colon \R \to \R$ are slow and fast potentials driving the dynamics of the solution $X_t^\epl$. Given $N \in \N_{>0}$, we assume the slow potential to be of the form
+\begin{equation}
+	V(x) = \sum_{i=1}^N \alpha_i V_i(x),
+\end{equation}
+for coefficients $\alpha_i \in \R$, $i = 1, \ldots, N$, and smooth functions $V_i\colon \R \to \R$. Moreover, we assume $p$ to be smooth and periodic of period $L$. Theory of homogenization \cite{BLP78} guarantees the existence of an SDE of the form
+\begin{equation}\label{eq:SDE_HOM}
+	\d X_t^0 = - K V'(X) \dd t + \sqrt{2K\sigma} \dd W_t,
+\end{equation}
+where $W_t$ is the same Brownian motion and where the fast dynamics have been eliminated, such that $X_t^\epl \to X_t^0$ for $\epl\to 0$ in law as random variables in $\mathcal C^0((0, T), \R)$. In the following, we will denote $A_i \defeq K\alpha_i$. The coefficient $K$ is given by the formula
+\begin{equation}\label{eq:K_HOM}
+	K = \int_0^L (1 + \Phi'(y))^2 \, \mu(\d y),
+\end{equation}
+with 
+\begin{equation}
+	\mu(\d y) = \frac1Z \exp\left(-\frac{p'(y)}{\sigma}\right) \dd y, \quad Z = \int_0^L \exp\left(-\frac{p'(y)}{\sigma}\right) \dd y,
+\end{equation}
+and where the function $\Phi$ is the solution of the elliptic partial differential equation
+\begin{equation}
+	-p'(y)\Phi'(y) + \sigma \Phi''(y) = p''(y), \quad 0 \leq y \leq L,
+\end{equation}
+endowed with periodic boundary conditions.
+
+\section{The Bayesian perspective}
+
+Let us denote by $A \in \R^N$ the vector of the coefficients $A_i \defeq K \alpha_i$ appearing in the drift term of the homogenized SDE \eqref{eq:SDE_HOM}. In a Bayesian setting, our goal is to determine the posterior distribution $\mu(A \mid X_{0:T})$ given a continuous trajectory $X_{0:T} \defeq (X_t, 0 \leq t \leq T)$. Choosing a Gaussian prior $\mu_0 = \mathcal N(A_0, C_0)$ on $A$, where $A_0 \in \R^N$ and $C_0 \in \R^{N\times N}$ is symmetric positive definite, the posterior distribution admits a density $p(A \mid X_{0:T})$ with respect to the Lebesgue measure which satisfies
+\begin{equation}
+	p(A \mid X_{0:T}) = \frac1Z \, p(X_{0:T} \mid A) \, p_0(A),
+\end{equation}
+where $Z$ is a normalization constant, $p_0$ is the density of $\mu_0$, and where Girsanov's formula allows to write the likelihood as
+\begin{equation}
+	p(X_{0:T} \mid A) = \exp\left\{-\int_0^T \langle A, \mathbf V'(X_t)\rangle \dd X_t - \frac12 \int_0^T \langle A, \mathbf V'(X_t) \rangle^2 \dd t \right\}.
+\end{equation}
+In the formula above, we denote by $\mathbf V \colon \R \to \R^N$ the vector-valued function whose $i$-th component is $\mathbf V_i = V_i$, and by $\mathbf V'$ the vector of its derivatives, i.e., the Jacobian matrix. Moreover, we denote by $\langle \cdot, \cdot \rangle$ the Euclidean scalar product in $\R^N$ and by $\norm{\cdot}_2$ the corresponding norm. The log-posterior density is then given by
+\begin{equation}
+\begin{aligned}
+	\log p(A \mid X_{0:T}) = &-\log Z -\int_0^T \langle A, \mathbf V'(X_t)\rangle \dd X_t - \frac12 \int_0^T \langle A, \mathbf V'(X_t) \rangle^2 \dd t \\
+	&- \frac12 \norm{C_0^{-1/2}(A - A_0)}_2^2.
+\end{aligned}
+\end{equation}
+Since the log-posterior density is quadratic in $A$, the posterior is Gaussian, and it is therefore sufficient to determine its mean and covariance to fully characterize it. We denote by $m_T$ and $C_T$ the mean and covariance matrix, respectively. Let us consider the matrix-valued function $M_{\mathbf V} \colon \R \to \R^{N\times N}$ whose entries are given by
+\begin{equation}
+	(M_{\mathbf V}(T))_{ij} = \int_0^T V_i'(X_t) \, V_j'(X_t) \dd t, \quad i, j = 1, \ldots, N,
+\end{equation}
+and the vector-valued function $I_{\mathbf V} \colon \R \to \R^N$ defined by
+\begin{equation}
+	(I_{\mathbf V}(T))_i = \int_0^T V_i'(X_t) \dd X_t.
+\end{equation}
+If we employ this notation, we can rewrite the log-posterior density as
+\begin{equation}
+\begin{aligned}
+	\log p(A \mid X_{0:T}) = &-\log Z - \langle A, I_{\mathbf V}(T)\rangle - \frac12 \langle A, M_{\mathbf V}(T)A\rangle - \frac12 \langle A - A_0, C_0^{-1}(A-A_0) \rangle.
+\end{aligned}
+\end{equation}
+Identifying the quadratic and linear terms in the log-posterior density, it is possible to show that the posterior covariance and mean are formally given by
+\begin{equation}
+\begin{aligned}
+	C_T^{-1} &= C_0^{-1} + M_{\mathbf V}(T), \\
+	m_T &= C_T \left(C_0^{-1}A_0 - I_{\mathbf V}(T)\right).
+\end{aligned}
+\end{equation}
+We are now interested in the limit of the posterior distribution for $T \to \infty$. Let us first define the maximum likelihood estimator (MLE) $\widehat A(X_{0:T})$ of $A$, which is obtained by maximizing the log-likelihood function $\log p(X_{0:T} \mid A)$, and which is hence formally given by
+\begin{equation}
+	\widehat A(X_{0:T}) = -M_{\mathbf V}(T)^{-1}I_{\mathbf V}(T).
+\end{equation}
+We now introduce regularity assumptions on the SDE.
+\begin{assumption}\label{as:regularity} The potentials $p$ and $V$ are such that 
+	\begin{enumerate}
+		\item the symmetric matrix $M_{\mathbf V}(T)$ is positive definite for all $T > 0$,
+		\item there exist $a, b > 0$ such that $x\, V_i'(x) \geq -a + bx^2$, for all $x \in \R$ and for all $i = 1, \ldots, N$,
+		\item 	\corr{other assumptions to be added}
+	\end{enumerate}
+\end{assumption}
+
+We can now state the main result for asymptotic convergence of the posterior distribution.
+\begin{proposition}\label{prop:equiv} Given a trajectory $X_{0:T}$ for $T$ arbitrarily large and under Assumption \ref{as:regularity}, the posterior mean and covariance satisfy
+	\begin{equation}
+	\begin{aligned}
+		&\lim_{T \to \infty} \norm{m_T - \widehat A(X_{0:T})}_2 = 0, \\
+		&\lim_{T \to \infty} \norm{C_T}_F = 0,
+	\end{aligned}
+	\end{equation}
+	i.e., the posterior tends in distribution to the Dirac delta centred in the limit of the MLE.
+\end{proposition}
+\begin{proof} Let us first consider the covariance matrix. Hua's identity yields
+	\begin{equation}
+		C_T = M_{\mathbf V}(T)^{-1} - Q_T^{-1},
+	\end{equation}
+	where 
+	\begin{equation}
+		Q_T = M_{\mathbf V}(T) + M_{\mathbf V}(T) C_0 M_{\mathbf V}(T).
+	\end{equation}
+	Let us now consider the matrix $M_{\mathbf V}(T)$. 
+	We now consider the mean. We have
+	\begin{equation}
+		\norm{m_T - \widehat A(X_{0:T})}_2 = \norm{M_{\mathbf V}(T)^{-1}C_0^{-1}A_0 - Q_T^{-1}\left(C_0^{-1}A_0 -I_{\mathbf V}(T) \right)}_2.
+	\end{equation}
+	\corr{to be completed}
+\end{proof}
+
+\begin{remark} Proposition \ref{prop:equiv} guarantees that in the asymptotic limit of $T \to \infty$, it is equivalent to consider the Bayesian approach and the maximum likelihood approach, and can therefore be interpreted as a consistency result for both approaches. Nonetheless, in this Gaussian framework the Bayesian approach provides richer information on the inference result with a negligible additional cost.
+\end{remark}
+
+
+\section{Convergence analysis for a single coefficient}
+
+Let us consider $N = 1$ and write $A_1 = A$ and $V_1 = V$, respectively. The posterior distribution of $A$ given a trajectory $(X_t, 0 \leq t \leq T)$ is in this case a Gaussian $\mathcal N(m_T, \sigma^2_T)$ where
+\begin{equation}
+\begin{aligned}
+	m_T &= \frac{A_0}{1+\sigma_0^2\int_0^T V'(X_t)^2 \dd t} - \frac{\sigma_0^2\int_0^T  V'(X_t) \dd X_t}{1+\sigma_0^2\int_0^T V'(X_t)^2 \dd t}, \\
+	\sigma^{-2}_T &= \sigma_0^{-2} + \int_0^T V'(X_t)^2 \dd t.
+\end{aligned}
+\end{equation}
+We will in the following sections analyse the convergence of the posterior, both in case data from the multiscale process is not treated and in case they are pre-processed. 
+
+\subsection{Failure without pre-processing}
+
+Let us consider a trajectory $X_{0:T}^\epl \defeq (X_t^\epl, 0 \leq t \leq T)$ coming from the multiscale equation \eqref{eq:SDE_MS}, and the corresponding posterior distribution over the parameter $A$, which we denote by $\mu^\epl(A, X_{0:T}^\epl)$. The following result holds.
+\begin{theorem} Under assumption \ref{as:regularity} and if $T = \epl^{-\gamma}$ for $\gamma > 0$, then the posterior distribution $\mu^\epl(A \mid X_{0:T}^\epl) = \mathcal N(m_T,  \sigma^2_T)$ satisfies
+	\begin{equation}
+	\begin{aligned}
+		&\lim_{T \to \infty} m_T = \alpha, \\
+		&\lim_{T \to \infty} \sigma^2_T = 0.
+	\end{aligned}
+	\end{equation}
+\end{theorem}
+\begin{proof} Proposition \ref{prop:equiv} 	guarantees that 
+	\begin{equation}
+		\lim_{T \to \infty} \abs{m_T - \hat A(X^\epl_{0:T})} = 0,
+	\end{equation}
+	and that $\sigma^2_T \to 0$ for $T \to \infty$. Moreover, \cite[Theorem xx]{PaS07} yields
+	\begin{equation}
+		\lim_{T \to \infty} \hat A(X^\epl_{0:T}) = \alpha,
+	\end{equation}
+	which completes the proof.
+\end{proof}
+
+The result above implies that the posterior distribution over the drift coefficient concentrates asymptotically on an undesired value.
+
+\subsection{Success with pre-processing}
+
+
+Let $Z^{\epl,k}_t$ be defined as
+\begin{equation}
+	Z^{\epl,k}_t \defeq \int_0^t k^\epl(t, s)X^\epl_s \dd s,
+\end{equation}
+where $k^\epl(t, s)$ is a kernel satisfying the following assumption.
+\begin{assumption} The kernel $k \colon \R^+ \times \R^+ \to \R$ either satisfies for all $T > 0$, $t, s \in (0, T)$ and $\alpha \geq 1/2$
+\begin{enumerate}
+	\item \label{as:kernReg} (regularity) $k^\epl(t, s), \partial_t k^\epl(t, s) \in \mathcal C^0(\R^+\times\R^+; \R)$ 
+	\item \label{as:kernDivFree} (divergence--free) $\partial_t k^\epl(t, s) + \partial_s k^\epl(t, s) = 0, $
+	\item \label{as:kernNorm} (normalization) there exists a function $\psi(t, \epl)$ satisfying for all $p \geq 0$ and for a constant $C > 0$ independent of $\epl$
+	\begin{equation}
+		\lim_{t \to \infty, \epl \to 0}\psi(t, \epl) = 0, \quad \int_0^T \abs{\psi(t, \epl)}^p \dd t \leq C,
+	\end{equation}
+	such that $k^\epl$ satisfies
+	\begin{equation}
+		\int_0^t (t-s) \, \partial_t k^\epl(t, s) \dd s = -1 + \psi(t, \epl),
+	\end{equation}
+	\item\label{as:kernVanish} (limit) $\lim_{t \to \infty} k^\epl(t, 0) = 0$. 
+\end{enumerate}	
+or it can be written as
+\begin{equation}
+	k^\epl(t,s) = \chi_{[t-\delta, t]}(s),
+\end{equation}
+where $\chi_{[t', t]}$ is the indicator function of the interval $[t', t]$ for $t' < t$ and $\delta = \epl^\zeta$ for $\zeta \in (0, 1)$.
+\end{assumption}
+
+\begin{example} Let $\delta = \epl^\zeta$ for $\zeta \in (0, 1)$, $\beta > 0$ and
+	\begin{equation}
+		k^\epl(t, s) = C_{\beta} \delta^{-1/\beta} e^{-(t-s)^\beta/\delta},
+	\end{equation}
+	where $C_{\beta}$ is a normalizing constant. It is possible to verify that for each $\beta$ there exists $C_\beta$ such that \ref{as:kernReg}--\ref{as:kernVanish} are all verified. For example, for $\beta = 1$ we have $C_1 = 1$, whereas for $\beta = 2$ we have $C_2 = 2/\sqrt{\pi}$.
+\end{example}
+
+\begin{remark} The assumptions on the kernel given above could be relaxed without spoiling the theoretical results presented in the following. For example, condition \ref{as:kernDivFree} could be relaxed to
+	\begin{equation}
+		\lim_{t\to\infty}\int_0^t \abs{\partial_t k^\epl(t, s) + \partial_s k^\epl(t, s)} = 0, 
+	\end{equation}
+	which is trivially implied by \eqref{as:kernDivFree}.
+\end{remark}
+
+Due to assumption \eqref{as:kernReg} we can apply Leibniz's integral rule and obtain the following representation
+\begin{equation}
+	\frac{\d Z^{\epl,k}_t}{\d t} = k^\epl(t, t)X^\epl_t + \int_0^t \partial_t k^\epl(t, s) X^\epl_s \dd s.
+\end{equation}
+Adding and subtracting $X_t^\epl$ inside the integral yields
+\begin{equation}
+\begin{aligned}
+	\frac{\d Z^{\epl,k}_t}{\d t} &= \int_0^t \partial_t k^\epl(t, s) (X^\epl_s - X^\epl_t) \dd s + \left(k^\epl(t, t) + \int_0^t \partial_t k^\epl(t, s) \dd s\right)X^\epl_t.
+\end{aligned}
+\end{equation}
+Due to \eqref{as:kernDivFree}, we have
+\begin{equation}
+\begin{aligned}
+	k^\epl(t, t) + \int_0^t \partial_t k^\epl(t, s) \dd s &= k^\epl(t, 0) + \int_0^t \left(\partial_s k^\epl(t, s) + \partial_t k^\epl(t, s)\right) \dd s\\
+	&= k^\epl(t, 0).
+\end{aligned}
+\end{equation}
+Therefore, 
+\begin{equation}
+\begin{aligned}
+	\frac{\d Z^{\epl,k}_t}{\d t} = \int_0^t \partial_t k^\epl(t, s) (X^\epl_s - X^\epl_t) \dd s + k^\epl(t, 0) X^\epl_t.
+\end{aligned}
+\end{equation}
+Then
+\begin{equation}
+\begin{aligned}
+\frac{\d Z^{\epl,k}_t}{\d t} = &\alpha \int_0^t\int_s^t \partial_t k^\epl(t, s) \, V_0'(X^\epl_r)\, \big(1 + \Phi'(Y^\epl_r)\big)\dd r \dd s  \\
+&-\sqrt{2\sigma}\int_0^t\int_s^t \partial_t k^\epl(t, s) \big(1 + \Phi'(Y^\epl_r)\big) \dd W_r \dd s\\
+&+ \epl \int_0^t \partial_t k^\epl(t, s) \big(\Phi(Y^\epl_t)- \Phi(Y^\epl_s)\big) \dd s + k^\epl(t, 0) X^\epl_t
+\end{aligned}
+\end{equation}
+
+\begin{lemma} Lemma text
+	\begin{equation}
+		\alpha \int_s^t V_0'(X^\epl_r)\, \big(1 + \Phi'(Y^\epl_r)\big)\dd r = A (t - s)V'_0(Z_t^{\epl, k}) + R(\epl, t-s),
+	\end{equation}
+	where for all $p \geq 1$ it holds
+	\begin{equation}
+		\left( \E^{\mu^\epl} \abs{R(\epl, t)}^p \right)^{1/p} \leq C(\epl^2 + \epl t^{1/2} + \epl t + t^{3/2}),
+	\end{equation}
+\end{lemma}
+
+\section{Convergence analysis for $N > 1$}
+
+\section{``Old'' computations which could be useful}
+
+In this section, we study the convergence with respect to the parameter $\epl$ of point estimates of the drift and the diffusion coefficients when the estimator is computed employing continuous data coming from the multiscale model.
+
+\subsection{Drift coefficient}\label{sec:ACont}
+Let $X^\epl \defeq (X^\epl_t, 0\leq t \leq T)$ be the solution of \eqref{eq:SDE_MS} and define $\mathcal H_\Delta(X^\epl)$ as
+\begin{equation}\label{eq:ContMovingAverage}
+	\mathcal H_\Delta(X^\epl)_t \coloneqq 
+	\begin{cases} 
+	X_0, &t = 0, \\
+	\frac1t \int_0^t X_s \dd s, &0 < t < \Delta, \\
+	\frac1\Delta \int_{t-\Delta}^t X_s \dd s, &\Delta \leq t \leq T,\\
+	\end{cases}
+\end{equation}
+with $\Delta > 0$. Let us denote for ease of notation, $Z^\epl_t \coloneqq \mathcal H_\Delta(X^\epl)_t$. The maximum likelihood estimator of the drift coefficient is then
+\begin{equation}
+	\widehat A_{T, \Delta}(Z_t^\epl) = - \frac{\int_0^T V_0'(Z^\epl_t) \dd Z^\epl_t}{\int_0^T V_0'(Z^\epl_t)^2 \dd t}.
+\end{equation}
+Let us remark that for $0 < t < \Delta$, 
+\begin{equation}
+	\dd (t Z^\epl_t) = X_t \dd t,
+\end{equation}
+which implies 
+\begin{equation}\label{eq:MovAvDifferential}
+	\dd Z^\epl_t = \frac1t (X^\epl_t - Z^\epl_t) \dd t.
+\end{equation}
+For $\Delta \leq t \leq T$, instead
+\begin{equation}
+	\dd Z^\epl_t = \frac1\Delta (X^\epl_t - X^\epl_{t-\Delta}) \dd t.
+\end{equation}
+We rewrite the estimator as
+\begin{equation}
+	\widehat A_{T, \Delta}(Z_t^\epl) = -\frac{\int_0^\Delta V_0'(Z^\epl_t) \frac1t (X^\epl_t - Z^\epl_t) \dd t}{\int_0^T V_0'(Z^\epl_t)^2 \dd t} -\frac{\int_\Delta^T V_0'(Z^\epl_t) (X^\epl_t - X^\epl_{t-\Delta}) \dd t}{\Delta\int_0^T V_0'(Z^\epl_t)^2 \dd t}.
+\end{equation}
+The goal of this section is proving the following result.
+\begin{theorem}\label{thm:DriftContinuous} Under assumption \corr{add assumptions}, if there exists $\zeta \in (0, 1)$ such that $\Delta = \epl^{\zeta}$ and $\gamma > \zeta$ such that $T = \epl^{-\gamma}$, it holds 
+\begin{equation}
+	\lim_{\epl\to 0} \widehat A_{T, \Delta}(Z_t^\epl) = A, \quad \text{in law}.
+\end{equation}
+\end{theorem}
+
+It is useful in the following to rewrite \eqref{eq:SDE_MS} as a system of two coupled SDEs. In particular, introducing the variable $Y^\epl_t \defeq X^\epl_t / \epl$, one has
+\begin{equation}\label{eq:SDE_MS2}
+\begin{aligned}
+	\d X_t^\epl &= -\alpha V_0'(X_t^\epl) \dd t - \frac1\epl V_1'\left(Y_t^\epl\right) + \sqrt{2\sigma} \dd W_t, \\
+	\d Y_t^\epl &= -\frac{\alpha}{\epl} V_0'(X_t^\epl) \dd t - \frac1{\epl^2} V_1'\left(Y^\epl_t\right) + \sqrt{\frac{2\sigma}{\epl^2}} \dd W_t.
+\end{aligned}
+\end{equation}
+The analysis necessary to prove Theorem \ref{thm:DriftContinuous} is based on the expansion 
+\begin{equation}\label{eq:ContDiffDecomp}
+\begin{aligned}
+	X^\epl_t - X^\epl_{t-\Delta} = &-\alpha \int_{t-\Delta}^t V_0'(X^\epl_s)\big(1 + \Phi'(Y^\epl_s)\big)\dd s \\
+	&+\sqrt{2\sigma}\int_{t-\Delta}^t \big(1 + \Phi'(Y^\epl_s)\big) \dd W_s \\
+	&-\epl \big(\Phi(Y^\epl_t)- \Phi(Y^\epl_{t - \Delta})\big),
+\end{aligned}
+\end{equation}
+for $t \geq \Delta$ (see \cite[Equation (5.8)]{PaS07}). The following lemma ensures that the process $Z^\epl_t$ has bounded moments. 
+
+\begin{lemma}\label{lem:BoundMoments} The process $Z_t^\epl$ has bounded moments of all order, i.e., for all $p \geq 1$ and $t \geq 0$ it holds
+	\begin{equation}
+		\E^{\mu^\epl} \abs{Z_t^\epl}^p \leq C,
+	\end{equation}
+	for $C > 0$ a constant uniform in $\epl \to 0$.
+\end{lemma}
+\begin{proof} The process $X^\epl_t$ has bounded moments (see \cite[Corollary 5.4]{PaS07}), which implies the desired result with an application of the Hölder inequality. In fact, for $0 < t < \Delta$,
+\begin{equation}
+\begin{aligned}
+	\E^{\mu^\epl} \abs{Z_t^\epl}^p &\leq \frac{t^{p-1}}{t^p} \int_0^t \E^{\mu^\epl} \abs{X_s^\epl}^p \dd s \\
+	&\leq t^{-1} \int_0^t C \dd s = C.
+\end{aligned}
+\end{equation}
+For $\Delta \leq t \leq T$ the procedure is analogue. 
+\end{proof}
+
+In the following lemma the difference between the processes $X_t^\epl$ and $Z_t^\epl$ is bounded. 
+\begin{lemma}\label{lem:BoundDiffCont} Under assumptions \corr{add assumptions}
+	\begin{equation}
+		\E^{\mu^\epl} \abs{X_t^\epl - Z_t^\epl}^p \leq C (\Delta^p + \Delta^{p/2} + \epl^p),
+	\end{equation}
+	where $C > 0$ is a constant independent of $\Delta$ and $\epl$.
+\end{lemma}
+\begin{proof} By definition of $Z_t^\epl$ for $\Delta \leq t \leq T$ and applying Hölder's inequality we have
+	\begin{equation}
+	\begin{aligned}
+		\E^{\mu^\epl} \abs{X_t^\epl - Z_t^\epl}^p &= \Delta^{-p} \E^{\mu^\epl} \abs{\int_{t-\Delta}^t (X_t^\epl - X_s^\epl) \dd s}^p \\
+		&\leq \Delta^{-1} \int_{t-\Delta}^t  \E^{\mu^\epl} \abs{X_t^\epl - X_s^\epl}^p \dd s
+	\end{aligned}
+	\end{equation}
+	We can now apply \cite[Lemma 6.1]{PaS07} to the integrand to obtain
+	\begin{equation}
+		\E^{\mu^\epl} \abs{X_t^\epl - Z_t^\epl}^p \leq C\Delta^{-1} \int_{t-\Delta}^t (\Delta^p + \Delta^{p/2} + \epl^p) \dd s,
+	\end{equation}
+	which implies the desired result. The case $0 < t \leq \Delta$ can be proved analogously.
+\end{proof}
+
+\begin{lemma}[See {\cite[Proposition 5.8]{PaS07}}]\label{lem:ContFirstBound} Under assumptions \corr{add assumptions}, it holds in law
+\begin{equation}
+	\alpha \int_{t-\Delta}^t V_0'(X^\epl_s)\big(1 + \Phi'(Y^\epl_s)\big)\dd s = A \Delta V_0'(Z^\epl_t) + R(\epl, \Delta),
+\end{equation}
+where for every $p > 0$ and if $\Delta$ and $\epl$ are sufficiently small, then
+\begin{equation}
+	\left( \E^{\mu^\epl} \abs{R(\epl, \Delta)}^p \right)^{1/p} \leq C(\epl^2 + \Delta^{1/2}\epl + \Delta^{3/2}),
+\end{equation}
+where $C > 0$ is independent of $\epl$ and $\Delta$.
+\end{lemma}
+\begin{proof} Let us denote $\Psi(t) \defeq 1 + \Phi'(Y^\epl_t)$. Then
+	\begin{equation}
+	\begin{aligned}
+		\E^{\mu^\epl} \abs{R(\epl, \Delta)}^p &= \E^{\mu^\epl} \abs{\int_{t-\Delta}^t \alpha V_0'(X_s^\epl)\Psi(s) \dd s - \Delta A V_0'(Z_t^\epl)}^p \\
+		&\leq C \E^{\mu^\epl}\left| V_0'(Z_t^\epl) \int_{t-\Delta}^t \left(\alpha \Psi(s) - A\right) \dd s \right|^p \\
+		&\quad +C \E^{\mu^\epl} \left| \int_{t-\Delta}^t \alpha \left(V_0'(X_t^\epl ) - V_0'(Z_t^\epl)\right) \Psi(s) \dd s \right|^p.
+	\end{aligned}
+	\end{equation}	
+	The result is then obtained following the proof of \cite[Proposition 5.8]{PaS07} and replacing \cite[Lemma 6.1]{PaS07} with Lemma \ref{lem:BoundDiffCont}, and \cite[Corollary 4.1]{PaS07} with Lemma \ref{lem:BoundMoments}.
+\end{proof}
+
+We can now prove Theorem \ref{thm:DriftContinuous}.
+\begin{proof}[Proof of Theorem \ref{thm:DriftContinuous}] Consider the decomposition \eqref{eq:ContDiffDecomp}. Denoting
+	\begin{equation}
+		J_t \defeq \sqrt{2\sigma}\int_{t-\Delta}^t \big(1 + \Phi'(Y^\epl_s)\big) \dd W_s,
+	\end{equation}
+	we have due to Lemma \ref{lem:ContFirstBound} the equality in law
+	\begin{equation}
+		X^\epl_t - X^\epl_{t-\Delta} = -A\Delta V'(Z^\epl_t) + J_t + \widehat R(\epl, \Delta),
+	\end{equation}
+	where, since $\zeta \in (0, 1)$, we have
+	\begin{equation}
+		\left(\E^{\mu^\epl} \abs{\widehat R(\epl, \Delta)}^p\right)^{1/p} \leq C(\epl + \epl^{3\zeta/2})
+	\end{equation}
+	Therefore, we have that the estimator satisfies
+	\begin{equation}\label{eq:EstDecomp}
+	\begin{aligned}
+		\widehat A_{T, \Delta}(Z_t^\epl) &= A - A\frac{\int_0^\Delta V_0'(Z^\epl_t)^2 \dd t}{\int_0^T V_0'(Z^\epl_t)^2 \dd t} -\frac{\int_0^\Delta V_0'(Z^\epl_t) \frac1t (X^\epl_t - Z^\epl_t) \dd t}{\int_0^T V_0'(Z^\epl_t)^2 \dd t} \\
+		&\quad - \frac{\int_\Delta^T V_0'(Z^\epl_t) J_t \dd t}{\Delta \int_0^T V_0'(Z^\epl_t)^2 \dd t} - \frac{\widehat R(\epl, \Delta)\int_\Delta^T V_0'(Z^\epl_t) \dd t}{\Delta \int_0^T V_0'(Z^\epl_t)^2 \dd t} \\
+		&\eqqcolon A - I_1 - I_2 - I_3 - I_4,
+	\end{aligned}
+	\end{equation}
+	in law. Let us analyse the terms $I_i$, $i = 1, \ldots, 4$ separately. Let us consider $I_1$ and multiply both the numerator and the denominator by $1/T$. Due to assumption \corr{add assumption} and Lemma \ref{lem:BoundMoments}, we have
+	\begin{equation}
+		\frac{A}{T}\E^{\mu^\epl}\abs{\int_0^\Delta V_0'(Z^\epl_t)^2 \dd t} \leq C \epl^{\gamma + \zeta},
+	\end{equation}
+	for a constant $C > 0$ independent of $\Delta$ and $\epl$. Hence the numerator vanishes in $L^1$ and thus in law for $\epl \to 0$. We split the denominator as
+	\begin{equation}
+		\frac1T \int_0^T V_0'(Z^\epl_t)^2 \dd t = \frac1T\int_0^T V_0'(X^\epl_t)^2 \dd t + \frac1T\int_0^T \left(V_0'(Z^\epl_t)^2 - V_0'(X^\epl_t)^2 \right) \dd t 
+	\end{equation} 
+	For the first term, we have by the ergodic theorem
+	\begin{equation}
+		\lim_{T\to\infty}\frac1T \int_0^T V_0'(X^\epl_t)^2 \dd t = \E^{\mu^\epl} \abs{V_0'}^2, \quad \text{a.s.}
+	\end{equation}
+	For the second term, we have applying Cauchy--Schwarz's inequality and due to assumption \corr{add assumption} and Lemma \ref{lem:BoundDiffCont}
+	\begin{equation}
+	\begin{aligned}
+		\frac1T \E^{\mu^\epl} \abs{\int_0^T \left(V_0'(Z^\epl_t)^2 - V_0'(X^\epl_t)^2 \right) \dd t} &\leq \frac{C}{T} \int_0^T \left(\E^{\mu^\epl} \abs{V_0'(Z^\epl_t) - V_0'(X^\epl_t)}^2\right)^{1/2}\dd t\\
+		&\leq C \left(\Delta + \Delta^{1/2} + \epl\right),
+	\end{aligned}
+	\end{equation}
+	which implies that the denominator tends to a finite value in probability for $\epl \to 0$. Therefore, by Slutsky's theorem,
+	\begin{equation}
+		\lim_{\epl \to 0} I_1 = 0, \quad \text{in law}.
+	\end{equation}
+	Let us now consider $I_2$ and multiply numerator and denominator by $1/T$. The denominator is the same as $I_1$, and therefore does not need to be treated further. The numerator can be bounded in $L^1$ as
+	\begin{equation}
+	\frac1T \E^{\mu^\epl}\abs{\int_0^\Delta V_0'(Z^\epl_t) \frac1t (X^\epl_t - Z^\epl_t) \dd t} \leq \frac{C}{\Delta T} \int_0^\Delta \frac{\Delta}{t}\E^{\mu^\epl}\abs{X^\epl_t - Z^\epl_t} \dd t,
+	\end{equation}
+	which, since $Z_0^\epl = X_0^\epl$, vanishes for $\epl \to 0$. Hence, an application of Slutsky's theorem yields
+	\begin{equation}
+		\lim_{\epl \to 0} I_2 = 0, \quad \text{in law}.
+	\end{equation}
+	We consider now $I_3$, which can be rewritten as
+	\begin{equation}
+	\begin{aligned}
+		I_3 &= \frac{1}{\sqrt{T\Delta}}\frac{\frac{1}{\sqrt{T\Delta}}\int_\Delta^T V_0'(Z^\epl_t) J_t \dd t}{\frac1T\int_0^T V_0'(Z^\epl_t)^2 \dd t} \\
+		&= \epl^{(\gamma - \zeta)/2}\frac{\frac{1}{\sqrt{T\Delta}}\int_\Delta^T V_0'(Z^\epl_t) J_t \dd t}{\frac1T\int_0^T V_0'(Z^\epl_t)^2 \dd t}
+	\end{aligned}
+	\end{equation}
+	Let us remark that $J_t$ is a martingale and that by Itô isometry
+	\begin{equation}
+		\E^{\mu^\epl}|J_\Delta|^2 = 2\Sigma\Delta,
+	\end{equation}
+	Therefore, we can apply the central limit theorem for martingales to the numerator and obtain the equality in law
+	\begin{equation}	
+	\begin{aligned}
+		\lim_{T\to\infty}\frac{1}{\sqrt{T\Delta}}\int_\Delta^T V_0'(Z^\epl_t) J_t \dd t &= \frac{1}{\sqrt{\Delta}} \mathcal N\left(0,\E^{\mu^\epl}\left(\abs{V_0'(X^\epl_0)}^2\abs{J_\Delta}^2\right)\right) \\
+		&= C \mathcal N(0, 1).
+	\end{aligned}
+	\end{equation}
+	The denominator is the same as in $I_2$ and $I_3$ and tends in probability to a finite value. Hence, since by hypothesis $\gamma > \zeta$, we have
+	\begin{equation}
+		\lim_{\epl \to 0} I_3 = 0, \quad \text{in law}.
+	\end{equation}
+	For the last term $I_4$, we have
+	\begin{equation}
+		I_4 = \frac{\epl^{\gamma - \zeta}\widehat R(\epl, \Delta)\int_\Delta^T V_0'(Z^\epl_t) \dd t}{\frac1T\int_0^T V_0'(Z^\epl_t)^2 \dd t}.
+	\end{equation}
+	For the numerator, we have by the Cauchy--Schwarz inequality and due to Lemma \ref{lem:ContFirstBound}
+	\begin{equation}
+	\begin{aligned}
+		\epl^{\gamma-\zeta}\E^{\mu^\epl}\abs{\widehat R(\epl, \Delta)\int_\Delta^T V_0'(Z^\epl_t) \dd t} &\leq 
+		\epl^{\gamma - \zeta} \left(\E^{\mu^\epl}\abs{\widehat R(\epl, \Delta)}^2\right)^{1/2}\left(\E^{\mu^\epl}\abs{\int_\Delta^T V_0'(Z^\epl_t) \dd t}^2\right)^{1/2}\\
+		&\leq C\epl^{\gamma - \zeta}(\epl + \epl^{3\zeta/2}) \epl^{-\gamma}\\
+		&\leq C\left(\epl^{1-\zeta} + \epl^{\zeta/2}\right)
+	\end{aligned}
+	\end{equation}
+	which implies that, since the denominator is the same as before,
+	\begin{equation}
+		\lim_{\epl \to 0} I_4 = 0, \quad \text{in law}.
+	\end{equation}
+	The decomposition \eqref{eq:EstDecomp}, together with the limits of $I_i$ for $i = 1, \ldots, 4$, prove the desired result.
+\end{proof}
+
+
+\section{Numerical experiments}
+
+\subsection{Ornstein--Uhlenbeck process}
+
+\subsection{Bistable potential}
+
+\subsection{Real(istic) data?}
+
+\bibliographystyle{siam}
+\bibliography{../../anmc}
+\end{document}  
