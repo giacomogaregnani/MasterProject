@@ -25,6 +25,9 @@ class Langevin(SDE):
     def grad_v_vect(self, x):
         pass
 
+    def lapl_v_vect(self, x):
+        pass
+
     def f(self, x, p):
         return -1.0 * p[0] * self.grad_v(x)
 
@@ -42,6 +45,9 @@ class OrnUhl(Langevin):
     def grad_v(self, x):
         return x
 
+    def lapl_v_vect(self, x):
+        return np.ones(np.size(x))
+
     def grad_v_vect(self, x):
         return x
 
@@ -51,7 +57,8 @@ class Quartic(Langevin):
         Langevin.__init__(self)
 
     def v(self, x):
-        return x*x*x*x / 4
+        x_sqd = x*x
+        return x_sqd*x_sqd / 4
 
     def grad_v(self, x):
         return x*x*x
@@ -59,20 +66,28 @@ class Quartic(Langevin):
     def grad_v_vect(self, x):
         return np.multiply(x, np.multiply(x, x))
 
+    def lapl_v_vect(self, x):
+        return 3.0*x*x
 
 class Sixth(Langevin):
     def __init__(self):
         Langevin.__init__(self)
 
     def v(self, x):
-        return x*x*x*x*x*x / 6
+        x_cube = x*x*x
+        return x_cube*x_cube / 6
 
     def grad_v(self, x):
-        return x*x*x*x*x
+        x_sqd = x*x
+        return x_sqd*x_sqd * x
 
     def grad_v_vect(self, x):
         x_sqd = np.multiply(x, x)
         return np.multiply(np.multiply(x, x_sqd), x_sqd)
+
+    def lapl_v_vect(self, x):
+        x_sqd = np.multiply(x, x)
+        return 5.0 * np.multiply(x_sqd, x_sqd)
 
 
 class Bistable(Langevin):
@@ -89,6 +104,8 @@ class Bistable(Langevin):
     def grad_v_vect(self, x):
         return np.multiply(x, np.multiply(x, x)) - x
 
+    def lapl_v_vect(self, x):
+        return 3 * np.multiply(x, x) - 1.0
 
 class MSLangevin(SDE):
     def __init__(self, eps):

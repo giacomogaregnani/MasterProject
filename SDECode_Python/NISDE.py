@@ -12,7 +12,7 @@ class EulerMaruyama:
         dw = np.multiply(np.sqrt(h), np.random.normal(0, 1, n))
         for i in range(0, n):
             y[i+1] = y[i] + self.sde.f(y[i], p)*h + self.sde.g(y[i], p)*dw[i]
-        return y
+        return y, dw
 
 
 class Milstein:

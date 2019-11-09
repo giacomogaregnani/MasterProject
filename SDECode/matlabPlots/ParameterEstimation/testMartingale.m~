@@ -1,0 +1,34 @@
+clc; clear; close all
+%%
+
+T = 10000;
+N = T * 100;
+h = T / N;
+tVec = linspace(0, T, N+1);
+
+sigma = 1;
+A = 1;
+sqrt2Sigma = sqrt(2 * sigma);
+
+nExp = 100;
+ratio = zeros(nExp, 1);
+
+parfor j = 1 : 100
+    dW = sqrt(h) * randn(1, N);
+    X = zeros(1, N+1);
+    
+    for i = 1 : N
+        X(i+1) = X(i) - h * A * X(i) + sqrt2Sigma * dW(i);
+    end
+    
+    % Compute the martingale
+    M = sum(X(1:end-1) .* dW);
+    % Compute the quadratic variation
+    qM = sum(X(1:end-1).^2) * h;
+    
+    ratio(j) = M / qM;
+end
+
+r
+
+
