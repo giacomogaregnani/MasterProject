@@ -34,7 +34,7 @@ set(gca, 'yTickLabel', [])
 box on
 axis square
 % print -depsc '../../../Reports/DraftMultiSDE_19/CaltechNotes_2/Figures/A_OU.eps'
-export_fig(fig, '../../../Reports/DraftMultiSDE_19/CaltechNotes_2/Figures/A_OU.png', '-nocrop', '-painters', '-m10')
+%export_fig(fig, '../../../Reports/DraftMultiSDE_19/CaltechNotes_2/Figures/A_OU.png', '-nocrop', '-painters', '-m10')
 
 %% Diffusion
 
@@ -70,4 +70,4 @@ set(gca, 'yTickLabel', [])
 box on
 axis square
 % print -depsc '../../../Reports/DraftMultiSDE_19/CaltechNotes_2/Figures/A_OU.eps'
-export_fig(fig, '../../../Reports/DraftMultiSDE_19/CaltechNotes_2/Figures/S_OU.png', '-nocrop', '-painters', '-m10')
+%export_fig(fig, '../../../Reports/DraftMultiSDE_19/CaltechNotes_2/Figures/S_OU.png', '-nocrop', '-painters', '-m10')

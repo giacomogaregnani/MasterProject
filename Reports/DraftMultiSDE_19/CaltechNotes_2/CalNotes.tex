@@ -612,7 +612,18 @@ We have
 \begin{equation}
 	\E I_1^2(t) = 2 \Sigma \int_0^t \int_0^t \partial_s k^\epl(t, s) \partial_r k^\epl(t, r) \sqrt{(t- s)(t-r)} \E \xi_{t,s}\xi_{t,r} \dd r \dd s.
 \end{equation}
-Let us remark that $\sqrt{t-s}\, \xi_{t,s} = \widetilde W(t) - \widetilde W(s)$, where $\widetilde W$ is a standard Brownian motion.
+Let us remark that $\sqrt{t-s}\, \xi_{t,s} = \widetilde W(t) - \widetilde W(s)$, where $\widetilde W$ is a standard Brownian motion. Therefore 
+\begin{equation}
+\begin{aligned}
+	\E I_1^2(t) &= 2\Sigma \int_0^t \int_0^t \partial_s k^\epl(t, s) \partial_r k^\epl(t, r) (t-s-r+\min\{s,r\}) \dd r \dd s \\
+	&= 
+	\begin{aligned}[t]
+	& 2\Sigma \int_0^t \int_0^s \partial_s k^\epl(t, s) \partial_r k^\epl(t, r) (t-s) \dd r \dd s \\
+	&+ 2\Sigma \int_0^t \int_s^t \partial_s k^\epl(t, s) \partial_r k^\epl(t, r) (t-r) \dd r \dd s.
+	\end{aligned}
+\end{aligned}
+\end{equation}
+
 
 \subsubsection{Proof of Theorem \ref{thm:mainResultN1}}
 
@@ -721,7 +732,18 @@ which, considering Assumption \ref{as:kern}, implies that
 	\lim_{\epl \to 0} I_4 = 0,	
 \end{equation}
 which concludes the proof. \qed
-\section{Convergence analysis for $N > 1$}
+\section{Current ideas}
+
+\subsection{Stratonovich}
+The numerator of the estimator $\hat A$ seems to converge to the Stratonovich integral of the multiscale process when the filter is applied. In particular, I observed numerically that
+\begin{equation}
+	\langle V(Z_t^{\epl,k}), \dd Z_t^{\epl,k} \rangle \approx \langle V(X_t^\epl), \circ \dd X_t^\epl\rangle.
+\end{equation}
++ Stratonovich to Itô correction -- needs knowledge of $\Sigma$ \\
++ Is it possible to correct this behaviour without knowledge of $\Sigma$?
+
+\subsection{Alternative estimator}
+The second estimator $\widetilde A$ gives correct result (but need for a correct estimator of the diffusion coefficient -- for now the problem is solved only for a specific filter).
 
 %\section{``Old'' computations which could be useful}
 %

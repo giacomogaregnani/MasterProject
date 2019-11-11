@@ -6,9 +6,9 @@ import sys
 
 
 # Set up the equation
-eps = 0.04
-sde = MSOrnUhl(eps)
-sdeHomo = OrnUhl()
+eps = 0.05
+sde = MSSixth(eps)
+sdeHomo = Sixth()
 EM = EulerMaruyama(sde)
 alpha = 1.0
 sigma = 1.0
@@ -20,9 +20,9 @@ hom_param = compute_homogeneous(param, 2.0 * np.pi, sde.p)
 print(hom_param)
 
 # Set parameters
-gamma = 2.0
+gamma = 1.3
 beta = 2.0
-zeta = beta - 0.33 # For zeta in (0, 1) in PaS07, fix here zeta in (beta-1, beta)
+zeta = beta - 0.5  # For zeta in (0, 1) in PaS07, fix here zeta in (beta-1, beta)
 zetaFilter = 0.5
 T = round(eps ** (-1.0 * gamma))
 h = eps ** beta
@@ -36,7 +36,7 @@ nSub = N / deltaSub
 tVecSub = np.arange(nSub+1) * h * deltaSub
 
 # Initialize results
-nExp = 1000
+nExp = 100
 A_filt = np.zeros(nExp)
 A_sub = np.zeros(nExp)
 A_interp = np.zeros(nExp)
@@ -51,7 +51,6 @@ S_interp = np.zeros(nExp)
 S_bayes = np.zeros(nExp)
 S_full = np.zeros(nExp)
 S_mov = np.zeros(nExp)
-
 
 for i in range(0, nExp):
     print(i)
@@ -79,11 +78,12 @@ for i in range(0, nExp):
     print(A_interp[i], S_interp[i])
 
     # With filtering
-    filter, kt = filter_trajectory(Y, deltaFilter, T, beta=2)
+    filter, kt = filter_trajectory(Y, deltaFilter, T, beta=1)
     print('fil'),
     parEstFilt = ParEst(filter, sdeHomo.grad_v_vect, h, is_vect=True)
-    # A_filt[i] = parEstFilt.drift(strat=True, sigma=param[1], lapl=sdeHomo.lapl_v_vect, Sigma=hom_param[1])
-    A_filt[i], S_filt[i] = parEstFilt.drift_alternative(sdeHomo.lapl_v_vect, hom_param[1], estimate=True, delta=kt*h) # TODO WHY h / delta WORKS (SOMETIMES)? LOOK AT EFFECTS...
+    # A_filt[i] = parEstFilt.drift(strat=True, sigma=param[1], lapl=sdeHomo.lapl_v_vect, Sigma=hom_param[1]) / (kt)
+    # S_filt[i] = parEstFilt.diffusion() / (kt * h)
+    A_filt[i], S_filt[i] = parEstFilt.drift_alternative(sdeHomo.lapl_v_vect, hom_param[1], estimate=True, delta=kt*h/2)
     print(A_filt[i], S_filt[i])
 
     # With a moving average
@@ -129,11 +129,11 @@ A_sub_sorted, A_sub_density = get_density(A_sub)
 A_full_sorted, A_full_density = get_density(A_full)
 A_mov_sorted, A_mov_density = get_density(A_mov)
 
-plt.hist(A_filt, bins=30, density=True, alpha=0.5)
-plt.hist(A_sub, bins=30, density=True, alpha=0.5)
-plt.hist(A_full, bins=30, density=True, alpha=0.5)
-#plt.hist(A_interp, bins=20, density=True, alpha=0.5)
-#plt.hist(A_mov, bins=20, density=True, alpha=0.5)
+plt.hist(A_filt, bins=30, normed=True, alpha=0.5)
+plt.hist(A_sub, bins=30, normed=True, alpha=0.5)
+plt.hist(A_full, bins=30, normed=True, alpha=0.5)
+#plt.hist(A_interp, bins=20, normed=True, alpha=0.5)
+#plt.hist(A_mov, bins=20, normed=True, alpha=0.5)
 plt.plot(A_filt_sorted, A_filt_density)
 plt.plot(A_sub_sorted, A_sub_density)
 plt.plot(A_full_sorted, A_full_density)
@@ -150,11 +150,11 @@ S_sub_sorted, S_sub_density = get_density(S_sub)
 S_full_sorted, S_full_density = get_density(S_full)
 S_mov_sorted, S_mov_density = get_density(S_mov)
 
-plt.hist(S_filt, bins=30, density=True, alpha=0.5)
-plt.hist(S_sub, bins=30, density=True, alpha=0.5)
-plt.hist(S_full, bins=30, density=True, alpha=0.5)
-#plt.hist(S_interp, bins=20, density=True, alpha=0.5)
-#plt.hist(S_mov, bins=20, density=True, alpha=0.5)
+plt.hist(S_filt, bins=30, normed=True, alpha=0.5)
+plt.hist(S_sub, bins=30, normed=True, alpha=0.5)
+plt.hist(S_full, bins=30, normed=True, alpha=0.5)
+#plt.hist(S_interp, bins=20, normed=True, alpha=0.5)
+#plt.hist(S_mov, bins=20, normed=True, alpha=0.5)
 plt.plot(S_filt_sorted, S_filt_density)
 plt.plot(S_sub_sorted, S_sub_density)
 plt.plot(S_full_sorted, S_full_density)

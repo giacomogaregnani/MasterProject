@@ -13,23 +13,24 @@ def moving_average(a, n):
 
 
 def filter_trajectory(a, delta, T, beta=1):
-    Cb = 1.0
-    if  beta == 2:
-        Cb = 2.0 / np.sqrt(np.pi)
     n = np.size(a)
     h = T / (n-1)
     t_vec = np.arange(n) * h
-    k = Cb * np.exp(-1.0 * (t_vec ** beta) / delta) / (delta ** (1.0 / beta))
+    k = np.exp(-1.0 * t_vec / (delta ** beta)) / (delta ** beta)
     # ret = convolve(a, k, mode='full') * h
     # ret = ret[0:n]
     a = np.concatenate((a[0]*np.ones(n), a), axis=None)
+    print "computing convolution... ",
     ret = convolve(a, k, mode='same') * h
+    print "computed convolution"
     ret = ret[int(n/2):n+int(n/2)]
     return ret, k[0]
+
 
 # This is just a naive implementation used for checking filter_trajectory
 def kernel(t, s, delta):
     return 1.0 / delta * np.exp(-1.0 * (t - s) / delta)
+
 
 def filter_trajectory_2(a, delta, T):
     n = np.size(a)
@@ -39,6 +40,7 @@ def filter_trajectory_2(a, delta, T):
     for i in range(0, n):
         ret[i] = h * np.sum(np.multiply(a[0:i], kernel(t_vec[i], t_vec[0:i], delta)))
     return ret
+
 
 def get_density(x):
     kde = stats.gaussian_kde(x)
