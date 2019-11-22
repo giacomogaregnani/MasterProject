@@ -1,7 +1,7 @@
 import numpy as np
 import scipy.stats as stats
 from scipy.signal import convolve
-
+from scipy.special import gamma
 
 def moving_average(a, n):
     ret = np.zeros(np.size(a))
@@ -16,14 +16,13 @@ def filter_trajectory(a, delta, T, beta=1):
     n = np.size(a)
     h = T / (n-1)
     t_vec = np.arange(n) * h
-    k = np.exp(-1.0 * t_vec / (delta ** beta)) / (delta ** beta)
-    # ret = convolve(a, k, mode='full') * h
-    # ret = ret[0:n]
-    a = np.concatenate((a[0]*np.ones(n), a), axis=None)
-    print "computing convolution... ",
-    ret = convolve(a, k, mode='same') * h
-    print "computed convolution"
-    ret = ret[int(n/2):n+int(n/2)]
+    if beta == 1:
+        Cb = 1.0
+    else:
+        Cb = 1.0 / gamma((beta+1.0)/beta)
+    k = Cb * np.exp(-1.0 * (t_vec ** beta) / delta) / (delta ** (1.0 / beta))
+    ret = convolve(a, k, mode='full') * h
+    ret=ret[0:n]
     return ret, k[0]
 
 
@@ -32,7 +31,7 @@ def kernel(t, s, delta):
     return 1.0 / delta * np.exp(-1.0 * (t - s) / delta)
 
 
-def filter_trajectory_2(a, delta, T):
+def filter_trajectory_2(a, delta, T,beta=1):
     n = np.size(a)
     h = T / (n-1)
     t_vec = np.arange(n) * h
@@ -112,7 +111,7 @@ class ParEst:
 
         return term1
 
-    def drift(self, strat=False, sigma=1, Sigma=1, lapl=None):
+    def drift(self, strat=False, Sigma=1, lapl=None):
         grad_v_eval = np.zeros(self.n-1)
         if self.is_vect:
             grad_v_eval = self.grad_v(self.x[0:-1])
@@ -123,14 +122,13 @@ class ParEst:
         num = np.sum(num_summand)
         # Convert from Stratonovich to Ito
         if strat:
-            correction = Sigma / sigma * self.h * np.sum(lapl(self.x[0:-1]))
+            correction = Sigma * self.h * np.sum(lapl(self.x[0:-1]))
             num -= correction
         self.den = np.sum(np.square(grad_v_eval))
-        # print([num, self.h * self.den])
         return -1.0 * num / (self.h * self.den)
 
-    def drift_alternative(self, lapl, Sigma=1, estimate=False, delta=1.0):
-        if estimate:
+    def drift_alternative(self, lapl, delta=1.0, Sigma=0):
+        if Sigma==0:
             Sigma = self.diffusion() / delta
         grad_v_eval = self.grad_v(self.x[0:-1])
         den = np.sum(np.square(grad_v_eval)) * self.h

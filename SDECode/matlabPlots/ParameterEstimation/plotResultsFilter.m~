@@ -21,9 +21,9 @@ f = zeros(3, 1);
 
 lMax = max([l(:).YData]);
 plot([aHom, aHom], [0, lMax], 'k--', 'LineWidth', .5)
-legend([l(1),l(2)], {'filter', 'subsamp'}, 'Location', 'NW')
+legend([l(1),l(2)], {'filter', 'subsamp'}, 'Location', 'best')
 
-xlabel('$A$', 'interpreter', 'laTeX')
+xlabel('A')
 
 set(gca, 'fontsize', fontsizeTICK);
 set(get(gca, 'xlabel'), 'fontsize', fontsizeLAB);
@@ -35,7 +35,7 @@ set(gca, 'yTick', [])
 set(gca, 'yTickLabel', [])
 box on
 axis square
-% export_fig(fig, '../../../Reports/DraftMultiSDE_19/CaltechNotes_2/Figures/A_OU.png', '-nocrop', '-painters', '-m10')
+export_fig(fig, '../../../Reports/DraftMultiSDE_19/CaltechNotes_2/Figures/A_OU.png', '-nocrop', '-painters', '-m10')
 
 %% Diffusion
 
@@ -58,9 +58,9 @@ clear l
 
 lMax = max([l(:).YData]);
 plot([sHom, sHom], [0, lMax], 'k--', 'LineWidth', .5)
-legend([l(1),l(2)], {'filter', 'subsamp'}, 'Location', 'NW')
+legend([l(1),l(2)], {'filter', 'subsamp'})
 
-xlabel('$\Sigma$', 'interpreter', 'laTeX')
+xlabel('$\Sigma$', 'inte)
 
 set(gca, 'fontsize', fontsizeTICK);
 set(get(gca, 'xlabel'), 'fontsize', fontsizeLAB);
@@ -72,4 +72,4 @@ set(gca, 'yTick', [])
 set(gca, 'yTickLabel', [])
 box on
 axis square
-% export_fig(fig, '../../../Reports/DraftMultiSDE_19/CaltechNotes_2/Figures/S_OU.png', '-nocrop', '-painters', '-m10')
+export_fig(fig, '../../../Reports/DraftMultiSDE_19/CaltechNotes_2/Figures/S_OU.png', '-nocrop', '-painters', '-m10')

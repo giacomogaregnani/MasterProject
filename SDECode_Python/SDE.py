@@ -67,7 +67,8 @@ class Quartic(Langevin):
         return np.multiply(x, np.multiply(x, x))
 
     def lapl_v_vect(self, x):
-        return 3.0*x*x
+        return 3.0*np.multiply(x, x)
+
 
 class Sixth(Langevin):
     def __init__(self):
@@ -118,6 +119,9 @@ class MSLangevin(SDE):
     def grad_v(self, x):
         return float()
 
+    def lapl_v(self, x):
+        return float()
+
     def p(self, x):
         return float()
 
@@ -141,6 +145,9 @@ class MSOrnUhl(MSLangevin):
     def grad_v(self, x):
         return x
 
+    def lapl_v(self, x):
+        return 1
+
     def p(self, x):
         return np.cos(x)
 
@@ -153,10 +160,14 @@ class MSQuartic(MSLangevin):
         MSLangevin.__init__(self, eps)
 
     def v(self, x):
-        return x*x*x*x / 4.0
+        x_sqd = x*x
+        return x_sqd*x_sqd / 4.0
 
     def grad_v(self, x):
         return x*x*x
+
+    def lapl_v(self, x):
+        return 3*x*x
 
     def p(self, x):
         return np.cos(x)
@@ -177,6 +188,10 @@ class MSSixth(MSLangevin):
         x_sqd = x*x
         return x_sqd*x_sqd*x
 
+    def lapl_v(self, x):
+        x_sqd = x*x
+        return 5.0*x_sqd*x_sqd
+
     def p(self, x):
         return np.cos(x)
 
@@ -194,6 +209,9 @@ class MSBistable(MSLangevin):
 
     def grad_v(self, x):
         return x * x * x - x
+
+    def lapl_v(self, x):
+        return 3.0*x*x - 1.0
 
     def p(self, x):
         return np.cos(x)

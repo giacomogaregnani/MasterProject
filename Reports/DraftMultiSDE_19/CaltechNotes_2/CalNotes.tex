@@ -217,12 +217,12 @@ In order to obtain a satisfactory estimator, the kernel $k$ has to satisfy a ser
 	\end{equation}	
 	\item \label{as:kernTimeInv} (time-invariance) for $s, t > 0$ and any $r > 0$ it holds $k^\epl(t+r, s+r) = k^\epl(t, s)$. Moreover, there exists $\zeta \in (0, 1)$ such that
 	\begin{equation}
-		k(t, t) \leq C \epl^{-\zeta},
+		k^\epl(t, t) \leq C \epl^{-\zeta},
 	\end{equation}
 	for any $t > 0$.
 	\item\label{as:kernVanish} (decay) there exists a function $\psi(t, \epl)$ satisfying for all $p > 0$
 	\begin{equation}
-		 \lim_{\epl\to 0} \lim_{T\to\infty} \int_0^T \psi(t, \epl)^p = 0,
+		 \lim_{\epl\to 0} \lim_{T\to\infty} \frac1T \int_0^T \psi(t, \epl)^p = 0,
 	\end{equation} 
 	such that it holds 
 	\begin{equation}
@@ -260,11 +260,29 @@ We now give an example of kernels satisfying the assumptions above.
 	\begin{equation}
 		\gamma(p+1, t) \defeq \int_0^t s^p e^{-s} \dd s.
 	\end{equation}
-	Hence, noticing that for all $t$ and $\delta$ it holds $\gamma(p+1, t/\delta) \leq \Gamma(p+1)$, where $\Gamma$ is the (complete) Gamma function, we can choose $\psi(t, \epl) = \delta$ and $C_p = \gamma(p+1, t/\delta)$. Finally, 
+	Hence, noticing that for all $t$ and $\delta$ it holds $\gamma(p+1, t/\delta) \leq \Gamma(p+1)$, where $\Gamma$ is the (complete) Gamma function, we can choose $\psi(t, \epl) = \delta$ and $C_p = \gamma(p+1, t/\delta)$. Moreover,
+	\begin{equation}
+		\int_0^T \psi(t, \epl)^p \dd t
+	\end{equation}
+	Finally, 
 	\begin{equation}
 		\frac1\delta \int_0^T t e^{-t/\delta} \dd t = \delta - e^{-T/\delta}(T + \delta),
 	\end{equation}
-	which shows that \ref{as:kernVanish} holds.	For $\beta = 2$ and choosing $C_2 = 2/\sqrt{\pi}$ one can similarly verify that all the assumptions hold.
+	which shows that \ref{as:kernVanish} holds.	For $\beta = 2$ and choosing $C_2 = 2/\sqrt{\pi}$ one can similarly verify that all the assumptions hold. In general, we have $C_\beta = \beta\Gamma(1/\beta)^{-1}$.
+	\corr{For general $\beta$, one can find
+	\begin{equation}
+		\phi(t, \epl) = 1 - \frac{\gamma\left(\frac1\beta, \frac{t^\beta}\delta\right)}{\Gamma\left(\frac1\beta\right)},
+	\end{equation}
+	and
+	\begin{equation}
+		\int_0^t \frac{(t-s)^p}{\delta^{\beta/2}}e^{-(t-s)^\beta / \delta} \dd s  = C_\beta \frac{\delta^{p/\beta}}{\beta} \gamma\left(\frac{p+1}{\beta},\frac{t^\beta}{\delta}\right),
+	\end{equation}
+	so that $\psi(t, \epl) = \delta^{1/\beta}$ and
+	\begin{equation}
+		C_p = C_\beta \gamma\left(\frac{p+1}{\beta},\frac{t^\beta}{\delta}\right) \leq C_\beta \Gamma\left(\frac{p+1}{\beta}\right).
+	\end{equation}
+	}
+	
 %	For the second case, we have that the kernel
 %	\begin{equation}
 %		k^\epl(t, s) = \frac1\delta \chi_{[t-\delta, t]}(s),
@@ -337,7 +355,7 @@ We now estimate the deviation of the process $Z_t^{\epl, k}$ from the original p
 	\end{equation}
 	where $C$ is a constant independent of $\epl$. Moreover, it holds
 	\begin{equation}\label{eq:boundDiff2}
-		\E^{\mu^\epl} \abs{Z_t^{\epl, k} - X_t^\epl}^p \leq C\left(\psi(t, \epl)^p + \psi(t, \epl)^{p/2} + \phi(t, \epl)^p + \epl^p \right)
+		\E^{\mu^\epl} \abs{Z_t^{\epl, k} - X_t^\epl}^p \leq C\left(\psi(t, \epl)^p + \psi(t, \epl)^{p/2} + \phi(t, \epl)^p + \epl^p \right).
 	\end{equation}
 \end{lemma}
 \begin{proof} Let us first consider \eqref{eq:boundDiff1} and remark that
@@ -393,7 +411,7 @@ We now estimate the deviation of the process $Z_t^{\epl, k}$ from the original p
 	see e.g. \cite[Equation (5.8)]{PaS07}. Replacing the equality above into the decomposition given by Lemma \ref{lem:ZRewriting} yields the desired result.
 \end{proof}
 
-\subsubsection{Ergodic properties of the transformed process}
+\subsubsection{Ergodic properties of the transformed process}\label{sec:Ergodic}
 
 In this section we consider the transformed process and in particular the properties of the long time mean
 \begin{equation}
@@ -560,7 +578,7 @@ which will be employed in the following Lemma. \end{remark}
 \end{proof}
 
 
-\subsubsection{Estimation of the diffusion coefficient}
+\subsubsection{Estimation of the diffusion coefficient}\label{sec:Sigma}
 
 In this section, we compute the quadratic variation of the process $Z_t^{\epl, k}$, which, as we will show, can be employed as an estimator for the diffusion coefficient of the homogenized equation. Let us first report a result from \cite{PaS07}, which will be employed in the following.
 \begin{lemma}\label{lem:Sigma} Under Assumption \ref{as:regularity} and for $\epl$ sufficiently small it holds in law
@@ -583,7 +601,119 @@ In this section, we compute the quadratic variation of the process $Z_t^{\epl, k
 	which proves the claim for its covariance.
 \end{proof}
 
-Due to Lemma \ref{lem:ZExpansion} and in light of Lemma \ref{lem:ContBound} and Lemma \ref{lem:Sigma}, we have
+\begin{lemma}\label{lem:diffusionLemma} Let
+	\begin{equation}
+		I(t) \defeq \int_0^t \partial_t k^\epl(t, s) \sqrt{2\Sigma(t-s)} \, \xi_{t,s} \dd s,
+	\end{equation}
+	 Then
+	\begin{equation}
+		\E I(t)^2 = 2 \Sigma \bar k  \left( C_1 - C_2 e^{-t^\beta/\delta} + C_3 \delta^{-1/\beta} e^{-2t^\beta/\delta}\right),
+	\end{equation}
+	where $C_1$, $C_2$ and $C_3$ are positive constants bounded independently of $t$ and $\delta$ whose value is specified in the proof.
+\end{lemma}
+
+\begin{proof} We have
+	\begin{equation}
+		\E I(t)^2 = 2 \Sigma \int_0^t \int_0^t \partial_s k^\epl(t, s) \partial_r k^\epl(t, r) \sqrt{(t- s)(t-r)} \E \xi_{t,s}\xi_{t,r} \dd r \dd s.
+	\end{equation}
+	Let us remark that $\sqrt{t-s}\, \xi_{t,s} = \widetilde W(t) - \widetilde W(s)$, where $\widetilde W$ is a standard Brownian motion. Therefore 
+	\begin{equation}
+	\begin{aligned}
+		\E I(t)^2 &= 2\Sigma \int_0^t \int_0^t \partial_s k^\epl(t, s) \partial_r k^\epl(t, r) (t-s-r+\min\{s,r\}) \dd r \dd s \\
+		&= 
+		\begin{aligned}[t]
+		& 2\Sigma \int_0^t \int_0^s \partial_s k^\epl(t, s) \partial_r k^\epl(t, r) (t-s) \dd r \dd s \\
+		&+ 2\Sigma \int_0^t \int_s^t \partial_s k^\epl(t, s) \partial_r k^\epl(t, r) (t-r) \dd r \dd s 
+		\end{aligned}
+	\end{aligned}
+	\end{equation}
+	By straightforward calculations, one can show that
+	\begin{equation}
+		\E I(t)^2 = 2\Sigma \int_0^t \left(k^\epl(t,s) - k^\epl(t,0)\right)^2 \dd s.
+	\end{equation}
+	Since
+	\begin{equation}
+		k^\epl(t, s) = C_\beta\frac1{\delta^{1/\beta}} e^{-(t-s)^\beta / \delta},
+	\end{equation}
+	where $C_\beta = \beta \Gamma(1/\beta)^{-1}$, we have the explicit formula
+	\begin{equation}
+	\begin{aligned}
+		\frac1{2\Sigma }\E I(t)^2 &= \beta\Gamma\left(\frac1\beta\right)^{-2} \left((2\delta)^{-1/\beta}\gamma\left(\frac1\beta, \frac{2t^\beta}{\delta}\right) -2 \delta^{-1/\beta}\gamma\left(\frac1\beta, \frac{t^\beta}{\delta}\right)e^{-t^\beta/\delta} + \beta t \delta^{-2/\beta} e^{-2t^\beta/\delta}\right).
+	\end{aligned}
+	\end{equation}
+	Moreover, considering $\bar k \defeq k^\epl(t, t) = \beta \Gamma(1/\beta)^{-1}\delta^{-1/\beta}$, we have
+	\begin{equation}
+		\E I(t)^2 = 2 \Sigma \bar k  \left( C_1 - C_2 e^{-t^\beta/\delta} + C_3 \delta^{-1/\beta} e^{-2t^\beta/\delta}\right),
+	\end{equation}
+	where 
+	\begin{equation}\label{eq:LemmaDiffusionConstants}
+	\begin{aligned}
+		C_1 &= 2^{-1/\beta} \Gamma(1/\beta)^{-1} \gamma\left(\frac1\beta, \frac{2t^\beta}{\delta}\right), \\
+		C_2 &= 2 \gamma\left(\frac1\beta, \frac{t^\beta}{\delta}\right),\\
+		C_3 &= \beta \Gamma(1/\beta)^{-1},
+	\end{aligned}
+	\end{equation}
+	which is the desired result since $C_1$, $C_2$ and $C_3$ are bounded independently of $\delta$ and $t$.
+\end{proof}
+
+\begin{lemma} Let
+	\begin{equation}
+	\begin{aligned}
+		I &\defeq \int_{\bar t}^{\bar t+h} \int_0^t \partial_t k^\epl(t, s) \sqrt{2\Sigma(t-s)} \, \xi_{t,s} \dd s \dd t, \\
+		\widehat I &\defeq h \int_0^{\bar t} \partial_t k^\epl(\bar t, s) \sqrt{2\Sigma(\bar t-s)} \, \xi_{\bar t,s} \dd s \dd t.
+	\end{aligned}
+	\end{equation}
+	Then
+	\begin{equation}
+		\E\abs{I-\widehat I}^2 \leq
+	\end{equation}
+\end{lemma}
+\begin{proof} We write
+	\begin{equation}
+	\begin{aligned}
+		I - \widehat I = &\int_{\bar t}^{\bar t+h} \int_{\bar{t}}^t \partial_t k^\epl(t, s) \sqrt{2\Sigma(t-s)} \, \xi_{t,s} \dd s \dd t\\
+		+ &\int_{\bar t}^{\bar t+h} \int_0^t \left( \partial_t k^\epl(t, s) \sqrt{2\Sigma(t-s)} \, \xi_{t,s}  - \partial_t k^\epl(\bar t, s) \sqrt{2\Sigma(\bar t-s)} \, \xi_{\bar t,s} \right)\dd s \dd t\\
+		&\eqdef R_1 + R_2,
+	\end{aligned}
+	\end{equation}
+	which, with Young's inequality, yields
+	\begin{equation}
+		\E\abs{I-\widehat I}^2 \leq 2\E\abs{R_1}^2 + 2\E\abs{R_2}^2.
+	\end{equation}
+	We bound $R_1$ and $R_2$ separately. First, due to the Cauchy--Schwarz inequality and since $\E \xi_{t,s}^2 = 1$, we have
+	\begin{equation}
+		\E \abs{R_1}^2 \leq 2\Sigma h^2 \int_{\bar t}^{\bar t+h} \int_{\bar{t}}^t \partial_t k^\epl(t, s)^2  (t-s) \dd s \dd t.
+	\end{equation}
+	Now, since $-\partial_t k^\epl(t, s) \leq -\partial_t k^\epl(t, t)$ for all $0 \leq s \leq t$ and in view of Remark \ref{rem:kernDeriv}, we can write
+	\begin{equation}
+	\begin{aligned}
+		\E \abs{R_1}^2 &\leq -2\Sigma h^2\partial_t k^\epl(t, t) \int_{\bar{t}}^{\bar t + h}\left(\left(\phi(\bar t, \epl) - \phi(t, \epl) \right) + \left(\bar t k(\bar t, 0) - t k(t, 0)\right) \right) \dd t\\
+		&\leq \frac{2\Sigma h^2C_\beta}{\delta^{(\beta+1)/\beta}} \int_{\bar{t}}^{\bar t + h}\left(\Gamma(1/\beta)^{-1}\left(\gamma\left(\frac1\beta, \frac{t^\beta}\delta\right) - \gamma\left(\frac1\beta, \frac{ \bar t^\beta}\delta\right)\right) 
+		+ \frac{C_\beta}{\delta^{1/\beta}}\left(\bar t e^{-\bar t^\beta/\delta} - t e^{-t^\beta/\delta} \right) \right)\dd t,\\
+	\end{aligned}
+	\end{equation}
+	where we exploited the definition of the exponential kernels. We now remark that
+	\begin{equation}
+	\begin{aligned}
+		\gamma\left(\frac1\beta, \frac{t^\beta}\delta\right) - \gamma\left(\frac1\beta, \frac{ \bar t^\beta}\delta\right) &= \int_{\bar t^\beta/\delta}^{t^\beta / \delta} s^{(1-\beta)/\beta} e^{-s} \dd s\\
+		&\leq \int_{\bar t^\beta/\delta}^{t^\beta / \delta} s^{(1-\beta)/\beta} \dd s \leq \frac1\beta \frac{h}{\delta^{1/\beta}}. 
+	\end{aligned}
+	\end{equation}
+	\corr{comment: is it better bounding $e^{-s}\leq (1+s)^{-1}$?}
+\end{proof}
+
+\begin{proposition} Under ..., for the family of exponential kernels $k^\epl(t,s)$ given in Example \ref{ex:expKernel}, i.e.,
+	\begin{equation}
+		k^\epl(t, s) = \frac{1}{\delta^{1/\beta}} e^{-(t-s)^\beta/\delta},
+	\end{equation}
+	and for the estimator
+	\begin{equation}
+		\widehat \Sigma = \frac{2^{(1-\beta)/\beta}}{\bar k} \frac{1}{Nh^2} \sum_{j=0}^{N-1} \left(Z^{\epl,k}_{t_{j+1}} - Z^{\epl,k}_{t_j}\right)^2
+	\end{equation}
+	it holds	
+\end{proposition}
+
+\textit{Step 1: Decomposing the estimator.} Due to Lemma \ref{lem:ZExpansion} and in light of Lemma \ref{lem:ContBound} and Lemma \ref{lem:Sigma}, we have
 \begin{equation}
 \begin{aligned}
 	\frac{\d Z^{\epl,k}_t}{\d t} &= 
@@ -600,29 +730,59 @@ where
 \begin{equation}
 	\widetilde R(\epl, t - s) \defeq AV'(X^\epl_t)\,(t-s) + R(\epl, t-s) - \sqrt{2\Sigma} S(\epl) + \epl \big(\Phi(Y^\epl_t)- \Phi(Y^\epl_s)\big).
 \end{equation}
-We first study the behaviour of the quantity
-\begin{equation}
-	I_1(t) \defeq \int_0^t \partial_t k^\epl(t, s) \sqrt{2\Sigma(t-s)} \, \xi_{t,s} \dd s,
-\end{equation}
-which satisfies
-\begin{equation}
-	Z_{t_{j+1}} - Z_{t_j} \approx \int_{t_j}^{t_{j+1}} I_1(t) \dd t.	
-\end{equation}
-We have
-\begin{equation}
-	\E I_1^2(t) = 2 \Sigma \int_0^t \int_0^t \partial_s k^\epl(t, s) \partial_r k^\epl(t, r) \sqrt{(t- s)(t-r)} \E \xi_{t,s}\xi_{t,r} \dd r \dd s.
-\end{equation}
-Let us remark that $\sqrt{t-s}\, \xi_{t,s} = \widetilde W(t) - \widetilde W(s)$, where $\widetilde W$ is a standard Brownian motion. Therefore 
+Denoting
 \begin{equation}
 \begin{aligned}
-	\E I_1^2(t) &= 2\Sigma \int_0^t \int_0^t \partial_s k^\epl(t, s) \partial_r k^\epl(t, r) (t-s-r+\min\{s,r\}) \dd r \dd s \\
-	&= 
-	\begin{aligned}[t]
-	& 2\Sigma \int_0^t \int_0^s \partial_s k^\epl(t, s) \partial_r k^\epl(t, r) (t-s) \dd r \dd s \\
-	&+ 2\Sigma \int_0^t \int_s^t \partial_s k^\epl(t, s) \partial_r k^\epl(t, r) (t-r) \dd r \dd s.
-	\end{aligned}
+	I_1^{(j)} &\defeq \int_{t_j}^{t_{j+1}}\int_0^t \partial_t k^\epl(t, s)\left(\sqrt{2\Sigma(t-s)} \, \xi_{t,s} + \widetilde R(\epl, t - s)\right) \dd s \dd t\\
+	I_2^{(j)} &\defeq \int_{t_j}^{t_{j+1}} k^\epl(t, 0) X^\epl_t \dd t,
 \end{aligned}
 \end{equation}
+we therefore have
+\begin{equation}
+	\left(Z^{\epl,k}_{t_{j+1}} - Z^{\epl,k}_{t_j}\right)^2 = \left(I_1^{(j)}\right)^2 + \left(I_2^{(j)}\right)^2 + 2I_1^{(j)}I_2^{(j)}.
+\end{equation}
+Moreover, we can decompose $I_1^{(j)}$ as $I_1^{(j)} = I_{1,1}^{(j)} + \widehat R^{(j)}$, where
+\begin{equation}	
+\begin{aligned}
+	I_{1,1}^{(j)} &\defeq \int_{t_j}^{t_{j+1}}\int_0^t \partial_t k^\epl(t, s)\sqrt{2\Sigma(t-s)} \, \xi_{t,s} \dd s \dd t, \\
+	\widehat R^{(j)} &\defeq \int_{t_j}^{t_{j+1}}\int_0^t \partial_t k^\epl(t, s)\widetilde R(\epl, t - s)\dd s \dd t,
+\end{aligned}
+\end{equation}
+which implies
+\begin{equation}
+	\left(Z^{\epl,k}_{t_{j+1}} - Z^{\epl,k}_{t_j}\right)^2 = \left(I_{1,1}^{(j)}\right)^2 + \left(\widehat R^{(j)}\right)^2 + 2 I_{1,1}^{(j)} \widehat R^{(j)} + \left(I_2^{(j)}\right)^2 + 2I_1^{(j)}I_2^{(j)}.
+\end{equation}
+\textit{Step 2: Main component.} We now treat the term $I_{1,1}^{(j)}$, which is responsible for the asymptotic unbiasedness of the estimator. We first write
+\begin{equation}
+	\left(I_{1,1}^{(j)}\right)^2 = \left(\widehat I_{1,1}^{(j)} \right)^2 + \left(I_{1,1}^{(j)} - \widehat I_{1,1}^{(j)}\right)^2  + 2 \widehat I_{1,1}^{(j)} \left(I_{1,1}^{(j)} - \widehat I_{1,1}^{(j)}\right),
+\end{equation}
+where $\widehat I_{1,1}^{(j)}$ is an approximation of $I_{1,1}^{(j)}$ obtained with the left rectangle rule, i.e.,
+\begin{equation}
+	\widehat I_{1,1}^{(j)} = h \int_0^{t_j} \partial_t k^\epl(t_j, s)\sqrt{2\Sigma(t_j-s)} \, \xi_{t_j,s} \dd s.
+\end{equation}
+Due to Lemma \ref{lem:diffusionLemma}, there exist constants $C_i^{(j)}$, $i=1,2,3$, such that
+\begin{equation}
+	\frac{2^{(1-\beta)/\beta}}{\bar k} \frac1{Nh^2} \sum_{j=0}^{N-1} \E \left(\widehat I_{1,1}^{(j)} \right)^2 = 2^{1/\beta} \frac{\Sigma}{N} \sum_{j=0}^{N-1} \left( C_1^{(j)} - C_2^{(j)}e^{-t_j^\beta/\delta} + C_3^{(j)}\delta^{-1/\beta} e^{-2t_j^\beta / \delta} \right).
+\end{equation}
+While it is clear that the terms involving $C_2^{(j)}$ and $C_3^{(j)}$ vanish due to the exponential terms, the term involving $C_1^{(j)}$ is given by, as specified in \eqref{eq:LemmaDiffusionConstants},
+\begin{equation}
+	2^{1/\beta} \frac{\Sigma}{N} \sum_{j=0}^{N-1} C_1^{(j)} = \frac{\Sigma}{N} \sum_{j=0}^{N-1} \Gamma(1/\beta)^{-1} \gamma\left(\frac1\beta, \frac{2t^\beta}{\delta}\right) \to \Sigma, \quad \text{for } N \to \infty.
+\end{equation}
+Therefore, due to the weak law of large numbers (i.e., Chebyshev's theorem) in the limit for $N \to \infty$ we have
+\begin{equation}
+	\frac{2^{(1-\beta)/\beta}}{\bar k} \frac1{Nh^2} \sum_{j=0}^{N-1} \left(\widehat I_{1,1}^{(j)} \right)^2 \to \Sigma, \quad \text{in probability.}
+\end{equation}
+We now consider 
+
+
+\textit{Step 3: Remainders.} We finally consider the remainders, i.e., the terms
+\begin{equation}
+\begin{alignedat}{3}
+	&R_1 = \frac1N \sum_{j=0}^{N-1} \left(I_2^{(j)}\right)^2, \quad &&R_2 = \frac1N \sum_{j=0}^{N-1} 2I_1^{(j)}I_2^{(j)}, \quad &&R_3 = \frac1N \sum_{j=0}^{N-1} \left(\widehat R^{(j)}\right)^2, \\
+	&R_4 = \frac1N \sum_{j=0}^{N-1}2 I_{1,1}^{(j)}, \widehat R^{(j)}, \quad &&R_5 = \frac1N \sum_{j=0}^{N-1}2I_1^{(j)}I_2^{(j)}, 
+\end{alignedat}
+\end{equation}
+and show they all vanish.
 
 
 \subsubsection{Proof of Theorem \ref{thm:mainResultN1}}
@@ -735,15 +895,58 @@ which concludes the proof. \qed
 \section{Current ideas}
 
 \subsection{Stratonovich}
-The numerator of the estimator $\hat A$ seems to converge to the Stratonovich integral of the multiscale process when the filter is applied. In particular, I observed numerically that
+The numerator of the estimator $\hat A$ seems to converge to the Stratonovich integral of the multiscale process when the filter is applied. In particular, I observed numerically that (can it be proved?)
 \begin{equation}
-	\langle V(Z_t^{\epl,k}), \dd Z_t^{\epl,k} \rangle \approx \langle V(X_t^\epl), \circ \dd X_t^\epl\rangle.
+	\int_0^T V'(Z^{\epl,k}_t) \dd Z^{\epl,k}_t \approx \int_0^T V'(X^\epl_t) \circ \d X^\epl_t = V(X_T^\epl) - V(X_0^\epl).
 \end{equation}
-+ Stratonovich to Itô correction -- needs knowledge of $\Sigma$ \\
-+ Is it possible to correct this behaviour without knowledge of $\Sigma$?
+Therefore, one can compute the estimator 
+\begin{equation}
+	\widehat A_T (Z^{\epl,k}_{0:T}) = - \frac{\int_0^T V'(Z^{\epl,k}_t) \dd Z^{\epl,k}_t - \hat \Sigma \int_0^T V''(Z_t^{\epl,\kappa}) \dd t}{\int_0^T V'(Z^{\epl,k}_t)^2 \dd t},
+\end{equation}
+which accounts for the conversion of Itô--Stratonovich integrals. 
 
-\subsection{Alternative estimator}
-The second estimator $\widetilde A$ gives correct result (but need for a correct estimator of the diffusion coefficient -- for now the problem is solved only for a specific filter).
+\begin{remark} I just noticed that since
+	\begin{equation}
+		\E^{\mu^\epl}(V(X_T^\epl) - V(X_0^\epl)) = 0,
+	\end{equation}
+	then this estimator is approximately equal to $\widetilde A$. Therefore, numerical experiments are given in the following section.
+	
+\end{remark}
+
+\subsection{Estimator $\widetilde A$}
+We consider the estimator
+\begin{equation}
+	\widetilde A_T(Z_{0:T}^{\epl,k}) = \widehat \Sigma \, \frac{\int_0^T  V''(Z_t^\epl) \dd t}{\int_0^T V'(Z_t^\epl)^2 \dd t}.
+\end{equation}
+For this estimator to be unbiased, it is necessary to have the two following ingredients
+\begin{itemize}[label=-]
+	\item An unbiased estimator $\widehat \Sigma$ of $\Sigma$,
+	\item the process $Z_t^{\epl,k}$ should have the invariant distribution of the homogenized process as a limit invariant distribution.
+\end{itemize}
+These two issues are treated respectively in Section \ref{sec:Sigma} and \ref{sec:Ergodic}. Therefore, we can argue that (to be proved)
+\begin{equation}
+	\lim_{T\to\infty}\lim_{\epl \to 0} \widetilde A(Z_t^{\epl,k}) = A.
+\end{equation}
+Numerically, this seem to hold, but the behaviour of the estimator seems to give no better results (qualitatively) than the estimator obtained with subsampling. Results of test with $V(x) = x^2/2$ (Ornstein--Uhlenbeck) and with a quartic potential $V(x) = x^4 / 4$ can be found in Figure \ref{fig:OU} and Figure \ref{fig:Quartic}. In both figures, we plot the histogram and estimated density over $1000$ realization of the MLE for both the filter and the subsampling method. For these experiments, the parameter values where $\alpha = 1$, $\sigma = 0.5$, $\epl=0.1$, $T = \epl^{-\gamma}$ with $\gamma = 1.5$ and I employed the exponential filter of Example \ref{ex:expKernel}.
+
+\begin{figure}[t]
+	\centering 
+	\begin{tabular}{cc}
+		\includegraphics[]{Figures/A_OU.png} & 	\includegraphics[]{Figures/S_OU.png}
+	\end{tabular}
+	\caption{Results for the potential $V(x)=x^2/2$ (Ornstein--Uhlenbeck).}
+	\label{fig:OU}
+\end{figure}
+
+
+\begin{figure}[t]
+	\centering 
+	\begin{tabular}{cc}
+		\includegraphics[]{Figures/A_Quartic.png} & 	\includegraphics[]{Figures/S_Quartic.png}
+	\end{tabular}
+	\caption{Results for the potential $V(x)=x^4/4$.}
+	\label{fig:Quartic}
+\end{figure}
 
 %\section{``Old'' computations which could be useful}
 %
@@ -946,17 +1149,6 @@ The second estimator $\widetilde A$ gives correct result (but need for a correct
 \section{Numerical experiments}
 
 \subsection{Ornstein--Uhlenbeck process}
-
-Results in \ref{fig:A_OU}.
-
-\begin{figure}
-	\centering 
-	\begin{tabular}{cc}
-	\includegraphics[]{Figures/A_OU.png} & 	\includegraphics[]{Figures/S_OU.png}
-	\end{tabular}
-	\caption{Results for the Ornstein--Uhlenbeck process}
-	\label{fig:A_OU}
-\end{figure}
 
 \subsection{Bistable potential}
 

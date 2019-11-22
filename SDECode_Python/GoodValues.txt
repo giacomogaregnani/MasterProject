@@ -1,0 +1,24 @@
+========= EXPERIMENT 1 =========
+
+# Set up the equation
+eps = 0.1
+sde = MSOrnUhl(eps)
+sdeHomo = OrnUhl()
+EM = EulerMaruyama(sde)
+alpha = 1.0
+sigma = 1.0
+param = np.array([alpha, sigma])
+IC = 0.0
+
+# Compute the homogenized coefficients
+hom_param = compute_homogeneous(param, 2.0 * np.pi, sde.p)
+print(hom_param)
+
+# Set parameters
+gamma = 2.0
+betaFilter = max(1.0/sigma, 1.0)
+beta = 3.0
+
+VARY ZETASUB = ZETAFILTER = 0, 0.1, 0.2, ..., 1.0 AND SEE THAT FILTER IS MORE STABLE WRT ZETA.
+
+========= EXPERIMENT 2 =========

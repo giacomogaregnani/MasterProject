@@ -2,10 +2,11 @@ clc; clear all; close all
 %%
 
 syms t s d b p T
-k = 1/(d^(1/b)) * exp(-(t-s)^b/d);
 assume(t > 0)
 assume(d > 0)
 assume(b == 1)
+k = 1/(d^(1/b)) * exp(-(t-s)^b/d);
+pretty(k)
 
 % I = int(k, s, 0, t);
 % pretty(simplify(I))
@@ -17,16 +18,17 @@ assume(b == 1)
 % limit(I2, d, 0)
 
 syms p
-assume(p == 1/2)
-% assume(p == 2)
+assume(p == 2)
 
 f = k * (t-s)^(p);
 f = simplify(f);
 
-I = int(f, s, 0, t);
-pretty(simplify(I))
-limit(I, t, inf)
+psi = int(f, s, 0, t);
+pretty(simplify(psi))
+limit(psi, t, inf)
 
+syms T
+limit(int(psi, t, 0, T)/T, T, inf)
 % syms T
 % assume(s == 0)
 % f = k * t^p;
