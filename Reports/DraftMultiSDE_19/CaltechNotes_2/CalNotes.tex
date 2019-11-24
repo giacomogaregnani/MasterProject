@@ -612,51 +612,7 @@ In this section, we compute the quadratic variation of the process $Z_t^{\epl, k
 	where $C_1$, $C_2$ and $C_3$ are positive constants bounded independently of $t$ and $\delta$ whose value is specified in the proof.
 \end{lemma}
 
-\begin{proof} We have
-	\begin{equation}
-		\E I(t)^2 = 2 \Sigma \int_0^t \int_0^t \partial_s k^\epl(t, s) \partial_r k^\epl(t, r) \sqrt{(t- s)(t-r)} \E \xi_{t,s}\xi_{t,r} \dd r \dd s.
-	\end{equation}
-	Let us remark that $\sqrt{t-s}\, \xi_{t,s} = \widetilde W(t) - \widetilde W(s)$, where $\widetilde W$ is a standard Brownian motion. Therefore 
-	\begin{equation}
-	\begin{aligned}
-		\E I(t)^2 &= 2\Sigma \int_0^t \int_0^t \partial_s k^\epl(t, s) \partial_r k^\epl(t, r) (t-s-r+\min\{s,r\}) \dd r \dd s \\
-		&= 
-		\begin{aligned}[t]
-		& 2\Sigma \int_0^t \int_0^s \partial_s k^\epl(t, s) \partial_r k^\epl(t, r) (t-s) \dd r \dd s \\
-		&+ 2\Sigma \int_0^t \int_s^t \partial_s k^\epl(t, s) \partial_r k^\epl(t, r) (t-r) \dd r \dd s 
-		\end{aligned}
-	\end{aligned}
-	\end{equation}
-	By straightforward calculations, one can show that
-	\begin{equation}
-		\E I(t)^2 = 2\Sigma \int_0^t \left(k^\epl(t,s) - k^\epl(t,0)\right)^2 \dd s.
-	\end{equation}
-	Since
-	\begin{equation}
-		k^\epl(t, s) = C_\beta\frac1{\delta^{1/\beta}} e^{-(t-s)^\beta / \delta},
-	\end{equation}
-	where $C_\beta = \beta \Gamma(1/\beta)^{-1}$, we have the explicit formula
-	\begin{equation}
-	\begin{aligned}
-		\frac1{2\Sigma }\E I(t)^2 &= \beta\Gamma\left(\frac1\beta\right)^{-2} \left((2\delta)^{-1/\beta}\gamma\left(\frac1\beta, \frac{2t^\beta}{\delta}\right) -2 \delta^{-1/\beta}\gamma\left(\frac1\beta, \frac{t^\beta}{\delta}\right)e^{-t^\beta/\delta} + \beta t \delta^{-2/\beta} e^{-2t^\beta/\delta}\right).
-	\end{aligned}
-	\end{equation}
-	Moreover, considering $\bar k \defeq k^\epl(t, t) = \beta \Gamma(1/\beta)^{-1}\delta^{-1/\beta}$, we have
-	\begin{equation}
-		\E I(t)^2 = 2 \Sigma \bar k  \left( C_1 - C_2 e^{-t^\beta/\delta} + C_3 \delta^{-1/\beta} e^{-2t^\beta/\delta}\right),
-	\end{equation}
-	where 
-	\begin{equation}\label{eq:LemmaDiffusionConstants}
-	\begin{aligned}
-		C_1 &= 2^{-1/\beta} \Gamma(1/\beta)^{-1} \gamma\left(\frac1\beta, \frac{2t^\beta}{\delta}\right), \\
-		C_2 &= 2 \gamma\left(\frac1\beta, \frac{t^\beta}{\delta}\right),\\
-		C_3 &= \beta \Gamma(1/\beta)^{-1},
-	\end{aligned}
-	\end{equation}
-	which is the desired result since $C_1$, $C_2$ and $C_3$ are bounded independently of $\delta$ and $t$.
-\end{proof}
-
-\begin{lemma} Let
+\begin{lemma}\label{lem:diffusionLemma2} Let
 	\begin{equation}
 	\begin{aligned}
 		I &\defeq \int_{\bar t}^{\bar t+h} \int_0^t \partial_t k^\epl(t, s) \sqrt{2\Sigma(t-s)} \, \xi_{t,s} \dd s \dd t, \\
@@ -665,43 +621,12 @@ In this section, we compute the quadratic variation of the process $Z_t^{\epl, k
 	\end{equation}
 	Then
 	\begin{equation}
-		\E\abs{I-\widehat I}^2 \leq
+	\begin{aligned}
+		\E\abs{I}^2 &\leq \\
+		\E\abs{I-\widehat I}^2 &\leq
+	\end{aligned}
 	\end{equation}
 \end{lemma}
-\begin{proof} We write
-	\begin{equation}
-	\begin{aligned}
-		I - \widehat I = &\int_{\bar t}^{\bar t+h} \int_{\bar{t}}^t \partial_t k^\epl(t, s) \sqrt{2\Sigma(t-s)} \, \xi_{t,s} \dd s \dd t\\
-		+ &\int_{\bar t}^{\bar t+h} \int_0^t \left( \partial_t k^\epl(t, s) \sqrt{2\Sigma(t-s)} \, \xi_{t,s}  - \partial_t k^\epl(\bar t, s) \sqrt{2\Sigma(\bar t-s)} \, \xi_{\bar t,s} \right)\dd s \dd t\\
-		&\eqdef R_1 + R_2,
-	\end{aligned}
-	\end{equation}
-	which, with Young's inequality, yields
-	\begin{equation}
-		\E\abs{I-\widehat I}^2 \leq 2\E\abs{R_1}^2 + 2\E\abs{R_2}^2.
-	\end{equation}
-	We bound $R_1$ and $R_2$ separately. First, due to the Cauchy--Schwarz inequality and since $\E \xi_{t,s}^2 = 1$, we have
-	\begin{equation}
-		\E \abs{R_1}^2 \leq 2\Sigma h^2 \int_{\bar t}^{\bar t+h} \int_{\bar{t}}^t \partial_t k^\epl(t, s)^2  (t-s) \dd s \dd t.
-	\end{equation}
-	Now, since $-\partial_t k^\epl(t, s) \leq -\partial_t k^\epl(t, t)$ for all $0 \leq s \leq t$ and in view of Remark \ref{rem:kernDeriv}, we can write
-	\begin{equation}
-	\begin{aligned}
-		\E \abs{R_1}^2 &\leq -2\Sigma h^2\partial_t k^\epl(t, t) \int_{\bar{t}}^{\bar t + h}\left(\left(\phi(\bar t, \epl) - \phi(t, \epl) \right) + \left(\bar t k(\bar t, 0) - t k(t, 0)\right) \right) \dd t\\
-		&\leq \frac{2\Sigma h^2C_\beta}{\delta^{(\beta+1)/\beta}} \int_{\bar{t}}^{\bar t + h}\left(\Gamma(1/\beta)^{-1}\left(\gamma\left(\frac1\beta, \frac{t^\beta}\delta\right) - \gamma\left(\frac1\beta, \frac{ \bar t^\beta}\delta\right)\right) 
-		+ \frac{C_\beta}{\delta^{1/\beta}}\left(\bar t e^{-\bar t^\beta/\delta} - t e^{-t^\beta/\delta} \right) \right)\dd t,\\
-	\end{aligned}
-	\end{equation}
-	where we exploited the definition of the exponential kernels. We now remark that
-	\begin{equation}
-	\begin{aligned}
-		\gamma\left(\frac1\beta, \frac{t^\beta}\delta\right) - \gamma\left(\frac1\beta, \frac{ \bar t^\beta}\delta\right) &= \int_{\bar t^\beta/\delta}^{t^\beta / \delta} s^{(1-\beta)/\beta} e^{-s} \dd s\\
-		&\leq \int_{\bar t^\beta/\delta}^{t^\beta / \delta} s^{(1-\beta)/\beta} \dd s \leq \frac1\beta \frac{h}{\delta^{1/\beta}}. 
-	\end{aligned}
-	\end{equation}
-	\corr{comment: is it better bounding $e^{-s}\leq (1+s)^{-1}$?}
-\end{proof}
-
 \begin{proposition} Under ..., for the family of exponential kernels $k^\epl(t,s)$ given in Example \ref{ex:expKernel}, i.e.,
 	\begin{equation}
 		k^\epl(t, s) = \frac{1}{\delta^{1/\beta}} e^{-(t-s)^\beta/\delta},
@@ -1153,6 +1078,170 @@ Numerically, this seem to hold, but the behaviour of the estimator seems to give
 \subsection{Bistable potential}
 
 \subsection{Real(istic) data?}
+
+\section*{Appendix}
+
+\subsection*{Proof of Lemma \ref{lem:diffusionLemma}}
+
+We have
+\begin{equation}
+\E I(t)^2 = 2 \Sigma \int_0^t \int_0^t \partial_s k^\epl(t, s) \partial_r k^\epl(t, r) \sqrt{(t- s)(t-r)} \E \xi_{t,s}\xi_{t,r} \dd r \dd s.
+\end{equation}
+Let us remark that $\sqrt{t-s}\, \xi_{t,s} = \widetilde W(t) - \widetilde W(s)$, where $\widetilde W$ is a standard Brownian motion. Therefore 
+\begin{equation}
+\begin{aligned}
+\E I(t)^2 &= 2\Sigma \int_0^t \int_0^t \partial_s k^\epl(t, s) \partial_r k^\epl(t, r) (t-s-r+\min\{s,r\}) \dd r \dd s \\
+&= 
+\begin{aligned}[t]
+& 2\Sigma \int_0^t \int_0^s \partial_s k^\epl(t, s) \partial_r k^\epl(t, r) (t-s) \dd r \dd s \\
+&+ 2\Sigma \int_0^t \int_s^t \partial_s k^\epl(t, s) \partial_r k^\epl(t, r) (t-r) \dd r \dd s 
+\end{aligned}
+\end{aligned}
+\end{equation}
+By straightforward calculations, one can show that
+\begin{equation}
+\E I(t)^2 = 2\Sigma \int_0^t \left(k^\epl(t,s) - k^\epl(t,0)\right)^2 \dd s.
+\end{equation}
+Since
+\begin{equation}
+k^\epl(t, s) = C_\beta\frac1{\delta^{1/\beta}} e^{-(t-s)^\beta / \delta},
+\end{equation}
+where $C_\beta = \beta \Gamma(1/\beta)^{-1}$, we have the explicit formula
+\begin{equation}
+\begin{aligned}
+\frac1{2\Sigma }\E I(t)^2 &= \beta\Gamma\left(\frac1\beta\right)^{-2} \left((2\delta)^{-1/\beta}\gamma\left(\frac1\beta, \frac{2t^\beta}{\delta}\right) -2 \delta^{-1/\beta}\gamma\left(\frac1\beta, \frac{t^\beta}{\delta}\right)e^{-t^\beta/\delta} + \beta t \delta^{-2/\beta} e^{-2t^\beta/\delta}\right).
+\end{aligned}
+\end{equation}
+Moreover, considering $\bar k \defeq k^\epl(t, t) = \beta \Gamma(1/\beta)^{-1}\delta^{-1/\beta}$, we have
+\begin{equation}
+\E I(t)^2 = 2 \Sigma \bar k  \left( C_1 - C_2 e^{-t^\beta/\delta} + C_3 \delta^{-1/\beta} e^{-2t^\beta/\delta}\right),
+\end{equation}
+where 
+\begin{equation}\label{eq:LemmaDiffusionConstants}
+\begin{aligned}
+C_1 &= 2^{-1/\beta} \Gamma(1/\beta)^{-1} \gamma\left(\frac1\beta, \frac{2t^\beta}{\delta}\right), \\
+C_2 &= 2 \gamma\left(\frac1\beta, \frac{t^\beta}{\delta}\right),\\
+C_3 &= \beta \Gamma(1/\beta)^{-1},
+\end{aligned}
+\end{equation}
+which is the desired result since $C_1$, $C_2$ and $C_3$ are bounded independently of $\delta$ and $t$. \qed
+
+\subsection*{Proof of Lemma \ref{lem:diffusionLemma2}}
+We write
+\begin{equation}
+\begin{aligned}
+I - \widehat I = &\int_{\bar t}^{\bar t+h} \int_{\bar{t}}^t \partial_t k^\epl(t, s) \sqrt{2\Sigma(t-s)} \, \xi_{t,s} \dd s \dd t\\
++ &\int_{\bar t}^{\bar t+h} \int_0^t \left( \partial_t k^\epl(t, s) \sqrt{2\Sigma(t-s)} \, \xi_{t,s}  - \partial_t k^\epl(\bar t, s) \sqrt{2\Sigma(\bar t-s)} \, \xi_{\bar t,s} \right)\dd s \dd t\\
+&\eqdef R_1 + R_2.
+\end{aligned}
+\end{equation}
+Young's inequality yields
+\begin{equation}
+\E\abs{I-\widehat I}^2 \leq 2\E\abs{R_1}^2 + 2\E\abs{R_2}^2.
+\end{equation}
+We bound $R_1$ and $R_2$ separately. First, due to the Cauchy--Schwarz inequality and since $\E \xi_{t,s}^2 = 1$, we have
+\begin{equation}
+\E \abs{R_1}^2 \leq 2\Sigma h^2 \int_{\bar t}^{\bar t+h} \int_{\bar{t}}^t (\partial_t k^\epl(t, s))^2  (t-s) \dd s \dd t.
+\end{equation}
+Now, since \corr{$-\partial_t k^\epl(t, s) \leq -\partial_t k^\epl(t, t)$ This is wrong for $\beta > 1$!!!!} for all $0 \leq s \leq t$ and in view of Remark \ref{rem:kernDeriv}, we can write
+\begin{equation}
+\E \abs{R_1}^2 \leq -2\Sigma h^2\partial_t k^\epl(t, t) \int_{\bar{t}}^{\bar t + h}\int_{\bar t}^t -\partial_t k^\epl(t, s)(t-s) \dd s \dd t.
+\end{equation}
+For the inner integral, exploiting Assumption \ref{as:kern}.\ref{as:kernDivFree}, we have
+\begin{equation}
+\begin{aligned}
+\int_{\bar t}^t -\partial_t k^\epl(t, s)(t-s) \dd s &= \int_{\bar t}^t \partial_s k^\epl(t, s)(t-s)\\
+&= -k^\epl(t, \bar t)(t - \bar t) + \int_{\bar t}^t k^\epl(t, s) \dd s \\
+&\leq (t - \bar t) \left(k^\epl(t, t) - k^\epl(t, \bar t)\right).
+\end{aligned}
+\end{equation}
+Hence, replacing the definition of $k^\epl(t, s)$ and noticing that $k^\epl(t, \bar t) \geq k^\epl(\bar t, \bar t+h)$ for all $t \in [\bar t, \bar t + h]$, we obtain
+\begin{equation}
+\begin{aligned}
+\E \abs{R_1}^2 &\leq \frac{2\Sigma h^2 C_\beta}{\delta^{(\beta+1)/\beta}}\int_{\bar t}^{\bar t + h}(t - \bar t) \left(k^\epl(t, t) - k^\epl(t, \bar t)\right) \dd t\\
+&\leq \frac{\Sigma h^4 C_\beta^2}{\delta^{(\beta+2)/\beta}}\left(1 - e^{-h^\beta / \delta}\right) \leq \frac{\Sigma C_\beta^2}{\delta^{2(\beta+1)/\beta}} h^5,
+\end{aligned}
+\end{equation}
+where we exploited the inequality $1-e^{-x} \leq x$. We now proceed bounding $R_2$. The Cauchy--Schwarz inequality implies
+\begin{equation}
+\begin{aligned}
+\E\abs{R_2}^2 &\leq 2 \Sigma ht \int_{\bar t}^{\bar t + h}\int_0^t 
+\begin{aligned}[t]
+&\left(\partial_t k^\epl(t, s)^2 (t-s)  + \partial_t k^\epl(\bar t, s)^2 (\bar t-s)\right.\\
+&\left. -2 \partial_t k^\epl(t, s) \partial_t k^\epl(\bar t, s)(\bar t - s)\right) \dd s \dd t
+\end{aligned}
+\\
+&= 2 \Sigma ht \int_{\bar t}^{\bar t + h}\int_0^t 
+\begin{aligned}[t]
+&\left(\partial_t k^\epl(t, s)\left(\partial_t k^\epl(t, s)(t-s) -\partial_t k^\epl(\bar t, s)(\bar t - s)\right)\right.\\
+&+ \left.  \partial_t k^\epl(\bar t, s)\left(\partial_t k^\epl(\bar t, s)- \partial_t k^\epl(t, s) \right)(\bar t - s) \right) \dd s \dd t.
+\end{aligned}
+\\
+&\leq \frac{2 \Sigma ht C_\beta}{\delta^{(\beta + 1)/\beta}} 
+\begin{aligned}[t]
+&\left( \int_{\bar t}^{\bar t + h}\int_0^t \left(\partial_t k^\epl(\bar t, s)(\bar t - s) - \partial_t k^\epl(t, s)(t-s) \right) \dd s \dd t \right. \\
++ & \left. \int_{\bar t}^{\bar t + h}\int_0^t \left. \left(\partial_t k^\epl(t, s) - \partial_t k^\epl(\bar t, s)\right)(\bar t - s) \right) \dd s \dd t \right) 
+\end{aligned}
+\\
+&\eqdef \frac{2 \Sigma ht C_\beta}{\delta^{(\beta + 1)/\beta}}\left(R_{2,1} + R_{2,2}\right),
+\end{aligned}
+\end{equation}
+where we employed the fact that $-\partial_t k^\epl(t, t) \geq -\partial_t k^\epl(t, s)$ for all $t,s \geq 0$, and that $\partial_t k(t,t)$ is constant. Due to Assumption \ref{as:kern} and to an integration by parts we can now compute
+\begin{equation}
+\begin{aligned}
+	R_{2,1} &= \int_{\bar t}^{\bar t + h}\int_0^t \left(\partial_t k^\epl(\bar t, s)(\bar t - s) - \partial_t k^\epl(t, s)(t-s) \right) \dd s \dd t \\
+	&= \int_{\bar t}^{\bar t + h} \int_0^t \left( \partial_s k^\epl(t, s)(t-s) - \partial_s k^\epl(\bar t, s)(\bar t - s) \right) \dd s \dd t \\
+	&= \int_{\bar t}^{\bar t + h} \left(-k^\epl(t,0)t + \int_0^t k^\epl(t, s) \dd s + k^\epl(\bar t, t)(t - \bar t) + k^\epl(\bar t, 0)\bar t - \int_0^t k^\epl(\bar t, s) \dd s \right)\dd t\\
+	&= \int_{\bar t}^{\bar t + h} \left(-k^\epl(t,0)t + 1 - \phi(t, \epl) + k^\epl(\bar t, t)(t - \bar t) + k^\epl(\bar t, 0)\bar t -\int_0^t k^\epl(\bar t, s) \dd s \right) \dd t.
+\end{aligned}
+\end{equation} 
+Now, since $k^\epl(t, s)$ is a decreasing function of $t-s$, we have
+\begin{equation}
+\begin{aligned}
+	\int_0^t k^\epl(\bar t, s) \dd s &= 1 - \phi(\bar t, \epl) + \int_{\bar t}^{t} k^\epl(\bar t, s) \dd s\\
+	&\geq 1 - \phi(\bar t, \epl) + k^\epl(\bar t, t)(t - \bar t),
+\end{aligned}
+\end{equation}
+so that
+\begin{equation}
+\begin{aligned}
+	R_{2,1} \leq \int_{\bar t}^{\bar t + h} \left(k^\epl(\bar t, 0)\bar t - k^\epl(t,0)t + \phi(\bar t, \epl) - \phi(t, \epl) \right) \dd t.
+\end{aligned}
+\end{equation}
+We can now bound the integrand of the expression above. First, since $t \geq \bar t$, we have
+\begin{equation}
+\begin{aligned}
+	\phi(\bar t, \epl) - \phi(t, \epl) &= \Gamma(1/\beta)^{-1}\left(\gamma\left(\frac1\beta, \frac{t^\beta}{\delta}\right) - \gamma\left(\frac1\beta, \frac{\bar t^\beta}{\delta}\right) \right)\\
+	&= \Gamma(1/\beta)^{-1} \int_{\bar t^\beta/\delta}^{t^\beta / \delta} s^{\frac1\beta - 1}e^{-s} \dd s\\
+	&\leq  C_\beta \frac{e^{-\bar t^\beta / \delta} h}{\delta^{1/\beta}}.
+\end{aligned}
+\end{equation}
+where we identified $C_\beta=\beta \Gamma(1/\beta)^{-1}$. Second, since $t \geq \bar t$,
+\begin{equation}
+\begin{aligned}
+	k^\epl(\bar t, 0) \bar t - k^\epl(t, 0) t &= \frac{C_\beta}{\delta^{1/\beta}} \left(e^{-\bar t^\beta/\delta} \bar t - e^{-t^\beta / \delta} t\right) \\
+	&\leq C_\beta \frac{e^{-t^\beta / \delta} h}{\delta^{1/\beta}}.
+\end{aligned}
+\end{equation}
+Finally, we combine the two inequalities above to get
+\begin{equation}
+	R_{2,1} \leq 2 C_\beta \frac{\left(e^{-\bar t^\beta / \delta} + e^{-t^\beta / \delta}\right) h^2}{\delta^{1/\beta}}.
+\end{equation}
+We now consider $R_{2,2}$. We have
+\begin{equation}
+\begin{aligned}
+	R_{2,2} &= \int_{\bar t}^{\bar t + h}\int_0^t \left(\partial_t k^\epl(t, s) - \partial_t k^\epl(\bar t, s)\right)(\bar t - s)  \dd s \dd t \\
+	&= \int_{\bar t}^{\bar t + h}\int_0^t \left(\partial_t k^\epl(t, s)(t-s) + \partial_t k^\epl(t, s)(\bar t - t) - \partial_t k^\epl(\bar t, s)(\bar t - s)\right)\dd s \dd t \\
+	&= \int_{\bar t}^{\bar t + h} 
+	\begin{aligned}[t]
+	&\left(\phi(t, \epl) + tk^\epl(t, 0) + \int_0^t \partial_t k^\epl(t, s)(\bar t - t) \dd s \right.\\
+	&- \left. \phi(\bar t, \epl) - \bar t k^\epl(\bar t, 0) - \int_{\bar t}^{t}\partial_t k^\epl(\bar t, s)(\bar t - s) \dd s \right) \dd t
+	\end{aligned}
+\end{aligned}
+\end{equation}
+
+\qed
+
 
 \bibliographystyle{siam}
 \bibliography{../../anmc}

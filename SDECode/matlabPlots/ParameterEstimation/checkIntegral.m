@@ -23,6 +23,8 @@ plot(tVec, checkPhi)
 
 display(['error phi = ' , num2str(max(abs(phi(tVec)-checkPhi)))])
 
+
+
 %% INTEGRAL CHECK
 
 I1 = @(t) b/gamma(1/b)^2 * 1/(2*d)^(1/b) * myigamma(1/b, 2*t.^b/d);
