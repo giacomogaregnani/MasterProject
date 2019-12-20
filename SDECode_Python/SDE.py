@@ -108,6 +108,7 @@ class Bistable(Langevin):
     def lapl_v_vect(self, x):
         return 3 * np.multiply(x, x) - 1.0
 
+
 class MSLangevin(SDE):
     def __init__(self, eps):
         SDE.__init__(self)
@@ -149,10 +150,10 @@ class MSOrnUhl(MSLangevin):
         return 1
 
     def p(self, x):
-        return np.cos(x)
+        return np.sin(x)
 
     def grad_p(self, x):
-        return -1.0 * np.sin(x)
+        return np.cos(x)
 
 
 class MSQuartic(MSLangevin):

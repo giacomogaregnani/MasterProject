@@ -1,12 +1,12 @@
 clc; clear; close all
 %%
 
-b = 3;
+b = 1;
 d = 0.1;
 Cb = 1/gamma((b+1)/b);
 tVec = linspace(0, 1, 1000);
 myigamma = @(a, x) gamma(a) - igamma(a, x);
-k = @(t, s) Cb / (d^(1/b)) * exp(-(t-s).^b / d);
+k = @(t, s) Cb / (d^(1/b)) * exp(-abs(t-s).^b / d);
 
 %% PHI
 

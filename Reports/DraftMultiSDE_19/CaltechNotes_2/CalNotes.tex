@@ -328,7 +328,7 @@ We now present some estimates involving the process $Z_t^{\epl, k}$.
 	\d Z_t^{\epl, k} = k^\epl(t, 0) X^\epl_t \dd t + \int_0^t \partial_t k^\epl(t, s) (X^\epl_s - X^\epl_t) \dd s \dd t.
 	\end{equation}
 \end{lemma}
-\begin{proof} Due to assumption \ref{as:kernReg} we can apply Leibniz's integral rule and obtain the following representation
+\begin{proof} Due to assumption \ref{as:kern}.\ref{as:kernReg} we can apply Leibniz's integral rule and obtain the following representation
 	\begin{equation}
 	\frac{\d Z^{\epl,k}_t}{\d t} = k^\epl(t, t)X^\epl_t + \int_0^t \partial_t k^\epl(t, s) X^\epl_s \dd s.
 	\end{equation}
@@ -381,7 +381,7 @@ We now estimate the deviation of the process $Z_t^{\epl, k}$ from the original p
 	\begin{equation}
 		\E^{\mu^\epl} \abs{X_t^\epl - X_s^\epl}^p \leq C((t-s)^p + (t-s)^{p/2} + \epl^p), 
 	\end{equation}
-	which, combined with \ref{as:kernVanish}, implies
+	which, combined with Assumption \ref{as:kern}.\ref{as:kernVanish}, implies
 	\begin{equation}
 		I_1 \leq C(\psi(t, \epl)^p + \psi(t, \epl)^{p/2} + \epl^p).
 	\end{equation}
@@ -619,11 +619,11 @@ In this section, we compute the quadratic variation of the process $Z_t^{\epl, k
 		\widehat I &\defeq h \int_0^{\bar t} \partial_t k^\epl(\bar t, s) \sqrt{2\Sigma(\bar t-s)} \, \xi_{\bar t,s} \dd s \dd t.
 	\end{aligned}
 	\end{equation}
-	Then
+	Then, there exists a constant $C > 0$ independent of $h$, $\delta$ and $\bar t$ such that
 	\begin{equation}
 	\begin{aligned}
-		\E\abs{I}^2 &\leq \\
-		\E\abs{I-\widehat I}^2 &\leq
+		\E\abs{I-\widehat I}^2 &\leq C \frac{h^5}{\delta^{(\beta+2)/\beta}} + C \frac{e^{-\bar t^\beta / \delta} (\bar t + h)^2h^2}{\delta^{2/\beta}}, \\
+		\E\abs{I}^2 &\leq C \frac{h^2(\bar t + h)}{\delta^{1/\beta}}.
 	\end{aligned}
 	\end{equation}
 \end{lemma}
@@ -638,6 +638,8 @@ In this section, we compute the quadratic variation of the process $Z_t^{\epl, k
 	it holds	
 \end{proposition}
 
+\begin{proof} In the proof, the symbol $\E$ denotes expectation with respect to the invariant measure $\mu^\epl$ of \eqref{eq:SDE_MS}, so $\E = \E^{\mu^\epl}$. Moreover, we employ the symbol $C$ for a generic positive constant which is independent of $\epl$, $h$ and $t$, and which can assume different values from line to line.
+	
 \textit{Step 1: Decomposing the estimator.} Due to Lemma \ref{lem:ZExpansion} and in light of Lemma \ref{lem:ContBound} and Lemma \ref{lem:Sigma}, we have
 \begin{equation}
 \begin{aligned}
@@ -687,28 +689,76 @@ where $\widehat I_{1,1}^{(j)}$ is an approximation of $I_{1,1}^{(j)}$ obtained w
 \end{equation}
 Due to Lemma \ref{lem:diffusionLemma}, there exist constants $C_i^{(j)}$, $i=1,2,3$, such that
 \begin{equation}
-	\frac{2^{(1-\beta)/\beta}}{\bar k} \frac1{Nh^2} \sum_{j=0}^{N-1} \E \left(\widehat I_{1,1}^{(j)} \right)^2 = 2^{1/\beta} \frac{\Sigma}{N} \sum_{j=0}^{N-1} \left( C_1^{(j)} - C_2^{(j)}e^{-t_j^\beta/\delta} + C_3^{(j)}\delta^{-1/\beta} e^{-2t_j^\beta / \delta} \right).
+	\frac{2^{(1-\beta)/\beta}}{\bar k} \frac1{Nh^2} \sum_{j=0}^{N-1} \E \left(\widehat I_{1,1}^{(j)} \right)^2 = 2^{1/\beta} \frac{\Sigma}{N} \sum_{j=0}^{N-1} \left( C_1^{(j)} - C_2^{(j)}e^{-t_j^\beta/\delta} + C_3^{(j)}\delta^{-1/\beta} t_j e^{-2t_j^\beta / \delta} \right).
 \end{equation}
 While it is clear that the terms involving $C_2^{(j)}$ and $C_3^{(j)}$ vanish due to the exponential terms, the term involving $C_1^{(j)}$ is given by, as specified in \eqref{eq:LemmaDiffusionConstants},
 \begin{equation}
 	2^{1/\beta} \frac{\Sigma}{N} \sum_{j=0}^{N-1} C_1^{(j)} = \frac{\Sigma}{N} \sum_{j=0}^{N-1} \Gamma(1/\beta)^{-1} \gamma\left(\frac1\beta, \frac{2t^\beta}{\delta}\right) \to \Sigma, \quad \text{for } N \to \infty.
 \end{equation}
-Therefore, due to the weak law of large numbers (i.e., Chebyshev's theorem) in the limit for $N \to \infty$ we have
+Therefore, due to the weak law of large numbers in the limit for $N \to \infty$ we have
 \begin{equation}
 	\frac{2^{(1-\beta)/\beta}}{\bar k} \frac1{Nh^2} \sum_{j=0}^{N-1} \left(\widehat I_{1,1}^{(j)} \right)^2 \to \Sigma, \quad \text{in probability.}
 \end{equation}
-We now consider 
+We now consider the remainders due to the approximation of the integral with the (left) rectangle rule. Due to Lemma \ref{lem:diffusionLemma2}, there exists a constant $C > 0$ such that
+\begin{equation}
+\begin{aligned}
+	\frac{2^{(1-\beta)/\beta}}{\bar k} \frac1{Nh^2} \sum_{j=0}^{N-1} \E \abs{I_{1,1}^{(j)} - \widehat I_{1,1}^{(j)}}^2 &\leq C \frac{1}{\bar k N} \sum_{j=0}^{N-1} \left( \frac{h^3}{\delta^{(\beta+2)/\beta}} +  \frac{e^{-t_j^\beta / \delta} t_{j+1}^2}{\delta^{2/\beta}} \right)\\
+	&\leq C \frac{h^3}{\delta^{(\beta + 3)/\beta}} + C \frac1N \sum_{j=0}^{N-1} \frac{e^{-t_j^\beta / \delta} t_{j+1}^2}{\delta^{3/\beta}} \to 0, \quad \text{for } N \to \infty,
+\end{aligned}
+\end{equation}
+where the limit holds since \corr{condition on $\delta$, $h$}. We apply the Cauchy--Schwarz inequality to the second remainder as
+\begin{equation}
+\begin{aligned}
+	\frac{2^{(1-\beta)/\beta}}{\bar k} \frac1{Nh^2} \sum_{j=0}^{N-1} \E \abs{2I_{1,1}^{(j)}\left(I_{1,1}^{(j)} - \widehat I_{1,1}^{(j)}\right)} &\leq \frac{C}{\bar k N h^2} \sum_{j=0}^{N-1} \left(\E \abs{I_{1,1}^{(j)}}^2\right)^{1/2} \left( \E\abs{I_{1,1}^{(j)} - \widehat I_{1,1}^{(j)}}^2\right)^{1/2} \\
+	&\leq \frac{C}{N h^2 \delta^{1/\beta}} \sum_{j=0}^{N-1} \left(\frac{h^{5/2}}{\delta^{(\beta+2)/(2\beta)}} + \frac{e^{-t_j^\beta / 2\delta} t_{j+1}h}{\delta^{1/\beta}}\right)\frac{h t_{j+1}^{1/2}}{\delta^{1/(2\beta)}}\\
+	&\leq \frac{C}{N} \sum_{j=0}^{N-1} \left(\frac{h^{3/2}t_{j+1}^{1/2}}{\delta^{(\beta+5)/(2\beta)}} + \frac{e^{-t_j^\beta / 2\delta} t_{j+1}^{3/2}}{\delta^{5/(2\beta)}}\right).
+\end{aligned}
+\end{equation}
+\corr{This can be refined.} We now apply Jensen's inequality for concave functions to the second term, thus obtaining	
+\begin{equation}
+\begin{aligned}
+	\frac{2^{(1-\beta)/\beta}}{\bar k} \frac1{Nh^2} \sum_{j=0}^{N-1} \E \abs{2I_{1,1}^{(j)}\left(I_{1,1}^{(j)} - \widehat I_{1,1}^{(j)}\right)} &\leq C \frac{h^{3/2}\sqrt{T}}{\delta^{(\beta+5)/(2\beta)}} + \frac{C}{N\delta^{5/(2\beta)}} \left(\sum_{j=0}^{N} t_{j+1}^3\right)^{1/2}\\
+	&\leq C \frac{h^{3/2}\sqrt{T}}{\delta^{(\beta+5)/(2\beta)}} + C\frac{h^{1/2} T}{\delta^{5/(2\beta)}} \\
+	&\leq C \frac{h^{1/2}T}{\delta^{(\beta+5)/(2\beta)}} \to 0, \quad \text{for } N \to \infty, 
+\end{aligned}
+\end{equation}
+where the last inequality holds for $\delta$ and $h$ small enough. We can therefore conclude that
+\begin{equation}
+	\lim_{N\to \infty} 	\frac{2^{(1-\beta)/\beta}}{\bar k} \frac1{Nh^2} \sum_{j=0}^{N-1} \left(I_{1,1}^{(j)} \right)^2 = \Sigma, \quad \text{in probability.}
+\end{equation}
 
 
 \textit{Step 3: Remainders.} We finally consider the remainders, i.e., the terms
 \begin{equation}
 \begin{alignedat}{3}
-	&R_1 = \frac1N \sum_{j=0}^{N-1} \left(I_2^{(j)}\right)^2, \quad &&R_2 = \frac1N \sum_{j=0}^{N-1} 2I_1^{(j)}I_2^{(j)}, \quad &&R_3 = \frac1N \sum_{j=0}^{N-1} \left(\widehat R^{(j)}\right)^2, \\
-	&R_4 = \frac1N \sum_{j=0}^{N-1}2 I_{1,1}^{(j)}, \widehat R^{(j)}, \quad &&R_5 = \frac1N \sum_{j=0}^{N-1}2I_1^{(j)}I_2^{(j)}, 
+	&R_1 = \frac{\widetilde C_\beta}{Nh^2\bar k} \sum_{j=0}^{N-1} \left(I_2^{(j)}\right)^2, \quad &&R_2 = \frac{\widetilde C_\beta}{Nh^2\bar k} \sum_{j=0}^{N-1} 2I_1^{(j)}I_2^{(j)}, \quad &&R_3 = \frac{\widetilde C_\beta}{Nh^2\bar k} \sum_{j=0}^{N-1} \left(\widehat R^{(j)}\right)^2, \\
+	&R_4 = \frac{\widetilde C_\beta}{Nh^2\bar k} \sum_{j=0}^{N-1}2 I_{1,1}^{(j)}, \widehat R^{(j)}, \quad &&R_5 = \frac{\widetilde C_\beta}{Nh^2\bar k} \sum_{j=0}^{N-1}2I_1^{(j)}I_2^{(j)}, 
 \end{alignedat}
 \end{equation}
-and show they all vanish.
-
+where $\widetilde C_\beta = 2^{(1-\beta)/\beta}$, and show they all vanish in probability. Let us consider $R_1$ and remind that
+\begin{equation}
+	I_2^{(j)} \defeq \int_{t_j}^{t_{j+1}} k^\epl(t, 0) X^\epl_t \dd t.
+\end{equation}
+Since there exists a positive constant $C$ such that $\E\abs{X_t^\epl}^2 \leq C$, the Cauchy--Schwarz inequality yields
+\begin{equation}
+\begin{aligned}
+	\E\abs{I_2^{(j)}}^2 &\leq Ch \int_{t_j}^{t_{j+1}} k^\epl(t, 0)^2 \dd t \leq Ch \int_{t_j}^{t_{j+1}} \frac{e^{-2t^\beta/\delta}}{\delta^{2/\beta}}  \dd t\\
+	&\leq C\frac{h^2e^{-2t_j^\beta / \delta}}{\delta^{2/\beta}}.
+\end{aligned}
+\end{equation}
+Therefore,
+\begin{equation}
+	\E\abs{R_1} \leq C \delta^{-1/\beta} \frac1N \sum_{j=0}^{N-1} e^{-2t_j^\beta / \delta}.
+\end{equation}
+By a change of variable, it is possible to show that
+\begin{equation}
+	h\sum_{j=0}^{N-1} e^{-2t_j^\beta / \delta} \leq C \int_0^T e^{-2t^\beta/\delta} \leq C \delta^{1/\beta},
+\end{equation}
+so that there exists a constant $C > 0$ such that
+\begin{equation}
+	\E\abs{R_1} \leq \frac{C}{T}
+\end{equation}
+\end{proof}
 
 \subsubsection{Proof of Theorem \ref{thm:mainResultN1}}
 
@@ -717,8 +767,8 @@ In view of Proposition \ref{prop:equiv}, it suffices to prove that the MLE $\wid
 \begin{aligned}
 	 \widehat A_T (Z^{\epl,k}_{0:T}) = -\frac{1}{\int_0^T V'(Z^{\epl,k}_t)^2 \dd t} &\left(\alpha \int_0^T V'(Z^{\epl,k}_t) \int_0^t \partial_t k^\epl(t, s) \int_s^t  V'(X^\epl_r)\, \Psi^\epl_r\dd r \dd s \dd t\right.\\
 	 &-\sqrt{2\sigma} \int_0^T V'(Z^{\epl,k}_t) \int_0^t \partial_t k^\epl(t, s)  \int_s^t \Psi^\epl_r \dd W_r \dd s \dd t\\
-	 &+\epl \int_0^T \int_0^t \partial_t k^\epl(t, s) \big(\Phi(Y^\epl_t)- \Phi(Y^\epl_s)\big) \dd s \dd t\\
-	 &+ \left. \int_0^T k^\epl(t, 0) X^\epl_t \dd t \right) \eqdef I_1 + I_2 + I_3 + I_4.
+	 &+\epl \int_0^T V'(Z^{\epl,k}_t) \int_0^t \partial_t k^\epl(t, s) \big(\Phi(Y^\epl_t)- \Phi(Y^\epl_s)\big) \dd s \dd t\\
+	 &+ \left. \int_0^T V'(Z^{\epl,k}_t) k^\epl(t, 0) X^\epl_t \dd t \right) \eqdef I_1 + I_2 + I_3 + I_4.
 \end{aligned}
 \end{equation}
 Before analysing the terms above singularly, let us remark that Lemma \ref{lem:ergodic} yields
@@ -730,7 +780,7 @@ Let us first consider $I_1$. Due to Lemma \ref{lem:ContBound}, we can rewrite in
 \begin{equation}
 \begin{aligned}
 	I_1 = -\frac{A}{\int_0^T V'(Z^{\epl,k}_t)^2 \dd t} &\left(\int_0^T V'(Z^{\epl,k}_t)^2 \int_0^t \partial_t k^\epl(t, s) \, (t - s) \dd s \dd t \right. \\
-	&+ \left. \int_0^T V'(Z^{\epl,k}_t)^2 \int_0^t \partial_t k^\epl(t, s) \, R(\epl, t-s) \dd s \dd t \right) \eqdef I_{1,1} + I_{1,2},
+	&+ \left. \int_0^T V'(Z^{\epl,k}_t) \int_0^t \partial_t k^\epl(t, s) \, R(\epl, t-s) \dd s \dd t \right) \eqdef I_{1,1} + I_{1,2},
 \end{aligned}
 \end{equation}
 where, applying \eqref{eq:kernDiffEquality} shows that $I_{1,1}$ satisfies
@@ -817,6 +867,101 @@ which, considering Assumption \ref{as:kern}, implies that
 	\lim_{\epl \to 0} I_4 = 0,	
 \end{equation}
 which concludes the proof. \qed
+
+\section{Numerical experiments}
+
+\subsection{Ornstein--Uhlenbeck process}
+
+Let us consider equation \ref{eq:SDE_MS} with $V(x) = x^2 / 2$ and $p(x) = \cos(x)$. For all $\alpha$ and $\sigma$, the homogenized equation \eqref{eq:SDE_HOM} is therefore the Ornstein--Uhlenbeck process, i.e.,
+\begin{equation}
+	\d X_t = -A X_t \dd t + \sqrt{2\Sigma} \dd W_t.
+\end{equation}
+In all experiments, data is generated from the multiscale model fixing the multiscale parameter $\epl = 0.05$, the final time $T = 400 = \epl^{-2}$ and choosing a time step $h = \epl^{2.5}$, so that the multiscale behaviour is fully captured. We compare the estimator $\widetilde A$ computed with subsampling or by filtering with the exponential kernel of Example \ref{ex:expKernel}. 
+
+\begin{figure}[t]
+	\begin{subfigure}{\linewidth}
+	\centering
+	\begin{tikzpicture}
+		\draw (0,4.5) -- (10.3,4.5) -- (10.3,5.5) -- (0,5.5) -- (0,4.5);
+		\draw[style=dashdotted] (.2,5) -- (1,5) node[right]{Homogenized \vphantom{$\tilde A$} $A$};
+		\draw[] (4.2,5) -- (5,5) node[right]{\vphantom{g} Mean $\tilde A$};
+		\draw[style=dashed] (7,5) -- (7.8,5) node[right]{\vphantom{g} Conf. Int. $\tilde A$};
+	\end{tikzpicture} 
+
+	\vspace{0.5cm}
+	\centering
+	\begin{tabular}{cccc}
+		\includegraphics[]{Figures/A_sub_s4.png} & \includegraphics[]{Figures/A_filt_s4_b1.png} &
+		\includegraphics[]{Figures/A_filt_s4_b5.png} & \includegraphics[]{Figures/A_filt_s4_b10.png}
+	\end{tabular}	
+	\caption{Results for $\sigma = 0.4$.}
+	\end{subfigure}
+
+	\vspace{0.5cm}
+	\begin{subfigure}{\linewidth}
+		\centering
+		\begin{tabular}{cccc}
+			\includegraphics[]{Figures/A_sub_s7.png} & \includegraphics[]{Figures/A_filt_s7_b1.png} &
+			\includegraphics[]{Figures/A_filt_s7_b5.png} & \includegraphics[]{Figures/A_filt_s7_b10.png}
+		\end{tabular}	
+	\caption{Results for $\sigma = 0.7$.}
+	\end{subfigure}
+
+	\vspace{0.5cm}
+	\begin{subfigure}{\linewidth}
+		\centering
+		\begin{tabular}{cccc}
+			\includegraphics[]{Figures/A_sub_s10.png} & \includegraphics[]{Figures/A_filt_s10_b1.png} &
+			\includegraphics[]{Figures/A_filt_s10_b5.png} & \includegraphics[]{Figures/A_filt_s10_b10.png}
+		\end{tabular}	
+		\caption{Results for $\sigma = 1$.}
+	\end{subfigure}
+	\caption{Summary of results for the Ornstein--Uhlenbeck process with $\epl=0.05$.}
+	\label{fig:Result_OU}
+\end{figure}
+
+\begin{figure}[t]
+	\begin{subfigure}{\linewidth}
+		\centering
+		\begin{tikzpicture}
+		\draw (0,4.5) -- (10.3,4.5) -- (10.3,5.5) -- (0,5.5) -- (0,4.5);
+		\draw[style=dashdotted] (.2,5) -- (1,5) node[right]{Homogenized \vphantom{$\tilde A$} $A$};
+		\draw[] (4.2,5) -- (5,5) node[right]{\vphantom{g} Mean $\tilde A$};
+		\draw[style=dashed] (7,5) -- (7.8,5) node[right]{\vphantom{g} Conf. Int. $\tilde A$};
+		\end{tikzpicture} 
+		
+		\vspace{0.5cm}
+		\centering
+		\begin{tabular}{cccc}
+			\includegraphics[]{Figures/A2_sub_s4.png} & \includegraphics[]{Figures/A2_filt_s4_b1.png} &
+			\includegraphics[]{Figures/A2_filt_s4_b5.png} & \includegraphics[]{Figures/A2_filt_s4_b10.png}
+		\end{tabular}	
+		\caption{Results for $\sigma = 0.4$.}
+	\end{subfigure}
+	
+	\vspace{0.5cm}
+	\begin{subfigure}{\linewidth}
+		\centering
+		\begin{tabular}{cccc}
+			\includegraphics[]{Figures/A2_sub_s7.png} & \includegraphics[]{Figures/A2_filt_s7_b1.png} &
+			\includegraphics[]{Figures/A2_filt_s7_b5.png} & \includegraphics[]{Figures/A2_filt_s7_b10.png}
+		\end{tabular}	
+		\caption{Results for $\sigma = 0.7$.}
+	\end{subfigure}
+	
+	\vspace{0.5cm}
+	\begin{subfigure}{\linewidth}
+		\centering
+		\begin{tabular}{cccc}
+			\includegraphics[]{Figures/A2_sub_s10.png} & \includegraphics[]{Figures/A2_filt_s10_b1.png} &
+			\includegraphics[]{Figures/A2_filt_s10_b5.png} & \includegraphics[]{Figures/A2_filt_s10_b10.png}
+		\end{tabular}	
+		\caption{Results for $\sigma = 1$.}
+	\end{subfigure}
+	\caption{Summary of results for the Ornstein--Uhlenbeck process with $\epl=0.1$.}
+	\label{fig:Result_OU_2}
+\end{figure}
+
 \section{Current ideas}
 
 \subsection{Stratonovich}
@@ -854,234 +999,17 @@ These two issues are treated respectively in Section \ref{sec:Sigma} and \ref{se
 \end{equation}
 Numerically, this seem to hold, but the behaviour of the estimator seems to give no better results (qualitatively) than the estimator obtained with subsampling. Results of test with $V(x) = x^2/2$ (Ornstein--Uhlenbeck) and with a quartic potential $V(x) = x^4 / 4$ can be found in Figure \ref{fig:OU} and Figure \ref{fig:Quartic}. In both figures, we plot the histogram and estimated density over $1000$ realization of the MLE for both the filter and the subsampling method. For these experiments, the parameter values where $\alpha = 1$, $\sigma = 0.5$, $\epl=0.1$, $T = \epl^{-\gamma}$ with $\gamma = 1.5$ and I employed the exponential filter of Example \ref{ex:expKernel}.
 
-\begin{figure}[t]
-	\centering 
-	\begin{tabular}{cc}
-		\includegraphics[]{Figures/A_OU.png} & 	\includegraphics[]{Figures/S_OU.png}
-	\end{tabular}
-	\caption{Results for the potential $V(x)=x^2/2$ (Ornstein--Uhlenbeck).}
-	\label{fig:OU}
-\end{figure}
-
-
-\begin{figure}[t]
-	\centering 
-	\begin{tabular}{cc}
-		\includegraphics[]{Figures/A_Quartic.png} & 	\includegraphics[]{Figures/S_Quartic.png}
-	\end{tabular}
-	\caption{Results for the potential $V(x)=x^4/4$.}
-	\label{fig:Quartic}
-\end{figure}
-
-%\section{``Old'' computations which could be useful}
+%\section{Numerical experiments}
 %
-%In this section, we study the convergence with respect to the parameter $\epl$ of point estimates of the drift and the diffusion coefficients when the estimator is computed employing continuous data coming from the multiscale model.
+%\subsection{Bistable potential}
 %
-%\subsection{Drift coefficient}\label{sec:ACont}
-%Let $X^\epl \defeq (X^\epl_t, 0\leq t \leq T)$ be the solution of \eqref{eq:SDE_MS} and define $\mathcal H_\Delta(X^\epl)$ as
-%\begin{equation}\label{eq:ContMovingAverage}
-%	\mathcal H_\Delta(X^\epl)_t \coloneqq 
-%	\begin{cases} 
-%	X_0, &t = 0, \\
-%	\frac1t \int_0^t X_s \dd s, &0 < t < \Delta, \\
-%	\frac1\Delta \int_{t-\Delta}^t X_s \dd s, &\Delta \leq t \leq T,\\
-%	\end{cases}
-%\end{equation}
-%with $\Delta > 0$. Let us denote for ease of notation, $Z^\epl_t \coloneqq \mathcal H_\Delta(X^\epl)_t$. The maximum likelihood estimator of the drift coefficient is then
-%\begin{equation}
-%	\widehat A_{T, \Delta}(Z_t^\epl) = - \frac{\int_0^T V'(Z^\epl_t) \dd Z^\epl_t}{\int_0^T V'(Z^\epl_t)^2 \dd t}.
-%\end{equation}
-%Let us remark that for $0 < t < \Delta$, 
-%\begin{equation}
-%	\dd (t Z^\epl_t) = X_t \dd t,
-%\end{equation}
-%which implies 
-%\begin{equation}\label{eq:MovAvDifferential}
-%	\dd Z^\epl_t = \frac1t (X^\epl_t - Z^\epl_t) \dd t.
-%\end{equation}
-%For $\Delta \leq t \leq T$, instead
-%\begin{equation}
-%	\dd Z^\epl_t = \frac1\Delta (X^\epl_t - X^\epl_{t-\Delta}) \dd t.
-%\end{equation}
-%We rewrite the estimator as
-%\begin{equation}
-%	\widehat A_{T, \Delta}(Z_t^\epl) = -\frac{\int_0^\Delta V'(Z^\epl_t) \frac1t (X^\epl_t - Z^\epl_t) \dd t}{\int_0^T V'(Z^\epl_t)^2 \dd t} -\frac{\int_\Delta^T V'(Z^\epl_t) (X^\epl_t - X^\epl_{t-\Delta}) \dd t}{\Delta\int_0^T V'(Z^\epl_t)^2 \dd t}.
-%\end{equation}
-%The goal of this section is proving the following result.
-%\begin{theorem}\label{thm:DriftContinuous} Under assumption \corr{add assumptions}, if there exists $\zeta \in (0, 1)$ such that $\Delta = \epl^{\zeta}$ and $\gamma > \zeta$ such that $T = \epl^{-\gamma}$, it holds 
-%\begin{equation}
-%	\lim_{\epl\to 0} \widehat A_{T, \Delta}(Z_t^\epl) = A, \quad \text{in law}.
-%\end{equation}
-%\end{theorem}
-%
-%
-%The analysis necessary to prove Theorem \ref{thm:DriftContinuous} is based on the expansion 
-%\begin{equation}\label{eq:ContDiffDecomp}
-%\begin{aligned}
-%	X^\epl_t - X^\epl_{t-\Delta} = &-\alpha \int_{t-\Delta}^t V'(X^\epl_s)\big(1 + \Phi'(Y^\epl_s)\big)\dd s \\
-%	&+\sqrt{2\sigma}\int_{t-\Delta}^t \big(1 + \Phi'(Y^\epl_s)\big) \dd W_s \\
-%	&-\epl \big(\Phi(Y^\epl_t)- \Phi(Y^\epl_{t - \Delta})\big),
-%\end{aligned}
-%\end{equation}
-%for $t \geq \Delta$ (see \cite[Equation (5.8)]{PaS07}). The following lemma ensures that the process $Z^\epl_t$ has bounded moments. 
-%
-%\begin{lemma}\label{lem:BoundMoments} The process $Z_t^\epl$ has bounded moments of all order, i.e., for all $p \geq 1$ and $t \geq 0$ it holds
-%	\begin{equation}
-%		\E^{\mu^\epl} \abs{Z_t^\epl}^p \leq C,
-%	\end{equation}
-%	for $C > 0$ a constant uniform in $\epl \to 0$.
-%\end{lemma}
-%\begin{proof} The process $X^\epl_t$ has bounded moments (see \cite[Corollary 5.4]{PaS07}), which implies the desired result with an application of the Hölder inequality. In fact, for $0 < t < \Delta$,
-%\begin{equation}
-%\begin{aligned}
-%	\E^{\mu^\epl} \abs{Z_t^\epl}^p &\leq \frac{t^{p-1}}{t^p} \int_0^t \E^{\mu^\epl} \abs{X_s^\epl}^p \dd s \\
-%	&\leq t^{-1} \int_0^t C \dd s = C.
-%\end{aligned}
-%\end{equation}
-%For $\Delta \leq t \leq T$ the procedure is analogue. 
-%\end{proof}
-%
-%In the following lemma the difference between the processes $X_t^\epl$ and $Z_t^\epl$ is bounded. 
-%\begin{lemma}\label{lem:BoundDiffCont} Under assumptions \corr{add assumptions}
-%	\begin{equation}
-%		\E^{\mu^\epl} \abs{X_t^\epl - Z_t^\epl}^p \leq C (\Delta^p + \Delta^{p/2} + \epl^p),
-%	\end{equation}
-%	where $C > 0$ is a constant independent of $\Delta$ and $\epl$.
-%\end{lemma}
-%\begin{proof} By definition of $Z_t^\epl$ for $\Delta \leq t \leq T$ and applying Hölder's inequality we have
-%	\begin{equation}
-%	\begin{aligned}
-%		\E^{\mu^\epl} \abs{X_t^\epl - Z_t^\epl}^p &= \Delta^{-p} \E^{\mu^\epl} \abs{\int_{t-\Delta}^t (X_t^\epl - X_s^\epl) \dd s}^p \\
-%		&\leq \Delta^{-1} \int_{t-\Delta}^t  \E^{\mu^\epl} \abs{X_t^\epl - X_s^\epl}^p \dd s
-%	\end{aligned}
-%	\end{equation}
-%	We can now apply \cite[Lemma 6.1]{PaS07} to the integrand to obtain
-%	\begin{equation}
-%		\E^{\mu^\epl} \abs{X_t^\epl - Z_t^\epl}^p \leq C\Delta^{-1} \int_{t-\Delta}^t (\Delta^p + \Delta^{p/2} + \epl^p) \dd s,
-%	\end{equation}
-%	which implies the desired result. The case $0 < t \leq \Delta$ can be proved analogously.
-%\end{proof}
-%
-%\begin{lemma}[See {\cite[Proposition 5.8]{PaS07}}]\label{lem:ContFirstBound} Under assumptions \corr{add assumptions}, it holds in law
-%\begin{equation}
-%	\alpha \int_{t-\Delta}^t V'(X^\epl_s)\big(1 + \Phi'(Y^\epl_s)\big)\dd s = A \Delta V'(Z^\epl_t) + R(\epl, \Delta),
-%\end{equation}
-%where for every $p > 0$ and if $\Delta$ and $\epl$ are sufficiently small, then
-%\begin{equation}
-%	\left( \E^{\mu^\epl} \abs{R(\epl, \Delta)}^p \right)^{1/p} \leq C(\epl^2 + \Delta^{1/2}\epl + \Delta^{3/2}),
-%\end{equation}
-%where $C > 0$ is independent of $\epl$ and $\Delta$.
-%\end{lemma}
-%\begin{proof} 
-%	The result is then obtained following the proof of \cite[Proposition 5.8]{PaS07} and replacing \cite[Lemma 6.1]{PaS07} with Lemma \ref{lem:BoundDiffCont}, and \cite[Corollary 4.1]{PaS07} with Lemma \ref{lem:BoundMoments}.
-%\end{proof}
-%
-%We can now prove Theorem \ref{thm:DriftContinuous}.
-%\begin{proof}[Proof of Theorem \ref{thm:DriftContinuous}] Consider the decomposition \eqref{eq:ContDiffDecomp}. Denoting
-%	\begin{equation}
-%		J_t \defeq \sqrt{2\sigma}\int_{t-\Delta}^t \big(1 + \Phi'(Y^\epl_s)\big) \dd W_s,
-%	\end{equation}
-%	we have due to Lemma \ref{lem:ContFirstBound} the equality in law
-%	\begin{equation}
-%		X^\epl_t - X^\epl_{t-\Delta} = -A\Delta V'(Z^\epl_t) + J_t + \widehat R(\epl, \Delta),
-%	\end{equation}
-%	where, since $\zeta \in (0, 1)$, we have
-%	\begin{equation}
-%		\left(\E^{\mu^\epl} \abs{\widehat R(\epl, \Delta)}^p\right)^{1/p} \leq C(\epl + \epl^{3\zeta/2})
-%	\end{equation}
-%	Therefore, we have that the estimator satisfies
-%	\begin{equation}\label{eq:EstDecomp}
-%	\begin{aligned}
-%		\widehat A_{T, \Delta}(Z_t^\epl) &= A - A\frac{\int_0^\Delta V'(Z^\epl_t)^2 \dd t}{\int_0^T V'(Z^\epl_t)^2 \dd t} -\frac{\int_0^\Delta V'(Z^\epl_t) \frac1t (X^\epl_t - Z^\epl_t) \dd t}{\int_0^T V'(Z^\epl_t)^2 \dd t} \\
-%		&\quad - \frac{\int_\Delta^T V'(Z^\epl_t) J_t \dd t}{\Delta \int_0^T V'(Z^\epl_t)^2 \dd t} - \frac{\widehat R(\epl, \Delta)\int_\Delta^T V'(Z^\epl_t) \dd t}{\Delta \int_0^T V'(Z^\epl_t)^2 \dd t} \\
-%		&\eqqcolon A - I_1 - I_2 - I_3 - I_4,
-%	\end{aligned}
-%	\end{equation}
-%	in law. Let us analyse the terms $I_i$, $i = 1, \ldots, 4$ separately. Let us consider $I_1$ and multiply both the numerator and the denominator by $1/T$. Due to assumption \corr{add assumption} and Lemma \ref{lem:BoundMoments}, we have
-%	\begin{equation}
-%		\frac{A}{T}\E^{\mu^\epl}\abs{\int_0^\Delta V'(Z^\epl_t)^2 \dd t} \leq C \epl^{\gamma + \zeta},
-%	\end{equation}
-%	for a constant $C > 0$ independent of $\Delta$ and $\epl$. Hence the numerator vanishes in $L^1$ and thus in law for $\epl \to 0$. We split the denominator as
-%	\begin{equation}
-%		\frac1T \int_0^T V'(Z^\epl_t)^2 \dd t = \frac1T\int_0^T V'(X^\epl_t)^2 \dd t + \frac1T\int_0^T \left(V'(Z^\epl_t)^2 - V'(X^\epl_t)^2 \right) \dd t 
-%	\end{equation} 
-%	For the first term, we have by the ergodic theorem
-%	\begin{equation}
-%		\lim_{T\to\infty}\frac1T \int_0^T V'(X^\epl_t)^2 \dd t = \E^{\mu^\epl} \abs{V'}^2, \quad \text{a.s.}
-%	\end{equation}
-%	For the second term, we have applying Cauchy--Schwarz's inequality and due to assumption \corr{add assumption} and Lemma \ref{lem:BoundDiffCont}
-%	\begin{equation}
-%	\begin{aligned}
-%		\frac1T \E^{\mu^\epl} \abs{\int_0^T \left(V'(Z^\epl_t)^2 - V'(X^\epl_t)^2 \right) \dd t} &\leq \frac{C}{T} \int_0^T \left(\E^{\mu^\epl} \abs{V'(Z^\epl_t) - V'(X^\epl_t)}^2\right)^{1/2}\dd t\\
-%		&\leq C \left(\Delta + \Delta^{1/2} + \epl\right),
-%	\end{aligned}
-%	\end{equation}
-%	which implies that the denominator tends to a finite value in probability for $\epl \to 0$. Therefore, by Slutsky's theorem,
-%	\begin{equation}
-%		\lim_{\epl \to 0} I_1 = 0, \quad \text{in law}.
-%	\end{equation}
-%	Let us now consider $I_2$ and multiply numerator and denominator by $1/T$. The denominator is the same as $I_1$, and therefore does not need to be treated further. The numerator can be bounded in $L^1$ as
-%	\begin{equation}
-%	\frac1T \E^{\mu^\epl}\abs{\int_0^\Delta V'(Z^\epl_t) \frac1t (X^\epl_t - Z^\epl_t) \dd t} \leq \frac{C}{\Delta T} \int_0^\Delta \frac{\Delta}{t}\E^{\mu^\epl}\abs{X^\epl_t - Z^\epl_t} \dd t,
-%	\end{equation}
-%	which, since $Z_0^\epl = X_0^\epl$, vanishes for $\epl \to 0$. Hence, an application of Slutsky's theorem yields
-%	\begin{equation}
-%		\lim_{\epl \to 0} I_2 = 0, \quad \text{in law}.
-%	\end{equation}
-%	We consider now $I_3$, which can be rewritten as
-%	\begin{equation}
-%	\begin{aligned}
-%		I_3 &= \frac{1}{\sqrt{T\Delta}}\frac{\frac{1}{\sqrt{T\Delta}}\int_\Delta^T V'(Z^\epl_t) J_t \dd t}{\frac1T\int_0^T V'(Z^\epl_t)^2 \dd t} \\
-%		&= \epl^{(\gamma - \zeta)/2}\frac{\frac{1}{\sqrt{T\Delta}}\int_\Delta^T V'(Z^\epl_t) J_t \dd t}{\frac1T\int_0^T V'(Z^\epl_t)^2 \dd t}
-%	\end{aligned}
-%	\end{equation}
-%	Let us remark that $J_t$ is a martingale and that by Itô isometry
-%	\begin{equation}
-%		\E^{\mu^\epl}|J_\Delta|^2 = 2\Sigma\Delta,
-%	\end{equation}
-%	Therefore, we can apply the central limit theorem for martingales to the numerator and obtain the equality in law
-%	\begin{equation}	
-%	\begin{aligned}
-%		\lim_{T\to\infty}\frac{1}{\sqrt{T\Delta}}\int_\Delta^T V'(Z^\epl_t) J_t \dd t &= \frac{1}{\sqrt{\Delta}} \mathcal N\left(0,\E^{\mu^\epl}\left(\abs{V'(X^\epl_0)}^2\abs{J_\Delta}^2\right)\right) \\
-%		&= C \mathcal N(0, 1).
-%	\end{aligned}
-%	\end{equation}
-%	The denominator is the same as in $I_2$ and $I_3$ and tends in probability to a finite value. Hence, since by hypothesis $\gamma > \zeta$, we have
-%	\begin{equation}
-%		\lim_{\epl \to 0} I_3 = 0, \quad \text{in law}.
-%	\end{equation}
-%	For the last term $I_4$, we have
-%	\begin{equation}
-%		I_4 = \frac{\epl^{\gamma - \zeta}\widehat R(\epl, \Delta)\int_\Delta^T V'(Z^\epl_t) \dd t}{\frac1T\int_0^T V'(Z^\epl_t)^2 \dd t}.
-%	\end{equation}
-%	For the numerator, we have by the Cauchy--Schwarz inequality and due to Lemma \ref{lem:ContFirstBound}
-%	\begin{equation}
-%	\begin{aligned}
-%		\epl^{\gamma-\zeta}\E^{\mu^\epl}\abs{\widehat R(\epl, \Delta)\int_\Delta^T V'(Z^\epl_t) \dd t} &\leq 
-%		\epl^{\gamma - \zeta} \left(\E^{\mu^\epl}\abs{\widehat R(\epl, \Delta)}^2\right)^{1/2}\left(\E^{\mu^\epl}\abs{\int_\Delta^T V'(Z^\epl_t) \dd t}^2\right)^{1/2}\\
-%		&\leq C\epl^{\gamma - \zeta}(\epl + \epl^{3\zeta/2}) \epl^{-\gamma}\\
-%		&\leq C\left(\epl^{1-\zeta} + \epl^{\zeta/2}\right)
-%	\end{aligned}
-%	\end{equation}
-%	which implies that, since the denominator is the same as before,
-%	\begin{equation}
-%		\lim_{\epl \to 0} I_4 = 0, \quad \text{in law}.
-%	\end{equation}
-%	The decomposition \eqref{eq:EstDecomp}, together with the limits of $I_i$ for $i = 1, \ldots, 4$, prove the desired result.
-%\end{proof}
+%\subsection{Real(istic) data?}
 
+\begin{appendices}
 
-\section{Numerical experiments}
+\section{Proofs}
 
-\subsection{Ornstein--Uhlenbeck process}
-
-\subsection{Bistable potential}
-
-\subsection{Real(istic) data?}
-
-\section*{Appendix}
-
-\subsection*{Proof of Lemma \ref{lem:diffusionLemma}}
+\subsection*{Proof of lemma \ref{lem:diffusionLemma}}
 
 We have
 \begin{equation}
@@ -1114,7 +1042,7 @@ where $C_\beta = \beta \Gamma(1/\beta)^{-1}$, we have the explicit formula
 \end{equation}
 Moreover, considering $\bar k \defeq k^\epl(t, t) = \beta \Gamma(1/\beta)^{-1}\delta^{-1/\beta}$, we have
 \begin{equation}
-\E I(t)^2 = 2 \Sigma \bar k  \left( C_1 - C_2 e^{-t^\beta/\delta} + C_3 \delta^{-1/\beta} e^{-2t^\beta/\delta}\right),
+\E I(t)^2 = 2 \Sigma \bar k  \left( C_1 - C_2 e^{-t^\beta/\delta} + C_3 \delta^{-1/\beta} t e^{-2t^\beta/\delta}\right),
 \end{equation}
 where 
 \begin{equation}\label{eq:LemmaDiffusionConstants}
@@ -1143,9 +1071,13 @@ We bound $R_1$ and $R_2$ separately. First, due to the Cauchy--Schwarz inequalit
 \begin{equation}
 \E \abs{R_1}^2 \leq 2\Sigma h^2 \int_{\bar t}^{\bar t+h} \int_{\bar{t}}^t (\partial_t k^\epl(t, s))^2  (t-s) \dd s \dd t.
 \end{equation}
-Now, since \corr{$-\partial_t k^\epl(t, s) \leq -\partial_t k^\epl(t, t)$ This is wrong for $\beta > 1$!!!!} for all $0 \leq s \leq t$ and in view of Remark \ref{rem:kernDeriv}, we can write
+Let us remark that
 \begin{equation}
-\E \abs{R_1}^2 \leq -2\Sigma h^2\partial_t k^\epl(t, t) \int_{\bar{t}}^{\bar t + h}\int_{\bar t}^t -\partial_t k^\epl(t, s)(t-s) \dd s \dd t.
+	\max_{0\leq s \leq t} \left( -\partial_t k^\epl(t,s) \right) \leq	C_\beta \frac1{\delta^{1/\beta}} \left(\frac{\beta - 1}{\beta}\right)^{(\beta - 1)/\beta} e^{-(\beta-1)/\beta} \eqdef \frac{\widehat C_\beta}{\delta^{1/\beta}},
+\end{equation}
+so that
+\begin{equation}
+\E \abs{R_1}^2 \leq - \frac{2\Sigma  \widehat C_\beta h^2}{\delta^{1/\beta}} \int_{\bar{t}}^{\bar t + h}\int_{\bar t}^t -\partial_t k^\epl(t, s)(t-s) \dd s \dd t.
 \end{equation}
 For the inner integral, exploiting Assumption \ref{as:kern}.\ref{as:kernDivFree}, we have
 \begin{equation}
@@ -1155,38 +1087,38 @@ For the inner integral, exploiting Assumption \ref{as:kern}.\ref{as:kernDivFree}
 &\leq (t - \bar t) \left(k^\epl(t, t) - k^\epl(t, \bar t)\right).
 \end{aligned}
 \end{equation}
-Hence, replacing the definition of $k^\epl(t, s)$ and noticing that $k^\epl(t, \bar t) \geq k^\epl(\bar t, \bar t+h)$ for all $t \in [\bar t, \bar t + h]$, we obtain
+Hence, replacing the definition of $k^\epl(t, s)$ and noticing that $k^\epl(t, \bar t) \geq k^\epl(\bar t+h, \bar t)$ for all $t \in [\bar t, \bar t + h]$, we obtain
 \begin{equation}
 \begin{aligned}
-\E \abs{R_1}^2 &\leq \frac{2\Sigma h^2 C_\beta}{\delta^{(\beta+1)/\beta}}\int_{\bar t}^{\bar t + h}(t - \bar t) \left(k^\epl(t, t) - k^\epl(t, \bar t)\right) \dd t\\
-&\leq \frac{\Sigma h^4 C_\beta^2}{\delta^{(\beta+2)/\beta}}\left(1 - e^{-h^\beta / \delta}\right) \leq \frac{\Sigma C_\beta^2}{\delta^{2(\beta+1)/\beta}} h^5,
+\E \abs{R_1}^2 &\leq \frac{2\Sigma \widehat C_\beta h^2}{\delta^{1/\beta}}\int_{\bar t}^{\bar t + h}(t - \bar t) \left(k^\epl(t, t) - k^\epl(t, \bar t)\right) \dd t\\
+&\leq \frac{\Sigma C_\beta \widehat C_\beta h^4 }{\delta^{2/\beta}}\left(1 - e^{-h^\beta / \delta}\right) \leq \frac{\Sigma C_\beta \widehat C_\beta h^5}{\delta^{(\beta+2)/\beta}} ,
 \end{aligned}
 \end{equation}
 where we exploited the inequality $1-e^{-x} \leq x$. We now proceed bounding $R_2$. The Cauchy--Schwarz inequality implies
 \begin{equation}
 \begin{aligned}
-\E\abs{R_2}^2 &\leq 2 \Sigma ht \int_{\bar t}^{\bar t + h}\int_0^t 
+\E\abs{R_2}^2 &\leq 2 \Sigma h(\bar t + h)  \int_{\bar t}^{\bar t + h}\int_0^t 
 \begin{aligned}[t]
 &\left(\partial_t k^\epl(t, s)^2 (t-s)  + \partial_t k^\epl(\bar t, s)^2 (\bar t-s)\right.\\
 &\left. -2 \partial_t k^\epl(t, s) \partial_t k^\epl(\bar t, s)(\bar t - s)\right) \dd s \dd t
 \end{aligned}
 \\
-&= 2 \Sigma ht \int_{\bar t}^{\bar t + h}\int_0^t 
+&= 2 \Sigma h(\bar t + h) \int_{\bar t}^{\bar t + h}\int_0^t 
 \begin{aligned}[t]
 &\left(\partial_t k^\epl(t, s)\left(\partial_t k^\epl(t, s)(t-s) -\partial_t k^\epl(\bar t, s)(\bar t - s)\right)\right.\\
 &+ \left.  \partial_t k^\epl(\bar t, s)\left(\partial_t k^\epl(\bar t, s)- \partial_t k^\epl(t, s) \right)(\bar t - s) \right) \dd s \dd t.
 \end{aligned}
 \\
-&\leq \frac{2 \Sigma ht C_\beta}{\delta^{(\beta + 1)/\beta}} 
+&\leq \frac{2 \Sigma h(\bar t + h)  \hat C_\beta}{\delta^{1/\beta}} 
 \begin{aligned}[t]
 &\left( \int_{\bar t}^{\bar t + h}\int_0^t \left(\partial_t k^\epl(\bar t, s)(\bar t - s) - \partial_t k^\epl(t, s)(t-s) \right) \dd s \dd t \right. \\
-+ & \left. \int_{\bar t}^{\bar t + h}\int_0^t \left. \left(\partial_t k^\epl(t, s) - \partial_t k^\epl(\bar t, s)\right)(\bar t - s) \right) \dd s \dd t \right) 
++ & \left. \int_{\bar t}^{\bar t + h}\int_0^t \left. \left(\partial_t k^\epl(\bar t, s) - \partial_t k^\epl(t, s)\right)(\bar t - s) \right) \dd s \dd t \right) 
 \end{aligned}
 \\
-&\eqdef \frac{2 \Sigma ht C_\beta}{\delta^{(\beta + 1)/\beta}}\left(R_{2,1} + R_{2,2}\right),
+&\eqdef \frac{2 \Sigma h(\bar t + h)  \widehat C_\beta}{\delta^{1/\beta}}\left(R_{2,1} + R_{2,2}\right),
 \end{aligned}
 \end{equation}
-where we employed the fact that $-\partial_t k^\epl(t, t) \geq -\partial_t k^\epl(t, s)$ for all $t,s \geq 0$, and that $\partial_t k(t,t)$ is constant. Due to Assumption \ref{as:kern} and to an integration by parts we can now compute
+where we employed the fact that $-\partial_t k^\epl(t,s) \leq -\widehat C_\beta \delta^{-1/\beta}$ for all $0 \leq s \leq t$ and for all $t \geq 0$. Due to Assumption \ref{as:kern} and to an integration by parts we can now compute
 \begin{equation}
 \begin{aligned}
 	R_{2,1} &= \int_{\bar t}^{\bar t + h}\int_0^t \left(\partial_t k^\epl(\bar t, s)(\bar t - s) - \partial_t k^\epl(t, s)(t-s) \right) \dd s \dd t \\
@@ -1216,31 +1148,59 @@ We can now bound the integrand of the expression above. First, since $t \geq \ba
 	&\leq  C_\beta \frac{e^{-\bar t^\beta / \delta} h}{\delta^{1/\beta}}.
 \end{aligned}
 \end{equation}
-where we identified $C_\beta=\beta \Gamma(1/\beta)^{-1}$. Second, since $t \geq \bar t$,
+where we identified $C_\beta=\beta \Gamma(1/\beta)^{-1}$. Second, we have
 \begin{equation}
 \begin{aligned}
 	k^\epl(\bar t, 0) \bar t - k^\epl(t, 0) t &= \frac{C_\beta}{\delta^{1/\beta}} \left(e^{-\bar t^\beta/\delta} \bar t - e^{-t^\beta / \delta} t\right) \\
-	&\leq C_\beta \frac{e^{-t^\beta / \delta} h}{\delta^{1/\beta}}.
+	&\leq C_\beta\frac{e^{-\bar t^\beta / \delta}\bar t}{\delta^{1/\beta}}
 \end{aligned}
 \end{equation}
 Finally, we combine the two inequalities above to get
-\begin{equation}
-	R_{2,1} \leq 2 C_\beta \frac{\left(e^{-\bar t^\beta / \delta} + e^{-t^\beta / \delta}\right) h^2}{\delta^{1/\beta}}.
+\begin{equation}\label{eq:AppendixLemma_BoundR21}
+	R_{2,1} \leq 2 C_\beta \frac{e^{-\bar t^\beta / \delta} (\bar t + h)h}{\delta^{1/\beta}}.
 \end{equation}
 We now consider $R_{2,2}$. We have
 \begin{equation}
 \begin{aligned}
-	R_{2,2} &= \int_{\bar t}^{\bar t + h}\int_0^t \left(\partial_t k^\epl(t, s) - \partial_t k^\epl(\bar t, s)\right)(\bar t - s)  \dd s \dd t \\
-	&= \int_{\bar t}^{\bar t + h}\int_0^t \left(\partial_t k^\epl(t, s)(t-s) + \partial_t k^\epl(t, s)(\bar t - t) - \partial_t k^\epl(\bar t, s)(\bar t - s)\right)\dd s \dd t \\
+	R_{2,2} &= \int_{\bar t}^{\bar t + h}\int_0^t \left(\partial_t k^\epl(\bar t, s) - \partial_t k^\epl(t, s)\right)(\bar t - s)  \dd s \dd t \\
+	&= \int_{\bar t}^{\bar t + h}\int_0^t \left(\partial_t k^\epl(\bar t, s)(\bar t - s) - \partial_t k^\epl(t, s)(t-s) - \partial_t k^\epl(t, s)(\bar t - t)\right)\dd s \dd t \\
 	&= \int_{\bar t}^{\bar t + h} 
 	\begin{aligned}[t]
-	&\left(\phi(t, \epl) + tk^\epl(t, 0) + \int_0^t \partial_t k^\epl(t, s)(\bar t - t) \dd s \right.\\
-	&- \left. \phi(\bar t, \epl) - \bar t k^\epl(\bar t, 0) - \int_{\bar t}^{t}\partial_t k^\epl(\bar t, s)(\bar t - s) \dd s \right) \dd t
+	&\left(\phi(\bar t, \epl) + \bar t k^\epl(\bar t, 0) + \int_{\bar t}^{t}\partial_t k^\epl(\bar t, s)(\bar t - s) \dd s \right.\\
+	&- \left. \phi(t, \epl) - t k^\epl(t, 0) - \int_0^t \partial_t k^\epl(t, s)(\bar t - t) \dd s \right) \dd t
 	\end{aligned}
 \end{aligned}
 \end{equation}
-
+Let us remark that, due to the computations done for bounding $R_{2,1}$ above, we have
+\begin{equation}
+\begin{aligned}
+	R_{2,2} \leq 2 C_\beta \frac{e^{-\bar t^\beta / \delta} (\bar t + h)h}{\delta^{1/\beta}} + \int_{\bar t}^{\bar t + h}\left(\int_{\bar t}^{t}\partial_t k^\epl(\bar t, s)(\bar t - s) \dd s -  \int_0^t \partial_t k^\epl(t, s)(\bar t - t) \dd s \right) \dd t.
+\end{aligned}
+\end{equation}
+One can show that the second term in the inequality above is negative, and therefore that
+\begin{equation}\label{eq:AppendixLemma_BoundR22}
+	R_{2,2} \leq  2 C_\beta \frac{e^{-\bar t^\beta / \delta} (\bar t + h)h}{\delta^{1/\beta}}.
+\end{equation}
+Regrouping \eqref{eq:AppendixLemma_BoundR21} and \eqref{eq:AppendixLemma_BoundR22} we get
+\begin{equation}
+	\E\abs{R_2}^2 \leq 8 \Sigma C_\beta \widehat C_\beta \frac{e^{-\bar t^\beta / \delta} (\bar t + h)^2h^2}{\delta^{2/\beta}}.
+\end{equation} 
+Finally
+\begin{equation}
+	\E\abs{I-\hat I}^2 \leq \Sigma C_\beta \widehat C_\beta \left( \frac{2h^5}{\delta^{(\beta+2)/\beta}} +  \frac{16e^{-\bar t^\beta / \delta} (\bar t + h)^2h^2}{\delta^{2/\beta}} \right),
+\end{equation}
+which proves the first bound. For the second bound, the Cauchy--Schwarz inequality implies
+\begin{equation}
+\begin{aligned}
+	\E I^2 &\leq 2\Sigma h(\bar t + h) \int_{\bar t}^{\bar t + h} \int_0^t \left(\partial_t k^\epl(t,s)\right)^2 (t - s) \dd s \dd t\\
+	&\leq \frac{2\Sigma h(\bar t + h) \widehat C_\beta}{\delta^{1/\beta}} \int_{\bar t}^{\bar t + h} (1 - \phi(t, \epl) - tk^\epl(t, 0) )\dd t\\
+	&\leq \frac{2\Sigma h^2(\bar t + h) \widehat C_\beta}{\delta^{1/\beta}},
+\end{aligned}
+\end{equation}
+which proves the desired result.
 \qed
+
+\end{appendices}
 
 
 \bibliographystyle{siam}

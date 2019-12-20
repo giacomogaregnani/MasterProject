@@ -53,3 +53,10 @@ add_executable(driftBayesian driftBayesian.cpp
         generateObservations.hpp generateObservations.cpp
         computeHomogeneous.hpp computeHomogeneous.cpp)
 target_link_libraries(driftBayesian SDESolver MCMC)
+
+add_executable(filterTest FilterTest.cpp
+        Filter.hpp Filter.cpp
+        computeEstimators.hpp computeEstimators.cpp
+        computeHomogeneous.hpp computeHomogeneous.cpp
+        generateObservations.hpp generateObservations.cpp)
+target_link_libraries(filterTest SDESolver)
