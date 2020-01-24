@@ -1,58 +1,52 @@
-% clc; clear; close all
+clc; clear; close all
 
+%% CAREFUL ABOUT ALPHA
 %%
-results = dlmread('GaussianTest2.txt');
+results = dlmread('GaussianTest_OU_E.txt');
 n = length(results);
-
 x = results(1:n/2);
 z = results(n/2+1:end);
-
-x1 = -3:.02:3;
-x2 = -3:.02:3;
-[X1,X2] = meshgrid(x1,x2);
-
-F = mvksdensity([x, z], [X1(:), X2(:)], 'bandwidth', std([x, z])*(4/3/numel([x, z]))^(1/5));
-F = reshape(F, length(x1), length(x1));
+clear results
 
 % figure
-scatter(x, z, 10, '.')
+% scatter(x, z, 10, '.')
 
-% mu = [mean(x) mean(z)];
-% sigma = cov(x, z);
-
-alpha = 1; sigma = 0.5; delta = 0.1;
-muTh = [0, 0];
-C = 1 / (1 + alpha*delta);
-SigmaTh = sigma/alpha * [1, C; C, 1 / (1 - alpha^2*delta^2)];
-
-X = [X1(:) X2(:)];
-Y = mvnpdf(X, muTh,SigmaTh);
-Y = reshape(Y, length(x2),length(x1));
-
-hold on
-% contour(x1, x2, Y, 20, 'b')
-xlabel('x')
-ylabel('z')
-contour(x1, x2, F, 10)
+p = @(x) sin(x);
+v = @(x) x.^2 / 2;
+% p = @(x) cos(x);
+% v = @(x) x.^4 / 4;
+% v = @(x) x.^4 / 4 - x.^2 / 2;
+alpha = 2; sigma = 0.5; delta = 0.05; eps = 0.1;
 
 figure
-[f,xi] = ksdensity(x, 'bandwidth', 0.0002);
+[f, xi] = ksdensity(x, 'NumPoints', 2000, 'bandwidth', 0.01);
 plot(xi, f)
 hold on
-[f,xi] = ksdensity(z, 'bandwidth', 0.0002);
+[f,xi] = ksdensity(z, 'NumPoints', 2000, 'bandwidth', 0.01);
 plot(xi, f)
+
+xwide = linspace(-5, 5, 10000);
+
+vEps = @(x) alpha / sigma * v(x) + 1 / sigma * p(x/eps);
+theorypdf = @(x) exp(-vEps(x));
+inttheorypdf = trapz(xwide, theorypdf(xwide));
+theorypdfnorm = @(x) theorypdf(x) / inttheorypdf;
+
+vEpsZ = @(z) alpha / sigma * v(z) + eps / sigma * p(z / eps);
+theorypdflimit = @(z) exp(-vEpsZ(z));
+inttheorypdflimit = trapz(xwide, theorypdflimit(xwide));
+theorypdflimitnorm = @(z) theorypdflimit(z) / inttheorypdflimit;
+
+plot(xi, theorypdfnorm(xi))
+plot(xi, theorypdflimitnorm(xi))
+% legend('result', 'theory')
+legend('true', 'filter', 'theory', 'theory filter')
+
+% theoryJoint = @(x, z) theorypdfnorm(x) .* theorypdflimitnorm(z).* exp(-1/sigma*(alpha*x-z).^2);
+% [XX, ZZ] = meshgrid(xi,xi);
+% theoryJointEval = theoryJoint(XX, ZZ);
 % 
-% p = @(x) sin(x);
-% v = @(x) x.^2 / 2;
-% alpha = 1;
-% sigma = 0.5;
-% eps = 0.1;
-% 
-% xwide = linspace(-10, 10, 10000);
-% 
-% theorypdf = @(x) exp(-alpha / sigma * v(x) - 1 / sigma * p(x/eps));
-% theorypdfnorm = @(x) theorypdf(x) / trapz(xwide, theorypdf(xwide));
-% 
-% plot(xi, theorypdfnorm(xi))
-% 
-% legend('true', 'filter', 'theory')
+% figure
+% contour(XX, ZZ, theoryJointEval, 20)
+% hold on
+% scatter(x, z, 10, '.')

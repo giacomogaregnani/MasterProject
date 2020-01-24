@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
 
     // ODE
     odeDef ODE;
-    ODE.ode = KEPLER;
+    ODE.ode = PENDULUM;
     setProblem(&ODE);
 
     // Numerical method
@@ -83,23 +83,23 @@ int main(int argc, char* argv[])
 
     std::vector<VectorXd> solution(M, ODE.initialCond);
     VectorXd detSolution = ODE.initialCond;
-    double (*hamiltonian) (VectorXd&, double) = &hamKepler;
+    double (*hamiltonian) (VectorXd&, double) = &hamPendulum;
 
     if (RTS) {
         if (allTrajectory) {
             for (unsigned int i = 0; i < N; i++) {
-                if (i % 200 == 0) {
+                if (i % 5 == 0) {
                     output << std::fixed << std::setprecision(20) << h * i << "\t" << hamiltonian(detSolution, h) << "\t";
                 }
                 detSolution = detMethod.oneStep(h, detSolution, ODE.refParam);
 
                 for (int j = 0; j < M; j++) {
-                    if (i % 200 == 0) {
+                    if (i % 5 == 0) {
                         output << std::fixed << std::setprecision(20) << hamiltonian(solution[j], h) << "\t";
                     }
                     solution[j] = Method.oneStep(solution[j], ODE.refParam);
                 }
-                if (i % 200 == 0) {
+                if (i % 5 == 0) {
                     output << std::endl;
                 }
             }

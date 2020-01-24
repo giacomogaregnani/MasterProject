@@ -104,7 +104,7 @@ set(gca, 'YTickLabel', a, 'fontsize', fontsizeTICK)
 xlabel('$t_n$', 'interpreter', 'laTeX', 'fontsize', fontsizeLAB)
 ylabel('$E|Q(Y_n) - Q(y_0)|$', 'interpreter', 'laTeX', 'fontsize', fontsizeLAB)
 
-print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION15/HamiltonianError2.eps
+% print -depsc2 ../../../Reports/PaperRTSRK_18/VERSION15/HamiltonianError2.eps
 
 
 

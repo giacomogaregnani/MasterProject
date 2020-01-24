@@ -2,16 +2,6 @@ import numpy as np
 import scipy.stats as stats
 from scipy.signal import convolve
 from scipy.special import gamma
-import matplotlib.pyplot as plt
-
-
-def moving_average(a, n):
-    ret = np.zeros(np.size(a))
-    for i in range(0, n):
-        ret[i] = ret[i-1] + (a[i] - a[0]) / n
-    for i in range(n, np.size(ret)):
-        ret[i] = ret[i-1] + (a[i] - a[i-n]) / float(n)
-    return ret
 
 
 def filter_trajectory(a, delta, T, beta=1, type=0):
@@ -56,32 +46,6 @@ class ParEst:
         self.x_diff = np.diff(x)
         self.n = np.size(x)
 
-    def phi_prime(self, y):
-        return self.period / self.zHat * np.exp(self.p(y) / self.sigma) - 1.0
-
-    def phi(self, y):
-        n_grid = 10
-        grid = np.linspace(0.0, y, n_grid+1)
-        dx_integral = y / n_grid
-        func = np.exp(self.p(grid) / self.sigma)
-        return self.period / self.zHat * np.trapz(func, dx=dx_integral) - y
-
-    @staticmethod
-    def dsk(delta, t, s, beta):
-        c_beta = beta / gamma(1.0/beta)
-        # if t-s > delta:
-        #     return 0
-        # return beta * c_beta * (t - s)**(beta - 1) * delta**(-1.0 * (beta + 1))
-        return c_beta / (delta ** (beta+1)) * beta * ((t-s) ** (beta-1)) * np.exp(-1.0 * ((t-s) / delta) ** beta)
-
-    @staticmethod
-    def ker(delta, t, s, beta):
-        c_beta = beta / gamma(1.0/beta)
-        # if t-s > delta:
-        #     return 0
-        # return c_beta/delta - c_beta/(delta**(beta-1)) * (t-s)**beta
-        return c_beta / delta * np.exp(-1.0 * ((t - s) / delta) ** beta)
-
     def formula_verification(self, data=None, grad_p=None, eps=0, dw=None, sigma=0):
         grad_v_eval = self.grad_v(self.x[0:-1])
         num = self.h/eps * np.sum(np.multiply(grad_p(data[0:-1]/eps), grad_v_eval))
@@ -89,17 +53,14 @@ class ParEst:
         num2 = -np.sqrt(2.0*sigma) * np.sum(np.multiply(grad_v_eval, dw))
         return num/den, num2/den
 
-    def drift(self, strat=False, Sigma=1, lapl=None):
+    def drift(self):
         grad_v_eval = self.grad_v(self.x[0:-1])
         num_summand = np.multiply(self.x_diff, grad_v_eval)
         num = np.sum(num_summand)
-        if strat:
-            correction = Sigma * self.h * np.sum(lapl(self.x[0:-1]))
-            num -= correction
         den = np.sum(np.square(grad_v_eval))
         return -1.0 * num / (self.h * den)
 
-    def drift_other_data(self, data=None):
+    def drift_mixed(self, data=None):
         grad_v_eval = self.grad_v(self.x[0:-1])
         num_summand = np.multiply(np.diff(data), grad_v_eval)
         num = np.sum(num_summand)

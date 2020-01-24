@@ -1,7 +1,0 @@
-S_filt = np.zeros(nExp)
-S_sub = np.zeros(nExp)
-S_interp = np.zeros(nExp)
-S_bayes = np.zeros(nExp)
-S_full = np.zeros(nExp)
-S_mov = np.zeros(nExp)
-var_bayes = np.zeros(nExp)

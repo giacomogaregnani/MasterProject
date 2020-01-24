@@ -18,6 +18,9 @@ target_link_libraries(WeakConv RandomStep)
 add_executable(MSE MSE.cpp)
 target_link_libraries(MSE RandomStep)
 
+add_executable(MSE_M MSE_M.cpp)
+target_link_libraries(MSE_M RandomStep)
+
 add_executable(Adaptivity Adaptivity.cpp)
 target_link_libraries(Adaptivity RandomStep)
 
