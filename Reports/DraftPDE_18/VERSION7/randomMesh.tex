@@ -5,8 +5,7 @@
 \begin{document}
 \maketitle	
 
-\begin{abstract} 
-\end{abstract}
+\textbf{Abstract.}
 
 \textbf{AMS subject classification.}
 
@@ -14,7 +13,7 @@
 
 \section{Introduction}
 
-\todo \cite{AbG18, KeH16, KSH18, CCC16, CGS17}
+\todo \cite{AbG20, KeH16, KSH18, CCC16, CGS17}
 
 \begin{equation}\label{eq:ellipticEquation}
 \begin{aligned}
@@ -28,12 +27,12 @@
 \section{Random mesh probabilistic Finite Elements} 
 
 Weak formulation: bilinear form $a\colon V\times V \to \R$ and a linear functional $F\colon V \to \R$ satisfying the usual continuity and coercivity constraints, look for $u \in V$ satisfying
-\begin{equation}
+\begin{equation}\label{eq:EXSol}
 	a(u, v) = F(v),	
 \end{equation}
 for all functions $v \in V$. Galerkin formulation: for $V_h \subset V$ such that $\dim V_h < \infty$, find $u_h \in V_h$ such that
-\begin{equation}
-	a(u_h, v_h) = f(v_h), \quad \forall v_h \in V_h,\\
+\begin{equation}\label{eq:FEMSol}
+	a(u_h, v_h) = f(v_h), \quad \forall v_h \in V_h,
 \end{equation}
 for all $v_h \in V_h$. Given a triangulation $\mathcal T_h$ of the domain $D$, we choose $V_h$ to be the space of linear finite elements, i.e., $V_h = X_h^1 \cap V$, where 
 \begin{equation}
@@ -55,9 +54,9 @@ and where $\mathcal P_1$ is the space of polynomials of degree at most one. The 
 Once the perturbed mesh $\btilde {\mathcal T}_h$ is obtained, let us denote by $\btilde V_h$ the piecewise linear finite element space defined on $\btilde {\mathcal T}_h$. Let us remark that the space $\btilde V_h = \btilde V_h(\omega)$ is random itself, i.e., for each realisation of the random variables $\{\alpha_i\}_{i=1}^{N_I}$ we obtain a different perturbed finite element space.
 
 
-\begin{definition} \label{def:ProbSolution} With the notation above, the probabilistic solution $\tilde u_h \colon \Omega \times D \to \R$ is a random field satisfying for all $\omega \in \Omega$
+\begin{definition} \label{def:ProbSolution} With the notation above, the probabilistic solution $\btilde u_h \colon \Omega \times D \to \R$ is a random field satisfying for all $\omega \in \Omega$
 	\begin{equation}
-		\tilde u_h(\omega, \cdot) \in \btilde V_h(\omega), \; \text{s.t. } a(\tilde u_h(\omega, \cdot), \tilde v_h) = F(\tilde v_h), \; \text{for all } \tilde v_h \in \btilde V_h(\omega). 
+		\btilde u_h(\omega, \cdot) \in \btilde V_h(\omega), \; \text{s.t. } a(\btilde u_h(\omega, \cdot), \btilde v_h) = F(\btilde v_h), \; \text{for all } \btilde v_h \in \btilde V_h(\omega). 
 	\end{equation}
 \end{definition}
 
@@ -65,430 +64,482 @@ Let us finally introduce the following assumption on the random variables defini
 \begin{assumption} \label{as:MeshPerturbation}  The random variables $\alpha_i$ are chosen such that the perturbed mesh $\btilde {\mathcal T}_h$ has the same topology of the mesh $\mathcal T_h$ (e.g., no exchange of vertices in one-dimension and no crossing edges in two-dimensions) almost surely.  
 \end{assumption}
 
+A choice of which satisfies the assumption above is given by random variables $\alpha_i$ such that
+\begin{equation}
+	\abs{\alpha_i} \leq \bar \rho_i^{1-p},
+\end{equation}
+almost surely, where 
+
+\subsection{Notation}
+
+We now introduce some basic notation which will be employed throughout this paper. Most of the notation is classic, but we report it here for completeness. The symbol $D \subset \R^2$ is employed for a bounded domain with smooth boundary, or for a convex polygon. The following symbols are employed for function spaces
+\begin{itemize}
+	\item $L^p(D) = \left\{v\colon D \to \R, \int_D v^p \dd x< \infty \right\}$,
+	\item $W^{q, p}(D) = \left\{v \in L^p(D), \sum_{\abs{\alpha}\leq q} \abs{D^{\alpha} v} \in L^p(D) \right\}$,
+	\item $H^q(D) \equiv W^{q,2}(D)$,
+	\item $H^q_0(D) = \left\{v \in H^q(D), v\eval{\partial D} = 0\right\}$,
+	\item $C^l_0(D) = \left\{v \in \mathcal C^l(D), v\eval{\partial D} = 0\right\}$.
+\end{itemize}
+For a function $v \in \mathcal X$ where $\mathcal X$ is any of the spaces above, we denote by $\norm{v}_{\mathcal X}$ and $\abs{v}_{\mathcal X}$ the usual norms and seminorms. Furthermore, for $L^p$ and $W^{q,p}$, the usual meaning is given for $p = \infty$. For a vector $x \in \R^2$ we denote simply by $\abs{x}$ its Euclidean norm. Moreover, we will employ the following symbols
+\begin{itemize}
+	\item $\mathcal T_h$ is a triangulation of $D$ satisfying \corr{assumption}, and $V_h$ is the space of linear finite elements with zero boundary conditions defined on $\mathcal T_h$,
+	\item $\btilde{\mathcal T}_h$ is a perturbation of $\mathcal T_h$ as for \cref{def:RandomMesh} such that \cref{as:MeshPerturbation} holds, and $\btilde V_h$ is the space of linear finite elements with zero boundary conditions defined on $\btilde{\mathcal T}_h$.
+\end{itemize}
+Finally, if a function $v \colon D \to \R$ or $v \colon D \to \R^2$ is constant over a set $K \subset D$, we denote by $v\eval{K}$ its constant value.
+
+
 \section{A priori error analysis}
 
-Close finite element spaces, sum space \cite{GaL15, BaK93}. \corr{Introduce the main ideas.}
+In this section, we analyse the convergence a priori of our method. In particular, we wish the family of probabilistic solutions to be close to the solution obtained with the original mesh, i.e., we will prove that 
+\begin{equation}\label{eq:DefProbConv}
+	\norm{u_h - \btilde u_h}_{\mathcal X} \leq C\eta(h), \quad \text{a.s.},
+\end{equation}
+where $\eta \colon \R \to \R$ is such that $\eta(h) \to 0$ for $h \to 0$ and where $\mathcal X = \{H^1(D), L^\infty(D)\}$. Similarly to standard error analysis, we first introduce an interpolation result and then prove convergence in the above sense.
 
-\begin{definition} Given two possibly disjoint linear finite element spaces $V_h$ and $\btilde V_h$, we denote by $V_h^+ = V_h + \btilde V_h$  the space of functions that can be written as the sum of a function in $V_h$ and a function in $\btilde V_h$, i.e., for any function $v_h^+ \in V_h^+$ there exists functions $v_h \in V_h$ and $\tilde v_h \in \btilde V_h$ such that $v_h^+ = v_h + \tilde v_h$. 
+\subsection{Interpolation analysis}
+
+In this section we consider the Legendre piecewise linear interpolants and their properties when they are employed to pass from the space $V_h$ to the space $\widetilde V_h$. Let us first recall the definition of the Legendre interpolant.
+
+\begin{definition}\label{def:Legendre} Let $V = \mathcal C^0_0(D)$. We denote by $\Pi_h\colon V \to V_h$ and $\btilde \Pi_h\colon V \to \btilde V_h$ the Legendre piecewise linear interpolation operators on $V_h$ and $\btilde V_h$ respectively, i.e., for $v \in V$
+	\begin{equation}
+	\Pi_h v(x) = \fsum{x_j \in \mathcal N_h^I} v(x_j) \phi_j(x), \quad	\btilde \Pi_h v(x) = \fsum{\tilde x_j \in \btilde {\mathcal N}_h^I} v(x_j) \tilde \phi_j(x),
+	\end{equation}
+	where $\{\phi_i\}_{i=1}^{N^I}$ and $\{\tilde \phi_i\}_{i=1}^{N^I}$ are the basis functions of $V_h$ and $\btilde V_h$ respectively.
 \end{definition}
 
-\begin{remark} Clearly from the definition, we have the inclusion $(V_h \cup \btilde V_h) \subseteq V_h^+$. Moreover, with homogeneous boundary conditions $V_h \cap \btilde V_h = \{0\}$ almost surely. Hence, $V_h^+ = V_h \oplus \btilde V_h$ and the decomposition of $v_h^+ \in V_h^+$ is unique.
-\end{remark}
+In the following lemma we characterise the value that the Legendre interpolant $\btilde \Pi_h$ assumes on the nodes of the original mesh $\mathcal T_h$. Let us remark that $V_h \subset C_0^0(D)$, thus the interpolant above can be employed on $V_h$.
 
-\begin{lemma}\label{lem:ConvergenceGeneral} The solutions $u_h \in V_h$ and $\tilde u_h \in \btilde V_h$ satisfy almost surely in $\Omega$
+\begin{lemma}\label{lem:InterpPreliminary} With the notation of \cref{def:Legendre}, it holds for all $v_h \in V_h$ and all $x_i \in \mathcal N_h^I$
 	\begin{equation}
 	\begin{aligned}
-		\norm{u_h - \tilde u_h}_V^2 \leq \Bigl(\frac{M}{\alpha}\Bigr)^2 \finf{v_h, w_h \in V_h} \biggl(\finf{\tilde v_h, \tilde w_h \in \btilde V_h} \Bigl(&\norm{u_h^+ - w_h}_V \norm{\tilde u_h - v_h}_V + \\ 
-		&\norm{u_h^+ - \tilde w_h}_V \norm{u_h - \tilde v_h}_V \Bigr)\biggr),
+		v_h(\tilde x_i) &= v_h(x_i) + \bar h_i^p \alpha_i^\top \nabla v_h(\tilde x_i), \\
+		\btilde \Pi_h v_h(x_i) - v_h(x_i) &= \bar h_i^p \alpha_i^\top \Big(\nabla v_h(\tilde x_i) - \nabla \btilde \Pi_h v_h(x_i)\Big).
 	\end{aligned}
 	\end{equation}
-	where $u_h^+ \in V_h^+$ is the solution of 
+\end{lemma}
+\begin{proof} We can now expand the function $v_h$, which is linear on the segment connecting $x_i$ and $\tilde x_i$, as
+	\begin{equation}\label{eq:TaylorVh}
+	v_h(\tilde x_i) = v_h(x_i) + \bar h_i^p \alpha_i^\top \nabla v_h(\tilde x_i),
+	\end{equation}
+	which is the first equality. Let us now denote $e_h = \btilde \Pi_h v_h - v_h$. An exact Taylor expansion of the linear basis function $\tilde \phi_j$ gives
+	\begin{equation}
+	\begin{aligned}
+	e_h(x_i) &= \sum_{j} v_h(\tilde x_j) \phi_j(x_i) - v_h(x_i) \\
+	&= \sum_j v_h(\tilde x_j) \Big(\tilde \phi_j(\tilde x_i) - \bar h_i^p \alpha_i^\top \nabla \tilde \phi_j(x_i)\Big) - v_h(x_i) \\
+	&= v_h(\tilde x_i) - v_h(x_i) - \sum_j \bar h_i^p \alpha_i^\top v_h(\tilde x_j) \nabla \tilde \phi_j(x_i).
+	\end{aligned}
+	\end{equation}
+	This, together with \eqref{eq:TaylorVh}, yields
+	\begin{equation}
+	\begin{aligned}
+	e_h(x_i) &= \bar h_i^p \alpha_i^\top \nabla v_h(\tilde x_i) - \bar h_i^p \alpha_i^\top \sum_j v_h(\tilde x_j) \nabla \tilde \phi_j(x_i) \\
+	&= \bar h_i^p \alpha_i^\top \Big(\nabla v_h(\tilde x_i) - \nabla \btilde \Pi_h v_h(x_i)\Big),
+	\end{aligned}
+	\end{equation}
+	which is the second desired equality and which therefore concludes the proof.
+\end{proof}
+
+
+We are not interested in all possible functions in $V_h$, but only in those which are close enough to a smooth function. The definition below sets the function space we consider in the following.
+
+\begin{definition}\label{def:Vh2Inf} We denote by $V_h^{2, \infty} \subset V_h$ the space such that $v_h \in V_h^{2, \infty}$ if there exists $v \in W^{2, \infty}(D)$ satisfying
+	\begin{equation}
+		\norm{v - v_h}_{W^{1, \infty}(D)} \leq C h \abs{\log h} \abs{v}_{W^{2, \infty}(D)},
+	\end{equation} 
+	where $C > 0$ is a constant independent of $h$.
+\end{definition}
+
+In the following Lemma, we provide a property of functions in $V_h^{2, \infty}$ which is quite consequent from the definition of the space. Since we repeatedly employ this result in the following, let us highlight it here.
+\begin{lemma}\label{lem:Vh2InfPropr} Let $v_h \in V_h^{2, \infty}$. Then, if two triangles $K, K' \in \mathcal T_h$ share a vertex, it holds
+	\begin{equation}
+		\abs{\nabla v_h \eval{K} - \nabla v_h \eval{K'}} \leq Ch \abs{\log h} \abs{v}_{W^{2, \infty}(D)},
+	\end{equation} 
+	for a constant $C > 0$ independent of $h$.
+\end{lemma}
+\begin{proof} The proof follows from the triangle inequality. In particular, let $x \in K$ and $x' \in K'$. Then, there exists $v \in W^{2, \infty}$ such that
+	\begin{equation}
+	\begin{aligned}
+		\abs{\nabla v_h \eval{K} - \nabla v_h \eval{K'}} &\leq \abs{\nabla v_h \eval{K} - \nabla v(x)} + \abs{\nabla v_h \eval{K'} - \nabla v (x')} + \abs{\nabla v (x) - \nabla v (x')}\\
+		&\leq 2 \abs{v_h - v}_{W^{1, \infty}(D)} + \abs{v}_{W^{2, \infty}(D)}\abs{x - x'}.
+	\end{aligned}
+	\end{equation}
+	The desired result follows from the definition of $V_h^{2, \infty}(D)$ and from the fact that since $K$ and $K'$ share a vertex, it is possible to bound $\abs{x - x'} \leq Ch$.
+\end{proof}
+
+We now proceed to bound the difference between the gradient of $v_h$ and of its interpolant $\widetilde \Pi_h v_h$ on a single element. In the proof, the notation for the reference triangle and for affine maps triangle is borrowed from \cite[Chapter 4]{Qua09}.
+
+\begin{lemma}\label{lem:Interp_BoundKKTilde} With the notation of \cref{def:RandomMesh} and \cref{def:Legendre}, let $K \in \mathcal T_h$ be an element of the original mesh and let $\widetilde K \in \mathcal T_h$ be the corresponding element in the perturbed mesh. Then, it holds for all $v_h \in V_h^{2, \infty}$
+	\begin{equation}
+		\abs{\nabla v_h\eval{K} - \nabla \btilde \Pi_h v_h \eval{\btilde K}} \leq C h^p \abs{\log h} \abs{v}_{\WW^{2, \infty}(D)},
+	\end{equation}
+	where $p$ is given in \cref{def:RandomMesh}.
+\end{lemma}
+\begin{proof} Let us denote by $x_1, x_2, x_3$ the vertices of $K$ and by $\tilde x_1, \tilde x_2, \tilde x_3$ the corresponding vertices of $\btilde K$. Let $\bhat K$ be the triangle with vertices $\hat x_1 = (0, 0)^\top$, $\hat x_2 = (1, 0)^\top$, $\hat x_3 = (0, 1)^\top$. We consider the affine maps $F_K \colon \bhat K \to K$ and $\btilde F_K \colon \bhat K \to \btilde K$ defined for all $\bhat x \in \bhat K$ as 
+\begin{equation}
+	F_K(\hat x) = B_K\hat x + b_K, \quad \btilde F_K(\hat x) = \btilde B_K\hat x + \tilde b_K,
+\end{equation}
+where $b_K = x_1$, $\tilde b_K = \tilde x_1$ and the matrices $B_K, \btilde B_K \in \R^{2\times 2}$ are defined as
+\begin{equation}
+	B_K = \begin{pmatrix} x_2 - x_1 \mid x_3 - x_1 \end{pmatrix}, \quad B_{\btilde K} = \begin{pmatrix} \tilde x_2 - \tilde x_1 \mid \tilde x_3 - \tilde x_1\end{pmatrix},
+\end{equation}
+so that $F_K(\bhat x_i) = x_i$ and $\btilde F_K(\bhat x_i) = \tilde x_i$ for $i = 1, 2, 3$. Furthermore, we define $\bhat v_h \colon \bhat K \to \R$ as $\bhat v_h \defeq v_h \circ F_K$ and $\btilde \Pi_h \bhat v_h\colon \bhat K \to \R$ as $\btilde \Pi_h \bhat v_h \defeq \btilde \Pi_h v_h \circ \btilde F_K$. Then, the chain rule yields
+\begin{equation}\label{eq:DiffMapToRef}
+	\nabla v_h\eval{K} - \nabla \btilde \Pi_h v_h \eval{\btilde K} = B_K^{-\top} \bhat \nabla \bhat v_h - B_{\btilde K}^{-\top} \bhat \nabla \btilde \Pi_h \bhat v_h,
+\end{equation}
+where $\bhat \nabla$ is the gradient with respect to $\hat x$. Let us write $\btilde B_K = B_K + \Lambda$, where $\Lambda \in \R^{2\times 2}$ is the random matrix defined as
+\begin{equation}
+	\Lambda = \begin{pmatrix} \bar h_2^p \alpha_2 - \bar h_1^p \alpha_1 \mid \bar h_3^p \alpha_3 - \bar h_1^p \alpha_1 \end{pmatrix},
+\end{equation}
+and remark that we can rewrite $B_{\btilde K}^{-\top}$  with algebraic operations as
+\begin{equation}
+	B_{\btilde K}^{-\top} = (B_K + \Lambda)^{-\top} = B_K^{-\top}(I + B_K^{-1}\Lambda)^{-\top} = B_K^{-\top}(I - \Gamma),
+\end{equation}
+where the random matrix $\Gamma\in \R^{2\times 2}$ is given by the series expansion $\Gamma = \sum_{j=0}^\infty \Gamma_j$, with
+\begin{equation}
+\Gamma_j = (-1)^j (\Lambda^\top B_K^{-\top})^{j+1}.
+\end{equation} 
+Let us remark that we can write $\Gamma_j = -\Gamma_{j-1} \Gamma_0$. Moreover, the gradient on the reference triangle of the interpolated function satisfies
+\begin{equation}
+	\bhat\nabla \btilde \Pi_h \bhat v_h = \begin{pmatrix} \btilde \Pi_h \bhat v_h(\hat x_2) - \btilde \Pi_h \bhat v_h(\hat x_1) \\
+													 \btilde \Pi_h \bhat v_h(\hat x_3) - \btilde \Pi_h \bhat v_h(\hat x_1) \end{pmatrix}
+								   = \begin{pmatrix} \btilde \Pi_h v_h(\tilde x_2) - \btilde \Pi_h v_h(\tilde x_1) \\
+								   					 \btilde \Pi_h v_h(\tilde x_3) - \btilde \Pi_h v_h(\tilde x_1) \end{pmatrix}.
+\end{equation}
+Since the interpolation is exact on the nodes of the mesh $\btilde{\mathcal T}_h$ and due to \cref{lem:InterpPreliminary}, this yields
+\begin{equation}
+	\bhat\nabla \btilde \Pi_h \bhat v_h = \begin{pmatrix} v_h(\tilde x_2) - v_h(\tilde x_1) \\
+													 v_h(\tilde x_3) - v_h(\tilde x_1) \end{pmatrix}
+								   = \begin{pmatrix} v_h(x_2) - v_h(x_1) \\
+								   					 v_h(x_3) - v_h(x_1) \end{pmatrix} + \gamma
+								   = \bhat \nabla \bhat v_h + \gamma,
+\end{equation}
+where 
+\begin{equation}
+	\gamma = \begin{pmatrix} \bar h_2^p \alpha_2^\top \nabla v_h(\tilde x_2) - \bar h_1^p \alpha_1^\top \nabla v_h(\tilde x_1) \\
+	\bar h_3^p \alpha_3^\top \nabla v_h(\tilde x_3) - \bar h_1^p \alpha_1^\top \nabla v_h(\tilde x_1) \end{pmatrix}.
+\end{equation}
+Employing the properties of the sequence of matrices $\Gamma_j$, we can now rewrite \eqref{eq:DiffMapToRef} as
+\begin{equation}\label{eq:SumExpansionGradGradTilde}
+\begin{aligned}
+	\nabla v_h\eval{K} - \nabla \btilde \Pi_h v_h \eval{\btilde K} &= B_K^{-\top}(-\gamma + \Gamma \bhat \nabla \bhat v_h + \Gamma \gamma) \\
+	&= B_K^{-\top} \Bigl(-\gamma + \Gamma_0 \bhat \nabla \bhat v_h + \sum_{j=1}^\infty (\Gamma_j \bhat \nabla \bhat v_h + \Gamma_{j-1} \gamma)\Bigr) \\
+	&= B_K^{-\top} \sum_{j=0}^\infty \Gamma_{j-1} (\gamma -\Gamma_0 \bhat \nabla \bhat v_h)\\
+	&= B_K^{-\top} (\Gamma - I) (\gamma -\Gamma_0 \bhat \nabla \bhat v_h),
+\end{aligned}
+\end{equation}
+where $\Gamma_{-1} = -I$. We can now compute explicitly the difference $\gamma - \Gamma_0 \bhat\nabla \bhat v_h$ as
+\begin{equation}
+\begin{aligned}
+	\gamma - \Gamma_0 \bhat \nabla \bhat v_h &= \gamma - \Lambda^\top B_K^{-\top} \bhat \nabla \bhat v_h = \gamma - \Lambda^\top \nabla v_h \eval{K} \\
+	&= \begin{pmatrix}  \bar h_2^p \alpha_2^\top \nabla v_h(\tilde x_2) - \bar h_1^p \alpha_1^\top \nabla v_h(\tilde x_1) \\
+						\bar h_3^p \alpha_3^\top \nabla v_h(\tilde x_3) - \bar h_1^p \alpha_1^\top \nabla v_h(\tilde x_1) \end{pmatrix}
+	- \begin{pmatrix} (\bar h_2^p \alpha_2^\top - \bar h_1^p \alpha_1^\top) \nabla v_h \eval{K} \\ (\bar h_3^p \alpha_3^\top - \bar h_1^p \alpha_1^\top) \nabla v_h \eval{K} \end{pmatrix}\\
+	&= \begin{pmatrix} \bar h_2^p \alpha_2^\top \big(\nabla v_h(\tilde x_2) - \nabla v_h \eval{K}\big) + \bar h_1^p \alpha_1^\top \big(\nabla v_h \eval{K} - \nabla v_h(\tilde x_1)\big) \\
+					   \bar h_3^p \alpha_3^\top \big(\nabla v_h(\tilde x_3) - \nabla v_h \eval{K}\big) + \bar h_1^p \alpha_1^\top \big(\nabla v_h \eval{K} - \nabla v_h(\tilde x_1)\big) \end{pmatrix}.                
+\end{aligned}
+\end{equation}	
+Due to \cref{lem:Vh2InfPropr} and to \corr{assumptions on the mesh}, we have therefore
+\begin{equation}
+	\abs{\gamma - \Gamma_0 \bhat \nabla \bhat v_h} \leq Ch^{p+1} \abs{\log h}\abs{v}_{W^{2, \infty}(D)},
+\end{equation}
+almost surely, which, replaced in \eqref{eq:SumExpansionGradGradTilde}, implies 
+\begin{equation}
+	\abs{\nabla v_h\eval{K} - \nabla \btilde \Pi_h v_h \eval{\btilde K}} \leq Ch^{p+1}\abs{\log h}\abs{v}_{\WW^{2, \infty}(D)} \abs{B_K^{-\top}} \sum_{j=0}^{\infty}\abs{\Gamma_{j-1}}.
+\end{equation}
+From the definition of $\Gamma_j$, $j = -1, 0, \ldots, \infty$, we have
+\begin{equation}
+	\sum_{j=0}^{\infty} \abs{\Gamma_{j-1}} \leq \sum_{j=0}^{\infty} \abs{\Lambda}^j \abs{B_K^{-1}}^j \leq C \sum_{j=0}^\infty h^{(p-1)j},
+\end{equation}
+and since $h < 1$ and $p \geq 1$, this is bounded independently of $h$. Finally,
+\begin{equation}
+	\abs{\nabla v_h\eval{K} - \nabla \btilde \Pi_h v_h \eval{\btilde K}} \leq C h^p \abs{\log h} \abs{v}_{\WW^{2, \infty}(D)},
+\end{equation}
+which is the desired result.
+\end{proof}
+
+We can now prove an interpolation result in $L^\infty(D)$
+\begin{lemma}\label{lem:Interp2D_Linf} With the notation of \cref{def:Vh2Inf}, let $v_h \in V_h^{2, \infty}$. Then, with the notation of \cref{def:Legendre}, it holds
+		\begin{equation}
+		\norm{v_h - \btilde \Pi_h v_h}_{L^\infty(D)} \leq Ch^{p+1} \abs{\log h},
+		\end{equation}
+		where $C > 0$ is a constant independent of $h$. 
+\end{lemma}
+\begin{figure}[t]
+	\centering
+	\begin{tikzpicture}[scale=0.8]
+	% Pattern of triangles
+	\draw[preaction={clip, postaction={pattern=north east lines, pattern color= {rgb,255:red,220; green,220; blue,220}}}] (2,2) -- (2,0) -- (0,2) -- cycle;
+	\draw (2,2) -- (2,0) -- (4,0) -- cycle;
+	\draw (2,2) -- (0,2) -- (0,4) -- cycle;
+	\draw (2,2) -- (2,4) -- (0,4) -- cycle;
+	\draw[preaction={clip, postaction={pattern=north east lines, dashed, pattern color= {rgb,255:red,220; green,220; blue,220}}}] (2,2) -- (2,4) -- (4,2) -- cycle;
+	\draw (2,2) -- (4,2) -- (4,0) -- cycle;
+	% Modified triangles
+	\draw[densely dashed] (2.1,2.1) -- (1.9, 0.2) -- (0.1, 2.1) -- cycle;
+	% Points
+	\node[anchor = north east, inner sep = 2pt] at (2, 2) (xi) {$x_i$}; 
+	\node[anchor = south west, inner sep = 0] at (2.1, 2.1) (xitilde) {$\tilde x_i$};
+	\draw[fill=black] (2,2) circle[radius=1.2pt];
+	\draw[fill=black] (2.1,2.1) circle[radius=1.2pt];
+	% Legend
+	\node at (6.5, 3.5) (leg) {Legend}; 
+	\draw[preaction={clip, postaction={pattern=north east lines, pattern color= {rgb,255:red,220; green,220; blue,220}}}] (8.5,3) -- (8.5,4) -- (9.5,3) -- cycle;
+	\node at (10,3.5) (legK) {$\vphantom{\btilde K}K$};
+	\draw[preaction={clip, postaction={pattern=north east lines, dashed, pattern color= {rgb,255:red,220; green,220; blue,220}}}] (6,1) -- (6,2) -- (7,1) -- cycle;
+	\node at (7.5,1.5) (legK2) {$\vphantom{\btilde K} K'$};
+	\draw[densely dashed] (8.5,1) -- (8.5,2) -- (9.5,1) -- cycle;
+	\node at (10,1.5) (legKtilde) {$\btilde K$};
+	\end{tikzpicture}
+	\caption{Scheme for the proof of Lemma \ref{lem:Interp2D_Linf}. The triangle with solid grey lines on the background is $K$, the triangle with dashed grey lines on the background is $K'$ and the triangle with dashed borders is $\btilde K$.}
+	\label{fig:Error2D}
+\end{figure}
+\begin{proof} Let us denote $e_h = \btilde \Pi_h v_h - v_h$ and let us consider $x_i \in \mathcal N^I$. By definition $e_h(\tilde x_i) = 0$ for all $i = 0, \ldots, N$ and due to \cref{lem:InterpPreliminary}
+	\begin{equation}\label{eq:ValueNodes}
+		e_h(x_i) = h^p \alpha_i \big(\nabla v_h(\tilde x_i) - \nabla \btilde \Pi_hv_h(x_i)\big)  \eqdef h^p \alpha_i\epl_i.
+	\end{equation}
+	Let us denote by $K$ the element of $\mathcal T_h$ such that the corresponding element $\btilde K \in \widetilde{\mathcal T}_h$ contains $x_i$. Furthermore, let us denote by $K'$ the element in the original mesh containing $\tilde x_i$. We refer to \cref{fig:Error2D} for a schematic representation of these elements. With this notation, we have 
+	\begin{equation}
+		\nabla v_h(\tilde x_i) = \nabla v_h\eval{K'}, \quad \nabla \btilde \Pi_hv_h(x_i) = \nabla \btilde \Pi_h v_h\eval{\btilde K},
+	\end{equation}
+	and we can then decompose $\epl_i$ as $\epl_i = \epl_{i,1} + \epl_{i, 2}$ with
+	\begin{equation}
+		\epl_{i, 1} = \nabla v_h\eval{K'} - \nabla v_h\eval{K}, \quad  \epl_{i, 2} = \nabla v_h\eval{K}  - \nabla \btilde \Pi_h v_h \eval{\btilde K}.
+	\end{equation}
+	Due to \cref{lem:Vh2InfPropr}, we have 
+	\begin{equation}\label{eq:boundEps1Proof2d}
+	\abs{\epl_{i, 1}} \leq C h \abs{\log h} \abs{v}_{W^{2, \infty}(D)},
+	\end{equation}
+	Moreover, due to \cref{lem:Interp_BoundKKTilde}, we have
+	\begin{equation}
+		\abs{\epl_{i, 2}} \leq C h^p \abs{\log h} \abs{v}_{W^{2, \infty}(D)}
+	\end{equation} 
+	Since $p \geq 1$, the triangular inequality yields $\epl_{i} \leq Ch \abs{\log h} \abs{v}_{\WW^{2, \infty}(D)}$ for each node. Replacing this bound in \eqref{eq:ValueNodes}, we get for each $x_i \in \mathcal N_h^I$
+	\begin{equation}
+		\abs{e_h(x_i)} \leq C h^{p+1} \alpha_i \abs{\log h} \abs{v}_{\WW^{2, \infty}(D)}.
+	\end{equation}
+	Let us now remark that since by definition $e_h(\tilde x_i) = 0$ for all modified nodes, and since $e_h$ is linear on $D$, the maximum of $e_h$ has to be realised on one of the nodes of the original mesh. Hence
+	\begin{equation}
+		\norm{e_h}_{\LL^{\infty}(D)} = \max_{x_i \in \mathcal N_h^{I}} \abs{e_h(x_i)} \leq C h^{p+1} \abs{\log h} \abs{v}_{\WW^{2, \infty}(D)},
+	\end{equation}
+	which implies the desired result.
+\end{proof}
+
+We now consider the interpolation error in $H^1(D)$.
+\begin{lemma}\label{lem:Interp2D_H1} With the notation of \cref{def:Vh2Inf}, let $v_h \in V_h^{2, \infty}$. Then, with the notation of \cref{def:Legendre}, it holds
+	\begin{equation}
+		\norm{v_h - \btilde \Pi_h v_h}_{\HH^1(D)} \leq Ch^{(p+1)/2} \abs{\log h},
+	\end{equation}
+	where $C > 0$ is a constant independent of $h$. 
+\end{lemma}
+\begin{figure}[t]
+	\centering
+	\begin{tikzpicture}[scale=1.5]
+	% fill first
+	\fill[fill={rgb,255:red,240; green,240; blue,240}] (0,2) -- (1.8, 0.4) -- (0.295,2) -- cycle;
+	\fill[fill={rgb,255:red,240; green,240; blue,240}] (0,2) -- (1.8, 0.4) -- (2,0) -- cycle;
+	\fill[fill={rgb,255:red,240; green,240; blue,240}] (2,1.3) -- (1.8, 0.4)  -- (2,0) -- cycle;
+	% Pattern of triangles
+	\draw[] (2,2) -- (2,0) -- (0,2) -- cycle;
+	% Modified triangles
+	\draw[densely dashed] (2.2,2.2) -- (1.8, 0.4) -- (0.2, 2.1) -- cycle;
+	% Mini triangles
+	\draw[densely dotted] (0,2) -- (1.8, 0.4) -- (2,0) -- cycle;
+	\draw[densely dotted] (0,2) -- (1.8, 0.4); 
+	% Legend
+	\node[anchor = west] at (4, 2) (leg) {Legend};
+	\draw[] (4, 1.5) -- (4.5, 1.5);
+	\node[anchor = west] at (4.5, 1.5) (xi) {$\partial K$}; 
+	\draw[densely dashed] (4, 1) -- (4.5, 1);
+	\node[anchor = west] at (4.5, 1) (xi) {$\partial \widetilde K$}; 
+	\fill[fill={rgb,255:red,240; green,240; blue,240}] (4, 0.55) -- (4.5, 0.55) -- (4.5, 0.45) -- (4, 0.45) -- cycle;
+	\node[anchor = west] at (4.5, 0.5) (KmK) {$K \setminus \widetilde K$};
+	\end{tikzpicture}
+	\caption{Scheme for the proof of \cref{lem:Interp2D_H1}. The triangle with solid border is $K \in \mathcal T_h$, the one with dashed border is $\widetilde K \in \widetilde T_h$. The area filled in grey is $K \setminus \widetilde K$, and the dotted lines give one of the possible subdivision in triangles of $K \setminus \widetilde K$.}
+	\label{fig:Error2D_H1}
+\end{figure}
+\begin{proof} First, let us recall that for any triangle of sides of length $a, b, c$ and of area $A$ it holds \cite{CuB67}
+	\begin{equation}\label{eq:TriangleInequality}
+		A \leq \frac{4\sqrt{3}}{9} \frac{abc}{a+b+c}.
+	\end{equation}
+	Let us now consider an element $K \in \mathcal T_h$ and the corresponding element $\widetilde K \in \widetilde{\mathcal T}_h$. It is clear (see e.g. \cref{fig:Error2D_H1}) that it is possible to subdivide $K \setminus \widetilde K$ into a bounded number of triangles for which the length one side is bounded by $Ch^p$ and the length of the two other side is bounded by $Ch$. Therefore, due to \eqref{eq:TriangleInequality} we have
+	\begin{equation}\label{eq:AreaKMinusKTilde}
+		\abs{K \setminus \widetilde K} \leq C \frac{h^{p+2}}{h + h + h^p} \leq Ch^{p+1}.
+	\end{equation}
+	Moreover, we remark that
+	\begin{equation}\label{eq:AreaKIntersKTilde}
+		\abs{K \cap \widetilde K} \leq \abs{K} \leq Ch^2.
+	\end{equation}
+	Let us now denote by $N_K$ the number of triangles in which the set $K\setminus \widetilde K$ is divided and by $K_{\mathrm{diff}}^{(i)}$, $i= 1, \ldots, N_K$ these triangles. We have
+	\begin{equation}
+		\int_K \abs{\nabla e_h}^2 \dd x = \int_{K \cap \widetilde K} \abs{\nabla  e_h}^2 \dd x+ \sum_{i=1}^{N_K} \int_{K_{\mathrm{diff}}^{(i)}}\abs{\nabla  e_h}^2 \dd x.
+	\end{equation}
+	Now, \cref{lem:Interp_BoundKKTilde} and \eqref{eq:AreaKIntersKTilde} yield
+	\begin{equation}\label{eq:IntegralKIntersKTilde}
+		\int_{K \cap \widetilde K} \abs{\nabla  e_h}^2 \dd x = \int_{K \cap \widetilde K} \abs{\nabla v_h\eval{K} - \nabla \btilde \Pi_h v_h \eval{\btilde K}}^2 \dd x \leq C h^{2p+2} \abs{\log h}^2 \abs{v}_{\WW^{2, \infty}(D)}^2.
+	\end{equation}
+	Let us now consider the second term. Each triangle $K_{\mathrm{diff}}^{(i)}$ intersects a finite number $N_K^{(i)}$ of triangles in the mesh $\widetilde{\mathcal T}_h$. We denote by $\widetilde K^{(i,j)}$ for $j = 1, \ldots, N_K^{(i)}$ these triangles and by $\widetilde K^{(i,j)}_{\mathrm{diff}} = \widetilde K^{(i,j)} \cap \widetilde K^{(i)}_{\mathrm{diff}}$, for which we remark that it holds
+	\begin{equation}
+		\abs{\widetilde K_{\mathrm{diff}}^{(i,j)}}\leq\abs{K_{\mathrm{diff}}^{(i)}}\leq\abs{K\setminus\widetilde K} \leq Ch^{p+1}.
+	\end{equation}
+	Finally, for each $i,j$ we denote by $K^{(i,j)}$ the element of $\mathcal T_h$ corresponding to $\widetilde K^{(i,j)} \in \mathcal T_h$ and remark that it is a neighbour of $K$. Therefore
+	\begin{equation}
+		\int_{K_{\mathrm{diff}}^{(i)}}\abs{e_h}^2 \dd x = \sum_{j=1}^{N_K^{(i)}} \int_{\widetilde K_{\mathrm{diff}}^{(i,j)}}\abs{e_h}^2 \dd x,
+	\end{equation}
+	where due to Young's inequality we have 
+	\begin{equation}\label{eq:BoundLocalProof2D}
+	\begin{aligned}
+		\int_{\widetilde K_{\mathrm{diff}}^{(i,j)}}\abs{\nabla  e_h}^2 \dd x &= \int_{\widetilde K_{\mathrm{diff}}^{(i,j)}} \abs{\nabla v_h\eval{K} - \nabla \widetilde \Pi_h v_h\eval{\widetilde K^{(i,j)}}}^2 \dd x \\
+		&\leq 2\left(\abs{\nabla v_h\eval{K} - \nabla v_h\eval{K^{(i,j)}}}^2 + \abs{\nabla \widetilde \Pi_h v_h\eval{\widetilde K^{(i,j)}} - \nabla v_h\eval{K^{(i,j)}}}^2\right) \abs{\widetilde K_{\mathrm{diff}}^{(i,j)}}.
+	\end{aligned}
+	\end{equation}
+	Due to \cref{lem:Vh2InfPropr}, we have first
+	\begin{equation}
+		\abs{\nabla v_h\eval{K} - \nabla v_h\eval{K^{(i,j)}}}^2 \leq C h^2 \abs{\log h}^2 \abs{v}_{\WW^{2, \infty}(D)}^2,
+	\end{equation}
+	and due to \cref{lem:Interp_BoundKKTilde}, we obtain
+	\begin{equation}
+		\abs{\nabla \widetilde \Pi_h v_h\eval{\widetilde K^{(i,j)}} - \nabla v_h\eval{K^{(i,j)}}}^2 \leq C h^{2p} \abs{\log h}^2 \abs{v}_{\WW^{2, \infty}(D)}^2.
+	\end{equation}
+	Therefore, replacing these two inequalities and \eqref{eq:AreaKMinusKTilde} in \eqref{eq:BoundLocalProof2D} and since $p\geq 1$ and $h < 1$, we obtain for a constant $C > 0$
+	\begin{equation}
+		\int_{\widetilde K_{\mathrm{diff}}^{(i,j)}}\abs{\nabla  e_h}^2 \dd x \leq C h^{p+3} \abs{\log h}^2 \abs{v}_{\WW^{2, \infty}(D)}^2.
+	\end{equation}
+	Hence, we get
+	\begin{equation}\label{eq:IntegralKMinusKTilde}
+		\int_{K \setminus \widetilde K} \abs{\nabla  e_h}^2 \dd x\leq C N_K \left(\sum_{i=1}^{N_K} N_K^{(i)} \right)h^{p+3} \left(\abs{\log h} + 1\right)^2 \abs{v}_{\WW^{2, \infty}(D)}^2.
+	\end{equation}
+	Combining \eqref{eq:IntegralKIntersKTilde} and \eqref{eq:IntegralKMinusKTilde} and since $2p+2\geq p+3$ for $p \geq 1$, we conclude that there exists a constant $C > 0$ independent of $h$ but dependent on $v$ such that
+	\begin{equation}
+		\int_K \abs{\nabla  e_h}^2 \dd x \leq Ch^{p+3}\abs{\log h}^2.
+	\end{equation}
+	Finally, due to \corr{assumption on the mesh}, we have that $N \leq Ch^2$ and therefore
+	\begin{equation}
+		\abs{e_h}_{H^1(D)}^2 = \sum_{K \in \mathcal T_h} \int_K \abs{\nabla  e_h}^2 \dd x \leq Ch^{p+1}\abs{\log h}^2,
+	\end{equation}
+	which implies the desired result.
+\end{proof}
+
+\subsection{The sum space}
+
+In order to prove convergence of the probabilistic solution, and moreover the closeness of $u_h$ to $\btilde u_h$ in the sense of \eqref{eq:DefProbConv}, we first need to define a convenient function space which is finite dimensional but which contains both $V_h$ and $\btilde V_h$. 
+
+\begin{definition} Let us denote by $V_h^+ \subset V$  the space of functions that can be written as the sum of a function in $V_h$ and a function in $\btilde V_h$, i.e., for any function $v_h^+ \in V_h^+$ there exists functions $v_h \in V_h$ and $\btilde v_h \in \btilde V_h$ such that $v_h^+ = v_h + \btilde v_h$. 
+\end{definition}
+
+\begin{remark} Let us remark that in our setting of homogeneous boundary conditions $V_h \cap \btilde V_h = \{0\}$ almost surely. Therefore, the space $V_h^+$ is given by the direct sum $V_h^+ = V_h \oplus \btilde V_h$ and the decomposition of $v_h^+ \in V_h^+$ is unique. Moreover, since $\dim(V_h) = \dim(\btilde V_h) = N_I$, we have $\dim(V_h^+) = 2N_I$. Moreover, let us remark that we are not building a so-called supermesh as in \cite{FPP09,FaM11, CGR18}
+\end{remark}
+
+The following result characterizes the distance of the finite elements solutions on the spaces $V_h$ and $\btilde V_h$.
+\begin{lemma}\label{lem:ConvergenceGeneral} Let $u_h$ and $\btilde u_h$ be the solutions of
+	\begin{equation}
+		a(u_h, v_h) = F(v_h), \quad a(\btilde u_h, \btilde v_h) = F(\btilde v_h),
+	\end{equation}
+	for all $v_h \in V_h$ and $\btilde v_h \in \btilde V_h$. Then, it holds for all $v_h, w_h \in V_h$ and for all $\btilde v_h, \btilde w_h \in \btilde V_h$
+	\begin{equation}
+	\begin{aligned}
+	\norm{u_h - \btilde u_h}_V^2 \leq C \left(\norm{u_h^+ - w_h}_V \norm{\btilde u_h - v_h}_V + \norm{u_h^+ - \btilde w_h}_V \norm{u_h - \btilde v_h}_V \right),
+	\end{aligned}
+	\end{equation}
+	where $C > 0$ is a constant independent of $h$ and where $u_h^+ \in V_h^+$ is the solution of 
 	\begin{equation}\label{eq:uHPlus}
 		a(u_h^+ , v_h^+) = F(v_h^+),	
 	\end{equation}
 	for all $v_h^+ \in V_h^+$.
 \end{lemma}
-\begin{proof} Since $V_h$ and $\btilde V_h$ are both subspaces of $V_h^+$, we have
+\begin{proof} Since $V_h$ and $\btilde V_h$ are both subspaces of $V_h^+$, we have due to Galerkin's orthogonality
 	\begin{equation}\label{eq:orthogonality}
 	\begin{aligned}
-		a(u_h^+ - u_h, v_h) &=0, \quad \forall v_h \in V_h,\\
-		a(u_h^+ - \tilde u_h, \tilde v_h) &= 0, \quad \forall \tilde v_h \in \btilde V_h,
+		a(u_h^+ - u_h, v_h) &=0, \quad \forall v_h \in V_h, \\
+		a(u_h^+ - \btilde u_h, \btilde v_h) &= 0, \quad \forall \btilde v_h \in \btilde V_h,
 	\end{aligned}
 	\end{equation}
-	which means that $u_h$ and $\tilde u_h$ are the elliptic projection of $u_h^+$ onto $V_h$ and $\btilde V_h$ respectively. Hence, thanks to Cea's lemma
+	which means that $u_h$ and $\btilde u_h$ are the elliptic projection of $u_h^+$ onto $V_h$ and $\btilde V_h$ respectively. Hence, due to Cea's lemma
+	\begin{equation}\label{eq:SumSpaceOptimality}
+		\norm{u_h^+ - u_h}_V \leq C\norm{u_h^+ - w_h}_V, \quad 	\norm{u_h^+ - \btilde u_h}_V \leq C\norm{u_h^+ - \btilde w_h}_V,
+	\end{equation}
+	for all $w_h \in V_h$ and $\btilde w_h \in \btilde V_h$, where $C = M / \alpha$. Using the coercivity on $V$ of $a(\cdot, \cdot)$, adding and subtracting $a(u_h^+, u_h - \btilde u_h)$ and due to \eqref{eq:orthogonality} we have for all $v_h \in V_h$ and $\btilde v_h \in \btilde V_h$
 	\begin{equation}
 	\begin{aligned}
-		\norm{u_h^+ - u_h}_V \leq \frac{M}{\alpha}\norm{u_h^+ - w_h}_V,\\
-		\norm{u_h^+ - \tilde u_h}_V \leq \frac{M}{\alpha}\norm{u_h^+ - \tilde w_h}_V,
+		\alpha \norm{u_h - \btilde u_h}_V^2 &\leq a(u_h - \btilde u_h, u_h - \btilde u_h)\\
+		&= a(u_h - u_h^+, u_h - \btilde u_h) + a(u_h^+ - \btilde u_h, u_h - \btilde u_h)\\
+		&= a(u_h - u_h^+, v_h - \btilde u_h) + a(u_h^+ - \btilde u_h, u_h - \btilde v_h).
 	\end{aligned}
 	\end{equation}
-	for all $w_h \in V_h$ and $\tilde w_h \in \btilde V_h$.	Using the coercivity on $V$ of $a(\cdot, \cdot)$, adding and subtracting $a(u_h^+, u_h - \tilde u_h)$ and thanks to the orthogonality property \eqref{eq:orthogonality} we have for all $v_h \in V_h$ and $\tilde v_h \in \btilde V_h$
+	Due to the continuity of the bilinear form we then have for all $w_h \in V_h$ and $\btilde w_h \in \btilde V_h$ 
 	\begin{equation}
 	\begin{aligned}
-		\alpha \norm{u_h - \tilde u_h}_V^2 &\leq a(u_h - \tilde u_h, u_h - \tilde u_h)\\
-		&= a(u_h - u_h^+, u_h - \tilde u_h) + a(u_h^+ - \tilde u_h, u_h - \tilde u_h)\\
-		&= a(u_h - u_h^+, v_h - \tilde u_h) + a(u_h^+ - \tilde u_h, u_h - \tilde v_h).
+		\alpha \norm{u_h - \btilde u_h}_V^2 &\leq M \Big(\norm{u_h^+ - u_h}_V\norm{\btilde u_h - v_h}_V + \norm{u_h^+ - \btilde u_h}_V\norm{u_h - \btilde v_h}_V\Big)\\
+		&\leq \frac{M^2}{\alpha} \Big(\norm{u_h^+ - w_h}_V\norm{\btilde u_h - v_h}_V + \norm{u_h^+ - \btilde w_h}_V\norm{u_h - \btilde v_h}_V\Big),
 	\end{aligned}
 	\end{equation}
-	Thanks to the continuity of the bilinear form we then have for all $w_h \in V_h$ and $\tilde w_h \in \btilde V_h$ 
-	\begin{equation}
-	\begin{aligned}
-		\alpha \norm{u_h - \tilde u_h}_V^2 &\leq M \Big(\norm{u_h^+ - u_h}_V\norm{\tilde u_h - v_h}_V + \norm{u_h^+ - \tilde u_h}_V\norm{u_h - \tilde v_h}_V\Big)\\
-		&\leq \frac{M^2}{\alpha} \Big(\norm{u_h^+ - w_h}_V\norm{\tilde u_h - v_h}_V + \norm{u_h^+ - \tilde w_h}_V\norm{u_h - \tilde v_h}_V\Big),
-	\end{aligned}
-	\end{equation}
-	which implies the result taking the infimum at the right hand side.
+	which is the desired result.
 \end{proof}
 
-Let us remark that the lemma above is valid for any choice of $V_h$ and $\btilde V_h$. In order to study the approximation of a function $v_h$ of $V_h$ with functions of $\btilde V_h$, we exploit the Legendre interpolation.
+Let us remark that the Lemma above holds true for any choice of $V_h$ and $\btilde V_h$, not necessarily disjoint, and for any space $V_h^+$ such that $V_h \cup \btilde V_h \subseteq V_h^+$. For the next result, we instead consider the setting in which $V_h$ and $\btilde V_h$ are the fixed and randomly perturbed finite element spaces of \cref{def:RandomMesh}. 
 
-\begin{definition} We denote by $\Pi_h\colon V \to V_h$ and $\btilde \Pi_h\colon V \to \btilde V_h$ the Legendre piecewise linear interpolation operators on $V_h$ and $\btilde V_h$ respectively, i.e.,
+\begin{lemma}\label{lem:SumSpaceDecomp} Let $u_h^+ \in V_h^+$ be the solution of \eqref{eq:uHPlus}, and let us denote by $z_h$ and $\btilde z_h$ its unique components in $V_h$ and $\btilde V_h$, respectively, i.e., $u_h^+ = z_h + \btilde z_h$. Then, it holds
 	\begin{equation}
-	\begin{aligned}
-		\Pi_h v(x) = \fsum{x_j \in \mathcal N_h^I} v(x_j) \phi_j(x),\\
-		\btilde \Pi_h v(x) = \fsum{\tilde x_j \in \btilde {\mathcal N}_h^I} v(x_j) \tilde \phi_j(x),
-	\end{aligned}
-	\end{equation}
-	where $\{\phi_i\}_{i=1}^{N^I}$ and $\{\tilde \phi_i\}_{i=1}^{N^I}$ are the basis functions of $V_h$ and $\btilde V_h$ respectively.
-\end{definition}
-
-In the following lemma we characterise the Legendre interpolant $\btilde V_h$ through its values on the internal nodes of the original mesh $\mathcal T_h$.  
-
-\begin{lemma}\label{lem:InterpPreliminary} Let $V_h$ and $\btilde V_h$ be defined as in \cref{def:RandomMesh}. Then for all $v_h \in V_h$ and all $x_i \in \mathcal N_h^I$ it holds
-	\begin{equation}
-		\btilde \Pi_h v_h(x_i) - v_h(x_i) = \bar h_i^p \alpha_i^\top \Big(\nabla v_h(\tilde x_i) - \nabla \btilde \Pi_h v_h(x_i)\Big).
+		\norm{z_h - \btilde z_h}_V \leq Ch^r.
 	\end{equation}
 \end{lemma}
-\begin{proof} Let us denote $e_h = \btilde \Pi_h v_h - v_h$. An exact Taylor expansion of the linear basis function $\tilde \phi_j$ gives
-\begin{equation}
-\begin{aligned}
-	e_h(x_i) &= \sum_{j} v_h(\tilde x_j) \phi_j(x_i) - v_h(x_i) \\
-	&= \sum_j v_h(\tilde x_j) \Big(\tilde \phi_j(\tilde x_i) - \bar h_i^p \alpha_i^\top \nabla \tilde \phi_j(x_i)\Big) - v_h(x_i) \\
-	&= v_h(\tilde x_i) - v_h(x_i) - \sum_j \bar h_i^p \alpha_i^\top v_h(\tilde x_j) \nabla \tilde \phi_j(x_i).
-\end{aligned}
-\end{equation}
-We can now expand the function $v_h$, which is linear on the segment connecting $x_i$ and $\tilde x_i$, as
-\begin{equation}\label{eq:TaylorVh}
-	v_h(\tilde x_i) = v_h(x_i) + \bar h_i^p \alpha_i^\top \nabla v_h(\tilde x_i),
-\end{equation}
-to obtain
-\begin{equation}
-\begin{aligned}
-	e_h(x_i) &= \bar h_i^p \alpha_i^\top \nabla v_h(\tilde x_i) - \bar h_i^p \alpha_i^\top \sum_j v_h(\tilde x_j) \nabla \tilde \phi_j(x_i) \\
-	&= \bar h_i^p \alpha_i^\top \Big(\nabla v_h(\tilde x_i) - \nabla \btilde \Pi_h v_h(x_i)\Big),
-\end{aligned}
-\end{equation}
-which is the desired result.
+\begin{proof}
+	
 \end{proof}
 
-Let us remark that the quality of the approximation given by the operator $\btilde \Pi_h$ depends on the regularity of $v_h$, as it will be clarified in the following. In order to exploit \cref{lem:ConvergenceGeneral}, it is necessary to control the interpolation of a function in $V_h^+$ on both $V_h$ and $\btilde V_h$, which is explained in the following lemma.
-
-\begin{lemma}\label{lem:InterpSum} For all $v_h^+ \in V_h^+$ it holds
+\begin{corollary} With the notation of \cref{lem:SumSpaceDecomp} and of \cref{def:Vh2Inf}, we have $z_h \in V_h^{2, \infty}$ and $\btilde z_h \in \btilde V_h^{2, \infty}$.
+\end{corollary}
+\begin{proof} Let us consider without loss of generality $z_h$. Due to \eqref{eq:SumSpaceOptimality}, we have
 	\begin{equation}
-	\begin{aligned}
-		\Pi_h v_h^+ - v_h^+ &= \Pi_h \tilde v_h - \tilde v_h,  \\
-		\btilde \Pi_h v^+_h - v_h^+ &= \Pi_h v_h - v_h,
-	\end{aligned}
+		\norm{u - u_h^+}_V \leq \norm{u - u_h}_V,
+	\end{equation}
+\end{proof}
+
+
+We now introduce a result of interpolation with the Legendre interpolants defined in \cref{def:Legendre}.
+
+\begin{lemma}\label{lem:InterpSum} Let $\Pi_h$ and $\btilde \Pi_h$ be defined in \cref{def:Legendre}. Then, for all $v_h^+ \in V_h^+$ it holds
+	\begin{equation}
+	\Pi_h v_h^+ - v_h^+ = \Pi_h \btilde v_h - \btilde v_h,  \quad 	\btilde \Pi_h v^+_h - v_h^+ = \Pi_h v_h - v_h,
 	\end{equation} 
-	where $v_h \in V_h$ and $\tilde v_h \in \btilde V_h$ are the components of $v_h^+$ in $V_h$ and $\btilde V_h$ respectively, i.e., $v_h^+ = v_h + \tilde v_h$.
+	where $v_h \in V_h$, $\btilde v_h \in \btilde V_h$ and $v_h^+ = v_h + \btilde v_h$.
 \end{lemma}
-\begin{proof} The result can be obtained directly as $\Pi_h v_h = v_h$ for all $v_h \in V_h$ and $\btilde \Pi_h \tilde v_h = \tilde v_h$ for all $\tilde v_h \in \btilde V_h$.
+\begin{proof} The result is implied by the linearity of $\Pi_h$ and $\btilde \Pi_h$ and since the restriction of $\Pi_h$ on $V_h$ is the identity function (respectively, $\btilde \Pi_h$ on $\btilde V_h$).
 \end{proof}
 
-Let us now introduce the smoothness assumption we impose on the solution, which will constitute the framework for our analysis. 
+\subsection{Convergence result}
 
-\begin{assumption}\label{as:regularity} The exact solution $u$ of \eqref{eq:ellipticEquation} is in $\WW^{2, \infty}(D)$.
-\end{assumption}
-
-Under this assumption, the following result of uniform convergence holds.
-
-\begin{theorem}[Theorem 3.3.7 of \cite{Cia02}]\label{thm:CiarletUniform} Under \cref{as:regularity}, the Finite Element solution $u_h \in V_h$ satisfies
+We now present here a classic convergence result for the finite elements method \cite[Theorem 3.3.7]{Cia02}, which allows to control the supremum of the error under smoothness assumptions on the solution.
+\begin{theorem}\label{thm:CiarletUniform} Let $u$ be the solution of \eqref{eq:EXSol} and $u_h \in V_h$ be the solution of \eqref{eq:FEMSol}. Then, if $u \in W^{2, \infty}(D)$, it holds
 	\begin{equation}\label{eq:W1InfErr}
 	\begin{aligned}
-		&\norm{u - u_h}_{\LL^\infty(D)} \leq C h^2 \abs{\log h}^{3/2} \abs{u}_{\WW^{2, \infty}(D)}, \\
-		&\abs{u - u_h}_{\WW^{1, \infty}(D)} \leq C h \abs{\log h} \abs{u}_{\WW^{2, \infty}(D)},
+	&\norm{u - u_h}_{L^\infty(D)} \leq C h^2 \abs{\log h}^{3/2} \abs{u}_{\WW^{2, \infty}(D)}, \\
+	&\abs{u - u_h}_{W^{1, \infty}(D)} \leq C h \abs{\log h} \abs{u}_{\WW^{2, \infty}(D)},
 	\end{aligned}
 	\end{equation}
-	where $C > 0$ is a constant independent of $h$.
+	where $C > 0$ is a constant independent of $h$. In particular, with the notation of \cref{def:Vh2Inf}, we have that $u_h \in V_h^{2, \infty}$.
 \end{theorem}
 
-\subsection{One-dimensional case}
-
-\begin{lemma}\label{lem:Interp1D} Let $D = (0,1)$, $V_h$ be the finite element space defined on the regular grid $\{x_i = ih\}_{i=0}^{N}$ for $h = N^{-1}$ and $v_h \in V_h$. If there exists $v \in \WW^{2, \infty}(D)$ such that
-	\begin{equation}\label{eq:RegularityInterp1D}
-		\norm{v - v_h}_{\WW^{1, \infty}(D)} \leq C h \abs{\log h} \abs{v}_{\WW^{2, \infty}(D)},
-	\end{equation} 
-	then almost surely in $\Omega$
+We can now prove the main result of a priori convergence for the probabilistic solution.
+\begin{theorem}\label{thm:APriori} Let $u$ be the solution of \eqref{eq:EXSol} and let $u_h$ and $\btilde u_h$ be the solutions of
 	\begin{equation}
-	\begin{aligned}
-		\norm{v_h - \btilde \Pi_h v_h}_{\LL^\infty(D)} &\leq Ch^{p+1} \abs{\log h},\\
-		\abs{v_h - \btilde \Pi_h v_h}_{\HH^1(D)} &\leq Ch^{(p+1)/2} \abs{\log h},
-	\end{aligned}
+		a(u_h, v_h) = F(v_h), \quad a(\btilde u_h, \btilde v_h) = F(\btilde v_h),
 	\end{equation}
-	where $C > 0$ is a constant independent of $h$. 
-\end{lemma}
-\begin{proof} Let us denote $e_h = \btilde \Pi_h v_h - v_h$. By definition $e_h(\tilde x_i) = 0$ for all $i = 0, \ldots, N$ and thanks to \cref{lem:InterpPreliminary}, in this setting
-	\begin{equation}\label{eq:OneDNodes}
-		e_h(x_i) = h^p \alpha_i \big(v_h'(\tilde x_i) - (\btilde \Pi_hv_h)'(x_i)\big).
-	\end{equation}
-	In the following, we denote by $\epl_i$ the quantity
+	for all $v_h \in V_h$ and $\btilde v_h \in \btilde V_h$. Then, if $u \in W^{2, \infty}(D)$, it holds for $V = H^1_0(D)$
 	\begin{equation}
-		\epl_i = v_h'(\tilde x_i) - (\btilde \Pi_hv_h)'(x_i).
+		\norm{u_h - \btilde u_h}_V \leq \quad \text{a.s.},
 	\end{equation}
-	Before proceeding to the actual estimation of the error, we shall now bound $\abs{\epl_i}$. Let us consider without loss of generality $\alpha_i > 0$. In this case, it is clear that 
+	and moreover, it holds
 	\begin{equation}
-		\epl_i = v_h'\eval{K_{i+1}} - (\btilde \Pi_hv_h)'\eval{\btilde K_i}.
+		\norm{\btilde u_h - u} \leq \quad \text{a.s.}
 	\end{equation}
-	Let us decompose $\epl_i$ in two terms $\epl_{i, 1}$ and $\epl_{i, 2}$, defined as
-	\begin{equation}
-	\begin{aligned}
-		\epl_{i, 1} &= v_h'\eval{K_{i+1}} - v_h'\eval{K_i}, \\
-		\epl_{i, 2} &= v_h'\eval{K_i} - (\btilde \Pi_hv_h)'\eval{\btilde K_i},
-	\end{aligned}	
-	\end{equation}
-	so that $\abs{\epl_i} \leq \abs{\epl_{i, 1}} + \abs{\epl_{i, 2}}$. Thanks to \eqref{eq:RegularityInterp1D} we have
-	\begin{equation}\label{eq:gradDiffSmooth1d}
-	\begin{aligned}
-		\abs{\epl_{i, 1}} &\leq 2 \abs{v_h - v}_{\WW^{1,\infty}(D)} + \abs{v'(\bar x_i) - v'(\bar x_{i+1})}\\
-		&\leq C h \abs{\log h} \abs{v}_{\WW^{2, \infty}(D)},
-	\end{aligned}
-	\end{equation}
-	where we denote by $\bar x_j$ the midpoint of element $K_j$. Let us now consider $\epl_{i, 2}$. First, thanks to \eqref{eq:TaylorVh} and as we assumed $\alpha_i > 0$
-	\begin{equation}
-	\begin{aligned}
-		(\btilde \Pi_hv_h)'\eval{\btilde K_i} &= \frac{1}{h + (\alpha_i - \alpha_{i-1})h^p} \big(v_h(\tilde x_i) - v_h(\tilde x_{i-1})\big) \\
-		&= \frac{1}{h + (\alpha_i  - \alpha_{i-1})h^p} \Big(v_h(x_i) - v_h(x_{i-1}) + \big(\alpha_i v_h'(\tilde x_i) - \alpha_{i-1} v_h'(\tilde x_{i-1}) \big)h^p\Big)\\
-		&= \frac{1}{1 + (\alpha_i - \alpha_{i-1})h^{p-1}} \Big(v_h'\eval{K_i} + \big(\alpha_i v_h'\eval{K_{i+1}} - \alpha_{i-1} v_h'(\tilde x_{i-1}) \big) h^{p-1} \Big),
-	\end{aligned}
-	\end{equation}
-	where $v_h'(\tilde x_{i-1})$ could alternatively be equal to the derivative of $v_h$ on $K_{i-1}$ or $K_i$ depending on the sign of $\alpha_{i-1}$.	Let us now remark that
-	\begin{equation}
-		\frac{1}{1 + (\alpha_i - \alpha_{i-1})h^{p-1}} = 1 + R,
-	\end{equation}
-	where
-	\begin{equation}
-		R = \sum_{k=1}^\infty (-1)^k(\alpha_i - \alpha_{i-1})^k h^{k(p-1)},
-	\end{equation}
-	which implies
-	\begin{equation}
-	\begin{aligned}
-		(\btilde \Pi_hv_h)'\eval{\btilde K_i} = v_h'\eval{K_i} &+ \big(\alpha_i v_h'\eval{K_{i+1}} - \alpha_{i-1} v_h'(\tilde x_{i-1}) \big) h^{p-1} \\
-		&+ R \Big(v_h'\eval{K_i} + \big(\alpha_i v_h'\eval{K_{i+1}} - \alpha_{i-1} v_h'(\tilde x_{i-1}) \big)h^{p-1}\Big),
-	\end{aligned}
-	\end{equation}
-	and finally
-	\begin{equation}
-	\begin{aligned}
-		\abs{\epl_{i,2}} = \Bigl|&\big(\alpha_i v_h'\eval{K_{i+1}} - \alpha_{i-1} v_h'(\tilde x_{i-1}) \big) h^{p-1} \\
-		&+ R \Big(v_h'\eval{K_i} + \big(\alpha_i v_h'\eval{K_{i+1}} - \alpha_{i-1} v_h'(\tilde x_{i-1}) \big)h^{p-1}\Big) \Bigr|.
-	\end{aligned}
-	\end{equation}
-	Let us rewrite the expression above regrouping the terms by powers of $h$ as
-	\begin{equation}
-	\begin{aligned}
-		\abs{\epl_{i,2}} &= \abs{\sum_{k=1}^{\infty} (-1)^k(\alpha_i - \alpha_{i-1})^{k-1}\Big((\alpha_i - \alpha_{i-1}) v_h'\eval{K_i} - \big(\alpha_i v_h'\eval{K_{i+1}} - \alpha_{i-1} v_h'(\tilde x_{i-1}) \big)\Big) h^{k(p-1)}}\\
-		&= \abs{\sum_{k=1}^{\infty} (-1)^k(\alpha_i - \alpha_{i-1})^{k-1}\Big(\alpha_i \big(v_h'\eval{K_i} - v_h'\eval{K_{i+1}}\big) + \alpha_{i-1}\big(v_h'(\tilde x_{i-1}) - v_h'\eval{K_i}\big) \Big) h^{k(p-1)}} \\
-		&\leq \sum_{k=1}^{\infty} \abs{\alpha_i - \alpha_{i-1}}^{k-1}\Big(\abs{\alpha_i}\abs{v_h'\eval{K_i} - v_h'\eval{K_{i+1}}} + \abs{\alpha_{i-1}} \abs{v_h'\eval{K_i} - v_h'(\tilde x_{i-1})} \Big) h^{k(p-1)}.
-	\end{aligned}
-	\end{equation}
-	Hence, thanks to \eqref{eq:gradDiffSmooth1d} and to the hypotheses on the coefficients $\alpha_j$, we have
-	\begin{equation}
-		\abs{\epl_{i,2}} \leq C h^p \abs{\log h} \abs{v}_{\WW^{2, \infty}(D)},
-	\end{equation} 
-	which finally implies $\abs{\epl_i} \leq C h \abs{\log h}$ as $p\geq 1$. This means that the interpolation error satisfies on the nodes of the original mesh 
-	\begin{equation}
-		\abs{e_h(x_i)} \leq C h^{p+1} \abs{\log h} \abs{v}_{\WW^{2, \infty}(D)},
-	\end{equation}
-	and on the nodes of the perturbed mesh by definition $e_h(\tilde x_i) = 0$. We can now proceed to the estimation of the error. Let us now remark that since $e_h \in V_h^+$, the maximum of $e_h$ has to be realised on one of the nodes of the original mesh. Hence
-	\begin{equation}
-		\norm{e_h}_{\LL^{\infty}(D)} = \max_{x_i \in \mathcal N_h^{I}} \abs{e_h(x_i)} \leq C h^{p+1} \abs{\log h} \abs{v}_{\WW^{2, \infty}(D)},
-	\end{equation}
-	which implies the desired result for all $\LL^q$ spaces with $1 \leq q < \infty$.
-%	Let us consider a single element of the modified grid $\btilde K_i = (\tilde x_{i-1}, \tilde x_i)$ and the $\LL^2$ norm. There are four distinct cases depending on the sign of the random variables $\alpha_{i-1}$ and $\alpha_i$. First, if $\alpha_{i-1} > 0$ and $\alpha_i < 0$, i.e., $\btilde K_i \subset K_i$, $e_h \equiv 0$ and we have trivially 
-%	\begin{equation}
-%		\norm{e_h}_{\LL^2(\btilde K_i)} = 0.
-%	\end{equation}
-%	The second and third cases are given by $\alpha_{i-1}$ and $\alpha_i$ having the same sign. Let us consider without loss of generality $\alpha_{i-1} < 0$ and $\alpha_i < 0$, i.e., $\tilde x_{i-1} < x_{i-1} < \tilde x_i < x_i$ and estimate the error in the $\LL^2$ norm. We separate the integral over the element as
-%	\begin{equation}\label{eq:OneDDecomp1}
-%		\int_{\btilde K_i} e_h^2 = \int_{\tilde x_{i-1}}^{x_{i-1}} e_h^2 + \int_{x_{i-1}}^{\tilde x_i} e_h^2.
-%	\end{equation}
-%	For the first integral, since $e_h(\tilde x_{i-1}) = 0$ and thanks to \eqref{eq:OneDNodes} we have
-%	\begin{equation}
-%		\int_{\tilde x_{i-1}}^{x_{i-1}} e_h^2 = \frac{\abs{\alpha_{i-1}}^3}{3} h^{3p} \epl_{i-1}^2.
-%	\end{equation}
-%	For the second interval, we get analogously
-%	\begin{equation}
-%		\int_{x_{i-1}}^{\tilde x_i} e_h^2 = \frac{\alpha_{i-1}^2(1 + \alpha_i h^{p-1})}{3}h^{2p+1}  \epl_{i-1}^2.
-%	\end{equation}
-%	Hence, thanks to \cref{as:MeshPerturbation} and to the estimate of $\abs{\epl_i}$ there exists a constant $C > 0$ 
-%	\begin{equation}
-%		\norm{e_h}_{\LL^2(\btilde K_i)}^2 \leq Ch^{2p+3} \abs{\log h}^2.
-%	\end{equation}
-%	Let us now consider the case $K_i \subset \btilde K_i$, i.e.,
-%	\begin{equation}
-%		\int_{\btilde K_i} e_h^2 = \int_{\tilde x_{i-1}}^{x_{i-1}} e_h^2 + \int_{x_{i-1}}^{x_i} e_h^2 + \int_{x_i}^{\tilde x_i} e_h^2.
-%	\end{equation}
-%	It is possible to compute the three integrals explicitly, thus getting
-%	\begin{equation}
-%	\begin{aligned}
-%		\norm{e_h}_{\LL^2(\btilde K_i)}^2 &= \frac{1}{3}h^{3p}\big(\alpha_i^3 \epl_i^3 - \alpha_{i-1}^3\epl_{i-1}^2\big) + \frac{h^{2p+1}}{3}\big(\alpha_{i-1}^2\epl_{i-1}^2 + \alpha_i^2\epl_i^2 + \alpha_{i-1}\epl_{i-1} \alpha_i\epl_i\big)\\
-%		&\leq Ch^{2p+3} \abs{\log h}^3.
-%	\end{aligned}
-%	\end{equation}
-%%	Summing over the elements we get $\norm{e_h}_{\LL^2(D)} \leq Ch^{p+1} \abs{\log h}^{3/2}$, which is the desired result. 
-	Let us now consider the $\HH^1$ semi-norm. We fix a single element of the modified grid $\btilde K_i = (\tilde x_{i-1}, \tilde x_i)$. There are four distinct cases depending on the sign of the random variables $\alpha_{i-1}$ and $\alpha_i$. First, if $\alpha_{i-1} > 0$ and $\alpha_i < 0$, i.e., $\btilde K_i \subset K_i$, $e_h \equiv 0$ and we have trivially $\abs{e_h}_{\HH^1(\tilde K)} = 0$. We now fix $\alpha_{i-1} < 0$ and $\alpha_i < 0$, getting explicitly
-	\begin{equation}
-	\begin{aligned}
-		\int_{\btilde K_i} (e_h')^2 &= \alpha_{i-1} \epl_{i-1}^2 h^p \Big(1 + \frac{\alpha_{i-1} h^{p-1}}{1 + \alpha_i h^{p-1}}\Big)\\
-		&\leq C h^{p+2} \abs{\log h}^2.
-	\end{aligned}
-	\end{equation}
-	The same result is obtained when both $\alpha_{i-1}$ and $\alpha_i$ are positive. For the last case, i.e. $K_i \subset \btilde K_i$, we have
-	\begin{equation}
-	\begin{aligned}
-		\int_{\btilde K_i} (e_h')^2 &= h^p(\alpha_{i-1} \epl_{i-1}^2  + \alpha_i \epl_i^2) + h^{2p-1}(\alpha_i \epl_i - \alpha_{i-1}\epl_{i-1})^2\\
-		&\leq Ch^{p+2} \abs{\log h}^2.
-	\end{aligned}
-	\end{equation}
-	Summing over the elements we have $\abs{e_h}_{\HH^1(D)} \leq Ch^{(p+1)/2} \abs{\log h}$, which gives the desired result.
-\end{proof}
-
-\begin{remark} The same result holds exchanging the roles of $V_h$ and $\btilde V_h$, i.e., considering the interpolant $\Pi_h$ instead of $\btilde \Pi_h$.
-\end{remark}
-
-\begin{theorem}\label{thm:Convergence1D} Under \cref{as:regularity} and in the one-dimensional setting of \cref{lem:Interp1D}, the probabilistic solution $\tilde u_h$ satisfies almost surely in $\Omega$
-	\begin{equation}
-		\norm{u_h - \tilde u_h}_{V} \leq Ch^{(p+1)/2} \abs{\log h},
-	\end{equation}
-	where $C > 0$ is a constant independent of $h$. Moreover, 
-	\begin{equation}
-		\norm{u - \tilde u_h}_V \leq Ch,
-	\end{equation}
-	holds almost surely in $\Omega$.
 \end{theorem}
-\begin{proof} Under \cref{as:regularity}, condition \eqref{eq:RegularityInterp1D} is verified for $u_h$ and $u$ the solution of \eqref{eq:ellipticEquation} thanks to \cref{thm:CiarletUniform}. Hence, choosing in \cref{lem:ConvergenceGeneral} $v_h = \btilde \Pi_h u_h$, $\tilde v_h = \Pi_h \tilde u_h$, $w_h = \Pi_h u_h^+$ and $\tilde w_h = \btilde \Pi_h u_h^+$ and then applying \cref{lem:Interp1D} and \cref{lem:InterpSum} gives the result. The estimate involving the exact solution is then obtained with the triangular inequality and as $p \geq 1$. 
+\begin{proof} Considering \cref{lem:ConvergenceGeneral} with $v_h = \Pi_h \btilde u_h$, $w_h = \Pi_h u_h^+$, $\btilde v_h = \btilde \Pi_h u_h$ and $\btilde w_h = \btilde \Pi_h u_h^+$, we get
+	\begin{equation}
+		\norm{u_h - \btilde u_h}_V^2 \leq C \left(\norm{u_h^+ - w_h}_V \norm{\btilde u_h - v_h}_V + \norm{u_h^+ - \btilde w_h}_V \norm{u_h - \btilde v_h}_V \right),
+	\end{equation}
 \end{proof}
 
-\begin{remark} The convergence result in \cref{thm:Convergence1D} could be seen as the PDE counterpart of the ODE convergences shown in \cite{AbG18, CGS16}. However, \cref{thm:Convergence1D} holds almost surely, whereas for ODEs only mean-square and weak convergences have been taken into account.
-\end{remark}
-
-\subsection{Two-dimensional case}
-
-\begin{figure}[t]
-	\centering
-	\begin{tikzpicture}
-		% Pattern of triangles
-		\draw[preaction={clip, postaction={pattern=north east lines, pattern color= {rgb,255:red,210; green,210; blue,210}}}] (2,2) -- (2,0) -- (0,2) -- cycle;
-		\draw (2,2) -- (2,0) -- (4,0) -- cycle;
-		\draw (2,2) -- (0,2) -- (0,4) -- cycle;
-		\draw (2,2) -- (2,4) -- (0,4) -- cycle;
-		\draw[preaction={clip, postaction={pattern=north east lines, densely dotted, pattern color= {rgb,255:red,210; green,210; blue,210}}}] (2,2) -- (2,4) -- (4,2) -- cycle;
-		\draw (2,2) -- (4,2) -- (4,0) -- cycle;
-		% Modified triangles
-		\draw[densely dashed] (2.1,2.1) -- (1.9, 0.2) -- (0.1, 2.1) -- cycle;
-		% Points
-		\node[anchor = north east, inner sep = 2pt] at (2, 2) (xi) {$x_i$}; 
-		\node[anchor = south west, inner sep = 0] at (2.1, 2.1) (xitilde) {$\tilde x_i$};
-		% Legend
-		\node at (6.5, 3.5) (leg) {Legend}; 
-		\draw[preaction={clip, postaction={pattern=north east lines, pattern color= {rgb,255:red,210; green,210; blue,210}}}] (8.5,3) -- (8.5,4) -- (9.5,3) -- cycle;
-		\node at (10,3.5) (legK) {$\vphantom{\btilde K}K$};
-		\draw[preaction={clip, postaction={pattern=north east lines, densely dotted, pattern color= {rgb,255:red,210; green,210; blue,210}}}] (6,1) -- (6,2) -- (7,1) -- cycle;
-		\node at (7.5,1.5) (legK2) {$\vphantom{\btilde K} K'$};
-		\draw[densely dashed] (8.5,1) -- (8.5,2) -- (9.5,1) -- cycle;
-		\node at (10,1.5) (legKtilde) {$\btilde K$};
-	\end{tikzpicture}
-	\caption{Scheme for error analysis.}
-	\label{fig:Error2D}
-\end{figure}
-
-Establish \cref{lem:Interp1D} in the two-dimensional case
-
-\begin{lemma}\label{lem:Interp2D} \corr{Restate \cref{lem:Interp1D} in the 2d case.}
-\end{lemma}
-\begin{proof} Let us denote $e_h = \btilde \Pi_h v_h - v_h$. By definition $e_h(\tilde x_i) = 0$ for all $i = 0, \ldots, N$ and thanks to \cref{lem:InterpPreliminary}
-	\begin{equation}\label{eq:ValueNodes}
-		e_h(x_i) = h^p \alpha_i \big(\nabla v_h(\tilde x_i) - \nabla \btilde \Pi_hv_h(x_i)\big).
-	\end{equation}
-	In the following, we denote by $\epl_i$ the quantity
-	\begin{equation}
-		\epl_i = \nabla v_h(\tilde x_i) - \nabla \btilde \Pi_h v_h(x_i).
-	\end{equation}
-	Before proceeding to the actual estimation of the error, we shall now bound $\abs{\epl_i}$. Let us denote by $K$ an arbitrary element which has $x_i$ as a vertex and such that the corresponding element $\btilde K$ in the perturbed mesh contains $x_i$. Furthermore, let us denote by $K'$ the element in the original mesh containing $\tilde x_i$. We refer to \cref{fig:Error2D} for a schematic representation of these elements. With this notation, we have $\nabla v_h(\tilde x_i) = \nabla v_h\eval{K'}$, $\nabla \btilde \Pi_hv_h(x_i) = \nabla \btilde \Pi_h v_h\eval{\btilde K}$, and we can then decompose $\epl_i$ in two terms $\epl_{i, 1}$ and $\epl_{i, 2}$, defined as
-	\begin{equation}
-	\begin{aligned}
-		\epl_{i, 1} &= \nabla v_h\eval{K'} - \nabla v_h\eval{K}, \\
-		\epl_{i, 2} &= \nabla v_h\eval{K}  - \nabla \btilde \Pi_h v_h \eval{\btilde K},
-	\end{aligned}	
-	\end{equation}
-	so that $\abs{\epl_i} \leq \abs{\epl_{i, 1}} + \abs{\epl_{i, 2}}$. Thanks to \cref{thm:CiarletUniform} we have
-	\begin{equation}\label{eq:gradDiffSmooth2d}
-	\begin{aligned}
-	\abs{\epl_{i, 1}} &\leq 2 \abs{v_h - v}_{\WW^{1,\infty}(D)} + \abs{\nabla v(\bar x_K) - \nabla v(\bar x_{K'})}\\
-	&\leq C h \abs{\log h} \abs{v}_{\WW^{2, \infty}(D)},
-	\end{aligned}
-	\end{equation}
-	where we denote by $\bar x_K$ the barycenter of element $K$. Let us now consider $\epl_{i, 2}$. We denote by $B_K$ and $B_{\btilde K}$ the matrices identifying the affine transformations mapping $K$ and $\btilde K$ to the reference triangle $\bhat K$, with vertices $\hat x_1 = (0, 0)^\top$, $\hat x_2 = (1, 0)^\top$, $\hat x_3 = (0, 1)^\top$. In particular, ordering arbitrarily the vertices of $K$ and $\btilde K$ and calling them $x_i$, $\tilde x_i$, $i = 1, 2, 3$ respectively, we have
-	\begin{equation}
-	\begin{aligned}
-		B_K &= \begin{pmatrix} x_2 - x_1 \mid x_3 - x_1 \end{pmatrix},\\
-		B_{\btilde K} &= \begin{pmatrix} \tilde x_2 - \tilde x_1 \mid \tilde x_3 - \tilde x_1\end{pmatrix}\\
-		&= B_K + h^p \Lambda,
-	\end{aligned}
-	\end{equation}
-	where
-	\begin{equation}
-		\Lambda = \begin{pmatrix} \alpha_2 - \alpha_1 \mid \alpha_3 - \alpha_1 \end{pmatrix}.
-	\end{equation}
-	Then (introduce notations)
-	\begin{equation}
-		\abs{\nabla v_h\eval{K} - \nabla \btilde \Pi_h v_h \eval{\btilde K}} = \abs{B_K^{-\top}\nabla \bhat{v_h} - B_{\btilde K}^{-\top}\nabla \bhat{\btilde \Pi_h v_h}}.
-	\end{equation}
-	Thanks to \eqref{eq:TaylorVh} we can write
-	\begin{equation}
-		\nabla \bhat{\btilde \Pi_h v_h} = \nabla \bhat{v_h} + h^p \gamma, 
-	\end{equation}
-	where the vector $\gamma$ is given by
-	\begin{equation}
-		\gamma = \begin{pmatrix} \alpha_2^\top \nabla v_h(\tilde x_2) - \alpha_1^\top \nabla v_h(\tilde x_1) \\
-		                         \alpha_3^\top \nabla v_h(\tilde x_3) - \alpha_1^\top \nabla v_h(\tilde x_1) \end{pmatrix}.
-	\end{equation}
-	With algebraic operations we can rewrite $B_{\btilde K}^{-\top}$ as 
-	\begin{equation}
-	\begin{aligned}
-		B_{\btilde K}^{-\top} &= (B_K + h^p \Lambda)^{-\top} \\ 
-		&= B_K^{-\top}(I + h^p B_K^{-1}\Lambda)^{-\top} \\
-		&= B_K^{-\top}(I - h^p \Gamma),
-	\end{aligned}
-	\end{equation}
-	where the matrix $\Gamma$ is given by the series expansion $\Gamma = \sum_{j=0}^\infty \Gamma_j$, with
-	\begin{equation}
-		\Gamma_j = (-1)^j h^{pj} (\Lambda^\top B_K^{-\top})^{j+1}.
-	\end{equation} 
-	Since $\abs{B_K^{-1}} \leq Ch$ \cite[Theorem 3.1.3]{Cia02}, the single addends $\Gamma_j$ satisfy $\abs{\Gamma_j} \leq Ch^{j(p-1)-1}$. Let us remark that the expression above implies $\Gamma_j = -h^p \Gamma_{j-1} \Gamma_0$. Rearranging the terms, we finally get
-	\begin{equation}
-	\begin{aligned}
-		\abs{\nabla v_h\eval{K} - \nabla \btilde \Pi_h v_h \eval{\btilde K}} &= h^p \abs{B_K^{-\top}(-\gamma + \Gamma \nabla \bhat{v_h} + h^p \Gamma \gamma)} \\
-		&= h^p \bigg\lvert B_K^{-\top} \Bigl(-\gamma + \Gamma_0 \nabla \bhat{v_h} + \sum_{j=1}^\infty (\Gamma_j\nabla \bhat{v_h} + h^p \Gamma_{j-1} \gamma)\Bigr)\bigg\rvert \\
-		&= h^p \bigg\lvert B_K^{-\top} h^p \sum_{j=0}^\infty \Gamma_{j-1} (\gamma -\Gamma_0\nabla \bhat{v_h})\bigg\rvert,
-	\end{aligned}
-	\end{equation}
-	where we define $\Gamma_{-1} = -h^{-p}I$. We can now compute explicitly the difference $\gamma - \Gamma_0 \nabla \bhat{v_h}$ as
-	\begin{equation}
-	\begin{aligned}
-		\gamma - \Gamma_0 \nabla \bhat{v_h} &= \gamma - \Lambda^\top B_K^{-\top} \nabla \bhat{v_h}\\
-		&= \gamma - \Lambda^\top \nabla v_h \eval{K} \\
-		&= \begin{pmatrix} \alpha_2^\top \nabla v_h(\tilde x_2) - \alpha_1^\top \nabla v_h(\tilde x_1) \\
-		\alpha_3^\top \nabla v_h(\tilde x_3) - \alpha_1^\top \nabla v_h(\tilde x_1) \end{pmatrix}
-		- \begin{pmatrix} (\alpha_2^\top - \alpha_1^\top) \nabla v_h \eval{K} \\ (\alpha_3^\top - \alpha_1^\top) \nabla v_h \eval{K}	\end{pmatrix}\\
-		&= \begin{pmatrix} \alpha_2^\top \big(\nabla v_h(\tilde x_2) - \nabla v_h \eval{K}\big) + \alpha_1^\top \big(\nabla v_h \eval{K} - \nabla v_h(\tilde x_1)\big) \\
-						   \alpha_3^\top \big(\nabla v_h(\tilde x_3) - \nabla v_h \eval{K}\big) + \alpha_1^\top \big(\nabla v_h \eval{K} - \nabla v_h(\tilde x_1)\big) \end{pmatrix}.                
-	\end{aligned}
-	\end{equation}	
-	Reasoning as in \eqref{eq:gradDiffSmooth2d} we thus have
-	\begin{equation}
-		\abs{\gamma - \Gamma_0 \nabla \bhat{v_h}} \leq Ch \abs{\log h}\abs{v}_{\WW^{2, \infty}(D)},
-	\end{equation}
-	which implies 
-	\begin{equation}
-		\abs{\nabla v_h\eval{K} - \nabla \btilde \Pi_h v_h \eval{\btilde K}} \leq h^{p+1}\abs{\log h}\abs{v}_{\WW^{2, \infty}(D)} \abs{B_K^{-\top}} \sum_{j=0}^{\infty} h^p \abs{\Gamma_{j-1}}.
-	\end{equation}
-	From the definition of $\Gamma_j$, $j = -1, 0, \ldots, \infty$, we have $\sum_{j=0}^{\infty} h^p \abs{\Gamma_{j-1}} \leq C$, which finally gives
-	\begin{equation}
-		\abs{\nabla v_h\eval{K} - \nabla \btilde \Pi_h v_h \eval{\btilde K}} \leq C h^p \abs{\log h} \abs{v}_{\WW^{2, \infty}(D)}.
-	\end{equation}
-	Since $p \geq 1$, the triangular inequality yields $\epl_{i} \leq Ch \abs{\log h} \abs{v}_{\WW^{2, \infty}(D)}$ for each node. Replacing this bound in \eqref{eq:ValueNodes}, we get for each $x_i \in \mathcal N_h^I$
-	\begin{equation}
-		\abs{e_h(x_i)} \leq C h^{p+1} \alpha_i \abs{\log h} \abs{v}_{\WW^{2, \infty}(D)}.
-	\end{equation}
-	Let us now remark that since $e_h \in V_h^+$ and by definition $e_h(\tilde x_i) = 0$ for all modified nodes, the maximum of $e_h$ has to be realised on one of the nodes of the original mesh. Hence
-	\begin{equation}
-		\norm{e_h}_{\LL^{\infty}(D)} = \max_{x_i \in \mathcal N_h^{I}} \abs{e_h(x_i)} \leq C h^{p+1} \abs{\log h} \abs{v}_{\WW^{2, \infty}(D)},
-	\end{equation}
-	which implies the desired result for all $\LL^q$ spaces with $1 \leq q < \infty$.
-\end{proof}
-
-\section{A probabilistic a posteriori error estimator}\label{sec:errorestimation}
+\section{A posteriori error analysis}\label{sec:errorestimation}
  
 Several techniques exist for obtaining a posteriori error estimators in the framework of the FEM (see \cite{Ver13} for an overview), with the twofold goal of controlling the quality of numerical solutions and hence improve the meshing procedure to maximise efficiency. The main purpose of probabilistic numerical methods is to quantify the uncertainty introduced by approximate computations \cite{HOG15}. For the reasons above, we believe that deriving an error estimator from a family of numerical solutions fits perfectly in the probabilistic framework. In this section we present such a procedure for a probabilistic error estimation.
 \begin{assumption}\label{as:Saturation} Let $u_h^+ \in V_h^+$ be defined in \eqref{eq:uHPlus}. Then we assume there exists $0 \leq \beta < 1$ such that
@@ -497,26 +548,14 @@ Several techniques exist for obtaining a posteriori error estimators in the fram
 	\end{equation} 
 	where $\normm{u}^2 = a(u, u)$. Moreover, there exists a constant $\gamma > 0$ such that
 	\begin{equation}\label{eq:Saturation2}
-		\normm{u_h - u_h^+} \leq \gamma \normm{u_h - \tilde u_h},
+		\normm{u_h - u_h^+} \leq \gamma \normm{u_h - \btilde u_h},
 	\end{equation}
-	almost surely, where $\tilde u_h$ is the probabilistic solution.
+	almost surely, where $\btilde u_h$ is the probabilistic solution.
 \end{assumption}
 
 
 Let us remark that since $V_h \subset V_h^+$, we have $\beta \leq 1$ for the best approximation property of the Galerkin method and that \cref{as:Saturation} is often denoted in literature as the saturation assumption.
 
-\begin{lemma} Let us denote by $w_h \in V_h$ and $\tilde w_h \in \btilde V_h$ the components of $u_h^+$, i.e., $u_h^+ = w_h + \tilde w_h$. Then
-	\begin{equation}
-		\abs{w_h(x_i) - \tilde w_h(\tilde x_i)} \leq 
-	\end{equation}
-	and 
-	\begin{equation}
-		\normm{w_h - \tilde w_h} \leq
-	\end{equation}
-\end{lemma}
-\begin{proof}
-
-\end{proof}
 
 \begin{lemma} Let us denote by $z_h \in V_h$ the function $z_h = w_h - u_h /2$. Then
 	\begin{equation}
@@ -526,61 +565,61 @@ Let us remark that since $V_h \subset V_h^+$, we have $\beta \leq 1$ for the bes
 
 \begin{proof} 
 	\begin{equation}
-		\normm{z_h} \leq \frac12 \normm{w_h - \tilde w_h}.
+		\normm{z_h} \leq \frac12 \normm{w_h - \btilde w_h}.
 	\end{equation}
 \end{proof}
 
 \begin{lemma} Under \ldots, there exists $\gamma > 0$ independent of $h$ and $p$ such that
 	\begin{equation}
-		\normm{u_h - u_h^+} \leq \gamma \normm{u_h - \tilde u_h},
+		\normm{u_h - u_h^+} \leq \gamma \normm{u_h - \btilde u_h},
 	\end{equation}
 	almost surely in $\Omega$.
 \end{lemma}
-\begin{proof} Let us write $u_h^+ = w_h + \tilde w_h$, where $w_h$ and $\tilde w_h$ are the two components of $u^+_h$ in $V_h$ and $\btilde V_h$ respectively. For any $v_h^+ \in V_h^+$, $v_h^+ = v_h + \tilde v_h$, with $v_h \in V_h$ and $\tilde v_h \in \btilde V_h$, by Galerkin orthogonality 
+\begin{proof} Let us write $u_h^+ = w_h + \btilde w_h$, where $w_h$ and $\btilde w_h$ are the two components of $u^+_h$ in $V_h$ and $\btilde V_h$ respectively. For any $v_h^+ \in V_h^+$, $v_h^+ = v_h + \btilde v_h$, with $v_h \in V_h$ and $\btilde v_h \in \btilde V_h$, by Galerkin orthogonality 
 	\begin{equation}
 	\begin{aligned}
-		a(u_h^+ - u_h, v_h^+) &= a(u_h^+ - u_h, \tilde v_h) - a(u_h^+ - \tilde u_h, \tilde v_h) \\
-		&= a(\tilde u_h - u_h, \tilde v_h).
+		a(u_h^+ - u_h, v_h^+) &= a(u_h^+ - u_h, \btilde v_h) - a(u_h^+ - \btilde u_h, \btilde v_h) \\
+		&= a(\btilde u_h - u_h, \btilde v_h).
 	\end{aligned}
 	\end{equation}
-	Choosing $v_h^+ = u_h^+ - u_h$, we have $\tilde v_h = \tilde w_h$ and 
+	Choosing $v_h^+ = u_h^+ - u_h$, we have $\btilde v_h = \btilde w_h$ and 
 	\begin{equation}
-		\normm{u_h^+ - u_h}^2 = a(\tilde u_h - u_h, \tilde w_h).
+		\normm{u_h^+ - u_h}^2 = a(\btilde u_h - u_h, \btilde w_h).
 	\end{equation}
-	The same procedure applied to $u_h^+ - \tilde u_h$ yields
+	The same procedure applied to $u_h^+ - \btilde u_h$ yields
 	\begin{equation}
-		\normm{u_h^+ - \tilde u_h}^2 = a(u_h - \tilde u_h, w_h).
+		\normm{u_h^+ - \btilde u_h}^2 = a(u_h - \btilde u_h, w_h).
 	\end{equation}
 	Hence
 	\begin{equation}
-		\normm{u_h^+ - u_h}^2 + \normm{u_h^+ - \tilde u_h}^2 = a(u_h - \tilde u_h, w_h - \tilde w_h).
+		\normm{u_h^+ - u_h}^2 + \normm{u_h^+ - \btilde u_h}^2 = a(u_h - \btilde u_h, w_h - \btilde w_h).
 	\end{equation}
-	Let us introduce the functions $z_h = w_h - u_h/2 \in V_h$ and $\tilde z_h = \tilde w_h - \tilde u_h /2 \in \btilde V_h$. Then
+	Let us introduce the functions $z_h = w_h - u_h/2 \in V_h$ and $\tilde z_h = \btilde w_h - \btilde u_h /2 \in \btilde V_h$. Then
 	\begin{equation}
 	\begin{aligned}
-		\normm{u_h^+ - u_h}^2 + \normm{u_h^+ - \tilde u_h}^2 &= \frac12 a(u_h - \tilde u_h, u_h - \tilde u_h) + a(u_h - \tilde u_h, w_h - \frac{u_h}{2} - (\tilde w_h - \frac{\tilde u_h}{2}))\\
-		&= \frac{1}{2} \normm{u_h - \tilde u_h}^2 + a(u_h - \tilde u_h, z_h - \tilde z_h).
+		\normm{u_h^+ - u_h}^2 + \normm{u_h^+ - \btilde u_h}^2 &= \frac12 a(u_h - \btilde u_h, u_h - \btilde u_h) + a(u_h - \btilde u_h, w_h - \frac{u_h}{2} - (\btilde w_h - \frac{\btilde u_h}{2}))\\
+		&= \frac{1}{2} \normm{u_h - \btilde u_h}^2 + a(u_h - \btilde u_h, z_h - \tilde z_h).
 	\end{aligned}
 	\end{equation} 
 	Consider now the second term in the sum. Adding and subtracting $a(u_h^+, z_h - \tilde z_h)$ and considering Galerkin orthogonality we obtain
 	\begin{equation}
-		a(u_h - \tilde u_h, z_h - \tilde z_h) = a(u_h - u_h^+, v_h - \tilde z_h) + a(u_h^+ - \tilde u_h, z_h - \tilde v_h),
+		a(u_h - \btilde u_h, z_h - \tilde z_h) = a(u_h - u_h^+, v_h - \tilde z_h) + a(u_h^+ - \btilde u_h, z_h - \btilde v_h),
 	\end{equation} 
-	for all $v_h \in V_h$ and $\tilde v_h \in \btilde V_h$. Hence, applying Cauchy--Schwarz and Young's inequalities we obtain
+	for all $v_h \in V_h$ and $\btilde v_h \in \btilde V_h$. Hence, applying Cauchy--Schwarz and Young's inequalities we obtain
 	\begin{equation}
-		\normm{u_h^+ - u_h}^2 + \normm{u_h^+ - \tilde u_h}^2 \leq \normm{u_h - \tilde u_h}^2 + \inf_{\vphantom{\tilde v_h \in \btilde V_h}v_h \in V_h} \normm{\tilde z_h - v_h}^2 + \inf_{\tilde v_h \in \btilde V_h} \normm{z_h - \tilde v_h}^2.
+		\normm{u_h^+ - u_h}^2 + \normm{u_h^+ - \btilde u_h}^2 \leq \normm{u_h - \btilde u_h}^2 + \inf_{\vphantom{\btilde v_h \in \btilde V_h}v_h \in V_h} \normm{\tilde z_h - v_h}^2 + \inf_{\btilde v_h \in \btilde V_h} \normm{z_h - \btilde v_h}^2.
 	\end{equation} 
 \end{proof}
 
 Moreover, since the perturbed mesh and the original mesh could switch their roles by changing the sign to the random perturbations, the same assumption as \eqref{eq:Saturation2} should be imposed for the probabilistic solution, i.e.
 \begin{equation}
-	\normm{\tilde u_h - u_h^+} \leq \btilde \gamma \normm{u_h - \tilde u_h}.
+	\normm{\btilde u_h - u_h^+} \leq \btilde \gamma \normm{u_h - \btilde u_h}.
 \end{equation}
 Applying the triangular inequality, we get
 \begin{equation}
 \begin{aligned}
-	(\gamma + \btilde \gamma) \normm{u_h - \tilde u_h} &\geq \normm{\tilde u_h - u_h^+} + \normm{u_h - u_h^+} \\
-	& \geq \normm{u_h - \tilde u_h},
+	(\gamma + \btilde \gamma) \normm{u_h - \btilde u_h} &\geq \normm{\btilde u_h - u_h^+} + \normm{u_h - u_h^+} \\
+	& \geq \normm{u_h - \btilde u_h},
 \end{aligned}
 \end{equation}
 which implies that $(\gamma + \btilde \gamma) \geq 1$. The duality in the roles of deterministic and probabilistic meshes implies that $\gamma$ and $\btilde \gamma$ should be in general approximately equal, at least asymptotically. Hence, the lower bound above guarantees that neither $\gamma$ nor $\btilde \gamma$ should tend to zero with $h\to 0$.
@@ -591,7 +630,7 @@ It is known \cite{BaK93} that under \cref{as:Saturation} the estimate
 \end{equation}
 holds almost surely. The quantity $\norm{u_h - u_h^+}_a$ thus serves as an a posteriori error estimator for the error. However, computations involving the sum space $V_h^+$ are often intractable if the dimension $d > 1$. Hence, we further expand the upper bound thanks to \eqref{eq:Saturation2} as
 \begin{equation}\label{eq:ErrorEstimateFinal}
-	\normm{u - u_h} \leq \frac{\gamma}{1 - \beta} \normm{u_h - \tilde u_h},
+	\normm{u - u_h} \leq \frac{\gamma}{1 - \beta} \normm{u_h - \btilde u_h},
 \end{equation}
 which means that the difference between the deterministic and the probabilistic solutions can be employed as an a posteriori upper bound for the error.
 
@@ -606,19 +645,19 @@ which means that the difference between the deterministic and the probabilistic 
 	which, since $p > 1$, gives $\beta_2 \geq 1/2$. Numerical experiments confirm the qualitative behaviour of the function $\beta(h, p)$ explained above, and lead to the good working practice of fixing $p = 1$.
 \end{remark}
 
-A more robust estimator could be obtained by averaging a family of $M$ probabilistic solutions $\tilde u_h^{(i)}$, $i = 1, \ldots, M$, obtained by $M$ i.i.d. random perturbations of the original mesh. In particular, we have 
+A more robust estimator could be obtained by averaging a family of $M$ probabilistic solutions $\btilde u_h^{(i)}$, $i = 1, \ldots, M$, obtained by $M$ i.i.d. random perturbations of the original mesh. In particular, we have 
 \begin{equation}
-	\normm{u - u_h}^2 \leq C \E \normm{u_h - \tilde u_h}^2 \eqqcolon C \eta_h^2,
+	\normm{u - u_h}^2 \leq C \E \normm{u_h - \btilde u_h}^2 \eqqcolon C \eta_h^2,
 \end{equation}
 where we approximate the estimator $\eta_h$ via Monte Carlo sampling as
 \begin{equation}
-	\eta_h \approx \sqrt{\frac{1}{M} \sum_{i=1}^M \normm{u_h - \tilde u_h^{(i)}}^2}.
+	\eta_h \approx \sqrt{\frac{1}{M} \sum_{i=1}^M \normm{u_h - \btilde u_h^{(i)}}^2}.
 \end{equation}
 Taking the expectation over several realisations should in practice provide a sharper error estimator, as in case $p = 1$ a good portion of the domain $D$ is explored by the vertices of several realisations of the random mesh. Let us consider for simplicity the case $\kappa \equiv 1$, so that $\normm{u} = \norm{\nabla u}_{L^2(D)}$ for all $u \in H^1_0(D)$. In this case, we have
 \begin{equation}
 \begin{aligned}
-	\eta_h &= \int_{K} \E \abs{\nabla (u_h - \tilde u_h)}^2 \dd x\\
-		   &\approx \int_{K} \E \abs{\E (\nabla u_h) - \nabla \tilde u_h}^2 \dd x\\
+	\eta_h &= \int_{K} \E \abs{\nabla (u_h - \btilde u_h)}^2 \dd x\\
+		   &\approx \int_{K} \E \abs{\E (\nabla u_h) - \nabla \btilde u_h}^2 \dd x\\
 		   &= \int_K \trace (\Var \nabla u_h) \dd x.
 \end{aligned}
 \end{equation}   
@@ -627,7 +666,7 @@ Hence, following the probabilistic numerics canon, it is possible to interpret t
 We now consider the task of adapting the mesh. Given the error estimator derived above and a prescribed tolerance, we apply a standard technique for generating a sequence of meshes, which we briefly summarise in the following. Let us first split the estimator over the elements of the original mesh as
 \begin{equation}
 \begin{aligned}
-	\eta_h^2 &= \sum_{K\in \mathcal T_h} \E \int_{K} \kappa \nabla (u_h - \tilde u_h) \cdot \nabla (u_h - \tilde u_h)\\
+	\eta_h^2 &= \sum_{K\in \mathcal T_h} \E \int_{K} \kappa \nabla (u_h - \btilde u_h) \cdot \nabla (u_h - \btilde u_h) \dd x\\
 	&= \sum_{K \in \mathcal T_h} \eta_K^2,
 \end{aligned}
 \end{equation}
@@ -648,7 +687,7 @@ where $N$ is the number of elements in $\mathcal T_h$. Hence, we proceed iterati
 	Set $i = 0$ \;
 	\While{$\eta_h > \epsilon \normm{u_h} $}{
 		Compute $u_h$ and $\normm{u_h}$ \;
-		Draw $M$ random meshes and compute $\tilde u_h^{(j)}$ for $j = 1, \ldots, M$ \;
+		Draw $M$ random meshes and compute $\btilde u_h^{(j)}$ for $j = 1, \ldots, M$ \;
 		\For{$K \in \mathcal T_h^{(i)}$}{
 			Compute $\eta_K$ \;
 			\uIf{$\eta_K > \mathrm{fac}_1 \, \epsilon \normm{u_h} /\sqrt{N}$} {
@@ -664,12 +703,12 @@ where $N$ is the number of elements in $\mathcal T_h$. Hence, we proceed iterati
 
 \section{Inverse problems}\label{sec:inverseproblems}
 
-Probabilistic numerical methods are particularly helpful when inserted in the framework of Bayesian inverse problems (BIPs) involving differential equations, as studied in \cite{AbG18, CGS17} for ODEs, and in \cite{COS17, CCC16} for PDEs. Furthermore, in \cite{LST18} a theoretical basis is laid for ensuring the well-posedness of probabilistic solutions to BIPs.
+Probabilistic numerical methods are particularly helpful when inserted in the framework of Bayesian inverse problems (BIPs) involving differential equations, as studied in \cite{AbG20, CGS17} for ODEs, and in \cite{COS17, CCC16} for PDEs. Furthermore, in \cite{LST18} a theoretical basis is laid for ensuring the well-posedness of probabilistic solutions to BIPs.
 
 We consider the framework introduced in \cite{Stu10} and expanded in \cite{DaS11}. With the notation of \eqref{eq:ellipticEquation}, we consider the PDE
 \begin{equation}\label{eq:ellipticInverse}
 \begin{aligned}
-	-\nabla \cdot (\exp(\theta) \nabla u) &= f, &&\text{in } D,\\
+	-\nabla \cdot (e^\theta \, \nabla u) &= f, &&\text{in } D,\\
 	u &= 0, &&\text{on } \partial D,
 \end{aligned}
 \end{equation}
@@ -703,7 +742,7 @@ we obtain the approximate posterior measure $\mu_h$ as
 \end{equation}
 where $Z_h$ is the normalisation constant. Stuart proved \cite[Theorem 4.6]{Stu10} that under suitable assumptions $\Hell(\mu_h, \mu) \to 0$ for $h \to 0$, where $\Hell(\cdot, \cdot)$ is the Hellinger distance for probability measures. Hence, assuming an infinite computational budget is available it is possible to compute the posterior measure via approximate computations. This result has then been extended to more general priors than Gaussian \cite{DaS16, Sul17}.
 
-It has been shown empirically that under a fixed computational budget, employing a standard numerical method for the approximation of the solution operator $\mathcal S$ can lead to inaccurate results \cite{AbG18, CGS17, COS17}. In particular, in case the variance $\Sigma_\epl$ of the observational noise is small with respect to the discretisation error, the posterior measure $\mu_h$ will be overconfident and peaked away from the true value of the unknown field. Probabilistic numerical methods can efficiently tackle this overconfidence issue thanks to the uncertainty quantification of numerical errors they naturally introduce. Given the probability space $\Omega$ on which the random variables defining the probabilistic scheme $\alpha_i \colon \Omega \to \R^d$ introduced in \cref{as:MeshPerturbation} are defined, let us denote by $\btilde{\mathcal G}_h \colon \Omega \times \mathcal U \to \R^m$ the random forward model obtained as $\btilde{\mathcal G}_h = \mathcal O \circ \btilde{\mathcal S}_h$, where $\btilde{\mathcal S}_h \colon \Omega \times \mathcal U \to \btilde V_h$ is the solution operator corresponding to the random FEM introduced in this work. Replacing $\mathcal G_h$ with $\btilde{\mathcal G}_h$ in \eqref{eq:ApproxPotential} we get a random potential $\btilde \Phi_h$ and eventually a random posterior measure $\tilde \mu_h$ defined by
+It has been shown empirically that under a fixed computational budget, employing a standard numerical method for the approximation of the solution operator $\mathcal S$ can lead to inaccurate results \cite{AbG20, CGS17, COS17}. In particular, in case the variance $\Sigma_\epl$ of the observational noise is small with respect to the discretisation error, the posterior measure $\mu_h$ will be overconfident and peaked away from the true value of the unknown field. Probabilistic numerical methods can efficiently tackle this overconfidence issue thanks to the uncertainty quantification of numerical errors they naturally introduce. Given the probability space $\Omega$ on which the random variables defining the probabilistic scheme $\alpha_i \colon \Omega \to \R^d$ introduced in \cref{as:MeshPerturbation} are defined, let us denote by $\btilde{\mathcal G}_h \colon \Omega \times \mathcal U \to \R^m$ the random forward model obtained as $\btilde{\mathcal G}_h = \mathcal O \circ \btilde{\mathcal S}_h$, where $\btilde{\mathcal S}_h \colon \Omega \times \mathcal U \to \btilde V_h$ is the solution operator corresponding to the random FEM introduced in this work. Replacing $\mathcal G_h$ with $\btilde{\mathcal G}_h$ in \eqref{eq:ApproxPotential} we get a random potential $\btilde \Phi_h$ and eventually a random posterior measure $\tilde \mu_h$ defined by
 \begin{equation}
 	\frac{\dd \tilde \mu_h}{\dd \mu_0}(\theta) = \frac{1}{\btilde Z_h}\exp(-\btilde \Phi_h(\theta)),
 \end{equation}
@@ -776,7 +815,7 @@ Consider
 \end{equation}
 with $f$ chosen such that $u(x) = -\sin(12\pi x) \exp(-100(x-1/2)^2)$ is the true solution. We consider the error estimations of presented in \cref{sec:errorestimation}, both in a local and global manner. Results, displayed in \cref{fig:ErrEst1D_local,fig:ErrEst1D_global} show that the estimates hold in practice for this case. In particular, in \cref{fig:ErrEst1D_global} we can remark that the overall effectivity index $\eta_{\mathcal X}$, defined as
 \begin{equation}
-	\eta_{\mathcal X} = \frac{\E\norm{u_h - \tilde u_h}_{\mathcal X}}{\norm{u_h - u}_{\mathcal X}},
+	\eta_{\mathcal X} = \frac{\E\norm{u_h - \btilde u_h}_{\mathcal X}}{\norm{u_h - u}_{\mathcal X}},
 \end{equation}
 with $\mathcal X = H_0^1, L^2$, is in this case close to one for both norms. Errors are estimated employing $M = 10$ realisations of the probabilistic solution and with a Monte Carlo simulation.
 
@@ -849,7 +888,7 @@ and the inverse problem of retrieving the field $\kappa \in \LL^2(0, 1)$ given s
 				0 & \mbox{otherwise},
 				\end{cases}
 \end{equation}
-where $\kappa_1$, $\kappa_2$ are real scalars and $I_1$, $I_2$ are the intervals $(0.2, 0.4)$ and $(0.6, 0.8)$ respectively. Fixing a standard Gaussian prior on both parameters $\kappa_1$ and $\kappa_2$ we are able to compute the posterior distribution corresponding to both the deterministic and probabilistic forward models. In particular, we vary the number of elements $N$ in the set $\{20, 40, 80, 160\}$, thus studying the effects of numerical errors on the numerical posterior distribution. Observations are obtained from a reference solution evaluated at four equispaced points in the interior of $(0, 1)$ each corrupted by an additive source of noise $\epl \sim \mathcal N(0, 10^{-4})$. The posterior distributions are obtained with Metropolis--Hastings initialised near the true value of $(\kappa_1, \kappa_2)$ and ran as explained in \cref{sec:inverseproblems}, with 200 parallel chains employed for the probabilistic forward model. Results are shown in \cref{fig:BayesFin}, where \todo
+where $\kappa_1$, $\kappa_2$ are real scalars and $I_1$, $I_2$ are the intervals $(0.2, 0.4)$ and $(0.6, 0.8)$ respectively. Fixing a standard Gaussian prior on both parameters $\kappa_1$ and $\kappa_2$ we are able to compute the posterior distribution corresponding to both the deterministic and probabilistic forward models. In particular, we vary the number of elements $N$ in the set $\{20, 40, 80, 160\}$, thus studying the effects of numerical errors on the numerical posterior distribution. Observations are obtained from a reference solution evaluated at four equispaced points in the interior of $(0, 1)$ each corrupted by an additive source of noise $\epl \sim \mathcal N(0, 10^{-4})$. The posterior distributions are obtained with Metropolis--Hastings initialised near the true value of $(\kappa_1, \kappa_2)$ and ran as explained in \cref{sec:inverseproblems}, with 240 parallel chains employed for the probabilistic forward model. Results are shown in \cref{fig:BayesFin}, where \todo
 
 In a second experiment, we consider the same exact field $\kappa^*$ and observation model, but without the additional information encoded in \eqref{eq:fieldInfo}.
 
@@ -881,6 +920,6 @@ In a second experiment, we consider the same exact field $\kappa^*$ and observat
 %where $D_1$ and $D_2$ are the circles with radius $\sqrt{0.025}$ centred in $(0.25, 0.25)$ and $(0.75, 0.75)$
 
 
-\bibliographystyle{siamplain}
-\bibliography{anmc}
+\bibliographystyle{siam}
+\bibliography{../../anmc}
 \end{document}

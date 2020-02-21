@@ -18,11 +18,10 @@ EM = EulerMaruyama(sde)
 for sigma in sigmaVec:
 
     alpha = 2.0
-    param = np.array([alpha, sigma])
     IC = 0.0
 
     # Compute the homogenized coefficients
-    hom_param = compute_homogeneous(param, 2.0 * np.pi, sde.p)
+    hom_param = compute_homogeneous(sigma, alpha, 2.0 * np.pi, sde.p)
     print(hom_param)
 
     np.savetxt("../SDECode/matlabPlots/ParameterEstimation/resultsQU_epsBig/ResultsHom" + "_s" + str(sigma) + ".txt", hom_param, fmt='%f')
@@ -62,13 +61,14 @@ for sigma in sigmaVec:
             tVec = np.arange(N+1) * h
 
             # Initialize results
-            nExp = 110
+            nExp = 11
 
+            # plot = False
+            # for seed in range(0, nExp):
             def in_loop(seed, plot=False):
                 print seed
                 # Generate solution
-                y, dw = EM.solve(IC, N, T, param, seed=seed)
-                plt.show()
+                y, dw = EM.solve(IC, N, T, alpha, sigma, seed=seed)
                 sub = y[::nSub]
                 par_est_sub = ParEst(sub, sdeHomo.grad_v_vect, delta, is_vect=True)
                 filt, kt = filter_trajectory(y, delta, T, beta=betaFilter, type=1)

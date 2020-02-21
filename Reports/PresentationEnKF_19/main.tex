@@ -1,0 +1,189 @@
+\documentclass[usenames,dvipsnames]{beamer}
+%\documentclass[usenames,dvipsnames,handout]{beamer}
+
+\usetheme{Madrid}
+\usecolortheme{dolphin}
+\setbeamercolor{title}{fg=NavyBlue}
+\setbeamercolor{frametitle}{fg=NavyBlue}
+\setbeamercolor{section in toc}{fg=NavyBlue}
+\setbeamercolor{block title}{fg=white,bg=NavyBlue}
+
+\usepackage[english]{babel}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage{mathtools}
+\mathtoolsset{showonlyrefs}
+\usepackage{appendixnumberbeamer}
+%\usepackage{enumitem}
+\usepackage{centernot}
+\usepackage{tikz}
+\usepackage{algorithm}
+\usepackage[]{algpseudocode}
+\usepackage{caption}
+\usetikzlibrary{positioning}
+%\setitemize{label=-, leftmargin=*}
+\usepackage{booktabs}
+\usepackage{natbib}
+\usepackage{multicol}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{eso-pic}
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+
+\usepackage{etoolbox}
+
+\makeatletter
+\expandafter\patchcmd\csname\string\algorithmic\endcsname{\itemsep\z@}{\itemsep=1ex plus2pt}{}{}
+\makeatother
+
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\renewcommand{\Pr}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\E}{\operatorname{\mathbb{E}}}
+\newcommand{\iid}{\ensuremath{\stackrel{\text{iid}}{\sim}}}
+\newcommand{\toweak}{\rightharpoonup}
+\DeclarePairedDelimiterX{\inprod}[2]{\langle}{\rangle}{#1, #2}
+\DeclareMathOperator*{\argmin}{\mathrm{argmin}\;}
+\newcommand{\spann}{\mathrm{span}\;}
+
+\newcommand{\SubItem}[1]{
+	{\setlength\itemindent{15pt} \item[-] #1}
+}
+
+% Theorem blocks
+\newenvironment<>{greenblock}[1][]{%
+	\setbeamercolor{block title}{fg=white,bg=ForestGreen}%
+	\begin{block}#2{#1}}{\end{block}}
+\newenvironment<>{redblock}[1][]{%
+	\setbeamercolor{block title}{fg=white,bg=red!75!black}%
+	\begin{block}#2{#1}}{\end{block}}
+\newenvironment<>{orangeblock}[1][]{%
+	\setbeamercolor{block title}{fg=white,bg=orange!75!black}%
+	\begin{block}#2{#1}}{\end{block}}
+
+% Add numbers and take out navigation symbols
+\beamertemplatenavigationsymbolsempty
+\setbeamercolor{date in head/foot}{fg=gray, bg=white}
+\setbeamercolor{author in head/foot}{fg=white,bg=white}
+\setbeamercolor{title in head/foot}{fg=white,bg=white}
+\setbeamertemplate{footline}{
+	\leavevmode%
+	\hbox{%
+		\begin{beamercolorbox}[wd=.4\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+			\insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+	\end{beamercolorbox}}%
+	\vskip0pt%
+}
+
+\definecolor{leg1}{RGB}{0,114,189}
+\definecolor{leg2}{RGB}{217,83,25}
+\definecolor{leg3}{RGB}{237,177,32}
+\definecolor{leg4}{RGB}{126,47,142}
+\definecolor{leg5}{RGB}{119,172,48}
+
+% Text starts always from the top of the frame
+\newenvironment{frameT}{\begin{frame}[t]}{\end{frame}}
+
+\title[]{\Large Ensemble Kalman filter for multiscale inverse problems}
+%\author[Andrea Zanoni]{Author: Andrea Zanoni \\ Advisors: Professor Assyr Abdulle, Professor Sandro Salsa \\ Co-advisor: Giacomo Garegnani}
+\author{Assyr Abdulle, Giacomo Garegnani, Sandro Salsa}
+%\date[25/07/2019]{\small Thursday 25 July 2019}
+\date{MATHICSE Retreat \\ 11--13 June 2019}
+%\date{Place \dots \\ Date \dots}
+\institute[Polimi, EPFL]{ 
+\begin{multicols}{2}
+\centering 
+\includegraphics[width=0.1\textwidth]{Images/logo_POLIMI} \\
+\columnbreak
+\includegraphics[width=0.2\textwidth]{Images/logo_EPFL} \\
+\end{multicols}
+\vspace{-1cm}
+\begin{multicols}{2}
+\centering 
+POLITECNICO \\ DI MILANO \\
+Master in Mathematical \\ Engineering \\
+\columnbreak
+\'ECOLE POLYTECHNIQUE \\ F\'ED\'ERALE DE LAUSANNE \\
+Master in Computational \\ Science and Engineering \\
+\end{multicols}
+}
+
+\makeatletter
+\setbeamertemplate{title page}
+{
+\vbox{}
+\vfill
+\begin{centering}
+\vspace{-2cm}
+{\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}  
+\vskip2.25em%
+\begin{beamercolorbox}[sep=8pt,center]{institute}
+\usebeamerfont{institute}\insertinstitute
+\end{beamercolorbox}
+\begin{beamercolorbox}[sep=8pt,center]{title}
+\usebeamerfont{title}\inserttitle\par%
+\ifx\insertsubtitle\@empty%
+\else%
+\vskip0.25em%
+{\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+\fi%    
+\end{beamercolorbox}%
+\vskip1em\par
+\begin{beamercolorbox}[sep=8pt,center]{author}
+\usebeamerfont{author}\insertauthor
+\end{beamercolorbox}
+\vspace{0cm} %<-- right here
+\begin{beamercolorbox}[sep=8pt,center]{date}
+\usebeamerfont{date}\insertdate
+\end{beamercolorbox}\vskip0.5em
+\end{centering}
+\vfill
+}
+\makeatother
+
+\newcommand\FrameText[1]{%
+	\begin{textblock*}{\paperwidth}(0pt,\textheight)
+		\raggedleft #1\hspace{1.5em}
+\end{textblock*}}
+
+\begin{document}
+
+\thispagestyle{empty}
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{Main ingredients}
+\thispagestyle{empty}
+\centering
+\includegraphics[width=0.9\textwidth]{Images/problem}
+\end{frame}
+
+%\addtocounter{framenumber}{-1}
+
+\begin{frame}
+\thispagestyle{empty}
+\frametitle{Outline}
+\tableofcontents
+\end{frame}
+
+%\addtocounter{framenumber}{-1}
+
+\input{Presentation}
+
+\begin{frame}
+\frametitle{References}
+\small
+\bibliographystyle{apalike}
+\bibliography{Bibliography}
+\end{frame}
+
+\end{document}

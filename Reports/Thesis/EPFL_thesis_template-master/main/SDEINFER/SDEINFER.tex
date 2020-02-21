@@ -1,0 +1,885 @@
+\chapter{Parameter inference of Multiscale Diffusions}
+
+\section{Introduction}
+
+Data-driven approaches to the derivation of effective stochastic coarse-grained dynamics have become a standard tool in different areas such as molecular dynamics or atmosphere and ocean science \cite{KKP15,CoP09,YMV19}. When fitting data to a low dimensional coarse-grained model, one is faced with the problem of model misspecification; indeed, the data, coming from the full dynamics, are compatible with the coarse-grained model only at the time scales at which the effective dynamics is valid. This is related to the issue of high-frequency data that arises in econometrics \cite{AiJ14,AMZ05,ZMA05,OSP10}. 
+
+The issue of model misspecification in inverse problems with a multiscale structure has been treated in the context of partial differential equations (PDE). In particular, it has been shown that it is possible to infer a coarse-grained equation from data coming from the full model and to retrieve asymptotically the correct result \cite{NPS12}. A series of papers \cite{AbD18, AbD19, AGZ19} focuses on retrieving the full model when the multiscale coefficient is endowed with a specific parametrized structure. Being these problems ill-posed, the latter is achieved via Tikhonov regularization \cite{AbD19,NPS12}, adopting a Bayesian approach \cite{AbD18, NPS12} or exploiting techniques of Kalman filtering \cite{AGZ19}. In \cite{AbD18,AGZ19}, the authors highlight the need of accounting explicitly for the modelling error due to homogenization and apply statistical techniques taken from \cite{CDS18,CES14}.
+
+For simple models in molecular dynamics, the effect of model misspecification was studied in a series of papers \cite{PaS07,PPS09,PPS12,GaS17,GaS18} under the assumption of scale separation. In particular, for Brownian particles moving in two-scale potentials it was shown that, when fitting data from the full dynamics to the homogenized equation, the maximum likelihood estimator (MLE) is asymptotically biased \cite[Theorem 3.4]{PaS07}. To be more precise, in the large sample size limit the MLE converges to the coefficients of the unhomogenized equation, rather than to those of the homogenized one. The bias of the MLE can be eliminated by subsampling at an appropriate rate, which lies between the two characteristic time scales of the problem \cite[Theorems 3.5 and 3.6]{PaS07}. This is similar to the estimation of the integrated stochastic volatility in the presence of market micro-structure noise, where the data have to be subsampled at an appropriate rate \cite{AMZ05,ZMA05}. The correct subsampling rate can be in some instances rather extreme with respect to the frequency of the data and lead to get rid of more than $99\%$ of the data. As the intuition suggests, this increases significantly the bias of the estimator, which is usually taken care of with additional bias corrections and variance reduction procedures.
+
+The necessity to subsample the data can be alleviated by using appropriate martingale estimators, as was done in \cite{KPK13,KKP15}. This class of estimators can be applied to the case where the noise is multiplicative and also given by a deterministic chaotic system, as opposed to white noise. Estimators of this family have been applied to time series from paleoclimatic data and marine biology and augmented with appropriate model selection methodologies \cite{KPP15}.
+
+In this paper, we bypass the issue of subsampling by implementing an appropriate filtering methodology. In particular, we show that smoothing the data coming from the multiscale model with an appropriate linear time-invariant filter of the exponential family allows to retrieve the drift coefficient of the homogenized equation. The methodology we present is not involved computationally, easy to implement in practice and presents two main advantages:
+\begin{enumerate}
+	\item the filter's kernel depends on two parameters which can be tuned to obtain more robust results and which can be interpreted as analogous to the subsampling rate. Nevertheless, while the MLE is extremely sensitive with respect to the latter, changing the filter parameters does not have a strong influence on the result, therefore allowing our technique to be applied as a black-box tool for parameter estimation,
+	\item the entire stream of data is employed, which, in practice, enhances the quality of the filter-based MLE in terms of bias. Moreover, avoiding subsampling and thus discretising the data allows us to employ continuous-time theoretical tools.
+\end{enumerate}
+
+It is natural to reinterpret the problem of inferring the drift parameter of multiscale diffusion processes under a Bayesian perspective \cite{PSV09,PSZ13}. In particular, the form of the likelihood function guarantees, under a Gaussian prior hypothesis, that the posterior distribution is itself a Gaussian. Therefore, one can simply compute the mean and covariance of the posterior distribution to obtain a full uncertainty quantification of the inference process. The Bayesian approach has been adopted in several works concerning single and multiscale PDEs, too, and has proved itself to be versatile and efficient in this framework (see, e.g., \cite{AbD18, AGZ19}). Moreover, infinite-dimensional inverse problems are intrinsically ill-posed, and interpreting them in a Bayesian manner is an efficient tool for regularizing them and guaranteeing their well-posedness \cite{Stu10, DaS16}. The regularization property of a Bayesian approach has been recently demonstrated for inverse problems involving multiscale PDEs \cite{AbD18}. In this work, we investigate the effects of inserting our filtering methodology in a Bayesian framework. In particular, we analyse the effects of modifying the likelihood function inserting the filtered trajectory, showing how this corrects the faulty asymptotic behaviour which would be present in case no pre-processing would be applied.
+
+The rest of the paper is organised as follows. In Section \ref{sec:Setting} we introduce the problem and lay the basis of our analysis setting the main assumptions and notation. In Section \ref{sec:Filter} we present our filtering methodology, with a particular focus on ergodic properties, on multiscale convergence and, naturally, on the properties of our estimators. In Section \ref{sec:Bayesian} we introduce the Bayesian framework and show how it can be enhanced with filtering techniques. Finally, in Section \ref{sec:NumExp} we demonstrate the effectiveness of our methodology via a series of numerical experiments.
+
+\section{Problem setting}\label{sec:Setting}
+
+In this section, we introduce the class of diffusion processes which we treat in this paper and the classical methodology employed for the estimation of the drift. Let $\epl > 0$ and let us consider the one-dimensional multiscale stochastic differential equation (SDE)
+\begin{equation}\label{eq:SDE_MS}
+	\d X_t^\epl = -\alpha \cdot V'(X_t^\epl) \dd t - \frac1\epl p'\left(\frac{X_t^\epl}\epl\right) \dd t + \sqrt{2\sigma} \dd W_t,
+\end{equation}
+where, given a positive integer $N$, we have that $\alpha \in \R^N$ and $\sigma > 0$ are the drift and diffusion coefficients respectively and $W_t$ is a standard one-dimensional Brownian motion. The functions $V\colon \R \to \R^N$ and $p\colon \R \to \R$ correspond to the slow-scale and the fast-scale confining potentials. In particular, we assume 
+\begin{equation}\label{eq:Potential}
+	V(x) = \begin{pmatrix} V_1(x) & V_2(x) & \cdots & V_N(x) \end{pmatrix}^\top,
+\end{equation}
+for smooth functions $V_i\colon \R \to \R$, $i = 1, \ldots, N$. Moreover, we assume $p$ to be smooth and periodic of period $L$. Theory of homogenization \cite[Chapter 3]{BLP78} guarantees the existence of an SDE of the form
+\begin{equation}\label{eq:SDE_HOM}
+	\d X_t = - A \cdot V'(X_t) \dd t + \sqrt{2\Sigma} \dd W_t,
+\end{equation}
+where $W_t$ is the same Brownian motion as in \eqref{eq:SDE_MS}, such that $X_t^\epl \to X_t$ for $\epl\to 0$ in law as random variables in $\mathcal C^0([0, T]; \R)$. In particular, we have $A = K\alpha$ and $\Sigma = K \sigma$, where the coefficient $K$ is given by the formula
+\begin{equation}\label{eq:K_HOM}
+	K = \int_0^L (1 + \Phi'(y))^2 \, \mu(\d y),
+\end{equation}
+with 
+\begin{equation}
+	\mu(\d y) = \frac1Z e^{-p(y)/\sigma} \dd y, \quad\text{where}\quad Z = \int_0^L e^{-p(y)/\sigma} \dd y,
+\end{equation}
+and where the function $\Phi$ is the unique solution with zero-mean with respect to the measure $\mu$ of the elliptic partial differential equation
+\begin{equation}
+	-p'(y)\Phi'(y) + \sigma \Phi''(y) = p'(y), \quad 0 \leq y \leq L,
+\end{equation}
+endowed with periodic boundary conditions.
+
+We now briefly present the classical methodology for estimating the drift coefficient. Let $T > 0$ and let $X^\epl \defeq (X^\epl_t, 0\leq t \leq T)$ be a realization of the solution of \eqref{eq:SDE_MS} up to final time. Girsanov's change of measure formula applied to \eqref{eq:SDE_HOM} allows to write the likelihood of $X^\epl$ given a drift coefficient $A$ as
+\begin{equation}\label{eq:Likelihood}
+p(X^\epl \mid A) = \exp\left(-\frac{I(X^\epl\mid A)}{2\Sigma} \right), 
+\end{equation}
+where 
+\begin{equation}
+I(X^\epl \mid A) = \int_0^T A \cdot V'(X^\epl_t) \dd X^\epl_t + \frac12 \int_0^T \left( A \cdot V'(X^\epl_t) \right)^2 \dd t.
+\end{equation}
+Minimizing the functional $I(X^\epl \mid A)$ with respect to $A$ therefore gives the maximum likelihood estimator (MLE) of $A$, which can be formally computed in closed form as
+\begin{equation}\label{eq:MLE}
+	\widehat A^\epl(T) \defeq \arg \min_{A \in \R^N} I(X^\epl \mid A) = M^{-1}h,
+\end{equation}
+where $M\in\R^{N\times N}$ and $h\in\R^N$ are defined as
+\begin{equation}\label{eq:MandH}
+M = \frac1T \int_0^T V'(X^\epl_t) \otimes V'(X^\epl_t) \dd t, \quad h = \frac1T \int_0^T V'(X^\epl_t) \dd X^\epl_t,
+\end{equation}
+and where $\otimes$ denotes the outer product in $\R^N$. Let us now state the assumptions which will be employed throughout the rest of our work. In particular, we consider the same dissipative setting as \cite[Assumption 3.1]{PaS07}.
+\begin{assumption}\label{as:regularity} The potentials $p$ and $V$ satisfy
+	\begin{enumerate}
+		\item $p \in \mathcal C^\infty(\R) \cap L^\infty(\R)$ and is $L$-periodic for some $L > 0$,
+		\item\label{as:regularity_diss} $V_i \in \mathcal C^\infty(\R)$ for all $i=1, \ldots, N$ is polynomially bounded from above and bounded from below, and there exist $a,b > 0$ such that
+		\begin{equation}
+		-\sum_{i=1}^N V_i'(x)x \leq a - bx^2.
+		\end{equation} 
+		\item $V'$ is Lipschitz continuous, i.e. there exists a constant $C > 0$ such that
+		\begin{equation}
+			\norm{V'(x) - V'(y)}_2 \leq C\abs{x - y},
+		\end{equation} 
+		\item for all $T > 0$, the symmetric matrix $M$ is positive definite and there exists $\bar \lambda > 0$ such that $\lambda_{\min}(M) \geq \bar \lambda$.
+	\end{enumerate}
+\end{assumption}
+
+Under these assumptions, the MLE given in \eqref{eq:MLE} is indeed the unique minimizer of the likelihood function, as shown in \cite[Theorem 2.4]{PSV09}.
+
+Given the convergence of $X^\epl_t \to X_t$ in the space of continuous stochastic processes, one would expect that the MLE \eqref{eq:MLE} would be asymptotically unbiased for the drift coefficient $A$ of the homogenized equation \eqref{eq:SDE_HOM}. Instead, it is possible to prove that in the asymptotic limit for $T \to \infty$ and $\epl \to 0$, the MLE tends to the drift coefficient $\alpha$ of the unhomogenized equation \eqref{eq:SDE_MS}. We report here this result, whose proof can be found for the case $N = 1$ in \cite[Theorem 3.4]{PaS07}. Let us remark that the proof for $N > 1$ follows directly from the one-dimensional case.
+
+\begin{theorem}\label{thm:Bias} Let Assumption \ref{as:regularity} hold and let $X^\epl_0$ be distributed according to the invariant measure of the process $X^\epl$ solution of \eqref{eq:SDE_MS}. Then
+	\begin{equation}
+		\lim_{\epl \to 0}\lim_{T \to \infty} \widehat A^\epl(T) = \alpha, \quad \text{a.s.},
+	\end{equation}
+	where $\alpha$ is the drift coefficient of equation \eqref{eq:SDE_MS}.
+\end{theorem}
+
+As anticipated in the introduction, the main tool for obtaining unbiased estimators in the literature is subsampling the data. In particular, let the dimension of the parameter $N = 1$, let $\delta > 0$ and let $T = n\delta$ with $n$ a positive integer. Then, a subsampled estimator for $A$ is given by
+\begin{equation}
+	\widehat A^\epl_\delta(T) = - \frac{\sum_{j=0}^{n-1} V'(X^\epl_{j\delta})\left(X^\epl_{(j+1)\delta} - X^\epl_{j\delta}\right)}{\delta \sum_{j=0}^{n-1} V'(X^\epl_{j\delta})^2},
+\end{equation}
+which is a discretized version of $\widehat A^\epl(T)$. It is possible to show \cite[Theorem 3.5]{PaS07} that choosing $\delta = \epl^\zeta$ with $\zeta \in (0, 1)$ and if $T$ is sufficiently big, then $\widehat A^\epl_\delta(T)$ is an asymptotically unbiased estimator of $A$ with respect to $T \to \infty$ and $\epl \to 0$, in probability. Despite being widely employed in practice, estimators based on subsampling present some drawbacks, as discussed in the introduction. In the following, we will introduce and analyse a novel approach for the drift estimation.
+
+\begin{remark} Let us remark that for enhancing the clarity of the exposition, in this article we chose to focus on the case of a multi-dimensional parameter in the setting of one-dimensional diffusion processes. In fact, all the theory we present in the following could be generalized to the case of $d$-dimensional SDEs equivalent to \eqref{eq:SDE_MS}, which can be written as
+	\begin{equation}
+		\d X_t^\epl = - \sum_{i=1}^N \alpha_i \nabla V_i(X_t^\epl) \dd t - \frac1\epl \nabla p\left(\frac{X_t^\epl}{\epl}\right) \dd t + \sqrt{2\sigma} \dd W_t,
+	\end{equation}
+	where $W_t$ is a standard $d$-dimensional Brownian motion. The proof of all results below should be slightly modified, but we verified that all arguments still hold true in the $d$-dimensional case. 
+\end{remark}
+
+\section{The filtering approach}\label{sec:Filter}
+
+In this section, we introduce and analyse a novel filtering approach to solve the biasedness issue highlighted by Theorem \ref{thm:Bias}. Let $\beta, \delta > 0$ and let us consider a family of exponential kernel functions $k \colon \R^+ \to \R$ defined as
+\begin{equation}\label{eq:filter}
+k(r) = C_\beta \delta^{-1/\beta} e^{-r^\beta/\delta},
+\end{equation}
+where $C_{\beta}$ is a normalizing constant given by
+\begin{equation}
+C_\beta = \beta \, \Gamma(1/\beta)^{-1},
+\end{equation}
+and where $\Gamma(\cdot)$ is the gamma function. We consider the process $Z^\epl \defeq (Z^\epl_t, 0 \leq t \leq T)$ defined by the weighted average
+\begin{equation}\label{eq:ZDef}
+	Z^{\epl}_t \defeq \int_0^t k(t - s)X^\epl_s \dd s.
+\end{equation}
+The process $Z^\epl$ can be interpreted as a smoothed version of the original trajectory $X^\epl$. In fact, in the field of signal processing the kernel \eqref{eq:filter} belongs to the class of low-pass linear time-invariant filters, which cut the high frequencies in a signal to highlight its slowest components. In the following, only in case $\beta = 1$ a rigorous analysis is carried on. Nonetheless, numerical experiments show that for higher values of $\beta$ the performances of estimators computed employing the filter are more robust and qualitatively better. 
+
+\begin{remark} Given a trajectory $X^\epl$, it is relatively inexpensive to compute $Z^\epl$ from a computational standpoint. In particular, the process $Z^\epl$ is the truncated convolution of the kernel with the process $X^\epl$. Hence, computational tools based on the Fast Fourier Transform (FFT) exist and allow to compute $Z^\epl$ fast component-wise. Moreover, the process $Z^\epl$ can be computed, in case $\beta = 1$, in a recursive manner and therefore ``online''.
+\end{remark}
+
+In the rest of this section we will focus on the properties of the process $Z^\epl$ when it is considered together with the original process $X^\epl$. In particular, we focus on ergodic properties and multiscale convergence. Finally, we present and analyse unbiased estimators obtained with the filtering process.
+
+\subsection{Ergodic properties of the filter}\label{sec:ergodic}
+
+Let us consider the filtering kernel \eqref{eq:filter} with $\beta = 1$, i.e.,
+\begin{equation}\label{eq:filter_beta1}
+	k(r) = \frac{1}{\delta} e^{-r/\delta}.
+\end{equation}
+In this case, Leibniz integral rule yields the equality
+\begin{equation}
+	\d Z^\epl_t = k(0) X^\epl_t \dd t + \int_0^t k'(t-s) X^\epl_s \dd s \dd t = \frac{1}{\delta} \left ( X^\epl_t - Z^\epl_t \right ) \dd t,
+\end{equation}
+which can be interpreted as an ordinary differential equation for $Z_t^\epl$ driven by the stochastic signal $X^\epl$. Considering the processes $X^\epl$ and $Z^\epl$ together, we obtain the system of two one-dimensional SDEs
+\begin{equation}
+\label{eq:systemSDE}
+\begin{aligned}
+\d X_t^\epl &= -\alpha \cdot V'(X_t^\epl) \dd t - \frac1\epl p'\left(\frac{X_t^\epl}\epl\right) + \sqrt{2\sigma} \dd W_t, \\
+\d Z^\epl_t &= \frac{1}{\delta} \left ( X^\epl_t - Z^\epl_t \right ) \dd t.
+\end{aligned}
+\end{equation}
+The first ingredient for verifying the ergodic properties of the two-dimensional process $(X^\epl, Z^\epl)^\top \defeq ((X^\epl_t, Z^\epl_t)^\top, 0 \leq t \leq T)$ is verifying that the measure induced by the stochastic process admits a smooth density with respect to the Lebesgue measure. Since noise is present only on the first component, this is a consequence of the theory of hypo-ellipticity, as summarized in the following Lemma.
+
+\begin{lemma}\label{lem:density} Let $(X^\epl, Z^\epl)^\top$ be the solution of \eqref{eq:systemSDE} and let $\mu^\epl_t$ be the measure induced by the couple at time $t$. Then, the measure $\mu^\epl_t$ admits a smooth density $\rho^\epl_t$ with respect to the Lebesgue measure.
+\end{lemma}
+
+\begin{proof} We have to show that the joint process solution to \eqref{eq:systemSDE} is hypo-elliptic. Denoting as $f\colon \R \to \R$ the function 
+	\begin{equation}
+		f(x) = -\alpha \cdot V'(x) - \frac1\epl p'\left(\frac{x}\epl\right),
+	\end{equation}
+	the generator of the process $(X^\epl, Z^\epl)^\top$ is given by
+	\begin{equation}
+		\mathcal L = f \partial_x + \sigma \partial_{xx}^2 + \frac1\delta (x - z)\partial_z \eqdef \mathcal X_0 + \sigma \mathcal X_1^2, 
+	\end{equation}
+	where 
+	\begin{equation}
+		\mathcal X_0 = f \partial_x + \frac1\delta (x - z)\partial_z, \quad \mathcal X_1 = \partial_x.
+	\end{equation}
+	The commutator $[\mathcal X_0, \mathcal X_1]$ applied to a test function $v$ then gives
+	\begin{equation}
+	\begin{aligned}
+		[\mathcal X_0, \mathcal X_1]v &= f \partial_x^2 v + \frac1\delta (x - z) \partial_x \partial_z v  - \partial_x\left(f\partial_x v + \frac1\delta (x - z)\partial_z v\right)\\
+		&= -\partial_x f \partial_x v - \frac1\delta \partial_z v.
+	\end{aligned}
+	\end{equation}
+	Consequently, 
+	\begin{equation}
+		\mathrm{Lie}\left(\mathcal X_1, [\mathcal X_0, \mathcal X_1]\right) = \mathrm{Lie} \left(\partial_x, -\partial_x f \partial_x - \frac1\delta\partial_z\right),
+	\end{equation}
+	which spans $T_x\R^2$. The desired result then follows from Hörmander's theorem (see e.g. \cite[Chapter 6]{Pav14}).
+\end{proof}
+
+Once it is established that the law of the process admits a smooth density for all times $t>0$, which satisfies a time-dependent Fokker--Planck equation, we are interested in the limiting properties of this law. In particular, we know that the process $X^\epl$ alone is geometrically ergodic \cite[Theorem 4.4]{MSH02}, and we wish the couple $(X^\epl, Z^\epl)^\top$ to be endowed with the same property. The following Lemma guarantees that the couple is indeed geometrically ergodic exploiting an argument of dissipativity. 
+
+\begin{lemma}\label{lem:ergodicity} Let Assumption \ref{as:regularity} hold and let $b > 0$ be given in Assumption \ref{as:regularity}\ref{as:regularity_diss}. Then, if $\delta > 1/(4b)$, the process $(X^\epl, Z^\epl)^\top$ solution of \eqref{eq:systemSDE} is geometrically ergodic, i.e., there exists $C, \lambda > 0$ such that for all measurable $f\colon \R^2\to \R$ such that for some integer $q > 0$ 
+	\begin{equation}
+		f(x, z) \leq 1 + \norm{\begin{pmatrix} x & z \end{pmatrix}^\top}_2^q,
+	\end{equation}
+	it holds
+	\begin{equation}
+		\abs{\E f(X^\epl_t, Z^\epl_t) - \int_\R\int_\R f(x, z) \rho^\epl(x, z) \dd x \dd z} \leq C\left(1 + \norm{\begin{pmatrix} X^\epl_0 & Z^\epl_0 \end{pmatrix}^\top}_2^q \right)e^{-\lambda t},
+	\end{equation}
+	where $\E$ denotes expectation with respect to the Wiener measure and $\rho^\epl$ is the solution to the stationary Fokker--Planck equation
+	\begin{equation}
+	\label{eq:FPsystem}
+	\sigma \partial^2_{xx} \rho^\epl(x,z) +  \partial_x \left( \left( \alpha \cdot V'(x) + \frac{1}{\epl} p' \left ( \frac{x}\epl \right ) \right ) \rho^\epl(x,z) \right) + \frac{1}{\delta} \partial_z \left((z - x) \rho^\epl(x,z)\right) = 0.
+	\end{equation}
+\end{lemma}
+
+\begin{proof} Lemma \ref{lem:density} guarantees that the Fokker--Planck equation can be written directly from the system \eqref{eq:systemSDE}. For geometric ergodicity, let 
+\begin{equation}
+	 \mathcal S(x,z) \defeq \begin{pmatrix} -\sum_{i=1}^N V_i'(x) \\ \frac1\delta (x - z) \end{pmatrix} \cdot \begin{pmatrix} x \\ z \end{pmatrix} = -\sum_{i=1}^N V_i'(x)x+\frac1\delta(xz-z^2).
+\end{equation}
+Due to Assumption \ref{as:regularity}\ref{as:regularity_diss} and Young's inequality, we then have for all $\gamma > 0$
+\begin{equation}
+	\mathcal S(x,z) \leq a + \left(\frac{1}{2\gamma\delta} - b\right)x^2 + \frac1\delta\left(\frac{\gamma}{2} - 1\right)z^2.
+\end{equation}
+We choose $\gamma = \gamma^* \defeq 1 - b\delta + \sqrt{1 + (1 - b\delta)^2} > 0$ so that
+\begin{equation}
+	C(\gamma^*) \defeq -\frac{1}{2\gamma^*\delta} + b = -\frac1\delta\left(\frac{\gamma^*}{2} - 1\right),
+\end{equation}
+and we notice that $C(\gamma^*) > 0$ if $\delta > 1/(4b)$. In this case, we have
+\begin{equation}
+	\mathcal S(x, z) \leq a - C(\gamma^*) \norm{\begin{pmatrix} x & z \end{pmatrix}^\top}^2,
+\end{equation}
+and problem \eqref{eq:systemSDE} is dissipative. The result then follows from \cite[Theorem 4.4]{MSH02}.
+\end{proof}
+
+\begin{remark} Let us remark that for the multiscale equation \eqref{eq:SDE_MS} one should check the condition above for the potential $V(x) + p(x/\epl)$. Nevertheless, for functions $p$ satisfying Assumption \ref{as:regularity}, the result holds trivially.  
+\end{remark}
+
+\begin{remark} The condition $\delta > 1 / (4b)$ is not very restrictive. Let the parameter dimension $N = 1$ and let $V(x) \propto x^{2p}$ for an integer $p > 1$. Then, Assumption \ref{as:regularity}\ref{as:regularity_diss} holds for an arbitrarily large $b > 0$. Therefore, the parameter of the filter $\delta$ can be chosen along the entire positive real axis. A similar argument can be employed for higher dimensions $N > 1$.
+\end{remark}
+
+\begin{example}\label{ex:OrnUhl} A closed form solution of \eqref{eq:FPsystem} can be obtained in a simple homogenized case with the dimension of the parameter $N=1$. Let $p(y) = 0$ and the parameters $\alpha$, $\sigma$ be replaced respectively by $A$ and $\Sigma$. Then, if $V(x) = x^2/2$, equation \eqref{eq:FPsystem} has the analytical solution 
+\begin{equation}
+\rho^0(x,z) = \frac{1}{C_{\rho^0}} \exp\left(-\frac{A}{\Sigma} \frac{x^2}{2} - \frac{1}{\delta \Sigma} \frac{(x - (1+A \delta)z)^2}{2}\right),
+\end{equation}
+where
+\begin{equation}
+C_{\rho^0} = \int_{\R} \int_{\R} \exp\left(-\frac{A}{\Sigma} \frac{x^2}{2} - \frac{1}{\delta \Sigma} \frac{(x - (1+A \delta)z)^2}{2}\right) \dd x \dd z.
+\end{equation}
+This is the density of a multivariate normal distribution $\mathcal N(0, \Gamma)$, where the covariance matrix is given by
+\begin{equation}
+\Gamma = \frac{\Sigma}{A (1 + A\delta)} \begin{pmatrix} 1+A\delta & 1 \\ 1 & 1 \end{pmatrix}.
+\end{equation}
+Let us remark that this distribution can be obtained from direct computations involving Gaussian processes. In particular, it is known that $X \sim \mathcal{GP}(\mu_t, \mathcal C(t, s))$, where at stationarity $\mu_t = 0$ and
+\begin{equation}
+	\mathcal C(t, s) = \frac{\Sigma}{A} e^{-A|t-s|}.
+\end{equation}
+The basic properties of Gaussian processes imply that $Z$ is a Gaussian process, and that the couple $(X, Z)^\top$ is a Gaussian process, too, whose mean and covariance are computable explicitly.
+\end{example}
+
+In a general case, it is not possible to find an explicit solution to \eqref{eq:FPsystem}. Nevertheless, it is possible to show some relevant properties of the solution itself, which are summarized in the following Lemma.
+
+\begin{lemma}\label{lem:FPMarginal} Under the assumptions of Lemma \ref{lem:ergodicity}, let $\rho^\epl$ be the solution of \eqref{eq:FPsystem} and let us write 
+\begin{equation}\label{eq:densityDecomposition}
+	\rho^\epl(x, z) = \phi^\epl(x)\psi^\epl(z)R^\epl(x,z),
+\end{equation}
+where $\phi^\epl$ and $\psi^\epl$ are the marginal densities of $X^\epl$ and $Z^\epl$ respectively, i.e., 
+\begin{equation}
+	\phi^\epl(x) = \int_{\R} \rho^\epl(x,z) \dd z, \quad  \psi^\epl(z) = \int_{\R} \rho^\epl(x,z) \dd x.
+\end{equation}
+Then, it holds
+\begin{equation}\label{eq:marginalX}
+	\phi^\epl(x) = \frac{1}{C_{\phi^\epl}} \exp\left(-\frac{1}{\sigma} \alpha \cdot V(x) - \frac{1}{\sigma} p \left ( \frac{x}\epl \right )\right),
+\end{equation}
+where
+\begin{equation}
+	C_{\phi^\epl} = \int_{\R} \exp\left(-\frac{1}{\sigma} \alpha \cdot V(x) - \frac{1}{\sigma} p \left ( \frac{x}\epl \right )\right) \dd x.
+\end{equation}
+Moreover, it holds
+\begin{equation}
+	\sigma \delta \int_{\R} \int_{\R} V'(z) \phi^\epl(x) \psi^\epl(z) \partial_x R^\epl(x,z) \dd x \dd z = \E^{\rho^\epl}[((X^\epl)^2 - (Z^\epl)^2)V''(Z^\epl)].
+\end{equation}
+\end{lemma}
+
+\begin{proof} Integrating equation \eqref{eq:FPsystem} with respect to $z$ we obtain the stationary Fokker--Planck equation for the process $X^\epl$, i.e.
+\begin{equation}
+\label{FPx}
+	\sigma (\phi^\epl)''(x) + \frac{\d}{\d x} \left( \left ( \alpha \cdot V'(x) + \frac{1}{\epl} p' \left ( \frac{x}\epl \right ) \right ) \phi^\epl(x)\right) = 0,
+\end{equation}
+whose solution is given by
+\begin{equation}
+\phi^\epl(x) = \frac{1}{C_{\phi^\epl}} \exp\left(- \frac{1}{\sigma} \alpha \cdot V(x) - \frac{1}{\sigma} p \left ( \frac{x}\epl \right )\right),
+\end{equation}
+and which proves \eqref{eq:marginalX}. By integrating equation \eqref{eq:FPsystem} with respect to $x$ and integrating by parts we obtain
+\begin{equation}
+\psi^\epl(z) + z (\psi^\epl)'(z) = \frac{\d}{\d z} \int_{\R} x \rho^\epl(x,z) \dd x,
+\end{equation}
+which can be written as
+\begin{equation}
+	\frac{\d}{\d z} (z \psi^\epl(z)) = \frac{\d}{\d z} \int_{\R} x \rho^\epl(x,z) \dd x.
+\end{equation}
+Now, since $\psi^\epl$ is the density of a probability distribution, this implies that 
+\begin{equation}\label{FPz}
+z \psi^\epl(z) = \int_{\R} x \rho^\epl(x,z) \dd x,
+\end{equation}
+which, replacing the decomposition \eqref{eq:densityDecomposition}, yields
+\begin{equation} \label{eq:z_condition}
+z = \int_{\R} x \phi^\epl(x) R^\epl(x,z) \dd x.
+\end{equation}
+In view of \eqref{eq:densityDecomposition} and \eqref{FPx}, equation \eqref{eq:FPsystem} can be rewritten as
+\begin{equation}\label{eq:psiEqualityPDE}
+\sigma \phi^\epl \psi^\epl \partial^2_{xx} R^\epl + \frac{1}{\delta} \phi^\epl \psi^\epl R^\epl + \sigma (\phi^\epl)' \psi^\epl \partial_x R^\epl + \frac{1}{\delta} (z-x) \phi^\epl ((\psi^\epl)' R + \psi^\epl \partial_z R^\epl) = 0.
+\end{equation}
+We now multiply the equation above by $x$ and integrate with respect to $x$. Let us consider some simplifications explicitly. First, an integration by parts yields
+\begin{equation}\label{eq:psiEqualityPDE_1}
+\begin{aligned}
+	\sigma \psi^\epl \int_{\R}  x \phi^\epl \partial^2_{xx} R^\epl \dd x+ \sigma \psi^\epl \int_{\R} x (\phi^\epl)' \partial_x R^\epl \dd x &= -\sigma \psi^\epl \int_{\R} \phi^\epl \partial_x R^\epl \dd x.
+\end{aligned}
+\end{equation}
+Then, applying \eqref{eq:z_condition}, we have
+\begin{equation}\label{eq:psiEqualityPDE_2}
+	\frac1\delta \psi^\epl \int_{\R} x \phi^\epl  R^\epl \dd x = \frac1\delta z \psi^\epl.
+\end{equation}
+Moreover, again applying \eqref{eq:z_condition}, we can compute
+\begin{equation}\label{eq:psiEqualityPDE_3}
+\begin{aligned}
+	\frac1\delta (\psi^\epl)' \int_\R (z-x)x \phi^\epl  R \dd x = \frac1\delta (\psi^\epl)' \left(z^2 - \int_{\R} x^2 \phi^\epl R^\epl \dd x\right).
+\end{aligned}
+\end{equation}
+Finally, we compute the last term always applying \eqref{eq:z_condition} obtaining
+\begin{equation}\label{eq:psiEqualityPDE_4}
+	\frac1\delta \psi^\epl \int_\R (z-x)x \phi^\epl \partial_z R \dd x = \frac1\delta \psi^\epl\left(z - \int_{\R} x^2 \phi^\epl \partial_z R^\epl \dd x\right).
+\end{equation}
+Replacing the equalities \eqref{eq:psiEqualityPDE_1}, \eqref{eq:psiEqualityPDE_2}, \eqref{eq:psiEqualityPDE_3} and \eqref{eq:psiEqualityPDE_4} into \eqref{eq:psiEqualityPDE} we obtain
+\begin{equation}
+(\psi^\epl)' \left ( z^2 - \int_{\R} x^2 \phi^\epl R^\epl \dd x \right ) + \psi^\epl \left ( 2z - \int_{\R} x^2 \phi^\epl \partial_z R^\epl \dd x - \delta \sigma \int_{\R} \phi^\epl \partial_x R^\epl \dd x \right ) = 0.
+\end{equation}
+We rewrite the equality above as
+\begin{equation} \label{eq:psiEquality}
+\delta \sigma \psi^\epl(z) \int_{\R} \phi^\epl(x) \partial_x R^\epl(x, z) \dd x = 
+\begin{aligned}[t] &(\psi^\epl)'(z) z^2 - (\psi^\epl)'(z) \int_{\R} x^2 \phi^\epl(x) R^\epl(x, z) \dd x \\
+& + 2 \psi^\epl(x) z - \psi^\epl \int_{\R} x^2 \phi^\epl(x) \partial_z R^\epl(x, z) \dd x.
+\end{aligned}
+\end{equation}
+Multiplying by $V'(z)$, integrating with respect to $z$ and integrating by parts, we obtain the following identity in $\R^N$
+\begin{equation}
+\begin{aligned}
+\sigma \delta \int_{\R} \int_{\R} V'(z) \phi^\epl(x) \psi^\epl(z) \partial_x R^\epl(x,z) \dd x \dd z &=  \int_{\R} \int_{\R} (x^2 - z^2) V''(z) \rho_\epl(x,z) \dd x \dd z \\
+&= \E^{\rho^\epl}[((X^\epl)^2 - (Z^\epl)^2)V''(Z^\epl)],
+\end{aligned}
+\end{equation}
+which is the desired result.
+\end{proof}
+
+\subsection{Multiscale convergence}\label{sec:convMS}
+
+We now investigate the convergence of the couple $(X^\epl, Z^\epl)^\top$ with respect to the multiscale parameter $\epl \to 0$. In particular, it is known that the invariant measure of $X^\epl$ converges weakly to the invariant measure of $X$ solution of the homogenized equation \eqref{eq:SDE_HOM}. The following result guarantees the same kind of convergence for the couple $(X^\epl, Z^\epl)^\top$.
+
+\begin{lemma}\label{lem:convMeasure} Under Assumption \ref{as:regularity}, let $\mu^\epl$ be the invariant measure of the couple $(X^\epl, Z^\epl)^\top$ and let $(X_0^\epl, Z_0^\epl)^\top \sim \mu^\epl$. Then, the measure $\mu^\epl$ converges weakly to the measure $\mu^0(\d x, \d z) = \rho^0(x, z) \dd x \dd z$, whose density $\rho^0$ is the unique solution of the Fokker--Planck equation
+\begin{equation} \label{eq:FPsystem_homogenized}
+	\Sigma \partial^2_{xx} \rho^0(x,z) + \partial_x\left( A \cdot V'(x) \rho^0(x,z) \right) + \frac{1}{\delta}\partial_z\left((z - x) \rho^0(x,z) \right) = 0,
+\end{equation}
+where $A$ and $\Sigma$ are the coefficients of the homogenized equation \eqref{eq:SDE_HOM}.
+\end{lemma}
+\begin{proof} Let $(X, Z)^\top \defeq \left((X_t, Z_t)^\top, 0\leq t \leq T\right)$ be the solution of
+	\begin{equation}
+	\label{eq:systemSDEHom}
+	\begin{aligned}
+		\d X_t &= -A \cdot V'(X_t) \dd t + \sqrt{2\Sigma} \dd W_t, \\
+		\d Z_t &= \frac{1}{\delta} \left ( X_t - Z_t \right ) \dd t,
+	\end{aligned}
+	\end{equation} 
+	with $(X_0, Z_0)^\top \sim \mu^0$. The arguments of Section \ref{sec:ergodic} can be repeated to conclude that the invariant measure of $(X, Z)^\top$ admits a smooth density $\rho^0$ which satisfies \eqref{eq:FPsystem_homogenized}. Moreover, standard homogenization theory (see e.g. \cite[Chapter 3]{BLP78}) guarantees that $(X^\epl,Z^\epl)^\top \to (X,Z)^\top$ for $\epl \to 0$ in law as random variables with values in $\mathcal C^0([0, T]; \R^2)$. The Portmanteau theorem can be employed to conclude that the measure $\mu^\epl$ converges weakly to $\mu^0$ for $\epl \to 0$.
+\end{proof}
+
+We conclude this section presenting an analogous result to Lemma \ref{lem:FPMarginal} for the limit distribution.
+
+\begin{corollary}\label{lem:FPMarginal_Hom} Let $\rho^0$ be the solution of \eqref{eq:FPsystem_homogenized} and let us write 
+	\begin{equation}
+		\rho^0(x, z) = \phi^0(x)\psi^0(z)R^0(x,z),
+	\end{equation}
+	where $\phi^0$ and $\psi^0$ are the marginal densities, i.e., 
+	\begin{equation}
+		\phi^0(x) = \int_{\R} \rho^0(x,z) \dd z, \quad \psi^0(z) = \int_{\R} \rho^0(x,z) \dd x.
+	\end{equation}
+	Then, if $A$ and $\Sigma$ are the coefficients of the homogenized equation \eqref{eq:SDE_HOM}, it holds
+	\begin{equation}
+		\phi^0(x) = \frac{1}{C_{\phi^0}} \exp\left(- \frac1{\Sigma} A\cdot V(x)\right), \quad \text{where } \quad C_{\phi^0} = \int_{\R} \exp\left(- \frac1{\Sigma} A\cdot V(x) \right) \dd x.
+	\end{equation}
+	Moreover, it holds
+	\begin{equation}
+		\Sigma \delta \int_{\R} \int_{\R} V'(z) \phi^0(x) \psi^0(z) \partial_x R^0(x,z) \dd x \dd z = \E^{\rho^0}[(X^2 - Z^2)V''(Z)].
+	\end{equation}
+\end{corollary}
+\begin{proof} The proof is directly obtained from Lemma \ref{lem:FPMarginal} replacing $p(y)=0$ and $\alpha, \sigma$ by $A, \Sigma$ respectively. 
+\end{proof}
+
+\subsection{The filtering-based estimator}\label{sec:FilterMLE}
+
+We now consider the inference problem and propose our filtering-based estimator of the drift, which is formally given by the formula
+\begin{equation}\label{eq:AHatMixed}
+	\widehat A^\epl_k(T) = - \widetilde M^{-1} \widetilde h,
+\end{equation}
+where we employ the subscript $k$ for reference to the filter's kernel in \eqref{eq:filter}, and where
+\begin{equation}\label{eq:MandHTilde}
+	\widetilde M = \frac{1}{T} \int_0^T V'(Z^\epl_t) \otimes V'(X^\epl_t) \dd t, \qquad \text{and} \qquad \widetilde h = \frac{1}{T} \int_0^T V'(Z^\epl_t) \dd X^\epl_t.
+\end{equation}
+Let us remark that the formula above is obtained from \eqref{eq:MLE} by replacing only one instance of $X_t^\epl$ with $Z_t^\epl$ in both $M$ and $h$. In particular, it is fundamental for proving unbiasedness to keep in the definition of $h$ the differential of the original process $\d X^\epl_t$. Let us furthermore remark that $\widehat A^\epl_k(T)$ need not be the minimizer of some filtering-based likelihood function. In fact, if one were to replace $Z_t^\epl$ directly in \eqref{eq:Likelihood}, the symmetric part of the matrix $\widetilde M$ would appear and $\widehat A^\epl_k(T)$ would not be the minimizer. Therefore, the estimator $\widehat A^\epl_k(T)$ has to be thought of as a perturbation of $\widehat A^\epl(T)$, directly at the level of estimators and after the maximization procedure. The only theoretical guarantee which is still needed for the well-posedness of $\widehat A^\epl_k(T)$ is for $\widetilde M$ to be invertible, which we assume to be true and which we observed to hold in practice.
+
+%\begin{lemma}\label{lem:AHatWellPosed} Under Assumption \ref{as:regularity}, the matrix $\widetilde M$ defined in \eqref{eq:MandHTilde} is invertible a.s. 
+%\end{lemma}
+%\begin{proof} 
+%\todo: \corr{Idea. We don't need $\widetilde M$ to be symmetric positive definite (it is not) due to the comment just above the lemma. Nevertheless, if the functions $V_i'(x)$ are not such that the rows of $\widetilde M$ are identical for any $(X_t, Z_t)$, then the randomness in the entries should guarantee that $\det \widetilde M \neq 0$ with probability one. Still missing the (probably trivial) argument why this is true.}
+%\end{proof}
+
+We are now able to present the main result of unbiasedness of the filtering-based estimator.
+\begin{theorem}\label{thm:mainTheorem} Let the assumptions of Lemma \ref{lem:ergodicity} and Lemma \ref{lem:convMeasure} hold, and let $\widehat A^\epl_k(T)$ be defined in \eqref{eq:AHatMixed}. If $\widetilde M$ is invertible, then
+	\begin{equation}
+	\lim_{\epl \to 0} \lim_{T \to \infty} \widehat A_k^\epl(T) = A, \quad \text{a.s.},
+	\end{equation}
+	where $A$ is the drift coefficient of the homogenized equation \eqref{eq:SDE_MS}.
+\end{theorem}
+
+\begin{proof} Replacing the expression of $\d X^\epl_t$ into \eqref{eq:MandHTilde}, we get for $\widetilde h$
+\begin{equation}\label{Ahat_decomposition}
+\widetilde h = -\widetilde M \alpha - \frac{1}{T} \int_0^T \frac{1}{\epl} p' \left ( \frac{X^\epl_t}{\epl} \right ) V'(Z^\epl_t) \dd t + \frac{\sqrt{2\sigma}}{T} \int_0^T V'(Z^\epl_t) \dd W_t.
+\end{equation}
+Therefore, we have
+\begin{equation}\label{eq:alphaDecomposition}
+\begin{aligned}
+	\widehat A^\epl_k(T) &= \alpha + \frac{1}{T} \widetilde M^{-1} \int_0^T \frac{1}{\epl} p' \left ( \frac{X^\epl_t}{\epl} \right ) V'(Z^\epl_t) \dd t - \frac{\sqrt{2\sigma}}{T}  \widetilde M^{-1} \int_0^T V'(Z^\epl_t) \dd W_t\\
+	&\eqdef \alpha + I_1^\epl(T) - I_2^\epl(T).
+\end{aligned}
+\end{equation}
+We study the terms $I_1^\epl(T)$ and $I_2^\epl(T)$ separately. The ergodic theorem applied to $I_1^\epl(T)$ yields
+\begin{equation}\label{limit_estimator}
+\lim_{T \to \infty} I_1^\epl(T) = \E^{\rho^\epl} [V'(Z^\epl) \otimes V'(X^\epl)]^{-1} \E^{\rho^\epl} \left [ \frac{1}{\epl} p' \left ( \frac{X^\epl}{\epl} \right ) V'(Z^\epl) \right ], \quad \text{a.s.}
+\end{equation}
+Due to Lemma \ref{lem:FPMarginal} and integrating by parts, we have
+\begin{equation}
+\begin{aligned}
+	\E^{\rho^\epl} \left [ \frac{1}{\epl} p' \left ( \frac{X^\epl}{\epl} \right ) V'(Z^\epl) \right ] &= \int_{\R} \int_{\R} V'(z) \, \frac1\epl p' \left ( \frac{x}\epl \right ) \frac{1}{C_{\phi^\epl}} e^{- \frac{1}{\sigma} \alpha \cdot V(x)} e^{ - \frac{1}{\sigma} p \left ( \frac{x}\epl \right)} \psi^\epl(z) R^\epl(x,z) \dd x \dd z \\
+	&= -\sigma \int_{\R} \int_{\R} \frac{\d}{\d x}\left( e^{ - \frac{1}{\sigma} p \left ( \frac{x}\epl \right)} \right) \frac{1}{C_{\phi^\epl}} e^{- \frac{1}{\sigma} \alpha \cdot V(x)} V'(z) \psi^\epl(z) R^\epl(x,z) \dd x \dd z \\
+	&= \sigma \int_{\R} \int_{\R} \frac{1}{C_{\phi^\epl}} e^{ - \frac{1}{\sigma} p \left ( \frac{x}\epl \right)} \partial_x \left ( e^{- \frac{1}{\sigma} \alpha \cdot V(x)} R^\epl(x,z) \right ) V'(z) \psi^\epl(z) \dd x \dd z,
+\end{aligned}
+\end{equation}
+which implies
+\begin{align}
+	\E^{\rho^\epl} \left [ \frac{1}{\epl} p' \left ( \frac{X^\epl}{\epl} \right ) V'(Z^\epl) \right ] &= 
+	\begin{aligned}[t]
+		&- \left(\int_{\R} \int_{\R} V'(z) \otimes V'(x) \rho^\epl(x, z) \dd x \dd z\right) \alpha \\
+		&+\sigma \int_{\R} \int_{\R} V'(z) \phi^\epl(x) \psi^\epl(z) \partial_x R^\epl(x,z) \dd x \dd z 
+	\end{aligned}
+	\\
+	&= -  \E^{\rho^\epl} [ V'(Z^\epl) \otimes V'(X^\epl) ]\alpha + \sigma \int_{\R} \int_{\R} V'(z) \phi^\epl(x) \psi^\epl(z) \partial_x R^\epl(x,z) \dd x \dd z.
+\end{align}
+Replacing the equality above into \eqref{limit_estimator}, we obtain
+\begin{equation}
+\lim_{T \to \infty} I_1^\epl(T) = -\alpha + \E^{\rho^\epl} [ V'(Z^\epl) \otimes V'(X^\epl) ]^{-1} \sigma \int_{\R} \int_{\R} V'(z) \phi^\epl(x) \psi^\epl(z) \partial_x R^\epl(x,z) \dd x \dd z, \quad \text{a.s.}
+\end{equation}
+Due to Lemma \ref{lem:FPMarginal}, we therefore have
+\begin{equation}
+	\lim_{T \to \infty} I_1^\epl(T) = -\alpha + \frac1\delta \E^{\rho^\epl} [ V'(Z^\epl) \otimes V'(X^\epl) ]^{-1} \E^{\rho^\epl}[((X^\epl)^2 - (Z^\epl)^2)V''(Z^\epl)], \quad \text{a.s.}	
+\end{equation}
+We now pass to the limit as $\epl$ goes to zero and
+\begin{equation} \label{limit_estimator_2}
+	\lim_{\epl \to 0} \lim_{T \to \infty} I_1^\epl(T) = -\alpha + \frac1\delta \E^{\rho^0} [ V'(Z) \otimes V'(X) ]^{-1} \E^{\rho^0}[(X^2 - Z^2)V''(Z)], \quad \text{a.s.},
+\end{equation}
+where the function $\rho^0$ is the density of the limit invariant distribution for $\epl \to 0$, as in Lemma \ref{lem:convMeasure}. Due to Corollary \ref{lem:FPMarginal_Hom}, we have
+\begin{equation}\label{eq:final_result}
+	\frac{1}{\delta} \E^{\rho^0}[(X^2 - Z^2)V''(Z)] = \Sigma \int_{\R} \int_{\R} V'(z) \phi^0(x) \psi^0(z) \partial_x R^0(x,z) \dd x \dd z,
+\end{equation}
+and moreover, an integration by parts yields
+\begin{equation}
+\begin{aligned}
+	\frac{1}{\delta} \E^{\rho^0}[(X^2 - Z^2)V''(Z)] &= -\Sigma \int_{\R} \int_{\R} V'(z) (\phi^0)'(x) \psi^0(z) R^0(x,z) \dd x \dd z\\
+	&= -\Sigma \int_{\R} \int_{\R} V'(z) \frac{\d}{\d x} \left ( \frac{1}{C_{\phi^0}} e^{-\frac{1}{\Sigma} A\cdot V(x)} \right ) \psi^0(z) R^0(x,z) \dd x \dd z \\
+	&= \left(\int_{\R} \int_{\R} V'(z) \otimes V'(x) \rho^0(x,z) \dd x \dd z\right)A \\
+	&=  \E^{\rho^0} [ V'(Z) \otimes V'(X) ]A.
+\end{aligned}
+\end{equation}
+We can therefore conclude that
+\begin{equation}\label{eq:Proof_I1}
+\lim_{\epl \to 0} \lim_{T \to \infty} I_1^\epl(T) = -\alpha + A, \quad \text{a.s.}
+\end{equation}
+We now consider the second term $I_2^\epl(T)$, and rewrite it as
+\begin{equation}
+	I^\epl_2(T) = \sqrt{2\sigma} I_{2,1}^\epl(T)  I_{2,2}^\epl(T),
+\end{equation}
+where
+\begin{equation}
+\begin{aligned}
+	I_{2,1}^\epl(T) &\defeq \left(\frac{1}{T} \int_0^T V'(Z^\epl_t) \otimes V'(X^\epl_t) \dd t\right)^{-1}\left(\frac{1}{T} \int_0^T V'(Z^\epl_t) \otimes V'(Z^\epl_t) \dd t\right),\\
+	I_{2,2}^\epl(T) &\defeq \left(\frac{1}{T} \int_0^T V'(Z^\epl_t) \otimes V'(Z^\epl_t) \dd t\right)^{-1} \left(\frac1T \int_0^T V'(Z^\epl_t) \dd W_t\right).
+\end{aligned}
+\end{equation}
+The ergodic theorem yields
+\begin{equation}
+	\lim_{T \to \infty} I_{2,1}^\epl(T) = \E^{\rho^\epl}\left[V'(Z^\epl) \otimes V'(X^\epl)\right]^{-1}\E^{\rho^\epl}\left[V'(Z^\epl) \otimes V'(Z^\epl)\right] \eqdef R^\epl,
+\end{equation}
+where $R^\epl$ is bounded uniformly in $\epl$. Moreover, the strong law of large numbers for martingales implies
+\begin{equation}
+	\lim_{T \to \infty} I_{2,2}^\epl(T) = 0, \quad \text{a.s.},
+\end{equation}
+independently of $\epl$. Therefore
+\begin{equation}
+	\lim_{\epl \to 0}\lim_{T \to \infty} I_2^\epl(T) = 0, \quad \text{a.s.},
+\end{equation}
+which, together with \eqref{eq:Proof_I1} and \eqref{eq:alphaDecomposition}, proves the desired result.
+\end{proof}
+
+\subsection{A second filtering-based estimator}\label{sec:FilterMLE_2}
+
+In this section we consider a modification to the estimator \eqref{eq:AHatMixed}, which is defined as
+\begin{equation}\label{eq:AHatMixedTilde}
+	\widetilde A^\epl_k(T) = -M^{-1}\widetilde h,
+\end{equation}
+where the matrix $M$ is taken from \eqref{eq:MandH} and the vector $\widetilde{h}$ is taken from \eqref{eq:MandHTilde}. For this estimator we will be able to prove a result of unbiasedness under a condition on the filtering parameter $\delta$. Let us remark that for $\widehat A^\epl_k(T)$ we do not need any condition on this parameter. Nevertheless, this second estimator is the minimizer of a likelihood function unlike the first, and will therefore be used in the Bayesian framework. Let us start with an estimate concerning the distance between $X^\epl$ and $Z^\epl$. 
+
+\begin{lemma}\label{lem:distanceZandX} Under Assumption \ref{as:regularity}, let the couple $(X^\epl, Z^\epl)^\top$ be distributed as its invariant measure $\mu^\epl$. Then, if $\delta \leq 1$, it holds for any integer $p \geq 1$
+	\begin{equation}
+		\E^{\rho^\epl} \abs{X^\epl - Z^\epl}^{2p} \leq C\left(\epl^{2p} + \delta^p\right),
+	\end{equation}
+	for a constant $C > 0$ independent of $\epl$ and $\delta$.
+\end{lemma}
+\begin{proof} Let us first remark that the filtering kernel satisfies
+	\begin{equation}\label{eq:filterIntegral}
+		\int_0^t k(t-s) \dd s = 1 - e^{-t/\delta},
+	\end{equation}
+	which implies that the measure $\kappa_t(\d s)$ on $(0, t)$ defined as
+	\begin{equation}
+		\kappa_t(\d s) \defeq \frac{k(t-s)}{1 - e^{-t/\delta}} \dd s,
+	\end{equation}
+	is a probability measure. Let $X_t^\epl$ be at stationarity with respect to its invariant measure, which we recall having density denoted as $\phi^\epl$. Let $Z_t^\epl$ be the corresponding filtered process. By definition of $Z^\epl_t$ and due \eqref{eq:filterIntegral} we now have
+	\begin{equation}
+	\begin{aligned}
+		X_t^\epl - Z_t^\epl &= X_t^\epl - \int_0^t k(t-s) X_s^\epl \dd s\\
+		&= \int_0^t k(t - s) \left(X_t^\epl - X_s^\epl\right) \dd s + e^{-t/\delta} X^\epl_t\\
+		&= (1 - e^{-t/\delta})\int_0^t \left(X_t^\epl - X_s^\epl\right) \kappa_t(\d s) + e^{-t/\delta} X^\epl_t.
+	\end{aligned}
+	\end{equation}
+	Therefore, Jensen's inequalities yields for a constant $C > 0$ depending only on $p$
+	\begin{equation}
+	\begin{aligned}
+		\E^{\phi^\epl}\abs{X_t^\epl - Z_t^\epl}^{2p} &\leq C (1 - e^{-t/\delta})^{2p} \int_0^t \E^{\phi^\epl} \abs{X_t^\epl - X_s^\epl}^{2p} \kappa_t (\d s) + C e^{-2pt/\delta} \E^{\phi^\epl} \abs{X^\epl_t}^{2p}\\
+		&\leq C\int_0^t \E^{\phi^\epl} \abs{X_t^\epl - X_s^\epl}^{2p} k(t-s) \dd s + Ce^{-2pt/\delta} \E^{\phi^\epl} \abs{X^\epl_t}^{2p},
+	\end{aligned}
+	\end{equation}
+	where we replaced the definition of $\kappa(\d s)$ and exploited the fact that $1 - e^{-t/\delta}\leq 1$ for all $t \geq 0$. Due to \cite[Corollary 5.4]{PaS07}, we know that $X^\epl_t$ has bounded moments of all orders with respect to its invariant measure. Moreover, the estimate
+	\begin{equation}
+		\E^{\phi^\epl}\abs{X_t^\epl - X_s^\epl}^{2p} \leq C\left(\epl^{2p} + (t-s)^{2p} + (t-s)^p\right),
+	\end{equation}
+	holds for all $t > s$ due to \cite[Lemma 6.1]{PaS07}. Finally, it is possible to verify by induction on $r$ that for all integers $r$ it holds
+	\begin{equation}
+		\int_0^t k(t-s) (t - s)^r \dd s \leq r! \, \delta^r, 
+	\end{equation}
+	which implies that there exists a constant $C > 0$ depending only on $p$ such that
+	\begin{equation}
+		\E^{\phi^\epl}\abs{X_t^\epl - Z_t^\epl}^{2p} \leq C\left(\epl^{2p} + \delta^p + e^{-2pt/\delta}\right).
+	\end{equation}
+	Let us now remark that this result holds for $X_t^\epl$ being at stationarity and for $Z_t^\epl$ be its filtered process, and not for a couple $(X^\epl, Z^\epl)^\top \sim \mu^\epl$. In order to conclude, we remark that due to Lemma \ref{lem:ergodicity} we have for all $t \geq 0$ and for a constant $C$ depending on the initial condition and $p$  
+	\begin{equation}
+		\E^{\rho^\epl} \abs{X^\epl - Z^\epl}^{2p} \leq \E^{\phi^\epl}\abs{X_t^\epl - Z_t^\epl}^{2p} + Ce^{-\lambda t},
+	\end{equation}
+	which, for $t$ sufficiently big, yields
+	\begin{equation}
+		\E^{\rho^\epl} \abs{X^\epl - Z^\epl}^{2p} \leq C\left(\epl^{2p} + \delta^p\right),
+	\end{equation}
+	which is the desired result.
+\end{proof}
+
+Let us consider a couple $(X^\epl, Z^\epl)^\top$. In the following, we will adopt the notation
+\begin{equation}\label{eq:CalM}
+	\mathcal M = \E^{\rho^\epl}[V'(X^\epl) \otimes V'(X^\epl)] \quad \text{and} \quad \widetilde{\mathcal M} = \E^{\rho^\epl}[V'(Z^\epl) \otimes V'(X^\epl)],
+\end{equation}
+which due to the ergodic theorem satisfy
+\begin{equation}
+	\lim_{T \to \infty} M = \mathcal M, \quad \text{and} \quad \lim_{T \to \infty} \widetilde M = \mathcal{\widetilde M},
+\end{equation}
+almost surely. In the following Lemma, we consider the difference between the two matrices $\mathcal M$ and $\widetilde{\mathcal M}$.
+
+\begin{lemma}\label{lem:distanceMandTildeM} Let the assumptions of Lemma \ref{lem:distanceZandX} hold. Then the matrices $\mathcal M$ and $\widetilde{\mathcal M}$ defined in \eqref{eq:CalM} satisfy
+	\begin{equation}
+		\norm{\mathcal M - \widetilde{\mathcal M}}_2 \leq C\left(\epl + \delta^{1/2}\right),
+	\end{equation}
+	for a constant $C > 0$ independent of $\epl$ and $\delta$.
+\end{lemma}
+\begin{proof} Applying Jensen's and Cauchy--Schwarz inequalities we have
+	\begin{equation}
+	\begin{aligned}
+		\norm{\mathcal M - \widetilde{\mathcal M}}_2 &\leq \E^{\rho^\epl} \norm{\left(V'(Z^\epl) - V'(X^\epl)\right) \otimes V'(X^\epl)}_2 \\
+		&\leq \left(\E^{\rho^\epl}\norm{V'(Z^\epl) - V'(X^\epl)}_2^2\right)^{1/2} \left(\E^{\rho^\epl} \norm{V'(X^\epl)}_2^{2}\right)^{1/2}.
+	\end{aligned}
+	\end{equation}
+	The Lipschitz condition on $V$ together with the boundedness of the moments of $X^\epl$ and Lemma \ref{lem:distanceZandX} yield for a constant $C > 0$
+	\begin{equation}
+	\begin{aligned}
+		\norm{\mathcal M - \widetilde{\mathcal M}}_2 &\leq C\left(\E^{\rho^\epl}\abs{Z^\epl - X^\epl}^{2}\right)^{1/2} \leq C \left(\epl + \delta^{1/2} \right),
+	\end{aligned}
+	\end{equation}
+	which is the desired result.
+\end{proof}
+
+We can finally prove the unbiasedness of the estimator $\widetilde A^\epl_k(T)$.
+
+\begin{theorem}\label{thm:mainTheoremTilde} Let the assumptions of Theorem \ref{thm:mainTheorem} hold. Then, if $\delta$ in \eqref{eq:filter} satisfies $\delta = \delta(\epl)$ with $\delta(\epl) \to 0$ for $\epl \to 0$, it holds
+	\begin{equation}
+		\lim_{\epl \to 0} \lim_{T \to \infty} \widetilde A^\epl_k(T) = A, \quad \text{a.s.},
+	\end{equation} 
+	for $\widetilde A^\epl_k(T)$ defined in \eqref{eq:AHatMixedTilde}.
+\end{theorem}
+\begin{proof} We first consider the difference between the two estimators $\widetilde A^\epl_k(T)$ and $\widehat A^\epl_k(T)$. In particular, the ergodic theorem and an algebraic equality imply
+	\begin{equation}
+	\begin{aligned}
+		\lim_{T \to \infty} \left(\widetilde A^\epl_k(T) - \widehat A^\epl_k(T)\right) &= \left(\mathcal M^{-1} - \widetilde{\mathcal M}^{-1}\right) \lim_{T \to \infty}\widetilde h \\
+		&= \mathcal M^{-1}\left(\mathcal M - \widetilde{\mathcal M}\right)  \widetilde{\mathcal M}^{-1} \lim_{T \to \infty} \widetilde h\\
+		&= \mathcal M^{-1}\left(\mathcal M - \widetilde{\mathcal M}\right)\lim_{T \to \infty} \widehat A^\epl_k(T),
+	\end{aligned}
+	\end{equation}
+	almost surely. Therefore, due to Assumption \ref{as:regularity} which allows controlling the norm of $\mathcal M^{-1}$ and due to Lemma \ref{lem:distanceMandTildeM} we have for a constant $C > 0$
+	\begin{equation}\label{eq:DistATildeAHat}
+		\lim_{T \to \infty} \norm{\widetilde A^\epl_k(T) - \widehat A^\epl_k(T)}_2 \leq C \left(\epl + \delta^{1/2} \right).
+	\end{equation}
+	Let us remark that $\widehat A^\epl_k(T)$ has a bounded norm for $\epl$ sufficiently small due to Theorem \ref{thm:mainTheorem}. Now, the triangle inequality yields
+	\begin{equation}
+		\norm{\widetilde A^\epl_k(T) - A}_2 \leq \norm{\widetilde A^\epl_k(T) - \widehat A^\epl_k(T)}_2 + \norm{\widehat A^\epl_k(T) - A}_2.
+	\end{equation}
+	Therefore, due to Theorem \ref{thm:mainTheorem}, the inequality \eqref{eq:DistATildeAHat} and since $\delta \to 0$ for $\epl \to 0$, the desired result holds.
+\end{proof}
+
+\section{The Bayesian setting}\label{sec:Bayesian}
+
+In this section we present a Bayesian reinterpretation of the inference procedure, which, given the structure of the problem, allows to get at a full uncertainty quantification with a low computational effort. 
+
+Let us fix a Gaussian prior $\mu_0 = \mathcal N(A_0, C_0)$ on $A$, where $A_0 \in \R^N$ and $C_0 \in \R^{N\times N}$ is symmetric positive definite. Then, given a final time $T > 0$, the posterior distribution $\mu_{T,\epl}$ admits a density $p(A \mid X^\epl)$ with respect to the Lebesgue measure which satisfies
+\begin{equation}
+p(A \mid X^\epl) = \frac1{Z^\epl} \, p(X^\epl \mid A) \, p_0(A),
+\end{equation}
+where $Z^\epl$ is the normalization constant, $p_0$ is the density of $\mu_0$, and where the likelihood $p(X^\epl \mid A)$ is given in \eqref{eq:Likelihood}. The log-posterior density is therefore given by
+\begin{equation}\label{eq:Posterior}
+\log p(A \mid X^\epl) = -\log Z^\epl - \frac{T}{2\Sigma} A \cdot h - \frac{T}{4\Sigma} A \cdot M A - \frac12 (A - A_0) \cdot C_0^{-1}(A-A_0),
+\end{equation}
+where $M$ and $h$ are defined in \eqref{eq:MandH}.
+Since the log-posterior density is quadratic in $A$, the posterior is Gaussian, and it is therefore sufficient to determine its mean and covariance to fully characterize it. We denote by $m_{T,\epl}$ and $C_{T,\epl}$ the mean and covariance matrix, respectively. Completing the squares in the log-posterior density, we formally obtain
+\begin{equation}
+\begin{aligned}
+C_{T,\epl}^{-1} &= C_0^{-1} + \frac{T}{2\Sigma} M, \\
+C_{T,\epl}^{-1}m_{T,\epl} &= C_0^{-1}A_0 - \frac{T}{2\Sigma} h. 
+\end{aligned}
+\end{equation}
+Under Assumption \ref{as:regularity}, one can show that the posterior at time $T > 0$ is indeed given by $\mu_{T,\epl} = \mathcal N(m_{T,\epl}, C_{T,\epl})$. We are now interested in the asymptotic limit of the posterior distribution for $T \to \infty$ and for $\epl \to 0$.
+
+We can now state the main result for asymptotic convergence of the posterior distribution.
+\begin{theorem}\label{thm:BayesianBias} Under Assumption \ref{as:regularity}, the posterior measure $\mu_{T,\epl} = \mathcal N(m_{T,\epl}, C_{T,\epl})$ satisfies
+	\begin{equation}
+		\lim_{\epl \to 0}\lim_{T \to \infty} \mu_{T,\epl}(\cdot) = \delta(\cdot - \alpha), \quad \text{a.s.},
+	\end{equation}
+	weakly in the space of probability measures on $\R^N$, where $\delta$ is the Dirac measure on $\R^N$.
+\end{theorem}
+\begin{proof} Let us first consider the covariance matrix. Hua's identity yields
+	\begin{equation}
+	C_{T,\epl} = \frac{2\Sigma}{T} \left(M^{-1} - Q^{-1}\right),
+	\end{equation}
+	where 
+	\begin{equation}
+	Q = M + \frac{T}{2\Sigma} M C_0 M.
+	\end{equation}
+	Let us first remark that due to the hypothesis on $M$ and the ergodic theorem it holds for all $T > 0$
+	\begin{equation}
+		\norm{M^{-1}}_2 \leq \frac1{\bar \lambda}.
+	\end{equation}
+	We now have that for generic symmetric positive definite matrices $R$ and $S$ it holds
+	\begin{equation}
+		\norm{(R+S)^{-1}}_2 \leq \norm{S^{-1}}_2.
+	\end{equation}
+	Applying this inequality to $Q^{-1}$, we obtain
+	\begin{equation}
+		\norm{Q^{-1}}_2 \leq \frac{2\Sigma}T \norm{(MC_0M)^{-1}}_2 \leq \frac{2\Sigma}T \norm{M^{-1}}_2^2 \norm{C_0^{-1}}_2 = \frac{2\Sigma}{T\bar \lambda^2} \norm{C_0^{-1}}_2,
+	\end{equation}
+	which implies
+	\begin{equation}
+		\lim_{T \to \infty}\norm{Q^{-1}}_2 = 0,
+	\end{equation}
+	and due to the triangle inequality
+	\begin{equation}\label{eq:CovarianceShrink}
+		\lim_{T \to \infty}\norm{C_{T,\epl}}_2 = 0.
+	\end{equation}
+	We proved that in the limit for $T \to \infty$ the covariance shrinks to zero independently of $\epl$. We now consider the mean. First, we remark that the triangle inequality yields
+	\begin{equation}
+		\norm{m_{T,\epl} - \alpha}_2 \leq \norm{m_{T,\epl} - \widehat A^\epl(T)}_2 + \norm{\widehat A^\epl(T) - \alpha}_2.
+	\end{equation}
+	For the second term, Theorem \ref{thm:Bias} implies 
+	\begin{equation}
+		\lim_{\epl \to 0} \lim_{T \to \infty}\norm{\widehat A^\epl(T) - \alpha}_2 = 0, \quad \text{a.s.}
+	\end{equation}
+	Let us now consider the first term.	Replacing the expression of the maximum likelihood estimator \eqref{eq:MLE} and due to the Cauchy--Schwarz and triangle inequalities, we obtain
+	\begin{equation}
+	\begin{aligned}
+		\norm{m_{T,\epl} - \widehat A^\epl(T)}_2 &= \frac{2\Sigma}T\norm{M^{-1}C_0^{-1}A_0 - Q^{-1}\left(C_0^{-1}A_0 - \frac{T}{2\Sigma} h \right)}_2\\
+		&\leq \frac{2\Sigma}{T\bar \lambda} \norm{C_0^{-1}}_2 \left(\norm{A_0}_2 + \frac1{\bar \lambda}\norm{h}_2 + \frac{2\Sigma}{T\bar \lambda} \norm{C_0^{-1}}_2\norm{A_0}_2\right).
+	\end{aligned}
+	\end{equation}
+	Moreover, the ergodic theorem and the strong law of large numbers for martingales guarantee that $\norm{h}_2$ is bounded a.s. for $T \to \infty$. Therefore
+	\begin{equation}
+	\lim_{T\to\infty} \norm{m_{T,\epl} - \widehat A^\epl(T)}_2 = 0, \quad \text{a.s.},
+	\end{equation}
+	independently of $\epl$. Finally, 
+	\begin{equation}
+		\lim_{\epl \to 0} \lim_{T \to \infty}\norm{m_{T,\epl} - \alpha}_2 = 0, \quad \text{a.s.},
+	\end{equation}
+	which, together with \eqref{eq:CovarianceShrink}, implies the desired result. 
+\end{proof}
+
+\begin{remark} The result above has the same consequences in the Bayesian setting as Theorem \ref{thm:Bias} has for the MLE. In particular, it shows that the posterior distribution obtained when data is not pre-processed concentrates asymptotically on the drift coefficient of the unhomogenized equation \eqref{eq:SDE_MS}. Moreover, a partial result which can be deduced from the proof is that in the limit for $T \to \infty$ and for a positive value $\epl > 0$ the Bayesian and the MLE approaches are equivalent. In particular, we have for all $\epl > 0$
+	\begin{equation}
+	\begin{aligned}
+		&\lim_{T\to\infty} \norm{C_{T,\epl}}_2 = 0,\\
+		&\lim_{T \to\infty}\norm{m_{T,\epl} - \widehat A^\epl(T)}_2 =0,
+	\end{aligned}	
+	\end{equation} 
+	i.e., the weak limit of the posterior $\mu_{T,\epl}$ for $T\to \infty$ is the Dirac delta concentrated on the limit of $\widehat A^\epl(T)$ for $T\to \infty$. 
+\end{remark}
+
+\subsection{The filtering approach}\label{sec:BayesianFilter}
+
+In this section, we present how to correct the faulty behaviour highlighted by Theorem \ref{thm:BayesianBias} with filtering techniques. In particular, we employ the same strategy that led to the estimator $\widetilde A^\epl_k(T)$ presented in Section \ref{sec:FilterMLE_2}. Therefore, we modify the likelihood function as
+\begin{equation}
+	\widetilde p(X^\epl \mid A) = \exp\left(-\frac{\widetilde I(X^\epl\mid A)}{2\Sigma} \right), 
+\end{equation}
+where 
+\begin{equation}
+	\widetilde I(X^\epl \mid A) =\int_0^T A \cdot V'(Z^\epl_t) \dd X^\epl_t + \int_0^T \left(A \cdot V'(X^\epl_t)\right)^2 \dd t,
+\end{equation}
+so that the estimator $\widetilde A^\epl_k(T)$ introduced in \eqref{eq:AHatMixedTilde} is the MLE based on the new likelihood $\widetilde p(X^\epl \mid A)$. With this likelihood function, we obtain the modified posterior $\widetilde \mu_{T,\epl} = \mathcal N(\widetilde m_{T, \epl}, C_{T, \epl})$, whose parameters are given by
+\begin{equation}
+\begin{aligned}
+	C_{T, \epl}^{-1} &= C_0^{-1} + \frac{T}{2\Sigma} M, \\
+	C_{T,\epl}^{-1}\widetilde m_{T,\epl} &= C_0^{-1}A_0 - \frac{T}{2\Sigma} \widetilde h. 
+\end{aligned}	
+\end{equation}
+Let us remark that the posterior $\widetilde \mu_{T,\epl}$ has the same covariance as $\mu_{T,\epl}$. The following result now holds.
+\begin{theorem} Let the Assumptions of Theorem \ref{thm:mainTheoremTilde} hold. Then, the modified posterior measure $\widetilde\mu_{T,\epl} = \mathcal N(\widetilde m_{T,\epl}, C_{T,\epl})$ satisfies
+	\begin{equation}
+	\lim_{\epl \to 0}\lim_{T \to \infty} \widetilde \mu_{T,\epl}(\cdot) = \delta(\cdot - A), \quad \text{a.s.},
+	\end{equation}
+	weakly in the space of probability measures on $\R^N$, where $\delta$ is the Dirac measure on $\R^N$.
+\end{theorem}
+\begin{proof} The proof follows from the proof of Theorem \ref{thm:BayesianBias} and from Theorem \ref{thm:mainTheoremTilde}.
+\end{proof}
+
+%In this section we show how the filtering approach can be employed in a Bayesian framework. As in Section \ref{sec:Bayesian} let us consider a Gaussian prior $\mu_0 = \mathcal N(A_0, C_0)$. Then, the density $p^\epl(A \mid X)$ of the posterior distribution $\mu^\epl(A \mid X^\epl)$ given by multiscale data satisfies
+%\begin{equation}
+%	p^\epl(A \mid X) = \frac1{Z^\epl} \, p^\epl(X \mid A) \, p_0(A),
+%\end{equation}
+%where $Z^\epl$ is the normalization term and where the likelihood function is given by
+%\begin{equation}
+%	p^\epl(X \mid A) = \exp\left(-\frac{I^\epl(X\mid A)}{2\Sigma} \right), 
+%\end{equation}
+%with
+%\begin{equation}
+%	I^\epl(X\mid A) = \int_0^T A \cdot V'(X_t^\epl) \dd X_t^\epl + \frac12 \int_0^T \left( A \cdot V'(X_t^\epl) \right)^2 \dd t.
+%\end{equation}
+%Let us consider the likelihood function $\widetilde p^\epl(X \mid A)$ modified to include the filtered data $Z^\epl$ given by
+%\begin{equation}
+%	\widetilde p^\epl(X \mid A) = \exp\left(-\frac{\widetilde I^\epl(X\mid A)}{2\Sigma} \right), 
+%\end{equation}
+%with
+%\begin{equation}
+%	\widetilde I^\epl(X\mid A) = \int_0^T A \cdot V'(Z_t^\epl) \dd X_t^\epl + \frac12 \int_0^T \left( A \cdot V'(X_t^\epl) \right) \left( A \cdot V'(Z_t^\epl) \right) \dd t.
+%\end{equation}
+%Moreover, let us consider the modified posterior distribution $\widetilde \mu^\epl(A \mid X)$ with density
+%\begin{equation}
+%	\widetilde p^\epl(A \mid X) = \frac1{\widetilde Z^\epl} \, \widetilde p^\epl(X \mid A) \, p_0(A),
+%\end{equation}
+%Let us remark that employing \eqref{eq:MandHTilde} we can write 
+%\begin{equation}
+%	\log \widetilde p^\epl(A \mid X) = -\log \widetilde Z^\epl - T A \cdot \widetilde h - \frac{T}{2} A \cdot \widetilde M A - \frac12 (A - A_0) \cdot C_0^{-1}(A-A_0).
+%\end{equation}
+%With respect to Section \ref{sec:Bayesian}, the matrix $\widetilde M$ is not symmetric. Nonetheless, we remark that
+%\begin{equation}
+%	A \cdot \widetilde M A = A \cdot \widetilde M_S A,
+%\end{equation}
+%where $\widetilde M_S$ is the symmetric part of $\widetilde M$, i.e.,
+%\begin{equation}
+%	\widetilde M_S = \frac12 \left(\widetilde M + \widetilde M^\top\right).
+%\end{equation}
+%Hence, we can rewrite 
+%\begin{equation}	
+%	\log \widetilde p^\epl(A \mid X) = -\log \widetilde Z^\epl - T A \cdot \widetilde h - \frac{T}{2} A \cdot \widetilde M_S A - \frac12 (A - A_0) \cdot C_0^{-1}(A-A_0).
+%\end{equation}
+%This shows that the posterior $\widetilde \mu^\epl$ is a Gaussian $\mathcal N(\widetilde m_T, \widetilde C_T)$ where the covariance and mean can be obtained as 
+%\begin{equation}
+%\begin{aligned}
+%	\widetilde C_T^{-1} &= C_0^{-1} + T \widetilde M, \\
+%	\widetilde C_T^{-1} \widetilde m_T &= C_0^{-1}A_0 - T \widetilde h. 
+%\end{aligned}
+%\end{equation}
+%
+%In the following theorem we show that the posterior we obtain 
+%\begin{theorem} Under
+%\end{theorem}
+
+\section{Numerical experiments}\label{sec:NumExp}
+
+In this section we show numerical experiments confirming our theoretical findings and showing the potentiality of the filtering approach.
+
+\subsection{Parameters of the filter}
+\begin{figure}[t]
+	\centering
+	\begin{tabular}{ccc}
+		\includegraphics[]{/OUSubs_s5} & \includegraphics[]{/OUFilt_s5_b1}  & \includegraphics[]{/OUFilt_s5_b5} \\ % & \includegraphics[]{/OUFilt_s5_b10} \\
+		\includegraphics[]{/OUSubs_s7} & \includegraphics[]{/OUFilt_s7_b1}  & \includegraphics[]{/OUFilt_s7_b5} \\ % & \includegraphics[]{/OUFilt_s7_b10} \\
+		\includegraphics[]{/OUSubs_s10} & \includegraphics[]{/OUFilt_s10_b1}  & \includegraphics[]{/OUFilt_s10_b5} % & \includegraphics[]{/OUFilt_s10_b10}
+	\end{tabular}
+	\caption{Results for the Ornstein--Uhlenbeck process. The axis of abscissae $\zeta$ represents the value of $\delta = \epl^\zeta$ for both subsampling and the filter. The three rows correspond to $\sigma = 0.5, 0.7, 1.0$ from top to bottom.}
+	\label{fig:OU}
+\end{figure}
+We consider $N = 1$ and the quadratic potential $V(x) = x^2/2$. In this case, the solution of the homogenized equation is an Ornstein--Uhlenbeck process. Moreover, we set the multiscale equation \eqref{eq:SDE_MS} with $\epl = 0.1$ and the fast potential $p(y) = \cos(y)$. We generate data $X^\epl$ for $0 \leq t \leq T$ and $T = 10^3$ employing the Euler--Maruyama method with time step $\Delta_t = \epl^3$. 
+
+As a first experiment, we consider the effect of setting different values of the parameter $\delta$ of the filter \eqref{eq:filter} on the estimator. As a comparison and for similarity with the subsampling approach, we consider $\delta = \epl^{\zeta}$ and vary $\zeta \in [0, 1]$. We employ the same values of $\delta$ for the subsampling, too, as the theoretical results guarantee convergence only for these values. Moreover, we repeat the experiments fixing $\beta = 1, 5$ and for three different values of the diffusion, i.e., we choose $\sigma = 0.5, 0.7, 1$. We report in Figure \ref{fig:OU} the experimental results. Let us remark that
+\begin{enumerate}
+	\item for $\sigma = 0.5$ the results given by subsampling and by the filter with $\beta = 1$ are similar, while for higher values of $\sigma$ the filtering approach seems better than subsampling, 
+	\item in general, choosing a higher value of $\beta$ seems beneficial for the quality of the estimator,
+	\item the dependence on $\delta$ of numerical results given by the filter seems relevant only in case $\beta = 1$ and for small values of $\sigma$. For $\beta = 1$ and higher values of $\sigma$, the estimator is stable with respect to this parameter, as predicted in Theorem \ref{thm:mainTheorem}. This can be observed for a higher value of $\beta$ but we have no theoretical guarantee in this case.
+\end{enumerate}
+
+As a second experiment, we therefore test the variability of the estimator with respect to $\beta$ in \eqref{eq:filter}. We repeat the numerical experiment in Figure \ref{fig:OU} and we choose to consider $\delta = \epl$, which corresponds to $\zeta = 1$ and seems to be the worst-case scenario for the filter, at least for $\beta = 1$. We consider again $\sigma = 0.5, 0.7, 1$ and vary $\beta = 1, 2, \ldots, 10$. Results, given in Figure \ref{fig:OUBeta}, show empirically that the estimator is fast stable with respect to $\beta$.
+
+\begin{figure}[t]
+	\centering
+	\begin{tabular}{ccc}
+		\includegraphics[]{/OUBeta_s5} & \includegraphics[]{/OUBeta_s7}  & \includegraphics[]{/OUBeta_s10} \\
+	\end{tabular}
+	\caption{Dependence of the estimator given by the filter for the Ornstein--Uhlenbeck process on the parameter $\beta$ in \eqref{eq:filter}. From left to right we consider different values of $\sigma$.}
+	\label{fig:OUBeta}
+\end{figure}
+
+\subsection{The Bayesian approach: bistable potential}
+\begin{figure}[t]
+	\centering
+	\begin{tabular}{ccc}
+		\includegraphics[]{/Bayes_T100} & \includegraphics[]{/Bayes_T200}  & \includegraphics[]{/Bayes_T400} \\
+	\end{tabular}
+	\caption{Posterior distributions over the parameter $A = (A_1, A_2)^\top$ for the bistable potential obtained with the filtering approach. The figures refer to final time $T = 100, 200, 400$ from left to right, respectively. The MLE $\widetilde A^\epl_k(t)$ is represented with a circle, while the true value $A$ of the drift coefficient of the homogenized equation is represented with a cross.}
+	\label{fig:Bayes}
+\end{figure}
+
+In this numerical experiment we consider $N = 2$ and the bistable potential, i.e., the function $V$ defined as
+\begin{equation}
+	V(x) = \begin{pmatrix} \dfrac{x^4}{4} & -\dfrac{x^2}{2} \end{pmatrix}^\top,
+\end{equation}
+with coefficients $\alpha_1 = 1$ and $\alpha_2 = 2$. We then consider the multiscale equation with $\sigma = 0.7$, the fast potential $p(y) = \cos(y)$ and $\epl = 0.05$, thus simulating a trajectory $X^\epl$. We adopt here a Bayesian approach and compute the posterior distribution $\widetilde \mu_{T, \epl}$ obtained with the filtering approach introduced in Section \ref{sec:BayesianFilter}. The parameters of the filter are set to $\beta = 1$ and $\delta = \epl$ in \eqref{eq:filter}. Let us remark that in order to compute the posterior covariance the diffusion coefficient $\Sigma$ of the homogenized equation has to be known. In this case, we pre-compute the value of $\Sigma$ via the coefficient $K$ and the theory of homogenization, but let us remark that $\Sigma$ could be estimated employing the subsampling technique of \cite{PaS07}. We stop computations at times $T = 100, 200, 400$ in order to observe the shrinkage of the Gaussian posterior towards the MLE $\widetilde A^\epl_k(T)$ with respect to time. In Figure \ref{fig:Bayes}, we observe that the posterior does indeed shrink towards the MLE, which in turn gets progressively closer to the true value of the drift coefficient $A$ of the homogenized equation.
+
+
+\subsection{Multi-dimensional parameter}
+
+\begin{figure}[t]
+	\centering
+	\begin{tabular}{ccc}
+		\includegraphics[]{/KLNothing} & \includegraphics[]{/KLFilt}  & \includegraphics[]{/KLSubs}
+	\end{tabular}
+	\caption{Results for the four-dimensional parameter. From left to right the potential function estimated with the data itself, the filter, subsampled data.}
+	\label{fig:KLStyle}
+\end{figure}
+
+\begin{table}[t]
+	\centering
+	\begin{tabular}{ccccc}
+		\toprule
+		Coefficient & Truth & No preprocessing  & Filtering  		  & Subsampling  			 \\ 
+					& $A$   & $\widehat A^\epl$ & $\widehat A^\epl_k$ & $\widehat A^\epl_\delta$ \\
+		\midrule
+		$A_1$ & -0.62 & -0.92 & -0.70 & -0.59\\
+		$A_2$ & -0.31 & -0.70 & -0.27 & 0.05 \\
+		$A_3$ & 0.31  & 0.55  & 0.31  & 0.14 \\
+		$A_4$ & 0.62  & 1.22  & 0.57  & 0.13 \\
+		\bottomrule
+	\end{tabular}
+	\caption{Numerical results for the four-dimensional parameter rounded to the second significant figure.}
+	\label{tab:KLStyle}
+\end{table}
+
+Let us consider the Chebyshev polynomials of the first kind, i.e., the polynomials $T_i\colon \R \to \R$, $i=0, 1, \ldots$, defined by the recurrence relation
+\begin{equation}
+	T_0(x) = 1, \quad T_1(x) = x, \quad T_{i+1}(x) = 2xT_i(x) - T_{i-1}(x).
+\end{equation}
+We consider the potential function $V(x)$ as in \eqref{eq:Potential} with
+\begin{equation}
+	V_i(x) = T_i(x), \quad i =1, \ldots, 4.
+\end{equation}
+This potential function satisfies Assumption \ref{as:regularity} whenever $N$ is even and if the leading coefficient $\alpha_N$ is positive. We set $N = 4$ and the drift coefficient $\alpha = (-1, -1/2, 1/2, 1)$. With this drift coefficient, the potential function is of the bistable kind. Moreover, we set $\epl = 0.05$, the diffusion coefficient $\sigma = 1$, the fast potential $p(y) = \cos(y)$ and simulate a trajectory of $X^\epl$ for $0 \leq t \leq T$ with $T = 10^3$ employing the Euler--Maruyama method with time step $\Delta_t = \epl^3$. We estimate the drift coefficient $A \in \R^4$ with the estimators
+\begin{enumerate}
+	\item $\widehat A^\epl(T)$ based on the data $X^\epl$ itself,
+	\item $\widehat A^\epl_\delta(T)$ based on subsampled data with subsampling parameter $\delta = \epl^{2/3}$,
+	\item $\widehat A^\epl_k(T)$ based on filtered data $Z^\epl$ computed with $\beta = 1$ and $\delta = 1$.
+\end{enumerate}
+In particular, we pick this specific value of $\delta$ for the subsampling following the optimality criterion given in \cite{PaS07}. Results, given in Figure \ref{fig:KLStyle} and Table \ref{tab:KLStyle}, show that the filter-based estimation captures well the homogenized potential as well as the coefficient $A$. Moreover, it is possible to remark the negative result given by Theorem \ref{thm:Bias} holds in practice, i.e., with no pre-processing the estimator $\widehat A^\epl(T)$ tends to the drift coefficient $\alpha$ of the unhomogenized equation.
+
+\section{Conclusion}
+
+In this work we considered a novel methodology based on filtering for the estimation of the drift of multiscale diffusion processes. We proved results of ergodicity, convergence and, most importantly, unbiasedness of estimators drawn from our methodology. Moreover, we combined a Bayesian approach and our new technique to guarantee a robust uncertainty quantification of the inference procedure. Numerical experiments demonstrate how the filtering-based estimator requires less knowledge of the characteristic time-scales of the multiscale equation and how it can be employed as a black-box tool for parameter estimation on a range of academic examples. We believe this work gives way to several further developments. In particular, we believe it would be relevant to 
+\begin{enumerate}
+	\item analyse the filtering methodology for $\beta > 1$ in \eqref{eq:filter}, which seems to give more robust results in practice,
+	\item extend the analysis to the non-parametric framework most likely by means of Bayesian regularization techniques,
+	\item consider multiscale models for which the homogenized equation presents multiplicative noise,
+	\item test the filtering methodology against real-world data,
+	\item apply similar filtering methodologies to correct faulty behaviour of non likelihood-based estimators.
+\end{enumerate} 

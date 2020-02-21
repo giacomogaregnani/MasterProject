@@ -2,23 +2,23 @@ clc; clear; close all
 %%
 
 % f1 = @(x) x .^ 0;
-f1 = @(x) x.^3 .* (x >= 0.5);
-% f1 = @(x) sin(2 * pi * x);
+% f1 = @(x) x.^3 .* (x >= 0.5);
+f = @(x) sin(2 * pi * x);
 % f1 = @(x) (x-0.5) .* (x >= 0.5);
 
 % f2 = @(x) (x < 0.25) + (0.5 - x) .* (x >= 0.25) .* (x < 0.5) ...
 %     + (x - 0.5) .* (x >= 0.5) .* (x < 0.75) + (x >= 0.75);
-f2 = @(x) 0 .* x;
-% uEx = @(x) 1 / (4*pi^2) * sin(2 * pi * x);
-% grad_uEx = @(x) 1 / (2*pi) * cos(2 * pi * x);
+% f2 = @(x) 0 .* x;
+uEx = @(x) 1 / (4*pi^2) * sin(2 * pi * x);
+grad_uEx = @(x) 1 / (2*pi) * cos(2 * pi * x);
 field = @(x) x.^0;
 
-pVec = 1:3;
+pVec = 1;
 
-NVec = floor(2.^(2:1:7));
+NVec = floor(2.^(2:1:10));
 hVec = 1 ./ NVec;
 
-M = 200;
+M = 10;
 
 errL2Mean = cell(length(pVec), 1);
 errH1Mean = errL2Mean;
@@ -41,8 +41,8 @@ for k = 1 : length(pVec)
         N = NVec(i); h = hVec(i);
         x = linspace(0, 1, N + 1);
         
-        %         F = assembleRHS(f, x);
-        F = assembleRHS_Hminus1(f1, f2, x);
+        F = assembleRHS(f, x);
+%         F = assembleRHS_Hminus1(f1, f2, x);
         A = assembleMatrix(field, x);
         u = [0; A \ F; 0];
         gradu = computeGradient_1D(x, u');
@@ -53,7 +53,7 @@ for k = 1 : length(pVec)
         meanU = zeros(size(u));
         meanX = zeros(size(x));
         
-        parfor jj = 1 : M
+        for jj = 1 : M
             
             % Build perturbed grid
             X = x;
@@ -67,8 +67,8 @@ for k = 1 : length(pVec)
             meanX = meanX + X;
             
             % FEM solution on perturbed grid
-            %             FTilde = assembleRHS(f, X);
-            FTilde = assembleRHS_Hminus1(f1, f2, X);
+            FTilde = assembleRHS(f, X);
+%             FTilde = assembleRHS_Hminus1(f1, f2, X);
             ATilde = assembleMatrix(field, X);
             U = [0; ATilde\FTilde; 0];
             gradU = computeGradient_1D(X, U');

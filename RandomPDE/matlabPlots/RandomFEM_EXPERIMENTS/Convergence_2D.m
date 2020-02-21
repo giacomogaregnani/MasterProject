@@ -7,18 +7,18 @@ zeroFunc = @(x,y) 0.*x.*y;
 
 data   = read_DataFile('data_2D', 2, param);
 data.diffusion = @(x, y, t, param) (x.*y).^0;
-% data.diffusion = @(x,y,t,param)(1.3 + ... 1.2 * ((x - 0.25).^2 + (y - 0.25).^2 < 0.025) ...
+% data.diffusion = @(x,y,t,param)(1.3 + 1.2 * ((x - 0.25).^2 + (y - 0.25).^2 < 0.025) ...
 %                                     - 0.5 * ((x - 0.75).^2 + (y - 0.75).^2 < 0.025));
-data.diffusion = @(x,y,t,param)(0.5 * (x > 0.5) + 1.5 * (x < 0.5));                               
+% data.diffusion = @(x,y,t,param)(0.5 * (x > 0.5) + 1.5 * (x < 0.5));                               
                              
 data.param = param;
 data.bcDir = @(x,y,t,param)(0*x.*y);
 data.force = @(x,y,t,param) sin(2*pi*x) .* sin(2*pi*y);
 
-% a = 5;
-% data.force = @(x,y,t,param) -(a^2*exp(-a*((x - 1/2).^2 + (y - 1/2).^2)).*(2*y - 1).^2 - 2*a*exp(-a*((x - 1/2).^2 + (y - 1/2).^2)) ...
-%     +a^2*exp(-a*((x - 1/2).^2 + (y - 1/2).^2)).*(2*x - 1).^2 - 2*a*exp(-a*((x - 1/2).^2 + (y - 1/2).^2)));
-% p = 14;
+a = 5;
+data.force = @(x,y,t,param) -(a^2*exp(-a*((x - 1/2).^2 + (y - 1/2).^2)).*(2*y - 1).^2 - 2*a*exp(-a*((x - 1/2).^2 + (y - 1/2).^2)) ...
+    +a^2*exp(-a*((x - 1/2).^2 + (y - 1/2).^2)).*(2*x - 1).^2 - 2*a*exp(-a*((x - 1/2).^2 + (y - 1/2).^2)));
+% p = 5;
 % data.force = @(x,y,t,param)-(p^2*exp(p*x).*sin(2*pi*x).*sin(2*pi*y) + 4*p*pi*exp(p*x).*cos(2*pi*x).*sin(2*pi*y) - 4*pi^2*exp(p*x).*sin(2*pi*x).*sin(2*pi*y) ...
 %     -4*pi^2*exp(p*x).*sin(2*pi*x).*sin(2*pi*y));
 
@@ -59,7 +59,7 @@ g = [2 2 2 2
     1 1 1 1];
 
 pVec = 1.1:0.2:1.5;
-NVec = 2.^[2:5];
+NVec = 2.^[2:6];
 hVec = 1 ./ NVec;
 M = 6;
 nP = length(pVec); nN = length(NVec);
@@ -68,6 +68,7 @@ errInterpStruct = errProbStruct;
 errProbH1Struct = errProbStruct;
 errInterpH1Struct = errProbStruct;
 
+figure
 col = colormap(parula(2*length(pVec)));
 close
 col = col(1:2:end, :);
@@ -133,7 +134,7 @@ figure
 for k = 1 : length(pVec)
     loglog(hVec, errProbStruct{k}, 'o-', 'color', col(k, :))
     hold on
-%     loglog(hVec, errInterpStruct{k}, 'x-', 'color', col(k, :))
+    loglog(hVec, errInterpStruct{k}, 'x-', 'color', col(k, :))
     loglog(hVec, 2e-2 * hVec.^(pVec(k)+1), '--', 'color', col(k, :))
 end
 title('L2')
@@ -142,8 +143,8 @@ figure
 for k = 1 : length(pVec)
     loglog(hVec, errProbH1Struct{k}, 'o-', 'color', col(k, :))
     hold on
-%     loglog(hVec, errInterpH1Struct{k}, 'x-', 'color', col(k, :))
-    loglog(hVec, 5e-2*hVec.^((pVec(k))/2), '--', 'color', col(k, :))
+    loglog(hVec, errInterpH1Struct{k}, 'x-', 'color', col(k, :))
+    loglog(hVec, 2*hVec.^((pVec(k)+1)/2), '--', 'color', col(k, :))
 end
 title('H1')
 

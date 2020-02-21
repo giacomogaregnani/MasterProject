@@ -1,15 +1,22 @@
-import multiprocessing
+import numpy as np
+import matplotlib.pyplot as plt
 
-Y = 5
+v = np.empty(4)
+print v
 
-def f(val):
-    return Y*val, 2
+A = np.zeros((2, 2))
+print A
 
-def get_value(val):
-    ret = val*val
-    return val, f(ret)
+v = np.arange(10) + 1
+print v
 
-N = 10000
-pool = multiprocessing.Pool(processes=multiprocessing.cpu_count())
-outputs = pool.map(get_value, range(N))
-pool.close()
+I = np.eye(2)
+print I
+
+a = np.zeros(10)
+for i in range(1, 10):
+    v = i * np.ones(10)
+    iCol = float(i) / 11
+    # plt.plot(v, color=(iCol, iCol, iCol))
+    plt.plot(v, color='b', alpha=1-iCol)
+plt.show()

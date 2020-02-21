@@ -1,16 +1,17 @@
 clc; clear; close all
 
-eps = 0.1;
-alpha = 0.5;
-d = eps^alpha;
-tVec = linspace(0, 1, 1000);
+d = 1;
+tVec = linspace(0, 5, 1000);
 
 figure
 hold on
-for b = 1 : 5 : 40
+gray = linspace(0.1, 0.9, 20);
+i = 0;
+for b = linspace(1,5, 20)
+    i = i + 1;
     Cb = 1/gamma((b+1)/b);
-    k = @(t, s) Cb / d * exp(-abs(t-s).^b / d^b);
-    plot(tVec, k(1, tVec))
+    k = @(t) Cb / d^(1/b) * exp(-t.^b / d);
+    plot(tVec, k(tVec), 'color', gray(i) * ones(1, 3))
 end
 
 %% 

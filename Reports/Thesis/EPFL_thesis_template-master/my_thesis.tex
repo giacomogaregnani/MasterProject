@@ -1,0 +1,63 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%		My Thesis
+%
+%		EDOC Template
+%		2011
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\input{head/settings_epfl_template.tex}
+\input{head/settings_custom.tex}  % place your custom packages, etc... in this file
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% HEAD: Book-Begin
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt} %(needs to be before titlepage and frontmatter to keep the table of contents lists short)
+\frontmatter
+\input{head/titlepage.tex}
+\include{head/dedication}
+\setcounter{page}{0}
+\include{head/acknowledgements}
+\include{head/abstracts}
+
+\cleardoublepage
+\pdfbookmark{\contentsname}{toc}
+\tableofcontents
+
+% space before each new paragraph according to the template guidelines.
+%(needs to be after titlepage and frontmatter to keep the table of contents lists short)
+\setlength{\parskip}{1em}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% MAIN: The chapters of the thesis
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mainmatter
+\include{main/INTRO/INTRO}
+\cleardoublepage
+%\part{Body 2}
+\include{main/RTSRK/RTSRK}
+\include{main/RANDMESH/RANDMESH}
+\include{main/SDEINFER/SDEINFER}
+
+% use to end the last part if the thesis is composed of parts
+\addtocontents{toc}{\vspace{\normalbaselineskip}}
+\cleardoublepage
+\bookmarksetup{startatroot}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% TAIL: Bibliography, Appendix, CV
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{tail/appendix}
+\backmatter
+\include{tail/biblio}
+% Add your glossary here
+% Add your index here
+% Photographic credits (list of pictures&images that have been used with names of the person holding the copyright for them)
+\include{tail/cv}
+
+\end{document}

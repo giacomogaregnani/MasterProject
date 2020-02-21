@@ -2,14 +2,14 @@ clc; clear; close all
 
 %% CAREFUL ABOUT ALPHA
 %%
-results = dlmread('GaussianTest_SI_e_005_a_3.txt');
+results = dlmread('GaussianTest_SI_HOM.txt');
 n = length(results);
 x = results(1:n/2);
 z = results(n/2+1:end);
 clear results
 
-% figure
-% scatter(x, z, 10, '.')
+figure
+scatter(x, z, 10, '.')
 
 % p = @(x) sin(x);
 % v = @(x) x.^2 / 2;
@@ -20,10 +20,10 @@ v = @(x) x.^6 / 6;
 alpha = 3; sigma = 0.5; eps = 0.05;
 
 figure
-[f, xi] = ksdensity(x, 'NumPoints', 2000, 'bandwidth', 0.01);
+[f, xi] = ksdensity(x, 'NumPoints', 2000, 'bandwidth', 0.1);
 plot(xi, f)
 hold on
-[f,xi] = ksdensity(z, 'NumPoints', 2000, 'bandwidth', 0.015);
+[f,xi] = ksdensity(z, 'NumPoints', 2000, 'bandwidth', 0.1);
 plot(xi, f)
 
 xwide = linspace(-5, 5, 10000);
@@ -38,8 +38,8 @@ theorypdflimit = @(z) exp(-vEpsZ(z));
 inttheorypdflimit = trapz(xwide, theorypdflimit(xwide));
 theorypdflimitnorm = @(z) theorypdflimit(z) / inttheorypdflimit;
 
-plot(xi, theorypdfnorm(xi))
-plot(xi, theorypdflimitnorm(xi))
+% plot(xi, theorypdfnorm(xi))
+% plot(xi, theorypdflimitnorm(xi))
 % legend('result', 'theory')
 legend('true', 'filter', 'theory', 'theory filter')
 

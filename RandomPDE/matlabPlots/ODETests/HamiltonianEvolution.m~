@@ -1,0 +1,10 @@
+clc; clear; close all
+addpath('resultsHamiltonianTraj')
+%%
+
+results = dlmread('test_h_01.txt');
+meanResult = mean(results(:, 3:end), 2);
+
+semilogx(results(:, 1), results(:, 3:end) - results(1, 2), 'color', 0.7 * ones(1, 3))
+hold on
+plot(results(:, 1), meanResult - results(1, 2), 'k')

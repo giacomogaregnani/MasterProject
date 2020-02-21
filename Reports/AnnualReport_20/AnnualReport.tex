@@ -1,0 +1,144 @@
+\documentclass{article}
+
+% basics
+\usepackage{vmargin}
+\usepackage[utf8x]{inputenc}
+\usepackage[title,titletoc]{appendix}
+\usepackage{afterpage}
+\usepackage{enumitem}   
+\setlist[enumerate]{itemsep=3pt,label=(\roman*)}
+
+% maths
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\theoremstyle{theorem}
+\newtheorem{theorem}{Theorem}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+
+% tables
+\usepackage{booktabs}
+
+% plots
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,positioning,fit,matrix}
+\usepackage[labelfont=bf]{caption}
+\setlength{\belowcaptionskip}{-5pt}
+\usepackage{here}
+\usepackage[font=normal]{subcaption}
+
+% title and authors
+\title{Annual report -- Giacomo Garegnani}
+\author{}
+\date{}
+
+% my commands 
+\DeclarePairedDelimiter{\ceil}{\left\lceil}{\right\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\|}{\|}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\Pr}{\mathbb{P}}
+\newcommand{\eqtext}[1]{\ensuremath{\stackrel{#1}{=}}}
+\newcommand{\leqtext}[1]{\ensuremath{\stackrel{#1}{\leq}}}
+\newcommand{\iid}{\ensuremath{\stackrel{\text{i.i.d.}}{\sim}}}
+\newcommand{\totext}[1]{\ensuremath{\stackrel{#1}{\to}}}
+\newcommand{\rightarrowtext}[1]{\ensuremath{\stackrel{#1}{\longrightarrow}}}
+\newcommand{\leftrightarrowtext}[1]{\ensuremath{\stackrel{#1}{\longleftrightarrow}}}
+\newcommand{\pdv}[2]{\ensuremath\partial_{#2}#1}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\epl}{\varepsilon}
+\newcommand{\diffL}{\mathcal{L}}
+\newcommand{\prior}{\mathcal{Q}}
+\newcommand{\defeq}{\coloneqq}
+\newcommand{\eqdef}{\eqqcolon}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\E}{\operatorname{\mathbb{E}}}
+\newcommand{\MSE}{\operatorname{MSE}}
+\newcommand{\trace}{\operatorname{tr}}
+\newcommand{\MH}{\mathrm{MH}}
+\newcommand{\ttt}{\texttt}
+\newcommand{\Hell}{d_{\mathrm{Hell}}}
+\newcommand{\sksum}{{\textstyle\sum}}
+\newcommand{\dd}{\mathrm{d}}
+\definecolor{shade}{RGB}{100, 100, 100}
+\definecolor{bordeaux}{RGB}{128, 0, 50}
+\newcommand{\corr}[1]{{\color{bordeaux}#1}}
+
+\usepackage{autonum}
+	
+\begin{document}
+\maketitle
+	
+\section{State of research -- Future plans}
+	
+During the last twelve months, the focus of my research has moved primarily in two directions. The first started last year from discussions with Grigorios Pavliotis (Imperial College) in his visiting period at EPFL and concerns drift estimation of diffusion processes. It involved subsequently Andrew Stuart (Caltech) and eventually Andrea Zanoni (PhD student in ANMC). The second has been started by the Master project of Andrea Zanoni I co-supervised with Assyr Abdulle and is about a technique for Bayesian inverse problems based on Kalman filtering. In the following, I briefly describe the main focus of these two projects.
+
+\subsection{Drift estimation of multiscale diffusion processes}
+
+In this project we focused on the multiscale overdamped Langevin equation and on the problem of estimating the drift of its homogenized counterpart. In other words, we developed a coarse-graining technique which is data-driven and robust. Given as observation a trajectory of the solution $X_t^\epl$ of the equation
+\begin{equation}\label{eq:SDE_MS}
+	\d X_t^\epl = -\alpha \cdot V'(X_t^\epl) \dd t - \frac1\epl p'\left(\frac{X_t^\epl}\epl\right) \dd t + \sqrt{2\sigma} \dd W_t,
+\end{equation}
+we are interested in fitting a model of the kind
+\begin{equation}
+	\d X_t = - A \cdot V'(X_t) \dd t + \sqrt{2\Sigma} \dd W_t,
+\end{equation}
+such that $X^\epl_t \to X_t$ in distribution for $\epl \to 0$. In particular, we focus on the drift coefficient $A$. It is known that such a model exists by the theory of homogenization, but it is computationally involved to calculate it. Moreover, if $\sigma$ and $p$ are unknown, it is not possible. Classic estimators for $A$ based on a trajectory $X^\epl_t$ fail to identify correctly the drift estimator $A$ asymptotically, and therefore other techniques should be employed. A classic approach is based on subsampling the data at a rate which lies between the characteristic time scales of the two equations, but it has flaws in terms of bias and robustness. Therefore, we developed and analysed a methodology based on filtering techniques borrowed from the signal processing community to retrieve the coefficient $A$ robustly. This methodology proved itself to be more reliable than the subsampling approach, both for point-wise likelihood-based estimators and in a Bayesian setting.
+
+\subsection{Ensemble Kalman filter for multiscale inverse problems}
+
+In this project we focused on multiscale elliptic PDEs of the form
+\begin{equation}\label{eq:MSPDE}
+\left\{
+\begin{alignedat}{2}
+- \nabla \cdot ( A^{\varepsilon}_u \nabla p^{\varepsilon} ) &= f, \quad && \text{ in } \Omega, \\
+p^{\varepsilon} &= 0, \quad && \text{ on } \partial \Omega,
+\end{alignedat}
+\right.
+\end{equation}
+and in particular of the inverse problem of estimating the rapidly oscillating tensor $A^\epl_u$ from observations of the solution $p^\epl$. The subscript $u$ stands for a map which drives the slow variations of the tensor, and is the object of our inference. This problem has been studied in \cite{AbD18b, AbD19} both with a technique of Tikhonov regularization and in the Bayesian setting. In this project, we considered the ensemble Kalman filter and employed it to retrieve the full oscillating tensor, as well both with point estimates and in a Bayesian manner. In particular, we proved that Kalman filter inversion can be employed cheaply on the homogenized counterpart of \eqref{eq:MSPDE}, still retrieving the full multiscale tensor. A statistical technique to correct modelling error due to coarse-graining has been analysed and its effectiveness demonstrated via numerical examples.
+
+\subsection{Future plans}
+
+The two projects above should be completed in the next few months. For the future, I will be focusing on an ongoing project with Assyr Abdulle concerning a probabilistic integrator for elliptic partial differential equations. This project has been relatively put aside in the last year to complete the two projects above, and we wish to finish during the year. Other perspectives given by precedent projects could be taken into account if time is sufficient.
+			
+\section{Publications -- Presentations -- Visits}
+
+The following research articles are a result of my work and I have worked on all of them in different measures in the last twelve months:
+\begin{enumerate}
+	\item the paper \cite{AbG20}, summarizing the results of our first research project about probabilistic solvers for ODEs, has recently been accepted for publication in Statistics and Computing,
+	\item the paper \cite{AGZ19} is about a Kalman filter methodology for inverse problems involving multiscale PDEs is published on arXiv and we plan to submit it soon for publication,
+	\item the paper \cite{AGP20}, about drift estimation for multiscale diffusion processes is almost finished and ready for submission,
+	\item the paper \cite{AbG20b} concerns our probabilistic method for elliptic PDEs and is still in preparation.
+\end{enumerate}
+As far as participation to meetings is concerned, in the last twelve months I
+\begin{enumerate}
+	\item gave a seminar at Caltech (Pasadena, August 2019), title: \textit{Bayesian inference of multiscale differential equations},
+	\item gave a seminar at Imperial College (London, February 2020), title: \textit{A pre-processing technique for asymptotically correct drift estimation in multiscale diffusion processes},	
+	\item gave a short talk at the MATHICSE Retreat (Champéry, June 2018), title: \textit{Bayesian inference of multiscale diffusion processes},
+	\item will give a talk at SIAM UQ (Garching, March 2020) -- won a SIAM travel award to join, title: \textit{Model Misspecification And Uncertainty Quantification For Drift Estimation In Multiscale Diffusion Processes}.
+\end{enumerate}	
+Furthermore, in the last twelve months I underwent two academic visits, too, in particular
+\begin{enumerate}
+	\item five weeks at Caltech (Pasadena, August -- September 2019),
+	\item one week at Imperial College (London, February 2020).
+\end{enumerate}
+
+\bibliographystyle{siam}
+\bibliography{biblio}
+
+\end{document}

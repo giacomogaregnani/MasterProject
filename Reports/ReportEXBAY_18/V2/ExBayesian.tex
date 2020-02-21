@@ -1,0 +1,182 @@
+\documentclass{siamart1116}
+
+% basics
+\usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage[title,titletoc]{appendix}
+\usepackage{afterpage}
+\usepackage{enumitem}   
+\setlist[enumerate]{topsep=3pt,itemsep=3pt,label=(\roman*)}
+
+% maths
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\newsiamremark{assumption}{Assumption}
+\newsiamremark{remark}{Remark}
+\newsiamremark{example}{Example}
+\numberwithin{theorem}{section}
+
+% tables
+\usepackage{booktabs}
+
+% plots
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,positioning,fit,matrix}
+\usepackage[labelfont=bf]{caption}
+\setlength{\belowcaptionskip}{-5pt}
+\usepackage{here}
+\usepackage[font=normal]{subcaption}
+
+% title and authors
+%\newcommand{\TheTitle}{Probabilistic numerical methods with random time steps for chaotic and geometric integration} 
+\newcommand{\TheTitle}{Report -- Analytical posteriors in a simple case} 
+%\headers{Probabilistic Runge-Kutta method based on random time steps}{\TheAuthors}
+\title{{\TheTitle}}
+\author{\empty}
+
+% my commands 
+\DeclarePairedDelimiter{\ceil}{\left\lceil}{\right\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\|}{\|}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\Pr}{\mathbb{P}}
+\newcommand{\eqtext}[1]{\ensuremath{\stackrel{#1}{=}}}
+\newcommand{\leqtext}[1]{\ensuremath{\stackrel{#1}{\leq}}}
+\newcommand{\iid}{\ensuremath{\stackrel{\text{i.i.d.}}{\sim}}}
+\newcommand{\totext}[1]{\ensuremath{\stackrel{#1}{\to}}}
+\newcommand{\rightarrowtext}[1]{\ensuremath{\stackrel{#1}{\longrightarrow}}}
+\newcommand{\leftrightarrowtext}[1]{\ensuremath{\stackrel{#1}{\longleftrightarrow}}}
+\newcommand{\pdv}[2]{\ensuremath\partial_{#2}#1}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\epl}{\varepsilon}
+\newcommand{\diffL}{\mathcal{L}}
+\newcommand{\prior}{\mathcal{Q}}
+\newcommand{\defeq}{\coloneqq}
+\newcommand{\eqdef}{\eqqcolon}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\E}{\operatorname{\mathbb{E}}}
+\newcommand{\MSE}{\operatorname{MSE}}
+\newcommand{\trace}{\operatorname{tr}}
+\newcommand{\MH}{\mathrm{MH}}
+\newcommand{\ttt}{\texttt}
+\newcommand{\Hell}{d_{\mathrm{Hell}}}
+\newcommand{\sksum}{{\textstyle\sum}}
+\newcommand{\dd}{\mathrm{d}}
+\definecolor{shade}{RGB}{100, 100, 100}
+\definecolor{bordeaux}{RGB}{128, 0, 50}
+\newcommand{\corr}[1]{{\color{red}#1}}
+
+\begin{document}
+\maketitle	
+
+Let us consider as a toy problem the one dimensional ODE
+\[
+	y' = -y, \quad y(0) = y_0.
+\]
+We consider the inferential problem of determining the true initial condition $y_0^*$ from the observations. Given $h > 0$, we consider a single observation $d = y^{y_0^*}(h) + \eta$, where $y^{y_0^*}(h) = y_0^*e^{-h}$ is the true solution at time $t =  h$ and $\eta \sim \mathcal N (0, \sigma^2)$ is a source of noise. If a Gaussian prior $\pi_0 = \mathcal N(0, 1)$ is given for $y_0$, the posterior distribution is computable analytically and is given by
+\[
+	\pi(y_0 \mid d) = \mathcal N\Big(y_0; \frac{de^{-h}}{\sigma^2 + e^{-2h}}, \frac{\sigma^2}{\sigma^2 + e^{-2h}}\Big),
+\]
+where $\mathcal N(x; \mu, \alpha^2)$ is the density of a Gaussian random variable of mean $\mu$ and variance $\alpha^2$ evaluated in $x$. Consistently, if $\sigma^2 \to 0$, we have that $d \to y_0^*e^{-h}$ and therefore $\pi(y_0 \mid d) \to \delta_1 = \delta_{y_0^*}$. 
+
+If we approximate $y^{y_0}(h)$ for a given initial condition $y_0$ with a single step of the explicit Euler method (i.e., with step size $h$), we get $y^{y_0}(h) \approx (1 - h)y_0$. Computing the posterior distribution obtained with this approximation leads to 
+\[
+	\pi_{\mathrm{EE}}(y_0 \mid d) = \mathcal N\Big(y_0; \frac{(1 - h)d}{\sigma^2 + (1- h)^2}, \frac{\sigma^2}{\sigma^2 + (1 - h)^2}\Big).
+\]
+In the limit of $\sigma^2 \to 0$, we get in this case that the posterior distribution tends to $\pi_{\mathrm{EE}}(y_0 \mid d) \to \delta_{\bar y}$, where $\bar y = e^{-h}y_0^* / (1 - h)$. If, for example, $y_0^* = 1$ and $h = 1/2$, we would have $\bar y \approx 1.213$.  The posterior distribution is hence tending to a biased Dirac delta with respect to the true value.
+
+Let us consider the additive noise explicit Euler (AN-EE), i.e., the approximation $y^{y_0}(h) \approx Y_1$, where $Y_1 = (1 - h)y_0 + \xi$ and $\xi$ is a random variable $\mathcal N(0, h^3)$, so that the method converges consistently with the deterministic method. In this case, the posterior distribution is given by
+\[
+	\pi_{\mathrm{EE}}(y_0 \mid d) = \mathcal N\Big(y_0; \frac{(1 - h)d}{\tilde \sigma^2 + (1- h)^2}, \frac{\tilde \sigma^2}{\tilde \sigma^2 + (1 - h)^2}\Big).
+\]
+where $\tilde \sigma^2 = \sigma^2 + h^3$. In this case, taking the limit $\sigma^2 \to 0$ leads to 
+\[
+	\pi_{\mathrm{AN-EE}}(y_0 \mid d) \to \mathcal N\Big(y_0; \frac{(1 - h)e^{-h}y_0^*}{h^3 + (1 - h)^2}, \frac{h^3}{h^3 + (1 - h)^2}\Big),
+\]
+which shows that while the asymptotic mean is still biased with respect to the true value, the uncertainty in the forward model is reflected by a positive variance. In case $h=1/2$ and $y_0^* = 1$, we get that the mean under the posterior is approximately $0.809$ and the variance is $1/3$.
+
+Let us now consider the random time step explicit Euler (RTS-EE) with step size distribution $H \sim \mathcal U(h - h^p, h + h^p)$. In this case, the forward model acts as
+\[
+	Y_1 = y_0 - H y_0 = (1 - h)y_0 + (h - H) y_0, \quad U \sim \mathcal U (-h^p, h^p).
+\]
+The posterior distribution over $y_0$ can be computed as
+\begin{align*}
+	\pi_{\mathrm{RTS-EE}}(y_0 \mid d) &\propto \pi_0(y_0) \E^U\pi(d \mid y_0) \\
+	&\propto \exp\Big(-\frac{y_0^2}{2}\Big) \E^U \exp\Big(-\frac{(d - (1 - h)y_0 - Uy_0)^2}{2\sigma^2}\Big).
+\end{align*}
+Let us compute the likelihood term. With a change of variable $z = Uy_0$ we obtain
+\begin{equation*}
+	\E^U\pi(d \mid y_0) = \frac{1}{2h^p y_0}\int_{y_0 h^p}^{y_0 h^p} \exp\Big(-\frac{(d - (1 - h)y_0 - z)^2}{2\sigma^2}\Big) \dd z.
+\end{equation*}
+Now a change of variable $w = (z - (d - (1 - h)y_0)) / \sigma$ gives
+\begin{equation*}
+	\E^U\pi(d \mid y_0) = \frac{\sigma}{2h^p y_0}\int_{(-y_0 h^p - (d - (1 - h)y_0)) / \sigma}^{(y_0 h^p - (d - (1 - h)y_0)) / \sigma} \exp\Big(-\frac{w^2}{2}\Big) \dd z,
+\end{equation*}
+Hence the likelihood can be expressed in terms of the cumulative distribution function $\Phi$ of a standard Gaussian random variable, i.e.,
+\begin{equation*}
+	\E^U\pi(d \mid y_0) = \frac{\sigma\sqrt{2\pi}}{2h^p y_0} \Big(\Phi\Big(\frac{((1 - h) + h^p)y_0 - d}{\sigma}\Big) - \Phi\Big(\frac{((1 - h) - h^p)y_0 - d}{\sigma}\Big) \Big).
+\end{equation*}
+Disregarding all multiplicative constant that are independent of $y_0$, we get the posterior
+\[
+	\pi_{\mathrm{RTS-EE}}(y_0 \mid d) \propto \exp\Big(-\frac{y_0^2}{2}\Big) \frac{1}{y_0} \Big(\Phi\Big(\frac{((1 - h) + h^p)y_0 - d}{\sigma}\Big) - \Phi\Big(\frac{((1 - h) - h^p)y_0 - d}{\sigma}\Big) \Big).
+\]
+The natural choice of $p$ is $p = q + 1/2 = 3/2$, hence
+\[
+	\pi_{\mathrm{RTS-EE}}(y_0 \mid d) \propto \exp\Big(-\frac{y_0^2}{2}\Big) \frac{1}{y_0} \Big(\Phi\Big(\frac{((1 - h) + h^{3/2})y_0 - d}{\sigma}\Big) - \Phi\Big(\frac{((1 - h) - h^{3/2})y_0 - d}{\sigma}\Big) \Big).
+\]
+In the limit for $\sigma \to 0$, the difference between the cumulative distribution functions of tends to $1$ or to $0$ depending on the sign of the argument. Hence, the limiting distribution is
+\[
+	\pi_{\mathrm{RTS-EE}}(y_0 \mid d) \propto \exp\Big(-\frac{y_0^2}{2}\Big)\frac{1}{y_0} \chi_{\{y_{\min} \leq y_0 \leq y_{\max}\}},
+\]
+where the interval $[y_{\min}, y_{\max}]$ is given by
+\[
+	y_{\min} = \frac{e^{-h}y_0^*}{((1 - h) + h^{3/2})}, \quad y_{\max} = \frac{e^{-h}y_0^*}{((1 - h) - h^{3/2})},
+\]
+as in the limit of $\sigma \to 0$, we have $d \to e^{-h}y_0^*$. In order to compute moments of $y_0$ under the limiting posterior distribution with respect to $\sigma$, we need first to compute the normalising constant of the posterior, i.e.
+\[
+	C = \int_{-\infty}^{\infty} \exp\Big(-\frac{y_0^2}{2}\Big)\frac{1}{y_0} \chi_{\{y_{\min} \leq y_0 \leq y_{\max}\}} \dd y_0 = \frac{1}{2}\Big(\mathrm{Ei}\big(\frac{y_{\min}^2}{2}\big) - \mathrm{Ei}\big(\frac{y_{\max}^2}{2}\big)\Big),
+\]
+where $\mathrm{Ei}$ is the exponential integral function, which is defined as
+\[
+	\mathrm{Ei}(x) = - \int_{-x}^{\infty} \frac{e^{-t}}{t} \dd t.
+\]
+The mean of $y_0$ under the posterior is then given by
+\[
+	\E_{\pi_{\mathrm{RTS-EE}}(y_0 \mid d)} (y_0) = \frac{1}{C} \int_{-\infty}^{\infty}\exp\Big(-\frac{y_0^2}{2}\Big)\chi_{\{y_{\min} \leq y_0 \leq y_{\max}\}} \dd y_0 = \sqrt{2\pi}\frac{\Phi(y_{\max}) - \Phi(y_{\min})}{C}.
+\]
+The second moment of $y_0$ is instead given by
+\[
+	\E_{\pi_{\mathrm{RTS-EE}}(y_0 \mid d)} (y_0^2) = \frac{1}{C} \int_{-\infty}^{\infty} y_0 \exp\Big(-\frac{y_0^2}{2}\Big)\chi_{\{y_{\min} \leq y_0 \leq y_{\max}\}} \dd y_0 = \frac{e^{-y_{\min}^2/2} - e^{-y_{\max}^2/2}}{C},
+\]
+which gives the variance
+\[
+	\Var_{\pi_{\mathrm{RTS-EE}}(y_0 \mid d)} (y_0) = \frac{e^{-y_{\min}^2/2} - e^{-y_{\max}^2/2}}{C} - \Big(\sqrt{2\pi}\frac{\Phi(y_{\max}) - \Phi(y_{\min})}{C}\Big)^2.
+\]
+In case $h = 1/2$ and $y_0^* = 1$, we get $\E_{\pi_{\mathrm{RTS-EE}}(y_0 \mid d)} (y_0) \approx 1.154$ and $\Var_{\pi_{\mathrm{RTS-EE}}(y_0 \mid d)} (y_0) \approx 0.166$.
+
+We represent graphically the posterior distributions obtained with the exact and approximated forward models in Figure \ref{fig:ExactRK} and \ref{fig:Prob}. We vary $\sigma = \{0.1, 0.05, 0.025, 0.0125\}$ and consider $y_0^* = 1$ and $h = 1/2$.
+\begin{figure}
+	\centering
+	\includegraphics[]{PostEx} \\
+	\includegraphics[]{PostRK}
+	\caption{Exact posterior distribution and explicit Euler posterior.}
+	\label{fig:ExactRK}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[]{PostProb} \\
+	\includegraphics[]{PostRTS}
+	\caption{Posterior distributions for the AN-EE (top) and the RTS-EE (bottom) methods. The mean of the posterior distribution is represented by vertical dashed lines for the different values of $\sigma$.}
+	\label{fig:Prob}
+\end{figure}
+
+\end{document}

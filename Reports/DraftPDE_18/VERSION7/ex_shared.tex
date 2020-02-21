@@ -29,20 +29,22 @@
 \usepackage{ifthen}
 \usepackage[linesnumbered, ruled, vlined]{algorithm2e}
 \crefname{algocf}{Algorithm}{Algorithms}
+\usepackage{autonum}
 
 \theoremstyle{plain}
-\newtheorem{theorem}{Theorem}
-\newtheorem{corollary}{Corollary}
-\newtheorem{lemma}{Lemma}
-\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\numberwithin{equation}{section}
 
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}
+\newtheorem{definition}[theorem]{Definition}
 
 \theoremstyle{remark}
-\newtheorem{remark}{Remark}
-\newtheorem{assumption}{Assumption}
-\newtheorem{example}{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{example}[theorem]{Example}
 
 
 \ifpdf
@@ -92,8 +94,8 @@
 \DeclareMathOperator{\diag}{diag}
 \DeclarePairedDelimiter{\ceil}{\left\lceil}{\right\rceil}
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
-\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
-\newcommand{\norm}[1]{\left\|#1\right\|}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
 \renewcommand{\phi}{\varphi}
 \renewcommand{\theta}{\vartheta}
 \renewcommand{\Pr}{\mathbb{P}}
@@ -123,7 +125,8 @@
 \newcommand{\ttt}{\texttt}
 \newcommand{\Hell}{d_{\mathrm{H}}}
 \newcommand{\sksum}{{\textstyle\sum}}
-\newcommand{\dd}{\mathrm{d}}
+\newcommand{\dd}{\, \mathrm{d}}
+\renewcommand{\d}{\mathrm{d}}
 \definecolor{shade}{RGB}{100, 100, 100}
 \definecolor{bordeaux}{RGB}{128, 0, 50}
 \newcommand{\corr}[1]{{\color{red}#1}}

@@ -50,7 +50,7 @@ errTrue = []; errEst = []; N = [];
 x = linspace(0, 1, 20);
 flag = true;
 p = 1;
-M = 5e2;
+M = 6;
 it = 0;
 tol = 1e-3;
 

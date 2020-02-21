@@ -1,0 +1,6 @@
+\beamer@endinputifotherversion {3.24pt}
+\select@language {english}
+\beamer@sectionintoc {1}{Inverse problems}{4}{0}{1}
+\beamer@sectionintoc {2}{Ensemble Kalman method}{9}{0}{2}
+\beamer@sectionintoc {3}{Multiscale inverse problems}{18}{0}{3}
+\beamer@sectionintoc {4}{Numerical experiments}{32}{0}{4}

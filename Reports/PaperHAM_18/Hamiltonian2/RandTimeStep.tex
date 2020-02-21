@@ -1,0 +1,268 @@
+\documentclass{siamart1116}
+
+% basics
+\usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage[title,titletoc]{appendix}
+\usepackage{afterpage}
+\usepackage{enumitem}   
+\setlist[enumerate]{topsep=3pt,itemsep=3pt,label=(\roman*)}
+
+% maths
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\newsiamremark{assumption}{Assumption}
+\newsiamremark{remark}{Remark}
+\newsiamremark{example}{Example}
+\numberwithin{theorem}{section}
+
+% tables
+\usepackage{booktabs}
+
+% plots
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,positioning,fit,matrix}
+\usepackage[labelfont=bf]{caption}
+\setlength{\belowcaptionskip}{-5pt}
+\usepackage{here}
+\usepackage[font=normal]{subcaption}
+
+% title and authors
+%\newcommand{\TheTitle}{Probabilistic numerical methods with random time steps for chaotic and geometric integration} 
+\newcommand{\TheTitle}{Conservation Hamiltonian RTS-RK} 
+\newcommand{\TheAuthors}{A. Abdulle, G. Garegnani}
+%\headers{Probabilistic Runge-Kutta method based on random time steps}{\TheAuthors}
+\headers{\TheTitle}{\TheAuthors}
+\title{{\TheTitle}}
+\author{Assyr Abdulle\thanks{Institute of Mathematics, \'Ecole Polytechnique F\'ed\'erale de Lausanne (\email{assyr.abdulle@epfl.ch})}
+		\and
+		Giacomo Garegnani\thanks{Institute of Mathematics, \'Ecole Polytechnique F\'ed\'erale de Lausanne (\email{giacomo.garegnani@epfl.ch})}}
+
+% my commands 
+\DeclarePairedDelimiter{\ceil}{\left\lceil}{\right\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\|}{\|}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\Pr}{\mathbb{P}}
+\newcommand{\eqtext}[1]{\ensuremath{\stackrel{#1}{=}}}
+\newcommand{\leqtext}[1]{\ensuremath{\stackrel{#1}{\leq}}}
+\newcommand{\iid}{\ensuremath{\stackrel{\text{i.i.d.}}{\sim}}}
+\newcommand{\totext}[1]{\ensuremath{\stackrel{#1}{\to}}}
+\newcommand{\rightarrowtext}[1]{\ensuremath{\stackrel{#1}{\longrightarrow}}}
+\newcommand{\leftrightarrowtext}[1]{\ensuremath{\stackrel{#1}{\longleftrightarrow}}}
+\newcommand{\pdv}[2]{\ensuremath\partial_{#2}#1}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\epl}{\varepsilon}
+\newcommand{\diffL}{\mathcal{L}}
+\newcommand{\prior}{\mathcal{Q}}
+\newcommand{\defeq}{\coloneqq}
+\newcommand{\eqdef}{\eqqcolon}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\E}{\operatorname{\mathbb{E}}}
+\newcommand{\MSE}{\operatorname{MSE}}
+\newcommand{\trace}{\operatorname{tr}}
+\newcommand{\MH}{\mathrm{MH}}
+\newcommand{\ttt}{\texttt}
+\newcommand{\Hell}{d_{\mathrm{Hell}}}
+\newcommand{\sksum}{{\textstyle\sum}}
+\newcommand{\dd}{\mathrm{d}}
+\definecolor{shade}{RGB}{100, 100, 100}
+\definecolor{bordeaux}{RGB}{128, 0, 50}
+\newcommand{\corr}[1]{{\color{red}#1}}
+
+\ifpdf
+\hypersetup{
+	pdftitle={\TheTitle},
+	pdfauthor={\TheAuthors}
+}
+\fi
+
+\begin{document}
+\maketitle
+
+\section{Mean Hamiltonian} Consider the Hamiltonian $Q\colon \R^d \to \R$ and the ODE
+\begin{equation}
+	y' = J^{-1}\nabla Q(y), \quad y(0) = y_0.
+\end{equation}
+Applying a symplectic Runge Kutta method identified by its numerical flow $\Psi$, we have that the modified equation is still Hamiltonian and there exist functions $Q_j$, $j = 2, \ldots$, such that
+\begin{equation}\label{eq:ModifiedHamiltonian}
+	\tilde Q(y) = Q(y) + h Q_2(y) + h^2 Q_3(y) + \ldots,
+\end{equation}
+where $h$ is the time step. The series in \eqref{eq:ModifiedHamiltonian} does not converge, hence we consider the truncation after $N$ terms 
+\begin{equation}
+	\tilde Q(y) = Q(y) + h Q_2(y) + \ldots + h^{N-1} Q_N(y).
+\end{equation}
+Moreover, if $q$ is the order of convergence for $\Psi$, we have that $Q_i \equiv 0$ for $i = 2, \ldots, q$, hence
+\begin{equation}\label{eq:ModifiedHamiltonianTrunc}
+	\tilde Q(y) = Q(y) + h^q Q_{q+1}(y) + \ldots + h^{N-1} Q_N(y).
+\end{equation}
+Let us assume that $Q$ is analytic in a neighbourhood of $y_0$ and denoting $f = J^{-1}\nabla Q$ that there exist positive constants $R$ and $M$ such that $\norm{f(y)} \leq M$ for all $y \in B_{2R}(y_0) \subset \R^d$. Let us moreover introduce the constants $\mu$ and $\kappa$ given by
+\begin{equation}
+	\mu = \sum_{i=1}^{s} \abs{b_i}, \quad \kappa = \max_{i=1, \ldots, s} \sum_{j=1}^{s} \abs{a_{ij}},
+\end{equation}
+where $\{b_i\}_{i=1}^s$ and $\{a_{ij}\}_{i,j=1}^s$ are the coefficients of the Runge-Kutta method. Finally, let us introduce the constant $\eta = \max\{\kappa, \mu/(2\log 2 - 1)\}$. Denoting by $\tilde \phi_{N,t}(y)$ the exact flow of the equation corresponding to $\tilde Q$, we have that the local error satisfies \cite[Theorem IX.7.6]{HLW06}
+\begin{equation}\label{eq:LocalErrorModified}
+	\norm{\Psi_h(y_0) - \tilde \phi_{N,h}(y_0)} \leq h \gamma M e^{-\kappa / h},
+\end{equation}
+for all $h \leq \kappa / 4$, where $\kappa = R / (eM\eta)$ and $\gamma = e(2 + 1.65\eta + \mu)$.
+
+$[\ldots]$
+
+\begin{lemma}\label{lem:RTSHamiltonian} Under the assumption {\color{red} ADD THEM}, there exist constants $C_i > 0$, $i = 1, \ldots, 4$, such that
+	\begin{align}
+		\E \abs{\tilde Q(Y_n) - \tilde Q(y_0)} &\leq C_1 e^{-\kappa/2h}\big(1 + C_2 h^{2p-1}\big), \\
+		\E \abs{Q(Y_n) - Q(y_0)} &\leq C_1 e^{-\kappa/2h}(1 + C_2 h^{2p-1}) + C_3 h^q + C_4h^{q+p-1/2},
+	\end{align}
+	over exponentially long time intervals $nh \leq e^{\kappa / h}$.
+\end{lemma}
+\begin{proof} We exploit the conservation of $\tilde Q$ along the trajectories of its corresponding dynamical system, i.e., $\tilde Q (\tilde \phi_{N,z} (y)) = \tilde Q(y)$ for $y \in \R^d$ and $z > 0$ and employ a telescopic sum to obtain
+\begin{equation}
+\begin{aligned}
+	\E \abs{\tilde Q(Y_n) - \tilde Q(y_0)} &\leq \sum_{j=1}^{n} \E\abs{(\tilde Q(Y_{j}) - \tilde Q(Y_{j-1})} \\
+	&= \sum_{j=1}^{n} \E \abs{\tilde Q(Y_j) - \tilde Q(\tilde\phi_{N, H_{j-1}}(Y_{j-1}))} \\
+	&= \sum_{j=1}^{n} \E\E\big(\abs{\tilde Q(Y_j) - \tilde Q (\tilde\phi_{N, H_{j-1}}(Y_{j-1}))} \mid H_{j-1}\big),
+\end{aligned}
+\end{equation}
+where we applied the total expectation with respect to $H_{j-1}$ for the last equality. Then, as $Q$ is Lipschitz with constant independent of $h$ and under the assumptions on $\{H_i\}_{i\geq 0}$ and \eqref{eq:LocalErrorModified} we have
+\begin{equation}
+\begin{aligned}
+\E \abs{\tilde Q(Y_n) - \tilde Q(y_0)} &\leq C \sum_{j=0}^{n-1} \E\big(H_{j}e^{-\kappa/H_j}\big)\\
+&= C n \E\big(H_0e^{-\kappa/H_0}\big),
+\end{aligned}
+\end{equation}
+where the equality is given by the assumption of the random time steps being \textit{i.i.d.} We can now consider the function $g(x) = xe^{-\kappa/x}$ and the bound
+\begin{equation}
+\begin{aligned}
+	g(x) &\leq g(h) + g'(h) (x - h) + \frac{1}{2} \max_{x>0} g''(x) (x - h)^2 \\
+	&\leq e^{-\kappa/h} \big(h + \frac{h + \kappa}{h}(x-h)\big) + \frac{27}{2\kappa}e^{-3} (x-h)^2, \quad x > 0,
+\end{aligned}
+\end{equation}
+which is valid as $\max_{x>0} g''(x) = 27e^{-3}/\kappa$. Hence
+\begin{equation}\label{eq:ErrorModifHamiltonian}
+\begin{aligned}
+\E \abs{\tilde Q(Y_n) - \tilde Q(y_0)} &\leq Cn \E\big( e^{-\kappa/h} \big(h + \frac{h + \kappa}{h}(H_0-h)\big) + \frac{27}{\kappa}e^{-3} (H_0-h)^2 \big) \\
+&= Cnhe^{-\kappa/h}(1 + \frac{27}{\kappa}e^{-3} h^{2p-1}) \\
+&\leq Ce^{-\kappa/2h}(1 + \frac{27}{\kappa}e^{-3} h^{2p-1}),
+\end{aligned}
+\end{equation}
+where the equality is given by the assumptions on $H_0$. Hence, the first result is proved with $C_1 = C$ and $C_2 = 27e^{-3}/\kappa$. Let us now consider the original Hamiltonian and introduce the notation
+\begin{equation}
+	R(y) = h^{-q}\big(\tilde Q(y) - Q(y)\big), 
+\end{equation}
+i.e., $R(y) = Q_{q+1}(y) + h Q_{q+2}(y) + \ldots + h^{N-q-1} Q_N(y)$. We then have by the triangular inequality
+\begin{equation}
+	\E\abs{Q(Y_n) - Q(y_0)} \leq \E\abs{\tilde Q(Y_n) - \tilde Q (y_0)} + h^q \E\abs{R(Y_n) - R(y_0)}.
+\end{equation}
+The first term in the sum above is bounded thanks to \eqref{eq:ErrorModifHamiltonian}. For the second term, we add and subtract the function $R$ evaluated at exact solution of the modified equation to obtain
+\begin{equation}
+	\E\abs{R(Y_n) - R(y_0)} \leq \E\abs{R(Y_n) - R(\tilde \phi_{N,nh}(y_0))} + \abs{R(\tilde \phi_{N,nh}(y_0)) - R(y_0)},
+\end{equation}
+where the expectation on the second term disappears and there exists $C > 0$ independent of $h$ and $N$ such that
+\begin{equation}
+	\abs{R(\tilde \phi_{N,nh}(y_0)) - R(y_0)} \leq C.
+\end{equation}
+For the first term, as $R$ is Lipschitz with a constant independent of $h$ and $N$ we have
+\begin{equation}
+\begin{aligned}
+	\E\abs{R(Y_n) - R(\tilde \phi_{N,nh}(y_0))}	&\leq C \E\norm{Y_n - \tilde \phi_{N,nh}(y_0)} \\
+	&\leq \hat C e^{L h n} h^{\min\{p-1/2, N\}},
+\end{aligned}
+\end{equation}
+where the second bound is given by the strong order of convergence of the RTS-RK when applied to the modified equation, as the deterministic component in this case has order $N$. Since $N$ is arbitrary, we can assume that $\min\{p-1/2, N\} = p-1/2$. Hence, we have the final decomposition of the error on the original Hamiltonian for positive constants $C_i$, $i = 1, \ldots, 4$, i.e. 
+\begin{equation}\label{eq:ErrorHamiltonian}
+	\E\abs{Q(Y_n) - Q(y_0)} \leq C_1 e^{-\kappa/2h}(1 + C_2 h^{2p-1}) + C_3 h^q + C_4 e^{Lhn} h^{q+p-1/2}.
+\end{equation}
+\end{proof}
+
+\begin{proof}[Alternative proof of an alternative result] By Taylor expansion of the numerical solution and since $\tilde Q(y)$ is bounded we have
+	\begin{equation}
+		\E \tilde Q(Y_n) \leq \E\tilde Q(Y_{n-1}) + C \E H_{n-1},
+	\end{equation}
+	hence denoting by $\tilde \Delta_n \defeq \tilde Q(Y_n) - \tilde Q(y_n)$ where $y_n$ constant time steps
+	\begin{equation}
+		\E \tilde \Delta_n \leq \E \tilde \Delta_{n-1} + C \E H_{n-1},
+	\end{equation}
+	which implies by Brouwer's argument \cite{Bro37, HMR08}
+	\begin{equation}
+		\E \abs{\tilde \Delta_n} \leq C n^{1/2} h^p.
+	\end{equation}
+	By triangular inequality
+	\begin{equation}
+	\begin{aligned}
+			\E\abs{Q(Y_n) - Q(y_0)} &\leq \E\abs{Q(Y_n) - \tilde Q(Y_n)} + \E\abs{\tilde Q(Y_n) - \tilde Q(y_n)}\\
+			 &\quad + \abs{\tilde Q(y_n) - Q(y_n)} + \abs{Q(y_n) - Q(y_0)}.
+	\end{aligned}
+	\end{equation}
+	Now $\abs{Q(y) - \tilde Q(y)} \leq Ch^q$ for any $y$ and result on fixed time steps
+	\begin{equation}
+		 \E\abs{Q(Y_n) - Q(y_0)} \leq Ch^q + Cn^{1/2}h^p.
+	\end{equation}
+\end{proof}
+
+\begin{remark} The two results implied by Lemma \ref{lem:RTSHamiltonian} are consistent with the theory of deterministic symplectic integrators. In fact, in the limit $p \to \infty$, we have
+	\begin{align}
+		\E \abs{\tilde Q(Y_n) - \tilde Q(y_0)} &= \OO(e^{-\kappa/h}), \\
+		\E \abs{Q(Y_n) - Q(y_0)} &= \OO(h^q),
+	\end{align}
+	and the expectation $\E Q(Y_n) \to Q(y_n)$, where $y_n$ is the numerical solution given by the deterministic method.
+\end{remark}
+\begin{remark} In the bound \eqref{eq:ErrorHamiltonian} it is possible that $C_3 \ll C_4$, i.e., for large values of $h$ the term corresponding to the randomness of the RTS-RK method can be dominating. On the other hand, the higher order of convergence $q + p - 1/2$ makes this term negligible when $h$ tends to zero. In particular, implementing the reasonable choice $p = q + 1/2$ and disregarding the first term which decreases exponentially with $h$, we have
+\begin{equation}
+	\E\abs{Q(Y_n) - Q(y_0)} \leq C_3 h^q + C_4h^{2q}.
+\end{equation} 
+\end{remark}
+
+\subsection{Numerical experiment} 
+\begin{figure}[t!]
+	\centering
+	\includegraphics[]{ConvMean}
+	\caption{Convergence of the mean error on the Hamiltonian for the Hénon-Heiles problem.}
+	\label{fig:Mean}	
+\end{figure}
+
+Let us consider the Hénon-Heiles system, which is given by the Hamiltonian $Q \colon \R^4 \to \R$ defined by
+\begin{equation}
+	Q(p, q) = \frac{1}{2}\norm{p}^2 + \frac{1}{2}\norm{q}^2 + q_1^2q_2 - \frac{1}{3}q_2^3,
+\end{equation}
+where $y = (p, q)^\top \in \R^4$. We consider an initial condition such that $Q(y_0) = 0.13$ and integrate the equation employing the RTS-RK method with on the Gauss collocation method on two stages ($q = 4$) and the noise scale $p = \{2, 4\}$. We vary the mean time step $h_i = 0.2 \cdot 2^{-i}$ for $i = 0, \ldots, 7$ and consider the final time $T = 10^4$ for both values of $p$. We then compute the value of $Q$ at final time and compare it with $Q(y_0)$ to check numerically the validity of Lemma \ref{lem:RTSHamiltonian}. Results are shown in Figure \ref{fig:Mean}, where the dashed and dotted lines are given by \eqref{eq:ErrorHamiltonian} disregarding the first term and setting $C_3 = 3\cdot 10^{-2}$, $C_4 = 2\cdot 10^{-4}$. It is possible to remark that for small values of $h$ the slope of the error decreases as the asymptotic regime is reached.
+
+\subsection{Numerical experiment} Let us consider the pendulum problem, which is given by the Hamiltonian $Q \colon \R^2 \to \R$ defined by
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[]{MeanTime}
+	\caption{Time evolution of the mean error, pendulum problem}
+	\label{fig:MeanTime}	
+\end{figure}
+
+\begin{equation}
+Q(p, q) = \frac{p^2}{2} - \cos q,
+\end{equation}
+where $y = (p, q)^\top \in \R^2$. We consider the initial condition $(p_0, q_0) = (1.5, -\pi)$ and integrate the equation employing RTS-RK based on the implicit midpoint method ($q = 2$) and the noise scale $p = 2$. We vary the mean time step $h \in \{0.2, 0.1, 0.05, 0.025\}$ and consider the final time $T = 10^6$. We then study the time evolution of the numerical error on the Hamiltonian $Q$. Results are shown in Figure \ref{fig:MeanTime}, where it is possible to notice \ldots.
+
+
+
+%\section{Distribution} Guess by numerics, Figure \ref{fig:StdDev}, Kepler system, two-stage Gauss ($q = 4$). Over exponentially long times
+%\begin{equation}
+%	\sigma_n = \Var(Q(Y_n))^{1/2} = \OO(n^{1/2}h^{q+p}),
+%\end{equation}
+%
+%\begin{figure}
+%	\centering
+%	\includegraphics[]{ConvSigma}
+%	\caption{Convergence of the standard deviation, $h = \{0.2, 0.1, 0.05, 0.025, 0.0125\}$. Reference slopes correspond to $n^{1/2}h^{q+p}$.}
+%	\label{fig:StdDev}
+%\end{figure}
+
+\bibliographystyle{siam}
+\bibliography{anmc}
+
+\end{document}

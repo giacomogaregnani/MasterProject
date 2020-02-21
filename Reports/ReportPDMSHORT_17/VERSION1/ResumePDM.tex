@@ -1,0 +1,467 @@
+\documentclass{siamart1116}
+
+% basics
+\usepackage[left=3cm,right=3cm,top=3cm,bottom=4cm]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage[title,titletoc]{appendix}
+\usepackage{afterpage}
+
+% maths
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\newsiamremark{assumption}{Assumption}
+\newsiamremark{remark}{Remark}
+\numberwithin{theorem}{section}
+
+% plots
+\usepackage{pgfplots} 
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{subcaption}
+\usepackage{here}
+\usepackage[labelfont=bf]{caption}
+
+% title and authors
+\newcommand{\TheTitle}{Convergence properties of Monte Carlo estimators drawn from probabilistic integrators of ordinary differential equations} 
+\newcommand{\TheAuthors}{A. Abdulle, G. Garegnani}
+\headers{Monte Carlo estimators drawn from probabilistic integrators of ODEs}{\TheAuthors}
+\title{{\TheTitle}}
+\author{Assyr Abdulle\thanks{Mathematics Section, \'Ecole Polytechnique F\'ed\'erale de Lausanne (\email{assyr.abdulle@epfl.ch})}
+	\and
+	Giacomo Garegnani\thanks{Mathematics Section, \'Ecole Polytechnique F\'ed\'erale de Lausanne (\email{giacomo.garegnani@epfl.ch})}}
+
+% my commands 
+\DeclarePairedDelimiter{\ceil}{\left\lceil}{\right\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\renewcommand{\phi}{\varphi}
+\newcommand{\eqtext}[1]{\ensuremath{\stackrel{#1}{=}}}
+\newcommand{\leqtext}[1]{\ensuremath{\stackrel{#1}{\leq}}}
+\newcommand{\iid}{\ensuremath{\stackrel{\text{i.i.d.}}{\sim}}}
+\newcommand{\totext}[1]{\ensuremath{\stackrel{#1}{\to}}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\epl}{\varepsilon}
+\newcommand{\diffL}{\mathcal{L}}
+\newcommand{\prior}{\mathcal{Q}}
+\newcommand{\defeq}{\coloneqq}
+\newcommand{\eqdef}{\eqqcolon}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\E}{\operatorname{\mathbb{E}}}
+\newcommand{\MSE}{\operatorname{MSE}}
+\newcommand{\MH}{\mathrm{MH}}
+\newcommand{\ttt}{\texttt}
+\newcommand{\Hell}{d_{\mathrm{Hell}}}
+\newcommand{\sksum}{\textstyle\sum}
+\newcommand{\dd}{\mathrm{d}}
+
+\ifpdf
+\hypersetup{
+	pdftitle={\TheTitle},
+	pdfauthor={\TheAuthors}
+}
+\fi
+
+\begin{document}
+	
+\maketitle
+
+\begin{abstract} We consider a probabilistic integrator for ordinary differential equations (ODEs) which has recently been introduced \cite{CGS16}. The existing analysis of strong and weak convergence is integrated in this work with a novel bound on the mean square error (MSE) of estimators obtained with Monte Carlo simulations. Exploiting this result, we deduce a result of convergence of the posterior distribution in the frame of Bayesian inverse problems involving parameterized ODEs.	
+\end{abstract}
+
+\section{Introduction} Extremely efficient deterministic methods for ordinary differential equations (ODEs) have been developed and extensively studied in the last decades, although only recently a serious effort has been made to quantify in a probabilistic manner the natural error introduced by numerical schemes. In this work we consider an integrator \cite{CGS16} for ODEs that accounts for the statistical uncertainty given by the error. The main idea laying behind this novel numerical scheme is building a set of trajectories from the realizations of a random process, thus providing a statistical measure of the numerical solution which is not punctual as in the deterministic case.
+
+It has been empirically observed that the probabilistic method has better performances than its classic deterministic counterpart in the context of Bayesian inference inverse problems \cite{CGS16}. In particular, the posterior distributions obtained with Markov chain Monte Carlo methods (MCMC) seem to account well for the uncertainty given by the numerical approximation.
+
+The properties of strong and weak convergence of this numerical scheme have been extensively analyzed. In this work, we consider Monte Carlo estimators drawn from this probabilistic integrator and deduce a novel bound on their mean square error. In particular, we show that Monte Carlo estimators converge independently of the number of trajectories chosen in simulations when the ODE is fully deterministic. This result implies a remarkable gain in computational cost, as only an $\OO(1)$ number of trajectories is needed if the time step is small enough. Finally, we apply this bound to Bayesian inference inverse problems involving parameterized ODEs, thus predicting the distance between approximated and exact posterior distributions of the inferred parameter.
+
+The structure of this work is the following. In Section \ref{sect:ProbMethod} we present the probabilistic solver of ODEs together with its properties of convergence. Then, in Section \ref{sect:MonteCarlo} we show the main result of this work concerning Monte Carlo estimators drawn from the probabilistic solution. We show in Section \ref{sect:Bayes} how this result applies in the frame of Bayesian inference inverse problems. Finally, we present a numerical experiment in Section \ref{sect:NumExp}, thus drawing our final considerations in the conclusion.
+
+\section{Probabilistic methods for ODEs}\label{sect:ProbMethod}
+Let us consider a function $f\colon \R^d \to \R^d$ and the following autonomous ODE
+\begin{equation}\label{eq:ODE}
+\begin{aligned}
+	u'(t) &= f(u), &&  t \in (0, T], \\
+	u(0)  &= u_0, && u_0 \in \R^d,
+\end{aligned}
+\end{equation}
+where $d$ is the dimension of the problem and $u_0$ is the initial condition. It is possible to write the solution of \eqref{eq:ODE} in terms of the flow of the differential equation $\Phi\colon\R\times\R^d\to\R^d$ as
+\begin{equation}
+	u(t) = \Phi(t, u_0).
+\end{equation}
+Given a time step $h >0$, we now consider a discretization of the time interval $[0, T]$ defined as $t_k = kh$, with $k = 0, \ldots, N$, where $T = Nh$, and the numerical solution $u_k$ approximating $u(t_k)$ given by a Runge-Kutta method \cite{HLW02}. The numerical solution can be written in terms of the flow $\Psi\colon\R\times\R^d\to\R^d$ of the numerical method as
+\begin{equation}
+	u_{k+1} = \Psi(h, u_k).
+\end{equation}
+In the probabilistic method we analyze in this work, first introduced in \cite{CGS16}, we consider independent identically distributed (i.i.d.) random variables $\xi_k$, opportunely scaled with respect to the time step, adding them to the deterministic numerical solution as 
+\begin{equation}\label{eq:probabilisticMethod}
+\begin{aligned}
+U_{k+1} &= \Psi(h, U_k) + \xi_k(h), \\
+U_0 &= u_0.
+\end{aligned}
+\end{equation}
+The convergence of the numerical scheme has been extensively analyzed \cite{CGS16}. We report here the main results that are needed in this work. 
+
+The following assumptions are needed to prove a result of strong convergence. The first assumption concerns the random variables $\xi_k(h)$ in \eqref{eq:probabilisticMethod}.
+\begin{assumption}\label{ass:AssumptionOne} There exist constants $p > 1$, $C > 0$ such that the random variables $\xi_k(t)$ satisfy
+\begin{equation}
+	\E|\xi_k(t)\xi_k(t)^T|^2_F \leq Ct^{2p+1}.
+\end{equation}
+Furthermore, there exists a matrix $Q$ independent of $h$ such that 
+\begin{equation}
+	\E\xi_k(h)\xi_h(h)^T = Qh^{2p+1}.
+\end{equation}
+\end{assumption}
+Moreover, it is necessary to assume that the deterministic component identified by its flow $\Psi$ converges to the true solution of \eqref{eq:ODE}. 
+\begin{assumption}\label{ass:AssumptionTwo}  The function $f$ and a sufficient number of its derivatives are bounded uniformly in $\R^n$ in order to ensure that $f$ is globally Lipschitz and that the numerical flow map $\Psi$ has uniform local truncation error of order $q + 1$, i.e., 
+	\begin{equation}
+		\sup_{u\in\R^n} |\Psi_t(u) - \Phi_t(u)| \leq Kt^{q+1}.
+	\end{equation}
+\end{assumption}
+Under these two assumptions, it is possible to prove the following result \cite{CGS16}.
+\begin{theorem}[Strong Convergence]\label{thm:strongConv} Under assumptions \ref{ass:AssumptionOne} and \ref{ass:AssumptionTwo}, there is a constant $C>0$ such that
+	\begin{equation}\label{strongConvDisc}
+		\sup_{0<kh<T} \E|u_k - U_K|^2 \leq Ch^{2\min\{p,q\}}.
+	\end{equation}
+	Furthermore, the continuous version $U(t)$ of the numerical solution given by \ref{eq:probabilisticMethod} satisfies
+	\begin{equation}\label{strongConvCont}
+		\sup_{0\leq t \leq T} \E|u(t) - U(t)| \leq Ch^{\min\{p, q\}}.
+	\end{equation}
+\end{theorem}
+
+Under a further stability assumption, a result of weak convergence can be proven. 
+\begin{assumption}\label{ass:AssumptionThree} The function $f$ in \eqref{eq:ODE} is in $\mathcal C^\infty$ and all its derivatives are uniformly bounded in $\R^n$. Furthermore, $f$ is such that for all functions $\phi$ in $\mathcal C ^\infty(\R^n, \R)$ 
+	\begin{equation}
+	\begin{aligned}
+		\sup_{u\in\R^n} \abs{\phi(\Phi(h, u))} &\leq (1 + Lh) \sup_{u\in\R^n} \left|\phi(u)\right|, \\
+		\sup_{u\in\R^n} \abs{\E \phi(U_1\mid U_0 = u)} &\leq (1 + Lh) \sup_{u\in\R^n} \left|\phi(u)\right|, \\
+	\end{aligned}
+	\end{equation}
+	for a constant $L > 0$.
+\end{assumption}
+
+It is then possible to prove the following result \cite{CGS16}.
+\begin{theorem}[Weak convergence]\label{thm:WeakConvergence} Under assumptions \ref{ass:AssumptionOne}, \ref{ass:AssumptionTwo} and \ref{ass:AssumptionThree} and for any function $\phi$ in $\mathcal{C}^\infty(\R^d, \R)$, there is a constant $C > 0$ such that
+\begin{equation}
+	\abs{\phi(u(T)) - \E\phi(U_N)} \leq Ch^{\min\{2p, q\}}, \quad Nh = T,
+\end{equation}
+	where $u$ is the solution of \eqref{eq:ODE}.
+\end{theorem}
+
+We will exploit the results presented in this section to deduce the novel properties we analyze in this work.
+
+\section{Convergence of Monte Carlo estimators}\label{sect:MonteCarlo}
+As it has been highlighted in \cite{KeH16}, the behavior of Monte Carlo estimators computed using \eqref{eq:probabilisticMethod} has not been investigated yet. Given a function $\phi\colon\R^d\to\R$ in $\mathcal{C}^\infty(\R^d, \R)$, we consider the unbiased estimator $\hat Z$ defined as
+\begin{equation}
+	\hat Z \defeq M^{-1} \sksum_{i = 1}^M \phi(U_N^{(i)}),
+\end{equation}
+where $M\in\N^*$ is the number of values $U^{(i)}_N$, with $i = 1, \ldots, M$, which are drawn from the numerical solution at final time $T = Nh$. In particular, we are interested in controlling the convergence of the mean square error (MSE) of $\hat Z$ with respect to the time step $h$ and the number of trajectories $M$. Thanks to the result of weak convergence of Theorem \ref{thm:WeakConvergence}, we have a first bound given by
+\begin{equation}\label{eq:MSEdefinition}
+\begin{aligned}
+	 \MSE(\hat Z) &= \Var\hat Z + \big(\E(\hat Z - \phi(u(T)))\big)^2\\
+	  &\leq \Var\hat Z + C h^{2\min\{2p, q\}},
+\end{aligned}
+\end{equation}
+where $C$ is a positive constant. The variance of the estimator can be bounded by considering the structure of Runge-Kutta methods together with the additive nature of the introduced noise. Let us remark that trivially from the independence of samples we have
+\begin{equation}
+\begin{aligned}
+	\Var\hat Z &= \Var M^{-1} \sksum_{i = 1}^M \phi(U_N^{(i)}) \\
+	&= M^{-1} \Var\phi\left(U_N\right). \\
+\end{aligned}
+\end{equation}
+Moreover, if we denote by $L_\phi$ the Lipschitz constant of the function $\phi$ we have
+\begin{equation}\label{eq:BoundOfVarHatZ}
+	\Var\hat Z \leq M^{-1} L_\phi^2 \Var U_N.
+\end{equation}
+Therefore, it is sufficient to bound the variance of the numerical solution itself in order to obtain a bound on the MSE.
+\begin{lemma}\label{lem:VarianceExplicit} Consider the numerical method \eqref{eq:probabilisticMethod} applied to a one-dimensional ODE with $\Psi$ any explicit Runge-Kutta method on $s$ stages. If the numerical scheme satisfies Assumption \ref{ass:AssumptionOne}, then the solution $U_k$ at time $t_k = kh$ satisfies
+\begin{equation}
+	\Var U_k \leq C_1\Var U_0 + C_2Q h^{2p}, \quad k = 1, \ldots, N,
+\end{equation}
+where $C_1$, $C_2$ are positive constants independent of $h$, and where $p$ is the exponent of Assumption \ref{ass:AssumptionOne}.
+\end{lemma}
+
+\begin{proof}  Let us consider any explicit Runge-Kutta method defined by its flow $\Psi$, and rewrite \eqref{eq:probabilisticMethod} as
+	\begin{equation}
+		U_{k+1} = U_k + h\tilde \Psi (U_k) + \xi_k(h),
+	\end{equation}
+	where $\tilde\Psi(x) \defeq h^{-1}(\Psi(h, x) - x)$ is given by
+	\begin{equation}
+		\tilde\Psi(U_k) = \sksum_{i = 1}^{s} b_i K_i,
+	\end{equation} 
+	and $K_i$, $i = 1, \ldots, s$, are the stages of the Runge-Kutta method. Then, since for any random variables $X, Y$ it is true that
+	\begin{equation}\label{eq:VarianceOfSum}
+		\Var (X + Y) \leq 2 \Var X + 2 \Var Y,
+	\end{equation}
+	we have
+	\begin{equation}\label{eq:VarUkPlusOne}
+		\Var U_{k+1} \leq 2\Var U_k + 2h^2 \Var \tilde \Psi (U_k) + Q h^{2p + 1}.
+	\end{equation}
+	Let us consider the second term. Generalizing on $s$ terms \eqref{eq:VarianceOfSum} we get
+	\begin{equation}\label{eq:temp}
+		\Var \tilde \Psi (U_k) \leq s\sksum_{i = 1}^{s} b_i^2 \Var K_i.
+	\end{equation}
+	Hence, we can consider the variance of each stage singularly. Since we are only considering explicit Runge-Kutta method, we have
+	\begin{equation}
+		\Var K_i = \Var f(U_k + h\sksum_{j=1}^{i-1}a_{ij}K_j).
+	\end{equation}
+	Exploiting \eqref{eq:VarianceOfSum} on both the outer and inner sums and since $f$ is Lipschitz continuous of constant $L_f$ we obtain
+	\begin{equation}
+		\Var K_i \leq 2L_f^2 (\Var U_k + h^2(i-1) \max_{i,j=1,\ldots,s}a_{ij}^2 \sksum_{j=1}^{i-1} \Var K_j).
+	\end{equation}
+	We then apply the discrete Gronwall lemma and consider that $i \leq s$ to obtain
+	\begin{equation}
+		\Var K_i \leq 2L_f^2\exp(h^2s^2 \max_{i,j=1,\ldots,s}a_{ij}^2)\Var U_k.
+	\end{equation}
+	Hence, the variance of each stage of the Runge-Kutta method is controlled by the variance of the previous step. Replacing the obtained bound in \eqref{eq:temp} and noticing that $\Var K_i$ is bounded independently of $i$ for $i = 1, \ldots, s$ we get 
+	\begin{equation}\label{eq:VarTildePsi}
+		\Var \tilde \Psi (U_k) \leq \hat C \exp(\tilde C h^2)\Var U_k,
+ 	\end{equation}
+ 	where we introduce the positive constants $\hat C$ and $\tilde C$ defined as
+ 	\begin{equation}
+	 	\hat C \defeq  2s^2 L_f^2\max_{i=1\ldots s}b_i^2, \quad \tilde C \defeq s^2 \max_{i,j=1,\ldots,s}a_{ij}^2.
+ 	\end{equation}
+ 	Replacing \eqref{eq:VarTildePsi} in \eqref{eq:VarUkPlusOne} we get
+ 	\begin{equation}
+ 		\Var U_{k+1} \leq 2(1 +  h^2\hat C \exp(\tilde C h^2))\Var U_k + Q h^{2p + 1}.
+	\end{equation}
+	{\color{red}We then proceed recursively and get}
+	\begin{equation}
+		\Var U_{k} \leq 2g(h)^k \Var U_0 + 2Qh^{2p + 1}\sksum_{i=0}^{k-1}g(h)^i, \quad \text{where } g(h) = 1 +  h^2\hat C \exp(\tilde C h^2).
+ 	\end{equation}
+	Let us remark that the function $g(h)$ is bounded by an exponential as
+	\begin{equation}
+	\begin{aligned}
+		g(h) &\leq \exp(h^2\hat C \exp(\tilde C h^2))\\
+		&\leq \exp(\bar Ch^2),
+	\end{aligned}
+	\end{equation}	
+	where the constant $\bar C$ is defined as $\bar C = \hat C \exp(\tilde C T^2)$. Moreover, the function $g$ is bounded trivially as 
+	\begin{equation}
+		g(h) \leq 1 + h^2\bar C.
+	\end{equation} 
+	Hence, we can write
+	\begin{equation}
+		\Var U_{k} \leq 2\exp(\bar C k h^2) \Var U_0 + 2Qh^{2p + 1}\sksum_{i=0}^{k-1}(1 + h^2 \bar C)^i.
+	\end{equation}
+	The first term is bounded considering the constant $C_1$ defined as
+	\begin{equation}
+		C_1 = 2\exp(\bar C T^2).
+	\end{equation}
+	We consider for the sum in the second term the geometric series and we bound with the exponential function, thus obtaining
+	\begin{equation}
+		\sksum_{i=0}^{k-1}(1 + h^2 \bar C)^i \leq \dfrac{\exp(T\bar C h) - 1}{\bar C h^2}.
+	\end{equation}
+	Hence, we can develop the exponential and obtain
+	\begin{equation}\label{eq:BoundOfSum}
+		\sksum_{i=0}^{k-1}(1 + h^2 \bar C)^i \leq \dfrac{\exp(T^2\bar C) - 1}{\bar Ch}.
+	\end{equation}
+	We then set the constant $C_2$ to
+	\begin{equation}
+		C_2 = \frac{\exp(T^2\bar C) - 1}{\bar C},
+	\end{equation}
+	thus obtaining the desired result.
+\end{proof}
+
+A similar result can be proved for implicit method. In this case, an additional requirement about the time step is required in order to guarantee the well-posedness of the numerical method.
+
+\begin{lemma}\label{lem:VarianceImplicit} Consider the numerical method \eqref{eq:probabilisticMethod} applied to a one-dimensional ODE with $\Psi$ any implicit Runge-Kutta method on $s$ stages and Assumption \ref{ass:AssumptionOne}. Then, if $h$ is small enough, the numerical solution $U_k$ at time $t_k = kh$ satisfies
+	\begin{equation}\label{eq:BoundLemmaImplicit}
+		\Var U_k \leq C_1\Var U_0 + C_2Q h^{2p}, \quad k = 1, \ldots, N,
+	\end{equation}
+	where $C_1$, $C_2$ are positive constants independent of $h$, and where $p$ is the exponent of Assumption \ref{ass:AssumptionOne}.
+\end{lemma}
+
+\begin{proof} For any implicit or explicit Runge-Kutta method we can write one step of the probabilistic method as
+	\begin{equation}
+		U_k = U_{k-1} + h\sksum_{i=1}^{s}b_iK_i + \xi_k(h).
+	\end{equation}
+	Then thanks to \eqref{eq:VarianceOfSum} and Assumption \ref{ass:AssumptionOne} we obtain
+	\begin{equation}\label{eq:partialLemRKI}
+		\Var U_k \leq 2 \Var U_{k-1}  + 2h^2\Var \sksum_{i=1}^{s}b_i K_i + Q h^{2p + 1}.
+	\end{equation}
+	Let us consider the second term in the bound above. Thanks to the generalization on $s$ terms of \eqref{eq:VarianceOfSum} we get
+	\begin{equation}
+	\Var \sksum_{i=1}^{s}b_i K_i \leq s \sksum_{i=1}^s b_i^2 \Var K_i.
+	\end{equation}
+	Considering now the variance of all single stages of the Runge-Kutta scheme and denoting by $L_f$ the Lipschitz constant of the function $f$ we get
+	\begin{equation}
+	\begin{aligned}
+		\Var K_i  &\leq L_f^2 \Var(U_{k-1} + h\sksum_{j=1}^{s}a_{ij}K_j) \\
+		&\leq 2L_f^2 \Var U_{k-1} + 2L_f^2h^2s\max_{i,j=1,\ldots,s}a_{ij}^2 \sksum_{j=1}^{s}\Var K_j.
+	\end{aligned}
+	\end{equation}
+	Then, if we define the constant $\alpha > 0$ as
+	\begin{equation}
+		\alpha = 2L_f^2s\max_{i,j=1,\ldots,s}a_{ij}^2,
+	\end{equation}
+	and if there exists a constant $\tilde C > 0$ such that $1 - \alpha h^2 > \tilde C^{-1}$, we can bound the variance of the $i$-th Runge-Kutta stage as
+	\begin{equation}
+		\Var K_i \leq 2L_f^2 \tilde C \Var U_{k-1} + \alpha \tilde C \sksum_{j=1, j\neq i}^{s}\Var K_j. 
+	\end{equation}
+	If for each $i$ we consider a numbering of the Runge-Kutta stages such that $i = s$, we can apply the discrete Gronwall inequality and get
+	\begin{equation}
+		\Var K_i \leq 2L_f^2 \tilde C  \exp(\alpha \tilde C) \Var U_{k-1}.
+	\end{equation}
+	Substituting this inequality in \eqref{eq:partialLemRKI} we get
+	\begin{equation}
+		\Var U_k \leq 2\big(1 + 2 h^2 s^2 L_f^2 \tilde C  \exp(\alpha \tilde C)\max_{i=1,\ldots,s} b_i^2\big)\Var U_{k-1} + Q h^{2p+1}
+	\end{equation}
+	If we define the constant $\hat C > 0$ as 
+	\begin{equation}
+		\hat C \defeq 2 s^2 L_f^2 \tilde C  \exp(\alpha \tilde C)\max_{i=1,\ldots,s} b_i^2,
+	\end{equation}
+	and we proceed recursively on the index $k$, we get
+	\begin{equation}
+		\Var U_k \leq (1 + \hat C h^2)^k \Var U_0 + Qh^{2p+1}\sksum_{i=0}^{k-1} (1 + \hat C h^2)^i.
+	\end{equation}
+	For the second term we can exploit \eqref{eq:BoundOfSum} and get for a constant $C_2 > 0$
+	\begin{equation}
+		\Var U_k \leq \exp(\hat C T^2) \Var U_0 + C_2 Q h^{2p},
+	\end{equation}
+	thus obtaining the desired result with $C_1 = \exp(\hat C T^2)$.
+\end{proof}
+
+\begin{remark} Both the results presented in Lemma \ref{lem:VarianceExplicit} and \ref{lem:VarianceImplicit} simplify in case the ODE \eqref{eq:ODE} has a deterministic initial condition. In this case we have $U_0 = u_0$, thus we can bound the variance of the numerical solution at the $k$-th time step as
+\begin{equation}
+	\Var U_k \leq C_2 Q h^{2p}.
+\end{equation} 
+\end{remark} 
+
+We can now state the result of convergence for the MSE of the Monte Carlo estimator.
+
+\begin{theorem}\label{thm:MSE} Under the assumptions of Lemma \ref{lem:VarianceImplicit} and if the function $\phi$ in $\mathcal C^\infty(\R^d, \R)$ is Lipschitz continuous, the following bound for the MSE of $\hat Z$ is valid
+	\begin{equation}
+		\MSE(\hat Z) \leq C_1 h^{2\min\{2p, q\}} + C_2 M^{-1} (\Var(U_0) + h^{2p}),
+	\end{equation}	
+	where $C_1$, $C_2$ are positive constants independent of $h$.	
+\end{theorem}
+
+\begin{proof}
+	The result is trivially proved replacing \eqref{eq:BoundLemmaImplicit} in \eqref{eq:BoundOfVarHatZ} and then in \eqref{eq:MSEdefinition}.
+\end{proof}
+
+\begin{remark} If the initial condition $u_0$ is deterministic and $U_0 = u_0$, the MSE of the Monte Carlo estimator is bounded by a function of the time step as
+	\begin{equation}
+		\MSE(\hat Z) \leq C_1 h^{2\min\{2p, q\}} + C_2 M^{-1} h^{2p}.
+	\end{equation}
+	Hence, the estimator $\hat Z$ convergence in the mean square sense towards the solution of the ODE regardless of the number of trajectories that are used in a simulation context.
+\end{remark}
+
+\section{Bayesian inference of parametrized ODEs}\label{sect:Bayes}
+
+It has been shown in \cite{CGS16} that the numerical solution provided by the probabilistic method \eqref{eq:probabilisticMethod} has a favorable behavior in the context of Bayesian inference problems involving ODEs. Let us consider a real parameter $\theta$ in a domain $\Omega \subset \R^n$, with $n \in \N^*$, a function $f \colon \R^d\times \Omega \to\R^d$ and the ODE
+\begin{equation}\label{eq:ParamODE}
+\begin{aligned}
+	u'(t, \theta) &= f(u, \theta), &&  t \in (0, T], \\
+	u(0, \theta)  &= u_0(\theta), && u_0(\theta) \in \R^d,
+\end{aligned}
+\end{equation}
+where we highlight the dependence of the solution $u$ on the value of the parameter. We then consider a set of data that we denote by $\mathcal{Y} = \{y_1, \ldots, y_D\}$, where $D \in \N^*$ is the number of observations. In particular, the values $y_i \in \R^d$, with $i = 1, 2, \ldots, D$, are given by an additive Gaussian perturbation of the state computed at the true value $\bar \theta$ of the parameter, i.e.
+\begin{equation}
+	y_i = u(t_i, \bar \theta) + \epl_i, \quad \epl_i \iid \mathcal{N}(0, \Gamma), \quad i = 1, \ldots, D,
+\end{equation}
+where $\Gamma \in \R^{d\times d}$ is the covariance matrix of the observational noise.
+
+Given the observations, it is possible to perform inference on the value of the parameter $\theta$ following Bayes' rule, i.e.
+\begin{equation}\label{eq:ExactPosterior}
+	\pi(\theta\mid\mathcal Y) \propto \prior(\theta) \diffL(\mathcal Y\mid \theta),
+\end{equation}
+where $\pi$ is the posterior distribution, $\prior$ is the prior distribution on the parameter and $\diffL$ is the likelihood function. The proportionality constant is not of interest in this discussion, and can be retrieved by normalizing $\pi$ so that it is a probability density function. 
+
+Since \eqref{eq:ParamODE} does not admit a closed-form solution, we approximate numerically the value of the likelihood function. We choose to exploit the probabilistic method \eqref{eq:probabilisticMethod}, averaging over the variable $\xi$ to obtain the posterior distribution \cite{CGS16} as 
+\begin{equation}\label{eq:PosteriorSemiEstimator}
+	\pi_h(\theta\mid\mathcal Y) \propto \prior(\theta) \int  \diffL^\xi_h(\mathcal Y\mid \theta) \dd \xi,	
+\end{equation}
+where $\pi_h$ and $\diffL^\xi_h$ are the approximated posterior and likelihood obtained with \eqref{eq:probabilisticMethod} with time step $h$. The value of $\pi_h$ is still not computable in practice, as it requires evaluating the exact expectation of $\diffL^\xi_h$, which is not accessible. Hence, a Monte Carlo simulation has to be performed in order to retrieve an estimator of $\pi_h$. In particular, we compute $M$ trajectories of \eqref{eq:probabilisticMethod}, thus obtaining the estimator $\hat \pi_{h, M}$ defined as
+\begin{equation}
+	\hat \pi_{h,M}(\theta\mid\mathcal Y) \propto \prior(\theta) \hat \diffL_{h,M}(\mathcal Y\mid \theta),
+\end{equation}
+where the estimator of the likelihood function is given by the Monte Carlo average
+\begin{equation}
+	\hat \diffL_{h,M}(\mathcal Y\mid \theta) = M^{-1}\sksum_{i=1}^M \diffL^{\xi^{(i)}}_h(\mathcal Y\mid \theta).
+\end{equation}
+Here, we denote by $\diffL^{\xi^{(i)}}$ the likelihood computed using the $M$ realizations of \eqref{eq:probabilisticMethod}.
+
+The estimator of the posterior distribution can be exploited in the pseudo-marginal versions of the Metropolis-Hastings MCMC algorithms \cite{ADH10, DPD15}, which are used to generate samples from $\pi$. Exploiting the result on Monte Carlo averages in Theorem \ref{thm:MSE}, we can quantify the average distance between the posterior distribution and its estimator with respect to the time step $h$ and the number of trajectories $M$.
+
+\begin{theorem}\label{thm:HellingerTheorem} If the initial condition of \eqref{eq:ParamODE} is deterministic and under the assumptions of Theorem \ref{thm:MSE},
+	\begin{equation}\label{eq:HellingerTheorem}
+		\E \Hell(\pi(\theta|\mathcal{Y}), \hat \pi_{h,M}(\theta|\mathcal{Y})) \leq C \big(h^{2\min\{2p, q\}} + M^{-1}h^{2p}\big)^{1/2}, 
+	\end{equation}
+	where we maintained the notation above, $\Hell(\cdot, \cdot)$ denotes the Hellinger distance and $C$ is a positive constant independent of $h$ and $M$.
+\end{theorem}
+\begin{proof} By definition of the Hellinger distance we have
+	\begin{equation}
+		2\E\Hell^2(\pi(\theta\mid\mathcal{Y}),\hat\pi^M_h(\theta\mid\mathcal{Y})) = \E\int_\Omega (\pi(\theta\mid\mathcal{Y})^{1/2} - \hat\pi_{h, M}(\theta\mid\mathcal{Y})^{1/2}) \dd \theta.
+	\end{equation}
+	Replacing the definition of $\pi$ and $\pi_{h, M}$ we get
+	\begin{equation}
+		2\E\Hell^2(\pi(\theta\mid\mathcal{Y}),\hat\pi^M_h(\theta\mid\mathcal{Y})) = \int_\Omega \E \big(\diffL(\mathcal{Y}\mid\theta)^{1/2} - \diffL_{h,M}(\mathcal Y\mid\theta)^{1/2}\big)^2 \prior(\theta)\dd \theta.
+	\end{equation}
+	Furthermore, by definition of the MSE we get
+	\begin{equation}
+		2\E\Hell^2(\pi(\theta\mid\mathcal{Y}),\hat\pi^M_h(\theta\mid\mathcal{Y})) = \int_\Omega \MSE\big(\diffL_{h,M}(\mathcal Y\mid\theta)^{1/2}\big) \prior(\theta)\dd \theta.
+	\end{equation}
+	We now exploit Theorem \ref{thm:MSE} thus obtaining
+	\begin{equation}
+		\E\Hell^2(\pi(\theta\mid\mathcal{Y}),\hat\pi^M_h(\theta\mid\mathcal{Y})) \leq \tilde C(\theta) \big(h^{2\min\{2p, q\}} + M^{-1}h^{2p}\big).
+	\end{equation}
+	Let us remark that the constant $\tilde C(\theta)$ can depend on the value of $\theta$, as in Theorem \ref{thm:MSE} the constants appearing in the final bound depend on the Lipschitz constant $L_f$ of the function $f$. We now apply Jensen's inequality to get 
+	\begin{equation}
+		\E\Hell(\pi(\theta\mid\mathcal{Y}),\hat\pi^M_h(\theta\mid\mathcal{Y})) \leq \tilde C(\theta)^{1/2} \big(h^{2\min\{2p, q\}} + M^{-1}h^{2p}\big)^{1/2}.
+	\end{equation}
+	We then consider the constant $C$ appearing in \eqref{eq:HellingerTheorem} to be defined as
+	\begin{equation}
+		C = \sup_{\theta \in \Omega} \tilde C(\theta)^{1/2},
+	\end{equation}
+	thus obtaining the desired result.
+\end{proof}
+
+\begin{remark} The bound above can be used to set the number of trajectories $M$ needed to approximate the acceptance probability in a Metropolis-Hastings algorithm. Since the quality of the approximation of the posterior function is practically dependent only on the time step, we believe that if $h$ is small enough it is sufficient to choose $M = \OO(1)$, therefore saving computational time.
+\end{remark}
+
+\begin{remark} In practice, the value of $p$ appearing in Assumption \ref{ass:AssumptionOne} is fixed to the order $q$ of the chosen Runge-Kutta scheme \cite{CGS16}. Hence, the bound above simplifies to
+	\begin{equation}
+		\E\Hell(\pi(\theta\mid\mathcal{Y}),\pi^M_h(\theta\mid\mathcal{Y})) \leq C h^{q},
+	\end{equation}
+	where we assumed $M^{-1}$ to be an $\OO(1)$.
+\end{remark}
+
+\section{Numerical experiment}\label{sect:NumExp}
+
+\begin{figure}
+	\centering
+	\begin{subfigure}{0.49\linewidth}
+		\centering
+		\resizebox{1.0\linewidth}{!}{\input{plots/MonteCarloVariance2.tikz}}
+		\caption{Variation of the time step.}
+		\label{fig:MonteCarloVarianceH}
+	\end{subfigure}
+	\begin{subfigure}{0.49\linewidth}
+		\centering
+		\resizebox{1.0\linewidth}{!}{\input{plots/MonteCarloVariance3.tikz}}
+		\caption{Variation of the number of trajectories.}
+		\label{fig:MonteCarloVarianceM}
+	\end{subfigure}
+	\caption{Variance and squared bias of the Monte Carlo estimator $\hat Z$ with Explicit Euler and RK4 applied to \eqref{eq:FitzNag}. The two components of the MSE have the same order of convergence with respect to the time step $h$. Conversely, the order of convergence with respect to the number of trajectories $M$ with fixed $h$ of the variance of $\hat Z$ is equal to one for both methods.}
+	\label{fig:MonteCarloVariance}
+\end{figure}
+
+We consider the FitzHug-Nagumo problem, defined by the following ODE
+\begin{equation}\label{eq:FitzNag}
+\begin{aligned}
+	x' &= c\big(x - \frac{x^3}{3} + y\big), && x(0) = -1, \\
+	y' &= -\frac{1}{c}(x - a + by), && y(0) = 1,
+\end{aligned}
+\end{equation}
+here $a, b, c$ are real parameters with values $a = 0.2$, $b = 0.2$, $c = 3$, and integrate it up to the final time $T = 10$ with the probabilistic integrator. We choose the function $\phi$ to be given by $\phi(X) = X^TX$ and generate a reference solution $Z$ with an high-order numerical scheme on a fine time discretization. We then choose as deterministic integrator the explicit Euler method and the classic fourth-order Runge-Kutta scheme \cite{HLW02}. Moreover, we set the noise scale $p$ equal to $q$, i.e., one and four respectively. We choose the number of trajectories $M = 10$ and the time step $h = 0.5 / 2^i$ with $i = 0, 1, \ldots, 11$. We then repeat $300$ times the computation of the estimator $\hat Z$ for all the values of the time step, thus estimating its variance and bias. Numerical results (Figure \ref{fig:MonteCarloVarianceH}) confirm the theoretical bound presented in Theorem \ref{thm:MSE}, as the order of convergence of the variance of $\hat{Z}$ to zero is of order $2$ and $8$ with respect to $h$ for Explicit Euler and RK4 respectively independently of $M$. We perform a second experiment fixing the value of $h$ to $0.5$ and varying the number of trajectories in the values $M = 2^i$ with $i = 0, 1, \ldots, 9$. As in the first experiment, we compute 300 times $\hat Z$ in order to estimate its variance. Results (Figure \ref{fig:MonteCarloVarianceM}) show that the variance has an order equal to $1$ for both the methods with respect to $M^{-1}$, thus confirming the theoretical result.
+
+\section{Conclusion} We considered the probabilistic numerical scheme \eqref{eq:probabilisticMethod} that has been recently introduced \cite{CGS16} to solve numerically ODEs and we analyzed the behavior of Monte Carlo estimators drawn from its realizations. Moreover, we considered Bayesian inverse problems involving ODEs and showed how the posterior distribution is approximated when the likelihood function is computed through the trajectories of \eqref{eq:probabilisticMethod}. In particular, we deduced that if the reference ODE \eqref{eq:ODE} has deterministic initial conditions, Monte Carlo estimators converge to the true value of the solution independently of the simulated number of trajectories.
+
+\bibliographystyle{siamplain}
+\bibliography{anmc}
+\end{document}

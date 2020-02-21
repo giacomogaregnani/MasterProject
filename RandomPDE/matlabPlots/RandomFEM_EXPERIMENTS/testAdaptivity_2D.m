@@ -11,24 +11,24 @@ W = 6.7; H = 6.7;
 % Geometry specification [0,1]^2
 
 % Unit square
-% g = [2 2 2 2
-%     0 1 1 0
-%     1 1 0 0
-%     1 1 0 0
-%     1 0 0 1
-%     0 0 0 0
-%     1 1 1 1];
+g = [2 2 2 2
+    0 1 1 0
+    1 1 0 0
+    1 1 0 0
+    1 0 0 1
+    0 0 0 0
+    1 1 1 1];
 
 % L-shaped domain
-g = [2   2   2  2  2   2
-     1/2 1   1  0  0   1/2
-     1   1   0  0  1/2 1/2
-     1/2 1/2 1  1  0   0
-     1/2 1   1  0  0   1/2
-     1   1   1  1  1   1
-     0   0   0  0  0   0  ];
+% g = [2   2   2  2  2   2
+%      1/2 1   1  0  0   1/2
+%      1   1   0  0  1/2 1/2
+%      1/2 1/2 1  1  0   0
+%      1/2 1   1  0  0   1/2
+%      1   1   1  1  1   1
+%      0   0   0  0  0   0  ];
 
-[vertices, boundaries, elements] = initmesh(g, 'hMax', 1/150);
+[vertices, boundaries, elements] = initmesh(g, 'hMax', 1/50);
 
 %% Reference solution
 
@@ -37,7 +37,7 @@ uEx = [];
 param = [];
 zeroFunc = @(x,y) 0.*x.*y;
 
-data   = read_DataFile('data_2D', 2, param);
+data = read_DataFile('data_2D', 2, param);
 data.diffusion = @(x, y, t, param) (x.*y).^0;
 % data.diffusion = @(x,y,t,param)(1 - 0.75 * ((x - 0.75).^2 + (y - 0.75).^2 < 0.04));
 % data.diffusion = @(x,y,t,param) (0.1 * (x > 0.5) + 0.1 * (x <= 0.5)).*(y.^0);
@@ -85,13 +85,13 @@ data.uexact = @(x,y,t,param) evaluateFEMforError(uExInt,x,y,t,param);
 
 %% Solution
 
-N = 3;
+N = 5;
 [vert, bound, el] = initmesh(g, 'hMax', 1 / N);
 
 M = 10;
 flag = true;
 
-tol = 1e-3;
+tol = 1e-2;
 iter = 0;
 errEst = []; errTrue = []; NVec = [];
 
@@ -124,7 +124,7 @@ while flag
     errProbSqd = zeros(M, N);
     for jj = 1 : M
         MESH = meshCoarse;
-        MESH.vertices(:, idxInternal) = MESH.vertices(:, idxInternal) + 0.6 * repmat(hPerturbation,2,1) .* (rand(2, NVertInt) - 0.5);
+        MESH.vertices(:, idxInternal) = MESH.vertices(:, idxInternal) + 0.55 * repmat(hPerturbation,2,1) .* (rand(2, NVertInt) - 0.5);
         [U, ~, ~, ~, ~, ~, L2Loc] = Elliptic_Solver(2, MESH.elements, MESH.vertices, MESH.boundaries, 'P1', data, [], [], false);
         errProbSqd(jj, :) = L2Loc.^2;
     end
@@ -134,7 +134,7 @@ while flag
     % Refine mesh
     errEst(iter) = sqrt(sum(errProbSqd)) / solNorm;
     display(['error estimate ', num2str(errEst(iter))])
-    mark = []; newPoints = []; markPlot = zeros(1, N);
+    mark = [];
     
     if errEst(iter) < tol
         flag = false;
@@ -142,9 +142,7 @@ while flag
         for i = 1 : N
             if errProb(i) > tol * solNorm / sqrt(N)
                 mark = [mark i];
-                markPlot(i) = 1;
             else
-                markPlot(i) = 0;
             end
         end
         if length(mark) < 0.01 * N
@@ -164,7 +162,6 @@ while flag
         %export_fig(fig, '../../../Reports/DraftPDE_18/VERSION7/Figures/MeshAdapt2D_InitMesh.eps', '-nocrop', '-gray')
 
     elseif ~flag
-
         fig = createFigure(W, H, 'enhanced',enhanced);
         plotP0(meshCoarse, errDet / solNorm)
         zlim = caxis;

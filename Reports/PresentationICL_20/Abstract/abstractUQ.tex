@@ -1,0 +1,29 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amsfonts,amssymb}
+%\usepackage{geometry}
+\usepackage{vmargin}
+\usepackage[hidelinks]{hyperref}
+\newcommand*\samethanks[1][\value{footnote}]{\footnotemark[#1]}
+\renewcommand{\arraystretch}{1.20}
+
+
+\title{Model Misspecification And Uncertainty Quantification For Drift Estimation In Multiscale Diffusion Processes}
+\author{\begin{tabular}{ccc}
+		Assyr Abdulle \thanks{Institute of Mathematics, École Polytechnique Fédérale de
+		Lausanne, \href{mailto:assyr.abdulle@epfl.ch}{assyr.abdulle@epfl.ch}}
+		& Giacomo Garegnani \thanks{Institute of Mathematics, École Polytechnique Fédérale de Lausanne, \href{mailto:giacomo.garegnani@epfl.ch}{giacomo.garegnani@epfl.ch} (presenter)}
+		& Grigorios A. Pavliotis \thanks{Department of Mathematics, Imperial College London, \href{mailto:g.pavliotis@imperial.ac.uk}{g.pavliotis@imperial.ac.uk}}
+		\\ & Andrew M. Stuart \thanks{Department of Computing and Mathematical Sciences, Caltech, Pasadena, \href{mailto:astuart@caltech.edu}{astuart@caltech.edu}} &
+		\end{tabular}}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\noindent We present a novel filtering technique for estimating the drift function of a diffusion process. We suppose data comes from a two scales overdamped Langevin model and we aim at fitting the homogenized equation, thus dealing with an issue of model misspecification. In this setting, it is known that if the continuous multiscale data are not pre-processed, then maximum likelihood estimators converge asymptotically on the wrong value of the drift. Conversely, we show that data can be processed ahead of inference in order to obtain the desired drift coefficient. In particular, we prove that there exists a family of linear filters of the exponential kind which, used as a pre-processer, guarantees asymptotic convergence of the estimator. Finally, we present how the filtering approach can be applied in the Bayesian setting. A series of numerical examples on test cases which corroborate our theoretical findings is presented.
+
+\end{document}
