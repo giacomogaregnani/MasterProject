@@ -1,6 +1,6 @@
 clc; clear; close all
-% addpath('resultsKL_GOOD2')
-addpath('resultsKL')
+addpath('resultsKL_GOOD2')
+% addpath('resultsKL')
 
 
 %%
@@ -30,9 +30,9 @@ xTest = -1.4:0.01:1.4;
 % for i = 1 : length(zetas)
 
 W = 4.2; H = 4.2;
-fontsizeLAB = getLatexTextSize('footnotesize', 'enhanced', 1);
+fontsizeLAB = getLatexTextSize('small', 'enhanced', 1);
 fontsizeTICK = getLatexTextSize('scriptsize', 'enhanced', 1);
-enhanced = 4;
+enhanced = 1;
 
 fig = createFigure(W, H, 'enhanced', enhanced);
 plot(xTest, drift(alpha, xTest), 'k:');

@@ -7,7 +7,7 @@ import functools
 
 
 sigmaVec = [.5]
-betaFilterVec = [1]
+betaFilterVec = [5]
 
 # Set up the equation
 eps = 0.1
@@ -17,20 +17,20 @@ EM = EulerMaruyama(sde)
 
 for sigma in sigmaVec:
 
-    alpha = 2.0
+    alpha = 1.0
     IC = 0.0
 
     # Compute the homogenized coefficients
     hom_param = compute_homogeneous(sigma, alpha, 2.0 * np.pi, sde.p)
     print(hom_param)
 
-    np.savetxt("../SDECode/matlabPlots/ParameterEstimation/resultsQU_epsBig/ResultsHom" + "_s" + str(sigma) + ".txt", hom_param, fmt='%f')
+    np.savetxt("../SDECode/matlabPlots/ParameterEstimation/resultsOU_OtherFilter/ResultsHom" + "_s" + str(sigma) + ".txt", hom_param, fmt='%f')
 
     for betaFilter in betaFilterVec:
 
         # Set parameters
-        gammaTime = -np.log(200) / np.log(eps)
-        beta = 2.5
+        gammaTime = -np.log(1000) / np.log(eps)
+        beta = 3
         T = round(eps ** (-1.0 * gammaTime))
         h = eps ** beta
         print('T = ', T, 'h = ', h, 'N = ', round(T/h))
@@ -71,7 +71,7 @@ for sigma in sigmaVec:
                 y, dw = EM.solve(IC, N, T, alpha, sigma, seed=seed)
                 sub = y[::nSub]
                 par_est_sub = ParEst(sub, sdeHomo.grad_v_vect, delta, is_vect=True)
-                filt, kt = filter_trajectory(y, delta, T, beta=betaFilter, type=1)
+                filt, kt = filter_trajectory(y, delta, T, beta=betaFilter, type=0)
                 par_est_filt = ParEst(filt, sdeHomo.grad_v_vect, h, is_vect=True)
 
                 a_fi = par_est_filt.drift_mixed(data=y)
@@ -97,5 +97,5 @@ for sigma in sigmaVec:
             print(['sub: ', 'A ', aSub.mean(), aSub.std()])
 
         # Write data to file
-        np.savetxt("../SDECode/matlabPlots/ParameterEstimation/resultsQU_epsBig/ResultsFilter" + "_s" + str(sigma) + "_b" + str(betaFilter) + ".txt", np.append(A_filt_means, A_filt_stds), fmt='%f')
-    np.savetxt("../SDECode/matlabPlots/ParameterEstimation/resultsQU_epsBig/ResultsSub" + "_s" + str(sigma) + ".txt" , np.append(A_sub_means, A_sub_stds), fmt='%f')
+        np.savetxt("../SDECode/matlabPlots/ParameterEstimation/resultsOU_OtherFilter/ResultsFilter" + "_s" + str(sigma) + "_b" + str(betaFilter) + ".txt", np.append(A_filt_means, A_filt_stds), fmt='%f')
+    np.savetxt("../SDECode/matlabPlots/ParameterEstimation/resultsOU_OtherFilter/ResultsSub" + "_s" + str(sigma) + ".txt" , np.append(A_sub_means, A_sub_stds), fmt='%f')

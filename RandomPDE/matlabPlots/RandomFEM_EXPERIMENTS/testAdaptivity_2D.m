@@ -28,7 +28,7 @@ g = [2 2 2 2
 %      1   1   1  1  1   1
 %      0   0   0  0  0   0  ];
 
-[vertices, boundaries, elements] = initmesh(g, 'hMax', 1/50);
+[vertices, boundaries, elements] = initmesh(g, 'hMax', 1/100);
 
 %% Reference solution
 
@@ -38,26 +38,26 @@ param = [];
 zeroFunc = @(x,y) 0.*x.*y;
 
 data = read_DataFile('data_2D', 2, param);
-data.diffusion = @(x, y, t, param) (x.*y).^0;
-% data.diffusion = @(x,y,t,param)(1 - 0.75 * ((x - 0.75).^2 + (y - 0.75).^2 < 0.04));
-% data.diffusion = @(x,y,t,param) (0.1 * (x > 0.5) + 0.1 * (x <= 0.5)).*(y.^0);
+% data.diffusion = @(x, y, t, param) (x.*y).^0;
+% data.diffusion = @(x,y,t,param)(1 - 0.8 * ((x - 0.75).^2 + (y - 0.75).^2 < 0.04));
+data.diffusion = @(x,y,t,param) (0.1 * (x > 0.5) + 0.8 * (x <= 0.5)).*(y.^0);
 
 data.param = param;
 data.bcDir = @(x,y,t,param)(0*x.*y);
 data.bcNeu = @(x,y,t,param)(0*x.*y);
 % data.bcNeu = @(x,y,t,param)(x).^2;
 
-a = 200;
-data.force = @(x,y,t,param) -(a^2*exp(-a*((x - 1/2).^2 + (y - 1/2).^2)).*(2*y - 1).^2 - 2*a*exp(-a*((x - 1/2).^2 + (y - 1/2).^2)) ...
-    +a^2*exp(-a*((x - 1/2).^2 + (y - 1/2).^2)).*(2*x - 1).^2 - 2*a*exp(-a*((x - 1/2).^2 + (y - 1/2).^2)));
-% data.force = @(x,y,t,param)(8*pi^2*(sin(2*pi*x).*sin(2*pi*y)));
-% data.force = @(x,y,t,param)(0*x.*y);
-% p = 4;
+% a = 200;
+% data.force = @(x,y,t,param) -(a^2*exp(-a*((x - 1/2).^2 + (y - 1/2).^2)).*(2*y - 1).^2 - 2*a*exp(-a*((x - 1/2).^2 + (y - 1/2).^2)) ...
+%     +a^2*exp(-a*((x - 1/2).^2 + (y - 1/2).^2)).*(2*x - 1).^2 - 2*a*exp(-a*((x - 1/2).^2 + (y - 1/2).^2)));
+a = 4;
+data.force = @(x,y,t,param)(100 * (sin(a*pi*x).*sin(a*pi*y)));
+% p = 42;
 % data.force = @(x,y,t,param) -(2^(4*p)*p*x.^p.*y.^p.*(p - 1).*(1 - x).^(p - 2).*(1 - y).^p ...
 %     - 2*2^(4*p)*p^2*x.^(p - 1).*y.^p.*(1 - x).^(p - 1).*(1 - y).^p + 2^(4*p)*p*x.^(p - 2).*y.^p.*(p - 1).*(1 - x).^p.*(1 - y).^p ...
 %     + 2^(4*p)*p*x.^p.*y.^p.*(p - 1).*(1 - x).^p.*(1 - y).^(p - 2) - 2*2^(4*p)*p^2*x.^p.*y.^(p - 1).*(1 - x).^p.*(1 - y).^(p - 1) ...
 %     + 2^(4*p)*p*x.^p.*y.^(p - 2).*(p - 1).*(1 - x).^p.*(1 - y).^p);
-% p = 3;
+% p = 14;
 % data.force = @(x,y,t,param)-(p^2*exp(p*x).*sin(2*pi*x).*sin(2*pi*y) + 4*p*pi*exp(p*x).*cos(2*pi*x).*sin(2*pi*y) - 4*pi^2*exp(p*x).*sin(2*pi*x).*sin(2*pi*y) ...
 %                             -4*pi^2*exp(p*x).*sin(2*pi*x).*sin(2*pi*y));
 
@@ -91,7 +91,7 @@ N = 5;
 M = 10;
 flag = true;
 
-tol = 1e-2;
+tol = 1e-1;
 iter = 0;
 errEst = []; errTrue = []; NVec = [];
 
@@ -114,7 +114,6 @@ while flag
     NVertInt = length(idxInternal);
     hPerturbation = zeros(1, NVertInt);
     itPert = 1;
-    
     for ii = idxInternal
         [~, Neighbours] = find(meshCoarse.elements(1:3, :) == ii);
         hPerturbation(itPert) = min(meshCoarse.h(Neighbours));
@@ -124,9 +123,9 @@ while flag
     errProbSqd = zeros(M, N);
     for jj = 1 : M
         MESH = meshCoarse;
-        MESH.vertices(:, idxInternal) = MESH.vertices(:, idxInternal) + 0.55 * repmat(hPerturbation,2,1) .* (rand(2, NVertInt) - 0.5);
+        MESH.vertices(:, idxInternal) = MESH.vertices(:, idxInternal) + 5 * repmat(hPerturbation,2,1).^2 .* (rand(2, NVertInt) - 0.5);
         [U, ~, ~, ~, ~, ~, L2Loc] = Elliptic_Solver(2, MESH.elements, MESH.vertices, MESH.boundaries, 'P1', data, [], [], false);
-        errProbSqd(jj, :) = L2Loc.^2;
+        errProbSqd(jj, :) = L2Loc.^2 ./ meshCoarse.h';
     end
     errProbSqd = mean(errProbSqd);
     errProb = sqrt(errProbSqd);

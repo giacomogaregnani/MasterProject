@@ -12,7 +12,7 @@ class EulerMaruyama:
         h = t/n
         dw = np.multiply(np.sqrt(h), local_state.normal(0, 1, n))
         for i in range(0, n):
-            y[i+1] = y[i] + self.sde.f(y[i], alpha)*h + self.sde.g(y[i], sigma)*dw[i]
+            y[i+1] = y[i] + self.sde.f(y[i], alpha) * h + self.sde.g(y[i], sigma) * dw[i]
         return y, dw
 
 

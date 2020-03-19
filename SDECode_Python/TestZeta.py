@@ -6,8 +6,8 @@ from multiprocessing import Pool
 import functools
 
 
-sigmaVec = [.5, .7, 1.]
-betaFilterVec = [1, 5, 10]
+sigmaVec = [.5]  # , .7, 1.]
+betaFilterVec = [1]
 
 # Set up the equation
 eps = 0.1
@@ -23,13 +23,13 @@ for sigma in sigmaVec:
     hom_param = compute_homogeneous(sigma, alpha, 2.0 * np.pi, sde.p)
     print(hom_param)
 
-    np.savetxt("../SDECode/matlabPlots/ParameterEstimation/resultsOU/ResultsHom" + "_s" + str(sigma) + ".txt",
+    np.savetxt("../SDECode/matlabPlots/ParameterEstimation/resultsOU_OtherFilter/ResultsHom" + "_s" + str(sigma) + ".txt",
                [hom_param[0]], fmt='%f')
 
     for betaFilter in betaFilterVec:
 
         # Set parameters
-        gammaTime = -np.log(1000) / np.log(eps)
+        gammaTime = -np.log(10000) / np.log(eps)
         beta = 3.0
         T = round(eps ** (-1.0 * gammaTime))
         h = eps ** beta
@@ -95,8 +95,8 @@ for sigma in sigmaVec:
             print(['sub: ', 'A ', aSub.mean(), aSub.std()])
 
         # Write data to file
-        np.savetxt("../SDECode/matlabPlots/ParameterEstimation/resultsOU/ResultsFilter" + "_s" + str(sigma) + "_b" + str(betaFilter) + ".txt",
+        np.savetxt("../SDECode/matlabPlots/ParameterEstimation/resultsOU_OtherFilter/ResultsFilter" + "_s" + str(sigma) + "_b" + str(betaFilter) + ".txt",
                    np.append(A_filt_means, A_filt_stds), fmt='%f')
-    np.savetxt("../SDECode/matlabPlots/ParameterEstimation/resultsOU/ResultsSub" + "_s" + str(sigma) + ".txt",
+    np.savetxt("../SDECode/matlabPlots/ParameterEstimation/resultsOU_OtherFilter/ResultsSub" + "_s" + str(sigma) + ".txt",
                np.append(A_sub_means, A_sub_stds), fmt='%f')
-    np.savetxt("../SDECode/matlabPlots/ParameterEstimation/resultsOU/zetas.txt", zetaVec, fmt='%f')
+    np.savetxt("../SDECode/matlabPlots/ParameterEstimation/resultsOU_OtherFilter/zetas.txt", zetaVec, fmt='%f')

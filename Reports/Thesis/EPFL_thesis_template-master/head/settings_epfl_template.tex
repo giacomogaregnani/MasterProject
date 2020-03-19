@@ -10,27 +10,14 @@
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-% % Uncomment for bibliography
-% % Bibliography using Biblatex
-%\usepackage{doi}
-%\usepackage[autostyle]{csquotes}
-% \usepackage[
-%     backend=biber,
-%     style=authoryear,
-%     natbib=true,
-%     firstinits=true,
-%     sortlocale=en_US,
-%     url=false, 
-%     doi=true,
-%     eprint=false,
-%     isbn=false
-% ]{biblatex}
-%\addbibresource{tail/bibliography.bib}
-% % OR Bibliography management for Bibtex 
-% Load natbib before babel
-
-
 \usepackage[french,german,english]{babel}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -182,11 +169,10 @@
   } % code before the title body
 \titlespacing*{\part}{11.06cm}{26.4pt-\parskip-\parskip}{0pt}
 
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{mathtools}
+
+\usepackage{amscd}
+\usepackage{bbm}
+%\usepackage{autonum}
 % Fix the problem with delimiter size caused by fourier and amsmath packages.
 \makeatletter
 \def\resetMathstrut@{%

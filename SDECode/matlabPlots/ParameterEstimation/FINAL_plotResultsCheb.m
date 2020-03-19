@@ -27,8 +27,8 @@ xTest = -1.65:0.01:1.65;
 
 % for i = 1 : length(zetas)
 
-W = 4.2; H = 4.2;
-fontsizeLAB = getLatexTextSize('footnotesize', 'enhanced', 1);
+W = 4.5; H = 4.5;
+fontsizeLAB = getLatexTextSize('small', 'enhanced', 1);
 fontsizeTICK = getLatexTextSize('scriptsize', 'enhanced', 1);
 enhanced = 1;
 
@@ -48,7 +48,10 @@ set(get(gca, 'ylabel'), 'fontsize', fontsizeLAB);
 set(get(gca, 'legend'), 'fontsize', fontsizeLAB);
 set(get(gca, 'title'), 'fontsize', fontsizeLAB);
 
-export_fig(fig, ['~/Desktop/PaperSDE/Figures/KLFilt.png'], '-painters', '-m5')
+placeLegendExtreme(fig, 3, 'N')
+niceBox(fig)
+
+export_fig(fig, ['~/Desktop/PaperSDE/Figures/KLFilt.png'], '-nocrop', '-painters', '-m5')
 
 fig = createFigure(W, H, 'enhanced', enhanced);
 plot(xTest, drift(alpha, xTest), 'k:');
@@ -66,7 +69,10 @@ set(get(gca, 'ylabel'), 'fontsize', fontsizeLAB);
 set(get(gca, 'legend'), 'fontsize', fontsizeLAB);
 set(get(gca, 'title'), 'fontsize', fontsizeLAB);
 
-export_fig(fig, ['~/Desktop/PaperSDE/Figures/KLSubs.png'], '-painters', '-m5')
+placeLegendExtreme(fig, 3, 'N')
+niceBox(fig)
+
+export_fig(fig, ['~/Desktop/PaperSDE/Figures/KLSubs.png'], '-nocrop', '-painters', '-m5')
 
 
 fig = createFigure(W, H, 'enhanced', enhanced);
@@ -85,4 +91,7 @@ set(get(gca, 'ylabel'), 'fontsize', fontsizeLAB);
 set(get(gca, 'legend'), 'fontsize', fontsizeLAB);
 set(get(gca, 'title'), 'fontsize', fontsizeLAB);
 
-export_fig(fig, ['~/Desktop/PaperSDE/Figures/KLNothing.png'], '-painters', '-m5')
+placeLegendExtreme(fig, 3, 'N')
+niceBox(fig)
+
+export_fig(fig, ['~/Desktop/PaperSDE/Figures/KLNothing.png'], '-nocrop', '-painters', '-m5')

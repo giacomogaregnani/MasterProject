@@ -9,8 +9,8 @@ betaFilterVec = np.arange(10) + 1
 
 # Set up the equation
 eps = 0.1
-sde = MSOrnUhl(eps)
-sdeHomo = OrnUhl()
+sde = MSQuartic(eps)
+sdeHomo = Quartic()
 EM = EulerMaruyama(sde)
 alpha = 1.0
 IC = 0.0
@@ -21,7 +21,7 @@ beta = 3.0
 T = round(eps ** (-1.0 * gammaTime))
 h = eps ** beta
 N = int(round(T / h))
-delta = eps
+delta = eps ** 0.5
 
 print('T = ', T, 'h = ', h, 'N = ', round(T / h))
 

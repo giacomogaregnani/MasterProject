@@ -1,17 +1,16 @@
 clc; clear; close all
-% addpath('resultsOU_epsSmall')
-addpath('resultsBeta_GOOD')
-% addpath('resultsQU_epsBig2')
+% addpath('resultsBeta_GOOD')
+addpath('resultsBeta')
 
 %%
-s = 1.;
+s = .7;
 
 aHom = dlmread(['ResultsHom_s' num2str(s,'%.1f') '.txt']);
 aFil = dlmread(['ResultsFilter_s' num2str(s,'%.1f') '.txt']);
 
-W = 4; H = 4;
-enhanced = 1;
-fontsizeLAB = getLatexTextSize('footnotesize', 'enhanced', 1);
+W = 4.5; H = 4.5;
+enhanced = 4;
+fontsizeLAB = getLatexTextSize('small', 'enhanced', 1);
 fontsizeTICK = getLatexTextSize('scriptsize', 'enhanced', 1);
 fig = createFigure(W, H, 'enhanced', enhanced);
 
@@ -31,5 +30,6 @@ xlim([1, 10])
 title(['$\sigma = $ ' num2str(s)], 'interpreter', 'latex')
 
 box on
+niceBox(fig)
 
-export_fig(fig, ['~/Desktop/PaperSDE/Figures/OUBeta_s' num2str(10*s) '.png'], '-nocrop', '-painters', '-m5')
+% export_fig(fig, ['~/Desktop/PaperSDE/Figures/OUBeta_s' num2str(10*s) '.png'], '-nocrop', '-painters', '-m5')

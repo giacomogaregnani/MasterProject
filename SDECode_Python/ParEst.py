@@ -99,13 +99,19 @@ class ParEst:
 
         return -1.0 * np.linalg.solve(m, vec)
 
-    def drift_mixed(self, data=None):
+    def drift_mixed(self, data=None, return_exp=False):
         grad_v_eval = self.grad_v(self.x[0:-1])
         num_summand = np.multiply(np.diff(data), grad_v_eval)
         num = np.sum(num_summand)
         # den = np.sum(np.square(grad_v_eval))
         den = np.sum(np.multiply(grad_v_eval, self.grad_v(data[0:-1])))
-        return -1.0 * num / (self.h * den)
+        if return_exp:
+            final_time = self.h * (self.n - 1)
+            exp_num = self.h * np.sum(grad_v_eval**2) / final_time
+            exp_den = self.h * den / final_time
+            return -1.0 * num / (self.h * den), exp_num, exp_den
+        else:
+            return -1.0 * num / (self.h * den)
 
     def drift_mixed_bayesian(self, sigma, a_pr, var_pr, data=None, tilde=False):
         grad_v_eval = self.grad_v(self.x[0:-1])
@@ -154,18 +160,10 @@ class ParEst:
         mean_post = np.matmul(cov_post, mean_pr - T * vec)
         return mean_post, cov_post
 
-    def drift_tilde(self, lapl, delta=1.0, sigma=0):
-        if sigma == 0:
-            sigma = self.diffusion() / delta
-        grad_v_eval = self.grad_v(self.x[0:-1])
-        den = np.sum(np.square(grad_v_eval)) * self.h
-        num = sigma * np.sum(lapl(self.x[0:-1])) * self.h
-        return num / den, sigma
-
     def diffusion(self):
         return np.sum(np.square(self.x_diff)) / (2.0 * self.h * self.n)
 
-    #TODO Correct this
+    # TODO Correct this
     def drift_bayesian(self, a_pr, var_pr):
         grad_v_eval = self.grad_v(self.x[0:-1])
         int_num = np.sum(np.multiply(self.x_diff, grad_v_eval))

@@ -35,8 +35,9 @@ elseif nargin >= 5 && nargin <= 6
     UU = uInt.evaluate([XX(:)'; YY(:)']);
     UU = reshape(UU, nContF, nContF);
     contourf(XX, YY, UU, nContF2);
-%     hold on
-%     plot(XX(:), YY(:), '+r')
+    figure
+    surf(XX, YY, UU, 'edgecolor', 'none')
+
 end
 
 xlim([0,1])
